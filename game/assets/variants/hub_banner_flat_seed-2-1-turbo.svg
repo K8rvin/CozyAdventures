@@ -1,0 +1,300 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" width="1000" height="340">
+<rect width="1000" height="340" fill="#f3e6cf"/>
+<!-- ceiling beam -->
+<rect x="0" y="0" width="1000" height="38" fill="#3d2f22"/>
+<rect x="0" y="38" width="1000" height="7" fill="#5d6b3f"/>
+<rect x="120" y="38" width="8" height="18" fill="#3d2f22" opacity="0.4"/>
+<rect x="420" y="38" width="8" height="18" fill="#3d2f22" opacity="0.4"/>
+<rect x="720" y="38" width="8" height="18" fill="#3d2f22" opacity="0.4"/>
+<!-- back wall panels -->
+<rect x="0" y="45" width="1000" height="225" fill="#efe2c3"/>
+<rect x="0" y="45" width="1000" height="225" fill="#3d2f22" opacity="0.04"/>
+<!-- vertical panel lines -->
+<g stroke="#3d2f22" stroke-opacity="0.07" stroke-width="2">
+<line x1="200" y1="45" x2="200" y2="270"/><line x1="400" y1="45" x2="400" y2="270"/><line x1="600" y1="45" x2="600" y2="270"/><line x1="800" y1="45" x2="800" y2="270"/>
+</g>
+<!-- floor -->
+<rect x="0" y="270" width="1000" height="70" fill="#3d2f22"/>
+<rect x="0" y="270" width="1000" height="14" fill="#5d6b3f" opacity="0.9"/>
+<g stroke="#ffca7a" stroke-opacity="0.1" stroke-width="2">
+<line x1="0" y1="295" x2="1000" y2="295"/><line x1="0" y1="315" x2="1000" y2="315"/>
+</g>
+<g stroke="#3d2f22" stroke-opacity="0.25" stroke-width="1.5">
+<line x1="150" y1="284" x2="150" y2="340"/><line x1="350" y1="284" x2="350" y2="340"/><line x1="550" y1="284" x2="550" y2="340"/><line x1="750" y1="284" x2="750" y2="340"/><line x1="900" y1="284" x2="900" y2="340"/>
+</g>
+
+<!-- LEFT SHELVES UNIT -->
+<rect x="52" y="52" width="298" height="218" rx="10" fill="#3d2f22"/>
+<rect x="62" y="62" width="278" height="198" rx="6" fill="#f3e6cf"/>
+<!-- shelf shadows -->
+<rect x="62" y="62" width="278" height="198" rx="6" fill="#3d2f22" opacity="0.06"/>
+<!-- shelves wood -->
+<g fill="#3d2f22">
+<rect x="52" y="116" width="298" height="14" rx="4"/>
+<rect x="52" y="176" width="298" height="14" rx="4"/>
+<rect x="52" y="236" width="298" height="14" rx="4"/>
+</g>
+<rect x="52" y="116" width="298" height="4" fill="#ffca7a" opacity="0.25"/>
+<rect x="52" y="176" width="298" height="4" fill="#ffca7a" opacity="0.25"/>
+<rect x="52" y="236" width="298" height="4" fill="#ffca7a" opacity="0.25"/>
+<!-- vertical divider -->
+<rect x="195" y="66" width="6" height="170" rx="2" fill="#3d2f22" opacity="0.85"/>
+
+<!-- TOP SHELF ITEMS y~68-116 -->
+<!-- potion 1 amber tall -->
+<g>
+<rect x="76" y="80" width="28" height="36" rx="7" fill="#ffca7a" stroke="#3d2f22" stroke-width="2.2"/>
+<rect x="84" y="68" width="12" height="14" rx="2" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.6"/>
+<rect x="82" y="62" width="16" height="8" rx="2" fill="#3d2f22"/>
+<ellipse cx="88" cy="90" rx="4" ry="7" fill="#fff" opacity="0.22"/>
+<rect x="80" y="102" width="20" height="6" rx="2" fill="#3d2f22" opacity="0.12"/>
+</g>
+<!-- round moss flask -->
+<g>
+<circle cx="135" cy="95" r="19" fill="#5d6b3f" stroke="#3d2f22" stroke-width="2.2"/>
+<rect x="128" y="68" width="14" height="14" rx="1" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.6"/>
+<rect x="126" y="62" width="18" height="7" rx="2" fill="#3d2f22"/>
+<ellipse cx="128" cy="92" rx="4" ry="7" fill="#fff" opacity="0.18"/>
+</g>
+<!-- small amber -->
+<g>
+<rect x="168" y="88" width="22" height="28" rx="6" fill="#ffca7a" stroke="#3d2f22" stroke-width="2"/>
+<rect x="172" y="76" width="14" height="13" rx="2" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.4"/>
+<rect x="171" y="70" width="16" height="7" rx="2" fill="#3d2f22"/>
+</g>
+<!-- books stack top shelf right -->
+<g>
+<rect x="215" y="92" width="44" height="10" rx="2" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.6"/>
+<rect x="215" y="82" width="44" height="10" rx="2" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.6"/>
+<rect x="215" y="72" width="44" height="10" rx="2" fill="#3d2f22"/>
+<rect x="220" y="75" width="18" height="3" rx="1" fill="#ffca7a" opacity="0.6"/>
+</g>
+<g>
+<rect x="275" y="78" width="18" height="38" rx="4" fill="#3d2f22" stroke="#3d2f22" stroke-width="1"/>
+<rect x="278" y="84" width="4" height="26" rx="1" fill="#ffca7a" opacity="0.5"/>
+<rect x="285" y="84" width="2" height="26" rx="1" fill="#f3e6cf" opacity="0.4"/>
+</g>
+
+<!-- MIDDLE SHELF y 130-176 -->
+<!-- lantern on shelf -->
+<g>
+<ellipse cx="92" cy="174" rx="18" ry="6" fill="#3d2f22" opacity="0.15"/>
+<rect x="78" y="138" width="28" height="26" rx="4" fill="#ffca7a" stroke="#3d2f22" stroke-width="2"/>
+<rect x="82" y="142" width="20" height="18" rx="2" fill="#f3e6cf" opacity="0.9"/>
+<circle cx="92" cy="151" r="5" fill="#ffca7a" opacity="0.9"/>
+<rect x="74" y="134" width="36" height="6" rx="2" fill="#3d2f22"/>
+<rect x="74" y="164" width="36" height="5" rx="2" fill="#3d2f22"/>
+<rect x="88" y="130" width="8" height="6" fill="#3d2f22"/>
+</g>
+<!-- moss potion tall -->
+<g>
+<rect x="128" y="136" width="24" height="40" rx="6" fill="#5d6b3f" stroke="#3d2f22" stroke-width="2"/>
+<rect x="132" y="122" width="16" height="16" rx="2" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.6"/>
+<rect x="131" y="116" width="18" height="7" rx="2" fill="#3d2f22"/>
+<ellipse cx="138" cy="148" rx="3" ry="8" fill="#fff" opacity="0.15"/>
+</g>
+<!-- amber small round -->
+<g>
+<circle cx="175" cy="158" r="14" fill="#ffca7a" stroke="#3d2f22" stroke-width="2"/>
+<rect x="169" y="136" width="12" height="10" rx="1" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.4"/>
+<rect x="168" y="131" width="14" height="6" rx="1.5" fill="#3d2f22"/>
+</g>
+<!-- scrolls -->
+<g>
+<rect x="208" y="144" width="52" height="14" rx="7" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.6"/>
+<rect x="210" y="148" width="48" height="2" rx="1" fill="#3d2f22" opacity="0.15"/>
+<rect x="210" y="152" width="32" height="2" rx="1" fill="#3d2f22" opacity="0.15"/>
+<circle cx="212" cy="151" r="6" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.2"/>
+<circle cx="256" cy="151" r="6" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.2"/>
+</g>
+<g>
+<rect x="218" y="160" width="52" height="14" rx="7" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.6"/>
+<circle cx="222" cy="167" r="6" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.2"/>
+<circle cx="266" cy="167" r="6" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.2"/>
+</g>
+
+<!-- BOTTOM SHELF y 190-236 -->
+<g>
+<rect x="72" y="200" width="30" height="36" rx="4" fill="#5d6b3f" stroke="#3d2f22" stroke-width="2"/>
+<rect x="80" y="188" width="14" height="14" rx="2" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.4"/>
+<rect x="78" y="182" width="18" height="7" rx="2" fill="#3d2f22"/>
+<ellipse cx="84" cy="214" rx="4" ry="8" fill="#fff" opacity="0.15"/>
+</g>
+<g>
+<rect x="112" y="208" width="26" height="28" rx="6" fill="#ffca7a" stroke="#3d2f22" stroke-width="2"/>
+<rect x="118" y="196" width="14" height="13" rx="2" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.4"/>
+<rect x="117" y="190" width="16" height="7" rx="2" fill="#3d2f22"/>
+</g>
+<g>
+<rect x="148" y="204" width="24" height="32" rx="6" fill="#f3e6cf" stroke="#3d2f22" stroke-width="2"/>
+<rect x="146" y="198" width="28" height="4" rx="2" fill="#3d2f22"/>
+<rect x="152" y="188" width="16" height="12" rx="2" fill="#3d2f22"/>
+<rect x="154" y="214" width="12" height="10" rx="1" fill="#5d6b3f" opacity="0.9"/>
+</g>
+<!-- plant pot -->
+<g>
+<rect x="218" y="210" width="38" height="26" rx="3" fill="#3d2f22"/>
+<rect x="222" y="214" width="30" height="18" rx="2" fill="#ffca7a" opacity="0.2"/>
+<!-- leaves -->
+<ellipse cx="228" cy="200" rx="10" ry="14" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.4"/>
+<ellipse cx="242" cy="192" rx="12" ry="16" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.4"/>
+<ellipse cx="252" cy="202" rx="9" ry="12" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.4"/>
+<ellipse cx="235" cy="205" rx="6" ry="8" fill="#7a9a4a" opacity="0.5"/>
+</g>
+<g>
+<circle cx="298" cy="216" r="16" fill="#ffca7a" stroke="#3d2f22" stroke-width="2"/>
+<rect x="292" y="196" width="12" height="10" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.4"/>
+<rect x="290" y="190" width="16" height="7" rx="2" fill="#3d2f22"/>
+</g>
+
+<!-- HANGING LANTERNS from ceiling -->
+<g>
+<line x1="472" y1="38" x2="472" y2="72" stroke="#3d2f22" stroke-width="3"/>
+<ellipse cx="472" cy="72" rx="6" ry="3" fill="#3d2f22"/>
+<rect x="452" y="72" width="40" height="44" rx="6" fill="#3d2f22"/>
+<rect x="457" y="78" width="30" height="32" rx="4" fill="#ffca7a"/>
+<rect x="462" y="82" width="20" height="24" rx="2" fill="#fff" opacity="0.85"/>
+<circle cx="472" cy="94" r="7" fill="#ffca7a"/>
+<ellipse cx="472" cy="118" rx="18" ry="8" fill="#ffca7a" opacity="0.18"/>
+</g>
+<g>
+<line x1="632" y1="38" x2="632" y2="62" stroke="#3d2f22" stroke-width="3"/>
+<ellipse cx="632" cy="62" rx="5" ry="2.5" fill="#3d2f22"/>
+<rect x="616" y="62" width="32" height="36" rx="5" fill="#3d2f22"/>
+<rect x="620" y="67" width="24" height="26" rx="3" fill="#ffca7a"/>
+<rect x="624" y="70" width="16" height="20" rx="1.5" fill="#fff" opacity="0.85"/>
+<circle cx="632" cy="80" r="5.5" fill="#ffca7a"/>
+<ellipse cx="632" cy="100" rx="16" ry="7" fill="#ffca7a" opacity="0.18"/>
+</g>
+
+<!-- COUNTER -->
+<!-- shadow -->
+<ellipse cx="505" cy="278" rx="150" ry="14" fill="#3d2f22" opacity="0.18"/>
+<rect x="360" y="200" width="300" height="74" rx="8" fill="#3d2f22"/>
+<rect x="352" y="188" width="316" height="22" rx="5" fill="#ffca7a" stroke="#3d2f22" stroke-width="3"/>
+<rect x="352" y="188" width="316" height="10" rx="3" fill="#fff" opacity="0.18"/>
+<!-- front panel -->
+<rect x="374" y="218" width="272" height="44" rx="6" fill="#5d6b3f"/>
+<rect x="374" y="218" width="272" height="8" rx="4" fill="#fff" opacity="0.12"/>
+<rect x="385" y="232" width="250" height="4" rx="2" fill="#3d2f22" opacity="0.35"/>
+<g fill="#ffca7a" opacity="0.9">
+<circle cx="400" cy="242" r="3"/><circle cx="420" cy="242" r="3"/><circle cx="440" cy="242" r="3"/><circle cx="600" cy="242" r="3"/><circle cx="620" cy="242" r="3"/>
+</g>
+
+<!-- candles on counter -->
+<g>
+<ellipse cx="385" cy="186" rx="22" ry="10" fill="#ffca7a" opacity="0.22"/>
+<rect x="378" y="162" width="14" height="26" rx="3" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.5"/>
+<line x1="385" y1="162" x2="385" y2="152" stroke="#3d2f22" stroke-width="1.5"/>
+<ellipse cx="385" cy="144" rx="7" ry="10" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.2"/>
+<ellipse cx="385" cy="146" rx="3" ry="5" fill="#fff" opacity="0.9"/>
+</g>
+<g>
+<ellipse cx="625" cy="186" rx="18" ry="8" fill="#ffca7a" opacity="0.22"/>
+<rect x="619" y="168" width="12" height="20" rx="3" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.5"/>
+<line x1="625" y1="168" x2="625" y2="160" stroke="#3d2f22" stroke-width="1.3"/>
+<ellipse cx="625" cy="152" rx="6" ry="8" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.1"/>
+<ellipse cx="625" cy="154" rx="2.5" ry="4" fill="#fff" opacity="0.9"/>
+</g>
+
+<!-- SLEEPING CAT on counter -->
+<g>
+<!-- shadow -->
+<ellipse cx="505" cy="188" rx="48" ry="10" fill="#3d2f22" opacity="0.12"/>
+<!-- body -->
+<ellipse cx="505" cy="176" rx="38" ry="22" fill="#ffca7a" stroke="#3d2f22" stroke-width="2.4"/>
+<!-- head -->
+<circle cx="536" cy="162" r="19" fill="#ffca7a" stroke="#3d2f22" stroke-width="2.4"/>
+<!-- ears -->
+<path d="M524 148 L528 128 L540 142 Z" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M544 145 L552 127 L556 150 Z" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M528 136 L531 142 L536 141 Z" fill="#3d2f22"/>
+<path d="M550 136 L548 142 L543 142 Z" fill="#3d2f22"/>
+<!-- tail curled -->
+<path d="M472 178 C460 172, 458 158, 475 152 C482 162, 478 174, 485 176" fill="#ffca7a" stroke="#3d2f22" stroke-width="2" stroke-linecap="round"/>
+<path d="M465 162 C462 162, 462 166, 465 166" stroke="#3d2f22" stroke-width="1.2" fill="none" opacity="0.5"/>
+<!-- face details -->
+<path d="M528 162 C530 164, 532 164, 534 162" stroke="#3d2f22" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<path d="M540 162 C542 164, 544 164, 546 162" stroke="#3d2f22" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+<ellipse cx="531" cy="168" rx="2" ry="1.5" fill="#3d2f22"/>
+<path d="M531 168 L528 171 L534 171 Z" fill="#3d2f22"/>
+<!-- paws -->
+<ellipse cx="492" cy="188" rx="8" ry="5" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.4"/>
+<ellipse cx="510" cy="189" rx="8" ry="5" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.4"/>
+<!-- belly spot -->
+<ellipse cx="500" cy="180" rx="12" ry="8" fill="#f3e6cf" opacity="0.9"/>
+</g>
+
+<!-- small potion on counter next to cat -->
+<g>
+<rect x="560" y="172" width="16" height="18" rx="4" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.6"/>
+<rect x="563" y="164" width="10" height="9" rx="1" fill="#f3e6cf" stroke="#3d2f22" stroke-width="1.2"/>
+<rect x="562" y="160" width="12" height="5" rx="1.5" fill="#3d2f22"/>
+</g>
+
+<!-- KNIGHT HELMET STAND right side -->
+<!-- rug under stand -->
+<ellipse cx="780" cy="268" rx="48" ry="12" fill="#3d2f22" opacity="0.12"/>
+<ellipse cx="780" cy="268" rx="38" ry="8" fill="#ffca7a" opacity="0.25"/>
+<!-- stand pole -->
+<rect x="774" y="142" width="12" height="110" rx="3" fill="#3d2f22"/>
+<rect x="774" y="142" width="4" height="110" fill="#fff" opacity="0.08"/>
+<!-- cross arm -->
+<rect x="742" y="154" width="76" height="10" rx="5" fill="#3d2f22"/>
+<!-- base -->
+<ellipse cx="780" cy="256" rx="34" ry="10" fill="#3d2f22"/>
+<ellipse cx="780" cy="252" rx="34" ry="10" fill="#5d6b3f" stroke="#3d2f22" stroke-width="2"/>
+<ellipse cx="780" cy="252" rx="20" ry="5" fill="#3d2f22" opacity="0.3"/>
+<!-- cape behind helmet -->
+<path d="M755 162 C745 190, 740 230, 750 252 L810 252 C820 230, 815 190, 805 162 Z" fill="#5d6b3f" stroke="#3d2f22" stroke-width="2"/>
+<path d="M765 168 L765 245" stroke="#3d2f22" stroke-opacity="0.2" stroke-width="1.5"/>
+<!-- helmet -->
+<g>
+<path d="M748 132 C748 84, 812 84, 812 132 L812 158 C812 168, 748 168, 748 158 Z" fill="#d8ddd6" stroke="#3d2f22" stroke-width="3"/>
+<path d="M748 132 C748 84, 812 84, 812 132" fill="#f3e6cf" opacity="0.5"/>
+<!-- visor ridge -->
+<rect x="752" y="118" width="56" height="10" rx="3" fill="#3d2f22"/>
+<rect x="758" y="120" width="44" height="2" rx="1" fill="#ffca7a" opacity="0.6"/>
+<!-- eye slit -->
+<rect x="760" y="134" width="40" height="6" rx="3" fill="#3d2f22"/>
+<rect x="765" y="136" width="30" height="1.5" rx="1" fill="#ffca7a" opacity="0.5"/>
+<!-- cheek detail -->
+<path d="M762 148 L762 158" stroke="#3d2f22" stroke-width="1.2" opacity="0.4"/>
+<path d="M798 148 L798 158" stroke="#3d2f22" stroke-width="1.2" opacity="0.4"/>
+<!-- highlight -->
+<ellipse cx="768" cy="108" rx="8" ry="12" fill="#fff" opacity="0.35"/>
+</g>
+<!-- plume -->
+<g>
+<path d="M780 86 C782 62, 795 48, 808 58 C804 72, 792 84, 784 88 Z" fill="#ffca7a" stroke="#3d2f22" stroke-width="1.8"/>
+<path d="M786 68 C790 62, 796 58, 800 62" stroke="#3d2f22" stroke-width="1" fill="none" opacity="0.5"/>
+<path d="M784 76 C788 71, 794 68, 798 71" stroke="#3d2f22" stroke-width="1" fill="none" opacity="0.5"/>
+</g>
+<!-- small shield leaning -->
+<g>
+<path d="M830 210 L860 210 L868 228 L845 250 L822 228 Z" fill="#ffca7a" stroke="#3d2f22" stroke-width="2.2"/>
+<circle cx="845" cy="226" r="8" fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.5"/>
+<path d="M841 222 L849 230 M849 222 L841 230" stroke="#f3e6cf" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+
+<!-- hanging ivy top right -->
+<g fill="#5d6b3f" stroke="#3d2f22" stroke-width="1.3">
+<ellipse cx="870" cy="58" rx="14" ry="10" />
+<ellipse cx="890" cy="68" rx="12" ry="9" />
+<ellipse cx="910" cy="58" rx="13" ry="10" />
+<ellipse cx="930" cy="68" rx="11" ry="9" />
+<ellipse cx="880" cy="78" rx="9" ry="12" />
+<ellipse cx="900" cy="82" rx="8" ry="10" />
+</g>
+<path d="M870 58 Q880 78 880 92" stroke="#3d2f22" stroke-width="1.5" fill="none" opacity="0.6"/>
+<path d="M910 58 Q905 78 902 92" stroke="#3d2f22" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+<!-- fairy lights -->
+<g fill="#ffca7a" stroke="#3d2f22" stroke-width="1">
+<circle cx="380" cy="52" r="4"/><circle cx="420" cy="58" r="4"/><circle cx="460" cy="62" r="4"/><circle cx="500" cy="64" r="4"/><circle cx="540" cy="62" r="4"/><circle cx="580" cy="58" r="4"/><circle cx="620" cy="52" r="4"/>
+</g>
+<path d="M375 50 Q430 70 500 66 Q570 70 625 50" stroke="#3d2f22" stroke-width="1.5" fill="none" opacity="0.7"/>
+
+<!-- soft glow vignette bottom -->
+<rect x="0" y="260" width="1000" height="30" fill="#3d2f22" opacity="0.06"/>
+</svg>

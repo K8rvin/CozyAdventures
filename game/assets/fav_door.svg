@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+<defs>
+  <radialGradient id="gGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#FFC97A" stop-opacity="0.62"/>
+    <stop offset="58%" stop-color="#FFB04A" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="#FF9A2B" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="gWood" x1="15%" y1="8%" x2="85%" y2="92%">
+    <stop offset="0%" stop-color="#DEB06A"/>
+    <stop offset="22%" stop-color="#C48A3E"/>
+    <stop offset="48%" stop-color="#9C5E1E"/>
+    <stop offset="72%" stop-color="#7A3E12"/>
+    <stop offset="100%" stop-color="#B07A2E"/>
+  </linearGradient>
+  <linearGradient id="gFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#6B4420"/>
+    <stop offset="100%" stop-color="#3A2310"/>
+  </linearGradient>
+  <radialGradient id="gBrass" cx="32%" cy="28%" r="78%">
+    <stop offset="0%" stop-color="#FFF7CC"/>
+    <stop offset="26%" stop-color="#FFDA7A"/>
+    <stop offset="52%" stop-color="#D9A12E"/>
+    <stop offset="78%" stop-color="#8A6212"/>
+    <stop offset="100%" stop-color="#4A3410"/>
+  </radialGradient>
+  <filter id="wc">
+    <feTurbulence type="fractalNoise" baseFrequency="0.88" numOctaves="2" seed="5" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="0.6" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</defs>
+<!-- App icon background - warm parchment -->
+<rect x="0" y="0" width="64" height="64" rx="13" fill="#F3E6C8"/>
+<rect x="0" y="0" width="64" height="64" rx="13" fill="#EDE0C4" opacity="0.9"/>
+<!-- subtle paper grain -->
+<rect x="0" y="0" width="64" height="64" rx="13" fill="#FFFFFF" opacity="0.0"/>
+<!-- warm candlelit glow around door -->
+<circle cx="32" cy="32.5" r="24.5" fill="url(#gGlow)"/>
+<!-- soft ground shadow -->
+<ellipse cx="32" cy="55.5" rx="15.5" ry="3.2" fill="#3A2310" opacity="0.16"/>
+<!-- outer stone/wood frame - round hobbit door -->
+<circle cx="32" cy="33" r="19.2" fill="url(#gFrame)" stroke="#2E1A0C" stroke-width="1.6" stroke-linecap="round"/>
+<circle cx="32" cy="33" r="19.2" fill="none" stroke="#FFC87A" stroke-width="0.7" opacity="0.22"/>
+<!-- inner wooden door -->
+<circle cx="32" cy="33" r="16.2" fill="url(#gWood)" stroke="#2E1A0C" stroke-width="1.3"/>
+<!-- vertical wood planks -->
+<g opacity="0.95" stroke="#5A3214" stroke-width="0.95" stroke-linecap="round">
+  <path d="M 26.2 18.8 L 26.2 47.2" opacity="0.75"/>
+  <path d="M 32 16.9 L 32 49.1" opacity="0.85"/>
+  <path d="M 37.8 18.8 L 37.8 47.2" opacity="0.75"/>
+</g>
+<!-- wood grain - hand painted wavy lines -->
+<g fill="none" stroke="#6E3D14" stroke-width="0.55" opacity="0.32" stroke-linecap="round">
+  <path d="M 20.8 28 C 22.5 28.6 24 28.2 25.5 27.4"/>
+  <path d="M 33.2 22 C 34.2 24.1 34.5 26.5 34.2 28.8"/>
+  <path d="M 39.5 26.5 C 40.8 28.8 41.2 31.2 40.9 33.6"/>
+  <path d="M 21.5 38 C 23 38.9 24.6 39 26.2 38.4"/>
+  <path d="M 33.8 38.5 C 35 40.2 35.6 42.2 35.8 44.3"/>
+  <path d="M 38.8 39.2 C 40.1 40.8 41 42.6 41.4 44.6"/>
+</g>
+<!-- horizontal middle brace / beam -->
+<rect x="17.8" y="31.2" width="28.4" height="4" rx="1.3" fill="#4F2E16" stroke="#2E1A0C" stroke-width="0.9"/>
+<rect x="17.8" y="32.1" width="28.4" height="1.1" rx="0.5" fill="#8A5A2A" opacity="0.45"/>
+<!-- rivets on brace -->
+<g fill="#2A1A0C" stroke="#1A0F06" stroke-width="0.4">
+  <circle cx="20.6" cy="33.2" r="0.95"/>
+  <circle cx="43.4" cy="33.2" r="0.95"/>
+  <circle cx="27.2" cy="33.2" r="0.75" opacity="0.9"/>
+  <circle cx="36.8" cy="33.2" r="0.75" opacity="0.9"/>
+</g>
+<!-- left side black iron hinge -->
+<g fill="#1E1A16" stroke="#0F0D0B" stroke-width="0.6">
+  <rect x="15.2" y="24.2" width="2.8" height="7.2" rx="1.1"/>
+  <rect x="15.2" y="34.6" width="2.8" height="7.2" rx="1.1"/>
+  <circle cx="16.6" cy="27.8" r="0.7" fill="#3A352F" stroke="none"/>
+  <circle cx="16.6" cy="38.2" r="0.7" fill="#3A352F" stroke="none"/>
+</g>
+<!-- brass knob -->
+<circle cx="41.2" cy="33" r="3.9" fill="url(#gBrass)" stroke="#4A3410" stroke-width="0.85"/>
+<!-- knob highlight - candlelit sparkle -->
+<circle cx="40.1" cy="31.6" r="1.05" fill="#FFFBEA" opacity="0.92"/>
+<circle cx="39.6" cy="31.1" r="0.45" fill="#FFFFFF" opacity="0.75"/>
+<!-- subtle inner amber rim light -->
+<circle cx="32" cy="33" r="16.2" fill="none" stroke="#FFD18A" stroke-width="1" opacity="0.18"/>
+<!-- gentle ink outline reinforcement bottom -->
+<path d="M 20.5 46.8 A 16.2 16.2 0 0 0 43.5 46.8" fill="none" stroke="#2E1A0C" stroke-width="0.6" opacity="0.25" stroke-linecap="round"/>
+</svg>

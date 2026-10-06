@@ -1,0 +1,477 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" width="1000" height="340" role="img">
+<defs>
+  <filter id="paper" x="0%" y="0%" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="7" result="n"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0.95 0 0 0 0 0.9 0 0 0 0 0.82 0 0 0 0.35 0" />
+  </filter>
+  <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="1.2" />
+  </filter>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="8" result="b"/>
+    <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.6 0"/>
+  </filter>
+  <filter id="watercolorEdge" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence baseFrequency="0.02" numOctaves="2" seed="12" result="t"/>
+    <feDisplacementMap in="SourceGraphic" in2="t" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <radialGradient id="candleGlow" cx="50%" cy="55%" r="55%">
+    <stop offset="0%" stop-color="#fff6d0" stop-opacity="0.95"/>
+    <stop offset="25%" stop-color="#ffcf7a" stop-opacity="0.65"/>
+    <stop offset="55%" stop-color="#e8a04a" stop-opacity="0.28"/>
+    <stop offset="85%" stop-color="#8b5a2a" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="lanternGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#fff8d6" stop-opacity="0.9"/>
+    <stop offset="35%" stop-color="#ffbf5a" stop-opacity="0.5"/>
+    <stop offset="75%" stop-color="#d68a2e" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#5a3a1a" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="woodGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#a67c52"/>
+    <stop offset="50%" stop-color="#8e5d36"/>
+    <stop offset="100%" stop-color="#6b3e22"/>
+  </linearGradient>
+  <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#f7e9c9"/>
+    <stop offset="100%" stop-color="#e8d5b0"/>
+  </linearGradient>
+  <linearGradient id="counterGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#9c6b3f"/>
+    <stop offset="100%" stop-color="#5e351e"/>
+  </linearGradient>
+  <linearGradient id="helmetGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#9aa3ad"/>
+    <stop offset="45%" stop-color="#d6dde3"/>
+    <stop offset="100%" stop-color="#7f8a96"/>
+  </linearGradient>
+</defs>
+
+<!-- Background paper -->
+<rect x="0" y="0" width="1000" height="340" fill="#f3e6c8"/>
+<rect x="0" y="0" width="1000" height="340" fill="url(#wallGrad)" opacity="0.9"/>
+<!-- paper texture overlay -->
+<rect x="0" y="0" width="1000" height="340" filter="url(#paper)" opacity="0.18"/>
+
+<!-- Back wall wood paneling -->
+<rect x="0" y="38" width="1000" height="222" fill="#e9d7b5" stroke="#b89a6f" stroke-width="1.2" stroke-opacity="0.35"/>
+<!-- vertical panel lines -->
+<g stroke="#c2a67a" stroke-width="1" opacity="0.35">
+  <line x1="140" y1="38" x2="140" y2="260"/><line x1="320" y1="38" x2="320" y2="260"/><line x1="680" y1="38" x2="680" y2="260"/><line x1="860" y1="38" x2="860" y2="260"/>
+</g>
+
+<!-- Ceiling beam -->
+<rect x="0" y="0" width="1000" height="38" fill="#5a3420" rx="2"/>
+<rect x="0" y="30" width="1000" height="8" fill="#3e2112" opacity="0.5"/>
+<!-- beam grain -->
+<g stroke="#7a4a2e" stroke-width="0.7" opacity="0.35">
+  <path d="M0 12 Q250 18 500 12 T1000 14" fill="none"/>
+  <path d="M0 22 Q300 26 600 21 T1000 23" fill="none"/>
+</g>
+<!-- hanging hooks -->
+<g fill="#2b1a0f">
+  <rect x="198" y="32" width="6" height="14" rx="1"/><rect x="497" y="32" width="6" height="14" rx="1"/><rect x="798" y="32" width="6" height="14" rx="1"/>
+</g>
+
+<!-- Floor -->
+<rect x="0" y="260" width="1000" height="80" fill="#c9a87a"/>
+<g opacity="0.9">
+  <rect x="0" y="260" width="1000" height="80" fill="url(#woodGrad)" opacity="0.25"/>
+  <!-- floor planks -->
+  <g stroke="#8b5e3a" stroke-width="1" opacity="0.35">
+    <line x1="0" y1="278" x2="1000" y2="278"/><line x1="0" y1="298" x2="1000" y2="298"/><line x1="0" y1="318" x2="1000" y2="318"/>
+    <line x1="180" y1="260" x2="180" y2="340" opacity="0.5"/><line x1="380" y1="260" x2="380" y2="340" opacity="0.5"/><line x1="610" y1="260" x2="610" y2="340" opacity="0.5"/><line x1="820" y1="260" x2="820" y2="340" opacity="0.5"/>
+  </g>
+</g>
+<!-- floor shadow -->
+<ellipse cx="500" cy="332" rx="320" ry="12" fill="#3d2412" opacity="0.18" filter="url(#softBlur)"/>
+
+<!-- LEFT SHELVES -->
+<g>
+  <rect x="38" y="62" width="252" height="14" rx="2" fill="#7a4a2e" stroke="#3d2312" stroke-width="1.1" stroke-opacity="0.4"/>
+  <rect x="38" y="128" width="252" height="14" rx="2" fill="#7a4a2e" stroke="#3d2312" stroke-width="1.1" stroke-opacity="0.4"/>
+  <rect x="38" y="194" width="252" height="14" rx="2" fill="#7a4a2e" stroke="#3d2312" stroke-width="1.1" stroke-opacity="0.4"/>
+  <!-- shelf shadows -->
+  <rect x="42" y="76" width="244" height="8" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <rect x="42" y="142" width="244" height="8" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <rect x="42" y="208" width="244" height="8" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <!-- brackets -->
+  <g fill="#4a2e1a" opacity="0.9">
+    <path d="M55 76 L55 92 L68 76 Z"/><path d="M265 76 L265 92 L252 76 Z"/>
+    <path d="M55 142 L55 158 L68 142 Z"/><path d="M265 142 L265 158 L252 142 Z"/>
+  </g>
+</g>
+
+<!-- RIGHT SHELVES -->
+<g>
+  <rect x="710" y="62" width="252" height="14" rx="2" fill="#7a4a2e" stroke="#3d2312" stroke-width="1.1" stroke-opacity="0.4"/>
+  <rect x="710" y="128" width="252" height="14" rx="2" fill="#7a4a2e" stroke="#3d2312" stroke-width="1.1" stroke-opacity="0.4"/>
+  <rect x="710" y="194" width="252" height="14" rx="2" fill="#7a4a2e" stroke="#3d2312" stroke-width="1.1" stroke-opacity="0.4"/>
+  <rect x="714" y="76" width="244" height="8" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <rect x="714" y="142" width="244" height="8" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <rect x="714" y="208" width="244" height="8" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <g fill="#4a2e1a"><path d="M728 76 L728 92 L741 76 Z"/><path d="M940 76 L940 92 L927 76 Z"/><path d="M728 142 L728 158 L741 142 Z"/><path d="M940 142 L940 158 L927 142 Z"/></g>
+</g>
+
+<!-- CENTER BACK SHELF / mantel -->
+<rect x="318" y="88" width="364" height="12" rx="2" fill="#7a4a2e" stroke="#3d2312" stroke-width="1" stroke-opacity="0.35"/>
+<rect x="322" y="100" width="356" height="6" fill="#3d2312" opacity="0.15" filter="url(#softBlur)"/>
+
+<!-- POTIONS LEFT SHELF TOP -->
+<g stroke="#3d2c1e" stroke-width="0.9" stroke-opacity="0.35">
+  <g>
+    <path d="M62 62 Q62 42 76 42 Q90 42 90 62 L86 62 L86 48 Q86 45 76 45 Q66 45 66 48 L66 62 Z" fill="#d9a24a" opacity="0.95"/>
+    <rect x="66" y="48" width="20" height="14" rx="2" fill="#fff2c2" opacity="0.85"/>
+    <ellipse cx="76" cy="42" rx="9" ry="3" fill="#8b5a12" opacity="0.9"/>
+    <ellipse cx="76" cy="58" rx="6" ry="8" fill="#fff6d6" opacity="0.35"/>
+  </g>
+  <g>
+    <path d="M104 62 Q104 38 120 38 Q136 38 136 62 L132 62 L132 46 Q132 42 120 42 Q108 42 108 46 L108 62 Z" fill="#6a9b8a" opacity="0.95"/>
+    <rect x="110" y="50" width="16" height="2" fill="#fff" opacity="0.3"/>
+    <circle cx="118" cy="55" r="3" fill="#fff" opacity="0.25"/>
+    <rect x="112" y="34" width="16" height="6" rx="1.5" fill="#3d2c1e" opacity="0.85"/>
+  </g>
+  <g>
+    <ellipse cx="168" cy="48" rx="18" ry="14" fill="#c9d8e8" opacity="0.95" stroke-width="0.9"/>
+    <rect x="162" y="28" width="12" height="10" fill="#7a4a2e"/>
+    <rect x="160" y="26" width="16" height="4" rx="1" fill="#2b1a0f"/>
+    <ellipse cx="162" cy="44" rx="4" ry="7" fill="#fff" opacity="0.3"/>
+  </g>
+  <g>
+    <path d="M202 62 L202 38 Q202 32 212 32 Q222 32 222 38 L222 62 Z" fill="#c45c5c" opacity="0.92"/>
+    <rect x="205" y="40" width="12" height="14" fill="#fff2d6" opacity="0.25"/>
+    <rect x="206" y="30" width="12" height="5" rx="1" fill="#3d2c1e"/>
+  </g>
+  <g>
+    <path d="M238 62 Q238 44 252 44 Q266 44 266 62 Z" fill="#8a6da8" opacity="0.92"/>
+    <rect x="246" y="32" width="12" height="12" rx="1" fill="#2b1a0f"/>
+    <ellipse cx="247" cy="52" rx="3" ry="5" fill="#fff" opacity="0.28"/>
+  </g>
+</g>
+
+<!-- POTIONS LEFT MIDDLE -->
+<g stroke="#3d2c1e" stroke-width="0.9" stroke-opacity="0.32">
+  <g>
+    <rect x="52" y="92" width="28" height="36" rx="4" fill="#e8c07a" opacity="0.95"/>
+    <rect x="52" y="102" width="28" height="16" fill="#d9a24a" opacity="0.5"/>
+    <rect x="60" y="86" width="12" height="8" rx="1" fill="#4a2e1a"/>
+    <ellipse cx="60" cy="108" rx="3" ry="8" fill="#fff" opacity="0.25"/>
+  </g>
+  <g>
+    <path d="M98 128 Q98 98 118 98 Q138 98 138 128 Z" fill="#4a8a9b" opacity="0.92"/>
+    <rect x="110" y="90" width="16" height="10" rx="2" fill="#2b1a0f"/>
+    <ellipse cx="112" cy="112" rx="4" ry="9" fill="#fff" opacity="0.22"/>
+  </g>
+  <g>
+    <rect x="152" y="100" width="22" height="28" rx="3" fill="#fff6d6" stroke="#c9b48a" stroke-width="0.7"/>
+    <rect x="152" y="106" width="22" height="8" fill="#8a6da8" opacity="0.35"/>
+    <text x="0" y="0" opacity="0"></text>
+    <rect x="158" y="92" width="10" height="10" rx="1" fill="#3d2c1e"/>
+  </g>
+  <!-- stack of books -->
+  <g>
+    <rect x="186" y="112" width="44" height="8" rx="1.5" fill="#8e5d36" stroke="#3d2312" stroke-width="0.6"/>
+    <rect x="186" y="104" width="44" height="8" rx="1.5" fill="#a67c52"/>
+    <rect x="188" y="96" width="40" height="8" rx="1.5" fill="#d9a24a"/>
+    <rect x="190" y="98" width="14" height="4" rx="1" fill="#fff" opacity="0.35"/>
+  </g>
+  <g>
+    <path d="M250 128 Q250 100 262 100 Q274 100 274 128 Z" fill="#d9a24a" opacity="0.9"/>
+    <ellipse cx="262" cy="100" rx="7" ry="2.5" fill="#3d2c1e"/>
+    <ellipse cx="258" cy="114" rx="3" ry="7" fill="#fff" opacity="0.2"/>
+  </g>
+</g>
+
+<!-- POTIONS LEFT BOTTOM -->
+<g stroke="#3d2c1e" stroke-width="0.9" stroke-opacity="0.32">
+  <g>
+    <ellipse cx="72" cy="182" rx="18" ry="12" fill="#6a9b8a" opacity="0.92"/>
+    <rect x="66" y="162" width="12" height="12" fill="#2b1a0f"/>
+    <rect x="64" y="160" width="16" height="4" rx="1" fill="#4a2e1a"/>
+  </g>
+  <g>
+    <rect x="108" y="158" width="26" height="36" rx="3" fill="#c45c5c" opacity="0.88"/>
+    <rect x="108" y="168" width="26" height="10" fill="#fff" opacity="0.18"/>
+    <rect x="115" y="150" width="12" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+  <g>
+    <path d="M152 194 Q152 164 168 164 Q184 164 184 194 Z" fill="#e8c07a" opacity="0.92"/>
+    <rect x="162" y="154" width="12" height="12" rx="1" fill="#3d2c1e"/>
+    <ellipse cx="162" cy="176" rx="3" ry="8" fill="#fff" opacity="0.2"/>
+  </g>
+  <g>
+    <rect x="198" y="166" width="34" height="28" rx="2" fill="#f2e4c6" stroke="#b89a6f" stroke-width="0.7"/>
+    <line x1="198" y1="176" x2="232" y2="176" stroke="#b89a6f" stroke-width="0.6"/>
+    <line x1="198" y1="184" x2="232" y2="184" stroke="#b89a6f" stroke-width="0.6"/>
+  </g>
+  <g>
+    <path d="M250 194 Q250 168 260 168 Q270 168 270 194 Z" fill="#8a6da8" opacity="0.9"/>
+    <rect x="255" y="160" width="10" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+</g>
+
+<!-- RIGHT SHELF POTIONS TOP -->
+<g stroke="#3d2c1e" stroke-width="0.9" stroke-opacity="0.32">
+  <g>
+    <rect x="730" y="36" width="26" height="26" rx="3" fill="#e8c07a" opacity="0.95"/>
+    <rect x="730" y="44" width="26" height="10" fill="#d9a24a" opacity="0.4"/>
+    <rect x="738" y="30" width="10" height="8" rx="1" fill="#2b1a0f"/>
+  </g>
+  <g>
+    <path d="M770 62 Q770 38 786 38 Q802 38 802 62 Z" fill="#4a8a9b" opacity="0.92"/>
+    <rect x="780" y="28" width="12" height="12" rx="1" fill="#3d2c1e"/>
+    <ellipse cx="780" cy="48" rx="3" ry="6" fill="#fff" opacity="0.22"/>
+  </g>
+  <g>
+    <rect x="818" y="40" width="24" height="22" rx="2" fill="#c45c5c" opacity="0.88"/>
+    <rect x="824" y="32" width="12" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+  <g>
+    <ellipse cx="872" cy="48" rx="16" ry="14" fill="#d9a24a" opacity="0.92"/>
+    <rect x="866" y="30" width="12" height="10" rx="1" fill="#2b1a0f"/>
+    <ellipse cx="866" cy="46" rx="3" ry="7" fill="#fff" opacity="0.25"/>
+  </g>
+  <g>
+    <path d="M910 62 Q910 42 924 42 Q938 42 938 62 Z" fill="#6a9b8a" opacity="0.92"/>
+    <rect x="918" y="32" width="12" height="12" rx="1" fill="#3d2c1e"/>
+  </g>
+</g>
+<!-- RIGHT MIDDLE -->
+<g stroke="#3d2c1e" stroke-width="0.9" stroke-opacity="0.32">
+  <g>
+    <path d="M730 128 Q730 100 744 100 Q758 100 758 128 Z" fill="#8a6da8" opacity="0.9"/>
+    <rect x="738" y="92" width="12" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+  <g>
+    <rect x="770" y="98" width="32" height="30" rx="2" fill="#f2e4c6" stroke="#b89a6f" stroke-width="0.7"/>
+    <line x1="770" y1="108" x2="802" y2="108" stroke="#b89a6f" stroke-width="0.6"/><line x1="770" y1="118" x2="802" y2="118" stroke="#b89a6f" stroke-width="0.6"/>
+  </g>
+  <g>
+    <ellipse cx="832" cy="114" rx="16" ry="14" fill="#e8c07a" opacity="0.95"/>
+    <rect x="826" y="96" width="12" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+  <g>
+    <rect x="864" y="102" width="28" height="26" rx="3" fill="#6a9b8a" opacity="0.9"/>
+    <rect x="870" y="94" width="16" height="10" rx="1" fill="#3d2c1e"/>
+  </g>
+  <g>
+    <path d="M910 128 Q910 100 926 100 Q942 100 942 128 Z" fill="#c45c5c" opacity="0.88"/>
+    <rect x="920" y="92" width="12" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+</g>
+<!-- RIGHT BOTTOM -->
+<g stroke="#3d2c1e" stroke-width="0.9" stroke-opacity="0.32">
+  <g>
+    <rect x="730" y="164" width="30" height="30" rx="3" fill="#d9a24a" opacity="0.9"/>
+    <rect x="736" y="156" width="18" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+  <g>
+    <path d="M774 194 Q774 166 790 166 Q806 166 806 194 Z" fill="#4a8a9b" opacity="0.92"/>
+    <rect x="784" y="158" width="12" height="10" rx="1" fill="#3d2c1e"/>
+  </g>
+  <g>
+    <rect x="820" y="168" width="36" height="26" rx="2" fill="#a67c52" opacity="0.9"/>
+    <rect x="824" y="172" width="28" height="4" rx="1" fill="#f2e4c6" opacity="0.5"/><rect x="824" y="180" width="20" height="4" rx="1" fill="#f2e4c6" opacity="0.35"/>
+  </g>
+  <g>
+    <ellipse cx="884" cy="180" rx="14" ry="14" fill="#c9d8e8" opacity="0.9"/>
+    <rect x="878" y="162" width="12" height="10" rx="1" fill="#2b1a0f"/>
+  </g>
+  <g>
+    <rect x="914" y="168" width="24" height="26" rx="2" fill="#8a6da8" opacity="0.88"/>
+    <rect x="918" y="160" width="16" height="10" rx="1" fill="#3d2c1e"/>
+  </g>
+</g>
+
+<!-- CENTER BACK small potions on mantel -->
+<g stroke="#3d2c1e" stroke-width="0.8" stroke-opacity="0.3">
+  <g><rect x="340" y="68" width="18" height="20" rx="2" fill="#c45c5c" opacity="0.85"/><rect x="344" y="62" width="10" height="8" rx="1" fill="#2b1a0f"/></g>
+  <g><path d="M370 88 Q370 62 382 62 Q394 62 394 88 Z" fill="#6a9b8a" opacity="0.85"/><rect x="376" y="56" width="12" height="8" rx="1" fill="#2b1a0f"/></g>
+  <g><ellipse cx="420" cy="76" rx="12" ry="12" fill="#e8c07a" opacity="0.9"/><rect x="414" y="60" width="12" height="8" rx="1" fill="#2b1a0f"/></g>
+  <g><rect x="580" y="66" width="20" height="22" rx="2" fill="#8a6da8" opacity="0.85"/><rect x="584" y="60" width="12" height="8" rx="1" fill="#2b1a0f"/></g>
+  <g><path d="M620 88 Q620 64 632 64 Q644 64 644 88 Z" fill="#4a8a9b" opacity="0.85"/><rect x="626" y="56" width="12" height="10" rx="1" fill="#2b1a0f"/></g>
+  <g><rect x="652" y="68" width="16" height="20" rx="2" fill="#d9a24a" opacity="0.85"/><rect x="655" y="62" width="10" height="8" rx="1" fill="#2b1a0f"/></g>
+</g>
+
+<!-- LANTERNS -->
+<g>
+  <!-- left lantern -->
+  <ellipse cx="200" cy="88" rx="42" ry="38" fill="url(#lanternGlow)" opacity="0.95"/>
+  <g stroke="#3d2312" stroke-width="1" stroke-opacity="0.4">
+    <path d="M184 62 L216 62 L212 92 L188 92 Z" fill="#d9a24a" stroke="#5a3420" stroke-width="1.2"/>
+    <path d="M188 62 L188 92 M200 62 L200 92 M212 62 L212 92" stroke="#5a3420" stroke-width="0.8" opacity="0.6"/>
+    <rect x="186" y="58" width="28" height="6" rx="1" fill="#3d2312"/><rect x="186" y="92" width="28" height="5" rx="1" fill="#3d2312"/>
+    <line x1="200" y1="44" x2="200" y2="58" stroke="#3d2312" stroke-width="1.4"/>
+    <ellipse cx="200" cy="77" rx="10" ry="12" fill="#fff6d0" opacity="0.85" filter="url(#glow)"/>
+    <path d="M197 70 Q200 66 203 70 Q202 78 200 82 Q198 78 197 70" fill="#ffbf5a" opacity="0.95"/>
+  </g>
+  <!-- center lantern -->
+  <ellipse cx="500" cy="82" rx="48" ry="44" fill="url(#lanternGlow)" opacity="0.9"/>
+  <g stroke="#3d2312" stroke-width="1" stroke-opacity="0.4">
+    <path d="M482 56 L518 56 L514 90 L486 90 Z" fill="#d9a24a" stroke="#5a3420" stroke-width="1.2"/>
+    <path d="M486 56 L486 90 M500 56 L500 90 M514 56 L514 90" stroke="#5a3420" stroke-width="0.8" opacity="0.6"/>
+    <rect x="484" y="52" width="32" height="6" rx="1" fill="#3d2312"/><rect x="484" y="90" width="32" height="5" rx="1" fill="#3d2312"/>
+    <line x1="500" y1="38" x2="500" y2="52" stroke="#3d2312" stroke-width="1.4"/>
+    <ellipse cx="500" cy="73" rx="11" ry="13" fill="#fff6d0" opacity="0.85" filter="url(#glow)"/>
+    <path d="M496 66 Q500 61 504 66 Q503 76 500 80 Q497 76 496 66" fill="#ffbf5a" opacity="0.95"/>
+  </g>
+  <!-- right lantern -->
+  <ellipse cx="800" cy="88" rx="42" ry="38" fill="url(#lanternGlow)" opacity="0.95"/>
+  <g stroke="#3d2312" stroke-width="1" stroke-opacity="0.4">
+    <path d="M784 62 L816 62 L812 92 L788 92 Z" fill="#d9a24a" stroke="#5a3420" stroke-width="1.2"/>
+    <path d="M788 62 L788 92 M800 62 L800 92 M812 62 L812 92" stroke="#5a3420" stroke-width="0.8" opacity="0.6"/>
+    <rect x="786" y="58" width="28" height="6" rx="1" fill="#3d2312"/><rect x="786" y="92" width="28" height="5" rx="1" fill="#3d2312"/>
+    <line x1="800" y1="44" x2="800" y2="58" stroke="#3d2312" stroke-width="1.4"/>
+    <ellipse cx="800" cy="77" rx="10" ry="12" fill="#fff6d0" opacity="0.85" filter="url(#glow)"/>
+    <path d="M797 70 Q800 66 803 70 Q802 78 800 82 Q798 78 797 70" fill="#ffbf5a" opacity="0.95"/>
+  </g>
+</g>
+
+<!-- COUNTER -->
+<g>
+  <ellipse cx="500" cy="278" rx="210" ry="18" fill="#3d2312" opacity="0.22" filter="url(#softBlur)"/>
+  <path d="M285 232 L715 232 L700 298 L300 298 Z" fill="url(#counterGrad)" stroke="#3d2312" stroke-width="1.3" stroke-opacity="0.45"/>
+  <path d="M285 232 Q500 245 715 232 L700 242 Q500 255 300 242 Z" fill="#c9a87a" opacity="0.95" stroke="#3d2312" stroke-width="1" stroke-opacity="0.35"/>
+  <!-- wood grain on counter front -->
+  <g stroke="#4a2e1a" stroke-width="0.7" opacity="0.25" fill="none">
+    <path d="M320 250 Q400 254 500 252 T680 250"/>
+    <path d="M315 268 Q420 272 520 270 T690 268"/>
+    <path d="M310 284 Q430 288 540 286 T695 284"/>
+  </g>
+  <!-- drawer line -->
+  <rect x="360" y="252" width="70" height="26" rx="2" fill="#6b3e22" stroke="#3d2312" stroke-width="0.8" stroke-opacity="0.4" opacity="0.9"/>
+  <circle cx="395" cy="265" r="3.5" fill="#d9a24a" stroke="#3d2312" stroke-width="0.6"/>
+  <rect x="570" y="252" width="70" height="26" rx="2" fill="#6b3e22" stroke="#3d2312" stroke-width="0.8" stroke-opacity="0.4" opacity="0.9"/>
+  <circle cx="605" cy="265" r="3.5" fill="#d9a24a" stroke="#3d2312" stroke-width="0.6"/>
+</g>
+
+<!-- CANDLES ON COUNTER -->
+<g>
+  <ellipse cx="365" cy="238" rx="28" ry="16" fill="url(#candleGlow)" opacity="0.9"/>
+  <ellipse cx="635" cy="238" rx="28" ry="16" fill="url(#candleGlow)" opacity="0.9"/>
+  <ellipse cx="505" cy="228" rx="22" ry="13" fill="url(#candleGlow)" opacity="0.7"/>
+  <!-- candle 1 -->
+  <g>
+    <rect x="358" y="212" width="14" height="22" rx="2" fill="#fff6d6" stroke="#b89a6f" stroke-width="0.7"/>
+    <rect x="360" y="218" width="10" height="10" fill="#ffcf7a" opacity="0.35"/>
+    <path d="M365 208 Q367 198 365 192 Q363 198 365 208" fill="#ffbf5a" stroke="#d98c2a" stroke-width="0.5"/>
+    <ellipse cx="365" cy="209" rx="3" ry="4" fill="#fff6d0" opacity="0.9" filter="url(#glow)"/>
+    <ellipse cx="365" cy="234" rx="9" ry="2.5" fill="#3d2312" opacity="0.15"/>
+  </g>
+  <!-- candle 2 -->
+  <g>
+    <rect x="628" y="212" width="14" height="22" rx="2" fill="#fff6d6" stroke="#b89a6f" stroke-width="0.7"/>
+    <rect x="630" y="218" width="10" height="10" fill="#ffcf7a" opacity="0.35"/>
+    <path d="M635 208 Q637 198 635 192 Q633 198 635 208" fill="#ffbf5a" stroke="#d98c2a" stroke-width="0.5"/>
+    <ellipse cx="635" cy="209" rx="3" ry="4" fill="#fff6d0" opacity="0.9" filter="url(#glow)"/>
+    <ellipse cx="635" cy="234" rx="9" ry="2.5" fill="#3d2312" opacity="0.15"/>
+  </g>
+  <!-- small candle near helmet -->
+  <g>
+    <rect x="500" y="208" width="10" height="16" rx="1.5" fill="#fff6d6" stroke="#b89a6f" stroke-width="0.6"/>
+    <path d="M505 205 Q506.5 198 505 193 Q503.5 198 505 205" fill="#ffbf5a" stroke="#d98c2a" stroke-width="0.4"/>
+    <ellipse cx="505" cy="206" rx="2.5" ry="3" fill="#fff6d0" opacity="0.9" filter="url(#glow)"/>
+  </g>
+</g>
+
+<!-- SLEEPING CAT on counter -->
+<g filter="url(#watercolorEdge)">
+  <!-- cat shadow -->
+  <ellipse cx="462" cy="237" rx="52" ry="14" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <!-- body curled -->
+  <path d="M402 232 Q410 210 438 208 Q468 206 485 218 Q498 228 492 236 Q484 244 462 244 Q432 244 412 238 Q398 234 402 232 Z" fill="#e8a65d" stroke="#5a3a1a" stroke-width="1.1" stroke-opacity="0.38"/>
+  <!-- head tucked -->
+  <ellipse cx="428" cy="218" rx="22" ry="18" fill="#e8a65d" stroke="#5a3a1a" stroke-width="1" stroke-opacity="0.38"/>
+  <!-- ear -->
+  <path d="M414 208 Q418 196 426 202 L420 212 Z" fill="#e8a65d" stroke="#5a3a1a" stroke-width="0.8" stroke-opacity="0.38"/>
+  <path d="M417 204 Q419 200 422 204" fill="#c07a3a" opacity="0.9"/>
+  <path d="M438 204 Q442 194 450 202 L442 212 Z" fill="#e8a65d" stroke="#5a3a1a" stroke-width="0.8" stroke-opacity="0.38"/>
+  <path d="M442 200 Q444 197 447 201" fill="#c07a3a" opacity="0.9"/>
+  <!-- stripes -->
+  <g stroke="#8b4a1e" stroke-width="1.2" opacity="0.35" stroke-linecap="round">
+    <path d="M440 214 Q444 216 446 214"/><path d="M442 222 Q446 224 448 222"/><path d="M452 228 Q456 230 458 228"/><path d="M462 232 Q466 234 468 232"/>
+    <path d="M418 218 Q420 220 422 218"/><path d="M415 224 Q417 226 419 224"/>
+  </g>
+  <!-- white chest/muzzle -->
+  <path d="M422 224 Q428 232 438 232 Q442 228 438 220 Q432 214 422 224 Z" fill="#fff2d6" opacity="0.95" stroke="#b89a6f" stroke-width="0.6" stroke-opacity="0.3"/>
+  <ellipse cx="426" cy="222" rx="1.2" ry="1" fill="#3d2312" opacity="0.9"/>
+  <!-- closed eye -->
+  <path d="M418 216 Q421 214 424 216" stroke="#3d2312" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- nose -->
+  <path d="M423 219 Q424 220 423 221" stroke="#c45c5c" stroke-width="0.8" fill="none" opacity="0.7"/>
+  <!-- tail curled around -->
+  <path d="M485 218 Q500 214 502 224 Q504 236 488 240 Q478 242 472 238" fill="none" stroke="#c07a3a" stroke-width="8" stroke-linecap="round" opacity="0.95"/>
+  <path d="M485 218 Q500 214 502 224 Q504 236 488 240" fill="none" stroke="#e8a65d" stroke-width="6.5" stroke-linecap="round"/>
+  <path d="M492 238 Q496 240 498 238" stroke="#8b4a1e" stroke-width="0.9" opacity="0.3" fill="none"/>
+  <!-- paws tucked -->
+  <ellipse cx="452" cy="240" rx="8" ry="5" fill="#fff2d6" opacity="0.9" stroke="#b89a6f" stroke-width="0.6" stroke-opacity="0.3"/>
+  <ellipse cx="468" cy="239" rx="7" ry="4.5" fill="#fff2d6" opacity="0.9"/>
+  <!-- whiskers -->
+  <g stroke="#3d2312" stroke-width="0.5" opacity="0.35">
+    <line x1="410" y1="221" x2="400" y2="219"/><line x1="410" y1="224" x2="400" y2="224"/>
+  </g>
+</g>
+
+<!-- KNIGHT HELMET on stand -->
+<g>
+  <!-- stand shadow -->
+  <ellipse cx="594" cy="236" rx="24" ry="6" fill="#3d2312" opacity="0.18" filter="url(#softBlur)"/>
+  <!-- wooden stand post -->
+  <rect x="586" y="202" width="16" height="28" rx="2" fill="#5a3420" stroke="#2b1a0f" stroke-width="0.9" stroke-opacity="0.4"/>
+  <rect x="578" y="228" width="32" height="8" rx="2" fill="#3d2312" stroke="#1a0f08" stroke-width="0.7"/>
+  <rect x="582" y="198" width="24" height="8" rx="4" fill="#7a4a2e" stroke="#2b1a0f" stroke-width="0.7"/>
+  <!-- helmet -->
+  <g stroke="#2b2f33" stroke-width="1" stroke-opacity="0.35" filter="url(#watercolorEdge)">
+    <path d="M568 192 Q568 158 594 156 Q620 158 620 192 L618 198 Q618 204 594 204 Q570 204 568 198 Z" fill="url(#helmetGrad)" />
+    <!-- visor slit -->
+    <path d="M576 182 Q594 188 612 182 L612 190 Q594 196 576 190 Z" fill="#2b2f33" opacity="0.95" stroke="none"/>
+    <rect x="576" y="183" width="36" height="2" fill="#6a7580" opacity="0.6"/>
+    <!-- rivets -->
+    <g fill="#d6dde3" stroke="#5a6570" stroke-width="0.5">
+      <circle cx="576" cy="172" r="1.8"/><circle cx="612" cy="172" r="1.8"/><circle cx="578" cy="195" r="1.6"/><circle cx="610" cy="195" r="1.6"/>
+    </g>
+    <!-- highlight -->
+    <path d="M582 166 Q594 162 606 168 Q602 172 594 170 Q586 170 582 166" fill="#fff" opacity="0.38"/>
+    <path d="M576 175 Q578 185 580 193" stroke="#fff" stroke-width="1.2" opacity="0.22" fill="none"/>
+    <!-- plume holder -->
+    <rect x="590" y="150" width="8" height="10" rx="1" fill="#5a3420" stroke="#2b1a0f" stroke-width="0.7"/>
+    <path d="M594 152 Q598 138 604 132 Q608 128 610 136 Q606 144 598 152" fill="#c45c5c" opacity="0.92" stroke="#7a1f1f" stroke-width="0.6" stroke-opacity="0.4"/>
+    <path d="M594 152 Q596 140 600 134" fill="none" stroke="#7a1f1f" stroke-width="0.5" opacity="0.4"/>
+  </g>
+  <!-- glow from candle on helmet -->
+  <ellipse cx="594" cy="178" rx="18" ry="14" fill="#ffcf7a" opacity="0.12" filter="url(#glow)"/>
+</g>
+
+<!-- Small details: scrolls, herbs -->
+<g opacity="0.95" stroke="#3d2c1e" stroke-width="0.7" stroke-opacity="0.32">
+  <!-- scrolls on counter -->
+  <g>
+    <rect x="320" y="218" width="28" height="12" rx="6" fill="#f2e4c6" />
+    <rect x="322" y="220" width="24" height="8" rx="4" fill="#e8d5b0"/>
+    <line x1="328" y1="222" x2="340" y2="222" stroke="#b89a6f" stroke-width="0.6"/><line x1="328" y1="226" x2="338" y2="226" stroke="#b89a6f" stroke-width="0.6"/>
+  </g>
+  <g>
+    <rect x="658" y="218" width="28" height="12" rx="6" fill="#f2e4c6"/>
+    <rect x="660" y="220" width="24" height="8" rx="4" fill="#e8d5b0"/>
+  </g>
+  <!-- hanging herbs left -->
+  <g opacity="0.85">
+    <line x1="120" y1="38" x2="120" y2="52" stroke="#4a2e1a" stroke-width="1"/>
+    <path d="M120 52 Q114 64 118 74 Q122 64 120 52" fill="#6a9b4a" opacity="0.85" stroke-width="0.6"/>
+    <path d="M118 60 Q110 62 112 70 Q117 64 118 60" fill="#7ab05a" opacity="0.9"/>
+    <path d="M122 62 Q128 64 126 72 Q121 66 122 62" fill="#7ab05a" opacity="0.9"/>
+  </g>
+  <g opacity="0.85">
+    <line x1="880" y1="38" x2="880" y2="52" stroke="#4a2e1a" stroke-width="1"/>
+    <path d="M880 52 Q874 64 878 74 Q882 64 880 52" fill="#6a9b4a" opacity="0.85"/>
+    <path d="M878 60 Q870 62 872 70 Q877 64 878 60" fill="#7ab05a" opacity="0.9"/>
+  </g>
+</g>
+
+<!-- Warm ambient vignette -->
+<rect x="0" y="0" width="1000" height="340" fill="none" stroke="#3d2312" stroke-width="14" opacity="0.08" rx="6"/>
+<rect x="0" y="0" width="1000" height="340" fill="none" stroke="#5a3420" stroke-width="1.2" opacity="0.25" rx="4"/>
+
+<!-- subtle watercolor bleed overlay -->
+<rect x="0" y="0" width="1000" height="340" fill="#fff" opacity="0" />
+</svg>

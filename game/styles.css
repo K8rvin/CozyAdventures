@@ -1,0 +1,574 @@
+/* Уютная тема: тёплое дерево, мягкий свет, крупные контролы (ПК + мобильные). */
+:root {
+  --bg: #2b2118;
+  --panel: #3d2f22;
+  --panel-2: #4a3a29;
+  --text: #f3e6cf;
+  --muted: #c9b294;
+  --accent: #ffca7a;
+  --accent-2: #8fd18b;
+  --danger: #e88a7a;
+  --shadow: rgba(0, 0, 0, 0.35);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+#topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 2px solid #58452f;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand { font-weight: 600; font-size: 17px; }
+.wallet { display: flex; gap: 14px; font-size: 16px; font-weight: 600; }
+.wallet span { background: var(--panel-2); padding: 4px 12px; border-radius: 20px; }
+
+#screen { max-width: 1060px; margin: 0 auto; padding: 16px; }
+
+h2 { margin: 6px 0 14px; font-size: 22px; }
+h3 { margin: 14px 0 8px; font-size: 17px; color: var(--accent); }
+
+.panel {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 14px var(--shadow);
+  margin-bottom: 14px;
+}
+
+button {
+  font: inherit;
+  color: var(--text);
+  background: var(--panel-2);
+  border: 2px solid #6b553a;
+  border-radius: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  min-height: 48px;
+  transition: transform 0.06s ease, background 0.15s ease;
+}
+button:hover { background: #5a4732; }
+button:active { transform: scale(0.97); }
+button:disabled { opacity: 0.45; cursor: default; }
+button.primary { background: #7a5c33; border-color: var(--accent); }
+button.primary:hover { background: #8d6d3e; }
+button.small { min-height: 36px; padding: 6px 10px; font-size: 14px; }
+button.ghost { background: transparent; }
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  text-align: left;
+  padding: 16px;
+  border-radius: 14px;
+}
+.menu-card .big { font-size: 30px; }
+.menu-card .title { font-weight: 700; font-size: 17px; }
+.menu-card .sub { color: var(--muted); font-size: 13px; }
+
+.list { display: flex; flex-direction: column; gap: 8px; }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel-2);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.row .grow { flex: 1; }
+.row .icon { font-size: 26px; }
+.row .name { font-weight: 600; }
+.row .desc { color: var(--muted); font-size: 13px; }
+.row .price { color: var(--accent); font-weight: 700; white-space: nowrap; }
+.row.locked { opacity: 0.55; }
+.row.done { outline: 2px solid #6d8a55; }
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: #58452f;
+  color: var(--accent);
+  margin-left: 6px;
+}
+.badge.rare { color: #a8d8ff; }
+.badge.epic { color: #d3a8ff; }
+
+/* Экран головоломки */
+.puzzle-wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.puzzle-canvas-box {
+  background: #241b12;
+  border-radius: 14px;
+  padding: 10px;
+  box-shadow: 0 4px 14px var(--shadow);
+}
+canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
+.puzzle-side { flex: 1; min-width: 220px; }
+.puzzle-status { font-size: 16px; margin-bottom: 10px; }
+.puzzle-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.puzzle-controls button { flex: 1; min-width: 90px; }
+.intro-text { color: var(--muted); font-style: italic; margin-bottom: 10px; }
+.warn { color: var(--danger); font-weight: 600; }
+
+/* Экипировка */
+.equip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.slot {
+  background: var(--panel-2);
+  border: 2px solid #6b553a;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 78px;
+  cursor: pointer;
+  text-align: center;
+}
+.slot:hover { border-color: var(--accent); }
+.slot .slot-name { font-size: 12px; color: var(--muted); }
+.slot .slot-item { font-size: 22px; margin: 4px 0 2px; }
+.slot .item-name { font-size: 13px; font-weight: 600; }
+.slot.blocked { opacity: 0.5; border-style: dashed; }
+.slot.empty .slot-item { opacity: 0.3; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 6px; font-size: 14px; }
+.stats-grid div { background: var(--panel-2); border-radius: 8px; padding: 6px 10px; }
+
+/* Бой */
+.battle-arena { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.unit-card {
+  background: var(--panel-2);
+  border-radius: 12px;
+  padding: 10px;
+  min-width: 120px;
+  text-align: center;
+}
+.unit-card .uicon { font-size: 34px; }
+.unit-card.dead { opacity: 0.35; filter: grayscale(1); }
+
+/* --- Анимация боя --- */
+@keyframes lunge-ally {
+  0% { transform: translateX(0); }
+  35% { transform: translateX(26px) scale(1.06); }
+  100% { transform: translateX(0); }
+}
+@keyframes lunge-enemy {
+  0% { transform: translateX(0); }
+  35% { transform: translateX(-26px) scale(1.06); }
+  100% { transform: translateX(0); }
+}
+@keyframes shake-hit {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+@keyframes flash-damage {
+  0% { background-color: #b8442f; box-shadow: 0 0 18px rgba(232, 90, 60, 0.8); }
+  100% { background-color: var(--panel-2); }
+}
+@keyframes flash-crit {
+  0% { background-color: #d98a1f; box-shadow: 0 0 24px rgba(255, 180, 60, 0.9); transform: scale(1.1); }
+  100% { background-color: var(--panel-2); }
+}
+@keyframes hop-dodge {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-12px); }
+}
+@keyframes glow-heal {
+  0% { box-shadow: 0 0 20px rgba(143, 209, 139, 0.9); }
+  100% { box-shadow: none; }
+}
+@keyframes fall-dead {
+  from { transform: rotate(0) translateY(0); opacity: 1; }
+  to { transform: rotate(-14deg) translateY(8px); opacity: 0.35; }
+}
+@keyframes dmg-float {
+  0% { opacity: 0; transform: translateY(6px) scale(0.7); }
+  20% { opacity: 1; transform: translateY(0) scale(1.15); }
+  100% { opacity: 0; transform: translateY(-28px) scale(1); }
+}
+
+.unit-card { position: relative; }
+.unit-card.anim-lunge-ally { animation: lunge-ally 0.32s ease; }
+.unit-card.anim-lunge-enemy { animation: lunge-enemy 0.32s ease; }
+.unit-card.anim-hit { animation: shake-hit 0.3s ease, flash-damage 0.45s ease; }
+.unit-card.anim-crit { animation: shake-hit 0.3s ease, flash-crit 0.5s ease; }
+.unit-card.anim-dodge { animation: hop-dodge 0.35s ease; }
+.unit-card.anim-heal { animation: glow-heal 0.7s ease; }
+.unit-card.anim-death { animation: fall-dead 0.6s ease forwards; }
+
+.dmg-number {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 800;
+  font-size: 18px;
+  color: #ff9a7a;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
+  animation: dmg-float 0.8s ease forwards;
+  z-index: 5;
+}
+.dmg-number.crit { color: #ffca7a; font-size: 22px; }
+.dmg-number.heal { color: #8fd18b; }
+.hpbar { height: 10px; border-radius: 5px; background: #241b12; overflow: hidden; margin-top: 6px; }
+.hpbar > div { height: 100%; background: var(--accent-2); transition: width 0.2s ease; }
+.status-badges { font-size: 13px; min-height: 18px; }
+
+.battle-log {
+  background: #241b12;
+  border-radius: 12px;
+  padding: 10px 14px;
+  height: 220px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.battle-log .hit { color: var(--text); }
+.battle-log .crit { color: var(--accent); font-weight: 700; }
+.battle-log .status { color: #b8a8e8; }
+.battle-log .potion { color: var(--accent-2); }
+.battle-log .sys { color: var(--muted); font-style: italic; }
+
+/* Оверлей результата */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 14, 8, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+.overlay .card {
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px var(--shadow);
+}
+.overlay .card h2 { margin-top: 0; }
+.overlay .rewards { font-size: 17px; margin: 12px 0; line-height: 1.8; }
+.overlay .advice {
+  background: var(--panel-2);
+  border-left: 4px solid var(--accent);
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-align: left;
+  margin: 12px 0;
+  color: var(--text);
+}
+.overlay .actions { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+
+/* Лавка-хаб */
+.hub-scene {
+  width: 100%;
+  border-radius: 14px;
+  display: block;
+  box-shadow: 0 4px 14px var(--shadow);
+}
+
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1d150e;
+  border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 10px 18px;
+  border-radius: 24px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 200;
+  max-width: 90vw;
+  text-align: center;
+}
+#toast.show { opacity: 1; }
+
+.muted { color: var(--muted); }
+.center { text-align: center; }
+.mt { margin-top: 12px; }
+
+@media (max-width: 640px) {
+  #screen { padding: 10px; }
+  .brand { font-size: 14px; }
+  .equip-grid { grid-template-columns: repeat(3, 1fr); }
+  .puzzle-wrap { flex-direction: column; }
+  .puzzle-side { min-width: 0; width: 100%; }
+  .puzzle-controls button { min-width: 0; flex: 1 1 30%; }
+  /* Крупные тач-цели, без прилипания наведения */
+  button { min-height: 52px; }
+  .row .icon { font-size: 22px; }
+}
+
+/* Убираем липкий hover на тач-устройствах */
+@media (hover: none) {
+  button:hover { background: var(--panel-2); }
+  button.primary:hover { background: #7a5c33; }
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Плавающая быстрая навигация — всегда под рукой, в любом положении скролла */
+.quick-nav {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 80;
+}
+.quick-nav button {
+  width: 56px;
+  height: 56px;
+  min-height: 0;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  background: var(--panel-2);
+  position: relative;
+}
+.quick-nav button:hover { background: #6b553a; }
+.quick-nav button .qn-label {
+  position: absolute;
+  right: 62px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  background: #1d150e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.quick-nav button:hover .qn-label,
+.quick-nav button:focus-visible .qn-label { opacity: 1; }
+
+/* Подсказка-сравнение «Сейчас надето» в прилавке */
+.compare-tip {
+  position: fixed;
+  z-index: 300;
+  max-width: 280px;
+  background: #1d150e;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  pointer-events: none;
+  animation: bubble-in 0.15s ease;
+}
+.compare-tip .ct-title { color: var(--accent); font-weight: 700; font-size: 12px; margin-bottom: 2px; }
+.compare-tip .ct-item { font-weight: 600; }
+.compare-tip .ct-stats { color: var(--muted); }
+.compare-tip .ct-empty { color: var(--accent-2); }
+
+/* --- Паучок = скроллбар (нативный скрыт) --- */
+html { scrollbar-width: none; }
+body::-webkit-scrollbar { display: none; }
+/* Внутренние скроллы (лог боя) оставляем тонкими и видимыми */
+.battle-log { scrollbar-width: thin; scrollbar-color: #6b553a transparent; }
+.battle-log::-webkit-scrollbar { display: block; width: 8px; }
+.battle-log::-webkit-scrollbar-thumb { background: #6b553a; border-radius: 4px; }
+
+#spidertrack {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 34px;
+  z-index: 90;
+  cursor: pointer;
+  touch-action: none;
+}
+#spidertrack:hover { background: rgba(61, 47, 34, 0.25); }
+/* Паутина: отдельный элемент, всегда прибит к верху трека */
+#spidertrack .thread {
+  position: absolute;
+  top: 0;
+  right: 19px;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to bottom, rgba(243, 230, 207, 0.65), rgba(243, 230, 207, 0.25));
+  pointer-events: none;
+}
+/* Мувер двигает (translateY), жук качается внутри него (rotate) —
+   анимация не конфликтует с позиционированием */
+#spidertrack .mover {
+  position: absolute;
+  right: 5px;
+  top: 0;
+  will-change: transform;
+}
+#spidertrack .bug {
+  display: block;
+  font-size: 26px;
+  cursor: grab;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
+  animation: spider-sway 3.2s ease-in-out infinite;
+  transform-origin: top center;
+  user-select: none;
+}
+#spidertrack.dragging .bug { cursor: grabbing; animation: none; }
+@keyframes spider-sway {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(7deg); }
+}
+#spidertrack.boing .bug { animation: spider-boing 0.5s ease; }
+@keyframes spider-boing {
+  0% { margin-top: 0; }
+  40% { margin-top: -8px; }
+  100% { margin-top: 0; }
+}
+
+/* --- Плавные переходы между экранами --- */
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+#screen.screen-enter { animation: screen-in 0.28s ease; }
+@keyframes screen-out {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateY(-6px); }
+}
+#screen.screen-exit { animation: screen-out 0.14s ease; }
+
+/* Вспышка-пульс хотспота перед переходом */
+@keyframes hs-zap {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  60% { transform: translate(-50%, -50%) scale(1.25); }
+  100% { transform: translate(-50%, -50%) scale(1.1); }
+}
+.hotspot.zap { animation: hs-zap 0.22s ease; }
+
+/* --- Хаб: интерактивные объекты на большой картинке --- */
+.hub-picture { position: relative; }
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: rgba(61, 47, 34, 0.35);
+  border: 2px solid transparent;
+  border-radius: 50%;
+  width: 76px;
+  height: 76px;
+  min-height: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  backdrop-filter: blur(1px);
+}
+.hotspot .hs-icon { font-size: 30px; line-height: 1.1; }
+.hotspot .hs-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+.hotspot:hover, .hotspot:focus-visible {
+  background: rgba(122, 92, 51, 0.75);
+  border-color: var(--accent);
+  transform: translate(-50%, -50%) scale(1.12);
+  z-index: 6;
+}
+.hotspot:hover .hs-label, .hotspot:focus-visible .hs-label { opacity: 1; }
+.hotspot .hs-dot {
+  position: absolute;
+  top: 2px;
+  right: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  box-shadow: 0 0 8px var(--accent-2);
+  animation: dot-pulse 1.6s ease-in-out infinite;
+}
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.5); opacity: 0.4; }
+}
+@media (max-width: 640px) {
+  .hotspot { width: 58px; height: 58px; }
+  .hotspot .hs-icon { font-size: 24px; }
+}
+
+/* --- Обучение: прожектор и кот-гид --- */
+.tut-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+}
+.tut-spot {
+  position: absolute;
+  border-radius: 18px;
+  box-shadow: 0 0 0 9999px rgba(18, 12, 6, 0.72);
+  transition: all 0.35s ease;
+  pointer-events: none;
+}
+.tut-bubble {
+  position: absolute;
+  display: flex;
+  gap: 10px;
+  max-width: 340px;
+  background: var(--panel);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  pointer-events: auto;
+  animation: bubble-in 0.3s ease;
+}
+@keyframes bubble-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.tut-cat { font-size: 34px; line-height: 1; }
+.tut-title { font-weight: 700; margin-bottom: 4px; color: var(--accent); }
+.tut-text { font-size: 14px; line-height: 1.5; margin-bottom: 10px; }
+.tut-actions { display: flex; gap: 8px; flex-wrap: wrap; }

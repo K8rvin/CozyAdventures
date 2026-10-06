@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" shape-rendering="crispEdges">
+<rect width="128" height="128" fill="#f7e7c6"/>
+<!-- shadow -->
+<rect x="36" y="100" width="56" height="4" fill="#d9c2a0"/>
+<rect x="40" y="104" width="48" height="4" fill="#d9c2a0"/>
+<!-- leaf plume outline -->
+<rect x="56" y="32" width="16" height="4" fill="#3e2f2f"/>
+<rect x="52" y="36" width="24" height="4" fill="#3e2f2f"/>
+<!-- leaf plume -->
+<rect x="60" y="28" width="8" height="8" fill="#c5e8a0"/>
+<rect x="60" y="32" width="8" height="4" fill="#a8d46f"/>
+<rect x="56" y="36" width="16" height="4" fill="#7fb069"/>
+<rect x="60" y="40" width="8" height="4" fill="#4a7a3b"/>
+<!-- helmet outline top -->
+<rect x="52" y="36" width="28" height="4" fill="#3e2f2f"/>
+<rect x="48" y="40" width="36" height="4" fill="#3e2f2f"/>
+<rect x="44" y="44" width="44" height="20" fill="#3e2f2f"/>
+<!-- helmet main -->
+<rect x="52" y="40" width="28" height="4" fill="#fffaf0"/>
+<rect x="48" y="44" width="36" height="4" fill="#fffaf0"/>
+<rect x="44" y="48" width="44" height="4" fill="#e9e6d6"/>
+<rect x="44" y="52" width="44" height="4" fill="#e9e6d6"/>
+<rect x="44" y="56" width="44" height="4" fill="#c2b8a3"/>
+<!-- helmet highlight -->
+<rect x="56" y="48" width="12" height="4" fill="#ffffff"/>
+<rect x="52" y="52" width="4" height="4" fill="#ffffff"/>
+<!-- helmet visor shadow / dithering -->
+<rect x="48" y="60" width="4" height="4" fill="#8d8678"/>
+<rect x="56" y="60" width="4" height="4" fill="#8d8678"/>
+<rect x="64" y="60" width="4" height="4" fill="#8d8678"/>
+<rect x="72" y="60" width="4" height="4" fill="#8d8678"/>
+<rect x="80" y="60" width="4" height="4" fill="#8d8678"/>
+<!-- face base -->
+<rect x="52" y="60" width="24" height="20" fill="#ffcc99"/>
+<rect x="48" y="60" width="4" height="20" fill="#c2b8a3"/>
+<rect x="80" y="60" width="4" height="20" fill="#c2b8a3"/>
+<rect x="44" y="60" width="4" height="20" fill="#3e2f2f"/>
+<rect x="84" y="60" width="4" height="20" fill="#3e2f2f"/>
+<!-- face shadow dithering -->
+<rect x="52" y="76" width="4" height="4" fill="#e8a87c"/>
+<rect x="60" y="76" width="4" height="4" fill="#e8a87c"/>
+<rect x="68" y="76" width="4" height="4" fill="#e8a87c"/>
+<rect x="76" y="76" width="4" height="4" fill="#e8a87c"/>
+<!-- eyes -->
+<rect x="56" y="68" width="8" height="8" fill="#3e2f2f"/>
+<rect x="72" y="68" width="8" height="8" fill="#3e2f2f"/>
+<rect x="60" y="68" width="4" height="4" fill="#ffffff"/>
+<rect x="76" y="68" width="4" height="4" fill="#ffffff"/>
+<rect x="58" y="72" width="4" height="4" fill="#6a9bff"/>
+<rect x="74" y="72" width="4" height="4" fill="#6a9bff"/>
+<!-- blush -->
+<rect x="52" y="72" width="4" height="4" fill="#f08a8a"/>
+<rect x="80" y="72" width="4" height="4" fill="#f08a8a"/>
+<!-- nose / mouth -->
+<rect x="62" y="74" width="4" height="2" fill="#c47a56"/>
+<rect x="60" y="78" width="12" height="4" fill="#3e2f2f"/>
+<rect x="60" y="78" width="12" height="2" fill="#8d3a2e"/>
+<rect x="64" y="80" width="4" height="2" fill="#ff8a8a"/>
+<!-- chin outline -->
+<rect x="52" y="80" width="24" height="4" fill="#e8a87c"/>
+<rect x="56" y="80" width="16" height="4" fill="#ffcc99"/>
+<!-- collar / neck -->
+<rect x="56" y="84" width="16" height="4" fill="#ffcc99"/>
+<rect x="52" y="84" width="4" height="4" fill="#3e2f2f"/>
+<rect x="72" y="84" width="4" height="4" fill="#3e2f2f"/>
+<!-- armor collar -->
+<rect x="48" y="88" width="32" height="4" fill="#c2b8a3"/>
+<rect x="44" y="88" width="4" height="4" fill="#3e2f2f"/>
+<rect x="80" y="88" width="4" height="4" fill="#3e2f2f"/>
+<rect x="52" y="88" width="8" height="4" fill="#fffaf0"/>
+<!-- armor shoulders -->
+<rect x="40" y="92" width="48" height="8" fill="#e9e6d6"/>
+<rect x="36" y="92" width="4" height="8" fill="#3e2f2f"/>
+<rect x="88" y="92" width="4" height="8" fill="#3e2f2f"/>
+<rect x="40" y="96" width="48" height="4" fill="#c2b8a3"/>
+<!-- armor dithering -->
+<rect x="44" y="92" width="4" height="4" fill="#ffffff"/>
+<rect x="52" y="92" width="4" height="4" fill="#ffffff"/>
+<rect x="60" y="92" width="4" height="4" fill="#ffffff"/>
+<rect x="68" y="92" width="4" height="4" fill="#ffffff"/>
+<rect x="76" y="92" width="4" height="4" fill="#ffffff"/>
+<rect x="48" y="96" width="4" height="4" fill="#8d8678"/>
+<rect x="56" y="96" width="4" height="4" fill="#8d8678"/>
+<rect x="64" y="96" width="4" height="4" fill="#8d8678"/>
+<rect x="72" y="96" width="4" height="4" fill="#8d8678"/>
+<rect x="80" y="96" width="4" height="4" fill="#8d8678"/>
+<!-- bottom outline -->
+<rect x="40" y="100" width="48" height="4" fill="#3e2f2f"/>
+</svg>

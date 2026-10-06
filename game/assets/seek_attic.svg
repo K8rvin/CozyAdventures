@@ -1,0 +1,449 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="1000" height="650" role="img">
+<defs>
+  <radialGradient id="warmGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#FFD78A" stop-opacity="0.55"/>
+    <stop offset="35%" stop-color="#FFB95E" stop-opacity="0.25"/>
+    <stop offset="70%" stop-color="#E8A84A" stop-opacity="0.12"/>
+    <stop offset="100%" stop-color="#E8A84A" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="candleGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#FFF2B2" stop-opacity="0.9"/>
+    <stop offset="25%" stop-color="#FFD07A" stop-opacity="0.5"/>
+    <stop offset="60%" stop-color="#FF9A3A" stop-opacity="0.18"/>
+    <stop offset="100%" stop-color="#FF7A18" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="waxGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#E8DDC2"/>
+    <stop offset="22%" stop-color="#FFF8E0"/>
+    <stop offset="55%" stop-color="#F5E6C8"/>
+    <stop offset="85%" stop-color="#E8D5A8"/>
+    <stop offset="100%" stop-color="#C9B895"/>
+  </linearGradient>
+  <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#8C6B32"/>
+    <stop offset="20%" stop-color="#C9A86A"/>
+    <stop offset="45%" stop-color="#F0D090"/>
+    <stop offset="65%" stop-color="#B9975A"/>
+    <stop offset="100%" stop-color="#6B4E1E"/>
+  </linearGradient>
+  <linearGradient id="plankGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#D9C0A0"/>
+    <stop offset="100%" stop-color="#B89A78"/>
+  </linearGradient>
+  <filter id="paperTexture" x="0%" y="0%" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="4" seed="7" result="n"/>
+    <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.18 0" />
+  </filter>
+  <filter id="watercolorEdge" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence baseFrequency="0.025" numOctaves="2" seed="3" result="turb"/>
+    <feDisplacementMap in="SourceGraphic" in2="turb" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="1.2"/>
+  </filter>
+  <pattern id="woodKnots" width="200" height="108" patternUnits="userSpaceOnUse">
+    <rect width="200" height="108" fill="none"/>
+    <ellipse cx="140" cy="54" rx="18" ry="7" fill="none" stroke="#A68A6A" stroke-width="0.9" opacity="0.25"/>
+    <ellipse cx="142" cy="54" rx="8" ry="3.5" fill="none" stroke="#8C7355" stroke-width="0.6" opacity="0.2"/>
+  </pattern>
+</defs>
+
+<!-- Paper base -->
+<rect width="1000" height="650" fill="#F3EAD6"/>
+<rect width="1000" height="650" fill="#EDE3C8" opacity="0.6"/>
+
+<!-- Wooden plank floor top-down -->
+<g id="floor">
+  <rect x="0" y="0" width="1000" height="108" fill="#D8BE9E" stroke="#B89A78" stroke-width="1.2"/>
+  <rect x="0" y="108" width="1000" height="108" fill="#CAB296" stroke="#B89A78" stroke-width="1.2"/>
+  <rect x="0" y="216" width="1000" height="108" fill="#D4BCA0" stroke="#B89A78" stroke-width="1.2"/>
+  <rect x="0" y="324" width="1000" height="108" fill="#C9AD8F" stroke="#B89A78" stroke-width="1.2"/>
+  <rect x="0" y="432" width="1000" height="108" fill="#D6BF9F" stroke="#B89A78" stroke-width="1.2"/>
+  <rect x="0" y="540" width="1000" height="110" fill="#CAB296" stroke="#B89A78" stroke-width="1.2"/>
+  <!-- plank seams highlight -->
+  <line x1="0" y1="108" x2="1000" y2="108" stroke="#9C8466" stroke-width="1" opacity="0.5"/>
+  <line x1="0" y1="216" x2="1000" y2="216" stroke="#9C8466" stroke-width="1" opacity="0.5"/>
+  <line x1="0" y1="324" x2="1000" y2="324" stroke="#9C8466" stroke-width="1" opacity="0.5"/>
+  <line x1="0" y1="432" x2="1000" y2="432" stroke="#9C8466" stroke-width="1" opacity="0.5"/>
+  <line x1="0" y1="540" x2="1000" y2="540" stroke="#9C8466" stroke-width="1" opacity="0.5"/>
+  <!-- vertical plank joints -->
+  <line x1="320" y1="0" x2="320" y2="108" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="720" y1="0" x2="720" y2="108" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="180" y1="108" x2="180" y2="216" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="560" y1="108" x2="560" y2="216" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="850" y1="108" x2="850" y2="216" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="410" y1="216" x2="410" y2="324" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="780" y1="216" x2="780" y2="324" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="240" y1="324" x2="240" y2="432" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="620" y1="324" x2="620" y2="432" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="360" y1="432" x2="360" y2="540" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="690" y1="432" x2="690" y2="540" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="150" y1="540" x2="150" y2="650" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="500" y1="540" x2="500" y2="650" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <line x1="830" y1="540" x2="830" y2="650" stroke="#9C8466" stroke-width="1" opacity="0.4"/>
+  <!-- wood grain wavy lines -->
+  <g fill="none" stroke="#A68A6A" stroke-width="1" opacity="0.22" stroke-linecap="round">
+    <path d="M0 28 C 120 32, 200 18, 320 26"/>
+    <path d="M0 62 C 140 68, 220 52, 320 60"/>
+    <path d="M0 85 C 100 92, 210 78, 320 88"/>
+    <path d="M320 35 C 450 28, 600 42, 720 30"/>
+    <path d="M720 55 C 800 62, 900 48, 1000 58"/>
+    <path d="M0 138 C 90 145, 150 128, 260 138"/>
+    <path d="M180 165 C 300 172, 420 158, 560 168"/>
+    <path d="M560 148 C 680 135, 780 152, 850 140"/>
+    <path d="M850 175 C 910 182, 960 168, 1000 176"/>
+    <path d="M0 248 C 130 255, 260 238, 410 250"/>
+    <path d="M410 268 C 560 275, 680 258, 780 270"/>
+    <path d="M780 238 C 860 245, 930 230, 1000 242"/>
+    <path d="M0 352 C 110 360, 180 342, 320 355"/>
+    <path d="M240 378 C 380 385, 500 368, 620 376"/>
+    <path d="M620 348 C 750 355, 880 338, 1000 352"/>
+    <path d="M0 468 C 120 475, 220 458, 360 470"/>
+    <path d="M360 498 C 500 505, 580 488, 690 496"/>
+    <path d="M690 462 C 800 470, 910 452, 1000 465"/>
+    <path d="M0 582 C 80 590, 120 572, 250 584"/>
+    <path d="M500 575 C 620 582, 720 568, 830 578"/>
+    <path d="M830 605 C 900 612, 950 598, 1000 606"/>
+  </g>
+  <rect width="1000" height="650" fill="url(#woodKnots)" opacity="0.35"/>
+</g>
+
+<!-- Warm candlelight pools top-down -->
+<ellipse cx="180" cy="155" rx="210" ry="165" fill="url(#warmGlow)" opacity="0.42"/>
+<ellipse cx="760" cy="180" rx="230" ry="175" fill="url(#warmGlow)" opacity="0.38"/>
+<ellipse cx="520" cy="420" rx="260" ry="190" fill="url(#warmGlow)" opacity="0.32"/>
+<ellipse cx="320" cy="520" rx="190" ry="140" fill="url(#warmGlow)" opacity="0.28"/>
+
+<!-- soft light beams diagonal -->
+<g opacity="0.14" fill="#FFDDAA">
+  <path d="M 120 0 L 260 0 L 340 650 L 200 650 Z" />
+  <path d="M 680 0 L 820 0 L 880 650 L 740 650 Z" opacity="0.7"/>
+</g>
+
+<!-- Shadows under objects -->
+<g opacity="0.14" fill="#5A4630">
+  <ellipse cx="145" cy="210" rx="95" ry="55"/>
+  <ellipse cx="775" cy="235" rx="110" ry="65"/>
+  <ellipse cx="520" cy="380" rx="145" ry="85"/>
+  <ellipse cx="165" cy="545" rx="105" ry="60"/>
+  <ellipse cx="830" cy="520" rx="85" ry="50"/>
+</g>
+
+<!-- ===== HIDDEN OBJECTS ===== -->
+
+<!-- Stack 1: Top-left aged books -->
+<g id="stack-tl" filter="url(#watercolorEdge)">
+  <!-- book 1 horizontal -->
+  <g>
+    <rect x="72" y="78" width="148" height="38" rx="4" fill="#8B5A3A" stroke="#4A2E1E" stroke-width="1.6" stroke-linejoin="round"/>
+    <rect x="72" y="84" width="148" height="6" fill="#F0E0C0" opacity="0.9"/>
+    <rect x="78" y="92" width="136" height="14" fill="#6E3F26" opacity="0.35" rx="1"/>
+    <line x1="90" y1="78" x2="90" y2="116" stroke="#4A2E1E" stroke-width="0.8" opacity="0.5"/>
+    <line x1="200" y1="78" x2="200" y2="116" stroke="#4A2E1E" stroke-width="0.8" opacity="0.5"/>
+    <circle cx="138" cy="98" r="7" fill="#D4A84A" opacity="0.9" stroke="#4A2E1E" stroke-width="0.7"/>
+    <circle cx="138" cy="98" r="3" fill="#FFF2C2" opacity="0.8"/>
+  </g>
+  <!-- book 2 -->
+  <g>
+    <rect x="68" y="118" width="156" height="36" rx="4" fill="#5E7A5A" stroke="#2F3D2E" stroke-width="1.6"/>
+    <rect x="68" y="124" width="156" height="5" fill="#E8E0C8" opacity="0.85"/>
+    <rect x="84" y="138" width="92" height="8" fill="#FFF8D0" opacity="0.5" rx="1"/>
+    <line x1="105" y1="118" x2="105" y2="154" stroke="#2F3D2E" stroke-width="0.7" opacity="0.45"/>
+  </g>
+  <!-- book 3 -->
+  <g>
+    <rect x="78" y="156" width="138" height="34" rx="4" fill="#A67C52" stroke="#4A2E1E" stroke-width="1.6"/>
+    <rect x="78" y="162" width="138" height="5" fill="#FFF0D0" opacity="0.8"/>
+    <path d="M 95 170 Q 145 174 195 170" stroke="#4A2E1E" stroke-width="0.7" fill="none" opacity="0.4"/>
+  </g>
+  <!-- small leather journal diagonal -->
+  <g transform="rotate(-12 245 140)">
+    <rect x="210" y="92" width="78" height="58" rx="5" fill="#7A3A2E" stroke="#3D1E14" stroke-width="1.5"/>
+    <rect x="218" y="100" width="62" height="42" fill="#F5E6C8" stroke="#8C7355" stroke-width="0.8" rx="1"/>
+    <line x1="235" y1="108" x2="270" y2="108" stroke="#8C7355" stroke-width="0.7" opacity="0.5"/>
+    <line x1="235" y1="118" x2="270" y2="118" stroke="#8C7355" stroke-width="0.7" opacity="0.5"/>
+    <line x1="235" y1="128" x2="260" y2="128" stroke="#8C7355" stroke-width="0.7" opacity="0.5"/>
+    <rect x="245" y="102" width="10" height="38" fill="#D4A84A" opacity="0.9" stroke="#3D1E14" stroke-width="0.6"/>
+  </g>
+</g>
+
+<!-- Open scrolls near top-left -->
+<g id="scroll1" filter="url(#watercolorEdge)">
+  <path d="M 260 195 C 270 185, 340 188, 360 200 L 365 245 C 340 258, 270 255, 260 242 Z" fill="#FFF8E0" stroke="#8C7A5B" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M 260 195 C 265 205, 265 232, 260 242" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="1"/>
+  <path d="M 360 200 C 365 210, 365 235, 365 245" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="1"/>
+  <g stroke="#8C7A5B" stroke-width="0.9" opacity="0.55" stroke-linecap="round">
+    <path d="M 278 210 Q 320 212 345 210"/>
+    <path d="M 278 220 Q 320 222 345 220"/>
+    <path d="M 278 230 Q 315 232 345 230"/>
+  </g>
+  <circle cx="285" cy="228" r="4" fill="#C0392B" opacity="0.85" stroke="#4A2E1E" stroke-width="0.6"/>
+  <path d="M 285 228 L 285 238" stroke="#4A2E1E" stroke-width="0.6"/>
+</g>
+
+<!-- Brass inkwell top-left near books -->
+<g id="inkwell1" filter="url(#watercolorEdge)">
+  <ellipse cx="252" cy="175" rx="26" ry="14" fill="#2B1A0E" opacity="0.25"/>
+  <ellipse cx="250" cy="168" rx="22" ry="16" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1.3"/>
+  <rect x="238" y="152" width="24" height="22" rx="3" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1.2"/>
+  <ellipse cx="250" cy="152" rx="14" ry="7" fill="#1A0F08" stroke="#4A2E1E" stroke-width="1"/>
+  <ellipse cx="250" cy="151" rx="9" ry="4.5" fill="#0F1A2A" opacity="0.95"/>
+  <ellipse cx="247" cy="149.5" rx="3" ry="1.5" fill="#5A7A9A" opacity="0.7"/>
+  <!-- feather quill -->
+  <g stroke="#4A2E1E" stroke-width="1.2" stroke-linecap="round">
+    <path d="M 262 148 C 275 130, 295 95, 310 68" fill="none" stroke="#EDE6D6" stroke-width="5" opacity="0.95"/>
+    <path d="M 262 148 C 275 130, 295 95, 310 68" fill="none" stroke="#8C7A5B" stroke-width="1.1"/>
+    <path d="M 310 68 C 305 78, 300 85, 295 90" fill="none" stroke="#8C7A5B" stroke-width="0.8"/>
+    <path d="M 305 72 C 298 80, 292 88, 286 95" fill="none" stroke="#8C7A5B" stroke-width="0.6" opacity="0.6"/>
+  </g>
+  <ellipse cx="262" cy="148" rx="2.5" ry="3.5" fill="#1A0F08" stroke="#4A2E1E" stroke-width="0.6"/>
+</g>
+
+<!-- Stack 2: Top-right -->
+<g id="stack-tr" filter="url(#watercolorEdge)">
+  <rect x="640" y="72" width="165" height="42" rx="4" fill="#6B4A3A" stroke="#3D2618" stroke-width="1.6"/>
+  <rect x="640" y="78" width="165" height="6" fill="#F0E0C0" opacity="0.85"/>
+  <rect x="660" y="92" width="125" height="10" fill="#D4A84A" opacity="0.25" rx="1"/>
+  <rect x="635" y="116" width="172" height="38" rx="4" fill="#3A5A6B" stroke="#1E2F3A" stroke-width="1.6"/>
+  <rect x="635" y="122" width="172" height="5" fill="#E8E0C8" opacity="0.85"/>
+  <line x1="675" y1="116" x2="675" y2="154" stroke="#1E2F3A" stroke-width="0.7" opacity="0.5"/>
+  <rect x="645" y="156" width="152" height="36" rx="4" fill="#8C6A4A" stroke="#4A2E1E" stroke-width="1.6"/>
+  <rect x="645" y="162" width="152" height="5" fill="#FFF0D0" opacity="0.8"/>
+  <!-- tiny magnifying glass -->
+  <g>
+    <ellipse cx="830" cy="148" rx="28" ry="28" fill="none" stroke="#6B4E1E" stroke-width="3.5" opacity="0.95"/>
+    <ellipse cx="830" cy="148" rx="24" ry="24" fill="#E0F0FF" opacity="0.28" stroke="#8CA8C8" stroke-width="0.8"/>
+    <path d="M 850 168 L 872 190" stroke="#6B4E1E" stroke-width="5" stroke-linecap="round"/>
+    <path d="M 850 168 L 872 190" stroke="#C9A86A" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+    <ellipse cx="822" cy="138" rx="7" ry="4" fill="white" opacity="0.55"/>
+  </g>
+</g>
+
+<!-- Open book center top -->
+<g id="openBook" filter="url(#watercolorEdge)">
+  <path d="M 420 95 L 500 78 L 520 155 L 440 172 Z" fill="#FFF8E0" stroke="#8C7A5B" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M 500 78 L 580 95 L 600 172 L 520 155 Z" fill="#FFF0D0" stroke="#8C7A5B" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M 500 78 L 520 155" stroke="#8C7A5B" stroke-width="1.2"/>
+  <g stroke="#8C7A5B" stroke-width="0.8" opacity="0.45" stroke-linecap="round">
+    <path d="M 435 108 Q 465 104 490 108"/>
+    <path d="M 432 120 Q 462 116 488 120"/>
+    <path d="M 435 132 Q 465 128 490 132"/>
+    <path d="M 530 112 Q 560 116 580 112"/>
+    <path d="M 532 124 Q 562 128 582 124"/>
+    <path d="M 534 136 Q 564 140 584 136"/>
+  </g>
+  <!-- shadow fold -->
+  <path d="M 500 78 L 520 155 L 515 158 L 497 82 Z" fill="#E8DCC0" opacity="0.6"/>
+</g>
+
+<!-- Candle 1 - top center -->
+<g id="candle1">
+  <ellipse cx="510" cy="210" rx="44" ry="22" fill="url(#candleGlow)" opacity="0.95"/>
+  <ellipse cx="510" cy="210" rx="28" ry="14" fill="url(#candleGlow)" opacity="0.7"/>
+  <!-- wax pool -->
+  <ellipse cx="510" cy="208" rx="22" ry="12" fill="#F5E6C8" stroke="#C9B895" stroke-width="1" opacity="0.9"/>
+  <ellipse cx="510" cy="206" rx="16" ry="8" fill="#FFF8E0" opacity="0.95"/>
+  <!-- candle body top-down stub -->
+  <ellipse cx="510" cy="205" rx="13" ry="9" fill="url(#waxGrad)" stroke="#8C7A5B" stroke-width="1.2"/>
+  <ellipse cx="510" cy="203" rx="7" ry="4.5" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="0.6"/>
+  <!-- wick -->
+  <circle cx="510" cy="203" r="1.8" fill="#2B1A0E"/>
+  <!-- flame top-down view (slightly side) -->
+  <path d="M 510 198 C 506 190, 507 182, 510 176 C 513 182, 514 190, 510 198 Z" fill="#FFD86B" stroke="#E67E22" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M 510 195 C 508.5 190, 509 185, 510 182 C 511 185, 511.5 190, 510 195 Z" fill="#FFF8C0" opacity="0.95"/>
+  <!-- melted wax drips -->
+  <ellipse cx="518" cy="212" rx="4" ry="6" fill="#FFF8E0" stroke="#C9B895" stroke-width="0.7" opacity="0.85"/>
+  <ellipse cx="502" cy="214" rx="3" ry="5" fill="#FFF8E0" stroke="#C9B895" stroke-width="0.7" opacity="0.85"/>
+</g>
+
+<!-- Center scattered books and scrolls -->
+<g id="center-cluster" filter="url(#watercolorEdge)">
+  <!-- large horizontal book -->
+  <rect x="380" y="260" width="175" height="44" rx="5" fill="#7A4A3A" stroke="#3D1E14" stroke-width="1.6"/>
+  <rect x="380" y="268" width="175" height="7" fill="#F0E0C0" opacity="0.9"/>
+  <rect x="395" y="282" width="145" height="12" fill="#D4A84A" opacity="0.18" rx="2"/>
+  <line x1="420" y1="260" x2="420" y2="304" stroke="#3D1E14" stroke-width="0.7" opacity="0.45"/>
+  <!-- vertical book -->
+  <rect x="570" y="242" width="44" height="148" rx="5" fill="#4A6741" stroke="#2A3D28" stroke-width="1.6"/>
+  <rect x="578" y="242" width="7" height="148" fill="#E8E0C8" opacity="0.85"/>
+  <line x1="570" y1="285" x2="614" y2="285" stroke="#2A3D28" stroke-width="0.7" opacity="0.4"/>
+  <circle cx="592" cy="320" r="9" fill="#D4A84A" stroke="#2A3D28" stroke-width="0.8" opacity="0.9"/>
+  <!-- small stack -->
+  <rect x="395" y="315" width="132" height="32" rx="4" fill="#B08A5A" stroke="#4A2E1E" stroke-width="1.4"/>
+  <rect x="395" y="321" width="132" height="5" fill="#FFF0D0" opacity="0.8"/>
+  <rect x="405" y="345" width="112" height="28" rx="4" fill="#5A4A6A" stroke="#2E2535" stroke-width="1.4"/>
+  <rect x="405" y="351" width="112" height="4" fill="#E8E0C8" opacity="0.85"/>
+  <!-- scroll horizontal -->
+  <g>
+    <path d="M 620 320 C 640 315, 700 318, 720 328 L 718 368 C 695 378, 635 375, 620 362 Z" fill="#FFF8E0" stroke="#8C7A5B" stroke-width="1.3"/>
+    <path d="M 620 320 C 625 330, 625 352, 620 362" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="1"/>
+    <path d="M 720 328 C 718 338, 718 358, 718 368" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="1"/>
+    <g stroke="#8C7A5B" stroke-width="0.8" opacity="0.5">
+      <path d="M 638 335 Q 675 337 705 335"/>
+      <path d="M 638 345 Q 675 347 705 345"/>
+      <path d="M 638 355 Q 675 357 705 355"/>
+    </g>
+    <ellipse cx="670" cy="348" rx="6" ry="6" fill="#2A5A8A" opacity="0.85" stroke="#1A2A3A" stroke-width="0.6"/>
+  </g>
+  <!-- loose parchment -->
+  <path d="M 350 360 L 430 355 L 445 410 L 365 418 Z" fill="#FFF8E0" stroke="#8C7A5B" stroke-width="1.2" stroke-linejoin="round" opacity="0.95"/>
+  <path d="M 365 375 Q 395 378 425 375" stroke="#8C7A5B" stroke-width="0.7" opacity="0.4" fill="none"/>
+  <path d="M 368 385 Q 398 388 428 385" stroke="#8C7A5B" stroke-width="0.7" opacity="0.4" fill="none"/>
+  <path d="M 370 395 Q 400 398 430 395" stroke="#8C7A5B" stroke-width="0.7" opacity="0.4" fill="none"/>
+  <circle cx="410" cy="400" r="5" fill="#C0392B" opacity="0.8" stroke="#4A2E1E" stroke-width="0.6"/>
+</g>
+
+<!-- Brass dividers / bookmark -->
+<g opacity="0.9" stroke="#6B4E1E" stroke-width="1" fill="none">
+  <path d="M 555 272 L 555 298" stroke-width="1.2"/>
+  <circle cx="555" cy="305" r="4" fill="#D4A84A" stroke="#6B4E1E" stroke-width="0.8"/>
+</g>
+
+<!-- Candle 2 - center right -->
+<g id="candle2">
+  <ellipse cx="680" cy="430" rx="38" ry="19" fill="url(#candleGlow)" opacity="0.85"/>
+  <ellipse cx="680" cy="428" rx="20" ry="11" fill="#F5E6C8" stroke="#C9B895" stroke-width="1" opacity="0.9"/>
+  <ellipse cx="680" cy="426" rx="11" ry="7.5" fill="url(#waxGrad)" stroke="#8C7A5B" stroke-width="1.1"/>
+  <ellipse cx="680" cy="424.5" rx="6" ry="3.8" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="0.5"/>
+  <circle cx="680" cy="424.5" r="1.5" fill="#2B1A0E"/>
+  <path d="M 680 420 C 677.5 413, 678 407, 680 402 C 682 407, 682.5 413, 680 420 Z" fill="#FFD86B" stroke="#E67E22" stroke-width="0.7"/>
+  <path d="M 680 417 C 679 413, 679.2 409, 680 407 C 680.8 409, 681 413, 680 417 Z" fill="#FFF8C0"/>
+</g>
+
+<!-- Inkwell 2 -->
+<g id="inkwell2" filter="url(#watercolorEdge)">
+  <ellipse cx="615" cy="445" rx="20" ry="11" fill="#2B1A0E" opacity="0.2"/>
+  <ellipse cx="613" cy="438" rx="18" ry="13" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1.2"/>
+  <rect x="603" y="424" width="20" height="18" rx="2.5" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1.1"/>
+  <ellipse cx="613" cy="424" rx="11" ry="5.5" fill="#1A0F08" stroke="#4A2E1E" stroke-width="0.9"/>
+  <ellipse cx="613" cy="423" rx="7" ry="3.5" fill="#0F1A2A" opacity="0.95"/>
+  <ellipse cx="611" cy="422" rx="2.2" ry="1.2" fill="#6A8AAA" opacity="0.6"/>
+</g>
+
+<!-- Bottom cluster -->
+<g id="bottom-cluster" filter="url(#watercolorEdge)">
+  <rect x="78" y="452" width="142" height="38" rx="4" fill="#6B3A2A" stroke="#3D1E14" stroke-width="1.6"/>
+  <rect x="78" y="458" width="142" height="6" fill="#F0E0C0" opacity="0.85"/>
+  <rect x="88" y="472" width="122" height="8" fill="#D4A84A" opacity="0.2" rx="1"/>
+  <rect x="85" y="492" width="135" height="34" rx="4" fill="#4A5A3A" stroke="#2A3525" stroke-width="1.6"/>
+  <rect x="85" y="498" width="135" height="5" fill="#E8E0C8" opacity="0.85"/>
+  <rect x="92" y="528" width="128" height="32" rx="4" fill="#8B7355" stroke="#4A2E1E" stroke-width="1.5"/>
+  <rect x="92" y="534" width="128" height="5" fill="#FFF0D0" opacity="0.8"/>
+  <!-- spectacles top-down -->
+  <g>
+    <ellipse cx="285" cy="505" rx="26" ry="22" fill="none" stroke="#4A2E1E" stroke-width="2.2" opacity="0.95"/>
+    <ellipse cx="335" cy="505" rx="26" ry="22" fill="none" stroke="#4A2E1E" stroke-width="2.2" opacity="0.95"/>
+    <ellipse cx="285" cy="505" rx="22" ry="18" fill="#E0F0FF" opacity="0.18" stroke="#8CA8C8" stroke-width="0.7"/>
+    <ellipse cx="335" cy="505" rx="22" ry="18" fill="#E0F0FF" opacity="0.18" stroke="#8CA8C8" stroke-width="0.7"/>
+    <path d="M 311 505 L 309 505" stroke="#4A2E1E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 259 498 L 240 485" stroke="#4A2E1E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 361 498 L 380 485" stroke="#4A2E1E" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="278" cy="498" rx="5" ry="3" fill="white" opacity="0.5"/>
+    <ellipse cx="328" cy="498" rx="5" ry="3" fill="white" opacity="0.5"/>
+  </g>
+  <!-- scroll bottom -->
+  <path d="M 250 560 C 280 555, 340 558, 365 568 L 360 610 C 330 620, 255 618, 245 605 Z" fill="#FFF8E0" stroke="#8C7A5B" stroke-width="1.3"/>
+  <path d="M 250 560 C 255 570, 255 595, 245 605" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="1"/>
+  <path d="M 365 568 C 363 578, 362 600, 360 610" fill="#E8DCC0" stroke="#8C7A5B" stroke-width="1"/>
+  <g stroke="#8C7A5B" stroke-width="0.8" opacity="0.5">
+    <path d="M 268 575 Q 310 578 348 575"/>
+    <path d="M 268 585 Q 310 588 348 585"/>
+    <path d="M 268 595 Q 310 598 348 595"/>
+  </g>
+</g>
+
+<!-- Bottom right books -->
+<g id="stack-br" filter="url(#watercolorEdge)">
+  <rect x="740" y="460" width="138" height="36" rx="4" fill="#5A6A8A" stroke="#2A3545" stroke-width="1.6"/>
+  <rect x="740" y="466" width="138" height="5" fill="#E8E0C8" opacity="0.85"/>
+  <rect x="750" y="498" width="122" height="32" rx="4" fill="#A65A3A" stroke="#4A2E1E" stroke-width="1.5"/>
+  <rect x="750" y="504" width="122" height="5" fill="#FFF0D0" opacity="0.8"/>
+  <rect x="760" y="532" width="108" height="30" rx="4" fill="#7A4A3A" stroke="#3D1E14" stroke-width="1.5"/>
+  <rect x="760" y="538" width="108" height="4" fill="#F0E0C0" opacity="0.85"/>
+  <!-- key -->
+  <g transform="rotate(-28 815 415)">
+    <rect x="795" y="410" width="42" height="8" rx="4" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1"/>
+    <circle cx="835" cy="414" r="10" fill="none" stroke="#4A2E1E" stroke-width="2.2"/>
+    <circle cx="835" cy="414" r="6" fill="#F0D090" stroke="#4A2E1E" stroke-width="0.8"/>
+    <rect x="798" y="412" width="6" height="4" fill="#4A2E1E"/>
+    <rect x="805" y="412" width="6" height="4" fill="#4A2E1E"/>
+  </g>
+</g>
+
+<!-- Candle 3 bottom left -->
+<g id="candle3">
+  <ellipse cx="110" cy="355" rx="36" ry="18" fill="url(#candleGlow)" opacity="0.8"/>
+  <ellipse cx="110" cy="353" rx="18" ry="10" fill="#F5E6C8" stroke="#C9B895" stroke-width="1" opacity="0.9"/>
+  <ellipse cx="110" cy="351" rx="10" ry="7" fill="url(#waxGrad)" stroke="#8C7A5B" stroke-width="1.1"/>
+  <circle cx="110" cy="350" r="1.4" fill="#2B1A0E"/>
+  <path d="M 110 346 C 108 339, 108.5 334, 110 329 C 111.5 334, 112 339, 110 346 Z" fill="#FFD86B" stroke="#E67E22" stroke-width="0.6"/>
+</g>
+
+<!-- Dust motes in light beams -->
+<g id="dust" opacity="0.95">
+  <circle cx="185" cy="95" r="1.8" fill="#FFF8C0" opacity="0.85"/>
+  <circle cx="210" cy="125" r="1.2" fill="#FFF8C0" opacity="0.7"/>
+  <circle cx="165" cy="135" r="1.5" fill="#FFF8C0" opacity="0.8"/>
+  <circle cx="195" cy="165" r="1" fill="#FFF8C0" opacity="0.6"/>
+  <circle cx="225" cy="85" r="1.3" fill="#FFF8C0" opacity="0.75"/>
+  <circle cx="140" cy="110" r="0.9" fill="#FFF8C0" opacity="0.6"/>
+  <circle cx="720" cy="95" r="1.6" fill="#FFF8C0" opacity="0.8"/>
+  <circle cx="750" cy="125" r="1.4" fill="#FFF8C0" opacity="0.75"/>
+  <circle cx="785" cy="145" r="1.1" fill="#FFF8C0" opacity="0.65"/>
+  <circle cx="710" cy="155" r="1" fill="#FFF8C0" opacity="0.6"/>
+  <circle cx="770" cy="85" r="1.2" fill="#FFF8C0" opacity="0.7"/>
+  <circle cx="800" cy="110" r="0.9" fill="#FFF8C0" opacity="0.55"/>
+  <circle cx="520" cy="350" r="1.4" fill="#FFF8C0" opacity="0.7"/>
+  <circle cx="540" cy="375" r="1.1" fill="#FFF8C0" opacity="0.6"/>
+  <circle cx="485" cy="385" r="1.3" fill="#FFF8C0" opacity="0.65"/>
+  <circle cx="505" cy="405" r="0.9" fill="#FFF8C0" opacity="0.55"/>
+  <circle cx="560" cy="395" r="1" fill="#FFF8C0" opacity="0.6"/>
+  <circle cx="480" cy="360" r="1.2" fill="#FFF8C0" opacity="0.6"/>
+  <circle cx="315" cy="485" r="1.3" fill="#FFF8C0" opacity="0.65"/>
+  <circle cx="340" cy="470" r="1" fill="#FFF8C0" opacity="0.6"/>
+  <circle cx="295" cy="460" r="0.9" fill="#FFF8C0" opacity="0.55"/>
+</g>
+
+<!-- Ink splatters and small details -->
+<g opacity="0.85">
+  <circle cx="445" cy="285" r="1.5" fill="#1A0F08" opacity="0.8"/>
+  <circle cx="448" cy="288" r="0.8" fill="#1A0F08" opacity="0.7"/>
+  <circle cx="442" cy="289" r="0.6" fill="#1A0F08" opacity="0.6"/>
+  <circle cx="632" cy="452" r="1.2" fill="#1A0F08" opacity="0.7"/>
+  <circle cx="635" cy="455" r="0.7" fill="#1A0F08" opacity="0.6"/>
+  <path d="M 350 245 Q 352 247 354 245" stroke="#1A0F08" stroke-width="0.7" fill="none" opacity="0.6" stroke-linecap="round"/>
+</g>
+
+<!-- Small brass compass -->
+<g id="compass" filter="url(#watercolorEdge)">
+  <ellipse cx="460" cy="520" rx="26" ry="26" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1.4"/>
+  <ellipse cx="460" cy="520" rx="20" ry="20" fill="#FFF8E0" stroke="#4A2E1E" stroke-width="0.9"/>
+  <circle cx="460" cy="520" r="1.8" fill="#4A2E1E"/>
+  <path d="M 460 520 L 472 508" stroke="#C0392B" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M 460 520 L 448 532" stroke="#2A4A6A" stroke-width="1.6" stroke-linecap="round"/>
+  <g stroke="#4A2E1E" stroke-width="0.6" opacity="0.6">
+    <line x1="460" y1="500" x2="460" y2="504"/>
+    <line x1="460" y1="536" x2="460" y2="540"/>
+    <line x1="440" y1="520" x2="444" y2="520"/>
+    <line x1="476" y1="520" x2="480" y2="520"/>
+  </g>
+  <ellipse cx="454" cy="510" rx="4" ry="2.5" fill="white" opacity="0.45"/>
+</g>
+
+<!-- Loose coins / seals -->
+<g>
+  <ellipse cx="895" cy="325" rx="14" ry="14" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1"/>
+  <ellipse cx="895" cy="325" rx="9" ry="9" fill="#F0D090" stroke="#4A2E1E" stroke-width="0.6" opacity="0.9"/>
+  <circle cx="895" cy="325" r="3" fill="#4A2E1E" opacity="0.8"/>
+  <ellipse cx="905" cy="345" rx="13" ry="13" fill="url(#brassGrad)" stroke="#4A2E1E" stroke-width="1" opacity="0.95"/>
+  <ellipse cx="905" cy="345" rx="8" ry="8" fill="#F0D090" opacity="0.85"/>
+</g>
+
+<!-- Vignette and paper texture overlay -->
+<rect width="1000" height="650" fill="none" stroke="#8C7A5B" stroke-width="2.5" opacity="0.22" rx="8"/>
+<rect x="0" y="0" width="1000" height="650" fill="white" opacity="0.035" filter="url(#paperTexture)"/>
+<!-- watercolor wash overlay -->
+<rect x="0" y="0" width="1000" height="650" fill="#8C6A4A" opacity="0.03"/>
+<ellipse cx="500" cy="325" rx="480" ry="300" fill="none" stroke="#5A4630" stroke-width="40" opacity="0.04" filter="url(#softBlur)"/>
+
+</svg>

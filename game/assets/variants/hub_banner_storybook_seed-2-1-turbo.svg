@@ -1,0 +1,380 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" width="1000" height="340" role="img">
+<defs>
+  <filter id="wc" x="-10%" y="-10%" width="120%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="1.4"/>
+  </filter>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#ffd27a" stop-opacity="0.9"/>
+    <stop offset="40%" stop-color="#e8a23a" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#e8a23a" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#ffe8b0" stop-opacity="0.7"/>
+    <stop offset="100%" stop-color="#b36a2a" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#d7b78e"/>
+    <stop offset="100%" stop-color="#8a5f2e"/>
+  </linearGradient>
+  <linearGradient id="woodDark" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#a67c52"/>
+    <stop offset="100%" stop-color="#5e3d1e"/>
+  </linearGradient>
+  <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#fdf6e6"/>
+    <stop offset="100%" stop-color="#e9ddd0"/>
+  </linearGradient>
+  <linearGradient id="counterTop" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#e8c9a0"/>
+    <stop offset="100%" stop-color="#b88a5a"/>
+  </linearGradient>
+</defs>
+
+<!-- background paper -->
+<rect width="1000" height="340" fill="#fdf6e6"/>
+<rect width="1000" height="340" fill="url(#wallGrad)" opacity="0.9"/>
+
+<!-- warm ambient washes -->
+<ellipse cx="500" cy="180" rx="420" ry="140" fill="#f2d5a0" opacity="0.18" filter="url(#soft)"/>
+<ellipse cx="200" cy="120" rx="160" ry="90" fill="#e8a23a" opacity="0.07" filter="url(#soft)"/>
+<ellipse cx="800" cy="130" rx="170" ry="100" fill="#e8a23a" opacity="0.08" filter="url(#soft)"/>
+
+<!-- ceiling beam -->
+<rect x="0" y="0" width="1000" height="28" fill="#6b4a2e" opacity="1"/>
+<rect x="0" y="28" width="1000" height="6" fill="#4a2f18" opacity="0.9"/>
+<!-- wood grain lines ceiling -->
+<g stroke="#3d2410" stroke-opacity="0.15" stroke-width="1.2" stroke-linecap="round">
+  <path d="M0 12 Q250 18 500 12 T1000 14"/>
+  <path d="M0 20 Q300 24 600 19 T1000 21"/>
+</g>
+
+<!-- back wall panels -->
+<rect x="250" y="34" width="500" height="210" fill="#efe3cc" stroke="#c9b8a0" stroke-width="1.2" rx="6"/>
+<!-- wall planks -->
+<g stroke="#d6c4a8" stroke-width="1" opacity="0.6">
+  <line x1="250" y1="90" x2="750" y2="90"/>
+  <line x1="250" y1="145" x2="750" y2="145"/>
+  <line x1="250" y1="195" x2="750" y2="195"/>
+</g>
+<!-- arched niche center -->
+<path d="M 380 244 L 380 110 Q 380 62 500 62 Q 620 62 620 110 L 620 244 Z" fill="#e8ddd0" stroke="#b8a08a" stroke-width="1.6"/>
+<path d="M 395 240 L 395 115 Q 395 78 500 78 Q 605 78 605 115 L 605 240 Z" fill="#f7ecd7" opacity="0.95"/>
+<!-- window in niche - stained glass soft -->
+<path d="M 435 220 L 435 125 Q 435 95 500 95 Q 565 95 565 125 L 565 220 Z" fill="#d9e8d5" stroke="#8aa89a" stroke-width="1.2" opacity="0.9"/>
+<g opacity="0.35">
+  <path d="M 435 125 Q 435 95 500 95" fill="none" stroke="#7a9a8e" stroke-width="1"/>
+  <line x1="500" y1="95" x2="500" y2="220" stroke="#7a9a8e" stroke-width="1"/>
+  <line x1="435" y1="165" x2="565" y2="165" stroke="#7a9a8e" stroke-width="1"/>
+</g>
+<ellipse cx="500" cy="170" rx="28" ry="28" fill="#e8a23a" opacity="0.12" filter="url(#soft)"/>
+
+<!-- LEFT SHELVES -->
+<g>
+  <rect x="32" y="34" width="210" height="212" rx="4" fill="#5e3d1e" opacity="0.95"/>
+  <rect x="38" y="40" width="198" height="200" rx="3" fill="url(#woodDark)" stroke="#3d2410" stroke-width="1.1"/>
+  <!-- shelves -->
+  <rect x="45" y="88" width="184" height="10" rx="2" fill="#3d2410" opacity="0.95"/>
+  <rect x="45" y="138" width="184" height="10" rx="2" fill="#3d2410" opacity="0.95"/>
+  <rect x="45" y="188" width="184" height="10" rx="2" fill="#3d2410" opacity="0.95"/>
+  <!-- top shelf shadow -->
+  <rect x="45" y="96" width="184" height="6" fill="#000" opacity="0.12" filter="url(#soft)"/>
+  <rect x="45" y="146" width="184" height="6" fill="#000" opacity="0.12" filter="url(#soft)"/>
+  <!-- potions row 1 -->
+  <g>
+    <!-- amber bottle -->
+    <rect x="58" y="52" width="22" height="36" rx="6" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1.1"/>
+    <rect x="58" y="60" width="22" height="22" rx="4" fill="#e8a23a" opacity="0.85"/>
+    <rect x="64" y="46" width="10" height="8" rx="2" fill="#4a2f18"/>
+    <ellipse cx="69" cy="66" rx="4" ry="6" fill="#fff" opacity="0.28"/>
+    <!-- teal bottle -->
+    <path d="M 92 52 L 108 52 L 112 68 L 112 84 Q112 88 108 88 L 92 88 Q88 88 88 84 L88 68 Z" fill="#d6ebe3" stroke="#5a7a6e" stroke-width="1.1"/>
+    <rect x="92" y="66" width="20" height="18" fill="#7ab8a6" opacity="0.9"/>
+    <rect x="96" y="46" width="12" height="7" rx="1.5" fill="#4a2f18"/>
+    <!-- purple bottle -->
+    <rect x="122" y="58" width="18" height="30" rx="9" fill="#e8d0e8" stroke="#7a5a7a" stroke-width="1.1"/>
+    <rect x="122" y="64" width="18" height="18" fill="#b07ab0" opacity="0.85" rx="6"/>
+    <rect x="127" y="50" width="8" height="10" rx="2" fill="#4a2f18"/>
+    <!-- small amber -->
+    <rect x="152" y="62" width="16" height="26" rx="5" fill="#ffe4b0" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="152" y="70" width="16" height="14" fill="#e8a23a" opacity="0.8" rx="3"/>
+    <rect x="156" y="56" width="8" height="7" rx="1.5" fill="#4a2f18"/>
+    <!-- book -->
+    <rect x="176" y="58" width="38" height="30" rx="2" fill="#c9a87a" stroke="#6b4a2e" stroke-width="1"/>
+    <line x1="184" y1="62" x2="184" y2="84" stroke="#6b4a2e" stroke-width="0.8" opacity="0.5"/>
+    <line x1="190" y1="62" x2="190" y2="84" stroke="#6b4a2e" stroke-width="0.6" opacity="0.4"/>
+  </g>
+  <!-- row2 -->
+  <g>
+    <rect x="56" y="102" width="20" height="36" rx="4" fill="#e8ddd0" stroke="#7a6a5a" stroke-width="1"/>
+    <rect x="56" y="112" width="20" height="20" fill="#c9a87a" opacity="0.9"/>
+    <rect x="84" y="108" width="22" height="30" rx="6" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="84" y="116" width="22" height="18" fill="#e8a23a" opacity="0.85" rx="4"/>
+    <rect x="90" y="102" width="10" height="7" rx="1.5" fill="#4a2f18"/>
+    <rect x="116" y="110" width="26" height="28" rx="2" fill="#b08a5a" stroke="#4a2f18" stroke-width="1"/>
+    <line x1="122" y1="114" x2="136" y2="114" stroke="#4a2f18" stroke-width="0.7" opacity="0.4"/>
+    <rect x="152" y="106" width="18" height="32" rx="5" fill="#d6ebe3" stroke="#5a7a6e" stroke-width="1"/>
+    <rect x="152" y="116" width="18" height="16" fill="#7ab8a6" opacity="0.85" rx="3"/>
+    <rect x="178" y="112" width="20" height="26" rx="4" fill="#ffe4b0" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="178" y="120" width="20" height="12" fill="#d98a3a" opacity="0.8"/>
+  </g>
+  <!-- row3 -->
+  <g>
+    <rect x="54" y="152" width="32" height="36" rx="2" fill="#d7b78e" stroke="#5e3d1e" stroke-width="1"/>
+    <rect x="58" y="158" width="24" height="3" fill="#5e3d1e" opacity="0.3"/>
+    <rect x="58" y="165" width="24" height="3" fill="#5e3d1e" opacity="0.3"/>
+    <rect x="96" y="158" width="18" height="30" rx="5" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="96" y="166" width="18" height="16" fill="#e8a23a" opacity="0.85"/>
+    <rect x="124" y="152" width="22" height="36" rx="6" fill="#e8d0e8" stroke="#7a5a7a" stroke-width="1"/>
+    <rect x="124" y="162" width="22" height="20" fill="#b07ab0" opacity="0.8" rx="4"/>
+    <rect x="156" y="160" width="20" height="28" rx="4" fill="#fdf6e6" stroke="#7a6a5a" stroke-width="1"/>
+    <rect x="156" y="168" width="20" height="12" fill="#c9a87a" opacity="0.8"/>
+    <rect x="184" y="156" width="28" height="32" rx="2" fill="#8a5f2e" stroke="#3d2410" stroke-width="1"/>
+  </g>
+  <!-- bottom row jars -->
+  <g>
+    <ellipse cx="82" cy="228" rx="18" ry="10" fill="#000" opacity="0.12" filter="url(#soft)"/>
+    <rect x="64" y="202" width="36" height="28" rx="8" fill="#fdf6e6" stroke="#8a7a6a" stroke-width="1"/>
+    <rect x="64" y="210" width="36" height="14" fill="#e8c9a0" opacity="0.9"/>
+    <ellipse cx="82" cy="202" rx="14" ry="4" fill="#c9a87a" stroke="#8a7a6a" stroke-width="0.8"/>
+    <rect x="118" y="206" width="30" height="24" rx="6" fill="#d6ebe3" stroke="#5a7a6e" stroke-width="1"/>
+    <rect x="118" y="214" width="30" height="10" fill="#7ab8a6" opacity="0.85"/>
+    <rect x="162" y="202" width="34" height="28" rx="7" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="162" y="210" width="34" height="14" fill="#e8a23a" opacity="0.85"/>
+  </g>
+</g>
+
+<!-- RIGHT SHELVES -->
+<g>
+  <rect x="758" y="34" width="210" height="212" rx="4" fill="#5e3d1e" opacity="0.95"/>
+  <rect x="764" y="40" width="198" height="200" rx="3" fill="url(#woodDark)" stroke="#3d2410" stroke-width="1.1"/>
+  <rect x="771" y="88" width="184" height="10" rx="2" fill="#3d2410" opacity="0.95"/>
+  <rect x="771" y="138" width="184" height="10" rx="2" fill="#3d2410" opacity="0.95"/>
+  <rect x="771" y="188" width="184" height="10" rx="2" fill="#3d2410" opacity="0.95"/>
+  <rect x="771" y="96" width="184" height="6" fill="#000" opacity="0.12" filter="url(#soft)"/>
+  <!-- potions right top -->
+  <g>
+    <rect x="780" y="52" width="20" height="36" rx="5" fill="#d6ebe3" stroke="#5a7a6e" stroke-width="1"/>
+    <rect x="780" y="62" width="20" height="18" fill="#7ab8a6" opacity="0.85" rx="3"/>
+    <rect x="810" y="58" width="22" height="30" rx="6" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="810" y="66" width="22" height="16" fill="#e8a23a" opacity="0.85" rx="4"/>
+    <rect x="842" y="50" width="18" height="38" rx="6" fill="#e8d0e8" stroke="#7a5a7a" stroke-width="1"/>
+    <rect x="842" y="60" width="18" height="20" fill="#b07ab0" opacity="0.8" rx="4"/>
+    <rect x="872" y="56" width="24" height="32" rx="2" fill="#c9a87a" stroke="#6b4a2e" stroke-width="1"/>
+    <rect x="908" y="60" width="18" height="28" rx="5" fill="#ffe4b0" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="908" y="68" width="18" height="14" fill="#e8a23a" opacity="0.8" rx="3"/>
+  </g>
+  <g>
+    <rect x="780" y="106" width="26" height="32" rx="3" fill="#b08a5a" stroke="#4a2f18" stroke-width="1"/>
+    <rect x="814" y="112" width="18" height="26" rx="5" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="814" y="120" width="18" height="12" fill="#e8a23a" opacity="0.85"/>
+    <rect x="842" y="102" width="20" height="36" rx="4" fill="#fdf6e6" stroke="#7a6a5a" stroke-width="1"/>
+    <rect x="842" y="112" width="20" height="18" fill="#c9a87a" opacity="0.9"/>
+    <rect x="872" y="108" width="22" height="30" rx="6" fill="#d6ebe3" stroke="#5a7a6e" stroke-width="1"/>
+    <rect x="872" y="116" width="22" height="16" fill="#7ab8a6" opacity="0.85"/>
+    <rect x="906" y="110" width="28" height="28" rx="2" fill="#8a5f2e" stroke="#3d2410" stroke-width="1"/>
+  </g>
+  <g>
+    <rect x="778" y="152" width="22" height="36" rx="6" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="778" y="162" width="22" height="18" fill="#e8a23a" opacity="0.85" rx="4"/>
+    <rect x="810" y="156" width="28" height="32" rx="2" fill="#d7b78e" stroke="#5e3d1e" stroke-width="1"/>
+    <rect x="848" y="158" width="18" height="30" rx="5" fill="#e8d0e8" stroke="#7a5a7a" stroke-width="1"/>
+    <rect x="848" y="166" width="18" height="16" fill="#b07ab0" opacity="0.8"/>
+    <rect x="876" y="160" width="20" height="28" rx="4" fill="#fdf6e6" stroke="#7a6a5a" stroke-width="1"/>
+    <rect x="904" y="152" width="32" height="36" rx="2" fill="#d7b78e" stroke="#5e3d1e" stroke-width="1"/>
+  </g>
+  <g>
+    <rect x="780" y="202" width="36" height="28" rx="8" fill="#f7d08a" stroke="#7a5a2e" stroke-width="1"/>
+    <rect x="780" y="210" width="36" height="14" fill="#e8a23a" opacity="0.85"/>
+    <rect x="830" y="206" width="30" height="24" rx="6" fill="#e8d0e8" stroke="#7a5a7a" stroke-width="1"/>
+    <rect x="830" y="214" width="30" height="10" fill="#b07ab0" opacity="0.8"/>
+    <rect x="874" y="202" width="34" height="28" rx="7" fill="#fdf6e6" stroke="#8a7a6a" stroke-width="1"/>
+    <rect x="874" y="210" width="34" height="14" fill="#c9a87a" opacity="0.9"/>
+  </g>
+</g>
+
+<!-- hanging lanterns -->
+<g>
+  <!-- left lantern -->
+  <line x1="140" y1="28" x2="140" y2="58" stroke="#3d2410" stroke-width="1.4"/>
+  <ellipse cx="140" cy="64" rx="22" ry="6" fill="#3d2410" opacity="0.9"/>
+  <path d="M 118 64 L 122 92 Q122 102 140 102 Q158 102 162 92 L166 64 Z" fill="#f7d08a" stroke="#8a5f2e" stroke-width="1.2"/>
+  <rect x="122" y="72" width="36" height="22" rx="2" fill="#e8a23a" opacity="0.85" filter="url(#soft)"/>
+  <ellipse cx="140" cy="92" rx="14" ry="4" fill="#8a5f2e" opacity="0.9"/>
+  <ellipse cx="140" cy="88" rx="34" ry="22" fill="url(#glow)" opacity="0.55"/>
+  <ellipse cx="140" cy="76" rx="6" ry="8" fill="#fff" opacity="0.22"/>
+  <!-- center lantern -->
+  <line x1="500" y1="28" x2="500" y2="48" stroke="#3d2410" stroke-width="1.4"/>
+  <ellipse cx="500" cy="54" rx="24" ry="7" fill="#3d2410" opacity="0.9"/>
+  <path d="M 476 54 L 480 86 Q480 98 500 98 Q520 98 524 86 L528 54 Z" fill="#f7d08a" stroke="#8a5f2e" stroke-width="1.2"/>
+  <rect x="482" y="64" width="36" height="24" fill="#e8a23a" opacity="0.88" filter="url(#soft)"/>
+  <ellipse cx="500" cy="86" rx="15" ry="4.5" fill="#8a5f2e" opacity="0.9"/>
+  <ellipse cx="500" cy="80" rx="38" ry="24" fill="url(#glow)" opacity="0.5"/>
+  <!-- right lantern -->
+  <line x1="860" y1="28" x2="860" y2="58" stroke="#3d2410" stroke-width="1.4"/>
+  <ellipse cx="860" cy="64" rx="22" ry="6" fill="#3d2410" opacity="0.9"/>
+  <path d="M 838 64 L 842 92 Q842 102 860 102 Q878 102 882 92 L886 64 Z" fill="#f7d08a" stroke="#8a5f2e" stroke-width="1.2"/>
+  <rect x="844" y="72" width="32" height="22" fill="#e8a23a" opacity="0.85" filter="url(#soft)"/>
+  <ellipse cx="860" cy="92" rx="14" ry="4" fill="#8a5f2e" opacity="0.9"/>
+  <ellipse cx="860" cy="88" rx="34" ry="22" fill="url(#glow)" opacity="0.55"/>
+</g>
+
+<!-- counter -->
+<g>
+  <!-- counter shadow -->
+  <ellipse cx="500" cy="288" rx="480" ry="22" fill="#000" opacity="0.08" filter="url(#soft)"/>
+  <!-- counter body -->
+  <rect x="14" y="246" width="972" height="66" rx="4" fill="url(#wood)" stroke="#4a2f18" stroke-width="1.4"/>
+  <!-- counter top -->
+  <path d="M 10 246 L 990 246 L 972 260 L 28 260 Z" fill="url(#counterTop)" stroke="#4a2f18" stroke-width="1.2"/>
+  <!-- wood planks lines -->
+  <g stroke="#4a2f18" stroke-opacity="0.18" stroke-width="1" fill="none">
+    <line x1="14" y1="278" x2="986" y2="278"/>
+    <line x1="14" y1="294" x2="986" y2="294"/>
+    <line x1="220" y1="260" x2="220" y2="312"/>
+    <line x1="460" y1="260" x2="460" y2="312"/>
+    <line x1="700" y1="260" x2="700" y2="312"/>
+  </g>
+  <!-- counter front panel highlight -->
+  <rect x="20" y="264" width="960" height="10" fill="#fff" opacity="0.12" rx="2"/>
+</g>
+
+<!-- sleeping cat on counter (center left) -->
+<g transform="translate(365,234)">
+  <!-- cat shadow -->
+  <ellipse cx="38" cy="28" rx="52" ry="12" fill="#000" opacity="0.12" filter="url(#soft)"/>
+  <!-- body curled -->
+  <ellipse cx="38" cy="18" rx="46" ry="22" fill="#e8c9a0" stroke="#8a6a4a" stroke-width="1.2"/>
+  <ellipse cx="38" cy="18" rx="46" ry="22" fill="#f2d5a0" opacity="0.9" filter="url(#wc)"/>
+  <!-- stripes -->
+  <g stroke="#c48a4a" stroke-width="1.1" stroke-linecap="round" opacity="0.45" fill="none">
+    <path d="M 12 12 Q18 16 14 22"/>
+    <path d="M 26 8 Q30 14 27 20"/>
+    <path d="M 42 8 Q45 14 42 20"/>
+    <path d="M 58 12 Q62 16 58 22"/>
+  </g>
+  <!-- head tucked -->
+  <ellipse cx="62" cy="6" rx="20" ry="16" fill="#f2d5a0" stroke="#8a6a4a" stroke-width="1.2"/>
+  <ellipse cx="62" cy="6" rx="20" ry="16" fill="#ffe8c0" opacity="0.6"/>
+  <!-- ear -->
+  <path d="M 52 -8 L 48 -18 L 58 -12 Z" fill="#d8a06a" stroke="#8a6a4a" stroke-width="1"/>
+  <path d="M 72 -8 L 76 -18 L 66 -12 Z" fill="#d8a06a" stroke="#8a6a4a" stroke-width="1"/>
+  <path d="M 53 -14 L 50 -17 L 55 -13 Z" fill="#b06a4a" opacity="0.6"/>
+  <!-- tail curled around -->
+  <path d="M -4 14 Q -12 2 6 -6 Q 22 -10 28 2" fill="none" stroke="#8a6a4a" stroke-width="7" stroke-linecap="round" opacity="1"/>
+  <path d="M -4 14 Q -12 2 6 -6 Q 22 -10 28 2" fill="none" stroke="#f2d5a0" stroke-width="5" stroke-linecap="round"/>
+  <path d="M -4 14 Q -4 6 6 -2" fill="none" stroke="#c48a4a" stroke-width="1" opacity="0.4"/>
+  <!-- nose -->
+  <ellipse cx="68" cy="8" rx="1.6" ry="1.2" fill="#8a5a4a" opacity="0.9"/>
+  <!-- whiskers -->
+  <g stroke="#8a6a4a" stroke-width="0.6" opacity="0.5" stroke-linecap="round">
+    <line x1="70" y1="10" x2="78" y2="11"/>
+    <line x1="70" y1="12" x2="78" y2="13.5"/>
+  </g>
+  <!-- paw tucked -->
+  <ellipse cx="22" cy="24" rx="10" ry="6" fill="#ffe8c0" stroke="#8a6a4a" stroke-width="0.9" opacity="0.95"/>
+  <ellipse cx="50" cy="26" rx="9" ry="5.5" fill="#ffe8c0" stroke="#8a6a4a" stroke-width="0.9" opacity="0.95"/>
+</g>
+
+<!-- knight's helmet on stand (center right) -->
+<g transform="translate(585,210)">
+  <!-- stand shadow -->
+  <ellipse cx="30" cy="52" rx="28" ry="6" fill="#000" opacity="0.14" filter="url(#soft)"/>
+  <!-- wooden stand -->
+  <rect x="18" y="36" width="24" height="16" rx="2" fill="#4a2f18" stroke="#2a1a0e" stroke-width="1"/>
+  <rect x="10" y="48" width="40" height="6" rx="1.5" fill="#6b4a2e" stroke="#2a1a0e" stroke-width="1"/>
+  <rect x="26" y="18" width="8" height="20" fill="#6b4a2e" stroke="#2a1a0e" stroke-width="1"/>
+  <!-- helmet base -->
+  <path d="M 8 34 Q 8 8 30 4 Q 52 8 52 34 L 48 36 L 12 36 Z" fill="#d9dde3" stroke="#5a5a62" stroke-width="1.3"/>
+  <path d="M 8 34 Q 8 8 30 4 Q 52 8 52 34" fill="#eef2f7" opacity="0.9"/>
+  <!-- helmet highlight -->
+  <path d="M 16 28 Q 16 12 30 8 Q 38 10 42 16" fill="#fff" opacity="0.42" filter="url(#soft)"/>
+  <!-- visor slit -->
+  <rect x="16" y="18" width="28" height="5" rx="1.5" fill="#3a3a42" stroke="#2a2a32" stroke-width="0.8"/>
+  <line x1="18" y1="20.5" x2="42" y2="20.5" stroke="#6a6a72" stroke-width="0.6" opacity="0.6"/>
+  <!-- visor ridge -->
+  <path d="M 12 24 Q30 26 48 24" fill="none" stroke="#8a8a92" stroke-width="1" opacity="0.9" stroke-linecap="round"/>
+  <!-- rivets -->
+  <g fill="#8a8a92" stroke="#5a5a62" stroke-width="0.6">
+    <circle cx="14" cy="14" r="1.4"/>
+    <circle cx="46" cy="14" r="1.4"/>
+    <circle cx="13" cy="28" r="1.4"/>
+    <circle cx="47" cy="28" r="1.4"/>
+  </g>
+  <!-- plume feather -->
+  <path d="M 30 4 Q 32 -8 38 -14 Q 44 -18 42 -8 Q 40 2 30 6 Z" fill="#c45a3a" stroke="#7a2e1e" stroke-width="1"/>
+  <path d="M 32 -2 Q 36 -10 40 -12" fill="none" stroke="#7a2e1e" stroke-width="0.7" opacity="0.6"/>
+  <path d="M 38 -14 Q 38 -6 32 2" fill="none" stroke="#fff" stroke-width="0.7" opacity="0.28"/>
+</g>
+
+<!-- candles on counter -->
+<g>
+  <!-- candle left -->
+  <ellipse cx="268" cy="248" rx="18" ry="8" fill="url(#glow)" opacity="0.7"/>
+  <ellipse cx="268" cy="250" rx="10" ry="3" fill="#000" opacity="0.12" filter="url(#soft)"/>
+  <rect x="262" y="228" width="12" height="18" rx="2" fill="#fdf6e6" stroke="#c9b8a0" stroke-width="0.9"/>
+  <rect x="262" y="230" width="12" height="6" fill="#fff" opacity="0.6"/>
+  <line x1="268" y1="228" x2="268" y2="220" stroke="#3d2410" stroke-width="1"/>
+  <!-- flame -->
+  <path d="M 268 220 Q 264 214 268 206 Q 272 214 268 220 Z" fill="#ffd27a" stroke="#e8a23a" stroke-width="0.6"/>
+  <path d="M 268 218 Q 266 214 268 210 Q 270 214 268 218 Z" fill="#fff" opacity="0.85"/>
+  <ellipse cx="268" cy="218" rx="12" ry="8" fill="url(#glow)" opacity="0.45" filter="url(#soft)"/>
+
+  <!-- candle right -->
+  <ellipse cx="708" cy="248" rx="18" ry="8" fill="url(#glow)" opacity="0.7"/>
+  <ellipse cx="708" cy="250" rx="10" ry="3" fill="#000" opacity="0.12" filter="url(#soft)"/>
+  <rect x="702" y="228" width="12" height="18" rx="2" fill="#fdf6e6" stroke="#c9b8a0" stroke-width="0.9"/>
+  <rect x="702" y="230" width="12" height="6" fill="#fff" opacity="0.6"/>
+  <line x1="708" y1="228" x2="708" y2="220" stroke="#3d2410" stroke-width="1"/>
+  <path d="M 708 220 Q 704 214 708 206 Q 712 214 708 220 Z" fill="#ffd27a" stroke="#e8a23a" stroke-width="0.6"/>
+  <path d="M 708 218 Q 706 214 708 210 Q 710 214 708 218 Z" fill="#fff" opacity="0.85"/>
+  <ellipse cx="708" cy="218" rx="12" ry="8" fill="url(#glow)" opacity="0.45" filter="url(#soft)"/>
+
+  <!-- small candle on shelf left -->
+  <rect x="206" y="198" width="8" height="10" rx="1.5" fill="#fdf6e6" stroke="#c9b8a0" stroke-width="0.7"/>
+  <path d="M 210 198 Q 208 194 210 190 Q 212 194 210 198 Z" fill="#ffd27a" stroke="#e8a23a" stroke-width="0.5"/>
+  <ellipse cx="210" cy="198" rx="8" ry="5" fill="url(#glow)" opacity="0.35" filter="url(#soft)"/>
+  <!-- small candle right shelf -->
+  <rect x="918" y="198" width="8" height="10" rx="1.5" fill="#fdf6e6" stroke="#c9b8a0" stroke-width="0.7"/>
+  <path d="M 922 198 Q 920 194 922 190 Q 924 194 922 198 Z" fill="#ffd27a" stroke="#e8a23a" stroke-width="0.5"/>
+  <ellipse cx="922" cy="198" rx="8" ry="5" fill="url(#glow)" opacity="0.35" filter="url(#soft)"/>
+</g>
+
+<!-- extra cozy details: stacked books on counter -->
+<g transform="translate(748,232)">
+  <rect x="0" y="14" width="48" height="8" rx="1.5" fill="#b07a4a" stroke="#5e3d1e" stroke-width="0.9"/>
+  <rect x="2" y="8" width="44" height="8" rx="1.5" fill="#d7b78e" stroke="#5e3d1e" stroke-width="0.9"/>
+  <rect x="4" y="2" width="40" height="8" rx="1.5" fill="#7ab8a6" stroke="#4a6a5e" stroke-width="0.9"/>
+  <line x1="8" y1="5" x2="32" y2="5" stroke="#4a6a5e" stroke-width="0.6" opacity="0.4"/>
+</g>
+
+<!-- scroll on counter -->
+<g transform="translate(220,238)">
+  <rect x="0" y="4" width="36" height="14" rx="7" fill="#fdf6e6" stroke="#c9b8a0" stroke-width="0.9"/>
+  <rect x="4" y="6" width="28" height="10" rx="2" fill="#f2d5a0" opacity="0.6"/>
+  <ellipse cx="4" cy="11" rx="4" ry="7" fill="#d7b78e" stroke="#8a6a4a" stroke-width="0.8"/>
+  <ellipse cx="32" cy="11" rx="4" ry="7" fill="#d7b78e" stroke="#8a6a4a" stroke-width="0.8"/>
+  <line x1="10" y1="10" x2="26" y2="10" stroke="#8a6a4a" stroke-width="0.6" opacity="0.3"/>
+  <line x1="10" y1="13" x2="24" y2="13" stroke="#8a6a4a" stroke-width="0.6" opacity="0.3"/>
+</g>
+
+<!-- soft vignette and paper grain -->
+<rect width="1000" height="340" fill="none" stroke="#4a2f18" stroke-width="6" opacity="0.07" rx="8"/>
+<g opacity="0.04">
+  <filter id="grain">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1"/>
+    <feColorMatrix type="saturate" values="0"/>
+  </filter>
+  <rect width="1000" height="340" filter="url(#grain)"/>
+</g>
+
+<!-- gentle ink outline wash -->
+<g fill="none" stroke="#4a3728" stroke-opacity="0.08" stroke-width="1.2" filter="url(#wc)">
+  <path d="M 32 34 Q 32 180 32 246"/>
+  <path d="M 968 34 Q 968 180 968 246"/>
+  <path d="M 250 34 Q 500 20 750 34"/>
+</g>
+</svg>

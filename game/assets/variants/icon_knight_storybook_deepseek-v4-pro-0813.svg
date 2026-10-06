@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img">
+<defs>
+  <radialGradient id="bgPaper" cx="50%" cy="45%" r="75%">
+    <stop offset="0%" stop-color="#FFF8E7"/>
+    <stop offset="55%" stop-color="#F5E6C8"/>
+    <stop offset="100%" stop-color="#E8D5B0"/>
+  </radialGradient>
+  <radialGradient id="portraitBg" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#FFF3D0"/>
+    <stop offset="58%" stop-color="#F0D9B5"/>
+    <stop offset="100%" stop-color="#D9B98E"/>
+  </radialGradient>
+  <linearGradient id="helmetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#E8E6E1"/>
+    <stop offset="35%" stop-color="#C8C5BF"/>
+    <stop offset="100%" stop-color="#9A9590"/>
+  </linearGradient>
+  <linearGradient id="leafGold" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#F6C667"/>
+    <stop offset="100%" stop-color="#D98A2E"/>
+  </linearGradient>
+  <linearGradient id="leafGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#B8C99E"/>
+    <stop offset="100%" stop-color="#7A9A6B"/>
+  </linearGradient>
+  <filter id="watercolorEdge" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="1.2"/>
+  </filter>
+</defs>
+
+<!-- Background paper -->
+<rect width="128" height="128" rx="22" fill="url(#bgPaper)"/>
+<!-- paper grain texture -->
+<rect width="128" height="128" rx="22" fill="none" opacity="0.0"/>
+<!-- subtle vignette -->
+<rect width="128" height="128" rx="22" fill="none" stroke="#8C6B4A" stroke-opacity="0.12" stroke-width="2.5"/>
+
+<!-- Outer portrait frame - hand painted irregular circle -->
+<g filter="url(#watercolorEdge)">
+  <!-- outer warm shadow -->
+  <ellipse cx="64" cy="66.5" rx="46.5" ry="46.5" fill="#8C6B4A" opacity="0.18" style="filter:url(#softBlur)"/>
+  <!-- main frame -->
+  <ellipse cx="64" cy="65" rx="44" ry="44" fill="#FFF8E7" stroke="#4A3721" stroke-width="1.6" stroke-opacity="0.85" stroke-linecap="round"/>
+  <ellipse cx="64" cy="65" rx="41.2" ry="41.2" fill="none" stroke="#C9A86A" stroke-width="1.1" stroke-opacity="0.9"/>
+  <ellipse cx="64" cy="65" rx="39" ry="39" fill="url(#portraitBg)" stroke="#8C6B4A" stroke-width="0.7" stroke-opacity="0.25"/>
+  <!-- inner watercolor wash variation -->
+  <ellipse cx="64" cy="65" rx="39" ry="39" fill="#E8A735" opacity="0.07"/>
+  <ellipse cx="58" cy="58" rx="18" ry="14" fill="#FFFFFF" opacity="0.22" style="filter:url(#softBlur)"/>
+</g>
+
+<!-- Candlelit glow behind shoulders -->
+<ellipse cx="64" cy="92" rx="26" ry="10" fill="#E8A735" opacity="0.18" style="filter:url(#softBlur)"/>
+<ellipse cx="64" cy="88" rx="18" ry="6" fill="#F6C667" opacity="0.22" style="filter:url(#softBlur)"/>
+
+<!-- Cape / collar shadow -->
+<path d="M 34 92 C 36 78, 48 72, 64 73 C 80 72, 92 78, 94 92 C 94 98, 88 102, 64 103 C 40 102, 34 98, 34 92 Z" fill="#9B6B4A" opacity="0.95" stroke="#4A3721" stroke-width="1.2" stroke-linejoin="round" stroke-opacity="0.75"/>
+<path d="M 38 90 C 42 80, 52 75, 64 75.5 C 76 75, 86 80, 90 90 L 86 96 L 42 96 Z" fill="#C17A3B" opacity="1"/>
+<path d="M 42 88 C 48 80, 56 77, 64 77.2 C 72 77, 80 80, 86 88" fill="none" stroke="#F6C667" stroke-width="1" stroke-opacity="0.5" stroke-linecap="round"/>
+<!-- cape highlight watercolor -->
+<path d="M 52 88 C 56 84, 60 83, 64 83 C 64 88, 58 92, 52 88 Z" fill="#E8A735" opacity="0.35" style="filter:url(#softBlur)"/>
+
+<!-- Neck -->
+<rect x="57.5" y="76" width="13" height="10" rx="3" fill="#E8C4A0" stroke="#4A3721" stroke-width="1" stroke-opacity="0.6"/>
+
+<!-- Armor shoulder pads -->
+<g stroke="#4A3721" stroke-opacity="0.65" stroke-linejoin="round">
+  <path d="M 31 88 C 31 80, 38 74, 46 76 L 54 80 L 50 92 L 38 96 C 33 94, 31 91, 31 88 Z" fill="#D8D5D0" stroke-width="1.15"/>
+  <path d="M 97 88 C 97 80, 90 74, 82 76 L 74 80 L 78 92 L 90 96 C 95 94, 97 91, 97 88 Z" fill="#D8D5D0" stroke-width="1.15"/>
+  <!-- shoulder highlights -->
+  <path d="M 36 82 C 38 79, 42 77.5, 46 78.5" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.7" stroke-linecap="round"/>
+  <path d="M 92 82 C 90 79, 86 77.5, 82 78.5" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-opacity="0.7" stroke-linecap="round"/>
+  <!-- amber rivets -->
+  <circle cx="42" cy="86" r="1.7" fill="#E8A735" stroke="#4A3721" stroke-width="0.6" stroke-opacity="0.7"/>
+  <circle cx="86" cy="86" r="1.7" fill="#E8A735" stroke="#4A3721" stroke-width="0.6" stroke-opacity="0.7"/>
+  <circle cx="40.5" cy="82.5" r="1.1" fill="#E8A735" opacity="0.9"/>
+  <circle cx="87.5" cy="82.5" r="1.1" fill="#E8A735" opacity="0.9"/>
+</g>
+
+<!-- Head base shape (face) -->
+<ellipse cx="64" cy="66.2" rx="19.8" ry="21.2" fill="#FAD8B8" stroke="#4A3721" stroke-width="1.25" stroke-opacity="0.78" stroke-linejoin="round"/>
+<!-- cheek blush watercolor -->
+<ellipse cx="52.5" cy="70.5" rx="5.2" ry="3.2" fill="#E8A0A0" opacity="0.32" style="filter:url(#softBlur)"/>
+<ellipse cx="75.5" cy="70.5" rx="5.2" ry="3.2" fill="#E8A0A0" opacity="0.32" style="filter:url(#softBlur)"/>
+<!-- chin shadow -->
+<path d="M 55 78 C 59 81.5, 69 81.5, 73 78 C 69 80.2, 59 80.2, 55 78 Z" fill="#D9A88C" opacity="0.45"/>
+
+<!-- Eyes - friendly closed happy -->
+<g stroke="#4A3721" stroke-linecap="round" stroke-linejoin="round">
+  <!-- eye sparkle dots -->
+  <g fill="#4A3721" stroke="none">
+    <ellipse cx="54.8" cy="65.2" rx="2.4" ry="2.7" opacity="0.95"/>
+    <ellipse cx="73.2" cy="65.2" rx="2.4" ry="2.7" opacity="0.95"/>
+    <!-- highlights -->
+    <circle cx="55.6" cy="64.2" r="0.85" fill="#FFFFFF" opacity="0.95"/>
+    <circle cx="74.0" cy="64.2" r="0.85" fill="#FFFFFF" opacity="0.95"/>
+  </g>
+  <!-- gentle eyelid line -->
+  <path d="M 51.5 63.2 C 52.8 62, 57 61, 58.2 63.2" fill="none" stroke-width="0.7" opacity="0.35"/>
+  <path d="M 69.8 63.2 C 71 62, 75.2 61, 76.5 63.2" fill="none" stroke-width="0.7" opacity="0.35"/>
+</g>
+
+<!-- Smile -->
+<path d="M 60.2 73.2 C 62 75.6, 66 75.6, 67.8 73.2 C 66.2 74.1, 61.8 74.1, 60.2 73.2 Z" fill="#4A3721" opacity="0.9" stroke="#4A3721" stroke-width="0.6" stroke-linejoin="round"/>
+<path d="M 59.5 72.8 C 61.5 72.2, 66.5 72.2, 68.5 72.8" fill="none" stroke="#4A3721" stroke-width="0.7" stroke-linecap="round" opacity="0.85"/>
+
+<!-- Nose hint -->
+<path d="M 64 67.5 C 63.2 68.8, 64.8 69.6, 64 70.2" fill="none" stroke="#4A3721" stroke-width="0.6" stroke-linecap="round" opacity="0.35"/>
+
+<!-- Helmet - round friendly shapes -->
+<g>
+  <!-- helmet dome -->
+  <path d="M 43.2 58.5 C 43.2 38.2, 52.5 29.5, 64 29.5 C 75.5 29.5, 84.8 38.2, 84.8 58.5 L 84.8 62.2 C 84.8 62.2, 78.5 60.2, 76.2 54.5 C 73.5 47.2, 68 43.5, 64 43.5 C 60 43.5, 54.5 47.2, 51.8 54.5 C 49.5 60.2, 43.2 62.2, 43.2 62.2 Z" fill="url(#helmetGrad)" stroke="#4A3721" stroke-width="1.35" stroke-linejoin="round" stroke-opacity="0.8"/>
+  <!-- helmet top highlight watercolor -->
+  <path d="M 52 35 C 55 31, 60 29.8, 64 29.8 C 62 32, 58 34.5, 52 35 Z" fill="#FFFFFF" opacity="0.42" style="filter:url(#softBlur)"/>
+  <path d="M 67 33.5 C 71 35, 76 39, 78 46" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-opacity="0.28" stroke-linecap="round"/>
+  <!-- helmet brow band amber accent -->
+  <path d="M 44.5 50.5 C 48 45.2, 55 42, 64 42 C 73 42, 80 45.2, 83.5 50.5 L 82.2 54.8 C 79 51.2, 71.8 47.8, 64 47.8 C 56.2 47.8, 49 51.2, 45.8 54.8 Z" fill="#E8A735" stroke="#4A3721" stroke-width="1" stroke-opacity="0.75" stroke-linejoin="round"/>
+  <!-- rivets on band -->
+  <circle cx="64" cy="48.2" r="1.4" fill="#FFF3D0" stroke="#4A3721" stroke-width="0.6" opacity="0.95"/>
+  <circle cx="54.5" cy="49.8" r="1.0" fill="#FFF3D0" stroke="#4A3721" stroke-width="0.5" opacity="0.95"/>
+  <circle cx="73.5" cy="49.8" r="1.0" fill="#FFF3D0" stroke="#4A3721" stroke-width="0.5" opacity="0.95"/>
+  <!-- cheek guards -->
+  <path d="M 43.2 58.5 L 43.2 66.5 C 43.2 69.2, 46 71.5, 49.5 71.5 L 51.5 71.5 C 51.5 71.5, 48.2 67, 48.2 62 L 43.2 58.5 Z" fill="#C8C5BF" stroke="#4A3721" stroke-width="1.1" stroke-linejoin="round" stroke-opacity="0.75"/>
+  <path d="M 84.8 58.5 L 84.8 66.5 C 84.8 69.2, 82 71.5, 78.5 71.5 L 76.5 71.5 C 76.5 71.5, 79.8 67, 79.8 62 L 84.8 58.5 Z" fill="#C8C5BF" stroke="#4A3721" stroke-width="1.1" stroke-linejoin="round" stroke-opacity="0.75"/>
+  <!-- visor edge inner shadow -->
+  <path d="M 51.8 54.5 C 54.5 47.2, 60 43.5, 64 43.5 C 68 43.5, 73.5 47.2, 76.2 54.5" fill="none" stroke="#4A3721" stroke-width="0.9" stroke-opacity="0.25" stroke-linecap="round"/>
+</g>
+
+<!-- Leaf plume - centered on helmet -->
+<g stroke="#4A3721" stroke-linejoin="round" stroke-linecap="round">
+  <!-- stem -->
+  <path d="M 64 30.2 L 64 21.5" stroke-width="1.4" stroke-opacity="0.7"/>
+  <!-- central large amber leaf -->
+  <path d="M 64 13.5 C 66.8 15.8, 71.5 20.2, 69.8 26.2 C 67.5 30.5, 64 31.8, 64 31.8 C 64 31.8, 60.5 30.5, 58.2 26.2 C 56.5 20.2, 61.2 15.8, 64 13.5 Z" fill="url(#leafGold)" stroke-width="1.05" stroke-opacity="0.75"/>
+  <!-- leaf vein -->
+  <path d="M 64 14.5 L 64 30.2" stroke-width="0.7" stroke-opacity="0.45"/>
+  <path d="M 64 20 L 67 22.2" stroke-width="0.6" opacity="0.4"/>
+  <path d="M 64 20 L 61 22.2" stroke-width="0.6" opacity="0.4"/>
+  <path d="M 64 24 L 67.2 26" stroke-width="0.6" opacity="0.4"/>
+  <path d="M 64 24 L 60.8 26" stroke-width="0.6" opacity="0.4"/>
+  <!-- left small leaf -->
+  <path d="M 58.5 18.2 C 56.2 17, 52.2 17.2, 50.8 20.8 C 50.2 24, 53.5 27.2, 57.2 27.8 C 58.8 25.2, 59.5 20.5, 58.5 18.2 Z" fill="url(#leafGreen)" stroke-width="0.9" stroke-opacity="0.65"/>
+  <path d="M 51.5 21.2 L 57.2 27.2" stroke-width="0.55" opacity="0.4"/>
+  <!-- right small leaf -->
+  <path d="M 69.5 18.2 C 71.8 17, 75.8 17.2, 77.2 20.8 C 77.8 24, 74.5 27.2, 70.8 27.8 C 69.2 25.2, 68.5 20.5, 69.5 18.2 Z" fill="url(#leafGreen)" stroke-width="0.9" stroke-opacity="0.65"/>
+  <path d="M 76.5 21.2 L 70.8 27.2" stroke-width="0.55" opacity="0.4"/>
+  <!-- watercolor highlight on leaves -->
+  <ellipse cx="65.2" cy="19.5" rx="2.2" ry="1.2" fill="#FFFFFF" opacity="0.32" style="filter:url(#softBlur)"/>
+</g>
+
+<!-- Small amber sparkle accents - candlelit mood -->
+<g fill="#E8A735" stroke="#4A3721" stroke-width="0.35" opacity="0.9">
+  <circle cx="38.5" cy="48.5" r="1.1" stroke-opacity="0.5"/>
+  <circle cx="89.5" cy="48.5" r="1.1" stroke-opacity="0.5"/>
+  <circle cx="34.2" cy="66" r="0.8" opacity="0.6" stroke="none"/>
+  <circle cx="93.8" cy="66" r="0.8" opacity="0.6" stroke="none"/>
+</g>
+<!-- subtle ink speckles for hand-painted texture -->
+<g fill="#4A3721" opacity="0.07">
+  <circle cx="42" cy="38" r="0.6"/>
+  <circle cx="86" cy="40" r="0.5"/>
+  <circle cx="39" cy="72" r="0.45"/>
+  <circle cx="89" cy="74" r="0.5"/>
+  <circle cx="64" cy="100" r="0.6"/>
+</g>
+
+</svg>

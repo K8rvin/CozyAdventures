@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<rect width="128" height="128" rx="24" fill="#f3e6cf"/>
+<!-- soft shadow -->
+<ellipse cx="64" cy="112" rx="30" ry="6" fill="#3d2f22" opacity="0.13"/>
+<!-- portrait circle -->
+<circle cx="64" cy="60" r="46" fill="#ffca7a"/>
+<circle cx="64" cy="60" r="46" fill="none" stroke="#3d2f22" stroke-width="4.5" stroke-linecap="round"/>
+<!-- inner soft shadow -->
+<ellipse cx="64" cy="92" rx="32" ry="9" fill="#3d2f22" opacity="0.08"/>
+<!-- cloak / shoulders -->
+<path d="M 30 84 C 30 84 36 104 64 104 C 92 104 98 84 98 84 L 88 71 L 40 71 Z" fill="#5d6b3f" stroke="#3d2f22" stroke-width="3.5" stroke-linejoin="round"/>
+<path d="M 40 71 L 58 82 L 64 88 L 70 82 L 88 71 Z" fill="#3d2f22" opacity="0.18"/>
+<!-- neck -->
+<rect x="54" y="78" width="20" height="14" rx="6" fill="#f3e6cf" stroke="#3d2f22" stroke-width="3"/>
+<!-- helmet main -->
+<path d="M 36 66 C 36 44.5 46.5 29 64 29 C 81.5 29 92 44.5 92 66 L 92 74 C 92 78.5 88.5 82 64 82 C 39.5 82 36 78.5 36 74 Z" fill="#f3e6cf" stroke="#3d2f22" stroke-width="3.5" stroke-linejoin="round"/>
+<!-- helmet side shadow -->
+<path d="M 36 66 C 36 44.5 46.5 29 64 29 C 68 29 71.5 29.8 74.5 31.2 C 63 35.5 52 45.5 52 66 L 52 74 C 52 77 54.5 79.5 64 81.5 C 39.5 82 36 78.5 36 74 Z" fill="#3d2f22" opacity="0.07"/>
+<!-- visor band -->
+<rect x="38" y="55" width="52" height="18" rx="7" fill="#3d2f22"/>
+<!-- eye slits -->
+<rect x="46.5" y="62" width="14" height="5" rx="2.5" fill="#f3e6cf"/>
+<rect x="67.5" y="62" width="14" height="5" rx="2.5" fill="#f3e6cf"/>
+<!-- eye shine -->
+<circle cx="50.5" cy="64.2" r="1.2" fill="#3d2f22" opacity="0.9"/>
+<circle cx="71.5" cy="64.2" r="1.2" fill="#3d2f22" opacity="0.9"/>
+<!-- cheek blush -->
+<ellipse cx="45" cy="72.5" rx="4.5" ry="2.2" fill="#ffca7a" opacity="0.9"/>
+<ellipse cx="83" cy="72.5" rx="4.5" ry="2.2" fill="#ffca7a" opacity="0.9"/>
+<!-- helmet top ridge -->
+<path d="M 64 29 L 64 55" stroke="#3d2f22" stroke-width="2.2" stroke-linecap="round" opacity="0.9"/>
+<circle cx="64" cy="35" r="2" fill="#3d2f22"/>
+<circle cx="64" cy="47" r="1.6" fill="#3d2f22" opacity="0.9"/>
+<!-- helmet rivets -->
+<circle cx="42.5" cy="50" r="1.8" fill="#3d2f22" opacity="0.95"/>
+<circle cx="85.5" cy="50" r="1.8" fill="#3d2f22" opacity="0.95"/>
+<circle cx="40.5" cy="62" r="1.4" fill="#3d2f22" opacity="0.95"/>
+<circle cx="87.5" cy="62" r="1.4" fill="#3d2f22" opacity="0.95"/>
+<!-- leaf plume holder -->
+<rect x="60.5" y="18" width="7" height="14" rx="3.5" fill="#3d2f22"/>
+<!-- leaf plume -->
+<g>
+<path d="M 64 10 C 64 10 52.5 15.2 52.2 24.5 C 52 30.5 56.8 33.8 64 35.5 C 71.2 33.8 76 30.5 75.8 24.5 C 75.5 15.2 64 10 64 10 Z" fill="#5d6b3f" stroke="#3d2f22" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M 64 11.5 C 64 11.5 58 16.8 57.8 23.2 C 57.7 26.2 59.5 28.5 64 30.2 C 64 30.2 64 11.5 64 11.5 Z" fill="#7a9a4a" opacity="0.95"/>
+<path d="M 64 11.2 L 64 35" stroke="#3d2f22" stroke-width="1.6" stroke-linecap="round" opacity="0.95"/>
+<path d="M 64 20 L 58.5 23.2" stroke="#3d2f22" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+<path d="M 64 24.5 L 69.2 27.2" stroke="#3d2f22" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+<path d="M 64 28 L 59 30.2" stroke="#3d2f22" stroke-width="1.1" stroke-linecap="round" opacity="0.7"/>
+</g>
+</svg>
