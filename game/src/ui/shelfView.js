@@ -1,10 +1,10 @@
 // Экран головоломки «Полки и товары».
 import {
-  createShelfPuzzle, placeItem, removeItem, undoShelf, resetShelf,
+  createShelfPuzzle, placeItem, removeItem, moveItem, undoShelf, resetShelf,
   violations, isShelfSolved, shelfCells, shelfHint, TAG_LABEL,
 } from '../core/shelfPuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
-import { header, showOverlay } from './common.js';
+import { header, showOverlay , puzzleSkipButton } from './common.js';
 
 const CELL = 64;
 
@@ -31,6 +31,7 @@ export function renderShelfPuzzle(container, ctx, level) {
   canvas.style.width = `${gw * CELL}px`;
   canvas.style.height = `${gh * CELL}px`;
   canvas.style.maxWidth = '100%';
+  canvas.style.touchAction = 'none'; // перетаскивание без прокрутки страницы
   canvasBox.appendChild(canvas);
   wrap.appendChild(canvasBox);
 
@@ -72,6 +73,7 @@ export function renderShelfPuzzle(container, ctx, level) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Сброс (R)', doReset);
   controls.append(btnUndo, btnHint, btnReset);
+  controls.appendChild(puzzleSkipButton(ctx, level, () => ctx.go('puzzles')));
   side.appendChild(controls);
 
   wrap.appendChild(side);
@@ -151,7 +153,97 @@ export function renderShelfPuzzle(container, ctx, level) {
       }
     }
   }
-  canvas.addEventListener('pointerdown', onTap);
+  // --- Перетаскивание предметов (тап-управление сохраняется) ---
+  let drag = null; // { itemId, startX, startY, active, ghost, hover:[x,y]|null }
+
+  function cellFromEvent(ev) {
+    const rect = canvas.getBoundingClientRect();
+    const scale = canvas.width / dpr / rect.width;
+    const x = Math.floor((ev.clientX - rect.left) * scale / CELL);
+    const y = Math.floor((ev.clientY - rect.top) * scale / CELL);
+    return (x >= 0 && y >= 0 && x < level.grid[0] && y < level.grid[1]) ? [x, y] : null;
+  }
+
+  function startPotentialDrag(ev, itemId) {
+    if (finished) return;
+    drag = { itemId, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hover: null };
+  }
+
+  function activateDrag(ev) {
+    const it = level.items.find((i) => i.id === drag.itemId);
+    if (!it) return;
+    const ghost = document.createElement('div');
+    ghost.className = 'drag-ghost';
+    ghost.textContent = it.icon;
+    document.body.appendChild(ghost);
+    drag.ghost = ghost;
+    drag.active = true;
+    selectedItem = null;
+    ctx.sfx?.('tap');
+  }
+
+  function onPointerMove(ev) {
+    if (!drag) return;
+    if (!drag.active) {
+      const dist = Math.hypot(ev.clientX - drag.startX, ev.clientY - drag.startY);
+      if (dist > 8) activateDrag(ev);
+      else return;
+    }
+    drag.ghost.style.transform = `translate(${ev.clientX - 24}px, ${ev.clientY - 24}px)`;
+    const cell = cellFromEvent(ev);
+    const key = cell ? cell.join(',') : null;
+    if ((drag.hover ? drag.hover.join(',') : null) !== key) {
+      drag.hover = cell;
+      draw();
+    }
+  }
+
+  function onPointerUp(ev) {
+    if (!drag) return;
+    const wasActive = drag.active;
+    const itemId = drag.itemId;
+    const cell = drag.hover;
+    if (drag.ghost) drag.ghost.remove();
+    drag = null;
+    if (!wasActive) return; // это был тап — обрабатывают click/onTap
+
+    const trayRect = tray.getBoundingClientRect();
+    const overTray = ev.clientX >= trayRect.left && ev.clientX <= trayRect.right &&
+                     ev.clientY >= trayRect.top && ev.clientY <= trayRect.bottom;
+
+    if (cell) {
+      const r = moveItem(puzzle, itemId, cell[0], cell[1]);
+      if (r.ok) {
+        hintMark = null;
+        ctx.sfx?.('rotate');
+        draw();
+        if (isShelfSolved(puzzle)) finish();
+      } else {
+        ctx.toast(r.error);
+        draw();
+      }
+    } else if (overTray && puzzle.placement[itemId]) {
+      removeItem(puzzle, itemId);
+      hintMark = null;
+      ctx.sfx?.('tap');
+      draw();
+    } else {
+      draw(); // просто отмена перетаскивания
+    }
+  }
+
+  canvas.addEventListener('pointerdown', (ev) => {
+    if (finished) return;
+    const cell = cellFromEvent(ev);
+    if (cell) {
+      const occupantId = Object.entries(puzzle.placement)
+        .find(([, pos]) => pos && pos[0] === cell[0] && pos[1] === cell[1])?.[0];
+      if (occupantId) { startPotentialDrag(ev, occupantId); return; }
+    }
+    onTap(ev); // пустая клетка — тап-логика (поставить выбранный)
+  });
+  window.addEventListener('pointermove', onPointerMove);
+  window.addEventListener('pointerup', onPointerUp);
 
   function onKey(ev) {
     if (ev.key === 'z' || ev.key === 'Z' || (ev.ctrlKey && ev.key === 'z')) { ev.preventDefault(); doUndo(); }
@@ -224,6 +316,15 @@ export function renderShelfPuzzle(container, ctx, level) {
       }
     }
 
+    // Подсветка клетки под курсором при перетаскивании
+    if (drag?.active && drag.hover) {
+      g.strokeStyle = 'rgba(255, 202, 122, 0.95)';
+      g.lineWidth = 3;
+      g.setLineDash([7, 5]);
+      g.strokeRect(drag.hover[0] * CELL + 4, drag.hover[1] * CELL + 4, CELL - 8, CELL - 8);
+      g.setLineDash([]);
+    }
+
     const v = violations(puzzle);
     const badItems = new Set(v.flatMap((x) => [x.itemA, x.itemB]).filter(Boolean));
 
@@ -246,7 +347,9 @@ export function renderShelfPuzzle(container, ctx, level) {
       g.font = `${CELL * 0.55}px "Segoe UI Emoji", sans-serif`;
       g.textAlign = 'center';
       g.textBaseline = 'middle';
+      if (drag?.active && drag.itemId === itemId) g.globalAlpha = 0.3;
       g.fillText(it?.icon || '🎁', cx, cy);
+      g.globalAlpha = 1;
     }
 
     // Куда кот кивает (пустая клетка из подсказки)
@@ -270,6 +373,7 @@ export function renderShelfPuzzle(container, ctx, level) {
       b.className = 'small' + (selectedItem === it.id ? ' primary' : '');
       b.innerHTML = `${it.icon} ${it.name}`;
       b.title = it.tags.join(', ');
+      b.addEventListener('pointerdown', (ev) => startPotentialDrag(ev, it.id));
       b.addEventListener('click', () => {
         selectedItem = selectedItem === it.id ? null : it.id;
         ctx.sfx?.('tap');
@@ -295,7 +399,9 @@ export function renderShelfPuzzle(container, ctx, level) {
 
   return () => {
     window.removeEventListener('keydown', onKey);
-    canvas.removeEventListener('pointerdown', onTap);
+    window.removeEventListener('pointermove', onPointerMove);
+    window.removeEventListener('pointerup', onPointerUp);
+    if (drag?.ghost) drag.ghost.remove();
   };
 }
 

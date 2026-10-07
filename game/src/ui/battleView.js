@@ -34,7 +34,13 @@ export function renderBattleList(container, ctx) {
   list.className = 'list';
   const won = Object.keys(state.battlesDone).length;
   const firstUnbeaten = firstUnbeatenBattle(state);
-  const WORLD_LABEL = { meadow: '🌿 Тихая опушка', town: '🏰 Средневековый дворик', attic: '📖 Книжный чердак' };
+  const WORLD_LABEL = {
+    meadow: '🌿 Тихая опушка', town: '🏰 Средневековый дворик', attic: '📖 Книжный чердак',
+    crossroads: '🌟 Экспедиции перекрёстка',
+    nm: '🌃 Ночной рынок', sw: '🐸 Сказочные топи', sf: '🎪 Звёздная ярмарка',
+    cr: '💎 Хрустальные горы', ash: '🔥 Пепельные степи', jade: '🎋 Нефритовый сад',
+    deep: '🐚 Подводный грот', mist: '⏳ Туманные часы',
+  };
   let lastWorld = null;
   for (const b of BATTLES) {
     if (b.world !== lastWorld) {
@@ -48,11 +54,11 @@ export function renderBattleList(container, ctx) {
     const row = document.createElement('div');
     row.className = 'row' + (available ? '' : ' locked') + (done ? ' done' : '');
     if (firstUnbeaten && b.id === firstUnbeaten.id) row.dataset.scrollTarget = '1';
-    const icons = b.enemies.map((e) => ENEMY_BY_ID[e].icon).join(' ');
+    const icons = b.enemies.map((e) => ENEMY_BY_ID[typeof e === 'string' ? e : e.id].icon).join(' ');
     row.innerHTML = `
       <span class="icon">${available ? (done ? '🏆' : '⚔️') : '🔒'}</span>
       <span class="grow">
-        <div class="name">${b.name} ${ENEMY_BY_ID[b.enemies[0]].boss ? '<span class="badge epic">БОСС</span>' : ''}</div>
+        <div class="name">${b.name} ${ENEMY_BY_ID[typeof b.enemies[0] === 'string' ? b.enemies[0] : b.enemies[0].id].boss ? '<span class="badge epic">БОСС</span>' : ''}</div>
         <div class="desc">${available ? b.tip : 'Пройди предыдущий поход.'} · Против: ${icons}</div>
       </span>`;
     if (available) {
@@ -105,9 +111,11 @@ export function renderBattle(container, ctx, params) {
       const d = MERC_BY_ID[id];
       return { uid: `a${i + 1}`, name: d.name, icon: d.icon, hp: d.hp, maxHp: d.hp, badges: new Set() };
     }),
-    foes: battle.enemies.map((id, i) => {
+    foes: battle.enemies.map((entry, i) => {
+      const id = typeof entry === 'string' ? entry : entry.id;
+      const scale = typeof entry === 'string' ? 1 : (entry.scale || 1);
       const d = ENEMY_BY_ID[id];
-      return { uid: `e${i}`, name: d.name, icon: d.icon, hp: d.hp, maxHp: d.hp, badges: new Set() };
+      return { uid: `e${i}`, name: d.name, icon: d.icon, hp: Math.round(d.hp * scale), maxHp: Math.round(d.hp * scale), badges: new Set() };
     }),
   };
 

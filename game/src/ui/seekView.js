@@ -1,12 +1,13 @@
 // Экран «Поиск предметов»: цельная иллюстрированная сцена, поиск по названиям.
 // Фон: assets/seek_<world>.png, фолбэк — assets/seek_<world>.svg, затем заливка.
 import {
-  createSeekPuzzle, seekTap, isSeekSolved, seekProgress, seekHint, seekTargets,
+  createSeekPuzzle, seekTap, isSeekSolved, seekProgress, seekHint, groupProgress,
 } from '../core/seekPuzzle.js';
-import { completePuzzle, nextPuzzle } from '../core/state.js';
-import { header, showOverlay } from './common.js';
+import { completePuzzle, nextPuzzle, applySeekOverrides } from '../core/state.js';
+import { header, showOverlay , puzzleSkipButton } from './common.js';
 
-export function renderSeekPuzzle(container, ctx, level) {
+export function renderSeekPuzzle(container, ctx, rawLevel) {
+  const level = applySeekOverrides(ctx.state, rawLevel); // правки из редактора
   const puzzle = createSeekPuzzle(level);
   let hintsUsed = 0;
   let hintSpot = null; // {x, y}
@@ -62,6 +63,11 @@ export function renderSeekPuzzle(container, ctx, level) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Заново (R)', doReset);
   controls.append(btnHint, btnReset);
+  controls.appendChild(puzzleSkipButton(ctx, level, () => ctx.go('puzzles')));
+  const btnEdit = mkBtn('✏️', () => ctx.go('seekeditor', { id: rawLevel.id }));
+  btnEdit.classList.add('ghost');
+  btnEdit.title = 'Править области поиска';
+  controls.appendChild(btnEdit);
   side.appendChild(controls);
 
   wrap.appendChild(side);
@@ -130,7 +136,10 @@ export function renderSeekPuzzle(container, ctx, level) {
     if (r.result === 'found') {
       hintSpot = null;
       ctx.sfx?.('coin');
-      ctx.toast(`Найдено: ${r.object.label}!`);
+      const gp = groupProgress(puzzle, r.group);
+      ctx.toast(gp.found === gp.total
+        ? `Все предметы: ${r.group.label}!`
+        : `${r.group.label}: ${gp.found} из ${gp.total}!`);
       draw();
       if (isSeekSolved(puzzle)) finish();
     } else if (r.result === 'decoy' || r.result === 'empty') {
@@ -171,23 +180,6 @@ export function renderSeekPuzzle(container, ctx, level) {
     }, 450);
   }
 
-  function drawObject(g, o, fade) {
-    g.save();
-    g.translate(o.x, o.y);
-    g.rotate(o.rot || 0);
-    const size = 46 * (o.scale || 1);
-    // Реалистичная тень под предметом
-    g.shadowColor = 'rgba(0, 0, 0, 0.55)';
-    g.shadowBlur = 7;
-    g.shadowOffsetY = 3;
-    g.globalAlpha = fade ? 0.4 : (o.alpha ?? 1);
-    g.font = `${size}px "Segoe UI Emoji", sans-serif`;
-    g.textAlign = 'center';
-    g.textBaseline = 'middle';
-    g.fillText(o.icon, 0, 0);
-    g.restore();
-  }
-
   function draw() {
     const g = canvas.getContext('2d');
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -211,46 +203,36 @@ export function renderSeekPuzzle(container, ctx, level) {
     g.fillStyle = vig;
     g.fillRect(0, 0, W, H);
 
-    // Объекты сцены
-    for (const o of level.scene) {
-      const isFound = o.target && puzzle.found.has(o.id);
-      drawObject(g, o, isFound);
-      if (isFound) {
-        g.strokeStyle = 'rgba(143, 209, 139, 0.85)';
-        g.lineWidth = 3;
-        g.beginPath();
-        g.arc(o.x, o.y, 30, 0, Math.PI * 2);
-        g.stroke();
-        g.fillStyle = '#8fd18b';
-        g.font = 'bold 20px sans-serif';
-        g.textAlign = 'center';
-        g.textBaseline = 'middle';
-        g.fillText('✓', o.x + 24, o.y - 22);
-      }
-      if (hintSpot && Math.hypot(o.x - hintSpot.x, o.y - hintSpot.y) < 1) {
-        g.strokeStyle = 'rgba(255, 226, 138, 0.95)';
-        g.lineWidth = 4;
-        g.setLineDash([8, 6]);
-        g.beginPath();
-        g.arc(o.x, o.y, 42, 0, Math.PI * 2);
-        g.stroke();
-        g.setLineDash([]);
-      }
-    }
-
-    // Передний план — поверх предметов (эффект укрытости)
-    for (const f of level.front || []) {
-      g.save();
-      g.translate(f.x, f.y);
-      g.rotate(f.rot || 0);
-      g.globalAlpha = f.alpha ?? 0.85;
-      g.shadowColor = 'rgba(0,0,0,0.4)';
-      g.shadowBlur = 5;
-      g.font = `${52 * (f.scale || 1)}px "Segoe UI Emoji", sans-serif`;
-      g.textAlign = 'center';
-      g.textBaseline = 'middle';
-      g.fillText(f.icon, 0, 0);
-      g.restore();
+    // Предметы не дорисовываем: они уже есть в иллюстрации.
+    // Найденное — мягкое зелёное кольцо, подсказка — янтарный пунктир.
+    for (const group of level.groups) {
+      group.spots.forEach((s, i) => {
+        const isFound = puzzle.found.has(`${group.id}:${i}`);
+        if (isFound) {
+          g.strokeStyle = 'rgba(143, 209, 139, 0.9)';
+          g.lineWidth = 4;
+          g.beginPath();
+          g.arc(s.x, s.y, s.r * 0.9, 0, Math.PI * 2);
+          g.stroke();
+          g.fillStyle = 'rgba(143, 209, 139, 0.95)';
+          g.font = 'bold 20px sans-serif';
+          g.textAlign = 'center';
+          g.textBaseline = 'middle';
+          g.shadowColor = 'rgba(0,0,0,0.6)';
+          g.shadowBlur = 4;
+          g.fillText('✓', s.x, s.y);
+          g.shadowBlur = 0;
+        }
+        if (hintSpot && Math.hypot(s.x - hintSpot.x, s.y - hintSpot.y) < 1) {
+          g.strokeStyle = 'rgba(255, 226, 138, 0.95)';
+          g.lineWidth = 4;
+          g.setLineDash([8, 6]);
+          g.beginPath();
+          g.arc(s.x, s.y, s.r * 1.2, 0, Math.PI * 2);
+          g.stroke();
+          g.setLineDash([]);
+        }
+      });
     }
 
     // Вспышка промаха
@@ -261,19 +243,19 @@ export function renderSeekPuzzle(container, ctx, level) {
       g.fill();
     }
 
-    // Список целей
+    // Список целей со счётчиками «2 из 8»
     targetList.innerHTML = '';
-    for (const t of seekTargets(level)) {
-      const done = puzzle.found.has(t.id);
+    const pr = seekProgress(puzzle);
+    for (const g of pr.groups) {
+      const done = g.found === g.total;
       const row = document.createElement('div');
-      row.innerHTML = `${done ? '✅' : '🔍'} ${t.label}`;
+      row.innerHTML = `${done ? '✅' : '🔍'} ${g.label} — <b>${g.found} из ${g.total}</b>`;
       row.style.cssText = `font-size:15px;${done ? 'opacity:0.6;text-decoration:line-through' : ''}`;
       targetList.appendChild(row);
     }
 
-    const pr = seekProgress(puzzle);
     statusEl.innerHTML =
-      `🔍 Найдено: <b>${pr.found}/${pr.total}</b> &nbsp; <span class="muted">промахи: ${puzzle.misses}</span>` +
+      `🔍 Всего найдено: <b>${pr.found} из ${pr.total}</b> &nbsp; <span class="muted">промахи: ${puzzle.misses}</span>` +
       `<div class="muted" style="font-size:13px">Подсказки: ${hintsUsed}</div>`;
   }
 

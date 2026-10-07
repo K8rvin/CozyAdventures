@@ -15,11 +15,12 @@ export const PUZZLES = [
     id: 'md_01', world: 'meadow', name: 'Первый светлячок', difficulty: 1,
     grid: [4, 4],
     objects: [
-      { type: 'source', pos: [0, 1], dir: 1 },
-      { type: 'lantern', pos: [3, 1] },
+      { type: 'source', pos: [1, 3], dir: 0 },
+      { type: 'mirror', pos: [1, 1], orient: 1 },
+      { type: 'lantern', pos: [0, 1] },
     ],
     rewards: [{ type: 'coins', amount: 40 }],
-    intro: 'Смотри: светлячок светит прямо — луч уже бежит к фонарю! Так работает свет. Уровень решится сам, а дальше мы добавим зеркала.',
+    intro: 'Светлячок светит вверх, но фонарь — слева. Тапни зеркало один раз: луч повернётся к фонарю!',
   },
   {
     id: 'md_02', world: 'meadow', name: 'Первое зеркало', difficulty: 1,

@@ -4,7 +4,7 @@ import {
   isBookSolved, bookProgress, bookHint, pathCells,
 } from '../core/bookPuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
-import { header, showOverlay } from './common.js';
+import { header, showOverlay , puzzleSkipButton } from './common.js';
 
 const CELL = 60;
 
@@ -62,6 +62,7 @@ export function renderBookPuzzle(container, ctx, level) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Сброс (R)', doReset);
   controls.append(btnUndo, btnHint, btnReset);
+  controls.appendChild(puzzleSkipButton(ctx, level, () => ctx.go('puzzles')));
   side.appendChild(controls);
 
   wrap.appendChild(side);

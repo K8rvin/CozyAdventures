@@ -11,13 +11,24 @@ import { ITEM_BY_ID } from '../data/items.js';
 import { renderShelfPuzzle } from './shelfView.js';
 import { renderBookPuzzle } from './bookView.js';
 import { renderSeekPuzzle } from './seekView.js';
+import { renderPathPuzzle } from './pathView.js';
+import { renderTeaPuzzle } from './teaView.js';
 import { startTutorial } from './tutorial.js';
-import { quickNav } from './common.js';
+import { quickNav, puzzleSkipButton } from './common.js';
 
 const WORLD_LABEL = {
   meadow: '🌿 Тихая опушка — свет и фонарики · поиск предметов',
   town: '🏰 Средневековый дворик — полки и товары · поиск предметов',
   attic: '📖 Книжный чердак — восстановление фраз · поиск предметов',
+  crossroads: '🌟 Перекрёсток миров — тропинки и чай',
+  nm: '🌃 Ночной рынок — поиск предметов',
+  sw: '🐸 Сказочные топи — поиск предметов',
+  sf: '🎪 Звёздная ярмарка — поиск предметов',
+  ash: '🔥 Кузница — поиск предметов',
+  cr: '💎 Хрустальные горы — поиск предметов',
+  jade: '🎋 Нефритовый сад — поиск предметов',
+  deep: '🐚 Подводный грот — поиск предметов',
+  mist: '⏳ Туманные часы — поиск предметов',
 };
 
 // --- Список уровней ---
@@ -54,6 +65,14 @@ export function renderPuzzleList(container, ctx) {
       btn.textContent = done ? 'Ещё раз' : 'Решать';
       btn.addEventListener('click', () => ctx.go('puzzle', { id: p.id }));
       row.appendChild(btn);
+      if (!done) {
+        const skipBtn = puzzleSkipButton(ctx, p, () => {
+          container.innerHTML = '';
+          renderPuzzleList(container, ctx);
+        });
+        skipBtn.className = 'small ghost';
+        row.appendChild(skipBtn);
+      }
     }
     list.appendChild(row);
   });
@@ -84,6 +103,12 @@ export function renderPuzzle(container, ctx, params) {
   }
   if (level.mechanic === 'seek') {
     return renderSeekPuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'path') {
+    return renderPathPuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'tea') {
+    return renderTeaPuzzle(container, ctx, level);
   }
   const puzzle = createPuzzle(level);
   let hintsUsed = 0;
@@ -128,6 +153,7 @@ export function renderPuzzle(container, ctx, params) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Сброс (R)', doReset);
   controls.append(btnUndo, btnHint, btnReset);
+  controls.appendChild(puzzleSkipButton(ctx, level, () => ctx.go('puzzles')));
   side.appendChild(controls);
 
   const legend = document.createElement('div');

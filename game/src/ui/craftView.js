@@ -11,7 +11,7 @@ export function renderCraft(container, ctx) {
   container.appendChild(header(ctx, 'Кузница и котёл',
     'Материалы с походов становятся зельями и снаряжением. Наковальня горячая, котёл булькает.'));
   container.appendChild(quickNav(ctx, [
-    { icon: '🏠', label: 'В лавку', screen: 'hub' },
+    { icon: '🌇', label: 'На площадь', screen: 'hub', params: { scene: 'square' } },
   ]));
 
   const layout = document.createElement('div');

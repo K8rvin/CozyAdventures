@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { SEEK_PUZZLES } from '../src/data/puzzlesSeek.js';
 import {
   createSeekPuzzle, seekTap, isSeekSolved, seekProgress, seekHint,
-  seekTargets, validateSeekLevel,
+  seekTargets, validateSeekLevel, groupProgress,
 } from '../src/core/seekPuzzle.js';
 
 test('все уровни поиска валидны', () => {
@@ -13,67 +13,57 @@ test('все уровни поиска валидны', () => {
   }
 });
 
-test('целевые иконки не дублируются в декорациях', () => {
-  for (const level of SEEK_PUZZLES) {
-    const targetIcons = new Set(seekTargets(level).map((t) => t.icon));
-    for (const o of level.scene) {
-      if (!o.target) assert.ok(!targetIcons.has(o.icon), `${level.id}: декорация совпадает с целью`);
-    }
-  }
+test('в группах есть и одиночные, и множественные цели', () => {
+  const multi = SEEK_PUZZLES.flatMap((l) => l.groups.filter((g) => g.spots.length >= 3));
+  assert.ok(multi.length >= 4, 'должно быть несколько групп по 3+ экземпляра');
 });
 
-test('сцены достаточно плотные (реалистичная искалка)', () => {
-  for (const level of SEEK_PUZZLES) {
-    assert.ok(level.scene.length >= 50, `${level.id}: объектов ${level.scene.length} — маловато`);
-  }
+test('счётчик группы: «2 из 8»', () => {
+  const level = SEEK_PUZZLES.find((l) => l.id === 'sk_tw_01'); // голуби 8
+  const s = createSeekPuzzle(level);
+  const pigeons = level.groups.find((g) => g.id === 'pigeon');
+  assert.equal(pigeons.spots.length, 8);
+  const p0 = groupProgress(s, pigeons);
+  assert.deepEqual(p0, { found: 0, total: 8 });
+  seekTap(s, pigeons.spots[0].x, pigeons.spots[0].y);
+  seekTap(s, pigeons.spots[1].x, pigeons.spots[1].y);
+  assert.deepEqual(groupProgress(s, pigeons), { found: 2, total: 8 });
+  const pr = seekProgress(s);
+  assert.equal(pr.groups.find((g) => g.id === 'pigeon').found, 2);
 });
 
-test('тап по цели находит предмет, повторный тап не засчитывается', () => {
+test('один и тот же экземпляр дважды не засчитывается', () => {
   const level = SEEK_PUZZLES[0];
   const s = createSeekPuzzle(level);
-  const t = seekTargets(level)[0];
-  assert.equal(seekTap(s, t.x, t.y).result, 'found');
-  assert.equal(seekTap(s, t.x, t.y).result, 'already');
-  assert.equal(seekProgress(s).found, 1);
+  const g = level.groups[0];
+  assert.equal(seekTap(s, g.spots[0].x, g.spots[0].y).result, 'found');
+  assert.equal(seekTap(s, g.spots[0].x, g.spots[0].y).result, 'already');
+  assert.equal(groupProgress(s, g).found, 1);
 });
 
-test('тап рядом с целью (в радиусе) тоже работает, вдали — нет', () => {
+test('уровень решается только когда найдены ВСЕ экземпляры', () => {
   const level = SEEK_PUZZLES[0];
   const s = createSeekPuzzle(level);
-  const t = seekTargets(level)[0];
-  const rr = t.r * (t.scale || 1);
-  assert.equal(seekTap(s, t.x + rr * 0.7, t.y).result, 'found');
-  const s2 = createSeekPuzzle(level);
-  assert.equal(seekTap(s2, t.x + rr * 2 + 40, t.y).result, 'empty');
+  // Находим все, кроме одного спота
+  const all = level.groups.flatMap((g) => g.spots.map((sp, i) => ({ g, sp, i })));
+  for (const { g, sp, i } of all.slice(1)) seekTap(s, sp.x, sp.y);
+  assert.equal(isSeekSolved(s), false, 'пока не все — не решено');
+  const last = all[0];
+  seekTap(s, last.sp.x, last.sp.y);
+  assert.ok(isSeekSolved(s));
 });
 
-test('промахи считаются, но не наказывают', () => {
-  const level = SEEK_PUZZLES[0];
-  const s = createSeekPuzzle(level);
-  const decoy = level.scene.find((o) => !o.target);
-  assert.equal(seekTap(s, decoy.x, decoy.y).result, 'decoy');
-  assert.equal(seekTap(s, 5, 5).result, 'empty');
-  assert.equal(s.misses, 1);
-});
-
-test('уровень решается находкой всех целей, подсказка указывает на ненайденное', () => {
+test('подсказка ведёт к полному решению каждого уровня', () => {
   for (const level of SEEK_PUZZLES) {
     const s = createSeekPuzzle(level);
-    let guard = 10;
+    let guard = 40;
     while (!isSeekSolved(s) && guard-- > 0) {
       const h = seekHint(s);
       if (h.type === 'already') break;
       assert.equal(h.type, 'point');
-      assert.ok(!s.found.has(h.id), `${level.id}: подсказка указывает на найденное`);
-      seekTap(s, h.x, h.y);
+      const r = seekTap(s, h.x, h.y);
+      assert.equal(r.result, 'found', `${level.id}: подсказка ведёт на ненайденный экземпляр`);
     }
-    assert.ok(isSeekSolved(s), `${level.id} должен решаться`);
+    assert.ok(isSeekSolved(s), `${level.id} должен решаться подсказками`);
   }
-});
-
-test('сцена детерминирована (одинаковый id — одинаковая расстановка)', async () => {
-  const again = (await import('../src/data/puzzlesSeek.js')).SEEK_PUZZLES;
-  const a = SEEK_PUZZLES[0].scene.map((o) => `${o.id}:${o.icon}:${Math.round(o.x)}:${Math.round(o.y)}`).join('|');
-  const b = again[0].scene.map((o) => `${o.id}:${o.icon}:${Math.round(o.x)}:${Math.round(o.y)}`).join('|');
-  assert.equal(a, b);
 });

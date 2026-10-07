@@ -2,7 +2,7 @@
 import { ITEM_BY_ID, RARITY_LABEL } from '../data/items.js';
 import { itemEmoji } from './equipView.js';
 import { describeItem, SLOTS, SLOT_LABEL } from '../core/items.js';
-import { shopStock, buyItem, sellItem, buyCosmetic, toggleCosmetic } from '../core/state.js';
+import { shopStock, buyItem, sellItem, buyCosmetic, toggleCosmetic, unseenShopItems, markShopSeen } from '../core/state.js';
 import { COSMETICS, SEASON_LABEL } from '../data/cosmetics.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav } from './common.js';
@@ -27,6 +27,7 @@ export function renderShop(container, ctx) {
   ]));
 
   // --- Покупка ---
+  const newIds = new Set(unseenShopItems(state).map((i) => i.id));
   const buyPanel = document.createElement('div');
   buyPanel.className = 'panel';
   buyPanel.innerHTML = '<h3>Полки лавки</h3>';
@@ -34,13 +35,13 @@ export function renderShop(container, ctx) {
   buyList.className = 'list';
   for (const item of shopStock(state)) {
     const row = document.createElement('div');
-    row.className = 'row';
+    row.className = 'row' + (newIds.has(item.id) ? ' new-item' : '');
     const priceLabel = item.sealPrice ? `🔰 ${item.sealPrice}` : `🪙 ${item.price}`;
     const afford = item.sealPrice ? state.seals >= item.sealPrice : state.coins >= item.price;
     row.innerHTML = `
       <span class="icon">${itemEmoji(item)}</span>
       <span class="grow">
-        <div class="name">${item.name} <span class="badge ${item.rarity}">${RARITY_LABEL[item.rarity]}</span></div>
+        <div class="name">${item.name}${newIds.has(item.id) ? ' <span class="badge new-badge">новинка</span>' : ''} <span class="badge ${item.rarity}">${RARITY_LABEL[item.rarity]}</span></div>
         <div class="desc">${describeItem(item) || item.description}</div>
       </span>
       <span class="price">${priceLabel}</span>`;
@@ -160,6 +161,10 @@ export function renderShop(container, ctx) {
   }
   cosPanel.appendChild(cosList);
   container.appendChild(cosPanel);
+
+  // Ассортимент просмотрен — в следующий раз точка и метки погаснут
+  markShopSeen(state);
+  ctx.save();
 
   function rerender() {
     container.innerHTML = '';

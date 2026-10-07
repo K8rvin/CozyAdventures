@@ -67,6 +67,7 @@ test('bundle.js существует и приложение стартует б
   };
   globalThis.document = {
     createElement: (t) => new El(t),
+    querySelector: () => new El('div'),
     getElementById: (id) => byId[id] || new El('div'),
     body: new El('body'),
     documentElement: Object.assign(new El('html'), { scrollHeight: 2000 }),

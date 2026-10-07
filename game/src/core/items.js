@@ -1,7 +1,9 @@
 // Экипировка: 9 слотов, правило двуручного оружия, сборка характеристик.
 import { ITEM_BY_ID } from '../data/items.js';
 
-export const SLOTS = ['weapon', 'shield', 'helmet', 'armor', 'gloves', 'boots', 'amulet', 'ring1', 'ring2'];
+// Порядок = раскладка 3×3 в комнате рыцаря:
+// оружие · шлем · щит / перчатки · броня · сапоги / амулет · кольца
+export const SLOTS = ['weapon', 'helmet', 'shield', 'gloves', 'armor', 'boots', 'amulet', 'ring1', 'ring2'];
 
 export const SLOT_LABEL = {
   weapon: 'Оружие', shield: 'Щит', helmet: 'Шлем', armor: 'Броня',

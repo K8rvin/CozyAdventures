@@ -8,6 +8,9 @@ import { renderBattleList, renderBattle } from './battleView.js';
 import { renderTavern } from './tavernView.js';
 import { renderEditor, renderWorkshop } from './editorView.js';
 import { renderCraft } from './craftView.js';
+import { renderSettings } from './settingsView.js';
+import { renderFormation } from './formationView.js';
+import { renderSeekEditorList, renderSeekEditor } from './seekEditorView.js';
 import { initSound, sfx } from './sound.js';
 
 const screenEl = document.getElementById('screen');
@@ -33,18 +36,24 @@ function toast(msg) {
   toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2200);
 }
 
+let lastHubScene = 'lavka';
+
 const routes = {
-  hub: (c, p) => renderHub(c, ctx, p),
+  hub: (c, p) => renderHub(c, ctx, { scene: p.scene || lastHubScene }),
   puzzles: (c, p) => renderPuzzleList(c, ctx, p),
   puzzle: (c, p) => renderPuzzle(c, ctx, p),
   equip: (c, p) => renderEquip(c, ctx, p),
   shop: (c, p) => renderShop(c, ctx, p),
   battles: (c, p) => renderBattleList(c, ctx, p),
-  battle: (c, p) => renderBattle(c, ctx, p),
+  battle: (c, p) => (state.settings?.battleMode === 'formation'
+    ? renderFormation(c, ctx, p)
+    : renderBattle(c, ctx, p)),
   tavern: (c, p) => renderTavern(c, ctx, p),
   workshop: (c, p) => renderWorkshop(c, ctx, p),
   editor: (c, p) => renderEditor(c, ctx, p),
   craft: (c, p) => renderCraft(c, ctx, p),
+  settings: (c, p) => renderSettings(c, ctx, p),
+  seekeditor: (c, p) => (p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p)),
 };
 
 let currentCleanup = null;
@@ -74,6 +83,7 @@ const ctx = {
   get state() { return state; },
   save, go, toast, newGameConfirm,
   sfx,
+  setHubScene(scene) { lastHubScene = scene; },
 };
 
 // Звук инициализируется по первому взаимодействию (требование браузеров).
@@ -111,6 +121,12 @@ function renderSpider() {
   const y = Math.max(0, Math.min(shownY, (window.innerHeight || 600) - BUG_H));
   spiderMover.style.transform = `translateY(${y}px)`;
   spiderThread.style.height = `${Math.max(0, y + 8)}px`;
+  // Пасхалка: праздничная шляпа из чит-кода ПАУЧОК
+  const hat = !!state.cheats?.spiderHat;
+  if (spiderBug.dataset.hat !== String(hat)) {
+    spiderBug.dataset.hat = String(hat);
+    spiderBug.textContent = hat ? '🎩🕷️' : '🕷️';
+  }
 }
 
 function spiderLoop() {
@@ -179,6 +195,49 @@ const spiderTimer = setInterval(() => {
   kickSpider();
 }, 700);
 spiderTimer.unref?.();
+
+document.getElementById('settings-btn')?.addEventListener('click', () => { sfx('tap'); go('settings'); });
+
+// Пасхалка «Об игре»: три стука по вывеске лавки.
+const brandEl = document.querySelector('.brand');
+let brandTaps = 0;
+let brandTimer = null;
+brandEl.style.cursor = 'pointer';
+brandEl.addEventListener('click', () => {
+  brandTaps += 1;
+  sfx('tap');
+  clearTimeout(brandTimer);
+  brandTimer = setTimeout(() => { brandTaps = 0; }, 900);
+  if (brandTaps >= 3) {
+    brandTaps = 0;
+    showAbout();
+  }
+});
+
+function showAbout() {
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  overlay.innerHTML = `
+    <div class="card" style="text-align:left">
+      <h2 style="text-align:center">🏮 Лавка на перекрёстке миров</h2>
+      <div class="muted center" style="margin-bottom:10px">версия 0.9 · уютная игра-магазин с приключениями</div>
+      <p><b>Автор:</b> K8rvin (Андрей)</p>
+      <p><b>Сделано:</b> вдвоём — человек и ИИ-агент Kimi Code.
+      Чистый JavaScript, Canvas, SVG-арт, локальные сохранения. Ни строчки бэкенда.</p>
+      <p><b>Внутри:</b> 6 механик головоломок · 58 загадок · 200 боёв в 12 мирах ·
+      60+ существ · крафт · отряд · два режима автобоя · и один очень трудолюбивый паучок 🕷️</p>
+      <p class="muted">Спасибо, что заглянул на перекрёсток. Стучи по вывеске в любое время.</p>
+      <div class="actions" style="text-align:center"></div>
+    </div>`;
+  const actions = overlay.querySelector('.actions');
+  const close = document.createElement('button');
+  close.className = 'primary';
+  close.textContent = 'Вернуться в лавку';
+  close.addEventListener('click', () => overlay.remove());
+  actions.appendChild(close);
+  overlay.addEventListener('click', (ev) => { if (ev.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
 
 updateWallet();
 go('hub');

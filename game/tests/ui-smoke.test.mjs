@@ -80,7 +80,8 @@ class El {
 const listeners = {};
 const documentStub = {
   createElement: (tag) => new El(tag),
-  getElementById: () => new El('div'),
+  querySelector: () => new El('div'),
+    getElementById: () => new El('div'),
   body: new El('body'),
   documentElement: Object.assign(new El('html'), { scrollHeight: 2000 }),
   addEventListener: (t, f) => { (listeners[t] ||= []).push(f); },
@@ -98,6 +99,7 @@ globalThis.window = {
   innerWidth: 1024,
   innerHeight: 768,
 };
+globalThis.confirm = () => true;
 globalThis.localStorage = {
   _m: {},
   getItem(k) { return this._m[k] ?? null; },
@@ -114,6 +116,9 @@ const { renderBattleList, renderBattle } = await import('../src/ui/battleView.js
 const { renderTavern } = await import('../src/ui/tavernView.js');
 const { renderWorkshop, renderEditor } = await import('../src/ui/editorView.js');
 const { renderCraft } = await import('../src/ui/craftView.js');
+const { renderSettings } = await import('../src/ui/settingsView.js');
+const { renderFormation } = await import('../src/ui/formationView.js');
+const { renderSeekEditorList, renderSeekEditor } = await import('../src/ui/seekEditorView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
 const { ITEM_BY_ID } = await import('../src/data/items.js');
 
@@ -143,6 +148,10 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'bk_10' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'sk_md_01' }), // поиск предметов
     () => renderPuzzle(new El('main'), ctx, { id: 'sk_bk_02' }),
+    () => renderPuzzle(new El('main'), ctx, { id: 'pp_01' }),   // тропинка
+    () => renderPuzzle(new El('main'), ctx, { id: 'pp_08' }),
+    () => renderPuzzle(new El('main'), ctx, { id: 'tea_01' }),  // чай
+    () => renderPuzzle(new El('main'), ctx, { id: 'tea_08' }),
     () => renderEquip(new El('main'), ctx),
     () => renderShop(new El('main'), ctx),
     () => renderBattleList(new El('main'), ctx),
@@ -150,6 +159,10 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderBattle(new El('main'), ctx, { id: 'bt_boss_captain' }),
     () => renderTavern(new El('main'), ctx),
     () => renderCraft(new El('main'), ctx),
+    () => renderSettings(new El('main'), ctx),
+    () => renderFormation(new El('main'), ctx, { id: 'bt_slimes' }),
+    () => renderSeekEditorList(new El('main'), ctx),
+    () => renderSeekEditor(new El('main'), ctx, { id: 'sk_md_01' }),
     () => renderWorkshop(new El('main'), ctx),
     () => renderEditor(new El('main'), ctx, {}),
   ];

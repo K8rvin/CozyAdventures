@@ -65,6 +65,28 @@ export function placeItem(state, itemId, x, y) {
   return { ok: true };
 }
 
+// Переместить предмет с одной клетки на другую одним ходом (для drag&drop).
+export function moveItem(state, itemId, x, y) {
+  const from = state.placement[itemId];
+  if (!from) return placeItem(state, itemId, x, y); // из лотка = поставить
+  if (from[0] === x && from[1] === y) return { ok: true, noop: true };
+  const cell = shelfCells(state.level).find((c) => c.pos[0] === x && c.pos[1] === y);
+  if (!cell) return { ok: false, error: 'Сюда не поставить' };
+  const occupant = cellOf(state, x, y);
+  if (occupant && occupant !== itemId) {
+    // Обмен местами
+    state.history.push({ swap: [itemId, occupant], prevA: from, prevB: state.placement[occupant] });
+    state.placement[occupant] = from;
+    state.placement[itemId] = [x, y];
+    state.moves += 1;
+    return { ok: true, swapped: occupant };
+  }
+  state.history.push({ itemId, prev: from });
+  state.placement[itemId] = [x, y];
+  state.moves += 1;
+  return { ok: true };
+}
+
 export function removeItem(state, itemId) {
   if (!(itemId in state.placement) || !state.placement[itemId]) return false;
   state.history.push({ itemId, prev: state.placement[itemId] });
@@ -76,7 +98,13 @@ export function removeItem(state, itemId) {
 export function undoShelf(state) {
   const last = state.history.pop();
   if (!last) return false;
-  state.placement[last.itemId] = last.prev;
+  if (last.swap) {
+    // Откат обмена местами
+    state.placement[last.swap[0]] = last.prevA;
+    state.placement[last.swap[1]] = last.prevB;
+  } else {
+    state.placement[last.itemId] = last.prev;
+  }
   state.moves += 1;
   return true;
 }

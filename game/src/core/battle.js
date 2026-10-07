@@ -8,12 +8,13 @@ import { ENEMY_BY_ID } from '../data/enemies.js';
 const GAUGE_FULL = 100;
 const MAX_TICKS = 5000;
 
-function makeEnemy(id, rngSeed) {
+function makeEnemy(id, scale = 1) {
   const def = ENEMY_BY_ID[id];
+  const hp = Math.round(def.hp * scale);
   return {
     id, side: 'enemy', name: def.name, icon: def.icon, boss: !!def.boss,
-    hp: def.hp, maxHp: def.hp,
-    attack: def.attack, armor: def.armor, speed: def.speed,
+    hp, maxHp: hp,
+    attack: Math.round(def.attack * scale), armor: Math.round(def.armor * scale), speed: def.speed,
     crit: def.crit || 0, dodge: def.dodge || 0, block: 0,
     elem: def.elem || 'phys',
     skills: def.skills || [], tags: def.tags || [],
@@ -263,7 +264,7 @@ export function simulateBattle(alliesInput, enemyIds, seed = 1) {
   const rng = makeRng(seed);
   const allies = Array.isArray(alliesInput) ? alliesInput : [alliesInput];
   const knight = allies[0];
-  const foes = enemyIds.map((id) => makeEnemy(id));
+  const foes = enemyIds.map((entry) => (typeof entry === 'string' ? makeEnemy(entry) : makeEnemy(entry.id, entry.scale)));
   // Уникальные uid для привязки анимации к конкретному юниту (имена могут совпадать)
   allies.forEach((u, i) => { u.uid = `a${i}`; });
   foes.forEach((u, i) => { u.uid = `e${i}`; });

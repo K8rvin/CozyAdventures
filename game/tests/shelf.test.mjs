@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { SHELF_PUZZLES } from '../src/data/puzzlesShelf.js';
 import {
-  createShelfPuzzle, placeItem, removeItem, undoShelf, resetShelf,
+  createShelfPuzzle, placeItem, removeItem, moveItem, undoShelf, resetShelf,
   violations, isShelfSolved, solveShelf, shelfHint, shelfCells,
 } from '../src/core/shelfPuzzle.js';
 
@@ -67,6 +67,34 @@ test('тексты нарушений строго на русском (без �
       `английский тег в тексте: ${x.text}`);
   }
   assert.ok(v.some((x) => x.text.includes('едой')), 'ожидается «рядом с едой»');
+});
+
+test('moveItem: перенос, обмен, из лотка, откат обмена', () => {
+  const level = SHELF_PUZZLES.find((l) => l.id === 'tw_01');
+  const s = createShelfPuzzle(level);
+  placeItem(s, 'i_hammer', 0, 0);
+  // Перенос на пустую клетку
+  let r = moveItem(s, 'i_hammer', 1, 0);
+  assert.ok(r.ok);
+  assert.deepEqual(s.placement.i_hammer, [1, 0]);
+  // Из лотка на полку
+  r = moveItem(s, 'i_potion', 0, 0);
+  assert.ok(r.ok);
+  assert.deepEqual(s.placement.i_potion, [0, 0]);
+  // Обмен местами
+  placeItem(s, 'i_herbs', 2, 0);
+  r = moveItem(s, 'i_hammer', 2, 0);
+  assert.ok(r.ok);
+  assert.equal(r.swapped, 'i_herbs');
+  assert.deepEqual(s.placement.i_hammer, [2, 0]);
+  assert.deepEqual(s.placement.i_herbs, [1, 0]);
+  // Откат обмена возвращает оба предмета
+  undoShelf(s);
+  assert.deepEqual(s.placement.i_hammer, [1, 0]);
+  assert.deepEqual(s.placement.i_herbs, [2, 0]);
+  // На ту же клетку — noop
+  r = moveItem(s, 'i_hammer', 1, 0);
+  assert.ok(r.noop);
 });
 
 test('отмена и сброс', () => {

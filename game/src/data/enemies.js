@@ -114,4 +114,20 @@ ENEMIES.push(
   },
 );
 
+// --- Босс экспедиций перекрёстка ---
+ENEMIES.push(
+  {
+    id: 'boss_star_guardian', name: 'Звёздный страж', icon: '🌟',
+    hp: 420, attack: 27, armor: 26, speed: 11, crit: 0.12, dodge: 0.08,
+    elem: 'fire', skills: ['heavy_blow', 'fear_chill', 'spit_fire'], boss: true, tags: ['spirit'],
+    reward: { coins: [600, 800], seals: 5, materials: ['star_shard'] },
+  },
+);
+
+// Контентпаки миров (src/data/worlds/*.js)
+import { WORLDS } from './worlds/index.js';
+for (const w of WORLDS) {
+  if (w?.enemies) ENEMIES.push(...w.enemies);
+}
+
 export const ENEMY_BY_ID = Object.fromEntries(ENEMIES.map((e) => [e.id, e]));

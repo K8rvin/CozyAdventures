@@ -25,9 +25,13 @@ export function renderWorkshop(container, ctx) {
   newBtn.className = 'primary';
   newBtn.textContent = '➕ Новый уровень';
   newBtn.addEventListener('click', () => ctx.go('editor', {}));
+  const seekBtn = document.createElement('button');
+  seekBtn.textContent = '🔍 Редактор искалок';
+  seekBtn.style.marginLeft = '8px';
+  seekBtn.addEventListener('click', () => ctx.go('seekeditor', {}));
   const panel = document.createElement('div');
   panel.className = 'panel';
-  panel.appendChild(newBtn);
+  panel.append(newBtn, seekBtn);
   container.appendChild(panel);
 
   const list = document.createElement('div');

@@ -5,12 +5,19 @@ import { PUZZLES } from '../data/puzzles.js';
 import { SHELF_PUZZLES } from '../data/puzzlesShelf.js';
 import { BOOK_PUZZLES } from '../data/puzzlesBook.js';
 import { SEEK_PUZZLES } from '../data/puzzlesSeek.js';
+import { PATH_PUZZLES } from '../data/puzzlesPath.js';
+import { TEA_PUZZLES } from '../data/puzzlesTea.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
 import { COSMETIC_BY_ID } from '../data/cosmetics.js';
 import { RECIPES, RECIPE_BY_ID } from '../data/recipes.js';
+import { MATERIALS } from '../data/materials.js';
 import { emptyEquipment, equip, unequip, collectStats, isShieldBlocked } from './items.js';
 import { makeKnight, makeMerc, simulateBattle } from './battle.js';
+import {
+  makeFormationKnight, makeFormationMerc, makeFormationEnemy,
+  simulateFormationBattle, enemyFormationSlots,
+} from './formBattle.js';
 import { ENEMY_BY_ID } from '../data/enemies.js';
 
 const SAVE_KEY = 'cozy_adventures_save_v2';
@@ -32,8 +39,13 @@ export function newGame() {
     customPuzzles: [],      // уровни из редактора
     cosmeticsOwned: [],     // купленные украшения
     cosmeticsActive: [],    // выставленные украшения
+    seekOverrides: {},      // правки хотспотов искалок из редактора: levelId -> groups
+    shopSeenStock: [],      // id товаров прилавка, которые игрок уже видел
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
+    settings: { battleMode: 'formation' }, // 'classic' | 'formation'
+    formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
+    cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
   };
 }
@@ -47,8 +59,14 @@ function migrate(state) {
   state.customPuzzles ||= [];
   state.cosmeticsOwned ||= [];
   state.cosmeticsActive ||= [];
+  state.seekOverrides ||= {};
+  state.shopSeenStock ||= [];
   state.tutorial ||= {};
   state.tutorialSkipped ??= false;
+  state.settings ||= {};
+  state.settings.battleMode ||= 'formation';
+  state.formation ||= { knight: 1, merc0: 0, merc1: 5 };
+  state.cheats ||= { used: [], spiderHat: false };
   state.materials ||= {};
   state.seals ??= 0;
   return state;
@@ -88,6 +106,17 @@ export function shopStock(state) {
   return SHOP_STOCK
     .filter((s) => s.unlockAfter === null || state.battlesDone[s.unlockAfter])
     .map((s) => ITEM_BY_ID[s.itemId]);
+}
+
+// Товары, появившиеся в продаже с последнего визита в прилавок.
+export function unseenShopItems(state) {
+  const seen = new Set(state.shopSeenStock || []);
+  return shopStock(state).filter((i) => !seen.has(i.id));
+}
+
+// Отметить весь текущий ассортимент как просмотренный.
+export function markShopSeen(state) {
+  state.shopSeenStock = shopStock(state).map((i) => i.id);
 }
 
 export function buyItem(state, itemId) {
@@ -169,7 +198,16 @@ export function hireCrew(state, id, kind) {
   state.crew.push(id);
   // Автоматически в отряд, если есть место
   if (kind === 'companion' && state.squadCompanions.length < 3) state.squadCompanions.push(id);
-  if (kind === 'merc' && state.squadMercs.length < 2) state.squadMercs.push(id);
+  if (kind === 'merc' && state.squadMercs.length < 2) {
+    const idx = state.squadMercs.length;
+    state.squadMercs.push(id);
+    // Авторасстановка: танк в передний ряд, остальные — назад
+    const key = `merc${idx}`;
+    const isTank = def.role === 'танк';
+    const wantSlots = isTank ? [0, 2] : [4, 5, 3];
+    const taken = Object.values(state.formation);
+    state.formation[key] = wantSlots.find((s) => !taken.includes(s)) ?? (isTank ? 0 : 4);
+  }
   if (kind === 'pet' && !state.pet) state.pet = id;
   return { ok: true };
 }
@@ -303,13 +341,29 @@ export function toggleCosmetic(state, id) {
 
 // --- Головоломки ---
 
-// Полный список уровней кампании по порядку (миры 1, 2, 3 + поиск предметов).
-const SEEK_BY_WORLD = (w) => SEEK_PUZZLES.filter((p) => p.world === w);
-export const ALL_PUZZLES = [
-  ...PUZZLES, ...SEEK_BY_WORLD('meadow'),
-  ...SHELF_PUZZLES, ...SEEK_BY_WORLD('town'),
-  ...BOOK_PUZZLES, ...SEEK_BY_WORLD('attic'),
+// Полный список уровней кампании. Механики ЧЕРЕДУЮТСЯ (свет, полки, книги,
+// поиск), чтобы не идти одной тематикой подряд; внутри каждой механики
+// сложность растёт по своей цепочке.
+const PUZZLE_POOL = new Map(
+  [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES]
+    .map((p) => [p.id, p]),
+);
+const CAMPAIGN_ORDER = [
+  'md_01', 'md_02', 'sk_md_01', 'md_03', 'md_04', 'sk_md_02',
+  'md_05', 'tw_01', 'md_06', 'tw_02', 'md_07', 'tw_03', 'sk_tw_01',
+  'md_08', 'tw_04', 'md_09', 'tw_05', 'md_10', 'tw_06', 'sk_tw_02',
+  'md_11', 'tw_07', 'bk_01', 'tw_08', 'bk_02', 'md_12',
+  'bk_03', 'tw_09', 'bk_04', 'sk_bk_01',
+  'bk_05', 'tw_10', 'bk_06', 'bk_07', 'sk_bk_02', 'bk_08', 'bk_09', 'bk_10',
+  // Перекрёсток: тропинки и чай вперемешку с поиском
+  'pp_01', 'tea_01', 'pp_02', 'tea_02', 'pp_03', 'tea_03',
+  'pp_04', 'tea_04', 'pp_05', 'tea_05', 'pp_06', 'tea_06',
+  'pp_07', 'tea_07', 'pp_08', 'tea_08',
+  // Искалки новых миров
+  'sk_nm_01', 'sk_sw_01', 'sk_sf_01', 'sk_ash_01',
+  'sk_cr_01', 'sk_jade_01', 'sk_deep_01', 'sk_mist_01',
 ];
+export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 
 export function allPuzzles(state) {
   return [...ALL_PUZZLES, ...(state.customPuzzles || [])];
@@ -317,6 +371,57 @@ export function allPuzzles(state) {
 
 export function findPuzzle(state, id) {
   return allPuzzles(state).find((p) => p.id === id) || null;
+}
+
+// Уровень искалки с учётом правок из редактора хотспотов.
+// Правки хранятся ОТДЕЛЬНО от сохранения игры (инструмент разработчика):
+// новая игра их не стирает.
+const SEEK_OVERRIDES_KEY = 'cozy_seek_overrides_v1';
+
+function overrideStorage(storage) {
+  return storage || (typeof localStorage !== 'undefined' ? localStorage : null);
+}
+
+export function loadSeekOverrides(storage) {
+  const s = overrideStorage(storage);
+  if (!s) return {};
+  try {
+    return JSON.parse(s.getItem(SEEK_OVERRIDES_KEY) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+export function applySeekOverrides(state, level, storage) {
+  const ov = loadSeekOverrides(storage)[level.id] || state.seekOverrides?.[level.id];
+  if (!ov || level.mechanic !== 'seek') return level;
+  return { ...level, groups: JSON.parse(JSON.stringify(ov)) };
+}
+
+export function saveSeekOverride(state, levelId, groups, storage) {
+  const all = loadSeekOverrides(storage);
+  all[levelId] = JSON.parse(JSON.stringify(groups));
+  const s = overrideStorage(storage);
+  if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
+  else state.seekOverrides[levelId] = all[levelId]; // фолбэк в сохранение
+}
+
+export function resetSeekOverride(state, levelId, storage) {
+  const all = loadSeekOverrides(storage);
+  delete all[levelId];
+  const s = overrideStorage(storage);
+  if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
+  delete state.seekOverrides[levelId];
+}
+
+// Миграция правок из старого сохранения в отдельное хранилище.
+function migrateSeekOverrides(state, storage) {
+  const legacy = state.seekOverrides || {};
+  if (Object.keys(legacy).length === 0) return;
+  const all = { ...legacy, ...loadSeekOverrides(storage) }; // новые правки важнее
+  const s = overrideStorage(storage);
+  if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
+  state.seekOverrides = {};
 }
 
 export function puzzleAvailable(state, index) {
@@ -343,6 +448,32 @@ export function completePuzzle(state, puzzleId, info = {}) {
     return [{ type: 'coins', amount }];
   }
   return grantRewards(state, rewards);
+}
+
+// Пропуск головоломки за монеты: цепочка открывается, но наград нет.
+export function skipPuzzlePrice(puzzle) {
+  const coins = (puzzle.rewards || []).find((r) => r.type === 'coins');
+  return Math.max(50, Math.round((coins?.amount || 50) * 1.5));
+}
+
+export function skipPuzzle(state, puzzleId) {
+  const puzzle = findPuzzle(state, puzzleId);
+  if (!puzzle) return { ok: false, error: 'Нет такой загадки' };
+  const idx = ALL_PUZZLES.findIndex((p) => p.id === puzzleId);
+  if (idx >= 0 && !puzzleAvailable(state, idx)) {
+    return { ok: false, error: 'Загадка ещё не открыта' };
+  }
+  if (state.puzzlesDone[puzzleId]) return { ok: false, error: 'Уже решена' };
+  const price = skipPuzzlePrice(puzzle);
+  if (state.coins < price) return { ok: false, error: 'Не хватает монет', price };
+  state.coins -= price;
+  state.puzzlesDone[puzzleId] = { moves: 0, hintsUsed: 0, skipped: true, at: Date.now() };
+  state.stats.puzzlesSolved += 1;
+  // Утешение от кота-хранителя: треть монет уровня, без предметов и печатей
+  const coins = (puzzle.rewards || []).find((r) => r.type === 'coins');
+  const consolation = Math.round((coins?.amount || 30) / 3);
+  addCoins(state, consolation);
+  return { ok: true, price, consolation };
 }
 
 // Следующая кампейн-головоломка после текущей (для кнопки «Следующая →»).
@@ -378,6 +509,13 @@ export function battleAvailable(state, battleId) {
 export function runBattle(state, battleId, seed = 1) {
   const battle = BATTLE_BY_ID[battleId];
   if (!battle || !battleAvailable(state, battleId)) return null;
+  if ((state.settings?.battleMode || 'formation') === 'formation') {
+    return runFormationBattle(state, battle, seed);
+  }
+  return runClassicBattle(state, battle, seed);
+}
+
+function runClassicBattle(state, battle, seed) {
 
   const { stats, traits } = collectStats(state.equipped);
   // Бонусы спутников и питомца
@@ -410,15 +548,20 @@ export function runBattle(state, battleId, seed = 1) {
 
   let rewards = [];
   if (result.victory) {
-    const firstTime = !state.battlesDone[battleId];
-    state.battlesDone[battleId] = {
-      victories: (state.battlesDone[battleId]?.victories || 0) + 1,
+    const firstTime = !state.battlesDone[battle.id];
+    state.battlesDone[battle.id] = {
+      victories: (state.battlesDone[battle.id]?.victories || 0) + 1,
       at: Date.now(),
     };
     state.stats.battlesWon += 1;
-    for (const enemyId of battle.enemies) {
+    for (const entry of battle.enemies) {
+      const enemyId = typeof entry === 'string' ? entry : entry.id;
+      const scale = typeof entry === 'string' ? 1 : (entry.scale || 1);
       const def = enemyReward(enemyId, stats, seed);
-      rewards.push(...def);
+      for (const r of def) {
+        if (r.type === 'coins') r.amount = Math.round(r.amount * scale);
+        rewards.push(r);
+      }
     }
     grantRewards(state, rewards, {});
     // Лечение после боя от амулета очага.
@@ -452,6 +595,62 @@ function enemyRewardDef(enemyId) {
   return ENEMY_BY_ID[enemyId]?.reward;
 }
 
+// --- Чит-коды и пасхалки (тестовый инструментарий) ---
+
+const CHEATS = {
+  'КОТОПЁС': (state) => {
+    addCoins(state, 1000);
+    return '+1000 монет. Кот и пёс довольны.';
+  },
+  'ЗОЛОТАЯЛАВКА': (state) => {
+    addCoins(state, 10000);
+    return '+10000 монет. Прилавок прогибается!';
+  },
+  'ПЕЧАЛЬ': (state) => {
+    state.seals += 10;
+    return '+10 печатей мастера. Не печалься.';
+  },
+  'КОЛДОВСТВО': (state) => {
+    for (const m of MATERIALS) {
+      state.materials[m.id] = (state.materials[m.id] || 0) + 10;
+    }
+    return 'Все материалы ×10. Склад ломится.';
+  },
+  'РЫЦАРЬ': (state) => {
+    const set = ['wpn_firebird_quill', 'shd_tower', 'hlm_page_wanderer', 'arm_ink_cloak',
+      'glv_smithee', 'bt_quiet_step', 'amu_pages', 'rng_duelist', 'rng_contents'];
+    for (const id of set) state.inventory.push(id);
+    return 'Легендарный комплект — в сундуке. Надень с честью.';
+  },
+  'ОБУЧЕНИЕ': (state) => {
+    state.tutorial = {};
+    state.tutorialSkipped = false;
+    return 'Обучение сброшено. Кот-хранитель снова всё покажет.';
+  },
+  'ПАУЧОК': (state) => {
+    state.cheats.spiderHat = !state.cheats.spiderHat;
+    return state.cheats.spiderHat
+      ? 'Паучок надел праздничную шляпу 🎩'
+      : 'Паучок снял шляпу.';
+  },
+};
+
+// Применить чит-код. Возвращает { ok, message }
+export function applyCheat(state, rawCode) {
+  const code = (rawCode || '').trim().toUpperCase().replaceAll(' ', '');
+  if (!code) return { ok: false, message: 'Пусто. Кот недоумённо моргнул.' };
+  if (!CHEATS[code]) {
+    return { ok: false, message: 'Мяу? Такого заклинания лавка не знает.' };
+  }
+  const message = CHEATS[code](state);
+  if (!state.cheats.used.includes(code)) state.cheats.used.push(code);
+  return { ok: true, message };
+}
+
+export function cheatList() {
+  return Object.keys(CHEATS);
+}
+
 // --- Сохранения ---
 
 export function saveGame(state, storage) {
@@ -469,10 +668,94 @@ export function loadGame(storage) {
     if (!raw) return null;
     const data = JSON.parse(raw);
     if (!data || typeof data.coins !== 'number') return null;
-    return migrate(data);
+    const migrated = migrate(data);
+    migrateSeekOverrides(migrated, s);
+    return migrated;
   } catch {
     return null;
   }
+}
+
+// --- Режим «сбор»: автобой на поле боя с рядами ---
+
+export function moveFormationSlot(state, unitKey, slot) {
+  if (slot < 0 || slot > 5) return false;
+  // Меняемся местами, если слот занят
+  const current = state.formation[unitKey];
+  const otherKey = Object.keys(state.formation).find((k) => k !== unitKey && state.formation[k] === slot);
+  if (otherKey) state.formation[otherKey] = current;
+  state.formation[unitKey] = slot;
+  return true;
+}
+
+function runFormationBattle(state, battle, seed) {
+  const { stats, traits } = collectStats(state.equipped);
+  for (const cid of state.squadCompanions) {
+    const c = COMPANION_BY_ID[cid];
+    if (!c) continue;
+    for (const [k, v] of Object.entries(c.bonus || {})) stats[k] = (stats[k] || 0) + v;
+    if (c.trait) traits.push(c.trait);
+  }
+  if (state.pet && PET_BY_ID[state.pet]) {
+    for (const [k, v] of Object.entries(PET_BY_ID[state.pet].bonus || {})) {
+      stats[k] = (stats[k] || 0) + v;
+    }
+  }
+  const consumables = state.consumableBelt
+    .map((id) => ITEM_BY_ID[id])
+    .filter(Boolean)
+    .map((item) => ({ itemId: item.id, name: item.name, effect: item.effect }));
+
+  const knight = makeFormationKnight(stats, traits, consumables, state.formation.knight ?? 1);
+  const allies = [knight];
+  state.squadMercs.forEach((id, i) => {
+    const key = `merc${i}`;
+    const slot = state.formation[key] ?? (i === 0 ? 0 : 5);
+    allies.push(makeFormationMerc(MERC_BY_ID[id], slot, i + 1));
+  });
+
+  const entries = battle.enemies.map((e) => (typeof e === 'string' ? { id: e, scale: 1 } : e));
+  const slots = enemyFormationSlots(battle.enemies);
+  const foes = entries.map((e, i) => makeFormationEnemy(e.id, e.scale, slots[i], i));
+
+  const result = simulateFormationBattle(allies, foes, seed);
+
+  const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
+  for (const used of usedIds) {
+    const i = state.consumableBelt.indexOf(used);
+    if (i >= 0) state.consumableBelt.splice(i, 1);
+  }
+
+  let rewards = [];
+  if (result.victory) {
+    const firstTime = !state.battlesDone[battle.id];
+    state.battlesDone[battle.id] = {
+      victories: (state.battlesDone[battle.id]?.victories || 0) + 1,
+      at: Date.now(),
+    };
+    state.stats.battlesWon += 1;
+    for (const entry of battle.enemies) {
+      const enemyId = typeof entry === 'string' ? entry : entry.id;
+      const scale = typeof entry === 'string' ? 1 : (entry.scale || 1);
+      const def = enemyReward(enemyId, stats, seed);
+      for (const r of def) {
+        if (r.type === 'coins') r.amount = Math.round(r.amount * scale);
+        rewards.push(r);
+      }
+    }
+    grantRewards(state, rewards, {});
+    if (traits.includes('heal_after_battle')) {
+      rewards.push({ type: 'note', text: 'Амулет очага согрел рыцаря после боя.' });
+    }
+    if (!firstTime) rewards = rewards.map((r) => (r.type === 'coins' ? { ...r, amount: Math.round(r.amount * 0.5) } : r));
+  }
+  return {
+    ...result, rewards, battle,
+    formation: {
+      allies: allies.map((a) => ({ uid: a.uid, slot: a.slot })),
+      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot })),
+    },
+  };
 }
 
 export { SLOTS, collectStats, isShieldBlocked } from './items.js';

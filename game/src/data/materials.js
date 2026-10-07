@@ -16,7 +16,14 @@ export const MATERIALS = [
   { id: 'page_dust', name: 'Книжная пыль', icon: '📖', description: 'Пахнет старыми историями.' },
   { id: 'gold_leaf', name: 'Сусальное золото', icon: '🍂', description: 'Тоньше лепестка.' },
   { id: 'last_page', name: 'Последняя страница', icon: '📜', description: 'На ней — конец любой истории.' },
+  { id: 'star_shard', name: 'Осколок звезды', icon: '🌟', description: 'Тёплый, как маленькое солнце.' },
 ];
+
+// Контентпаки миров (src/data/worlds/*.js)
+import { WORLDS } from './worlds/index.js';
+for (const w of WORLDS) {
+  if (w?.materials) MATERIALS.push(...w.materials);
+}
 
 export const MATERIAL_BY_ID = Object.fromEntries(MATERIALS.map((m) => [m.id, m]));
 

@@ -39,7 +39,7 @@ export function renderTavern(container, ctx) {
   head.firstElementChild.appendChild(back);
   container.appendChild(head);
   container.appendChild(quickNav(ctx, [
-    { icon: '🏠', label: 'В лавку', screen: 'hub' },
+    { icon: '🌇', label: 'На площадь', screen: 'hub', params: { scene: 'square' } },
   ]));
 
   // Состав отряда

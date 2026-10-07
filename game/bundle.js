@@ -587,11 +587,12 @@
       difficulty: 1,
       grid: [4, 4],
       objects: [
-        { type: "source", pos: [0, 1], dir: 1 },
-        { type: "lantern", pos: [3, 1] }
+        { type: "source", pos: [1, 3], dir: 0 },
+        { type: "mirror", pos: [1, 1], orient: 1 },
+        { type: "lantern", pos: [0, 1] }
       ],
       rewards: [{ type: "coins", amount: 40 }],
-      intro: "\u0421\u043C\u043E\u0442\u0440\u0438: \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A \u0441\u0432\u0435\u0442\u0438\u0442 \u043F\u0440\u044F\u043C\u043E \u2014 \u043B\u0443\u0447 \u0443\u0436\u0435 \u0431\u0435\u0436\u0438\u0442 \u043A \u0444\u043E\u043D\u0430\u0440\u044E! \u0422\u0430\u043A \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442 \u0441\u0432\u0435\u0442. \u0423\u0440\u043E\u0432\u0435\u043D\u044C \u0440\u0435\u0448\u0438\u0442\u0441\u044F \u0441\u0430\u043C, \u0430 \u0434\u0430\u043B\u044C\u0448\u0435 \u043C\u044B \u0434\u043E\u0431\u0430\u0432\u0438\u043C \u0437\u0435\u0440\u043A\u0430\u043B\u0430."
+      intro: "\u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A \u0441\u0432\u0435\u0442\u0438\u0442 \u0432\u0432\u0435\u0440\u0445, \u043D\u043E \u0444\u043E\u043D\u0430\u0440\u044C \u2014 \u0441\u043B\u0435\u0432\u0430. \u0422\u0430\u043F\u043D\u0438 \u0437\u0435\u0440\u043A\u0430\u043B\u043E \u043E\u0434\u0438\u043D \u0440\u0430\u0437: \u043B\u0443\u0447 \u043F\u043E\u0432\u0435\u0440\u043D\u0451\u0442\u0441\u044F \u043A \u0444\u043E\u043D\u0430\u0440\u044E!"
     },
     {
       id: "md_02",
@@ -1229,92 +1230,8 @@
   var BOOK_PUZZLE_BY_ID = Object.fromEntries(BOOK_PUZZLES.map((p) => [p.id, p]));
 
   // src/data/puzzlesSeek.js
-  function hash(str) {
-    let h = 2166136261;
-    for (const c of str) h = Math.imul(h ^ c.codePointAt(0), 16777619);
-    return h >>> 0;
-  }
-  function rngFor(seedStr) {
-    let seed = hash(seedStr);
-    return () => {
-      seed |= 0;
-      seed = seed + 1831565813 | 0;
-      let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    };
-  }
-  var SCENE_SIZE = [1e3, 650];
-  function buildScene(level) {
-    const rnd = rngFor(level.id);
-    const [W, H] = SCENE_SIZE;
-    const scene = level.targets.map((t) => ({
-      ...t,
-      target: true,
-      r: t.r ?? 34,
-      scale: t.scale ?? 0.55 + rnd() * 0.2,
-      rot: (rnd() - 0.5) * 0.4
-    }));
-    const fillerSet = level.filler.filter((f) => !level.targets.some((t) => t.icon === f));
-    const minDist = 64;
-    const want = level.fillerCount ?? 60;
-    let guard = want * 40;
-    let placed = 0;
-    while (placed < want && guard-- > 0) {
-      const x = 30 + rnd() * (W - 60);
-      const y = 30 + rnd() * (H - 60);
-      const okScene = scene.every((o) => Math.hypot(o.x - x, o.y - y) > minDist);
-      if (!okScene) continue;
-      scene.push({
-        id: `d${placed}`,
-        icon: fillerSet[Math.floor(rnd() * fillerSet.length)],
-        x,
-        y,
-        r: 30,
-        target: false,
-        scale: 0.8 + rnd() * 0.5,
-        rot: (rnd() - 0.5) * 0.5,
-        alpha: 0.92 + rnd() * 0.08
-      });
-      placed += 1;
-    }
-    return scene;
-  }
-  function buildFront(level) {
-    const rnd = rngFor(level.id + ":front");
-    const [W, H] = SCENE_SIZE;
-    const pool = level.frontPool || ["\u{1F33F}"];
-    const front = [];
-    const count = level.frontCount ?? 7;
-    for (let i = 0; i < count; i++) {
-      const edge = rnd();
-      let x;
-      let y;
-      if (edge < 0.3) {
-        x = rnd() * W;
-        y = 20 + rnd() * 60;
-      } else if (edge < 0.6) {
-        x = rnd() * W;
-        y = H - 20 - rnd() * 60;
-      } else if (edge < 0.8) {
-        x = 20 + rnd() * 50;
-        y = rnd() * H;
-      } else {
-        x = 200 + rnd() * (W - 400);
-        y = 150 + rnd() * (H - 300);
-      }
-      front.push({
-        icon: pool[Math.floor(rnd() * pool.length)],
-        x,
-        y,
-        scale: 1.3 + rnd() * 0.8,
-        rot: (rnd() - 0.5) * 0.6,
-        alpha: 0.7 + rnd() * 0.3
-      });
-    }
-    return front;
-  }
-  var RAW = [
+  var R = 42;
+  var SEEK_PUZZLES = [
     // --- Мир 1: Тихая опушка ---
     {
       id: "sk_md_01",
@@ -1322,16 +1239,35 @@
       mechanic: "seek",
       name: "\u0423\u0442\u0440\u0435\u043D\u043D\u044F\u044F \u043F\u043E\u043B\u044F\u043D\u0430",
       difficulty: 1,
-      targets: [
-        { id: "t_key", icon: "\u{1F5DD}\uFE0F", label: "\u0421\u0442\u0430\u0440\u044B\u0439 \u043A\u043B\u044E\u0447", x: 700, y: 430 },
-        { id: "t_acorn", icon: "\u{1F330}", label: "\u0416\u0451\u043B\u0443\u0434\u044C", x: 180, y: 520 },
-        { id: "t_candle", icon: "\u{1F56F}\uFE0F", label: "\u0421\u0432\u0435\u0447\u0430", x: 330, y: 210 }
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "amanita",
+          label: "\u041A\u0440\u0430\u0441\u043D\u044B\u0435 \u043C\u0443\u0445\u043E\u043C\u043E\u0440\u044B",
+          spots: [
+            { x: 195, y: 174, r: 56 },
+            { x: 73, y: 423, r: 48 },
+            { x: 175, y: 598, r: 48 },
+            { x: 706, y: 549, r: 48 }
+          ]
+        },
+        {
+          id: "horseshoe",
+          label: "\u041F\u043E\u0434\u043A\u043E\u0432\u044B",
+          spots: [{ x: 651, y: 216, r: 54 }, { x: 377, y: 488, r: 34 }]
+        },
+        {
+          id: "feather",
+          label: "\u041F\u0435\u0440\u044C\u044F",
+          spots: [
+            { x: 594, y: 357, r: 54 },
+            { x: 430, y: 526, r: 42 },
+            { x: 720, y: 183, r: 42 }
+          ]
+        }
       ],
-      filler: ["\u{1F33C}", "\u{1F344}", "\u{1F33F}", "\u{1F40C}", "\u{1FAA8}", "\u{1F343}", "\u{1F33E}", "\u{1F41B}", "\u{1F331}", "\u{1FAB5}"],
-      frontPool: ["\u{1F33F}", "\u{1F343}", "\u{1F33E}", "\u{1F33C}"],
-      fillerCount: 55,
-      rewards: [{ type: "coins", amount: 70 }],
-      intro: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0440\u0430\u0441\u0442\u0435\u0440\u044F\u043B \u043C\u0435\u043B\u043E\u0447\u0438 \u043D\u0430 \u043F\u043E\u043B\u044F\u043D\u0435. \u041D\u0430\u0439\u0434\u0438 \u0438\u0445 \u0441\u0440\u0435\u0434\u0438 \u0442\u0440\u0430\u0432."
+      rewards: [{ type: "coins", amount: 80 }],
+      intro: "\u041F\u043E\u043B\u044F\u043D\u0430 \u043F\u043E\u043B\u043D\u0430 \u043D\u0430\u0445\u043E\u0434\u043E\u043A. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0435 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u0438\u0437 \u0441\u043F\u0438\u0441\u043A\u0430 \u2014 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0432\u0438\u0434\u0430 \u0434\u043E \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0433\u043E!"
     },
     {
       id: "sk_md_02",
@@ -1339,17 +1275,40 @@
       mechanic: "seek",
       name: "\u0421\u0443\u043D\u0434\u0443\u043A \u043F\u043E\u0434 \u043A\u043E\u0440\u043D\u044F\u043C\u0438",
       difficulty: 2,
-      targets: [
-        { id: "t_map", icon: "\u{1F5FA}\uFE0F", label: "\u041A\u043B\u043E\u0447\u043E\u043A \u043A\u0430\u0440\u0442\u044B", x: 90, y: 300 },
-        { id: "t_compass", icon: "\u{1F9ED}", label: "\u041A\u043E\u043C\u043F\u0430\u0441", x: 860, y: 140 },
-        { id: "t_ring", icon: "\u{1F48D}", label: "\u041A\u043E\u043B\u0435\u0447\u043A\u043E", x: 520, y: 560 },
-        { id: "t_bell", icon: "\u{1F514}", label: "\u041A\u043E\u043B\u043E\u043A\u043E\u043B\u044C\u0447\u0438\u043A", x: 260, y: 470 }
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "snail",
+          label: "\u0420\u0430\u043A\u043E\u0432\u0438\u043D\u044B \u0443\u043B\u0438\u0442\u043E\u043A",
+          spots: [
+            { x: 572, y: 152, r: 26 },
+            { x: 215, y: 339, r: 26 },
+            { x: 470, y: 563, r: 30 }
+          ]
+        },
+        {
+          id: "cone",
+          label: "\u0428\u0438\u0448\u043A\u0438",
+          spots: [
+            { x: 406, y: 39, r: 18 },
+            { x: 335, y: 215, r: 22 },
+            { x: 617, y: 583, r: 32 },
+            { x: 871, y: 278, r: 26 }
+          ]
+        },
+        {
+          id: "watch",
+          label: "\u041A\u0430\u0440\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+          spots: [{ x: 531, y: 249, r: 26 }]
+        },
+        {
+          id: "bottle",
+          label: "\u0421\u0442\u0435\u043A\u043B\u044F\u043D\u043D\u0430\u044F \u0431\u0443\u0442\u044B\u043B\u043A\u0430",
+          spots: [{ x: 935, y: 416, r: 34 }]
+        }
       ],
-      filler: ["\u{1F33F}", "\u{1F344}", "\u{1FAA8}", "\u{1F43F}\uFE0F", "\u{1F342}", "\u{1F330}", "\u{1F331}", "\u{1F994}", "\u{1F341}", "\u{1FABA}"],
-      frontPool: ["\u{1F33F}", "\u{1F342}", "\u{1F344}"],
-      fillerCount: 60,
-      rewards: [{ type: "coins", amount: 85 }],
-      intro: "\u041F\u043E\u0434 \u043A\u043E\u0440\u043D\u044F\u043C\u0438 \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B \u0441\u043F\u0440\u044F\u0442\u0430\u043D \u0442\u0430\u0439\u043D\u0438\u043A. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451 \u0446\u0435\u043D\u043D\u043E\u0435."
+      rewards: [{ type: "coins", amount: 95 }],
+      intro: "\u041F\u043E\u0434 \u043A\u043E\u0440\u043D\u044F\u043C\u0438 \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B \u2014 \u0446\u0435\u043B\u044B\u0439 \u0442\u0430\u0439\u043D\u0438\u043A. \u0422\u0435\u043F\u0435\u0440\u044C \u0443\u0436\u0435 \u043F\u043E\u0441\u043B\u043E\u0436\u043D\u0435\u0435."
     },
     // --- Мир 2: Средневековый дворик ---
     {
@@ -1358,17 +1317,46 @@
       mechanic: "seek",
       name: "\u0420\u044B\u043D\u043E\u0447\u043D\u0430\u044F \u0441\u0443\u0442\u043E\u043B\u043E\u043A\u0430",
       difficulty: 3,
-      targets: [
-        { id: "t_coin", icon: "\u{1FA99}", label: "\u0423\u0442\u0435\u0440\u044F\u043D\u043D\u0430\u044F \u043C\u043E\u043D\u0435\u0442\u0430", x: 640, y: 180 },
-        { id: "t_receipt", icon: "\u{1F9FE}", label: "\u0420\u0430\u0441\u043F\u0438\u0441\u043A\u0430", x: 140, y: 90 },
-        { id: "t_spur", icon: "\u2B50", label: "\u0428\u043F\u043E\u0440\u0430", x: 900, y: 470 },
-        { id: "t_thread", icon: "\u{1F9F5}", label: "\u041A\u0430\u0442\u0443\u0448\u043A\u0430 \u043D\u0438\u0442\u043E\u043A", x: 360, y: 580 }
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "pigeon",
+          label: "\u0413\u043E\u043B\u0443\u0431\u0438",
+          spots: [
+            { x: 510, y: 22, r: 12 },
+            { x: 822, y: 42, r: 14 },
+            { x: 774, y: 154, r: 14 },
+            { x: 245, y: 488, r: 18 },
+            { x: 107, y: 519, r: 18 },
+            { x: 149, y: 547, r: 22 },
+            { x: 393, y: 228, r: 12 },
+            { x: 882, y: 210, r: 18 }
+          ]
+        },
+        {
+          id: "horseshoe2",
+          label: "\u041F\u043E\u0434\u043A\u043E\u0432\u044B",
+          spots: [
+            { x: 621, y: 367, r: 14 },
+            { x: 663, y: 372, r: 14 },
+            { x: 746, y: 420, r: 12 },
+            { x: 636, y: 609, r: 14 }
+          ]
+        },
+        {
+          id: "garlic",
+          label: "\u0421\u0432\u044F\u0437\u043A\u0438 \u0447\u0435\u0441\u043D\u043E\u043A\u0430",
+          spots: [
+            { x: 388, y: 63, r: 14 },
+            { x: 408, y: 54, r: 14 },
+            { x: 525, y: 140, r: 22 },
+            { x: 720, y: 228, r: 22 },
+            { x: 921, y: 268, r: 26 }
+          ]
+        }
       ],
-      filler: ["\u{1F34E}", "\u{1F955}", "\u{1F9FA}", "\u{1F35E}", "\u{1F9C0}", "\u{1F956}", "\u{1F3A3}", "\u{1FAA3}", "\u{1F9C8}", "\u{1F95A}"],
-      frontPool: ["\u{1F9FA}", "\u{1F38F}", "\u{1F33E}", "\u{1FAA2}"],
-      fillerCount: 62,
-      rewards: [{ type: "coins", amount: 110 }],
-      intro: "\u041D\u0430 \u0440\u044B\u043D\u043A\u0435 \u0432\u0441\u0451 \u043A\u0430\u0442\u0438\u0442\u0441\u044F \u043F\u043E\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0438. \u041F\u043E\u043C\u043E\u0433\u0438 \u0442\u043E\u0440\u0433\u043E\u0432\u043A\u0435 \u0441\u043E\u0431\u0440\u0430\u0442\u044C \u0443\u0442\u0440\u0430\u0447\u0435\u043D\u043D\u043E\u0435."
+      rewards: [{ type: "coins", amount: 120 }],
+      intro: "\u0413\u043E\u043B\u0443\u0431\u0435\u0439 \u0442\u0443\u0442 \u0432\u043E\u0441\u0435\u043C\u044C, \u043F\u043E\u0434\u043A\u043E\u0432 \u0447\u0435\u0442\u044B\u0440\u0435, \u0430 \u0447\u0435\u0441\u043D\u043E\u043A\u0430 \u2014 \u043F\u044F\u0442\u044C \u0441\u0432\u044F\u0437\u043E\u043A. \u0412\u0441\u0435\u0445 \u043D\u0430\u0439\u0434\u0451\u0448\u044C?"
     },
     {
       id: "sk_tw_02",
@@ -1376,17 +1364,35 @@
       mechanic: "seek",
       name: "\u0421\u043A\u043B\u0430\u0434 \u043A\u0443\u0437\u043D\u0435\u0446\u0430",
       difficulty: 3,
-      targets: [
-        { id: "t_tongs", icon: "\u{1F527}", label: "\u041A\u043B\u0435\u0449\u0438", x: 830, y: 540 },
-        { id: "t_nail", icon: "\u{1F4CC}", label: "\u0413\u0432\u043E\u0437\u0434\u044C \u043E\u0441\u043E\u0431\u043E\u0439 \u0437\u0430\u043A\u0430\u043B\u043A\u0438", x: 250, y: 160 },
-        { id: "t_coal", icon: "\u{1F5A4}", label: "\u0423\u0433\u043E\u043B\u0451\u043A", x: 500, y: 380 },
-        { id: "t_glove", icon: "\u{1F9E4}", label: "\u0420\u0443\u043A\u0430\u0432\u0438\u0446\u0430", x: 880, y: 180 }
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "dog",
+          label: "\u0421\u043F\u044F\u0449\u0438\u0435 \u0441\u043E\u0431\u0430\u043A\u0438",
+          spots: [{ x: 188, y: 180, r: R + 12 }, { x: 156, y: 496, r: R + 12 }]
+        },
+        {
+          id: "bread",
+          label: "\u0411\u0443\u0445\u0430\u043D\u043A\u0438 \u0445\u043B\u0435\u0431\u0430",
+          spots: [
+            { x: 634, y: 232, r: R },
+            { x: 588, y: 265, r: R },
+            { x: 675, y: 281, r: R }
+          ]
+        },
+        {
+          id: "cheese",
+          label: "\u0413\u043E\u043B\u043E\u0432\u043A\u0438 \u0441\u044B\u0440\u0430",
+          spots: [{ x: 603, y: 196, r: R + 4 }]
+        },
+        {
+          id: "rope",
+          label: "\u041C\u043E\u0442\u043A\u0438 \u0432\u0435\u0440\u0451\u0432\u043A\u0438",
+          spots: [{ x: 781, y: 451, r: R }, { x: 787, y: 496, r: R }]
+        }
       ],
-      filler: ["\u2699\uFE0F", "\u{1F529}", "\u26D3\uFE0F", "\u{1F528}", "\u{1FA93}", "\u{1F6E2}\uFE0F", "\u{1F9F2}", "\u2692\uFE0F", "\u{1FA9A}", "\u{1F517}"],
-      frontPool: ["\u{1F578}\uFE0F", "\u{1F9F1}", "\u{1F32B}\uFE0F"],
-      fillerCount: 62,
-      rewards: [{ type: "coins", amount: 120 }],
-      intro: "\u041A\u0443\u0437\u043D\u0435\u0446 \u043E\u043F\u044F\u0442\u044C \u0432\u0441\u0451 \u0440\u0430\u0437\u0431\u0440\u043E\u0441\u0430\u043B. \u041D\u0430\u0439\u0434\u0438 \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u044B \u0434\u043E \u043F\u0440\u0438\u0445\u043E\u0434\u0430 \u0437\u0430\u043A\u0430\u0437\u0447\u0438\u043A\u0430."
+      rewards: [{ type: "coins", amount: 130 }],
+      intro: "\u041A\u0443\u0437\u043D\u0435\u0446 \u0441\u043D\u043E\u0432\u0430 \u0432\u0441\u0451 \u0440\u0430\u0441\u043A\u0438\u0434\u0430\u043B. \u0421\u043E\u0431\u0430\u043A \u043D\u0435 \u0431\u0443\u0434\u0438 \u2014 \u043F\u0440\u043E\u0441\u0442\u043E \u043E\u0442\u043C\u0435\u0442\u044C."
     },
     // --- Мир 3: Книжный чердак ---
     {
@@ -1395,17 +1401,43 @@
       mechanic: "seek",
       name: "\u041F\u044B\u043B\u044C\u043D\u0430\u044F \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430",
       difficulty: 4,
-      targets: [
-        { id: "t_bookmark", icon: "\u{1F516}", label: "\u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0430", x: 720, y: 260 },
-        { id: "t_quill", icon: "\u{1FAB6}", label: "\u041F\u0435\u0440\u043E", x: 130, y: 540 },
-        { id: "t_lens", icon: "\u{1F50D}", label: "\u041B\u0443\u043F\u0430", x: 890, y: 540 },
-        { id: "t_letter", icon: "\u2709\uFE0F", label: "\u041D\u0435\u0440\u0430\u0441\u043F\u0435\u0447\u0430\u0442\u0430\u043D\u043D\u043E\u0435 \u043F\u0438\u0441\u044C\u043C\u043E", x: 330, y: 80 }
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "keys",
+          label: "\u0421\u0442\u0430\u0440\u0438\u043D\u043D\u044B\u0435 \u043A\u043B\u044E\u0447\u0438",
+          spots: [
+            { x: 706, y: 496, r: R },
+            { x: 688, y: 510, r: R },
+            { x: 656, y: 503, r: R }
+          ]
+        },
+        {
+          id: "candle",
+          label: "\u0421\u0432\u0435\u0447\u0438",
+          spots: [
+            { x: 206, y: 379, r: R },
+            { x: 656, y: 209, r: R },
+            { x: 150, y: 405, r: R }
+          ]
+        },
+        {
+          id: "openbook",
+          label: "\u0420\u0430\u0441\u043A\u0440\u044B\u0442\u044B\u0435 \u043A\u043D\u0438\u0433\u0438",
+          spots: [
+            { x: 281, y: 457, r: R },
+            { x: 531, y: 457, r: R },
+            { x: 238, y: 163, r: R }
+          ]
+        },
+        {
+          id: "chest",
+          label: "\u0427\u0435\u043C\u043E\u0434\u0430\u043D\u0447\u0438\u043A\u0438",
+          spots: [{ x: 394, y: 274, r: R }, { x: 56, y: 522, r: R }]
+        }
       ],
-      filler: ["\u{1F4DA}", "\u{1F4D6}", "\u{1F4DC}", "\u{1F4D5}", "\u{1F4D7}", "\u{1F4D8}", "\u{1F56F}\uFE0F", "\u{1FAD6}", "\u2615", "\u{1F4D3}"],
-      frontPool: ["\u{1F4DC}", "\u{1F578}\uFE0F", "\u{1F32B}\uFE0F", "\u{1FAB6}"],
-      fillerCount: 65,
-      rewards: [{ type: "coins", amount: 140 }],
-      intro: "\u041D\u0430 \u0447\u0435\u0440\u0434\u0430\u043A\u0435 \u043A\u0430\u0436\u0434\u0430\u044F \u0432\u0435\u0449\u044C \u043F\u043E\u043C\u043D\u0438\u0442 \u0438\u0441\u0442\u043E\u0440\u0438\u044E. \u041D\u0430\u0439\u0434\u0438 \u0447\u0435\u0442\u044B\u0440\u0435 \u0441\u0430\u043C\u044B\u0435 \u0432\u0430\u0436\u043D\u044B\u0435."
+      rewards: [{ type: "coins", amount: 150 }],
+      intro: "\u041D\u0430 \u0447\u0435\u0440\u0434\u0430\u043A\u0435 \u043A\u0430\u0436\u0434\u0430\u044F \u0432\u0435\u0449\u044C \u043F\u043E\u043C\u043D\u0438\u0442 \u0438\u0441\u0442\u043E\u0440\u0438\u044E. \u041D\u0430\u0439\u0434\u0438 \u0432\u0441\u0435 \u043A\u043B\u044E\u0447\u0438, \u0441\u0432\u0435\u0447\u0438 \u0438 \u043A\u043D\u0438\u0433\u0438."
     },
     {
       id: "sk_bk_02",
@@ -1414,28 +1446,3289 @@
       name: "\u0421\u0443\u043D\u0434\u0443\u043A \u0431\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u044B\u0445 \u043F\u0438\u0441\u0435\u043C",
       difficulty: 5,
       bg: "seek_attic2",
-      targets: [
-        { id: "t_locket", icon: "\u{1F4FF}", label: "\u041C\u0435\u0434\u0430\u043B\u044C\u043E\u043D", x: 930, y: 330 },
-        { id: "t_stamp", icon: "\u{1F3F7}\uFE0F", label: "\u0420\u0435\u0434\u043A\u0430\u044F \u043C\u0430\u0440\u043A\u0430", x: 60, y: 540 },
-        { id: "t_key2", icon: "\u{1F5DD}\uFE0F", label: "\u041A\u043B\u044E\u0447\u0438\u043A \u043E\u0442 \u0448\u043A\u0430\u0442\u0443\u043B\u043A\u0438", x: 560, y: 560 },
-        { id: "t_photo", icon: "\u{1F5BC}\uFE0F", label: "\u0421\u0442\u0430\u0440\u0430\u044F \u0444\u043E\u0442\u043E\u0433\u0440\u0430\u0444\u0438\u044F", x: 240, y: 240 },
-        { id: "t_dry", icon: "\u{1F940}", label: "\u0417\u0430\u0441\u043E\u0445\u0448\u0430\u044F \u0440\u043E\u0437\u0430", x: 790, y: 90 }
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "letter",
+          label: "\u041F\u0438\u0441\u044C\u043C\u0430 \u0441 \u043F\u0435\u0447\u0430\u0442\u044C\u044E",
+          spots: [
+            { x: 338, y: 418, r: R },
+            { x: 388, y: 470, r: R },
+            { x: 663, y: 431, r: R },
+            { x: 750, y: 542, r: R }
+          ]
+        },
+        {
+          id: "specs",
+          label: "\u041E\u0447\u043A\u0438",
+          spots: [
+            { x: 550, y: 425, r: R },
+            { x: 519, y: 261, r: R },
+            { x: 406, y: 575, r: R }
+          ]
+        },
+        {
+          id: "keys2",
+          label: "\u041A\u043B\u044E\u0447\u0438",
+          spots: [
+            { x: 447, y: 418, r: R },
+            { x: 653, y: 549, r: R },
+            { x: 756, y: 496, r: R }
+          ]
+        },
+        {
+          id: "cup",
+          label: "\u0427\u0430\u0439\u043D\u044B\u0435 \u0447\u0430\u0448\u043A\u0438",
+          spots: [
+            { x: 244, y: 457, r: R },
+            { x: 803, y: 428, r: R },
+            { x: 681, y: 353, r: R }
+          ]
+        }
       ],
-      filler: ["\u{1F4DC}", "\u2709\uFE0F", "\u{1F4DA}", "\u{1F58B}\uFE0F", "\u{1F570}\uFE0F", "\u{1F9F8}", "\u{1F3BB}", "\u{1F4D4}", "\u{1F56F}\uFE0F", "\u{1FAD9}", "\u{1F4EF}", "\u{1F3A9}"],
-      frontPool: ["\u{1F4DC}", "\u{1F578}\uFE0F", "\u{1F380}", "\u{1F32B}\uFE0F"],
-      fillerCount: 72,
-      frontCount: 9,
-      rewards: [{ type: "coins", amount: 180 }, { type: "seals", amount: 1 }],
-      intro: "\u0421\u0430\u043C\u044B\u0439 \u0443\u044E\u0442\u043D\u044B\u0439 \u0442\u0430\u0439\u043D\u0438\u043A \u043B\u0430\u0432\u043A\u0438. \u041F\u044F\u0442\u044C \u043F\u0430\u043C\u044F\u0442\u043D\u044B\u0445 \u0432\u0435\u0449\u0435\u0439 \u0436\u0434\u0443\u0442 \u0441\u0432\u043E\u0435\u0439 \u043F\u043E\u043B\u043A\u0438."
+      rewards: [{ type: "coins", amount: 200 }, { type: "seals", amount: 1 }],
+      intro: "\u0424\u0438\u043D\u0430\u043B \u0438\u0441\u043A\u0430\u043B\u043E\u043A: \u043F\u0438\u0441\u044C\u043C\u0430, \u043E\u0447\u043A\u0438, \u043A\u043B\u044E\u0447\u0438 \u0438 \u0447\u0430\u0448\u043A\u0438 \u2014 \u0432\u0441\u0435 \u0434\u043E \u0435\u0434\u0438\u043D\u043E\u0433\u043E."
     }
   ];
-  var SEEK_PUZZLES = RAW.map((l) => ({
-    ...l,
-    sceneSize: SCENE_SIZE,
-    scene: buildScene(l),
-    front: buildFront(l)
-  }));
   var SEEK_PUZZLE_BY_ID = Object.fromEntries(SEEK_PUZZLES.map((p) => [p.id, p]));
+  SEEK_PUZZLES.push(
+    {
+      id: "sk_nm_01",
+      world: "nm",
+      mechanic: "seek",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
+      difficulty: 4,
+      bg: "seek_market",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "mask",
+          label: "\u041C\u0430\u0441\u043A\u0438 \u0434\u0443\u0445\u043E\u0432",
+          spots: [
+            { x: 469, y: 294, r: R },
+            { x: 531, y: 274, r: R },
+            { x: 597, y: 271, r: R },
+            { x: 744, y: 284, r: R }
+          ]
+        },
+        {
+          id: "wisp",
+          label: "\u0414\u0443\u0445\u0438-\u043E\u0433\u043E\u043D\u044C\u043A\u0438",
+          spots: [
+            { x: 325, y: 111, r: R },
+            { x: 588, y: 167, r: R },
+            { x: 931, y: 323, r: R }
+          ]
+        },
+        {
+          id: "origami",
+          label: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0435 \u0436\u0443\u0440\u0430\u0432\u043B\u0438\u043A\u0438",
+          spots: [
+            { x: 625, y: 356, r: R },
+            { x: 666, y: 362, r: R },
+            { x: 888, y: 310, r: R }
+          ]
+        },
+        {
+          id: "glowjar",
+          label: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0435\u0441\u044F \u0431\u0430\u043D\u043A\u0438",
+          spots: [
+            { x: 47, y: 473, r: R },
+            { x: 438, y: 356, r: R },
+            { x: 741, y: 157, r: R }
+          ]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 220 }],
+      intro: "\u0424\u043E\u043D\u0430\u0440\u0438\u043A\u0438, \u043C\u0430\u0441\u043A\u0438, \u0434\u0443\u0445\u0438 \u0442\u043E\u0440\u0433\u043E\u0432\u043B\u0438. \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u043F\u043E\u043B\u043E\u043D \u043C\u0435\u043B\u043A\u0438\u0445 \u0447\u0443\u0434\u0435\u0441."
+    },
+    {
+      id: "sk_sw_01",
+      world: "sw",
+      mechanic: "seek",
+      name: "\u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438",
+      difficulty: 4,
+      bg: "seek_swamp",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "frog",
+          label: "\u041B\u044F\u0433\u0443\u0448\u043A\u0438",
+          spots: [
+            { x: 394, y: 160, r: R },
+            { x: 500, y: 219, r: R },
+            { x: 241, y: 369, r: R },
+            { x: 600, y: 575, r: R },
+            { x: 688, y: 588, r: R }
+          ]
+        },
+        {
+          id: "glowshroom",
+          label: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0435\u0441\u044F \u0433\u0440\u0438\u0431\u044B",
+          spots: [
+            { x: 544, y: 147, r: R },
+            { x: 972, y: 137, r: R },
+            { x: 144, y: 493, r: R },
+            { x: 34, y: 320, r: R }
+          ]
+        },
+        {
+          id: "lantern",
+          label: "\u0424\u043E\u043D\u0430\u0440\u0438\u043A\u0438",
+          spots: [{ x: 572, y: 346, r: R }, { x: 753, y: 523, r: R }]
+        },
+        {
+          id: "dragonfly",
+          label: "\u0421\u0442\u0440\u0435\u043A\u043E\u0437\u044B",
+          spots: [
+            { x: 894, y: 251, r: R },
+            { x: 938, y: 477, r: R },
+            { x: 744, y: 49, r: R }
+          ]
+        },
+        {
+          id: "boot",
+          label: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0435 \u0441\u0430\u043F\u043E\u0433\u0438",
+          spots: [
+            { x: 384, y: 366, r: R },
+            { x: 450, y: 310, r: R },
+            { x: 253, y: 500, r: R }
+          ]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 240 }],
+      intro: "\u0422\u0443\u043C\u0430\u043D, \u0438\u0437\u0431\u0443\u0448\u043A\u0430, \u043B\u044F\u0433\u0443\u0448\u043A\u0438-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0438. \u0421\u0447\u0438\u0442\u0430\u0439 \u043B\u044F\u0433\u0443\u0448\u0435\u043A \u0432\u043D\u0438\u043C\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u2014 \u0438\u0445 \u043F\u044F\u0442\u044C!"
+    },
+    {
+      id: "sk_sf_01",
+      world: "sf",
+      mechanic: "seek",
+      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
+      difficulty: 5,
+      bg: "seek_fair",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "armillary",
+          label: "\u0410\u0441\u0442\u0440\u043E\u043B\u044F\u0431\u0438\u0438",
+          spots: [
+            { x: 125, y: 294, r: R },
+            { x: 550, y: 114, r: R },
+            { x: 269, y: 229, r: R },
+            { x: 953, y: 418, r: R }
+          ]
+        },
+        {
+          id: "candleorb",
+          label: "\u0421\u0432\u0435\u0447\u0438 \u0432 \u0448\u0430\u0440\u0430\u0445",
+          spots: [
+            { x: 69, y: 320, r: R },
+            { x: 394, y: 118, r: R },
+            { x: 825, y: 193, r: R },
+            { x: 956, y: 281, r: R }
+          ]
+        },
+        {
+          id: "starcookie",
+          label: "\u041F\u0435\u0447\u0435\u043D\u044C\u044F-\u0437\u0432\u0451\u0437\u0434\u044B",
+          spots: [
+            { x: 525, y: 389, r: R },
+            { x: 572, y: 382, r: R },
+            { x: 697, y: 320, r: R }
+          ]
+        },
+        {
+          id: "crystal",
+          label: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0431\u0443\u043A\u0435\u0442\u044B",
+          spots: [
+            { x: 650, y: 294, r: R },
+            { x: 603, y: 320, r: R },
+            { x: 713, y: 565, r: R },
+            { x: 750, y: 549, r: R }
+          ]
+        },
+        {
+          id: "moonpillow",
+          label: "\u041B\u0443\u043D\u043D\u044B\u0435 \u043F\u043E\u0434\u0443\u0448\u043A\u0438",
+          spots: [
+            { x: 431, y: 477, r: R },
+            { x: 494, y: 493, r: R },
+            { x: 294, y: 614, r: R }
+          ]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 260 }, { type: "seals", amount: 1 }],
+      intro: "\u042F\u0440\u043C\u0430\u0440\u043A\u0430 \u0447\u0443\u0434\u0435\u0441 \u043F\u043E\u0434 \u0437\u0432\u0451\u0437\u0434\u0430\u043C\u0438. \u0410\u0441\u0442\u0440\u043E\u043B\u044F\u0431\u0438\u0439 \u0437\u0434\u0435\u0441\u044C \u0447\u0435\u0442\u044B\u0440\u0435 \u2014 \u0432\u0441\u0435 \u0442\u0432\u043E\u0438."
+    },
+    {
+      id: "sk_ash_01",
+      world: "ash",
+      mechanic: "seek",
+      name: "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438\u0437\u043D\u0443\u0442\u0440\u0438",
+      difficulty: 5,
+      bg: "seek_forge",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "horseshoe3",
+          label: "\u041F\u043E\u0434\u043A\u043E\u0432\u044B",
+          spots: [
+            { x: 209, y: 153, r: R },
+            { x: 216, y: 186, r: R },
+            { x: 219, y: 212, r: R },
+            { x: 706, y: 516, r: R },
+            { x: 756, y: 523, r: R },
+            { x: 94, y: 529, r: R }
+          ]
+        },
+        {
+          id: "hammer",
+          label: "\u041C\u043E\u043B\u043E\u0442\u043A\u0438",
+          spots: [
+            { x: 406, y: 314, r: R },
+            { x: 588, y: 444, r: R },
+            { x: 775, y: 568, r: R },
+            { x: 238, y: 425, r: R }
+          ]
+        },
+        {
+          id: "ingot",
+          label: "\u0421\u043B\u0438\u0442\u043A\u0438",
+          spots: [
+            { x: 313, y: 300, r: R },
+            { x: 388, y: 470, r: R },
+            { x: 588, y: 529, r: R },
+            { x: 556, y: 487, r: R }
+          ]
+        },
+        {
+          id: "gear",
+          label: "\u0428\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0438",
+          spots: [
+            { x: 188, y: 346, r: R },
+            { x: 288, y: 562, r: R },
+            { x: 706, y: 366, r: R },
+            { x: 781, y: 457, r: R }
+          ]
+        },
+        {
+          id: "blade",
+          label: "\u041A\u043B\u0438\u043D\u043A\u0438-\u0437\u0430\u0433\u043E\u0442\u043E\u0432\u043A\u0438",
+          spots: [
+            { x: 144, y: 287, r: R },
+            { x: 153, y: 379, r: R },
+            { x: 753, y: 222, r: R }
+          ]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 280 }, { type: "seals", amount: 1 }],
+      intro: "\u041D\u0430\u043A\u043E\u0432\u0430\u043B\u044C\u043D\u0438, \u0443\u0433\u043B\u0438, \u0442\u044B\u0441\u044F\u0447\u0430 \u043C\u0435\u043B\u043E\u0447\u0435\u0439. \u0428\u0435\u0441\u0442\u044C \u043F\u043E\u0434\u043A\u043E\u0432 \u0436\u0434\u0443\u0442 \u043D\u043E\u0432\u043E\u0433\u043E \u0445\u043E\u0437\u044F\u0438\u043D\u0430."
+    }
+  );
+  SEEK_PUZZLES.push(
+    {
+      id: "sk_cr_01",
+      world: "cr",
+      mechanic: "seek",
+      name: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B",
+      difficulty: 5,
+      bg: "seek_crystal",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "cave",
+          label: "\u0422\u0451\u043F\u043B\u044B\u0435 \u043F\u0435\u0449\u0435\u0440\u044B",
+          spots: [
+            { x: 106, y: 483, r: R + 6 },
+            { x: 644, y: 542, r: R + 6 },
+            { x: 894, y: 523, r: R + 6 },
+            { x: 838, y: 124, r: R + 6 }
+          ]
+        },
+        {
+          id: "icelantern",
+          label: "\u041B\u0435\u0434\u044F\u043D\u044B\u0435 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438",
+          spots: [{ x: 209, y: 68, r: R }, { x: 225, y: 258, r: R }]
+        },
+        {
+          id: "rope2",
+          label: "\u0410\u043B\u044C\u043F\u0438\u043D\u0438\u0441\u0442\u0441\u043A\u0438\u0435 \u0432\u0435\u0440\u0451\u0432\u043A\u0438",
+          spots: [
+            { x: 247, y: 108, r: R },
+            { x: 291, y: 245, r: R },
+            { x: 753, y: 245, r: R },
+            { x: 975, y: 424, r: R }
+          ]
+        },
+        {
+          id: "crate",
+          label: "\u042F\u0449\u0438\u043A\u0438 \u044D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438",
+          spots: [{ x: 678, y: 193, r: R }, { x: 322, y: 480, r: R }]
+        },
+        {
+          id: "gem",
+          label: "\u0421\u0430\u043C\u043E\u0446\u0432\u0435\u0442\u044B",
+          spots: [
+            { x: 122, y: 183, r: R },
+            { x: 159, y: 163, r: R },
+            { x: 72, y: 359, r: R },
+            { x: 747, y: 424, r: R }
+          ]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 280 }],
+      intro: "\u0421\u0432\u0435\u0440\u043A\u0430\u044E\u0449\u0438\u0435 \u043F\u0438\u043A\u0438 \u0438 \u0442\u0451\u043F\u043B\u044B\u0435 \u043F\u0435\u0449\u0435\u0440\u044B. \u0427\u0435\u0442\u044B\u0440\u0435 \u043F\u0435\u0449\u0435\u0440\u044B \u2014 \u0432 \u043A\u0430\u0436\u0434\u043E\u0439 \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442 \u0434\u0443\u0445 \u0433\u043E\u0440."
+    },
+    {
+      id: "sk_jade_01",
+      world: "jade",
+      mechanic: "seek",
+      name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434",
+      difficulty: 5,
+      bg: "seek_jade",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "stonelantern",
+          label: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0435 \u0444\u043E\u043D\u0430\u0440\u0438",
+          spots: [
+            { x: 263, y: 124, r: R },
+            { x: 456, y: 274, r: R },
+            { x: 41, y: 562, r: R }
+          ]
+        },
+        {
+          id: "crane",
+          label: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0435 \u0436\u0443\u0440\u0430\u0432\u043B\u0438\u043A\u0438",
+          spots: [
+            { x: 47, y: 91, r: R },
+            { x: 147, y: 271, r: R },
+            { x: 644, y: 300, r: R },
+            { x: 381, y: 418, r: R },
+            { x: 31, y: 497, r: R }
+          ]
+        },
+        {
+          id: "statue",
+          label: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0435 \u0441\u0442\u0430\u0442\u0443\u044D\u0442\u043A\u0438",
+          spots: [
+            { x: 625, y: 101, r: R },
+            { x: 766, y: 108, r: R },
+            { x: 844, y: 157, r: R },
+            { x: 206, y: 362, r: R },
+            { x: 575, y: 444, r: R }
+          ]
+        },
+        {
+          id: "fan",
+          label: "\u0412\u0435\u0435\u0440\u0430",
+          spots: [
+            { x: 381, y: 176, r: R },
+            { x: 503, y: 362, r: R },
+            { x: 769, y: 597, r: R },
+            { x: 953, y: 398, r: R }
+          ]
+        },
+        {
+          id: "koi",
+          label: "\u041A\u043E\u0438 \u0432 \u043F\u0440\u0443\u0434\u0443",
+          spots: [
+            { x: 650, y: 382, r: R },
+            { x: 738, y: 405, r: R },
+            { x: 675, y: 555, r: R }
+          ]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 300 }, { type: "seals", amount: 1 }],
+      intro: "\u0421\u0430\u0434 \u043A\u0430\u043C\u043D\u0435\u0439 \u0436\u0434\u0451\u0442 \u0432\u043D\u0438\u043C\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0433\u043E\u0441\u0442\u044F. \u041F\u044F\u0442\u044C \u0441\u0442\u0430\u0442\u0443\u044D\u0442\u043E\u043A \u0438 \u043F\u044F\u0442\u044C \u0436\u0443\u0440\u0430\u0432\u043B\u0438\u043A\u043E\u0432."
+    },
+    {
+      id: "sk_deep_01",
+      world: "deep",
+      mechanic: "seek",
+      name: "\u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442",
+      difficulty: 5,
+      bg: "seek_grotto",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "jelly",
+          label: "\u041C\u0435\u0434\u0443\u0437\u044B",
+          spots: [
+            { x: 206, y: 379, r: R },
+            { x: 756, y: 176, r: R },
+            { x: 819, y: 85, r: R }
+          ]
+        },
+        {
+          id: "pearlshell",
+          label: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0435 \u0440\u0430\u043A\u043E\u0432\u0438\u043D\u044B",
+          spots: [
+            { x: 200, y: 196, r: R },
+            { x: 331, y: 402, r: R },
+            { x: 669, y: 274, r: R }
+          ]
+        },
+        {
+          id: "amphora",
+          label: "\u0410\u043C\u0444\u043E\u0440\u044B",
+          spots: [
+            { x: 109, y: 196, r: R },
+            { x: 288, y: 157, r: R },
+            { x: 494, y: 118, r: R },
+            { x: 138, y: 503, r: R },
+            { x: 656, y: 356, r: R }
+          ]
+        },
+        {
+          id: "crab",
+          label: "\u041A\u0440\u0430\u0431\u044B",
+          spots: [
+            { x: 550, y: 85, r: R },
+            { x: 556, y: 340, r: R },
+            { x: 694, y: 607, r: R }
+          ]
+        },
+        {
+          id: "key",
+          label: "\u0417\u0430\u0442\u043E\u043D\u0443\u0432\u0448\u0438\u0435 \u043A\u043B\u044E\u0447\u0438",
+          spots: [{ x: 775, y: 320, r: R }, { x: 581, y: 451, r: R }]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 320 }, { type: "seals", amount: 1 }],
+      intro: "\u0417\u0430\u0442\u043E\u043F\u043B\u0435\u043D\u043D\u044B\u0439 \u0433\u0440\u043E\u0442 \u0445\u0440\u0430\u043D\u0438\u0442 \u0441\u043E\u043A\u0440\u043E\u0432\u0438\u0449\u0430 \u0440\u0443\u0441\u0430\u043B\u043E\u043A. \u041F\u044F\u0442\u044C \u0430\u043C\u0444\u043E\u0440 \u2014 \u0432\u0441\u0435 \u043F\u043E\u0434\u043D\u044F\u0442\u044C \u043D\u0430\u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sk_mist_01",
+      world: "mist",
+      mechanic: "seek",
+      name: "\u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+      difficulty: 5,
+      bg: "seek_clockwork",
+      sceneSize: [1e3, 650],
+      groups: [
+        {
+          id: "hourglass",
+          label: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+          spots: [
+            { x: 650, y: 157, r: R },
+            { x: 450, y: 327, r: R },
+            { x: 438, y: 516, r: R },
+            { x: 531, y: 268, r: R }
+          ]
+        },
+        {
+          id: "pocketwatch",
+          label: "\u041A\u0430\u0440\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+          spots: [
+            { x: 600, y: 209, r: R },
+            { x: 244, y: 503, r: R },
+            { x: 344, y: 555, r: R },
+            { x: 369, y: 607, r: R },
+            { x: 575, y: 346, r: R }
+          ]
+        },
+        {
+          id: "windkey",
+          label: "\u0417\u0430\u0432\u043E\u0434\u043D\u044B\u0435 \u043A\u043B\u044E\u0447\u0438",
+          spots: [
+            { x: 488, y: 359, r: R },
+            { x: 444, y: 392, r: R },
+            { x: 744, y: 85, r: R }
+          ]
+        },
+        {
+          id: "brasscat",
+          label: "\u041B\u0430\u0442\u0443\u043D\u043D\u044B\u0439 \u043A\u043E\u0442",
+          spots: [{ x: 800, y: 398, r: R + 10 }]
+        },
+        {
+          id: "blueprint",
+          label: "\u0427\u0435\u0440\u0442\u0435\u0436\u0438",
+          spots: [
+            { x: 719, y: 287, r: R },
+            { x: 600, y: 431, r: R },
+            { x: 175, y: 340, r: R }
+          ]
+        }
+      ],
+      rewards: [{ type: "coins", amount: 350 }, { type: "seals", amount: 2 }],
+      intro: "\u041A\u0440\u0430\u0439 \u0432\u0440\u0435\u043C\u0451\u043D. \u041B\u0430\u0442\u0443\u043D\u043D\u044B\u0439 \u043A\u043E\u0442 \u0437\u043D\u0430\u0435\u0442, \u043A\u0443\u0434\u0430 \u043F\u0440\u044F\u0447\u0443\u0442\u0441\u044F \u0432\u0441\u0435 \u043A\u0430\u0440\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B."
+    }
+  );
+
+  // src/data/puzzlesPath.js
+  var PATH_PUZZLES = [
+    {
+      id: "pp_01",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0430",
+      difficulty: 1,
+      grid: [3, 3],
+      tiles: [
+        { type: "start", pos: [0, 1], rot: 1, fixed: true },
+        { type: "straight", pos: [1, 1], rot: 0 },
+        { type: "corner", pos: [1, 0], rot: 0 },
+        { type: "end", pos: [2, 1], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 100 }],
+      intro: "\u0422\u0430\u043F\u0430\u0439 \u043F\u043B\u0438\u0442\u043A\u0438 \u2014 \u043E\u043D\u0438 \u043F\u043E\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u044E\u0442\u0441\u044F. \u041F\u0440\u043E\u0432\u0435\u0434\u0438 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0443 \u043E\u0442 \u0434\u043E\u043C\u0438\u043A\u0430 \u043A \u0434\u0443\u0431\u0443."
+    },
+    {
+      id: "pp_02",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u0432\u043E\u0440\u043E\u0442",
+      difficulty: 1,
+      grid: [3, 3],
+      tiles: [
+        { type: "start", pos: [0, 2], rot: 0, fixed: true },
+        { type: "corner", pos: [0, 1], rot: 2 },
+        { type: "corner", pos: [1, 1], rot: 0 },
+        { type: "corner", pos: [1, 0], rot: 3 },
+        { type: "straight", pos: [2, 2], rot: 0 },
+        { type: "end", pos: [2, 0], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 110 }],
+      intro: "\u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u043C\u043E\u0436\u0435\u0442 \u0438\u0437\u0432\u0438\u0432\u0430\u0442\u044C\u0441\u044F. \u0423\u0433\u043B\u044B \u2014 \u0442\u0432\u043E\u0438 \u0434\u0440\u0443\u0437\u044C\u044F."
+    },
+    {
+      id: "pp_03",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u0417\u043C\u0435\u0439\u043A\u0430 \u043A \u0440\u0443\u0447\u044C\u044E",
+      difficulty: 2,
+      grid: [4, 3],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 1, fixed: true },
+        { type: "straight", pos: [1, 0], rot: 0 },
+        { type: "corner", pos: [2, 0], rot: 0 },
+        { type: "straight", pos: [2, 1], rot: 1 },
+        { type: "corner", pos: [2, 2], rot: 2 },
+        { type: "corner", pos: [1, 2], rot: 1 },
+        { type: "end", pos: [3, 2], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 120 }],
+      intro: "\u0414\u043B\u0438\u043D\u043D\u044B\u0439 \u043F\u0443\u0442\u044C \u043A\u043E\u0440\u043E\u0447\u0435, \u0447\u0435\u043C \u043A\u0430\u0436\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "pp_04",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u0421\u043F\u044F\u0449\u0438\u0439 \u043A\u0430\u0431\u0430\u043D",
+      difficulty: 2,
+      grid: [4, 4],
+      tiles: [
+        { type: "start", pos: [0, 3], rot: 0, fixed: true },
+        { type: "straight", pos: [0, 2], rot: 1 },
+        { type: "corner", pos: [0, 1], rot: 3 },
+        { type: "straight", pos: [1, 1], rot: 0 },
+        { type: "corner", pos: [2, 1], rot: 3 },
+        { type: "corner", pos: [2, 2], rot: 2 },
+        { type: "beast", pos: [1, 2], rot: 0 },
+        { type: "beast", pos: [3, 1], rot: 0 },
+        { type: "end", pos: [3, 2], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 130 }],
+      intro: "\u0417\u0432\u0435\u0440\u0438 \u0441\u043F\u044F\u0442 \u2014 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0435 \u0442\u0443\u0434\u0430 \u043D\u0435\u043B\u044C\u0437\u044F. \u041E\u0431\u043E\u0439\u0434\u0438 \u0438\u0445 \u0441\u0442\u043E\u0440\u043E\u043D\u043E\u0439."
+    },
+    {
+      id: "pp_05",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u0420\u0430\u0437\u0432\u0438\u043B\u043A\u0430",
+      difficulty: 3,
+      grid: [4, 4],
+      tiles: [
+        { type: "start", pos: [0, 1], rot: 1, fixed: true },
+        { type: "tee", pos: [1, 1], rot: 0 },
+        { type: "straight", pos: [2, 1], rot: 0 },
+        { type: "straight", pos: [1, 2], rot: 1 },
+        { type: "corner", pos: [1, 3], rot: 1 },
+        { type: "beast", pos: [2, 2], rot: 0 },
+        { type: "end", pos: [3, 1], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 140 }],
+      intro: "\u0422\u0440\u043E\u0439\u043D\u0438\u043A \u0440\u0430\u0437\u0432\u043E\u0434\u0438\u0442 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0443 \u0432 \u0441\u0442\u043E\u0440\u043E\u043D\u044B. \u041B\u0438\u0448\u043D\u044F\u044F \u0432\u0435\u0442\u043A\u0430 \u043D\u0435 \u0441\u0442\u0440\u0430\u0448\u043D\u0430 \u2014 \u0433\u043B\u0430\u0432\u043D\u043E\u0435 \u0434\u043E\u0431\u0440\u0430\u0442\u044C\u0441\u044F."
+    },
+    {
+      id: "pp_06",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u041E\u0431\u0445\u043E\u0434 \u043B\u043E\u0433\u043E\u0432\u0430",
+      difficulty: 3,
+      grid: [5, 4],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 2, fixed: true },
+        { type: "corner", pos: [0, 1], rot: 3 },
+        { type: "straight", pos: [1, 1], rot: 0 },
+        { type: "tee", pos: [2, 1], rot: 0 },
+        { type: "corner", pos: [3, 1], rot: 1 },
+        { type: "corner", pos: [3, 2], rot: 3 },
+        { type: "straight", pos: [2, 2], rot: 1 },
+        { type: "beast", pos: [2, 0], rot: 0 },
+        { type: "beast", pos: [1, 0], rot: 0 },
+        { type: "beast", pos: [1, 2], rot: 0 },
+        { type: "end", pos: [4, 2], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 155 }],
+      intro: "\u041B\u043E\u0433\u043E\u0432\u043E \u0441\u043F\u0440\u0430\u0432\u0430 \u0441\u0432\u0435\u0440\u0445\u0443. \u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u0438\u0434\u0451\u0442 \u043D\u0438\u0436\u043D\u0438\u043C \u043A\u0440\u0430\u0435\u043C."
+    },
+    {
+      id: "pp_07",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u0414\u0432\u0435 \u0440\u0430\u0437\u0432\u0438\u043B\u043A\u0438",
+      difficulty: 4,
+      grid: [5, 4],
+      tiles: [
+        { type: "start", pos: [0, 3], rot: 0, fixed: true },
+        { type: "straight", pos: [0, 2], rot: 1 },
+        { type: "corner", pos: [0, 1], rot: 3 },
+        { type: "tee", pos: [1, 1], rot: 0 },
+        { type: "straight", pos: [2, 1], rot: 0 },
+        { type: "tee", pos: [3, 1], rot: 2 },
+        { type: "corner", pos: [1, 2], rot: 2 },
+        { type: "straight", pos: [3, 2], rot: 1 },
+        { type: "corner", pos: [3, 3], rot: 1 },
+        { type: "beast", pos: [2, 2], rot: 0 },
+        { type: "end", pos: [4, 1], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 170 }],
+      intro: "\u0414\u0432\u0435 \u0440\u0430\u0437\u0432\u0438\u043B\u043A\u0438 \u043F\u043E\u0434\u0440\u044F\u0434. \u0414\u0435\u0440\u0436\u0438 \u043E\u0431\u0449\u0435\u0435 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043D\u0430 \u0432\u043E\u0441\u0442\u043E\u043A."
+    },
+    {
+      id: "pp_08",
+      world: "crossroads",
+      mechanic: "path",
+      name: "\u042F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u044B\u0439 \u043A\u0440\u0443\u0433",
+      difficulty: 5,
+      grid: [6, 5],
+      tiles: [
+        { type: "start", pos: [0, 4], rot: 0, fixed: true },
+        { type: "corner", pos: [0, 3], rot: 3 },
+        { type: "tee", pos: [1, 3], rot: 0 },
+        { type: "straight", pos: [2, 3], rot: 0 },
+        { type: "corner", pos: [3, 3], rot: 1 },
+        { type: "corner", pos: [3, 4], rot: 2 },
+        { type: "straight", pos: [4, 4], rot: 0 },
+        { type: "straight", pos: [1, 2], rot: 1 },
+        { type: "corner", pos: [1, 1], rot: 0 },
+        { type: "corner", pos: [2, 0], rot: 1 },
+        { type: "beast", pos: [2, 2], rot: 0 },
+        { type: "beast", pos: [4, 2], rot: 0 },
+        { type: "beast", pos: [4, 3], rot: 0 },
+        { type: "corner", pos: [5, 1], rot: 2 },
+        { type: "end", pos: [5, 4], rot: 3, fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 220 }, { type: "seals", amount: 1 }],
+      intro: "\u0411\u043E\u043B\u044C\u0448\u043E\u0439 \u043A\u0440\u0443\u0433 \u0432\u043E\u043A\u0440\u0443\u0433 \u044F\u0440\u043C\u0430\u0440\u043A\u0438. \u0424\u0438\u043D\u0430\u043B \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430!"
+    }
+  ];
+  var PATH_PUZZLE_BY_ID = Object.fromEntries(PATH_PUZZLES.map((p) => [p.id, p]));
+
+  // src/data/puzzlesTea.js
+  var TEA_PUZZLES = [
+    {
+      id: "tea_01",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u041C\u044F\u0442\u043D\u044B\u0439 \u0434\u043B\u044F \u043C\u043E\u043A\u0440\u043E\u0433\u043E \u0441\u0442\u0440\u0430\u043D\u043D\u0438\u043A\u0430",
+      difficulty: 1,
+      target: { r: 0, g: 50, b: 0 },
+      tolerance: 10,
+      maxHeat: 50,
+      ingredients: [
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 2 },
+        { id: "water", name: "\u0420\u043E\u0434\u043D\u0438\u043A\u043E\u0432\u0430\u044F \u0432\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 2 },
+        { id: "fire", name: "\u041F\u043E\u043B\u0435\u0448\u043A\u043E", icon: "\u{1F525}", dr: 0, dg: 0, db: 0, heat: 20, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 100 }],
+      intro: "\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0439 \u0438\u043D\u0433\u0440\u0435\u0434\u0438\u0435\u043D\u0442\u044B \u0432 \u043A\u043E\u0442\u0451\u043B. \u0426\u0432\u0435\u0442 \u043E\u0442\u0432\u0430\u0440\u0430 \u043F\u043E\u043A\u0430\u0437\u0430\u043D \u043F\u043E\u0434 \u043A\u043E\u0442\u043B\u043E\u043C, \u0446\u0435\u043B\u044C \u2014 \u043D\u0430 \u0444\u043B\u0430\u043A\u043E\u043D\u0435."
+    },
+    {
+      id: "tea_02",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u041C\u0435\u0434\u043E\u0432\u044B\u0439 \u0432\u0435\u0447\u0435\u0440",
+      difficulty: 1,
+      target: { r: 45, g: 20, b: 0 },
+      tolerance: 10,
+      maxHeat: 60,
+      ingredients: [
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 3 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 1 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 110 }],
+      intro: "\u041C\u0451\u0434 \u0434\u0430\u0451\u0442 \u0442\u0451\u043F\u043B\u044B\u0439 \u044F\u043D\u0442\u0430\u0440\u043D\u044B\u0439 \u0446\u0432\u0435\u0442. \u041D\u0435 \u0443\u0432\u043B\u0435\u043A\u0430\u0439\u0441\u044F \u044F\u0433\u043E\u0434\u0430\u043C\u0438."
+    },
+    {
+      id: "tea_03",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u041A\u043E\u0440\u0430 \u0434\u0443\u0431\u0430 \u0434\u043B\u044F \u043B\u0435\u0441\u043D\u0438\u043A\u0430",
+      difficulty: 2,
+      target: { r: 20, g: 20, b: 40 },
+      tolerance: 10,
+      maxHeat: 55,
+      ingredients: [
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 2 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 1 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 2 }
+      ],
+      rewards: [{ type: "coins", amount: 125 }],
+      intro: "\u041A\u043E\u0440\u0430 \u0442\u044F\u043D\u0435\u0442 \u0432 \u0441\u0438\u043D\u0435\u0432\u0443, \u043C\u0451\u0434 \u2014 \u0432 \u044F\u043D\u0442\u0430\u0440\u044C. \u0411\u0430\u043B\u0430\u043D\u0441 \u2014 \u0432\u043E \u0432\u0441\u0451\u043C."
+    },
+    {
+      id: "tea_04",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u042F\u0433\u043E\u0434\u043D\u044B\u0439, \u043D\u0435 \u043F\u0435\u0440\u0435\u0433\u0440\u0435\u0442\u044B\u0439",
+      difficulty: 2,
+      target: { r: 50, g: 0, b: 30 },
+      tolerance: 10,
+      maxHeat: 40,
+      ingredients: [
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 3 },
+        { id: "fire", name: "\u041F\u043E\u043B\u0435\u0448\u043A\u043E", icon: "\u{1F525}", dr: 0, dg: 0, db: 0, heat: 20, uses: 2 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 1 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 135 }],
+      intro: "\u041F\u0443\u0442\u043D\u0438\u043A \u043F\u0440\u043E\u0441\u0438\u0442 \u044F\u0433\u043E\u0434\u043D\u044B\u0439, \u043D\u043E \u0445\u043E\u043B\u043E\u0434\u043D\u044B\u0439. \u041E\u0433\u043E\u043D\u044C \u0437\u0434\u0435\u0441\u044C \u2014 \u0438\u0441\u043A\u0443\u0448\u0435\u043D\u0438\u0435."
+    },
+    {
+      id: "tea_05",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u041B\u0438\u043C\u043E\u043D\u043D\u0430\u044F \u043F\u043E\u043B\u044F\u043D\u0430",
+      difficulty: 3,
+      target: { r: 35, g: 45, b: 20 },
+      tolerance: 8,
+      maxHeat: 45,
+      ingredients: [
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 2 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 2 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 2 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 150 }],
+      intro: "\u0422\u0440\u0438 \u043D\u043E\u0442\u044B: \u043B\u0438\u043C\u043E\u043D, \u043C\u0451\u0434 \u0438 \u043D\u0435\u043C\u043D\u043E\u0433\u043E \u043A\u043E\u0440\u044B. \u0414\u043E\u043F\u0443\u0441\u043A \u0436\u0451\u0441\u0442\u0447\u0435."
+    },
+    {
+      id: "tea_06",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u041F\u0443\u0440\u043F\u0443\u0440 \u0441\u0443\u043C\u0435\u0440\u0435\u043A",
+      difficulty: 3,
+      target: { r: 60, g: 30, b: 60 },
+      tolerance: 10,
+      maxHeat: 50,
+      ingredients: [
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 3 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 2 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 160 }],
+      intro: "\u041F\u0443\u0440\u043F\u0443\u0440 \u2014 \u044D\u0442\u043E \u044F\u0433\u043E\u0434\u044B \u043F\u043B\u044E\u0441 \u043A\u043E\u0440\u0430, \u0430 \u0437\u0435\u043B\u0435\u043D\u044C \u043C\u044F\u0442\u044B \u0441\u043C\u044F\u0433\u0447\u0430\u0435\u0442 \u0442\u043E\u043D."
+    },
+    {
+      id: "tea_07",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u0418\u0437\u0443\u043C\u0440\u0443\u0434\u043D\u044B\u0439 \u043A\u0430\u043F\u0440\u0438\u0437",
+      difficulty: 4,
+      target: { r: 25, g: 65, b: 35 },
+      tolerance: 8,
+      maxHeat: 35,
+      ingredients: [
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 3 },
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 2 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 2 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 175 }],
+      intro: "\u0418\u0437\u0443\u043C\u0440\u0443\u0434\u043D\u044B\u0439 \u0446\u0432\u0435\u0442 \u043A\u0430\u043F\u0440\u0438\u0437\u0435\u043D: \u0448\u0430\u0433 \u0432\u043B\u0435\u0432\u043E, \u0448\u0430\u0433 \u0432\u043F\u0440\u0430\u0432\u043E \u2014 \u0438 \u043D\u0435 \u0442\u043E\u0442."
+    },
+    {
+      id: "tea_08",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u042F\u043D\u0442\u0430\u0440\u044C \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
+      difficulty: 5,
+      target: { r: 70, g: 50, b: 25 },
+      tolerance: 8,
+      maxHeat: 30,
+      ingredients: [
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 3 },
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 2 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 2 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 1 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 2 },
+        { id: "fire", name: "\u041F\u043E\u043B\u0435\u0448\u043A\u043E", icon: "\u{1F525}", dr: 0, dg: 0, db: 0, heat: 20, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 220 }, { type: "seals", amount: 1 }],
+      intro: "\u0424\u0438\u0440\u043C\u0435\u043D\u043D\u044B\u0439 \u044F\u043D\u0442\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438. \u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u043A\u043E\u0442\u0451\u043B, \u0436\u0451\u0441\u0442\u043A\u0438\u0439 \u0434\u043E\u043F\u0443\u0441\u043A \u2014 \u0432\u0435\u0440\u0448\u0438\u043D\u0430 \u0447\u0430\u0439\u043D\u043E\u0433\u043E \u0438\u0441\u043A\u0443\u0441\u0441\u0442\u0432\u0430."
+    }
+  ];
+  var TEA_PUZZLE_BY_ID = Object.fromEntries(TEA_PUZZLES.map((p) => [p.id, p]));
+
+  // src/data/worlds/nm.js
+  var WORLD = {
+    id: "nm",
+    label: "\u{1F303} \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
+    enemies: [
+      {
+        id: "nm_moth",
+        name: "\u042F\u043D\u0442\u0430\u0440\u043D\u044B\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A",
+        icon: "\u{1F98B}",
+        hp: 80,
+        attack: 15,
+        armor: 8,
+        speed: 14,
+        crit: 0.06,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        reward: { coins: [70, 95], materials: ["nm_moth_dust"] }
+      },
+      {
+        id: "nm_mask",
+        name: "\u041E\u0436\u0438\u0432\u0448\u0430\u044F \u043C\u0430\u0441\u043A\u0430",
+        icon: "\u{1F3AD}",
+        hp: 95,
+        attack: 18,
+        armor: 10,
+        speed: 11,
+        crit: 0.07,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [80, 110], materials: ["nm_mask_shard"] }
+      },
+      {
+        id: "nm_shadow",
+        name: "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u0447\u043D\u0430\u044F \u0442\u0435\u043D\u044C",
+        icon: "\u{1F312}",
+        hp: 105,
+        attack: 18,
+        armor: 10,
+        speed: 10,
+        crit: 0.08,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["sting_poison"],
+        tags: ["spirit"],
+        reward: { coins: [90, 120], materials: ["nm_shadow_ash"] }
+      },
+      {
+        id: "nm_lantern",
+        name: "\u0414\u0443\u0445 \u0444\u043E\u043D\u0430\u0440\u044F",
+        icon: "\u{1F3EE}",
+        hp: 90,
+        attack: 19,
+        armor: 10,
+        speed: 9,
+        crit: 0.06,
+        dodge: 0.06,
+        elem: "fire",
+        skills: ["spit_fire"],
+        tags: ["spirit"],
+        reward: { coins: [85, 115], materials: ["nm_ember_oil"] }
+      },
+      {
+        id: "nm_garland",
+        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u043D\u044B\u0439 \u0437\u043C\u0435\u0439",
+        icon: "\u2728",
+        hp: 120,
+        attack: 17,
+        armor: 16,
+        speed: 8,
+        crit: 0.04,
+        dodge: 0.04,
+        elem: "phys",
+        skills: ["slow_spores", "regen_ally_skill"],
+        tags: ["spirit"],
+        reward: { coins: [95, 130], materials: ["nm_moth_dust"] }
+      },
+      {
+        id: "nm_teller",
+        name: "\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446-\u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044C",
+        icon: "\u{1F5E3}\uFE0F",
+        hp: 140,
+        attack: 22,
+        armor: 18,
+        speed: 7,
+        crit: 0.05,
+        dodge: 0.03,
+        elem: "phys",
+        skills: ["heavy_blow", "regen_ally_skill"],
+        reward: { coins: [110, 150], materials: ["nm_shadow_ash"] }
+      },
+      // Босс мира
+      {
+        id: "nm_boss_keeper",
+        name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
+        icon: "\u{1F3AA}",
+        hp: 400,
+        attack: 28,
+        armor: 26,
+        speed: 10,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["heavy_blow", "fear_chill", "spit_fire"],
+        boss: true,
+        tags: ["spirit"],
+        reward: { coins: [700, 950], seals: 5, materials: ["nm_market_crown"] }
+      }
+    ],
+    materials: [
+      {
+        id: "nm_moth_dust",
+        name: "\u041F\u044B\u043B\u044C\u0446\u0430 \u044F\u043D\u0442\u0430\u0440\u043D\u043E\u0433\u043E \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430",
+        icon: "\u{1F31F}",
+        description: "\u041C\u0435\u0440\u0446\u0430\u0435\u0442 \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435 \u0442\u0451\u043F\u043B\u044B\u043C \u044F\u043D\u0442\u0430\u0440\u043D\u044B\u043C \u0441\u0432\u0435\u0442\u043E\u043C."
+      },
+      {
+        id: "nm_mask_shard",
+        name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u043E\u0436\u0438\u0432\u0448\u0435\u0439 \u043C\u0430\u0441\u043A\u0438",
+        icon: "\u{1F3AD}",
+        description: "\u041D\u0430 \u0433\u043B\u0430\u0434\u043A\u043E\u043C \u043B\u0430\u043A\u0435 \u0437\u0430\u0441\u0442\u044B\u043B\u0430 \u0447\u0443\u0436\u0430\u044F \u0443\u043B\u044B\u0431\u043A\u0430."
+      },
+      {
+        id: "nm_shadow_ash",
+        name: "\u041F\u0435\u043F\u0435\u043B \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u0447\u043D\u043E\u0439 \u0442\u0435\u043D\u0438",
+        icon: "\u{1F311}",
+        description: "\u041B\u0451\u0433\u043A\u0438\u0439 \u043F\u0435\u043F\u0435\u043B, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043F\u0440\u044F\u0447\u0435\u0442\u0441\u044F \u043E\u0442 \u0441\u0432\u0435\u0442\u0430."
+      },
+      {
+        id: "nm_ember_oil",
+        name: "\u041C\u0430\u0441\u043B\u043E \u0434\u0443\u0445\u043E\u0432 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+        icon: "\u{1F3EE}",
+        description: "\u0413\u043E\u0440\u0438\u0442 \u0431\u0435\u0437 \u0434\u044B\u043C\u0430 \u0438 \u043D\u0435 \u0433\u0430\u0441\u043D\u0435\u0442 \u043F\u043E\u0434 \u0434\u043E\u0436\u0434\u0451\u043C."
+      },
+      {
+        id: "nm_market_crown",
+        name: "\u041A\u043E\u0440\u043E\u043D\u0430 \u0445\u043E\u0437\u044F\u0438\u043D\u0430 \u0440\u044B\u043D\u043A\u0430",
+        icon: "\u{1F451}",
+        description: "\u0417\u043D\u0430\u043A \u0432\u043B\u0430\u0441\u0442\u0438 \u043D\u0430\u0434 \u0432\u0441\u0435\u043C\u0438 \u043B\u0430\u0432\u043A\u0430\u043C\u0438 \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430."
+      }
+    ],
+    battles: [
+      {
+        id: "nm_01",
+        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C",
+        world: "nm",
+        enemies: [{ id: "nm_moth", scale: 1.5 }],
+        unlockAfter: "ex_boss",
+        tip: "\u041E\u0434\u0438\u043D\u043E\u043A\u0438\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0411\u044B\u0441\u0442\u0440\u044B\u0439 \u0443\u0434\u0430\u0440 \u2014 \u0438 \u043F\u0443\u0442\u044C \u043E\u0442\u043A\u0440\u044B\u0442."
+      },
+      {
+        id: "nm_02",
+        name: "\u0420\u044F\u0434 \u0441 \u043C\u0430\u0441\u043A\u0430\u043C\u0438",
+        world: "nm",
+        enemies: [{ id: "nm_mask", scale: 1.52 }],
+        unlockAfter: "nm_01",
+        tip: "\u041C\u0430\u0441\u043A\u0430 \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0440\u0435\u0448\u0438\u0442 \u0432\u0441\u0451."
+      },
+      {
+        id: "nm_03",
+        name: "\u0422\u0435\u043D\u0438 \u043F\u043E\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C",
+        world: "nm",
+        enemies: [{ id: "nm_shadow", scale: 1.53 }, { id: "nm_moth", scale: 1.53 }],
+        unlockAfter: "nm_02",
+        tip: "\u042F\u0434 \u0438 \u0441\u043E\u043D \u0432 \u043F\u0430\u0440\u0435. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430."
+      },
+      {
+        id: "nm_04",
+        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u044B \u043E\u0436\u0438\u0432\u0430\u044E\u0442",
+        world: "nm",
+        enemies: [{ id: "nm_garland", scale: 1.55 }, { id: "nm_moth", scale: 1.54 }],
+        unlockAfter: "nm_03",
+        tip: "\u0417\u043C\u0435\u0439 \u043B\u0435\u0447\u0438\u0442 \u0441\u0435\u0431\u044F \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442. \u0411\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "nm_05",
+        name: "\u0416\u0430\u0440 \u043C\u0430\u0441\u043B\u044F\u043D\u044B\u0445 \u043B\u0430\u043C\u043F",
+        world: "nm",
+        enemies: [{ id: "nm_lantern", scale: 1.56 }, { id: "nm_lantern", scale: 1.55 }],
+        unlockAfter: "nm_04",
+        tip: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430 \u043E\u0433\u043D\u044F. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0441\u043F\u0430\u0441\u0451\u0442 \u043E\u0442 \u043E\u0436\u043E\u0433\u043E\u0432."
+      },
+      {
+        id: "nm_06",
+        name: "\u0421\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u0438 \u0443 \u0436\u0430\u0440\u043E\u0432\u043D\u0438",
+        world: "nm",
+        enemies: [{ id: "nm_teller", scale: 1.57 }, { id: "nm_garland", scale: 1.56 }],
+        unlockAfter: "nm_05",
+        tip: "\u0421\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044C \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u0437\u043C\u0435\u0439 \u0435\u0433\u043E \u043B\u0435\u0447\u0438\u0442. \u041D\u0435 \u0442\u044F\u043D\u0438 \u0431\u043E\u0439."
+      },
+      {
+        id: "nm_07",
+        name: "\u041C\u0430\u0441\u043A\u0438 \u0441\u043C\u0435\u044E\u0442\u0441\u044F \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435",
+        world: "nm",
+        enemies: [{ id: "nm_mask", scale: 1.58 }, { id: "nm_mask", scale: 1.58 }, { id: "nm_moth", scale: 1.58 }],
+        unlockAfter: "nm_06",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0441 \u0434\u0432\u0443\u0445 \u0441\u0442\u043E\u0440\u043E\u043D \u0438 \u0441\u043E\u043D. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0441\u043D\u043E\u0432\u0430 \u0432 \u0434\u0435\u043B\u0435."
+      },
+      {
+        id: "nm_08",
+        name: "\u042F\u0434\u043E\u0432\u0438\u0442\u044B\u0439 \u0442\u0443\u043C\u0430\u043D \u0430\u0440\u043E\u043C\u0430\u0442\u043E\u0432",
+        world: "nm",
+        enemies: [{ id: "nm_shadow", scale: 1.6 }, { id: "nm_lantern", scale: 1.59 }, { id: "nm_garland", scale: 1.59 }],
+        unlockAfter: "nm_07",
+        tip: "\u042F\u0434, \u043E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u0437\u043C\u0435\u044F."
+      },
+      {
+        id: "nm_09",
+        name: "\u0422\u0430\u043D\u0435\u0446 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+        world: "nm",
+        enemies: [{ id: "nm_lantern", scale: 1.62 }, { id: "nm_mask", scale: 1.61 }, { id: "nm_moth", scale: 1.61 }],
+        unlockAfter: "nm_08",
+        tip: "\u041E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0440\u0430\u0437\u043E\u043C. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "nm_10",
+        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0430\u0443\u043A\u0446\u0438\u043E\u043D",
+        world: "nm",
+        enemies: [{ id: "nm_teller", scale: 1.63 }, { id: "nm_shadow", scale: 1.62 }],
+        unlockAfter: "nm_09",
+        tip: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439 \u0443\u0434\u0430\u0440 \u0438 \u044F\u0434. \u0413\u043B\u0443\u0448\u0438 \u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044F \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "nm_11",
+        name: "\u0420\u043E\u0439 \u0443 \u043B\u0430\u043C\u043F",
+        world: "nm",
+        enemies: [{ id: "nm_moth", scale: 1.64 }, { id: "nm_moth", scale: 1.64 }, { id: "nm_moth", scale: 1.64 }],
+        unlockAfter: "nm_10",
+        tip: "\u0422\u0440\u043E\u0435 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0438\u0445 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432. \u0417\u0430\u0449\u0438\u0442\u0430 \u043E\u0442 \u0441\u043D\u0430 \u0440\u0435\u0448\u0430\u0435\u0442 \u0431\u043E\u0439."
+      },
+      {
+        id: "nm_12",
+        name: "\u0422\u0435\u043D\u0435\u0432\u043E\u0439 \u0440\u044F\u0434",
+        world: "nm",
+        enemies: [{ id: "nm_shadow", scale: 1.66 }, { id: "nm_mask", scale: 1.65 }, { id: "nm_moth", scale: 1.64 }],
+        unlockAfter: "nm_11",
+        tip: "\u042F\u0434, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0448\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430."
+      },
+      {
+        id: "nm_13",
+        name: "\u041C\u0430\u0441\u043B\u044F\u043D\u044B\u0439 \u043F\u043E\u0436\u0430\u0440",
+        world: "nm",
+        enemies: [{ id: "nm_lantern", scale: 1.67 }, { id: "nm_lantern", scale: 1.66 }, { id: "nm_garland", scale: 1.66 }],
+        unlockAfter: "nm_12",
+        tip: "\u041E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0437\u043C\u0435\u0439, \u043F\u043E\u0442\u043E\u043C \u0444\u043E\u043D\u0430\u0440\u0438."
+      },
+      {
+        id: "nm_14",
+        name: "\u0411\u0430\u043B \u043C\u0430\u0441\u043E\u043A",
+        world: "nm",
+        enemies: [{ id: "nm_mask", scale: 1.68 }, { id: "nm_mask", scale: 1.68 }, { id: "nm_mask", scale: 1.68 }],
+        unlockAfter: "nm_13",
+        tip: "\u0422\u0440\u043E\u0439\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u0445. \u0411\u0435\u0437 \u0430\u043C\u0443\u043B\u0435\u0442\u0430 \u043E\u0442\u0432\u0430\u0433\u0438 \u043E\u0442\u0440\u044F\u0434 \u0434\u0440\u043E\u0433\u043D\u0435\u0442."
+      },
+      {
+        id: "nm_15",
+        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u043D\u044B\u0439 \u043A\u043E\u0440\u0438\u0434\u043E\u0440",
+        world: "nm",
+        enemies: [{ id: "nm_garland", scale: 1.7 }, { id: "nm_garland", scale: 1.69 }, { id: "nm_teller", scale: 1.69 }],
+        unlockAfter: "nm_14",
+        tip: "\u0414\u0432\u0430 \u043B\u0435\u043A\u0430\u0440\u044F \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0439 \u043A\u0443\u043B\u0430\u043A. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0441\u0442\u0440\u043E\u0439 \u0431\u044B\u0441\u0442\u0440\u043E."
+      },
+      {
+        id: "nm_16",
+        name: "\u0422\u0435\u043D\u0438 \u0441\u043A\u0443\u043F\u0430\u044E\u0442 \u0441\u0432\u0435\u0442",
+        world: "nm",
+        enemies: [{ id: "nm_shadow", scale: 1.71 }, { id: "nm_lantern", scale: 1.7 }, { id: "nm_moth", scale: 1.7 }],
+        unlockAfter: "nm_15",
+        tip: "\u042F\u0434, \u043E\u0433\u043E\u043D\u044C \u0438 \u0441\u043E\u043D. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0432\u0430\u0436\u043D\u0435\u0435 \u043E\u0433\u043D\u0435\u0443\u043F\u043E\u0440\u0430."
+      },
+      {
+        id: "nm_17",
+        name: "\u0421\u043A\u0430\u0437\u043A\u0438 \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043B\u0443\u043D\u043E\u0447\u0438",
+        world: "nm",
+        enemies: [{ id: "nm_teller", scale: 1.7 }, { id: "nm_teller", scale: 1.7 }, { id: "nm_moth", scale: 1.7 }],
+        unlockAfter: "nm_16",
+        tip: "\u0414\u0432\u0430 \u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044F \u043B\u0435\u0447\u0430\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430. \u0411\u0435\u0439 \u043E\u0434\u043D\u043E\u0433\u043E \u0434\u043E \u043A\u043E\u043D\u0446\u0430."
+      },
+      {
+        id: "nm_18",
+        name: "\u042F\u043D\u0442\u0430\u0440\u043D\u0430\u044F \u0431\u0443\u0440\u044F",
+        world: "nm",
+        enemies: [{ id: "nm_lantern", scale: 1.73 }, { id: "nm_lantern", scale: 1.73 }, { id: "nm_mask", scale: 1.72 }],
+        unlockAfter: "nm_17",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u043E\u0433\u043D\u044F \u0438 \u0441\u0442\u0440\u0430\u0445. \u041E\u0433\u043D\u0435\u0443\u043F\u043E\u0440\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u0434\u0440\u0443\u0433."
+      },
+      {
+        id: "nm_19",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u043A",
+        world: "nm",
+        enemies: [{ id: "nm_teller", scale: 1.74 }, { id: "nm_garland", scale: 1.74 }, { id: "nm_lantern", scale: 1.73 }],
+        unlockAfter: "nm_18",
+        tip: "\u0412\u0441\u0451 \u0438 \u0441\u0440\u0430\u0437\u0443: \u043A\u0443\u043B\u0430\u043A, \u043B\u0435\u043A\u0430\u0440\u044C \u0438 \u043E\u0433\u043E\u043D\u044C. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430."
+      },
+      {
+        id: "nm_boss",
+        name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
+        world: "nm",
+        enemies: [{ id: "nm_boss_keeper", scale: 1.75 }],
+        unlockAfter: "nm_19",
+        tip: "\u041E\u043D \u043F\u044B\u0448\u0435\u0442 \u0436\u0430\u0440\u043E\u043C \u0438 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u041E\u0433\u043D\u0435\u0443\u043F\u043E\u0440 \u0438 \u043E\u0442\u0432\u0430\u0433\u0430 \u2014 \u0438 \u043A\u043E\u0440\u043E\u043D\u0430 \u0442\u0432\u043E\u044F."
+      }
+    ]
+  };
+
+  // src/data/worlds/sw.js
+  var WORLD2 = {
+    id: "sw",
+    label: "\u{1F438} \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438",
+    enemies: [
+      {
+        id: "sw_frog_guardian",
+        name: "\u041B\u044F\u0433\u0443\u0448\u043A\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u0438\u0446\u0430",
+        icon: "\u{1F438}",
+        hp: 150,
+        attack: 18,
+        armor: 22,
+        speed: 7,
+        crit: 0.04,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        reward: { coins: [70, 100], materials: ["sw_frog_amulet"] }
+      },
+      {
+        id: "sw_bog_spirit",
+        name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u0434\u0443\u0445",
+        icon: "\u{1F32B}\uFE0F",
+        hp: 95,
+        attack: 17,
+        armor: 10,
+        speed: 10,
+        crit: 0.06,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["fear_chill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [65, 90], materials: ["sw_bog_mist"] }
+      },
+      {
+        id: "sw_witch_cat",
+        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u043A\u043E\u0442",
+        icon: "\u{1F408}\u200D\u2B1B",
+        hp: 85,
+        attack: 16,
+        armor: 8,
+        speed: 11,
+        crit: 0.1,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["aimed_shot", "sting_poison_weak"],
+        reward: { coins: [60, 85], materials: ["sw_witch_thread"] }
+      },
+      {
+        id: "sw_doll_trickster",
+        name: "\u041A\u0443\u043A\u043B\u0430-\u043E\u0431\u043C\u0430\u043D\u0449\u0438\u0446\u0430",
+        icon: "\u{1FA86}",
+        hp: 105,
+        attack: 15,
+        armor: 12,
+        speed: 9,
+        crit: 0.05,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill"],
+        reward: { coins: [65, 90], materials: ["sw_witch_thread"] }
+      },
+      {
+        id: "sw_glow_bush",
+        name: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u043D\u0438\u043A",
+        icon: "\u{1FAD0}",
+        hp: 120,
+        attack: 14,
+        armor: 14,
+        speed: 6,
+        crit: 0.03,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["regen_ally_skill", "slow_spores"],
+        reward: { coins: [70, 95], materials: ["sw_glow_berry"] }
+      },
+      {
+        id: "sw_hut_walker",
+        name: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430-\u043F\u0440\u043E\u0445\u043E\u0436\u0430\u044F",
+        icon: "\u{1F6D6}",
+        hp: 160,
+        attack: 22,
+        armor: 20,
+        speed: 6,
+        crit: 0.05,
+        dodge: 0,
+        elem: "fire",
+        skills: ["spit_fire", "heavy_blow"],
+        reward: { coins: [85, 115], materials: ["sw_glow_berry"] }
+      },
+      // Босс мира
+      {
+        id: "sw_hag_queen",
+        name: "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439",
+        icon: "\u{1F9D9}\u200D\u2640\uFE0F",
+        hp: 350,
+        attack: 26,
+        armor: 24,
+        speed: 10,
+        crit: 0.1,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["sting_poison", "fear_chill", "heavy_blow"],
+        boss: true,
+        reward: { coins: [450, 600], seals: 4, materials: ["sw_hag_crown"] }
+      }
+    ],
+    materials: [
+      { id: "sw_frog_amulet", name: "\u041B\u044F\u0433\u0443\u0448\u0430\u0447\u0438\u0439 \u043E\u0431\u0435\u0440\u0435\u0433", icon: "\u{1F438}", description: "\u0422\u0451\u043F\u043B\u044B\u0439 \u043A\u0430\u043C\u0435\u0448\u0435\u043A, \u0438\u0437\u0440\u0435\u0434\u043A\u0430 \u0442\u0438\u0445\u043E\u043D\u044C\u043A\u043E \u043A\u0432\u0430\u043A\u0430\u0435\u0442." },
+      { id: "sw_bog_mist", name: "\u041A\u043B\u043E\u0447\u043E\u043A \u0442\u043E\u043F\u044F\u043D\u043E\u0433\u043E \u0442\u0443\u043C\u0430\u043D\u0430", icon: "\u{1F32B}\uFE0F", description: "\u041D\u0435 \u0440\u0430\u0441\u0441\u0435\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0434\u0430\u0436\u0435 \u0432 \u043F\u043B\u043E\u0442\u043D\u043E \u0437\u0430\u043A\u0440\u044B\u0442\u043E\u0439 \u0431\u0430\u043D\u043A\u0435." },
+      { id: "sw_witch_thread", name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u043D\u0438\u0442\u044C", icon: "\u{1F9F5}", description: "\u0428\u044C\u0451\u0442 \u0441\u0430\u043C\u0430 \u0438 \u043A\u0443\u0441\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C\u0430." },
+      { id: "sw_glow_berry", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0430\u044F\u0441\u044F \u044F\u0433\u043E\u0434\u0430", icon: "\u{1FAD0}", description: "\u041C\u044F\u0433\u043A\u043E \u0441\u0432\u0435\u0442\u0438\u0442 \u0437\u0435\u043B\u0451\u043D\u044B\u043C, \u0440\u0430\u0441\u0442\u0451\u0442 \u0434\u0430\u0436\u0435 \u043D\u0430 \u043A\u0440\u044B\u0448\u0435 \u0438\u0437\u0431\u0443\u0448\u043A\u0438." },
+      { id: "sw_hag_crown", name: "\u0412\u0435\u043D\u0435\u0446 \u0425\u043E\u0437\u044F\u0439\u043A\u0438 \u0422\u043E\u043F\u0435\u0439", icon: "\u{1F451}", description: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u043F\u0430\u0445\u043D\u0435\u0442 \u043A\u0443\u043F\u0430\u0432\u043E\u0439 \u0438 \u0431\u043E\u043B\u043E\u0442\u043D\u044B\u043C \u0434\u044B\u043C\u043E\u043C." }
+    ],
+    battles: [
+      {
+        id: "sw_01",
+        name: "\u041A\u043E\u0447\u043A\u0438 \u0443 \u0442\u0440\u043E\u043F\u044B",
+        world: "sw",
+        enemies: [{ id: "sw_doll_trickster", scale: 1.6 }],
+        unlockAfter: "nm_boss",
+        tip: "\u041A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442 \u043A\u043E\u043B\u044B\u0431\u0435\u043B\u044C\u043D\u0443\u044E \u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u041F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u044C \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "sw_02",
+        name: "\u041A\u0432\u0430\u043A\u0430\u043D\u044C\u0435 \u0432 \u043A\u0430\u043C\u044B\u0448\u0430\u0445",
+        world: "sw",
+        enemies: [{ id: "sw_frog_guardian", scale: 1.61 }, { id: "sw_frog_guardian", scale: 1.61 }],
+        unlockAfter: "sw_01",
+        tip: "\u041B\u044F\u0433\u0443\u0448\u043A\u0438 \u0431\u044C\u044E\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u043E\u0442\u0432\u0435\u0442."
+      },
+      {
+        id: "sw_03",
+        name: "\u0422\u0443\u043C\u0430\u043D \u043D\u0430\u0434 \u0432\u043E\u0434\u043E\u0439",
+        world: "sw",
+        enemies: [{ id: "sw_bog_spirit", scale: 1.63 }, { id: "sw_bog_spirit", scale: 1.63 }],
+        unlockAfter: "sw_02",
+        tip: "\u0414\u0443\u0445\u0438 \u043D\u0430\u0433\u043E\u043D\u044F\u044E\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "sw_04",
+        name: "\u042F\u0433\u043E\u0434\u043D\u0430\u044F \u043F\u043E\u043B\u044F\u043D\u0430",
+        world: "sw",
+        enemies: [{ id: "sw_glow_bush", scale: 1.64 }, { id: "sw_witch_cat", scale: 1.64 }],
+        unlockAfter: "sw_03",
+        tip: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u043D\u0438\u043A \u043B\u0435\u0447\u0438\u0442 \u0441\u0432\u043E\u0438\u0445 \u2014 \u0441\u0440\u0443\u0431\u0438 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_05",
+        name: "\u041A\u0443\u0440\u044C\u0438 \u0441\u043B\u0435\u0434\u044B",
+        world: "sw",
+        enemies: [{ id: "sw_hut_walker", scale: 1.66 }],
+        unlockAfter: "sw_04",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u0434\u044B\u0448\u0438\u0442 \u0436\u0430\u0440\u043A\u0438\u043C \u0434\u044B\u043C\u043E\u043C \u0438 \u0442\u043E\u043F\u0430\u0435\u0442 \u0442\u044F\u0436\u0435\u043B\u043E. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043F\u043E\u043C\u043E\u0436\u0435\u0442."
+      },
+      {
+        id: "sw_06",
+        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u0442\u0440\u043E\u043F\u0430",
+        world: "sw",
+        enemies: [{ id: "sw_witch_cat", scale: 1.67 }, { id: "sw_doll_trickster", scale: 1.67 }],
+        unlockAfter: "sw_05",
+        tip: "\u041A\u043E\u0442 \u0446\u0435\u043B\u0438\u0442\u0441\u044F \u043C\u0435\u0442\u043A\u043E, \u043A\u0443\u043A\u043B\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "sw_07",
+        name: "\u0414\u0443\u0445 \u0438 \u043B\u0435\u043A\u0430\u0440\u044C",
+        world: "sw",
+        enemies: [{ id: "sw_bog_spirit", scale: 1.68 }, { id: "sw_glow_bush", scale: 1.68 }],
+        unlockAfter: "sw_06",
+        tip: "\u0414\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C, \u0430 \u043A\u0443\u0441\u0442 \u0435\u0433\u043E \u043B\u0435\u0447\u0438\u0442. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0441\u044C \u0441 \u043B\u0435\u043A\u0430\u0440\u0435\u043C \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_08",
+        name: "\u0425\u043E\u0440\u043E\u0432\u043E\u0434 \u043A\u0443\u043A\u043E\u043B",
+        world: "sw",
+        enemies: [
+          { id: "sw_doll_trickster", scale: 1.7 },
+          { id: "sw_doll_trickster", scale: 1.7 },
+          { id: "sw_witch_cat", scale: 1.7 }
+        ],
+        unlockAfter: "sw_07",
+        tip: "\u0414\u0432\u0435 \u043A\u043E\u043B\u044B\u0431\u0435\u043B\u044C\u043D\u044B\u0435 \u0438 \u043C\u0435\u0442\u043A\u0438\u0439 \u043A\u043E\u0442. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+      },
+      {
+        id: "sw_09",
+        name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
+        world: "sw",
+        enemies: [{ id: "sw_frog_guardian", scale: 1.71 }, { id: "sw_bog_spirit", scale: 1.71 }],
+        unlockAfter: "sw_08",
+        tip: "\u0422\u043E\u043B\u0441\u0442\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u0441\u043F\u0435\u0440\u0435\u0434\u0438, \u0441\u0442\u0440\u0430\u0445 \u0438\u0437 \u0442\u0443\u043C\u0430\u043D\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "sw_10",
+        name: "\u0414\u044B\u043C\u043D\u0430\u044F \u0438\u0437\u0431\u0443\u0448\u043A\u0430",
+        world: "sw",
+        enemies: [{ id: "sw_hut_walker", scale: 1.73 }, { id: "sw_glow_bush", scale: 1.73 }],
+        unlockAfter: "sw_09",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u043F\u043B\u044E\u0451\u0442\u0441\u044F \u0434\u044B\u043C\u043E\u043C, \u0430 \u044F\u0433\u043E\u0434\u044B \u0435\u0451 \u043B\u0435\u0447\u0430\u0442. \u0413\u0430\u0441\u0438 \u043A\u0443\u0441\u0442 \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_11",
+        name: "\u041A\u043E\u0448\u043A\u0438\u043D\u044B \u0443\u043B\u043E\u0432\u043A\u0438",
+        world: "sw",
+        enemies: [
+          { id: "sw_witch_cat", scale: 1.74 },
+          { id: "sw_witch_cat", scale: 1.74 },
+          { id: "sw_doll_trickster", scale: 1.74 }
+        ],
+        unlockAfter: "sw_10",
+        tip: "\u0414\u0432\u0430 \u043A\u043E\u0442\u0430 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438 \u0441\u043B\u0435\u0433\u043A\u0430 \u0442\u0440\u0430\u0432\u044F\u0442. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "sw_12",
+        name: "\u041C\u0433\u043B\u0430 \u0441\u0433\u0443\u0449\u0430\u0435\u0442\u0441\u044F",
+        world: "sw",
+        enemies: [
+          { id: "sw_bog_spirit", scale: 1.75 },
+          { id: "sw_bog_spirit", scale: 1.75 },
+          { id: "sw_glow_bush", scale: 1.75 }
+        ],
+        unlockAfter: "sw_11",
+        tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u043F\u043E\u0434 \u0437\u0430\u0449\u0438\u0442\u043E\u0439 \u043A\u0443\u0441\u0442\u0430-\u043B\u0435\u043A\u0430\u0440\u044F. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
+      },
+      {
+        id: "sw_13",
+        name: "\u042F\u0433\u043E\u0434\u043D\u044B\u0439 \u0434\u043E\u0437\u043E\u0440",
+        world: "sw",
+        enemies: [
+          { id: "sw_glow_bush", scale: 1.77 },
+          { id: "sw_frog_guardian", scale: 1.77 },
+          { id: "sw_witch_cat", scale: 1.77 }
+        ],
+        unlockAfter: "sw_12",
+        tip: "\u041B\u0435\u043A\u0430\u0440\u044C, \u0442\u0430\u043D\u043A \u0438 \u043C\u0435\u0442\u043A\u0438\u0439 \u0441\u0442\u0440\u0435\u043B\u043E\u043A. \u0420\u0435\u0436\u044C \u043B\u0435\u043A\u0430\u0440\u044F \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_14",
+        name: "\u0421\u043A\u0440\u0438\u043F\u0443\u0447\u0438\u0439 \u0433\u043E\u0441\u0442\u044C",
+        world: "sw",
+        enemies: [{ id: "sw_hut_walker", scale: 1.78 }, { id: "sw_doll_trickster", scale: 1.78 }],
+        unlockAfter: "sw_13",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u0442\u043E\u043F\u0430\u0435\u0442, \u043A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442. \u0421\u043E\u043D \u0438 \u043E\u0433\u043E\u043D\u044C \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E."
+      },
+      {
+        id: "sw_15",
+        name: "\u0422\u043E\u043F\u044F\u043D\u043E\u0435 \u0442\u0440\u0438\u043E",
+        world: "sw",
+        enemies: [
+          { id: "sw_frog_guardian", scale: 1.65 },
+          { id: "sw_bog_spirit", scale: 1.6 },
+          { id: "sw_witch_cat", scale: 1.6 }
+        ],
+        unlockAfter: "sw_14",
+        tip: "\u041B\u044F\u0433\u0443\u0448\u043A\u0430 \u0434\u0435\u0440\u0436\u0438\u0442 \u0441\u0442\u0440\u043E\u0439, \u0434\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442, \u043A\u043E\u0442 \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442. \u041B\u0435\u043A\u0430\u0440\u044C \u0432 \u043E\u0442\u0440\u044F\u0434\u0435 \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "sw_16",
+        name: "\u041A\u0443\u043A\u043E\u043B\u044C\u043D\u044B\u0439 \u0432\u0435\u0440\u0442\u0435\u043F",
+        world: "sw",
+        enemies: [
+          { id: "sw_doll_trickster", scale: 1.81 },
+          { id: "sw_doll_trickster", scale: 1.81 },
+          { id: "sw_glow_bush", scale: 1.81 }
+        ],
+        unlockAfter: "sw_15",
+        tip: "\u0414\u0432\u0435 \u043A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0430 \u043A\u0443\u0441\u0442 \u043B\u0435\u0447\u0438\u0442. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u2014 \u043D\u0430 \u043F\u0435\u0440\u0432\u044B\u0439 \u043F\u043B\u0430\u043D."
+      },
+      {
+        id: "sw_17",
+        name: "\u0414\u044B\u043C \u043D\u0430\u0434 \u0442\u043E\u043F\u044C\u044E",
+        world: "sw",
+        enemies: [
+          { id: "sw_hut_walker", scale: 1.82 },
+          { id: "sw_bog_spirit", scale: 1.82 },
+          { id: "sw_witch_cat", scale: 1.82 }
+        ],
+        unlockAfter: "sw_16",
+        tip: "\u041E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0442\u043E\u0447\u043D\u044B\u0435 \u0432\u044B\u0441\u0442\u0440\u0435\u043B\u044B. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F."
+      },
+      {
+        id: "sw_18",
+        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u0441\u0431\u043E\u0440",
+        world: "sw",
+        enemies: [
+          { id: "sw_witch_cat", scale: 1.84 },
+          { id: "sw_doll_trickster", scale: 1.84 },
+          { id: "sw_glow_bush", scale: 1.84 }
+        ],
+        unlockAfter: "sw_17",
+        tip: "\u0412\u0441\u044F \u0432\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u0447\u0435\u043B\u044F\u0434\u044C \u0440\u0430\u0437\u043E\u043C: \u044F\u0434, \u0441\u043E\u043D \u0438 \u0432\u0440\u0430\u0436\u0435\u0441\u043A\u043E\u0435 \u043B\u0435\u0447\u0435\u043D\u0438\u0435."
+      },
+      {
+        id: "sw_19",
+        name: "\u0412\u0441\u0451 \u0431\u043E\u043B\u043E\u0442\u043E \u0440\u0430\u0437\u043E\u043C",
+        world: "sw",
+        enemies: [
+          { id: "sw_hut_walker", scale: 1.85 },
+          { id: "sw_glow_bush", scale: 1.83 },
+          { id: "sw_doll_trickster", scale: 1.8 }
+        ],
+        unlockAfter: "sw_18",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0443 \u043B\u0435\u0447\u0430\u0442 \u044F\u0433\u043E\u0434\u044B, \u043A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442. \u0421\u0440\u0443\u0431\u0438 \u043A\u0443\u0441\u0442 \u0438 \u043D\u0435 \u0443\u0441\u043D\u0438."
+      },
+      {
+        id: "sw_boss",
+        name: "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439",
+        world: "sw",
+        enemies: [{ id: "sw_hag_queen", scale: 1.6 }],
+        unlockAfter: "sw_19",
+        tip: "\u041E\u043D\u0430 \u0442\u0440\u0430\u0432\u0438\u0442, \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0431\u044C\u0451\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C. \u0412\u043E\u0437\u044C\u043C\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0435\u0441\u0442\u044C."
+      }
+    ]
+  };
+
+  // src/data/worlds/sf.js
+  var WORLD3 = {
+    id: "sf",
+    label: "\u{1F3AA} \u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
+    enemies: [
+      {
+        id: "sf_spirit",
+        name: "\u0414\u0443\u0445 \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
+        icon: "\u2728",
+        hp: 75,
+        attack: 14,
+        armor: 8,
+        speed: 13,
+        crit: 0.08,
+        dodge: 0.16,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [70, 100], materials: ["sf_spark"] }
+      },
+      {
+        id: "sf_steed",
+        name: "\u041A\u0430\u0440\u0443\u0441\u0435\u043B\u044C\u043D\u044B\u0439 \u043A\u043E\u043D\u0451\u043A",
+        icon: "\u{1F3A0}",
+        hp: 135,
+        attack: 16,
+        armor: 18,
+        speed: 7,
+        crit: 0.05,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        reward: { coins: [85, 115], materials: ["sf_plank"] }
+      },
+      {
+        id: "sf_guard",
+        name: "\u0421\u0442\u0440\u0430\u0436 \u043F\u043E\u0440\u044F\u0434\u043A\u0430",
+        icon: "\u{1F482}",
+        hp: 105,
+        attack: 17,
+        armor: 15,
+        speed: 9,
+        crit: 0.1,
+        dodge: 0.05,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        reward: { coins: [90, 120], materials: ["sf_ticket"] }
+      },
+      {
+        id: "sf_firefly",
+        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u0436\u043E\u043D\u0433\u043B\u0451\u0440",
+        icon: "\u{1F525}",
+        hp: 75,
+        attack: 18,
+        armor: 8,
+        speed: 12,
+        crit: 0.08,
+        dodge: 0.1,
+        elem: "fire",
+        skills: ["spit_fire"],
+        reward: { coins: [75, 105], materials: ["sf_candy"] }
+      },
+      {
+        id: "sf_doll",
+        name: "\u041A\u0443\u043A\u043B\u0430-\u0437\u0430\u0437\u044B\u0432\u0430\u043B\u0430",
+        icon: "\u{1F38E}",
+        hp: 70,
+        attack: 14,
+        armor: 10,
+        speed: 11,
+        crit: 0.06,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        reward: { coins: [70, 95], materials: ["sf_candy"] }
+      },
+      {
+        id: "sf_wheel",
+        name: "\u041E\u0436\u0438\u0432\u0448\u0435\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
+        icon: "\u{1F3A1}",
+        hp: 150,
+        attack: 18,
+        armor: 20,
+        speed: 6,
+        crit: 0.04,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores"],
+        reward: { coins: [110, 150], materials: ["sf_plank"] }
+      },
+      // Босс мира
+      {
+        id: "sf_boss",
+        name: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u043C\u0438\u0440\u043E\u0432",
+        icon: "\u{1F3C6}",
+        hp: 350,
+        attack: 26,
+        armor: 24,
+        speed: 10,
+        crit: 0.12,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["heavy_blow", "fear_chill", "regen_ally_skill"],
+        boss: true,
+        reward: { coins: [400, 550], seals: 4, materials: ["sf_champion_star"] }
+      }
+    ],
+    materials: [
+      { id: "sf_spark", name: "\u042F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u0430\u044F \u0438\u0441\u043A\u0440\u0430", icon: "\u2728", description: "\u0422\u0451\u043F\u043B\u044B\u0439 \u043E\u0433\u043E\u043D\u0451\u043A \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0430." },
+      { id: "sf_plank", name: "\u0414\u043E\u0449\u0435\u0447\u043A\u0430 \u043A\u0430\u0440\u0443\u0441\u0435\u043B\u0438", icon: "\u{1F3A0}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u043A\u0440\u0430\u0441\u043A\u043E\u0439 \u0438 \u043F\u043E\u043F\u0443\u0442\u043D\u044B\u043C \u0432\u0435\u0442\u0440\u043E\u043C." },
+      { id: "sf_ticket", name: "\u0421\u0447\u0430\u0441\u0442\u043B\u0438\u0432\u044B\u0439 \u0431\u0438\u043B\u0435\u0442\u0438\u043A", icon: "\u{1F39F}\uFE0F", description: "\u041F\u043E\u043B\u0443\u0440\u0430\u0441\u0442\u0451\u0440\u0442\u044B\u0439, \u043D\u043E \u0443\u0434\u0430\u0447\u0430 \u0435\u0449\u0451 \u0432\u043D\u0443\u0442\u0440\u0438." },
+      { id: "sf_candy", name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043A\u0430\u0440\u0430\u043C\u0435\u043B\u044C", icon: "\u{1F36C}", description: "\u0421\u043B\u0430\u0434\u043A\u0430\u044F \u0438 \u0441\u043B\u0435\u0433\u043A\u0430 \u0438\u0441\u043A\u0440\u0438\u0442 \u043D\u0430 \u044F\u0437\u044B\u043A\u0435." },
+      { id: "sf_champion_star", name: "\u0417\u0432\u0435\u0437\u0434\u0430 \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430", icon: "\u{1F3C6}", description: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430, \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u043D\u043E\u0441\u044F\u0442 \u043D\u0430 \u0433\u0440\u0443\u0434\u0438." }
+    ],
+    battles: [
+      {
+        id: "sf_01",
+        name: "\u041E\u0442\u043A\u0440\u044B\u0442\u0438\u0435 \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
+        world: "sf",
+        enemies: [{ id: "sf_doll", scale: 1.7 }, { id: "sf_spirit", scale: 1.7 }],
+        unlockAfter: "sw_boss",
+        tip: "\u041A\u0443\u043A\u043B\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0434\u0443\u0445 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "sf_02",
+        name: "\u041A\u0430\u0440\u0443\u0441\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u044F\u0434",
+        world: "sf",
+        enemies: [{ id: "sf_steed", scale: 1.71 }, { id: "sf_steed", scale: 1.71 }],
+        unlockAfter: "sf_01",
+        tip: "\u041A\u043E\u043D\u044C\u043A\u0438 \u0431\u044C\u044E\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u043D\u043E \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u044B. \u0411\u0440\u043E\u043D\u044F \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0440\u0435\u0448\u0430\u044E\u0442."
+      },
+      {
+        id: "sf_03",
+        name: "\u0416\u043E\u043D\u0433\u043B\u0451\u0440\u044B \u043E\u0433\u043D\u044F",
+        world: "sf",
+        enemies: [{ id: "sf_firefly", scale: 1.72 }, { id: "sf_firefly", scale: 1.72 }],
+        unlockAfter: "sf_02",
+        tip: "\u041F\u043B\u044E\u044E\u0442\u0441\u044F \u043E\u0433\u043D\u0451\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0431\u0438\u0432."
+      },
+      {
+        id: "sf_04",
+        name: "\u041F\u0430\u0442\u0440\u0443\u043B\u044C \u043F\u043E\u0440\u044F\u0434\u043A\u0430",
+        world: "sf",
+        enemies: [{ id: "sf_guard", scale: 1.74 }, { id: "sf_guard", scale: 1.74 }],
+        unlockAfter: "sf_03",
+        tip: "\u0421\u0442\u0440\u0430\u0436\u0438 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u043F\u043E \u0441\u0430\u043C\u043E\u043C\u0443 \u0445\u0440\u0443\u043F\u043A\u043E\u043C\u0443. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0441\u043B\u0430\u0431\u044B\u0445 \u0431\u0440\u043E\u043D\u0451\u0439."
+      },
+      {
+        id: "sf_05",
+        name: "\u0421\u043E\u043D\u043D\u044B\u0435 \u043A\u0430\u0447\u0435\u043B\u0438",
+        world: "sf",
+        enemies: [
+          { id: "sf_doll", scale: 1.75 },
+          { id: "sf_doll", scale: 1.75 },
+          { id: "sf_doll", scale: 1.75 }
+        ],
+        unlockAfter: "sf_04",
+        tip: "\u0422\u0440\u0438 \u043A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0448\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430."
+      },
+      {
+        id: "sf_06",
+        name: "\u0428\u0430\u0440\u043C\u0430\u043D\u043A\u0430 \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432",
+        world: "sf",
+        enemies: [
+          { id: "sf_spirit", scale: 1.76 },
+          { id: "sf_spirit", scale: 1.76 },
+          { id: "sf_doll", scale: 1.76 }
+        ],
+        unlockAfter: "sf_05",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0432\u043C\u0435\u0441\u0442\u0435. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "sf_07",
+        name: "\u0420\u0430\u0437\u0433\u043E\u043D \u043E\u0447\u0435\u0440\u0435\u0434\u0438",
+        world: "sf",
+        enemies: [{ id: "sf_guard", scale: 1.78 }, { id: "sf_steed", scale: 1.78 }],
+        unlockAfter: "sf_06",
+        tip: "\u041A\u043E\u043D\u0451\u043A \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0441\u0442\u0440\u0430\u0436\u0430. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0443\u0431\u0435\u0440\u0438 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0441\u0442\u0440\u0435\u043B\u043A\u0430."
+      },
+      {
+        id: "sf_08",
+        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u043E\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
+        world: "sf",
+        enemies: [
+          { id: "sf_firefly", scale: 1.79 },
+          { id: "sf_firefly", scale: 1.79 },
+          { id: "sf_steed", scale: 1.79 }
+        ],
+        unlockAfter: "sf_07",
+        tip: "\u041E\u0433\u043E\u043D\u044C \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043F\u043B\u044E\u0441 \u043A\u0440\u0435\u043F\u043A\u0438\u0439 \u0449\u0438\u0442."
+      },
+      {
+        id: "sf_09",
+        name: "\u0411\u043E\u043B\u044C\u0448\u043E\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
+        world: "sf",
+        enemies: [{ id: "sf_wheel", scale: 1.8 }],
+        unlockAfter: "sf_08",
+        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0438 \u0434\u0430\u0432\u0438\u0442 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041E\u0434\u0438\u043D, \u043D\u043E \u043E\u0447\u0435\u043D\u044C \u043A\u0440\u0435\u043F\u043A\u0438\u0439."
+      },
+      {
+        id: "sf_10",
+        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043F\u0430\u0440\u0430\u0434",
+        world: "sf",
+        enemies: [
+          { id: "sf_spirit", scale: 1.81 },
+          { id: "sf_firefly", scale: 1.81 },
+          { id: "sf_doll", scale: 1.81 }
+        ],
+        unlockAfter: "sf_09",
+        tip: "\u0421\u0442\u0440\u0430\u0445, \u043E\u0433\u043E\u043D\u044C \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0441\u0442\u0440\u043E\u044E. \u0421\u043E\u0431\u0435\u0440\u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0437\u0430\u0440\u0430\u043D\u0435\u0435."
+      },
+      {
+        id: "sf_11",
+        name: "\u0421\u0442\u0440\u0430\u0436\u0430 \u043D\u0430 \u0432\u0445\u043E\u0434\u0435",
+        world: "sf",
+        enemies: [
+          { id: "sf_guard", scale: 1.83 },
+          { id: "sf_guard", scale: 1.83 }
+        ],
+        unlockAfter: "sf_10",
+        tip: "\u0414\u0432\u0430 \u0441\u0442\u0440\u0430\u0436\u0430 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438 \u043D\u0435 \u043C\u0430\u0436\u0443\u0442. \u0412\u044B\u0441\u043E\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0432\u0441\u0435\u043C\u0443 \u043E\u0442\u0440\u044F\u0434\u0443."
+      },
+      {
+        id: "sf_12",
+        name: "\u0421\u043A\u0430\u0447\u043A\u0438 \u043F\u043E \u043A\u0440\u0443\u0433\u0443",
+        world: "sf",
+        enemies: [
+          { id: "sf_steed", scale: 1.84 },
+          { id: "sf_spirit", scale: 1.84 }
+        ],
+        unlockAfter: "sf_11",
+        tip: "\u041A\u043E\u043D\u0451\u043A \u0434\u0430\u0432\u0438\u0442 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C, \u0434\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "sf_13",
+        name: "\u041A\u0443\u043A\u043E\u043B\u044C\u043D\u044B\u0439 \u0431\u0430\u043B\u0430\u0433\u0430\u043D",
+        world: "sf",
+        enemies: [
+          { id: "sf_doll", scale: 1.85 },
+          { id: "sf_doll", scale: 1.85 },
+          { id: "sf_guard", scale: 1.85 }
+        ],
+        unlockAfter: "sf_12",
+        tip: "\u041A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0441\u0442\u0440\u0430\u0436 \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E. \u041D\u0435 \u0434\u0430\u0439 \u0443\u0441\u043D\u0443\u0442\u044C \u043B\u0435\u043A\u0430\u0440\u044E."
+      },
+      {
+        id: "sf_14",
+        name: "\u041A\u043E\u043B\u0435\u0441\u043E \u0438 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
+        world: "sf",
+        enemies: [{ id: "sf_wheel", scale: 1.86 }, { id: "sf_guard", scale: 1.86 }],
+        unlockAfter: "sf_13",
+        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442, \u0441\u0442\u0440\u0430\u0436 \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0437\u0435\u043B\u044C\u044F\u043C\u0438."
+      },
+      {
+        id: "sf_15",
+        name: "\u0424\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A",
+        world: "sf",
+        enemies: [
+          { id: "sf_firefly", scale: 1.88 },
+          { id: "sf_firefly", scale: 1.88 },
+          { id: "sf_firefly", scale: 1.88 }
+        ],
+        unlockAfter: "sf_14",
+        tip: "\u0422\u0440\u0438 \u0436\u043E\u043D\u0433\u043B\u0451\u0440\u0430 \u0436\u0433\u0443\u0442 \u043E\u0433\u043D\u0451\u043C. \u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "sf_16",
+        name: "\u041F\u043E\u043B\u043D\u043E\u0447\u043D\u044B\u0439 \u043A\u0430\u0440\u043D\u0430\u0432\u0430\u043B",
+        world: "sf",
+        enemies: [
+          { id: "sf_spirit", scale: 1.78 },
+          { id: "sf_spirit", scale: 1.78 },
+          { id: "sf_wheel", scale: 1.78 }
+        ],
+        unlockAfter: "sf_15",
+        tip: "\u0414\u0443\u0445\u0438 \u0441\u0435\u044E\u0442 \u0441\u0442\u0440\u0430\u0445, \u043A\u043E\u043B\u0435\u0441\u043E \u0434\u0430\u0432\u0438\u0442. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "sf_17",
+        name: "\u0422\u0443\u0440\u043D\u0438\u0440 \u043F\u0440\u0435\u0442\u0435\u043D\u0434\u0435\u043D\u0442\u043E\u0432",
+        world: "sf",
+        enemies: [
+          { id: "sf_steed", scale: 1.9 },
+          { id: "sf_firefly", scale: 1.9 }
+        ],
+        unlockAfter: "sf_16",
+        tip: "\u0418\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u0435 \u0441\u043C\u0435\u043B\u043E\u0441\u0442\u0438 \u0438 \u043B\u043E\u0432\u043A\u043E\u0441\u0442\u0438: \u0442\u0430\u0440\u0430\u043D \u043A\u043E\u043D\u044C\u043A\u0430 \u0438 \u043E\u0433\u043E\u043D\u044C \u0436\u043E\u043D\u0433\u043B\u0451\u0440\u0430."
+      },
+      {
+        id: "sf_18",
+        name: "\u0412\u0441\u0451 \u0441\u0440\u0430\u0437\u0443",
+        world: "sf",
+        enemies: [
+          { id: "sf_wheel", scale: 1.91 },
+          { id: "sf_doll", scale: 1.91 },
+          { id: "sf_spirit", scale: 1.91 }
+        ],
+        unlockAfter: "sf_17",
+        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435, \u0441\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445. \u041F\u043E\u043B\u043D\u044B\u0439 \u043D\u0430\u0431\u043E\u0440 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0439 \u0438 \u0437\u0435\u043B\u0438\u0439."
+      },
+      {
+        id: "sf_19",
+        name: "\u0413\u0440\u0430\u043D\u0434-\u0448\u043E\u0443",
+        world: "sf",
+        enemies: [
+          { id: "sf_wheel", scale: 1.93 },
+          { id: "sf_firefly", scale: 1.93 }
+        ],
+        unlockAfter: "sf_18",
+        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0438 \u0444\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A \u043F\u0435\u0440\u0435\u0434 \u0444\u0438\u043D\u0430\u043B\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "sf_boss",
+        name: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u043C\u0438\u0440\u043E\u0432",
+        world: "sf",
+        enemies: [{ id: "sf_boss", scale: 1.95 }],
+        unlockAfter: "sf_19",
+        tip: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u0431\u044C\u0451\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C, \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u043F\u0435\u0440\u0435\u0432\u043E\u0434\u0438\u0442 \u0434\u0443\u0445. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u043D\u0435 \u0434\u0430\u0432\u0430\u0439 \u0435\u043C\u0443 \u043F\u0435\u0440\u0435\u0434\u044B\u0448\u043A\u0438."
+      }
+    ]
+  };
+
+  // src/data/worlds/cr.js
+  var WORLD4 = {
+    id: "cr",
+    label: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B",
+    enemies: [
+      {
+        id: "cr_owl",
+        name: "\u0421\u043D\u0435\u0436\u043D\u0430\u044F \u0441\u043E\u0432\u0430",
+        icon: "\u{1F989}",
+        hp: 95,
+        attack: 14,
+        armor: 8,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        tags: ["ranged"],
+        reward: { coins: [60, 90], materials: ["cr_owl_feather"] }
+      },
+      {
+        id: "cr_shardling",
+        name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043E\u0441\u043A\u043E\u043B\u043E\u043A",
+        icon: "\u{1F539}",
+        hp: 90,
+        attack: 15,
+        armor: 10,
+        speed: 10,
+        crit: 0.05,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        tags: [],
+        reward: { coins: [55, 80], materials: ["cr_crystal_shard"] }
+      },
+      {
+        id: "cr_icewisp",
+        name: "\u0418\u0441\u043A\u0440\u0430 \u0437\u0432\u0435\u043D\u044F\u0449\u0435\u0433\u043E \u043B\u044C\u0434\u0430",
+        icon: "\u2744\uFE0F",
+        hp: 95,
+        attack: 16,
+        armor: 10,
+        speed: 13,
+        crit: 0.05,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["slow_spores"],
+        tags: [],
+        reward: { coins: [60, 85], materials: ["cr_ice_ring"] }
+      },
+      {
+        id: "cr_echo",
+        name: "\u0413\u043E\u0440\u043D\u044B\u0439 \u044D\u0445\u043E-\u0434\u0443\u0445",
+        icon: "\u{1F3D4}\uFE0F",
+        hp: 105,
+        attack: 17,
+        armor: 10,
+        speed: 10,
+        crit: 0.06,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [65, 95], materials: ["cr_echo_dust"] }
+      },
+      {
+        id: "cr_golem",
+        name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
+        icon: "\u{1F48E}",
+        hp: 155,
+        attack: 18,
+        armor: 22,
+        speed: 6,
+        crit: 0.03,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores"],
+        tags: [],
+        reward: { coins: [80, 110], materials: ["cr_crystal_shard"] }
+      },
+      {
+        id: "cr_dragon_young",
+        name: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u044B\u0439 \u0434\u0440\u0430\u043A\u043E\u043D",
+        icon: "\u{1F409}",
+        hp: 140,
+        attack: 19,
+        armor: 17,
+        speed: 9,
+        crit: 0.08,
+        dodge: 0.04,
+        elem: "phys",
+        skills: ["heavy_blow", "fear_chill"],
+        tags: [],
+        reward: { coins: [90, 120], materials: ["cr_crystal_shard"] }
+      },
+      // Босс мира
+      {
+        id: "cr_dragon_ancient",
+        name: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u043A\u0432\u0430\u0440\u0446\u0430",
+        icon: "\u{1F432}",
+        hp: 380,
+        attack: 26,
+        armor: 24,
+        speed: 8,
+        crit: 0.06,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["heavy_blow", "fear_chill", "slow_spores"],
+        boss: true,
+        tags: [],
+        reward: { coins: [700, 950], seals: 4, materials: ["cr_quartz_heart"] }
+      }
+    ],
+    materials: [
+      { id: "cr_crystal_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044F", icon: "\u{1F48E}", description: "\u0417\u0432\u0435\u043D\u0438\u0442, \u0435\u0441\u043B\u0438 \u0435\u0433\u043E \u0443\u0440\u043E\u043D\u0438\u0442\u044C." },
+      { id: "cr_owl_feather", name: "\u041F\u0435\u0440\u043E \u0441\u043D\u0435\u0436\u043D\u043E\u0439 \u0441\u043E\u0432\u044B", icon: "\u{1FAB6}", description: "\u0411\u0435\u043B\u043E\u0435 \u0438 \u043F\u043E\u0447\u0442\u0438 \u043D\u0435\u0432\u0435\u0441\u043E\u043C\u043E\u0435." },
+      { id: "cr_ice_ring", name: "\u0417\u0432\u0435\u043D\u044F\u0449\u0438\u0439 \u043B\u0451\u0434", icon: "\u2744\uFE0F", description: "\u041D\u0435 \u0442\u0430\u0435\u0442 \u0434\u0430\u0436\u0435 \u0443 \u043E\u0447\u0430\u0433\u0430." },
+      { id: "cr_echo_dust", name: "\u041F\u044B\u043B\u044C \u044D\u0445\u0430", icon: "\u{1F514}", description: "\u0422\u0438\u0445\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442 \u0441\u043A\u0430\u0437\u0430\u043D\u043D\u043E\u0435 \u0448\u0451\u043F\u043E\u0442\u043E\u043C." },
+      { id: "cr_quartz_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430", icon: "\u{1F4A0}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u0434\u0440\u0435\u043C\u043B\u0435\u0442 \u0434\u0440\u0435\u0432\u043D\u0438\u0439 \u0441\u0432\u0435\u0442." }
+    ],
+    battles: [
+      {
+        id: "cr_01",
+        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0441\u043D\u0435\u0433 \u043F\u0435\u0440\u0435\u0432\u0430\u043B\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.8 }, { id: "cr_shardling", scale: 1.8 }],
+        unlockAfter: "sf_boss",
+        tip: "\u0421\u043E\u0432\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043E\u0441\u043A\u043E\u043B\u043E\u043A \u0431\u044C\u0451\u0442 \u0442\u043E\u0447\u043D\u043E. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "cr_02",
+        name: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u043D\u0430 \u0442\u0440\u043E\u043F\u0435",
+        world: "cr",
+        enemies: [{ id: "cr_shardling", scale: 1.81 }, { id: "cr_shardling", scale: 1.81 }],
+        unlockAfter: "cr_01",
+        tip: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u0431\u044B\u0441\u0442\u0440\u044B \u0438 \u0431\u044C\u044E\u0442 \u0442\u043E\u0447\u043D\u043E. \u0414\u0435\u0440\u0436\u0438 \u0431\u0440\u043E\u043D\u044E \u0432 \u043F\u043E\u0440\u044F\u0434\u043A\u0435."
+      },
+      {
+        id: "cr_03",
+        name: "\u0417\u0432\u043E\u043D \u043B\u0435\u0434\u044F\u043D\u044B\u0445 \u0438\u0441\u043A\u0440",
+        world: "cr",
+        enemies: [{ id: "cr_icewisp", scale: 1.83 }, { id: "cr_icewisp", scale: 1.83 }],
+        unlockAfter: "cr_02",
+        tip: "\u0418\u0441\u043A\u0440\u044B \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442 \u043C\u043E\u0440\u043E\u0437\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u044E. \u0411\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "cr_04",
+        name: "\u042D\u0445\u043E \u0432 \u0443\u0449\u0435\u043B\u044C\u0435",
+        world: "cr",
+        enemies: [{ id: "cr_echo", scale: 1.84 }, { id: "cr_echo", scale: 1.84 }],
+        unlockAfter: "cr_03",
+        tip: "\u042D\u0445\u043E-\u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u043B\u0435\u0434\u0435\u043D\u044F\u0449\u0438\u0439 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438, \u043B\u0443\u043A \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440."
+      },
+      {
+        id: "cr_05",
+        name: "\u0421\u0442\u0440\u0430\u0436 \u0437\u0430\u0441\u0442\u044B\u0432\u0448\u0435\u0439 \u0440\u0435\u043A\u0438",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.85 }],
+        unlockAfter: "cr_04",
+        tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F. \u041D\u0443\u0436\u0435\u043D \u0441\u0435\u0440\u044C\u0451\u0437\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
+      },
+      {
+        id: "cr_06",
+        name: "\u0421\u043E\u0432\u0438\u043D\u0430\u044F \u043E\u0445\u043E\u0442\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.87 }, { id: "cr_icewisp", scale: 1.87 }],
+        unlockAfter: "cr_05",
+        tip: "\u0421\u043E\u043D \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0432\u043C\u0435\u0441\u0442\u0435. \u0420\u0430\u0437\u0431\u0443\u0434\u0438 \u0440\u044B\u0446\u0430\u0440\u044F \u0437\u0435\u043B\u044C\u0435\u043C \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "cr_07",
+        name: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043A\u0430\u0440\u044C\u0435\u0440",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.88 }, { id: "cr_shardling", scale: 1.88 }],
+        unlockAfter: "cr_06",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043E\u0441\u043A\u043E\u043B\u043E\u043A. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u043F\u0435\u0440\u0435\u0431\u0435\u0439 \u043C\u0435\u043B\u043E\u0447\u044C."
+      },
+      {
+        id: "cr_08",
+        name: "\u0414\u0440\u0430\u043A\u043E\u043D\u044C\u0435 \u044D\u0445\u043E",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_young", scale: 1.89 }],
+        unlockAfter: "cr_07",
+        tip: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E \u0438 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u043E\u043C\u043E\u0436\u0435\u0442."
+      },
+      {
+        id: "cr_09",
+        name: "\u041C\u043E\u0440\u043E\u0437\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A",
+        world: "cr",
+        enemies: [{ id: "cr_echo", scale: 1.91 }, { id: "cr_icewisp", scale: 1.91 }],
+        unlockAfter: "cr_08",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u043C\u043E\u0440\u043E\u0437\u043D\u0430\u044F \u043F\u044B\u043B\u044C. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "cr_10",
+        name: "\u0413\u043E\u043B\u0435\u043C\u0438\u0439 \u0437\u0430\u0432\u0430\u043B",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.92 }, { id: "cr_owl", scale: 1.92 }],
+        unlockAfter: "cr_09",
+        tip: "\u041A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430, \u0430 \u0437\u0430 \u043D\u0435\u0439 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0430\u044F \u0441\u043E\u0432\u0430. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "cr_11",
+        name: "\u041A\u0440\u0438\u043A \u043D\u0430\u0434 \u043F\u0440\u043E\u043F\u0430\u0441\u0442\u044C\u044E",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.93 }, { id: "cr_owl", scale: 1.93 }],
+        unlockAfter: "cr_10",
+        tip: "\u0414\u0432\u0435 \u0441\u043E\u0432\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u0435\u043D."
+      },
+      {
+        id: "cr_12",
+        name: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430 \u0443\u0449\u0435\u043B\u044C\u044F",
+        world: "cr",
+        enemies: [{ id: "cr_echo", scale: 1.95 }, { id: "cr_echo", scale: 1.95 }],
+        unlockAfter: "cr_11",
+        tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u0441\u043E \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "cr_13",
+        name: "\u041C\u043E\u043B\u043E\u0434\u044B\u0435 \u043A\u043E\u0433\u0442\u0438",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_young", scale: 1.96 }, { id: "cr_shardling", scale: 1.96 }],
+        unlockAfter: "cr_12",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441 \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u043C-\u043F\u0440\u0438\u0445\u0432\u043E\u0441\u0442\u043D\u0435\u043C. \u041F\u0435\u0440\u0435\u0431\u0435\u0439 \u043C\u0435\u043B\u043E\u0447\u044C \u0438 \u0441\u043E\u0441\u0440\u0435\u0434\u043E\u0442\u043E\u0447\u044C\u0441\u044F."
+      },
+      {
+        id: "cr_14",
+        name: "\u0417\u0432\u0435\u043D\u044F\u0449\u0430\u044F \u0441\u0442\u0435\u043D\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.97 }, { id: "cr_icewisp", scale: 1.97 }],
+        unlockAfter: "cr_13",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0449\u0430\u044F \u0438\u0441\u043A\u0440\u0430. \u041D\u0435 \u0434\u0430\u0439 \u0441\u0435\u0431\u044F \u0437\u0430\u043A\u043E\u043F\u0430\u0442\u044C \u0432 \u0441\u043D\u0435\u0433."
+      },
+      {
+        id: "cr_15",
+        name: "\u0421\u043D\u0435\u0436\u043D\u0430\u044F \u043F\u0443\u0440\u0433\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.85 }, { id: "cr_icewisp", scale: 1.85 }, { id: "cr_echo", scale: 1.85 }],
+        unlockAfter: "cr_14",
+        tip: "\u041F\u0443\u0440\u0433\u0430 \u0438\u0437 \u0441\u043D\u0430, \u0441\u0442\u0440\u0430\u0445\u0430 \u0438 \u043C\u043E\u0440\u043E\u0437\u043D\u043E\u0439 \u043F\u044B\u043B\u0438. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "cr_16",
+        name: "\u041A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0435 \u0433\u043D\u0435\u0437\u0434\u043E\u0432\u044C\u0435",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_young", scale: 2 }, { id: "cr_owl", scale: 2 }],
+        unlockAfter: "cr_15",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441\u0442\u043E\u0440\u043E\u0436\u0438\u0442 \u0433\u043D\u0435\u0437\u0434\u043E, \u0441\u043E\u0432\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u0438 \u043E\u0442\u0432\u0430\u0433\u0430."
+      },
+      {
+        id: "cr_17",
+        name: "\u042D\u0445\u043E \u0434\u0440\u0435\u0432\u043D\u0438\u0445",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_young", scale: 2.01 }, { id: "cr_echo", scale: 2.01 }],
+        unlockAfter: "cr_16",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0432 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u0434\u0443\u0445\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0443\u0434\u0430\u0440 \u043F\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0443."
+      },
+      {
+        id: "cr_18",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043B\u0435\u0434\u043D\u0438\u043A",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 2.02 }, { id: "cr_golem", scale: 2.02 }],
+        unlockAfter: "cr_17",
+        tip: "\u0414\u0432\u0435 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
+      },
+      {
+        id: "cr_19",
+        name: "\u0421\u0432\u0435\u0440\u043A\u0430\u044E\u0449\u0438\u0439 \u043F\u0438\u043A",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_young", scale: 2.04 }, { id: "cr_golem", scale: 2.04 }],
+        unlockAfter: "cr_18",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0438 \u0435\u0433\u043E \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u043F\u0438\u043A\u043E\u043C."
+      },
+      {
+        id: "cr_boss",
+        name: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u043A\u0432\u0430\u0440\u0446\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_ancient", scale: 2.05 }],
+        unlockAfter: "cr_19",
+        tip: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0437\u0432\u0435\u043D\u0438\u0442 \u0442\u044B\u0441\u044F\u0447\u0435\u0439 \u0433\u0440\u0430\u043D\u0435\u0439. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
+      }
+    ]
+  };
+
+  // src/data/worlds/ash.js
+  var WORLD5 = {
+    id: "ash",
+    label: "\u{1F525} \u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438",
+    enemies: [
+      {
+        id: "ash_wolf",
+        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u0432\u043E\u043B\u043A",
+        icon: "\u{1F43A}",
+        hp: 75,
+        attack: 14,
+        armor: 8,
+        speed: 10,
+        crit: 0.05,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        tags: [],
+        reward: { coins: [60, 90], materials: ["ash_pelt"] }
+      },
+      {
+        id: "ash_shaman",
+        name: "\u041A\u043E\u0447\u0435\u0432\u043E\u0439 \u0448\u0430\u043C\u0430\u043D \u043E\u0433\u043D\u044F",
+        icon: "\u{1F525}",
+        hp: 80,
+        attack: 16,
+        armor: 8,
+        speed: 9,
+        crit: 0.05,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["spit_fire", "regen_ally_skill"],
+        tags: [],
+        reward: { coins: [70, 100], materials: ["ash_ember"] }
+      },
+      {
+        id: "ash_storm_spirit",
+        name: "\u0414\u0443\u0445 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438",
+        icon: "\u{1F32A}\uFE0F",
+        hp: 75,
+        attack: 15,
+        armor: 8,
+        speed: 12,
+        crit: 0.05,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["fear_chill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [65, 95], materials: ["ash_storm_shard"] }
+      },
+      {
+        id: "ash_scorpion",
+        name: "\u041E\u0431\u0443\u0433\u043B\u0435\u043D\u043D\u044B\u0439 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D",
+        icon: "\u{1F982}",
+        hp: 85,
+        attack: 15,
+        armor: 14,
+        speed: 10,
+        crit: 0.05,
+        dodge: 0.03,
+        elem: "phys",
+        skills: ["sting_poison"],
+        tags: [],
+        reward: { coins: [65, 95], materials: ["ash_scale"] }
+      },
+      {
+        id: "ash_vulture",
+        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A",
+        icon: "\u{1F985}",
+        hp: 70,
+        attack: 14,
+        armor: 8,
+        speed: 9,
+        crit: 0.06,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        tags: [],
+        reward: { coins: [60, 90], materials: ["ash_pelt"] }
+      },
+      {
+        id: "ash_ghoul",
+        name: "\u0422\u0435\u043D\u044C \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0449\u0438\u043A\u0430",
+        icon: "\u{1F47B}",
+        hp: 85,
+        attack: 16,
+        armor: 10,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [70, 100], materials: ["ash_storm_shard"] }
+      },
+      {
+        id: "ash_khan",
+        name: "\u0425\u0430\u043D \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0431\u0443\u0440\u044C",
+        icon: "\u{1F30B}",
+        hp: 400,
+        attack: 26,
+        armor: 24,
+        speed: 12,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["spit_fire", "fear_chill"],
+        tags: [],
+        boss: true,
+        reward: { coins: [220, 300], seals: 4, materials: ["ash_heart"] }
+      }
+    ],
+    materials: [
+      { id: "ash_pelt", name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u0430\u044F \u0448\u043A\u0443\u0440\u0430", icon: "\u{1F43A}", description: "\u0416\u0451\u0441\u0442\u043A\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u0437\u0432\u0435\u0440\u044F \u0432\u044B\u0436\u0436\u0435\u043D\u043D\u044B\u0445 \u0441\u0442\u0435\u043F\u0435\u0439." },
+      { id: "ash_scale", name: "\u041E\u0431\u043E\u0436\u0436\u0451\u043D\u043D\u0430\u044F \u0447\u0435\u0448\u0443\u044F", icon: "\u{1F982}", description: "\u041F\u043B\u0430\u0441\u0442\u0438\u043D\u0430 \u0445\u0438\u0442\u0438\u043D\u0430, \u0437\u0430\u043A\u0430\u043B\u0451\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043F\u043D\u044B\u043C \u043F\u043E\u0436\u0430\u0440\u043E\u043C." },
+      { id: "ash_ember", name: "\u041D\u0435\u0443\u0433\u0430\u0441\u0430\u044E\u0449\u0438\u0439 \u0443\u0433\u043E\u043B\u0451\u043A", icon: "\u{1F525}", description: "\u0422\u043B\u0435\u0435\u0442 \u0432\u0435\u0447\u043D\u043E \u2014 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u043A\u043E\u0447\u0435\u0432\u044B\u0445 \u0448\u0430\u043C\u0430\u043D\u043E\u0432." },
+      { id: "ash_storm_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438", icon: "\u{1F32A}\uFE0F", description: "\u041A\u0443\u0441\u043E\u0447\u0435\u043A \u0432\u0435\u0442\u0440\u0430, \u0437\u0430\u0441\u0442\u044B\u0432\u0448\u0438\u0439 \u0432\u043C\u0435\u0441\u0442\u0435 \u0441 \u043F\u0435\u043F\u043B\u043E\u043C." },
+      { id: "ash_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0425\u0430\u043D\u0430 \u0411\u0443\u0440\u044C", icon: "\u{1F48E}", description: "\u041F\u044B\u043B\u0430\u044E\u0449\u0435\u0435 \u0441\u0435\u0440\u0434\u0446\u0435 \u043F\u043E\u0432\u0435\u043B\u0438\u0442\u0435\u043B\u044F \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0441\u0442\u0435\u043F\u0435\u0439." }
+    ],
+    battles: [
+      {
+        id: "ash_01",
+        name: "\u0412\u044B\u0436\u0436\u0435\u043D\u043D\u0430\u044F \u0433\u0440\u0430\u043D\u0438\u0446\u0430",
+        world: "ash",
+        enemies: [{ id: "ash_wolf", scale: 1.9 }, { id: "ash_wolf", scale: 1.9 }],
+        unlockAfter: "cr_boss",
+        tip: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0432\u043E\u043B\u043A\u0438 \u0431\u044C\u044E\u0442 \u043C\u043E\u0449\u043D\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041D\u0430\u0434\u0451\u0436\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u0441\u043D\u0438\u043C\u0443\u0442 \u043B\u044C\u0432\u0438\u043D\u0443\u044E \u0434\u043E\u043B\u044E \u0443\u0440\u043E\u043D\u0430."
+      },
+      {
+        id: "ash_02",
+        name: "\u0421\u043B\u0435\u0434\u044B \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0430",
+        world: "ash",
+        enemies: [{ id: "ash_vulture", scale: 1.913 }, { id: "ash_wolf", scale: 1.913 }],
+        unlockAfter: "ash_01",
+        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438\u0437\u0434\u0430\u043B\u0435\u043A\u0430. \u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u0438 \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0442\u0435\u043C\u043F \u0431\u043E\u044F \u0440\u0435\u0448\u0430\u044E\u0442."
+      },
+      {
+        id: "ash_03",
+        name: "\u041A\u043E\u0441\u0442\u0451\u0440 \u0448\u0430\u043C\u0430\u043D\u0430",
+        world: "ash",
+        enemies: [{ id: "ash_shaman", scale: 1.926 }, { id: "ash_wolf", scale: 1.926 }],
+        unlockAfter: "ash_02",
+        tip: "\u0428\u0430\u043C\u0430\u043D \u043F\u043B\u044E\u0451\u0442\u0441\u044F \u043E\u0433\u043D\u0451\u043C \u0438 \u043B\u0435\u0447\u0438\u0442 \u0432\u043E\u043B\u043A\u0430. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u0431\u0435\u0439 \u0448\u0430\u043C\u0430\u043D\u0430, \u043F\u043E\u043A\u0430 \u043E\u043D \u043D\u0435 \u0432\u044B\u0442\u044F\u043D\u0443\u043B \u0431\u043E\u0439."
+      },
+      {
+        id: "ash_04",
+        name: "\u0416\u0430\u043B\u0430 \u0432 \u043F\u0435\u043F\u043B\u0435",
+        world: "ash",
+        enemies: [{ id: "ash_scorpion", scale: 1.939 }, { id: "ash_scorpion", scale: 1.939 }],
+        unlockAfter: "ash_03",
+        tip: "\u0421\u043A\u043E\u0440\u043F\u0438\u043E\u043D\u044B \u044F\u0434\u043E\u0432\u0438\u0442\u044B \u0438 \u0442\u043E\u043B\u0441\u0442\u043E\u043A\u043E\u0436\u0438. \u0410\u043D\u0442\u0438\u0434\u043E\u0442 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0438\u0445 \u043F\u0430\u043D\u0446\u0438\u0440\u0435\u0439."
+      },
+      {
+        id: "ash_05",
+        name: "\u0428\u0451\u043F\u043E\u0442 \u0431\u0443\u0440\u0438",
+        world: "ash",
+        enemies: [{ id: "ash_storm_spirit", scale: 1.953 }, { id: "ash_storm_spirit", scale: 1.953 }],
+        unlockAfter: "ash_04",
+        tip: "\u0414\u0443\u0445\u0438 \u0431\u0443\u0440\u044C \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "ash_06",
+        name: "\u041F\u043E\u0433\u0438\u0431\u0448\u0438\u0439 \u043A\u0430\u0440\u0430\u0432\u0430\u043D",
+        world: "ash",
+        enemies: [{ id: "ash_ghoul", scale: 1.966 }, { id: "ash_vulture", scale: 1.966 }],
+        unlockAfter: "ash_05",
+        tip: "\u0422\u0435\u043D\u044C \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0449\u0438\u043A\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u0438 \u043F\u0443\u0433\u0430\u0435\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0432 \u043E\u0434\u043D\u043E\u043C \u043F\u043E\u0445\u043E\u0434\u0435."
+      },
+      {
+        id: "ash_07",
+        name: "\u0412\u043E\u043B\u0447\u044C\u044F \u0441\u0442\u0430\u044F",
+        world: "ash",
+        enemies: [{ id: "ash_wolf", scale: 1.979 }, { id: "ash_wolf", scale: 1.979 }],
+        unlockAfter: "ash_06",
+        tip: "\u0412\u043E\u043B\u043A\u0438 \u0431\u044C\u044E\u0442 \u043C\u043E\u0449\u043D\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041F\u043E\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435 \u0441 \u043A\u0440\u0435\u043F\u043A\u0438\u043C \u0440\u044B\u0446\u0430\u0440\u0435\u043C \u0432\u043F\u0435\u0440\u0435\u0434\u0438 \u0441\u043F\u0430\u0441\u0430\u0435\u0442 \u043E\u0442\u0440\u044F\u0434."
+      },
+      {
+        id: "ash_08",
+        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u043E\u0431\u0440\u044F\u0434",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 1.992 },
+          { id: "ash_shaman", scale: 1.992 },
+          { id: "ash_scorpion", scale: 1.992 }
+        ],
+        unlockAfter: "ash_07",
+        tip: "\u0414\u0432\u0430 \u0448\u0430\u043C\u0430\u043D\u0430 \u043B\u0435\u0447\u0430\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430, \u0430 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D \u0442\u0440\u0430\u0432\u0438\u0442. \u0424\u043E\u043A\u0443\u0441\u0438\u0440\u0443\u0439 \u043E\u0433\u043E\u043D\u044C \u043D\u0430 \u043E\u0434\u043D\u043E\u043C \u0448\u0430\u043C\u0430\u043D\u0435."
+      },
+      {
+        id: "ash_09",
+        name: "\u041A\u0440\u044B\u043B\u044C\u044F \u043D\u0430\u0434 \u043F\u0435\u043F\u043B\u043E\u043C",
+        world: "ash",
+        enemies: [
+          { id: "ash_vulture", scale: 2.005 },
+          { id: "ash_ghoul", scale: 2.005 },
+          { id: "ash_scorpion", scale: 2.005 }
+        ],
+        unlockAfter: "ash_08",
+        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u043C\u0435\u0442\u043E\u043A, \u0442\u0435\u043D\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D \u0442\u0440\u0430\u0432\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043D\u0442\u0438\u0434\u043E\u0442."
+      },
+      {
+        id: "ash_10",
+        name: "\u042F\u0434 \u0438 \u043F\u043B\u0430\u043C\u044F",
+        world: "ash",
+        enemies: [{ id: "ash_scorpion", scale: 2.018 }, { id: "ash_shaman", scale: 2.018 }],
+        unlockAfter: "ash_09",
+        tip: "\u042F\u0434 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D\u0430 \u0438 \u043E\u0433\u043E\u043D\u044C \u0448\u0430\u043C\u0430\u043D\u0430 \u0432\u043C\u0435\u0441\u0442\u0435. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u043F\u043B\u044E\u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "ash_11",
+        name: "\u0413\u0440\u043E\u0437\u0430 \u0431\u0435\u0437 \u0434\u043E\u0436\u0434\u044F",
+        world: "ash",
+        enemies: [{ id: "ash_storm_spirit", scale: 2.032 }, { id: "ash_ghoul", scale: 2.032 }],
+        unlockAfter: "ash_10",
+        tip: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430: \u0441\u0442\u0440\u0430\u0445, \u0441\u043E\u043D \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435. \u041E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "ash_12",
+        name: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u0431\u0443\u0440\u0438",
+        world: "ash",
+        enemies: [
+          { id: "ash_storm_spirit", scale: 2.045 },
+          { id: "ash_storm_spirit", scale: 2.045 },
+          { id: "ash_vulture", scale: 2.045 }
+        ],
+        unlockAfter: "ash_11",
+        tip: "\u0414\u0443\u0445\u0438 \u0441\u043A\u043E\u0432\u044B\u0432\u0430\u044E\u0442, \u0441\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u0438\u0437\u0434\u0430\u043B\u0435\u043A\u0430. \u041D\u0435 \u0434\u0430\u0439 \u0441\u0435\u0431\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u044C \u2014 \u0431\u0435\u0440\u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "ash_13",
+        name: "\u041A\u0430\u0440\u0430\u0432\u0430\u043D \u0442\u0435\u043D\u0435\u0439",
+        world: "ash",
+        enemies: [
+          { id: "ash_ghoul", scale: 2.058 },
+          { id: "ash_ghoul", scale: 2.058 },
+          { id: "ash_shaman", scale: 2.058 }
+        ],
+        unlockAfter: "ash_12",
+        tip: "\u0422\u0435\u043D\u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0448\u0430\u043C\u0430\u043D \u0436\u0436\u0451\u0442 \u0438 \u043B\u0435\u0447\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u2014 \u0438\u043D\u0430\u0447\u0435 \u043E\u0442\u0440\u044F\u0434 \u0437\u0430\u0441\u043D\u0451\u0442 \u043F\u043E\u0434 \u043E\u0433\u043D\u0451\u043C."
+      },
+      {
+        id: "ash_14",
+        name: "\u0421\u0442\u0435\u043F\u043D\u0430\u044F \u0437\u0430\u0441\u0430\u0434\u0430",
+        world: "ash",
+        enemies: [
+          { id: "ash_vulture", scale: 2.071 },
+          { id: "ash_storm_spirit", scale: 2.071 },
+          { id: "ash_ghoul", scale: 2.071 }
+        ],
+        unlockAfter: "ash_13",
+        tip: "\u041C\u0435\u0442\u043A\u0438\u0435 \u0441\u0442\u0440\u0435\u043B\u044B, \u0441\u043F\u043E\u0440\u044B \u0438 \u0441\u043E\u043D. \u0420\u0430\u0437\u043D\u043E\u0448\u0451\u0440\u0441\u0442\u043D\u0430\u044F \u0437\u0430\u0441\u0430\u0434\u0430 \u2014 \u0434\u0435\u0440\u0436\u0438 \u0431\u0430\u043B\u0430\u043D\u0441 \u0437\u0430\u0449\u0438\u0442."
+      },
+      {
+        id: "ash_15",
+        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u043A\u0440\u0443\u0433",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 2.084 },
+          { id: "ash_storm_spirit", scale: 2.084 },
+          { id: "ash_wolf", scale: 2.084 }
+        ],
+        unlockAfter: "ash_14",
+        tip: "\u0428\u0430\u043C\u0430\u043D \u0437\u0430 \u0441\u043F\u0438\u043D\u043E\u0439 \u0434\u0443\u0445\u0430 \u0438 \u0432\u043E\u043B\u043A\u0430. \u041F\u0440\u043E\u0440\u0432\u0438\u0441\u044C \u0441\u043A\u0432\u043E\u0437\u044C \u0441\u0442\u0440\u043E\u0439 \u0438 \u0441\u0431\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "ash_16",
+        name: "\u0412\u0438\u0445\u0440\u044C \u043D\u0430\u0434 \u0433\u043D\u0435\u0437\u0434\u043E\u043C",
+        world: "ash",
+        enemies: [
+          { id: "ash_vulture", scale: 2.097 },
+          { id: "ash_storm_spirit", scale: 2.097 },
+          { id: "ash_storm_spirit", scale: 2.097 }
+        ],
+        unlockAfter: "ash_15",
+        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u0438\u0437 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0432\u0438\u0445\u0440\u044F. \u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
+      },
+      {
+        id: "ash_17",
+        name: "\u0414\u044B\u0445\u0430\u043D\u0438\u0435 \u043F\u043E\u0436\u0430\u0440\u0430",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 2.111 },
+          { id: "ash_shaman", scale: 2.111 },
+          { id: "ash_storm_spirit", scale: 2.111 }
+        ],
+        unlockAfter: "ash_16",
+        tip: "\u041F\u0430\u0440\u043D\u044B\u0435 \u0448\u0430\u043C\u0430\u043D\u044B \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u0434\u0443\u0445\u0430. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
+      },
+      {
+        id: "ash_18",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043E\u0431\u043E\u0437",
+        world: "ash",
+        enemies: [
+          { id: "ash_ghoul", scale: 2.124 },
+          { id: "ash_wolf", scale: 2.124 },
+          { id: "ash_storm_spirit", scale: 2.124 }
+        ],
+        unlockAfter: "ash_17",
+        tip: "\u0422\u0435\u043D\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0432\u043E\u043B\u043A \u0431\u044C\u0451\u0442 \u043C\u043E\u0449\u043D\u043E, \u0434\u0443\u0445 \u043F\u0443\u0433\u0430\u0435\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "ash_19",
+        name: "\u041F\u0435\u0440\u0435\u0434 \u043B\u0438\u0446\u043E\u043C \u0425\u0430\u043D\u0430",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 2.137 },
+          { id: "ash_storm_spirit", scale: 2.137 },
+          { id: "ash_ghoul", scale: 2.137 }
+        ],
+        unlockAfter: "ash_18",
+        tip: "\u0412\u0441\u044F \u043D\u0435\u0447\u0438\u0441\u0442\u044C \u0441\u0442\u0435\u043F\u0438 \u0440\u0430\u0437\u043E\u043C: \u043E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0425\u0430\u043D\u043E\u043C."
+      },
+      {
+        id: "ash_boss",
+        name: "\u0425\u0430\u043D \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0431\u0443\u0440\u044C",
+        world: "ash",
+        enemies: [{ id: "ash_khan", scale: 1.9 }],
+        unlockAfter: "ash_19",
+        tip: "\u0425\u0430\u043D \u0436\u0436\u0451\u0442 \u043E\u0433\u043D\u0451\u043C \u0438 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0421\u043E\u0431\u0435\u0440\u0438 \u043B\u0443\u0447\u0448\u0435\u0435 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u0438 \u043E\u0442\u0440\u044F\u0434."
+      }
+    ]
+  };
+
+  // src/data/worlds/jade.js
+  var WORLD6 = {
+    id: "jade",
+    label: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434",
+    enemies: [
+      {
+        id: "jade_warrior",
+        name: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0439 \u0432\u043E\u0438\u043D",
+        icon: "\u{1F3B4}",
+        hp: 150,
+        attack: 16,
+        armor: 18,
+        speed: 8,
+        crit: 0.06,
+        dodge: 0.04,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        reward: { coins: [90, 120], materials: ["jade_paper"] }
+      },
+      {
+        id: "jade_crane",
+        name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0436\u0443\u0440\u0430\u0432\u043B\u044C",
+        icon: "\u{1F54A}\uFE0F",
+        hp: 90,
+        attack: 14,
+        armor: 10,
+        speed: 10,
+        crit: 0.09,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        reward: { coins: [85, 115], materials: ["jade_feather"] }
+      },
+      {
+        id: "jade_lantern",
+        name: "\u0424\u043E\u043D\u0430\u0440\u044C \u043D\u0430 \u0432\u043E\u0434\u0435",
+        icon: "\u{1F3EE}",
+        hp: 100,
+        attack: 19,
+        armor: 10,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "fire",
+        skills: ["spit_fire", "sting_poison"],
+        tags: ["spirit"],
+        reward: { coins: [85, 115], materials: ["jade_paper"] }
+      },
+      {
+        id: "jade_kitsune",
+        name: "\u0421\u0430\u0434\u043E\u0432\u0430\u044F \u043A\u0438\u0446\u0443\u043D\u044D",
+        icon: "\u{1F98A}",
+        hp: 110,
+        attack: 17,
+        armor: 12,
+        speed: 12,
+        crit: 0.06,
+        dodge: 0.11,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [90, 120], materials: ["jade_fur"] }
+      },
+      {
+        id: "jade_teamaster",
+        name: "\u0427\u0430\u0439\u043D\u044B\u0439 \u043C\u0430\u0441\u0442\u0435\u0440-\u0434\u0443\u0445",
+        icon: "\u{1F375}",
+        hp: 125,
+        attack: 15,
+        armor: 14,
+        speed: 8,
+        crit: 0.04,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["regen_ally_skill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [95, 130], materials: ["jade_tea"] }
+      },
+      // Босс мира
+      {
+        id: "jade_boss",
+        name: "\u0414\u0440\u0430\u043A\u043E\u043D-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u0430\u0434\u0430",
+        icon: "\u{1F409}",
+        hp: 400,
+        attack: 26,
+        armor: 26,
+        speed: 9,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["spit_fire", "heavy_blow", "fear_chill"],
+        boss: true,
+        tags: ["spirit"],
+        reward: { coins: [450, 600], seals: 4, materials: ["jade_pearl"] }
+      }
+    ],
+    materials: [
+      { id: "jade_paper", name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u0430\u044F \u0431\u0443\u043C\u0430\u0433\u0430", icon: "\u{1F3B4}", description: "\u041F\u0440\u043E\u0447\u043D\u0430\u044F, \u043A\u0430\u043A \u0442\u043E\u043D\u043A\u0430\u044F \u043A\u043E\u043B\u044C\u0447\u0443\u0433\u0430." },
+      { id: "jade_feather", name: "\u041F\u0435\u0440\u043E \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0436\u0443\u0440\u0430\u0432\u043B\u044F", icon: "\u{1FAB6}", description: "\u041B\u0451\u0433\u043A\u043E\u0435, \u0441 \u0437\u0435\u043B\u0435\u043D\u043E\u0432\u0430\u0442\u044B\u043C \u043E\u0442\u043B\u0438\u0432\u043E\u043C." },
+      { id: "jade_fur", name: "\u041C\u0435\u0445 \u0441\u0430\u0434\u043E\u0432\u043E\u0439 \u043A\u0438\u0446\u0443\u043D\u044D", icon: "\u{1F98A}", description: "\u041F\u0443\u0448\u0438\u0441\u0442\u044B\u0439 \u0438 \u0447\u0443\u0442\u044C \u0442\u0451\u043F\u043B\u044B\u0439." },
+      { id: "jade_tea", name: "\u041B\u0438\u0441\u0442 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0447\u0430\u044F", icon: "\u{1F375}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0434\u043E\u0436\u0434\u0451\u043C \u0438 \u0441\u0442\u0430\u0440\u044B\u043C \u043A\u0430\u043C\u043D\u0435\u043C." },
+      { id: "jade_pearl", name: "\u0416\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0434\u0440\u0430\u043A\u043E\u043D\u0430", icon: "\u{1F52E}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043A\u043B\u0443\u0431\u0438\u0442\u0441\u044F \u0442\u0443\u043C\u0430\u043D \u0441\u0430\u0434\u0430." }
+    ],
+    battles: [
+      {
+        id: "jade_01",
+        name: "\u0411\u0430\u043C\u0431\u0443\u043A\u043E\u0432\u044B\u0435 \u0432\u043E\u0440\u043E\u0442\u0430",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2 }, { id: "jade_teamaster", scale: 2 }],
+        unlockAfter: "ash_boss",
+        tip: "\u0412\u043E\u0438\u043D \u0431\u044C\u0451\u0442 \u043C\u043E\u0449\u043D\u043E, \u0430 \u043C\u0430\u0441\u0442\u0435\u0440 \u0435\u0433\u043E \u043F\u043E\u0434\u043B\u0435\u0447\u0438\u0432\u0430\u0435\u0442. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0437\u0430\u043F\u0430\u0441 \u0437\u0435\u043B\u0438\u0439."
+      },
+      {
+        id: "jade_02",
+        name: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u043F\u0440\u0443\u0434",
+        world: "jade",
+        enemies: [{ id: "jade_crane", scale: 2.01 }, { id: "jade_kitsune", scale: 2.01 }],
+        unlockAfter: "jade_01",
+        tip: "\u0422\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u0438 \u043B\u0438\u0441\u0438\u0439 \u043C\u043E\u0440\u043E\u043A. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "jade_03",
+        name: "\u0424\u043E\u043D\u0430\u0440\u0438 \u043D\u0430 \u0432\u043E\u0434\u0435",
+        world: "jade",
+        enemies: [{ id: "jade_lantern", scale: 2.03 }, { id: "jade_lantern", scale: 2.03 }],
+        unlockAfter: "jade_02",
+        tip: "\u0424\u043E\u043D\u0430\u0440\u0438 \u0436\u0433\u0443\u0442 \u043E\u0433\u043D\u0451\u043C \u0438 \u0442\u0440\u0430\u0432\u044F\u0442 \u0434\u044B\u043C\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435."
+      },
+      {
+        id: "jade_04",
+        name: "\u041B\u0438\u0441\u044C\u044F \u0442\u0440\u043E\u043F\u0430",
+        world: "jade",
+        enemies: [{ id: "jade_kitsune", scale: 2.04 }, { id: "jade_kitsune", scale: 2.04 }],
+        unlockAfter: "jade_03",
+        tip: "\u041A\u0438\u0446\u0443\u043D\u044D \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "jade_05",
+        name: "\u041F\u043B\u0430\u043C\u044F \u0438 \u0431\u0443\u043C\u0430\u0433\u0430",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.05 }, { id: "jade_lantern", scale: 2.05 }],
+        unlockAfter: "jade_04",
+        tip: "\u0424\u043E\u043D\u0430\u0440\u044C \u0436\u0436\u0451\u0442, \u0432\u043E\u0438\u043D \u043A\u0440\u0443\u0448\u0438\u0442. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_06",
+        name: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u0442\u0430\u043D\u0435\u0446",
+        world: "jade",
+        enemies: [{ id: "jade_crane", scale: 2.07 }, { id: "jade_crane", scale: 2.07 }],
+        unlockAfter: "jade_05",
+        tip: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u043D\u0435 \u043F\u0440\u043E\u043C\u0430\u0445\u0438\u0432\u0430\u0435\u0442\u0441\u044F. \u0411\u0440\u043E\u043D\u044F \u0432\u0430\u0436\u043D\u0435\u0435 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u044F."
+      },
+      {
+        id: "jade_07",
+        name: "\u041F\u0430\u0440 \u043D\u0430\u0434 \u0447\u0430\u0448\u0435\u0439",
+        world: "jade",
+        enemies: [{ id: "jade_teamaster", scale: 2.08 }, { id: "jade_crane", scale: 2.08 }],
+        unlockAfter: "jade_06",
+        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0436\u0443\u0440\u0430\u0432\u043B\u044F, \u0430 \u0442\u043E\u0442 \u0431\u044C\u0451\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0417\u0430\u043F\u0430\u0441\u0438\u0441\u044C \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435\u043C."
+      },
+      {
+        id: "jade_08",
+        name: "\u041C\u043E\u0440\u043E\u043A \u043D\u0430\u0434 \u0432\u043E\u0434\u043E\u0439",
+        world: "jade",
+        enemies: [{ id: "jade_kitsune", scale: 2.09 }, { id: "jade_lantern", scale: 2.09 }],
+        unlockAfter: "jade_07",
+        tip: "\u0421\u043E\u043D, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0435\u0434\u043A\u0438\u0439 \u0434\u044B\u043C. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435."
+      },
+      {
+        id: "jade_09",
+        name: "\u041B\u0438\u0441\u0438\u0439 \u0433\u0430\u0440\u043D\u0438\u0437\u043E\u043D",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.11 }, { id: "jade_kitsune", scale: 2.11 }],
+        unlockAfter: "jade_08",
+        tip: "\u0412\u043E\u0438\u043D \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u043A\u0438\u0446\u0443\u043D\u044D. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0442\u044F\u0436\u0451\u043B\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_10",
+        name: "\u041E\u0433\u043E\u043D\u044C\u043A\u0438 \u043D\u0430\u0434 \u043F\u0440\u0443\u0434\u043E\u043C",
+        world: "jade",
+        enemies: [{ id: "jade_lantern", scale: 2.12 }, { id: "jade_crane", scale: 2.12 }],
+        unlockAfter: "jade_09",
+        tip: "\u0424\u043E\u043D\u0430\u0440\u044C \u0436\u0436\u0451\u0442, \u0436\u0443\u0440\u0430\u0432\u043B\u044C \u043D\u0435 \u043C\u0430\u0436\u0435\u0442. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_11",
+        name: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0439 \u0441\u0430\u0434",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.13 }, { id: "jade_crane", scale: 2.13 }],
+        unlockAfter: "jade_10",
+        tip: "\u041C\u043E\u0449\u043D\u044B\u0439 \u0443\u0434\u0430\u0440 \u0438 \u0442\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0440\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "jade_12",
+        name: "\u0427\u0430\u0439 \u0434\u043B\u044F \u043B\u0438\u0441\u0438\u0446\u044B",
+        world: "jade",
+        enemies: [{ id: "jade_teamaster", scale: 2.14 }, { id: "jade_kitsune", scale: 2.14 }],
+        unlockAfter: "jade_11",
+        tip: "\u041B\u0438\u0441\u0438\u0446\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435."
+      },
+      {
+        id: "jade_13",
+        name: "\u0427\u0430\u0439 \u043D\u0430 \u0432\u043E\u0434\u0435",
+        world: "jade",
+        enemies: [{ id: "jade_teamaster", scale: 2.16 }, { id: "jade_lantern", scale: 2.16 }],
+        unlockAfter: "jade_12",
+        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0444\u043E\u043D\u0430\u0440\u044C, \u0430 \u0442\u043E\u0442 \u0436\u0436\u0451\u0442 \u0438 \u0442\u0440\u0430\u0432\u0438\u0442 \u0434\u044B\u043C\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435."
+      },
+      {
+        id: "jade_14",
+        name: "\u0421\u0442\u0440\u0430\u0436\u0438 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.17 }, { id: "jade_lantern", scale: 2.17 }],
+        unlockAfter: "jade_13",
+        tip: "\u0412\u043E\u0438\u043D \u0438 \u0444\u043E\u043D\u0430\u0440\u044C. \u0411\u0435\u0437 \u0431\u0440\u043E\u043D\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u043E\u0433\u043D\u044E \u043D\u0435 \u0432\u044B\u0441\u0442\u043E\u044F\u0442\u044C."
+      },
+      {
+        id: "jade_15",
+        name: "\u0414\u0435\u0432\u044F\u0442\u044C \u0445\u0432\u043E\u0441\u0442\u043E\u0432",
+        world: "jade",
+        enemies: [{ id: "jade_kitsune", scale: 2.18 }, { id: "jade_crane", scale: 2.18 }],
+        unlockAfter: "jade_14",
+        tip: "\u041B\u0438\u0441\u0438\u0439 \u043C\u043E\u0440\u043E\u043A \u0438 \u0442\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0445\u043E\u0440\u043E\u0448\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_16",
+        name: "\u041F\u0435\u0441\u043D\u044F \u043A\u0430\u043C\u043D\u0435\u0439",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.2 }, { id: "jade_teamaster", scale: 2.2 }],
+        unlockAfter: "jade_15",
+        tip: "\u0412\u043E\u0438\u043D \u0438 \u043C\u0430\u0441\u0442\u0435\u0440: \u043C\u043E\u0449\u044C \u0438 \u043B\u0435\u0447\u0435\u043D\u0438\u0435. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0431\u0435\u0440\u0438 \u0437\u0435\u043B\u044C\u044F."
+      },
+      {
+        id: "jade_17",
+        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0444\u0435\u0441\u0442\u0438\u0432\u0430\u043B\u044C",
+        world: "jade",
+        enemies: [{ id: "jade_crane", scale: 2.21 }, { id: "jade_lantern", scale: 2.21 }],
+        unlockAfter: "jade_16",
+        tip: "\u0422\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u0438 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0435 \u043F\u043B\u0430\u043C\u044F. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_18",
+        name: "\u0422\u0438\u0445\u0430\u044F \u0446\u0435\u0440\u0435\u043C\u043E\u043D\u0438\u044F",
+        world: "jade",
+        enemies: [{ id: "jade_teamaster", scale: 2.22 }, { id: "jade_crane", scale: 2.22 }],
+        unlockAfter: "jade_17",
+        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0436\u0443\u0440\u0430\u0432\u043B\u044F, \u0430 \u0442\u043E\u0442 \u0431\u044C\u0451\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0434\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "jade_19",
+        name: "\u0421\u043E\u0432\u0435\u0442 \u0441\u0442\u0430\u0440\u0435\u0439\u0448\u0438\u043D",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.24 }, { id: "jade_kitsune", scale: 2.24 }],
+        unlockAfter: "jade_18",
+        tip: "\u0412\u043E\u0438\u043D \u0438 \u043A\u0438\u0446\u0443\u043D\u044D \u043D\u0430 \u043F\u0438\u043A\u0435 \u0441\u0438\u043B\u044B. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0414\u0440\u0430\u043A\u043E\u043D\u043E\u043C."
+      },
+      {
+        id: "jade_boss",
+        name: "\u0414\u0440\u0430\u043A\u043E\u043D \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0441\u0430\u0434\u0430",
+        world: "jade",
+        enemies: [{ id: "jade_boss", scale: 2 }],
+        unlockAfter: "jade_19",
+        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0434\u044B\u0448\u0438\u0442 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u043C \u043F\u043B\u0430\u043C\u0435\u043D\u0435\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
+      }
+    ]
+  };
+
+  // src/data/worlds/deep.js
+  var WORLD7 = {
+    id: "deep",
+    label: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442",
+    enemies: [
+      {
+        id: "deep_siren",
+        name: "\u0420\u0443\u0441\u0430\u043B\u043A\u0430-\u043F\u0435\u0432\u0443\u043D\u044C\u044F",
+        icon: "\u{1F9DC}\u200D\u2640\uFE0F",
+        hp: 95,
+        attack: 15,
+        armor: 10,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["pollen_sleep", "regen_ally_skill"],
+        reward: { coins: [85, 120], materials: ["deep_siren_scale"] }
+      },
+      {
+        id: "deep_pearl_guard",
+        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+        icon: "\u{1F9AA}",
+        hp: 150,
+        attack: 17,
+        armor: 24,
+        speed: 6,
+        crit: 0.03,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores"],
+        reward: { coins: [100, 140], materials: ["deep_reef_stone"] }
+      },
+      {
+        id: "deep_shadow",
+        name: "\u0413\u043B\u0443\u0431\u043E\u043A\u043E\u0432\u043E\u0434\u043D\u0430\u044F \u0442\u0435\u043D\u044C",
+        icon: "\u{1F311}",
+        hp: 85,
+        attack: 18,
+        armor: 9,
+        speed: 12,
+        crit: 0.08,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [90, 130], materials: ["deep_sea_mist"] }
+      },
+      {
+        id: "deep_coral_golem",
+        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
+        icon: "\u{1FAB8}",
+        hp: 160,
+        attack: 20,
+        armor: 20,
+        speed: 5,
+        crit: 0.02,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "sting_poison_weak"],
+        reward: { coins: [110, 150], materials: ["deep_reef_stone"] }
+      },
+      {
+        id: "deep_current_spirit",
+        name: "\u0414\u0443\u0445 \u0442\u0435\u0447\u0435\u043D\u0438\u044F",
+        icon: "\u{1F300}",
+        hp: 75,
+        attack: 15,
+        armor: 8,
+        speed: 13,
+        crit: 0.06,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["slow_spores"],
+        tags: ["spirit", "ranged"],
+        reward: { coins: [85, 125], materials: ["deep_sea_mist"] }
+      },
+      {
+        id: "deep_light_bubble",
+        name: "\u041F\u0443\u0437\u044B\u0440\u0451\u043A \u0441\u0432\u0435\u0442\u0430",
+        icon: "\u{1FAE7}",
+        hp: 68,
+        attack: 13,
+        armor: 8,
+        speed: 12,
+        crit: 0.05,
+        dodge: 0.14,
+        elem: "fire",
+        skills: ["spit_fire"],
+        reward: { coins: [80, 115], materials: ["deep_light_drop"] }
+      },
+      // Босс мира
+      {
+        id: "deep_boss_queen",
+        name: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0433\u0440\u043E\u0442\u0430",
+        icon: "\u{1F451}",
+        hp: 370,
+        attack: 26,
+        armor: 24,
+        speed: 9,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill", "slow_spores"],
+        boss: true,
+        reward: { coins: [550, 750], seals: 4, materials: ["deep_abyss_pearl"] }
+      }
+    ],
+    materials: [
+      { id: "deep_siren_scale", name: "\u0427\u0435\u0448\u0443\u044F \u043F\u0435\u0432\u0443\u043D\u044C\u0438", icon: "\u{1F3B6}", description: "\u0425\u0440\u0430\u043D\u0438\u0442 \u043E\u0442\u0437\u0432\u0443\u043A \u043F\u043E\u0434\u0432\u043E\u0434\u043D\u043E\u0439 \u043F\u0435\u0441\u043D\u0438." },
+      { id: "deep_reef_stone", name: "\u041A\u0430\u043C\u0435\u043D\u044C \u0440\u0438\u0444\u0430", icon: "\u{1FAA8}", description: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0434\u0440\u0435\u0432\u043D\u0435\u0433\u043E \u0440\u0438\u0444\u0430, \u0442\u0451\u043F\u043B\u044B\u0439 \u043D\u0430 \u043E\u0449\u0443\u043F\u044C." },
+      { id: "deep_sea_mist", name: "\u041C\u043E\u0440\u0441\u043A\u0430\u044F \u0434\u044B\u043C\u043A\u0430", icon: "\u{1F32B}\uFE0F", description: "\u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u0442\u0443\u043C\u0430\u043D, \u043F\u043E\u0434\u043D\u044F\u0442\u044B\u0439 \u0441\u043E \u0434\u043D\u0430." },
+      { id: "deep_light_drop", name: "\u041A\u0430\u043F\u0435\u043B\u044C\u043A\u0430 \u0441\u0432\u0435\u0442\u0430", icon: "\u{1FAE7}", description: "\u0421\u0432\u0435\u0442\u0438\u0442\u0441\u044F, \u0435\u0441\u043B\u0438 \u0435\u0451 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C." },
+      { id: "deep_abyss_pearl", name: "\u0416\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0431\u0435\u0437\u0434\u043D\u044B", icon: "\u{1F52E}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043F\u043B\u0435\u0449\u0435\u0442\u0441\u044F \u0442\u0451\u043C\u043D\u0430\u044F \u0432\u043E\u0434\u0430." }
+    ],
+    battles: [
+      {
+        id: "deep_01",
+        name: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u0438 \u0443 \u0432\u0445\u043E\u0434\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_light_bubble", scale: 2.1 }, { id: "deep_light_bubble", scale: 2.1 }],
+        unlockAfter: "jade_boss",
+        tip: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u0438 \u0436\u0433\u0443\u0442 \u043E\u0441\u043B\u0435\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C \u0441\u0432\u0435\u0442\u043E\u043C. \u041F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "deep_02",
+        name: "\u041F\u0435\u0441\u043D\u044C \u0437\u0430 \u0441\u043A\u0430\u043B\u043E\u0439",
+        world: "deep",
+        enemies: [{ id: "deep_siren", scale: 2.11 }, { id: "deep_siren", scale: 2.11 }],
+        unlockAfter: "deep_01",
+        tip: "\u041F\u0435\u0441\u043D\u044F \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0428\u043B\u0435\u043C \u0441\u043E\u043D\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "deep_03",
+        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0439 \u043F\u043E\u0441\u0442",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.12 }, { id: "deep_light_bubble", scale: 2.12 }],
+        unlockAfter: "deep_02",
+        tip: "\u0421\u0442\u0440\u0430\u0436 \u043A\u0440\u0435\u043F\u043E\u043A, \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442\u0441\u044F. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0431\u044C\u0451\u0442 \u043F\u0430\u043D\u0446\u0438\u0440\u044C."
+      },
+      {
+        id: "deep_04",
+        name: "\u0422\u0435\u043D\u044C \u0432 \u0440\u0430\u0441\u0449\u0435\u043B\u0438\u043D\u0435",
+        world: "deep",
+        enemies: [{ id: "deep_shadow", scale: 2.14 }, { id: "deep_shadow", scale: 2.14 }],
+        unlockAfter: "deep_03",
+        tip: "\u0422\u0435\u043D\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0443\u0436\u0430\u0441. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0432\u0435\u0440\u043D\u0451\u0442 \u0440\u044B\u0446\u0430\u0440\u044E \u0442\u0432\u0451\u0440\u0434\u043E\u0441\u0442\u044C \u0440\u0443\u043A\u0438."
+      },
+      {
+        id: "deep_05",
+        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0437\u0430\u0432\u0430\u043B",
+        world: "deep",
+        enemies: [{ id: "deep_coral_golem", scale: 2.15 }, { id: "deep_light_bubble", scale: 2.15 }],
+        unlockAfter: "deep_04",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u0440\u0435\u0436\u0435\u0442 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u043C\u0438 \u043A\u043E\u0440\u0430\u043B\u043B\u0430\u043C\u0438. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "deep_06",
+        name: "\u0418\u0433\u0440\u044B \u0442\u0435\u0447\u0435\u043D\u0438\u044F",
+        world: "deep",
+        enemies: [{ id: "deep_current_spirit", scale: 2.16 }, { id: "deep_current_spirit", scale: 2.16 }],
+        unlockAfter: "deep_05",
+        tip: "\u0414\u0443\u0445\u0438 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u044E\u0442 \u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C \u0438 \u0431\u044C\u044E\u0442 \u043F\u043E \u0441\u043B\u0430\u0431\u0435\u0439\u0448\u0435\u043C\u0443. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0437\u0430\u0434\u043D\u0438\u0439 \u0440\u044F\u0434."
+      },
+      {
+        id: "deep_07",
+        name: "\u0425\u043E\u0440 \u043D\u0430 \u043E\u0442\u043C\u0435\u043B\u0438",
+        world: "deep",
+        enemies: [
+          { id: "deep_siren", scale: 2.18 },
+          { id: "deep_siren", scale: 2.18 },
+          { id: "deep_light_bubble", scale: 2.18 }
+        ],
+        unlockAfter: "deep_06",
+        tip: "\u0425\u043E\u0440 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0430 \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442\u0441\u044F. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "deep_08",
+        name: "\u0421\u0442\u0440\u0430\u0436 \u0438 \u0442\u0435\u043D\u044C",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.19 }, { id: "deep_shadow", scale: 2.19 }],
+        unlockAfter: "deep_07",
+        tip: "\u041A\u0440\u0435\u043F\u043A\u0438\u0439 \u0441\u0442\u0440\u0430\u0436 \u0438 \u0436\u0443\u0442\u043A\u0430\u044F \u0442\u0435\u043D\u044C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "deep_09",
+        name: "\u0421\u0430\u0434\u044B \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432",
+        world: "deep",
+        enemies: [{ id: "deep_coral_golem", scale: 2.2 }, { id: "deep_current_spirit", scale: 2.2 }],
+        unlockAfter: "deep_08",
+        tip: "\u042F\u0434 \u043A\u043E\u0440\u0430\u043B\u043B\u0430 \u0438 \u0441\u0442\u044F\u0433\u0443\u044E\u0449\u0435\u0435 \u0442\u0435\u0447\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "deep_10",
+        name: "\u041F\u043E\u044E\u0449\u0438\u0435 \u0440\u0438\u0444\u044B",
+        world: "deep",
+        enemies: [{ id: "deep_siren", scale: 2.21 }, { id: "deep_shadow", scale: 2.21 }],
+        unlockAfter: "deep_09",
+        tip: "\u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u0432 \u043E\u0434\u043D\u043E\u043C \u0445\u043E\u0440\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "deep_11",
+        name: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u043E\u0432\u044B\u0439 \u0440\u043E\u0439",
+        world: "deep",
+        enemies: [
+          { id: "deep_light_bubble", scale: 2.22 },
+          { id: "deep_light_bubble", scale: 2.22 },
+          { id: "deep_light_bubble", scale: 2.22 }
+        ],
+        unlockAfter: "deep_10",
+        tip: "\u0422\u0440\u043E\u0438\u0446\u0430 \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u043E\u0432 \u0436\u0436\u0451\u0442 \u0440\u0430\u0437\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0440\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "deep_12",
+        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u0436\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.24 }, { id: "deep_pearl_guard", scale: 2.24 }],
+        unlockAfter: "deep_11",
+        tip: "\u0414\u0432\u0430 \u0436\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0445 \u0441\u0442\u0440\u0430\u0436\u0430 \u2014 \u0441\u043F\u043B\u043E\u0448\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430. \u041D\u0443\u0436\u0435\u043D \u0443\u0440\u043E\u043D \u043F\u043E\u0442\u044F\u0436\u0435\u043B\u0435\u0435."
+      },
+      {
+        id: "deep_13",
+        name: "\u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u0432\u043E\u0434\u043E\u0432\u043E\u0440\u043E\u0442",
+        world: "deep",
+        enemies: [{ id: "deep_current_spirit", scale: 2.25 }, { id: "deep_shadow", scale: 2.25 }],
+        unlockAfter: "deep_12",
+        tip: "\u0422\u0435\u0447\u0435\u043D\u0438\u0435 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442, \u0442\u0435\u043D\u044C \u043B\u0435\u0434\u0435\u043D\u0438\u0442. \u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "deep_14",
+        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0445\u043E\u0440",
+        world: "deep",
+        enemies: [{ id: "deep_coral_golem", scale: 2.26 }, { id: "deep_siren", scale: 2.26 }],
+        unlockAfter: "deep_13",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0440, \u043F\u043E\u043A\u0430 \u0440\u0443\u0441\u0430\u043B\u043A\u0430 \u043F\u043E\u0451\u0442. \u0411\u0443\u0434\u0438 \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0431\u044B\u0441\u0442\u0440\u0435\u0435."
+      },
+      {
+        id: "deep_15",
+        name: "\u0421\u0432\u0435\u0442\u043E\u0432\u043E\u0439 \u0432\u043E\u0434\u043E\u0432\u043E\u0440\u043E\u0442",
+        world: "deep",
+        enemies: [{ id: "deep_current_spirit", scale: 2.28 }, { id: "deep_light_bubble", scale: 2.28 }],
+        unlockAfter: "deep_14",
+        tip: "\u0414\u0443\u0445 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442 \u0441\u043B\u0430\u0431\u0435\u0439\u0448\u0438\u0445, \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442 \u0441\u0432\u0435\u0442\u043E\u043C. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0437\u0430\u0434\u043D\u0438\u0439 \u0440\u044F\u0434."
+      },
+      {
+        id: "deep_16",
+        name: "\u041C\u0440\u0430\u043A \u0433\u0440\u043E\u0442\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_shadow", scale: 2.29 }, { id: "deep_pearl_guard", scale: 2.29 }],
+        unlockAfter: "deep_15",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u043F\u0435\u0440\u043B\u0430\u043C\u0443\u0442\u0440\u0430 \u0438 \u043B\u0435\u0434\u0435\u043D\u044F\u0449\u0430\u044F \u0442\u0435\u043D\u044C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "deep_17",
+        name: "\u041F\u0435\u0441\u043D\u044C \u0433\u043B\u0443\u0431\u0438\u043D",
+        world: "deep",
+        enemies: [
+          { id: "deep_siren", scale: 2.15 },
+          { id: "deep_siren", scale: 2.15 },
+          { id: "deep_shadow", scale: 2.15 }
+        ],
+        unlockAfter: "deep_16",
+        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0445\u043E\u0440 \u0438 \u0442\u0435\u043D\u044C. \u0411\u0435\u0437 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0440\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0451\u0442 \u043D\u0430\u0434\u043E\u043B\u0433\u043E."
+      },
+      {
+        id: "deep_18",
+        name: "\u041A\u0440\u0435\u043F\u043E\u0441\u0442\u044C \u043A\u043E\u0440\u0430\u043B\u043B\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_coral_golem", scale: 2.31 }, { id: "deep_coral_golem", scale: 2.31 }],
+        unlockAfter: "deep_17",
+        tip: "\u0414\u0432\u0430 \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0445 \u0433\u043E\u043B\u0435\u043C\u0430: \u044F\u0434 \u0438 \u0442\u043E\u043B\u0441\u0442\u044B\u0435 \u043F\u0430\u043D\u0446\u0438\u0440\u0438. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0432 \u0440\u0443\u043A\u0438."
+      },
+      {
+        id: "deep_19",
+        name: "\u0413\u043E\u043B\u043E\u0441\u0430 \u0433\u0440\u043E\u0442\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.33 }, { id: "deep_siren", scale: 2.33 }],
+        unlockAfter: "deep_18",
+        tip: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043A\u0430\u0440\u0430\u0443\u043B \u043F\u0435\u0440\u0435\u0434 \u0442\u0440\u043E\u043D\u043E\u043C: \u0441\u0442\u0440\u0430\u0436 \u0438 \u043F\u0435\u0432\u0443\u043D\u044C\u044F. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0438 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "deep_boss",
+        name: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0433\u0440\u043E\u0442\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_boss_queen", scale: 2.35 }],
+        unlockAfter: "deep_19",
+        tip: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u043F\u0435\u0441\u043D\u0435\u0439, \u043B\u0435\u0434\u0435\u043D\u0438\u0442 \u0432\u0437\u0433\u043B\u044F\u0434\u043E\u043C \u0438 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442 \u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      }
+    ]
+  };
+
+  // src/data/worlds/mist.js
+  var WORLD8 = {
+    id: "mist",
+    label: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+    enemies: [
+      {
+        id: "mist_clock_spirit",
+        name: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u0434\u0443\u0445",
+        icon: "\u{1F570}\uFE0F",
+        hp: 80,
+        attack: 14,
+        armor: 8,
+        speed: 12,
+        crit: 0.06,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [95, 130], materials: ["mist_gear_dust"] }
+      },
+      {
+        id: "mist_rust_automaton",
+        name: "\u0420\u0436\u0430\u0432\u044B\u0439 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D",
+        icon: "\u{1F916}",
+        hp: 100,
+        attack: 16,
+        armor: 16,
+        speed: 6,
+        crit: 0.04,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        tags: [],
+        reward: { coins: [110, 150], materials: ["mist_rust_flake"] }
+      },
+      {
+        id: "mist_echo_keeper",
+        name: "\u042D\u0445\u043E \u043B\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430",
+        icon: "\u{1F56F}\uFE0F",
+        hp: 75,
+        attack: 15,
+        armor: 8,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        tags: ["spirit"],
+        reward: { coins: [100, 135], materials: ["mist_echo_shard"] }
+      },
+      {
+        id: "mist_sand_wisp",
+        name: "\u041F\u0435\u0441\u0447\u0430\u043D\u044B\u0439 \u043E\u0433\u043E\u043D\u0451\u043A",
+        icon: "\u23F3",
+        hp: 85,
+        attack: 14,
+        armor: 10,
+        speed: 13,
+        crit: 0.07,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["slow_spores"],
+        tags: [],
+        reward: { coins: [95, 130], materials: ["mist_sand_grain"] }
+      },
+      {
+        id: "mist_cog_hound",
+        name: "\u0428\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043D\u0430\u044F \u0433\u043E\u043D\u0447\u0430\u044F",
+        icon: "\u{1F43A}",
+        hp: 80,
+        attack: 12,
+        armor: 10,
+        speed: 11,
+        crit: 0.08,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        tags: [],
+        reward: { coins: [105, 140], materials: ["mist_gear_dust"] }
+      },
+      {
+        id: "mist_time_warden",
+        name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
+        icon: "\u{1F5DD}\uFE0F",
+        hp: 90,
+        attack: 15,
+        armor: 16,
+        speed: 9,
+        crit: 0.05,
+        dodge: 0.05,
+        elem: "phys",
+        skills: ["regen_ally_skill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [120, 160], materials: ["mist_echo_shard"] }
+      },
+      // Босс мира: кульминация игры — само Время
+      {
+        id: "mist_boss",
+        name: "\u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F",
+        icon: "\u231B",
+        hp: 500,
+        attack: 33,
+        armor: 34,
+        speed: 11,
+        crit: 0.12,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores", "fear_chill"],
+        tags: ["spirit"],
+        boss: true,
+        reward: { coins: [900, 1200], seals: 6, materials: ["mist_heart_of_time"] }
+      }
+    ],
+    materials: [
+      { id: "mist_gear_dust", name: "\u0427\u0430\u0441\u043E\u0432\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u2699\uFE0F", description: "\u0422\u0438\u043A\u0430\u0435\u0442, \u0435\u0441\u043B\u0438 \u043F\u0440\u0438\u0441\u043B\u0443\u0448\u0430\u0442\u044C\u0441\u044F." },
+      { id: "mist_rust_flake", name: "\u0420\u0436\u0430\u0432\u0430\u044F \u043E\u043A\u0430\u043B\u0438\u043D\u0430", icon: "\u{1F529}", description: "\u041A\u043E\u0433\u0434\u0430-\u0442\u043E \u0431\u044B\u043B\u0430 \u0447\u044C\u0438\u043C-\u0442\u043E \u0441\u0435\u0440\u0434\u0446\u0435\u043C." },
+      { id: "mist_echo_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u044D\u0445\u0430", icon: "\u{1F52E}", description: "\u041F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0441\u043B\u043E\u0432\u0430 \u043B\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430." },
+      { id: "mist_sand_grain", name: "\u041F\u0435\u0441\u0447\u0438\u043D\u043A\u0430 \u0432\u0435\u0447\u043D\u043E\u0441\u0442\u0438", icon: "\u{1F32B}\uFE0F", description: "\u041F\u0430\u0434\u0430\u0435\u0442 \u0432\u0432\u0435\u0440\u0445, \u0430 \u043D\u0435 \u0432\u043D\u0438\u0437." },
+      { id: "mist_heart_of_time", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0432\u0440\u0435\u043C\u0435\u043D\u0438", icon: "\u{1F4A0}", description: "\u0411\u044C\u0451\u0442\u0441\u044F \u043E\u0434\u0438\u043D \u0440\u0430\u0437 \u0432 \u0441\u0442\u043E\u043B\u0435\u0442\u0438\u0435." }
+    ],
+    battles: [
+      {
+        id: "mist_01",
+        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0437\u0432\u043E\u043D \u0447\u0430\u0441\u043E\u0432",
+        world: "mist",
+        enemies: [{ id: "mist_clock_spirit", scale: 2.2 }, { id: "mist_clock_spirit", scale: 2.2 }],
+        unlockAfter: "deep_boss",
+        tip: "\u0427\u0430\u0441\u043E\u0432\u044B\u0435 \u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
+      },
+      {
+        id: "mist_02",
+        name: "\u0420\u0436\u0430\u0432\u044B\u0439 \u0437\u0430\u0432\u043E\u0434",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.22 }, { id: "mist_sand_wisp", scale: 2.22 }],
+        unlockAfter: "mist_01",
+        tip: "\u0410\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u043E\u0433\u043E\u043D\u0451\u043A \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u0437\u0435\u043B\u044C\u044F."
+      },
+      {
+        id: "mist_03",
+        name: "\u0413\u043E\u043B\u043E\u0441 \u0438\u0437-\u0437\u0430 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430",
+        world: "mist",
+        enemies: [{ id: "mist_echo_keeper", scale: 2.23 }, { id: "mist_echo_keeper", scale: 2.23 }],
+        unlockAfter: "mist_02",
+        tip: "\u042D\u0445\u043E \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u043F\u044B\u043B\u044C\u0446\u043E\u0439. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "mist_04",
+        name: "\u041A\u043B\u044B\u043A \u0438 \u043F\u0435\u0441\u043E\u043A",
+        world: "mist",
+        enemies: [{ id: "mist_cog_hound", scale: 2.25 }, { id: "mist_sand_wisp", scale: 2.25 }],
+        unlockAfter: "mist_03",
+        tip: "\u0413\u043E\u043D\u0447\u0430\u044F \u0431\u044C\u0451\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E, \u043E\u0433\u043E\u043D\u0451\u043A \u0442\u044F\u043D\u0435\u0442 \u0432\u0440\u0435\u043C\u044F. \u0423\u0431\u0435\u0439 \u0433\u043E\u043D\u0447\u0443\u044E \u043F\u0435\u0440\u0432\u043E\u0439."
+      },
+      {
+        id: "mist_05",
+        name: "\u041C\u0435\u0445\u0430\u043D\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0434\u043E\u0437\u043E\u0440",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.27 }, { id: "mist_clock_spirit", scale: 2.27 }],
+        unlockAfter: "mist_04",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u0438\u0437 \u0440\u0436\u0430\u0432\u0447\u0438\u043D\u044B \u0438 \u0434\u0443\u0445 \u0437\u0430 \u043D\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0434\u0443\u0445 \u2014 \u043E\u043D \u0445\u0440\u0443\u043F\u0447\u0435."
+      },
+      {
+        id: "mist_06",
+        name: "\u041F\u044B\u043B\u044C \u0432\u0435\u043A\u043E\u0432",
+        world: "mist",
+        enemies: [
+          { id: "mist_sand_wisp", scale: 2.15 },
+          { id: "mist_sand_wisp", scale: 2.15 },
+          { id: "mist_echo_keeper", scale: 2.15 }
+        ],
+        unlockAfter: "mist_05",
+        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0442\u0435\u043C\u043F."
+      },
+      {
+        id: "mist_07",
+        name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0443 \u0441\u0442\u0430\u043D\u043A\u0430",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.3 }, { id: "mist_rust_automaton", scale: 2.3 }],
+        unlockAfter: "mist_06",
+        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0435\u0447\u0438\u0442 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D\u0430. \u0421\u0431\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C, \u043F\u043E\u043A\u0430 \u0442\u0430\u043D\u043A \u0437\u0430\u043D\u044F\u0442."
+      },
+      {
+        id: "mist_08",
+        name: "\u0428\u0451\u043F\u043E\u0442 \u0431\u044B\u043B\u043E\u0439 \u043B\u0430\u0432\u043A\u0438",
+        world: "mist",
+        enemies: [
+          { id: "mist_echo_keeper", scale: 2.32 },
+          { id: "mist_echo_keeper", scale: 2.32 },
+          { id: "mist_clock_spirit", scale: 2.32 }
+        ],
+        unlockAfter: "mist_07",
+        tip: "\u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u0432\u043C\u0435\u0441\u0442\u0435. \u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439 \u043E\u0431\u0430 \u0441\u0442\u0430\u0442\u0443\u0441\u0430 \u0437\u0435\u043B\u044C\u044F\u043C\u0438."
+      },
+      {
+        id: "mist_09",
+        name: "\u041A\u043B\u0435\u0448\u043D\u0438 \u0438 \u043A\u043B\u044B\u043A\u0438",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.34 }, { id: "mist_cog_hound", scale: 2.34 }],
+        unlockAfter: "mist_08",
+        tip: "\u0422\u0430\u043D\u043A \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043C\u0435\u0442\u043A\u0443\u044E \u0433\u043E\u043D\u0447\u0443\u044E. \u0421\u0444\u043E\u043A\u0443\u0441\u0438\u0440\u0443\u0439\u0441\u044F \u043D\u0430 \u0433\u043E\u043D\u0447\u0435\u0439."
+      },
+      {
+        id: "mist_10",
+        name: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+        world: "mist",
+        enemies: [
+          { id: "mist_clock_spirit", scale: 1.85 },
+          { id: "mist_sand_wisp", scale: 1.8 },
+          { id: "mist_rust_automaton", scale: 1.8 }
+        ],
+        unlockAfter: "mist_09",
+        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0441\u043E \u0432\u0441\u0435\u0445 \u0441\u0442\u043E\u0440\u043E\u043D, \u0430 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0430\u0442\u0430\u0435\u0442 \u0440\u0430\u043D\u044B. \u0424\u043E\u043A\u0443\u0441 \u043D\u0430 \u043D\u0451\u043C."
+      },
+      {
+        id: "mist_11",
+        name: "\u041F\u0435\u0440\u0435\u0437\u0432\u043E\u043D \u0438 \u0448\u0451\u043F\u043E\u0442",
+        world: "mist",
+        enemies: [{ id: "mist_clock_spirit", scale: 2.37 }, { id: "mist_echo_keeper", scale: 2.37 }],
+        unlockAfter: "mist_10",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0434\u0443\u0445\u0430 \u0438 \u0443\u0441\u044B\u043F\u043B\u0435\u043D\u0438\u0435 \u044D\u0445\u0430. \u041E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432 \u043E\u043A\u0443\u043F\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "mist_12",
+        name: "\u042D\u0445\u043E \u0432 \u0448\u0435\u0441\u0442\u0435\u0440\u043D\u044F\u0445",
+        world: "mist",
+        enemies: [{ id: "mist_cog_hound", scale: 2.39 }, { id: "mist_echo_keeper", scale: 2.39 }],
+        unlockAfter: "mist_11",
+        tip: "\u041C\u0435\u0442\u043A\u0430\u044F \u0433\u043E\u043D\u0447\u0430\u044F \u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0435\u0435 \u044D\u0445\u043E. \u041D\u0435 \u0434\u0430\u0439 \u0440\u044B\u0446\u0430\u0440\u044E \u0443\u0441\u043D\u0443\u0442\u044C."
+      },
+      {
+        id: "mist_13",
+        name: "\u0414\u0432\u0430 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u0430",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.41 }, { id: "mist_rust_automaton", scale: 2.41 }],
+        unlockAfter: "mist_12",
+        tip: "\u0414\u0432\u0435 \u0440\u0436\u0430\u0432\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0437\u0430 \u0443\u0434\u0430\u0440."
+      },
+      {
+        id: "mist_14",
+        name: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0433\u043E\u043D",
+        world: "mist",
+        enemies: [{ id: "mist_cog_hound", scale: 2.3 }, { id: "mist_cog_hound", scale: 2.3 }],
+        unlockAfter: "mist_13",
+        tip: "\u0414\u0432\u0435 \u0433\u043E\u043D\u0447\u0438\u0435 \u0431\u044C\u044E\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0411\u0440\u043E\u043D\u044F \u0438 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u2014 \u0442\u0432\u043E\u0438 \u0434\u0440\u0443\u0437\u044C\u044F."
+      },
+      {
+        id: "mist_15",
+        name: "\u041F\u0430\u043A\u0442 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.44 }, { id: "mist_clock_spirit", scale: 2.44 }],
+        unlockAfter: "mist_14",
+        tip: "\u041B\u0435\u0447\u0435\u043D\u0438\u0435 \u0438 \u0441\u0442\u0440\u0430\u0445. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0441\u044C \u0441 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C \u0432 \u043F\u0435\u0440\u0432\u0443\u044E \u043E\u0447\u0435\u0440\u0435\u0434\u044C."
+      },
+      {
+        id: "mist_16",
+        name: "\u041F\u044B\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.46 }, { id: "mist_sand_wisp", scale: 2.46 }],
+        unlockAfter: "mist_15",
+        tip: "\u0422\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B \u043F\u043E\u0434 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435\u043C. \u041D\u0435 \u0440\u0430\u0441\u0442\u044F\u0433\u0438\u0432\u0430\u0439 \u0431\u043E\u0439."
+      },
+      {
+        id: "mist_17",
+        name: "\u0413\u043E\u043D \u043F\u043E \u0440\u0435\u0437\u044C\u0431\u0435",
+        world: "mist",
+        enemies: [{ id: "mist_cog_hound", scale: 2.35 }, { id: "mist_sand_wisp", scale: 2.35 }],
+        unlockAfter: "mist_16",
+        tip: "\u0411\u044B\u0441\u0442\u0440\u0430\u044F \u043F\u0430\u0440\u0430: \u043A\u043B\u044B\u043A\u0438 \u0438 \u043F\u0435\u0441\u043E\u043A. \u0414\u0435\u0440\u0436\u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u0440\u0438 \u0441\u0435\u0431\u0435."
+      },
+      {
+        id: "mist_18",
+        name: "\u0414\u0435\u0436\u0443\u0440\u0441\u0442\u0432\u043E \u044D\u0445\u0430",
+        world: "mist",
+        enemies: [
+          { id: "mist_echo_keeper", scale: 2.35 },
+          { id: "mist_echo_keeper", scale: 2.35 },
+          { id: "mist_time_warden", scale: 2.35 }
+        ],
+        unlockAfter: "mist_17",
+        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u043E\u043D \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u043B\u0435\u0447\u0435\u043D\u0438\u044F. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+      },
+      {
+        id: "mist_19",
+        name: "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0432\u0440\u0435\u043C\u0451\u043D",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.51 }, { id: "mist_rust_automaton", scale: 2.51 }],
+        unlockAfter: "mist_18",
+        tip: "\u0414\u0432\u0430 \u0442\u0430\u043D\u043A\u0430. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0437\u0430\u043F\u0430\u0441\u0438\u0441\u044C \u0432\u044B\u043D\u043E\u0441\u043B\u0438\u0432\u043E\u0441\u0442\u044C\u044E."
+      },
+      {
+        id: "mist_20",
+        name: "\u041E\u0445\u043E\u0442\u0430 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.53 }, { id: "mist_cog_hound", scale: 2.53 }],
+        unlockAfter: "mist_19",
+        tip: "\u0413\u043E\u043D\u0447\u0430\u044F \u043F\u043E\u0434\u043B\u0435\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C. \u0412\u044B\u043D\u043E\u0441\u0438 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "mist_21",
+        name: "\u0411\u0430\u0448\u043D\u044F \u0431\u0435\u0437 \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
+        world: "mist",
+        enemies: [{ id: "mist_clock_spirit", scale: 2.55 }, { id: "mist_clock_spirit", scale: 2.55 }],
+        unlockAfter: "mist_20",
+        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u0445 \u0432 \u0437\u0430\u0434\u043D\u0435\u043C \u0440\u044F\u0434\u0443. \u0421\u0442\u0440\u0435\u043B\u043A\u0438 \u0434\u043E\u0441\u0442\u0430\u043D\u0443\u0442 \u0438\u0445 \u0440\u0430\u043D\u044C\u0448\u0435."
+      },
+      {
+        id: "mist_22",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0437\u0430\u0432\u043E\u0434 \u043F\u0440\u0443\u0436\u0438\u043D\u044B",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.57 }, { id: "mist_echo_keeper", scale: 2.57 }],
+        unlockAfter: "mist_21",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u0438\u0437 \u0440\u0436\u0430\u0432\u0447\u0438\u043D\u044B \u0438 \u0443\u0441\u044B\u043F\u043B\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0431\u0435\u0439 \u0442\u0430\u043D\u043A\u0430, \u043D\u0435 \u0443\u0441\u043D\u0438."
+      },
+      {
+        id: "mist_23",
+        name: "\u041F\u0440\u0435\u0434\u0434\u0432\u0435\u0440\u0438\u0435 \u0432\u0435\u0447\u043D\u043E\u0441\u0442\u0438",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.58 }, { id: "mist_rust_automaton", scale: 2.58 }],
+        unlockAfter: "mist_22",
+        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0438 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D \u0432\u043C\u0435\u0441\u0442\u0435. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0412\u0440\u0435\u043C\u0435\u043D\u0435\u043C."
+      },
+      {
+        id: "mist_boss",
+        name: "\u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F",
+        world: "mist",
+        enemies: [{ id: "mist_boss", scale: 1 }],
+        unlockAfter: "mist_23",
+        tip: "\u0412\u0440\u0435\u043C\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0438 \u0434\u0430\u0432\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u043D\u0435 \u0431\u043E\u0439\u0441\u044F \u2014 \u0443 \u043B\u0430\u0432\u043A\u0438 \u0435\u0441\u0442\u044C \u0431\u0443\u0434\u0443\u0449\u0435\u0435."
+      }
+    ]
+  };
+
+  // src/data/worlds/index.js
+  var WORLDS = [WORLD, WORLD2, WORLD3, WORLD4, WORLD5, WORLD6, WORLD7, WORLD8];
+  var WORLD_BY_ID = Object.fromEntries(WORLDS.map((w) => [w.id, w]));
 
   // src/data/battles.js
   var BATTLES = [
@@ -1480,11 +4773,35 @@
       tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u0442\u043E\u043B\u0441\u0442\u0430\u044F \u0448\u043A\u0443\u0440\u0430. \u041D\u0443\u0436\u0435\u043D \u0443\u0440\u043E\u043D \u043F\u043E\u0442\u044F\u0436\u0435\u043B\u0435\u0435."
     },
     {
+      id: "bt_fireflies",
+      name: "\u0420\u043E\u0441\u0441\u044B\u043F\u044C \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u043E\u0432",
+      world: "meadow",
+      enemies: ["moth_night", "bee_wild", "moth_night", "bee_wild"],
+      unlockAfter: "bt_golem",
+      tip: "\u0420\u043E\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432 \u0438 \u043F\u0447\u0451\u043B: \u0441\u043E\u043D \u0438 \u044F\u0434 \u0432\u043C\u0435\u0441\u0442\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B."
+    },
+    {
+      id: "bt_overgrowth",
+      name: "\u0413\u0440\u0438\u0431\u043D\u0430\u044F \u0437\u0430\u0432\u0430\u043B\u0438\u043D\u043A\u0430",
+      world: "meadow",
+      enemies: ["golem_moss", "spirit_forest", "spirit_forest"],
+      unlockAfter: "bt_fireflies",
+      tip: "\u0413\u043E\u043B\u0435\u043C \u0438 \u0434\u0432\u0430 \u0434\u0443\u0445\u0430. \u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u043E\u043F\u0430\u0441\u043D\u043E \u2014 \u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+    },
+    {
+      id: "bt_hunt_trail",
+      name: "\u041E\u0445\u043E\u0442\u043D\u0438\u0447\u044C\u044F \u0442\u0440\u043E\u043F\u0430",
+      world: "meadow",
+      enemies: ["bee_wild", "spirit_forest", "moth_night", "slime_meadow"],
+      unlockAfter: "bt_overgrowth",
+      tip: "\u0412\u0441\u044F \u043E\u043F\u0443\u0448\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0421\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u043E\u0439."
+    },
+    {
       id: "bt_boss_willow",
       name: "\u0421\u0442\u0430\u0440\u0430\u044F \u0438\u0432\u0430",
       world: "meadow",
       enemies: ["boss_willow"],
-      unlockAfter: "bt_golem",
+      unlockAfter: "bt_hunt_trail",
       tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0438\u0432\u044B \u2014 \u0438\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u0435 \u0432\u0441\u0435\u0433\u043E, \u0447\u0435\u043C\u0443 \u0442\u044B \u043D\u0430\u0443\u0447\u0438\u043B\u0441\u044F."
     }
   ];
@@ -1530,11 +4847,35 @@
       tip: "\u0421\u043C\u0435\u0448\u0430\u043D\u043D\u0430\u044F \u0441\u0442\u0430\u044F: \u044F\u0434, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B. \u0413\u043E\u0442\u043E\u0432\u044C\u0441\u044F \u043A\u0430\u043A \u0441\u043B\u0435\u0434\u0443\u0435\u0442."
     },
     {
+      id: "bt_watchtower",
+      name: "\u0421\u0442\u043E\u0440\u043E\u0436\u0435\u0432\u0430\u044F \u0431\u0430\u0448\u043D\u044F",
+      world: "town",
+      enemies: ["ghost_guard", "ghost_guard", "bandit"],
+      unlockAfter: "bt_town_mix",
+      tip: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438 \u0438 \u0438\u0445 \u0436\u0438\u0432\u043E\u0439 \u0441\u043E\u043E\u0431\u0449\u043D\u0438\u043A. \u0421\u0442\u0440\u0430\u0445 \u0434\u0430\u0432\u0438\u0442\u044C \u0430\u043C\u0443\u043B\u0435\u0442\u043E\u043C \u043E\u0442\u0432\u0430\u0433\u0438."
+    },
+    {
+      id: "bt_cellar",
+      name: "\u041F\u043E\u0434\u0432\u0430\u043B\u044C\u043D\u044B\u0435 \u043A\u0440\u044B\u0441\u044B",
+      world: "town",
+      enemies: ["rat_thief", "rat_thief", "rat_thief", "rat_thief"],
+      unlockAfter: "bt_watchtower",
+      tip: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E \u0448\u0443\u0441\u0442\u0440\u044B\u0445 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u0438 \u0440\u0430\u0441\u0441\u0435\u0447\u0435\u043D\u0438\u0435."
+    },
+    {
+      id: "bt_tourney",
+      name: "\u0422\u0443\u0440\u043D\u0438\u0440\u043D\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
+      world: "town",
+      enemies: ["golem_wander", "bandit", "bandit"],
+      unlockAfter: "bt_cellar",
+      tip: "\u041A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430 \u0438 \u0434\u0432\u0430 \u043A\u043B\u0438\u043D\u043A\u0430 \u0437\u0430 \u043D\u0435\u0439. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0442\u044F\u0436\u0451\u043B\u044B\u043C."
+    },
+    {
       id: "bt_boss_captain",
       name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u043A\u0430\u043F\u0438\u0442\u0430\u043D",
       world: "town",
       enemies: ["boss_captain"],
-      unlockAfter: "bt_town_mix",
+      unlockAfter: "bt_tourney",
       tip: "\u041A\u0430\u043F\u0438\u0442\u0430\u043D \u0441\u0442\u0440\u0430\u0436\u0438 \u043D\u0435 \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442 \u0432\u0435\u043A\u0430\u043C\u0438. \u041F\u043E\u043A\u0430\u0436\u0438 \u0435\u043C\u0443, \u0447\u0442\u043E \u043B\u0430\u0432\u043A\u0430 \u043F\u043E\u0434 \u0437\u0430\u0449\u0438\u0442\u043E\u0439."
     }
   );
@@ -1580,14 +4921,145 @@
       tip: "\u0412\u0441\u0435 \u043E\u0431\u0438\u0442\u0430\u0442\u0435\u043B\u0438 \u0447\u0435\u0440\u0434\u0430\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0438 \u0437\u0435\u043B\u044C\u044F."
     },
     {
+      id: "bt_reading",
+      name: "\u0427\u0438\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0437\u0430\u043B",
+      world: "attic",
+      enemies: ["book_moth", "paper_spirit", "book_moth"],
+      unlockAfter: "bk_storm",
+      tip: "\u041C\u043E\u043B\u044C \u0438 \u0434\u0443\u0445 \u0441\u0440\u0435\u0434\u0438 \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u043E\u0432. \u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u2014 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439 \u043E\u0431\u0430."
+    },
+    {
+      id: "bt_archive",
+      name: "\u041F\u044B\u043B\u044C\u043D\u044B\u0439 \u0430\u0440\u0445\u0438\u0432",
+      world: "attic",
+      enemies: ["illustration", "ink_blot", "ink_blot"],
+      unlockAfter: "bt_reading",
+      tip: "\u0413\u0440\u0430\u0432\u044E\u0440\u0430 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430. \u042F\u0434 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u2014 \u0434\u0435\u0440\u0436\u0438 \u043E\u0442\u0432\u0430\u0440 \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+    },
+    {
+      id: "bt_inkwell",
+      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043A\u043E\u043B\u043E\u0434\u0435\u0446",
+      world: "attic",
+      enemies: ["ink_blot", "paper_spirit", "ink_blot", "paper_spirit"],
+      unlockAfter: "bt_archive",
+      tip: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E \u043E\u0431\u0438\u0442\u0430\u0442\u0435\u043B\u0435\u0439 \u0447\u0435\u0440\u0434\u0430\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C."
+    },
+    {
       id: "bk_boss_keeper",
       name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430",
       world: "attic",
       enemies: ["boss_keeper"],
-      unlockAfter: "bk_storm",
+      unlockAfter: "bt_inkwell",
       tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u043E\u0442\u0434\u0430\u0441\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0431\u0435\u0437 \u0431\u043E\u044F. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
     }
   );
+  BATTLES.push(
+    {
+      id: "ex_01",
+      name: "\u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043D\u0430\u044F \u0442\u0440\u043E\u043F\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "slime_meadow", scale: 1.1 },
+        { id: "bandit", scale: 1.1 },
+        { id: "ink_blot", scale: 1.1 }
+      ],
+      unlockAfter: "bk_boss_keeper",
+      tip: "\u041C\u0438\u0440\u044B \u0441\u043C\u0435\u0448\u0430\u043B\u0438\u0441\u044C. \u0421\u043B\u0438\u0437\u043D\u0438, \u0440\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A\u0438 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430 \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E."
+    },
+    {
+      id: "ex_02",
+      name: "\u0421\u043C\u0435\u0448\u0430\u043D\u043D\u044B\u0439 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
+      world: "crossroads",
+      enemies: [
+        { id: "rat_thief", scale: 1.15 },
+        { id: "rat_thief", scale: 1.15 },
+        { id: "book_moth", scale: 1.15 }
+      ],
+      unlockAfter: "ex_01",
+      tip: "\u0411\u044B\u0441\u0442\u0440\u044B\u0435 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0435, \u0430 \u043C\u043E\u043B\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+    },
+    {
+      id: "ex_03",
+      name: "\u0414\u0443\u0445\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "paper_spirit", scale: 1.2 },
+        { id: "ghost_guard", scale: 1.2 }
+      ],
+      unlockAfter: "ex_02",
+      tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u0441\u043E \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
+    },
+    {
+      id: "ex_04",
+      name: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0439 \u043A\u0430\u0440\u0430\u0432\u0430\u043D",
+      world: "crossroads",
+      enemies: [
+        { id: "golem_wander", scale: 1.25 },
+        { id: "golem_moss", scale: 1.25 }
+      ],
+      unlockAfter: "ex_03",
+      tip: "\u0414\u0432\u0435 \u043A\u0430\u043C\u0435\u043D\u043D\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u0441\u0435\u0440\u044C\u0451\u0437\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
+    },
+    {
+      id: "ex_05",
+      name: "\u042F\u0434\u043E\u0432\u0438\u0442\u044B\u0439 \u0442\u0443\u043C\u0430\u043D",
+      world: "crossroads",
+      enemies: [
+        { id: "ink_blot", scale: 1.3 },
+        { id: "bee_wild", scale: 1.3 },
+        { id: "rat_thief", scale: 1.3 }
+      ],
+      unlockAfter: "ex_04",
+      tip: "\u042F\u0434 \u0441\u043E \u0432\u0441\u0435\u0445 \u0441\u0442\u043E\u0440\u043E\u043D. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+    },
+    {
+      id: "ex_06",
+      name: "\u041D\u043E\u0447\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u0436\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "ghost_guard", scale: 1.3 },
+        { id: "ghost_guard", scale: 1.3 },
+        { id: "moth_night", scale: 1.3 }
+      ],
+      unlockAfter: "ex_05",
+      tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0444\u043B\u0430\u043A\u043E\u043D\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0441\u043D\u043E\u0432\u0430 \u0432 \u0434\u0435\u043B\u0435."
+    },
+    {
+      id: "ex_07",
+      name: "\u0411\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u0447\u043D\u0430\u044F \u043E\u0441\u0430\u0434\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "illustration", scale: 1.35 },
+        { id: "paper_spirit", scale: 1.35 },
+        { id: "paper_spirit", scale: 1.35 }
+      ],
+      unlockAfter: "ex_06",
+      tip: "\u0422\u043E\u043B\u0441\u0442\u0430\u044F \u0433\u0440\u0430\u0432\u044E\u0440\u0430 \u0438 \u0434\u0432\u0430 \u0434\u0443\u0445\u0430. \u041F\u0440\u043E\u0440\u044B\u0432\u0430\u0439\u0441\u044F \u043A \u043D\u0435\u0439 \u0441\u043A\u0432\u043E\u0437\u044C \u0441\u0442\u0440\u043E\u0439."
+    },
+    {
+      id: "ex_08",
+      name: "\u0425\u0430\u043E\u0441 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "golem_wander", scale: 1.4 },
+        { id: "ink_blot", scale: 1.4 },
+        { id: "book_moth", scale: 1.4 }
+      ],
+      unlockAfter: "ex_07",
+      tip: "\u0412\u0441\u0451 \u0438 \u0441\u0440\u0430\u0437\u0443: \u0441\u0442\u0435\u043D\u0430, \u044F\u0434 \u0438 \u0441\u043E\u043D. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0421\u0442\u0440\u0430\u0436\u0435\u043C."
+    },
+    {
+      id: "ex_boss",
+      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+      world: "crossroads",
+      enemies: [{ id: "boss_star_guardian", scale: 1 }],
+      unlockAfter: "ex_08",
+      tip: "\u041E\u043D \u0433\u043E\u0440\u0438\u0442 \u0437\u0432\u0451\u0437\u0434\u043D\u044B\u043C \u043E\u0433\u043D\u0451\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+    }
+  );
+  for (const w of WORLDS) {
+    if (w?.battles) BATTLES.push(...w.battles);
+  }
   var BATTLE_BY_ID = Object.fromEntries(BATTLES.map((b) => [b.id, b]));
 
   // src/data/crew.js
@@ -1955,8 +5427,37 @@
   ];
   var RECIPE_BY_ID = Object.fromEntries(RECIPES.map((r) => [r.id, r]));
 
+  // src/data/materials.js
+  var MATERIALS = [
+    { id: "slime_jelly", name: "\u0421\u043B\u0438\u0437\u044C \u043B\u0443\u0436\u0430\u0439\u043D\u0438\u043A\u0430", icon: "\u{1F7E2}", description: "\u041F\u0440\u043E\u0445\u043B\u0430\u0434\u043D\u0430\u044F \u0438 \u043F\u0435\u0440\u0435\u043B\u0438\u0432\u0430\u0435\u0442\u0441\u044F." },
+    { id: "honey", name: "\u0414\u0438\u043A\u0438\u0439 \u043C\u0451\u0434", icon: "\u{1F36F}", description: "\u0413\u0443\u0441\u0442\u043E\u0439, \u0441 \u0437\u0430\u043F\u0430\u0445\u043E\u043C \u043B\u0443\u0433\u043E\u0432\u044B\u0445 \u0442\u0440\u0430\u0432." },
+    { id: "glow_moss", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0439\u0441\u044F \u043C\u043E\u0445", icon: "\u{1F33F}", description: "\u041C\u044F\u0433\u043A\u043E \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435." },
+    { id: "moth_dust", name: "\u041F\u044B\u043B\u044C\u0446\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430", icon: "\u{1F98B}", description: "\u0423\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0435\u0441\u043B\u0438 \u043F\u043E\u043D\u044E\u0445\u0430\u0442\u044C." },
+    { id: "moss_stone", name: "\u041C\u0448\u0438\u0441\u0442\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C", icon: "\u{1F5FF}", description: "\u041A\u0430\u043C\u0435\u043D\u044C \u0432 \u043F\u043B\u043E\u0442\u043D\u043E\u0439 \u0448\u0443\u0431\u043A\u0435 \u043C\u0445\u0430." },
+    { id: "willow_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B", icon: "\u{1F333}", description: "\u0422\u0451\u043F\u043B\u0430\u044F \u0434\u0440\u0435\u0432\u0435\u0441\u0438\u043D\u0430 \u0441 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u043E\u043C." },
+    { id: "rat_tail", name: "\u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u0445\u0432\u043E\u0441\u0442", icon: "\u{1F400}", description: "\u041A\u0440\u0435\u043F\u043A\u0438\u0439 \u0438 \u0433\u0438\u0431\u043A\u0438\u0439. \u0412\u0435\u0434\u044C\u043C\u0438\u043D\u043A\u0438 \u0446\u0435\u043D\u044F\u0442." },
+    { id: "torn_cloth", name: "\u0420\u0432\u0430\u043D\u0430\u044F \u0442\u043A\u0430\u043D\u044C", icon: "\u{1F9E3}", description: "\u041D\u0438\u0447\u0435\u043C \u043D\u0435 \u043F\u0430\u0445\u043D\u0435\u0442, \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F." },
+    { id: "brick_chunk", name: "\u041E\u0431\u043B\u043E\u043C\u043E\u043A \u043A\u043B\u0430\u0434\u043A\u0438", icon: "\u{1F9F1}", description: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u0441 \u0446\u0435\u043C\u0435\u043D\u0442\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u044E." },
+    { id: "ectoplasm", name: "\u042D\u043A\u0442\u043E\u043F\u043B\u0430\u0437\u043C\u0430", icon: "\u{1F47B}", description: "\u0425\u043E\u043B\u043E\u0434\u043D\u0430\u044F \u0434\u044B\u043C\u043A\u0430 \u0432 \u0441\u043A\u043B\u044F\u043D\u043A\u0435." },
+    { id: "captain_badge", name: "\u0417\u043D\u0430\u0447\u043E\u043A \u043A\u0430\u043F\u0438\u0442\u0430\u043D\u0430", icon: "\u{1F396}\uFE0F", description: "\u041F\u043E\u0442\u0451\u0440\u0442\u044B\u0439, \u043D\u043E \u0433\u043E\u0440\u0434\u044B\u0439." },
+    { id: "ink_drop", name: "\u041A\u0430\u043F\u043B\u044F \u0447\u0435\u0440\u043D\u0438\u043B", icon: "\u{1FADF}", description: "\u041A\u043E\u043D\u0446\u0435\u043D\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F, \u043F\u043E\u0447\u0442\u0438 \u0436\u0438\u0432\u0430\u044F." },
+    { id: "paper_scrap", name: "\u041E\u0431\u0440\u044B\u0432\u043E\u043A \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B", icon: "\u{1F4C4}", description: "\u0421 \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u043E\u0439 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u044F." },
+    { id: "page_dust", name: "\u041A\u043D\u0438\u0436\u043D\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u{1F4D6}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0441\u0442\u0430\u0440\u044B\u043C\u0438 \u0438\u0441\u0442\u043E\u0440\u0438\u044F\u043C\u0438." },
+    { id: "gold_leaf", name: "\u0421\u0443\u0441\u0430\u043B\u044C\u043D\u043E\u0435 \u0437\u043E\u043B\u043E\u0442\u043E", icon: "\u{1F342}", description: "\u0422\u043E\u043D\u044C\u0448\u0435 \u043B\u0435\u043F\u0435\u0441\u0442\u043A\u0430." },
+    { id: "last_page", name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430", icon: "\u{1F4DC}", description: "\u041D\u0430 \u043D\u0435\u0439 \u2014 \u043A\u043E\u043D\u0435\u0446 \u043B\u044E\u0431\u043E\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u0438." },
+    { id: "star_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0437\u0432\u0435\u0437\u0434\u044B", icon: "\u{1F31F}", description: "\u0422\u0451\u043F\u043B\u044B\u0439, \u043A\u0430\u043A \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u043E\u0435 \u0441\u043E\u043B\u043D\u0446\u0435." }
+  ];
+  for (const w of WORLDS) {
+    if (w?.materials) MATERIALS.push(...w.materials);
+  }
+  var MATERIAL_BY_ID = Object.fromEntries(MATERIALS.map((m) => [m.id, m]));
+  function materialLabel(id) {
+    const m = MATERIAL_BY_ID[id];
+    return m ? `${m.icon} ${m.name}` : id;
+  }
+
   // src/core/items.js
-  var SLOTS = ["weapon", "shield", "helmet", "armor", "gloves", "boots", "amulet", "ring1", "ring2"];
+  var SLOTS = ["weapon", "helmet", "shield", "gloves", "armor", "boots", "amulet", "ring1", "ring2"];
   var SLOT_LABEL = {
     weapon: "\u041E\u0440\u0443\u0436\u0438\u0435",
     shield: "\u0429\u0438\u0442",
@@ -2328,23 +5829,45 @@
       reward: { coins: [380, 500], seals: 3, materials: ["last_page"] }
     }
   );
+  ENEMIES.push(
+    {
+      id: "boss_star_guardian",
+      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+      icon: "\u{1F31F}",
+      hp: 420,
+      attack: 27,
+      armor: 26,
+      speed: 11,
+      crit: 0.12,
+      dodge: 0.08,
+      elem: "fire",
+      skills: ["heavy_blow", "fear_chill", "spit_fire"],
+      boss: true,
+      tags: ["spirit"],
+      reward: { coins: [600, 800], seals: 5, materials: ["star_shard"] }
+    }
+  );
+  for (const w of WORLDS) {
+    if (w?.enemies) ENEMIES.push(...w.enemies);
+  }
   var ENEMY_BY_ID = Object.fromEntries(ENEMIES.map((e) => [e.id, e]));
 
   // src/core/battle.js
   var GAUGE_FULL = 100;
   var MAX_TICKS = 5e3;
-  function makeEnemy(id, rngSeed) {
+  function makeEnemy(id, scale = 1) {
     const def = ENEMY_BY_ID[id];
+    const hp = Math.round(def.hp * scale);
     return {
       id,
       side: "enemy",
       name: def.name,
       icon: def.icon,
       boss: !!def.boss,
-      hp: def.hp,
-      maxHp: def.hp,
-      attack: def.attack,
-      armor: def.armor,
+      hp,
+      maxHp: hp,
+      attack: Math.round(def.attack * scale),
+      armor: Math.round(def.armor * scale),
       speed: def.speed,
       crit: def.crit || 0,
       dodge: def.dodge || 0,
@@ -2596,7 +6119,7 @@
     const rng = makeRng(seed);
     const allies = Array.isArray(alliesInput) ? alliesInput : [alliesInput];
     const knight = allies[0];
-    const foes = enemyIds.map((id) => makeEnemy(id));
+    const foes = enemyIds.map((entry) => typeof entry === "string" ? makeEnemy(entry) : makeEnemy(entry.id, entry.scale));
     allies.forEach((u, i) => {
       u.uid = `a${i}`;
     });
@@ -2702,6 +6225,385 @@
     }
   }
 
+  // src/core/formBattle.js
+  var GAUGE_FULL2 = 100;
+  var MAX_TICKS2 = 5e3;
+  var FRONT = [0, 1, 2];
+  var BACK = [3, 4, 5];
+  function isRanged(unit) {
+    return unit.tags?.includes("ranged") || unit.traits?.includes("ranged");
+  }
+  function makeFormationKnight(knightStats, traits, consumables, slot) {
+    const statuses = [];
+    if ((traits || []).includes("regen_ally")) statuses.push({ kind: "regen", ticks: 9999, dmg: 1 });
+    const resist = { ...knightStats.resist || {} };
+    if ((traits || []).includes("fearless")) resist.fear = 1;
+    const potions = (consumables || []).map((c) => {
+      const p = { ...c, used: false };
+      if (p.effect?.kind === "shield" && p.effect.atStart) {
+        statuses.push({ kind: "shield", amount: p.effect.amount });
+        p.used = true;
+      }
+      return p;
+    });
+    return {
+      uid: "a0",
+      side: "ally",
+      name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438",
+      icon: "\u{1F6E1}\uFE0F",
+      slot,
+      hp: knightStats.hp,
+      maxHp: knightStats.hp,
+      attack: knightStats.attack,
+      armor: knightStats.armor,
+      speed: knightStats.speed,
+      crit: knightStats.crit,
+      dodge: knightStats.dodge,
+      block: knightStats.block,
+      elem: "phys",
+      skills: [],
+      tags: [],
+      traits: traits || [],
+      resist,
+      potions,
+      statuses,
+      gauge: 0,
+      stats: { dealt: 0, taken: 0, sleptTicks: 0, poisonTicks: 0 }
+    };
+  }
+  function makeFormationMerc(def, slot, index) {
+    return {
+      uid: `a${index}`,
+      side: "ally",
+      name: def.name,
+      icon: def.icon,
+      slot,
+      hp: def.hp,
+      maxHp: def.hp,
+      attack: def.attack,
+      armor: def.armor,
+      speed: def.speed,
+      crit: def.crit || 0,
+      dodge: def.dodge || 0,
+      block: def.block || 0,
+      elem: "phys",
+      skills: def.skills || [],
+      tags: def.tags || [],
+      traits: [],
+      resist: {},
+      potions: [],
+      statuses: [],
+      gauge: 0,
+      stats: { dealt: 0, taken: 0 }
+    };
+  }
+  function makeFormationEnemy(id, scale, slot, index) {
+    const def = ENEMY_BY_ID[id];
+    const hp = Math.round(def.hp * (scale || 1));
+    return {
+      uid: `e${index}`,
+      side: "enemy",
+      name: def.name,
+      icon: def.icon,
+      slot,
+      boss: !!def.boss,
+      tags: def.tags || [],
+      hp,
+      maxHp: hp,
+      attack: Math.round(def.attack * (scale || 1)),
+      armor: Math.round(def.armor * (scale || 1)),
+      speed: def.speed,
+      crit: def.crit || 0,
+      dodge: def.dodge || 0,
+      block: 0,
+      elem: def.elem || "phys",
+      skills: def.skills || [],
+      traits: [],
+      resist: {},
+      potions: [],
+      statuses: [],
+      gauge: 0,
+      stats: { dealt: 0, taken: 0 }
+    };
+  }
+  function hasStatus2(u, kind) {
+    return u.statuses.some((s) => s.kind === kind);
+  }
+  function addStatus2(u, status2) {
+    const ex = u.statuses.find((s) => s.kind === status2.kind);
+    if (ex) Object.assign(ex, status2);
+    else u.statuses.push(status2);
+  }
+  function computeDamage2(attacker, defender, rng, log, opts = {}) {
+    if (!opts.neverMiss && rng.chance(defender.dodge)) {
+      log.push({ t: "dodge", who: defender.name, uid: defender.uid });
+      return 0;
+    }
+    let mult = 1;
+    if (attacker.traits?.includes("bonus_spirit") && defender.tags?.includes("spirit")) mult *= 1.3;
+    const elem = opts.elem || attacker.elem || "phys";
+    if (elem !== "phys") mult *= 1 - (defender.resist[elem] || 0);
+    let armor = defender.armor;
+    if (attacker.traits?.includes("pierce")) armor *= 0.5;
+    mult *= 100 / (100 + Math.max(0, armor));
+    let crit = false;
+    if (rng.chance(attacker.crit)) {
+      mult *= 1.75;
+      crit = true;
+    }
+    if (rng.chance(defender.block)) mult *= 0.6;
+    if (hasStatus2(attacker, "fear")) mult *= 0.7;
+    if (defender.traits?.includes("first_hit_reduction") && defender.stats.taken === 0) mult *= 0.8;
+    const dmg = Math.max(1, Math.round((opts.base ?? attacker.attack) * (opts.skillMult || 1) * mult));
+    let remaining = dmg;
+    const shield = defender.statuses.find((s) => s.kind === "shield");
+    if (shield) {
+      const absorbed = Math.min(shield.amount, remaining);
+      shield.amount -= absorbed;
+      remaining -= absorbed;
+      if (shield.amount <= 0) defender.statuses = defender.statuses.filter((s) => s !== shield);
+    }
+    defender.hp -= remaining;
+    defender.stats.taken += remaining;
+    attacker.stats.dealt += remaining;
+    log.push({
+      t: "hit",
+      from: attacker.name,
+      to: defender.name,
+      fromUid: attacker.uid,
+      toUid: defender.uid,
+      dmg: remaining,
+      crit,
+      elem,
+      ranged: isRanged(attacker)
+    });
+    return remaining;
+  }
+  function tryApplyStatus2(attacker, defender, kind, chance, status2, rng, log) {
+    const effective = chance * (1 - (defender.resist[kind] || 0));
+    if (rng.chance(effective)) {
+      addStatus2(defender, status2);
+      log.push({ t: "status", who: defender.name, uid: defender.uid, kind });
+      return true;
+    }
+    return false;
+  }
+  function pickTarget2(attacker, foes, rng) {
+    const alive = foes.filter((f) => f.hp > 0);
+    if (alive.length === 0) return null;
+    if (isRanged(attacker)) {
+      return alive.reduce((a, b) => a.hp < b.hp ? a : b);
+    }
+    const frontAlive = alive.filter((f) => FRONT.includes(f.slot));
+    const row = frontAlive.length > 0 ? frontAlive : alive.filter((f) => BACK.includes(f.slot));
+    const pool = row.length > 0 ? row : alive;
+    return rng.pick(pool);
+  }
+  function checkPotions2(unit, log) {
+    if (!unit.potions || unit.hp <= 0) return;
+    for (const p of unit.potions) {
+      if (p.used) continue;
+      if (p.effect.kind === "heal" && unit.hp / unit.maxHp <= p.effect.atHpBelow) {
+        p.used = true;
+        const healed = Math.min(p.effect.amount, unit.maxHp - unit.hp);
+        unit.hp += healed;
+        log.push({ t: "potion", who: unit.name, uid: unit.uid, name: p.name, healed });
+      }
+      if (p.effect.kind?.startsWith("cleanse_")) {
+        const statusKind = p.effect.kind.slice(8);
+        if (hasStatus2(unit, statusKind)) {
+          p.used = true;
+          unit.statuses = unit.statuses.filter((s) => s.kind !== statusKind);
+          if (p.effect.resistAfter) {
+            for (const [k, v] of Object.entries(p.effect.resistAfter)) {
+              unit.resist[k] = Math.max(unit.resist[k] || 0, v);
+            }
+          }
+          log.push({ t: "potion", who: unit.name, uid: unit.uid, name: p.name, cleansed: statusKind });
+        }
+      }
+    }
+  }
+  function act2(unit, allies, foes, rng, log) {
+    const sleep = unit.statuses.find((s) => s.kind === "sleep");
+    if (sleep) {
+      sleep.ticks -= 1;
+      if (sleep.ticks <= 0) unit.statuses = unit.statuses.filter((s) => s !== sleep);
+      log.push({ t: "sleeps", who: unit.name, uid: unit.uid });
+      return;
+    }
+    const target = pickTarget2(unit, foes, rng);
+    if (!target) return;
+    const skill = unit.skills[0] && unit.skills[(unit._next || 0) % unit.skills.length];
+    unit._next = (unit._next || 0) + 1;
+    switch (skill) {
+      case "pollen_sleep":
+        computeDamage2(unit, target, rng, log, { skillMult: 0.6 });
+        tryApplyStatus2(unit, target, "sleep", 0.3, { kind: "sleep", ticks: 18 }, rng, log);
+        break;
+      case "sting_poison":
+        computeDamage2(unit, target, rng, log);
+        tryApplyStatus2(unit, target, "poison", 0.5, { kind: "poison", ticks: 40, dmg: 2 }, rng, log);
+        break;
+      case "sting_poison_weak":
+        computeDamage2(unit, target, rng, log);
+        tryApplyStatus2(unit, target, "poison", 0.25, { kind: "poison", ticks: 30, dmg: 1 }, rng, log);
+        break;
+      case "slow_spores":
+        computeDamage2(unit, target, rng, log, { skillMult: 0.7 });
+        tryApplyStatus2(unit, target, "slow", 0.5, { kind: "slow", ticks: 40, factor: 0.6 }, rng, log);
+        break;
+      case "heavy_blow":
+        computeDamage2(unit, target, rng, log, { skillMult: 1.6 });
+        break;
+      case "fear_chill":
+        computeDamage2(unit, target, rng, log, { skillMult: 0.8 });
+        tryApplyStatus2(unit, target, "fear", 0.5, { kind: "fear", ticks: 35 }, rng, log);
+        break;
+      case "spit_fire":
+        computeDamage2(unit, target, rng, log, { elem: "fire", skillMult: 1.1 });
+        break;
+      case "aimed_shot":
+        computeDamage2(unit, target, rng, log, { skillMult: 1.35, neverMiss: true });
+        break;
+      case "regen_ally_skill": {
+        const wounded = allies.filter((a) => a.hp > 0).sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
+        if (wounded && wounded.hp < wounded.maxHp * 0.8) {
+          addStatus2(wounded, { kind: "regen", ticks: 25, dmg: 2 });
+          log.push({ t: "status", who: wounded.name, uid: wounded.uid, kind: "regen", from: unit.name });
+        } else {
+          computeDamage2(unit, target, rng, log, { skillMult: 0.8 });
+        }
+        break;
+      }
+      default: {
+        if (unit.traits?.includes("cleave_small")) {
+          const row = foes.filter((f) => f.hp > 0 && FRONT.includes(f.slot));
+          const others = row.filter((f) => f !== target);
+          computeDamage2(unit, target, rng, log);
+          for (const other of others) computeDamage2(unit, other, rng, log, { skillMult: 0.4 });
+        } else {
+          computeDamage2(unit, target, rng, log);
+        }
+      }
+    }
+  }
+  function simulateFormationBattle(allies, foes, seed = 1) {
+    const rng = makeRng(seed);
+    const log = [{ t: "start", allies: allies.map((a) => a.name), foes: foes.map((f) => f.name) }];
+    const knight = allies[0];
+    let tick = 0;
+    while (tick < MAX_TICKS2) {
+      tick++;
+      for (const u of [...allies, ...foes]) {
+        if (u.hp <= 0) continue;
+        for (const s of [...u.statuses]) {
+          if (s.kind === "poison") {
+            s.ticks -= 1;
+            u.hp -= s.dmg;
+            u.stats.taken += s.dmg;
+            if (u.stats.poisonTicks !== void 0) u.stats.poisonTicks++;
+            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+          }
+          if (s.kind === "regen") {
+            s.ticks -= 1;
+            u.hp = Math.min(u.maxHp, u.hp + s.dmg);
+            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+          }
+          if (s.kind === "fear") {
+            s.ticks -= 1;
+            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+          }
+        }
+      }
+      for (const u of [...allies, ...foes]) {
+        if (u.hp <= 0) continue;
+        checkPotions2(u, log);
+        let spd = u.speed;
+        const slow = u.statuses.find((s) => s.kind === "slow");
+        if (slow) {
+          spd *= slow.factor;
+          slow.ticks -= 1;
+          if (slow.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== slow);
+        }
+        u.gauge += spd;
+      }
+      const ready = [...allies, ...foes].filter((u) => u.hp > 0 && u.gauge >= GAUGE_FULL2).sort((a, b) => b.gauge - a.gauge);
+      for (const u of ready) {
+        if (u.gauge < GAUGE_FULL2 || u.hp <= 0) continue;
+        u.gauge -= GAUGE_FULL2;
+        const myAllies = u.side === "ally" ? allies : foes;
+        const myFoes = u.side === "ally" ? foes : allies;
+        act2(u, myAllies, myFoes, rng, log);
+        if (u.side === "ally" && hasStatus2(u, "sleep")) u.stats.sleptTicks++;
+      }
+      if (foes.every((f) => f.hp <= 0) || allies.every((a) => a.hp <= 0)) break;
+    }
+    const victory = foes.every((f) => f.hp <= 0) && allies.some((a) => a.hp > 0);
+    const report = {
+      victory,
+      knightHpLeft: Math.max(0, knight.hp),
+      knightHpMax: knight.maxHp,
+      dealt: allies.reduce((s, a) => s + a.stats.dealt, 0),
+      taken: knight.stats.taken,
+      alliesDown: allies.filter((a) => a.hp <= 0).map((a) => a.name),
+      alliesStats: allies.map((a) => ({ name: a.name, icon: a.icon, dealt: a.stats.dealt, taken: a.stats.taken, alive: a.hp > 0 })),
+      foesDown: foes.filter((f) => f.hp <= 0).length,
+      foesTotal: foes.length,
+      slept: knight.stats.sleptTicks > 0,
+      poisoned: knight.stats.poisonTicks > 0,
+      deathCause: knight.hp > 0 ? null : inferCause(knight),
+      advice: victory ? null : adviceFor2(knight, allies, foes, inferCause(knight))
+    };
+    return { victory, log, report, ticks: tick };
+  }
+  function inferCause(knight) {
+    if (knight.stats.sleptTicks > 0) return "sleep";
+    if (knight.stats.poisonTicks > 20) return "poison";
+    return "phys";
+  }
+  function adviceFor2(knight, allies, foes, cause) {
+    if (cause === "sleep") {
+      return "\u0420\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0443\u043B \u043D\u0430 \u043F\u043E\u0441\u0442\u0443. \u0428\u043B\u0435\u043C \u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435\u043C \u0441\u043D\u0443 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u2014 \u0438 \u043F\u043E\u0440\u044F\u0434\u043E\u043A.";
+    }
+    if (cause === "poison") {
+      return "\u042F\u0434 \u043F\u043E\u0434\u0442\u043E\u0447\u0438\u043B \u0440\u044B\u0446\u0430\u0440\u044F. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u0438\u043B\u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440 \u043F\u043E\u043C\u043E\u0433\u0443\u0442.";
+    }
+    if (allies.length === 1) {
+      return "\u0412 \u043E\u0434\u0438\u043D\u043E\u0447\u043A\u0443 \u0442\u044F\u0436\u0435\u043B\u043E. \u041D\u0430\u0439\u043C\u0438 \u0432 \u0442\u0430\u0432\u0435\u0440\u043D\u0435 \u0433\u0440\u043E\u043C\u0438\u043B\u0443 \u0432 \u043F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434 \u0438 \u043B\u0443\u0447\u043D\u0438\u0446\u0443 \u0437\u0430 \u0441\u043F\u0438\u043D\u0443.";
+    }
+    const frontDown = allies.filter((a) => FRONT.includes(a.slot) && a.hp <= 0).length;
+    if (frontDown > 0) {
+      return "\u041F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434 \u0440\u0443\u0445\u043D\u0443\u043B, \u0438 \u0441\u0442\u0440\u0435\u043B\u043A\u043E\u0432 \u0437\u0430 \u0441\u043F\u0438\u043D\u043E\u0439 \u0440\u0430\u0441\u0442\u043E\u043F\u0442\u0430\u043B\u0438. \u041F\u043E\u0441\u0442\u0430\u0432\u044C \u0432\u043F\u0435\u0440\u0451\u0434 \u043A\u043E\u0433\u043E-\u043D\u0438\u0431\u0443\u0434\u044C \u043F\u043E\u043A\u0440\u0435\u043F\u0447\u0435.";
+    }
+    return "\u041D\u0435 \u0445\u0432\u0430\u0442\u0438\u043B\u043E \u043C\u043E\u0449\u0438. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0443, \u0437\u0435\u043B\u044C\u044F \u0438 \u0440\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0443: \u0442\u0430\u043D\u043A\u0438 \u0432\u043F\u0435\u0440\u0451\u0434, \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u043D\u0430\u0437\u0430\u0434.";
+  }
+  function enemyFormationSlots(enemyEntries) {
+    const slots = [];
+    let front = 0;
+    let back = 3;
+    for (const entry of enemyEntries) {
+      const id = typeof entry === "string" ? entry : entry.id;
+      const def = ENEMY_BY_ID[id];
+      if (def.boss) {
+        slots.push(1);
+        continue;
+      }
+      const melee = !def.skills.some((s) => s === "pollen_sleep" || s === "fear_chill");
+      if (melee) {
+        slots.push(FRONT[front % 3]);
+        front++;
+      } else {
+        slots.push(BACK[back % 3]);
+        back++;
+        if (back % 3 === 0 && front < 3) {
+          back = 3;
+        }
+      }
+    }
+    return slots;
+  }
+
   // src/core/state.js
   var SAVE_KEY = "cozy_adventures_save_v2";
   function newGame() {
@@ -2732,10 +6634,20 @@
       // купленные украшения
       cosmeticsActive: [],
       // выставленные украшения
+      seekOverrides: {},
+      // правки хотспотов искалок из редактора: levelId -> groups
+      shopSeenStock: [],
+      // id товаров прилавка, которые игрок уже видел
       tutorial: {},
       // пройденные этапы обучения
       tutorialSkipped: false,
       // игрок пропустил обучение целиком
+      settings: { battleMode: "formation" },
+      // 'classic' | 'formation'
+      formation: { knight: 1, merc0: 0, merc1: 5 },
+      // слоты 0-2 передний ряд, 3-5 задний
+      cheats: { used: [], spiderHat: false },
+      // активированные читы и пасхалки
       stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 }
     };
   }
@@ -2747,8 +6659,14 @@
     state2.customPuzzles ||= [];
     state2.cosmeticsOwned ||= [];
     state2.cosmeticsActive ||= [];
+    state2.seekOverrides ||= {};
+    state2.shopSeenStock ||= [];
     state2.tutorial ||= {};
     state2.tutorialSkipped ??= false;
+    state2.settings ||= {};
+    state2.settings.battleMode ||= "formation";
+    state2.formation ||= { knight: 1, merc0: 0, merc1: 5 };
+    state2.cheats ||= { used: [], spiderHat: false };
     state2.materials ||= {};
     state2.seals ??= 0;
     return state2;
@@ -2779,6 +6697,13 @@
   }
   function shopStock(state2) {
     return SHOP_STOCK.filter((s) => s.unlockAfter === null || state2.battlesDone[s.unlockAfter]).map((s) => ITEM_BY_ID[s.itemId]);
+  }
+  function unseenShopItems(state2) {
+    const seen = new Set(state2.shopSeenStock || []);
+    return shopStock(state2).filter((i) => !seen.has(i.id));
+  }
+  function markShopSeen(state2) {
+    state2.shopSeenStock = shopStock(state2).map((i) => i.id);
   }
   function buyItem(state2, itemId) {
     const item2 = ITEM_BY_ID[itemId];
@@ -2842,7 +6767,15 @@
     state2[purse] -= def.price;
     state2.crew.push(id);
     if (kind === "companion" && state2.squadCompanions.length < 3) state2.squadCompanions.push(id);
-    if (kind === "merc" && state2.squadMercs.length < 2) state2.squadMercs.push(id);
+    if (kind === "merc" && state2.squadMercs.length < 2) {
+      const idx = state2.squadMercs.length;
+      state2.squadMercs.push(id);
+      const key = `merc${idx}`;
+      const isTank = def.role === "\u0442\u0430\u043D\u043A";
+      const wantSlots = isTank ? [0, 2] : [4, 5, 3];
+      const taken = Object.values(state2.formation);
+      state2.formation[key] = wantSlots.find((s) => !taken.includes(s)) ?? (isTank ? 0 : 4);
+    }
     if (kind === "pet" && !state2.pet) state2.pet = id;
     return { ok: true };
   }
@@ -2962,20 +6895,121 @@
     else state2.cosmeticsActive.push(id);
     return { ok: true, active: i < 0 };
   }
-  var SEEK_BY_WORLD = (w) => SEEK_PUZZLES.filter((p) => p.world === w);
-  var ALL_PUZZLES = [
-    ...PUZZLES,
-    ...SEEK_BY_WORLD("meadow"),
-    ...SHELF_PUZZLES,
-    ...SEEK_BY_WORLD("town"),
-    ...BOOK_PUZZLES,
-    ...SEEK_BY_WORLD("attic")
+  var PUZZLE_POOL = new Map(
+    [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES].map((p) => [p.id, p])
+  );
+  var CAMPAIGN_ORDER = [
+    "md_01",
+    "md_02",
+    "sk_md_01",
+    "md_03",
+    "md_04",
+    "sk_md_02",
+    "md_05",
+    "tw_01",
+    "md_06",
+    "tw_02",
+    "md_07",
+    "tw_03",
+    "sk_tw_01",
+    "md_08",
+    "tw_04",
+    "md_09",
+    "tw_05",
+    "md_10",
+    "tw_06",
+    "sk_tw_02",
+    "md_11",
+    "tw_07",
+    "bk_01",
+    "tw_08",
+    "bk_02",
+    "md_12",
+    "bk_03",
+    "tw_09",
+    "bk_04",
+    "sk_bk_01",
+    "bk_05",
+    "tw_10",
+    "bk_06",
+    "bk_07",
+    "sk_bk_02",
+    "bk_08",
+    "bk_09",
+    "bk_10",
+    // Перекрёсток: тропинки и чай вперемешку с поиском
+    "pp_01",
+    "tea_01",
+    "pp_02",
+    "tea_02",
+    "pp_03",
+    "tea_03",
+    "pp_04",
+    "tea_04",
+    "pp_05",
+    "tea_05",
+    "pp_06",
+    "tea_06",
+    "pp_07",
+    "tea_07",
+    "pp_08",
+    "tea_08",
+    // Искалки новых миров
+    "sk_nm_01",
+    "sk_sw_01",
+    "sk_sf_01",
+    "sk_ash_01",
+    "sk_cr_01",
+    "sk_jade_01",
+    "sk_deep_01",
+    "sk_mist_01"
   ];
+  var ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
   function allPuzzles(state2) {
     return [...ALL_PUZZLES, ...state2.customPuzzles || []];
   }
   function findPuzzle(state2, id) {
     return allPuzzles(state2).find((p) => p.id === id) || null;
+  }
+  var SEEK_OVERRIDES_KEY = "cozy_seek_overrides_v1";
+  function overrideStorage(storage) {
+    return storage || (typeof localStorage !== "undefined" ? localStorage : null);
+  }
+  function loadSeekOverrides(storage) {
+    const s = overrideStorage(storage);
+    if (!s) return {};
+    try {
+      return JSON.parse(s.getItem(SEEK_OVERRIDES_KEY) || "{}");
+    } catch {
+      return {};
+    }
+  }
+  function applySeekOverrides(state2, level, storage) {
+    const ov = loadSeekOverrides(storage)[level.id] || state2.seekOverrides?.[level.id];
+    if (!ov || level.mechanic !== "seek") return level;
+    return { ...level, groups: JSON.parse(JSON.stringify(ov)) };
+  }
+  function saveSeekOverride(state2, levelId, groups, storage) {
+    const all = loadSeekOverrides(storage);
+    all[levelId] = JSON.parse(JSON.stringify(groups));
+    const s = overrideStorage(storage);
+    if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
+    else state2.seekOverrides[levelId] = all[levelId];
+  }
+  function resetSeekOverride(state2, levelId, storage) {
+    const all = loadSeekOverrides(storage);
+    delete all[levelId];
+    const s = overrideStorage(storage);
+    if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
+    delete state2.seekOverrides[levelId];
+  }
+  function migrateSeekOverrides(state2, storage) {
+    const legacy = state2.seekOverrides || {};
+    if (Object.keys(legacy).length === 0) return;
+    const all = { ...legacy, ...loadSeekOverrides(storage) };
+    const s = overrideStorage(storage);
+    if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
+    state2.seekOverrides = {};
   }
   function puzzleAvailable(state2, index) {
     if (index === 0) return true;
@@ -3000,6 +7034,28 @@
     }
     return grantRewards(state2, rewards);
   }
+  function skipPuzzlePrice(puzzle) {
+    const coins = (puzzle.rewards || []).find((r) => r.type === "coins");
+    return Math.max(50, Math.round((coins?.amount || 50) * 1.5));
+  }
+  function skipPuzzle(state2, puzzleId) {
+    const puzzle = findPuzzle(state2, puzzleId);
+    if (!puzzle) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0439 \u0437\u0430\u0433\u0430\u0434\u043A\u0438" };
+    const idx = ALL_PUZZLES.findIndex((p) => p.id === puzzleId);
+    if (idx >= 0 && !puzzleAvailable(state2, idx)) {
+      return { ok: false, error: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0435\u0449\u0451 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u0442\u0430" };
+    }
+    if (state2.puzzlesDone[puzzleId]) return { ok: false, error: "\u0423\u0436\u0435 \u0440\u0435\u0448\u0435\u043D\u0430" };
+    const price = skipPuzzlePrice(puzzle);
+    if (state2.coins < price) return { ok: false, error: "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043C\u043E\u043D\u0435\u0442", price };
+    state2.coins -= price;
+    state2.puzzlesDone[puzzleId] = { moves: 0, hintsUsed: 0, skipped: true, at: Date.now() };
+    state2.stats.puzzlesSolved += 1;
+    const coins = (puzzle.rewards || []).find((r) => r.type === "coins");
+    const consolation = Math.round((coins?.amount || 30) / 3);
+    addCoins(state2, consolation);
+    return { ok: true, price, consolation };
+  }
   function nextPuzzle(currentId) {
     const idx = ALL_PUZZLES.findIndex((p) => p.id === currentId);
     return idx >= 0 && idx + 1 < ALL_PUZZLES.length ? ALL_PUZZLES[idx + 1] : null;
@@ -3022,6 +7078,12 @@
   function runBattle(state2, battleId, seed = 1) {
     const battle = BATTLE_BY_ID[battleId];
     if (!battle || !battleAvailable(state2, battleId)) return null;
+    if ((state2.settings?.battleMode || "formation") === "formation") {
+      return runFormationBattle(state2, battle, seed);
+    }
+    return runClassicBattle(state2, battle, seed);
+  }
+  function runClassicBattle(state2, battle, seed) {
     const { stats, traits } = collectStats(state2.equipped);
     for (const cid of state2.squadCompanions) {
       const c = COMPANION_BY_ID[cid];
@@ -3045,15 +7107,20 @@
     }
     let rewards = [];
     if (result.victory) {
-      const firstTime = !state2.battlesDone[battleId];
-      state2.battlesDone[battleId] = {
-        victories: (state2.battlesDone[battleId]?.victories || 0) + 1,
+      const firstTime = !state2.battlesDone[battle.id];
+      state2.battlesDone[battle.id] = {
+        victories: (state2.battlesDone[battle.id]?.victories || 0) + 1,
         at: Date.now()
       };
       state2.stats.battlesWon += 1;
-      for (const enemyId of battle.enemies) {
+      for (const entry of battle.enemies) {
+        const enemyId = typeof entry === "string" ? entry : entry.id;
+        const scale = typeof entry === "string" ? 1 : entry.scale || 1;
         const def = enemyReward(enemyId, stats, seed);
-        rewards.push(...def);
+        for (const r of def) {
+          if (r.type === "coins") r.amount = Math.round(r.amount * scale);
+          rewards.push(r);
+        }
       }
       grantRewards(state2, rewards, {});
       if (traits.includes("heal_after_battle")) {
@@ -3081,6 +7148,60 @@
   function enemyRewardDef(enemyId) {
     return ENEMY_BY_ID[enemyId]?.reward;
   }
+  var CHEATS = {
+    "\u041A\u041E\u0422\u041E\u041F\u0401\u0421": (state2) => {
+      addCoins(state2, 1e3);
+      return "+1000 \u043C\u043E\u043D\u0435\u0442. \u041A\u043E\u0442 \u0438 \u043F\u0451\u0441 \u0434\u043E\u0432\u043E\u043B\u044C\u043D\u044B.";
+    },
+    "\u0417\u041E\u041B\u041E\u0422\u0410\u042F\u041B\u0410\u0412\u041A\u0410": (state2) => {
+      addCoins(state2, 1e4);
+      return "+10000 \u043C\u043E\u043D\u0435\u0442. \u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u043F\u0440\u043E\u0433\u0438\u0431\u0430\u0435\u0442\u0441\u044F!";
+    },
+    "\u041F\u0415\u0427\u0410\u041B\u042C": (state2) => {
+      state2.seals += 10;
+      return "+10 \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430. \u041D\u0435 \u043F\u0435\u0447\u0430\u043B\u044C\u0441\u044F.";
+    },
+    "\u041A\u041E\u041B\u0414\u041E\u0412\u0421\u0422\u0412\u041E": (state2) => {
+      for (const m of MATERIALS) {
+        state2.materials[m.id] = (state2.materials[m.id] || 0) + 10;
+      }
+      return "\u0412\u0441\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \xD710. \u0421\u043A\u043B\u0430\u0434 \u043B\u043E\u043C\u0438\u0442\u0441\u044F.";
+    },
+    "\u0420\u042B\u0426\u0410\u0420\u042C": (state2) => {
+      const set = [
+        "wpn_firebird_quill",
+        "shd_tower",
+        "hlm_page_wanderer",
+        "arm_ink_cloak",
+        "glv_smithee",
+        "bt_quiet_step",
+        "amu_pages",
+        "rng_duelist",
+        "rng_contents"
+      ];
+      for (const id of set) state2.inventory.push(id);
+      return "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u044B\u0439 \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0442 \u2014 \u0432 \u0441\u0443\u043D\u0434\u0443\u043A\u0435. \u041D\u0430\u0434\u0435\u043D\u044C \u0441 \u0447\u0435\u0441\u0442\u044C\u044E.";
+    },
+    "\u041E\u0411\u0423\u0427\u0415\u041D\u0418\u0415": (state2) => {
+      state2.tutorial = {};
+      state2.tutorialSkipped = false;
+      return "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0441\u0431\u0440\u043E\u0448\u0435\u043D\u043E. \u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043D\u043E\u0432\u0430 \u0432\u0441\u0451 \u043F\u043E\u043A\u0430\u0436\u0435\u0442.";
+    },
+    "\u041F\u0410\u0423\u0427\u041E\u041A": (state2) => {
+      state2.cheats.spiderHat = !state2.cheats.spiderHat;
+      return state2.cheats.spiderHat ? "\u041F\u0430\u0443\u0447\u043E\u043A \u043D\u0430\u0434\u0435\u043B \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u0447\u043D\u0443\u044E \u0448\u043B\u044F\u043F\u0443 \u{1F3A9}" : "\u041F\u0430\u0443\u0447\u043E\u043A \u0441\u043D\u044F\u043B \u0448\u043B\u044F\u043F\u0443.";
+    }
+  };
+  function applyCheat(state2, rawCode) {
+    const code = (rawCode || "").trim().toUpperCase().replaceAll(" ", "");
+    if (!code) return { ok: false, message: "\u041F\u0443\u0441\u0442\u043E. \u041A\u043E\u0442 \u043D\u0435\u0434\u043E\u0443\u043C\u0451\u043D\u043D\u043E \u043C\u043E\u0440\u0433\u043D\u0443\u043B." };
+    if (!CHEATS[code]) {
+      return { ok: false, message: "\u041C\u044F\u0443? \u0422\u0430\u043A\u043E\u0433\u043E \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u044F \u043B\u0430\u0432\u043A\u0430 \u043D\u0435 \u0437\u043D\u0430\u0435\u0442." };
+    }
+    const message = CHEATS[code](state2);
+    if (!state2.cheats.used.includes(code)) state2.cheats.used.push(code);
+    return { ok: true, message };
+  }
   function saveGame(state2, storage) {
     const s = storage || (typeof localStorage !== "undefined" ? localStorage : null);
     if (!s) return false;
@@ -3095,96 +7216,83 @@
       if (!raw) return null;
       const data = JSON.parse(raw);
       if (!data || typeof data.coins !== "number") return null;
-      return migrate(data);
+      const migrated = migrate(data);
+      migrateSeekOverrides(migrated, s);
+      return migrated;
     } catch {
       return null;
     }
   }
-
-  // src/ui/sound.js
-  var ctxAudio = null;
-  var enabled = true;
-  function ac() {
-    if (!ctxAudio && typeof AudioContext !== "undefined") {
-      ctxAudio = new AudioContext();
-    }
-    return ctxAudio;
+  function moveFormationSlot(state2, unitKey, slot) {
+    if (slot < 0 || slot > 5) return false;
+    const current = state2.formation[unitKey];
+    const otherKey = Object.keys(state2.formation).find((k) => k !== unitKey && state2.formation[k] === slot);
+    if (otherKey) state2.formation[otherKey] = current;
+    state2.formation[unitKey] = slot;
+    return true;
   }
-  function initSound() {
-    enabled = typeof localStorage === "undefined" || localStorage.getItem("cozy_sound") !== "off";
-    if (typeof document === "undefined") return;
-    const unlock = () => {
-      ac()?.resume?.();
+  function runFormationBattle(state2, battle, seed) {
+    const { stats, traits } = collectStats(state2.equipped);
+    for (const cid of state2.squadCompanions) {
+      const c = COMPANION_BY_ID[cid];
+      if (!c) continue;
+      for (const [k, v] of Object.entries(c.bonus || {})) stats[k] = (stats[k] || 0) + v;
+      if (c.trait) traits.push(c.trait);
+    }
+    if (state2.pet && PET_BY_ID[state2.pet]) {
+      for (const [k, v] of Object.entries(PET_BY_ID[state2.pet].bonus || {})) {
+        stats[k] = (stats[k] || 0) + v;
+      }
+    }
+    const consumables = state2.consumableBelt.map((id) => ITEM_BY_ID[id]).filter(Boolean).map((item2) => ({ itemId: item2.id, name: item2.name, effect: item2.effect }));
+    const knight = makeFormationKnight(stats, traits, consumables, state2.formation.knight ?? 1);
+    const allies = [knight];
+    state2.squadMercs.forEach((id, i) => {
+      const key = `merc${i}`;
+      const slot = state2.formation[key] ?? (i === 0 ? 0 : 5);
+      allies.push(makeFormationMerc(MERC_BY_ID[id], slot, i + 1));
+    });
+    const entries = battle.enemies.map((e) => typeof e === "string" ? { id: e, scale: 1 } : e);
+    const slots = enemyFormationSlots(battle.enemies);
+    const foes = entries.map((e, i) => makeFormationEnemy(e.id, e.scale, slots[i], i));
+    const result = simulateFormationBattle(allies, foes, seed);
+    const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
+    for (const used of usedIds) {
+      const i = state2.consumableBelt.indexOf(used);
+      if (i >= 0) state2.consumableBelt.splice(i, 1);
+    }
+    let rewards = [];
+    if (result.victory) {
+      const firstTime = !state2.battlesDone[battle.id];
+      state2.battlesDone[battle.id] = {
+        victories: (state2.battlesDone[battle.id]?.victories || 0) + 1,
+        at: Date.now()
+      };
+      state2.stats.battlesWon += 1;
+      for (const entry of battle.enemies) {
+        const enemyId = typeof entry === "string" ? entry : entry.id;
+        const scale = typeof entry === "string" ? 1 : entry.scale || 1;
+        const def = enemyReward(enemyId, stats, seed);
+        for (const r of def) {
+          if (r.type === "coins") r.amount = Math.round(r.amount * scale);
+          rewards.push(r);
+        }
+      }
+      grantRewards(state2, rewards, {});
+      if (traits.includes("heal_after_battle")) {
+        rewards.push({ type: "note", text: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0447\u0430\u0433\u0430 \u0441\u043E\u0433\u0440\u0435\u043B \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F." });
+      }
+      if (!firstTime) rewards = rewards.map((r) => r.type === "coins" ? { ...r, amount: Math.round(r.amount * 0.5) } : r);
+    }
+    return {
+      ...result,
+      rewards,
+      battle,
+      formation: {
+        allies: allies.map((a) => ({ uid: a.uid, slot: a.slot })),
+        foes: foes.map((f) => ({ uid: f.uid, slot: f.slot }))
+      }
     };
-    document.addEventListener?.("pointerdown", unlock, { once: true });
-    document.addEventListener?.("keydown", unlock, { once: true });
-  }
-  function toggleSound() {
-    enabled = !enabled;
-    try {
-      localStorage.setItem("cozy_sound", enabled ? "on" : "off");
-    } catch {
-    }
-    return enabled;
-  }
-  function soundEnabled() {
-    return enabled;
-  }
-  function tone(freq, dur, { type = "sine", gain = 0.08, delay = 0, slide = 0 } = {}) {
-    const a = ac();
-    if (!a || !enabled) return;
-    const t0 = a.currentTime + delay;
-    const osc = a.createOscillator();
-    const g = a.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, t0);
-    if (slide) osc.frequency.exponentialRampToValueAtTime(Math.max(30, freq + slide), t0 + dur);
-    g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(gain, t0 + 0.01);
-    g.gain.exponentialRampToValueAtTime(1e-4, t0 + dur);
-    osc.connect(g).connect(a.destination);
-    osc.start(t0);
-    osc.stop(t0 + dur + 0.05);
-  }
-  function sfx(name) {
-    if (!enabled) return;
-    switch (name) {
-      case "tap":
-        tone(520, 0.08, { type: "triangle", gain: 0.05 });
-        break;
-      case "rotate":
-        tone(440, 0.07, { type: "triangle", gain: 0.06, slide: 160 });
-        break;
-      case "hint":
-        tone(660, 0.15, { type: "sine", gain: 0.05 });
-        tone(880, 0.2, { delay: 0.1, gain: 0.04 });
-        break;
-      case "success":
-        [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
-        break;
-      case "coin":
-        tone(990, 0.07, { type: "square", gain: 0.03 });
-        tone(1320, 0.1, { delay: 0.06, type: "square", gain: 0.025 });
-        break;
-      case "hit":
-        tone(180, 0.08, { type: "sawtooth", gain: 0.04, slide: -60 });
-        break;
-      case "crit":
-        tone(240, 0.12, { type: "sawtooth", gain: 0.06, slide: -120 });
-        break;
-      case "potion":
-        tone(392, 0.12, { gain: 0.05 });
-        tone(523, 0.15, { delay: 0.08, gain: 0.05 });
-        break;
-      case "fail":
-        [392, 330, 262].forEach((f, i) => tone(f, 0.3, { delay: i * 0.14, gain: 0.05 }));
-        break;
-      case "moth":
-        tone(300, 0.2, { type: "square", gain: 0.04, slide: 80 });
-        break;
-      default:
-        tone(440, 0.08, { gain: 0.04 });
-    }
   }
 
   // src/ui/tutorial.js
@@ -3308,49 +7416,74 @@
   }
 
   // src/ui/hub.js
-  function renderHub(container, ctx2) {
+  function renderHub(container, ctx2, params = {}) {
     const { state: state2 } = ctx2;
     const solved = Object.keys(state2.puzzlesDone).length;
     const won = Object.keys(state2.battlesDone).length;
+    const firstPurchaseDone = (state2.stats.itemsBought || 0) > 0;
+    function rerender(scene2) {
+      ctx2.setHubScene?.(scene2);
+      container.innerHTML = "";
+      renderHub(container, ctx2, { scene: scene2 });
+    }
+    const SCENES = {
+      lavka: {
+        candidates: ["assets/hub_banner_web.jpg", "assets/hub_banner.jfif", "assets/hub_banner.png", "assets/hub_banner.svg"],
+        alt: "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432",
+        // Хотспоты: [icon, label, screen, x%, y%, showDot]
+        hotspots: [
+          ["\u{1F4DA}", "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438", "puzzles", 15, 42, () => solved === 0],
+          ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, () => solved > 0 && !firstPurchaseDone || unseenShopItems(state2).length > 0],
+          ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 67, 45, () => false],
+          ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 77, 50, () => false],
+          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0]
+        ]
+      },
+      square: {
+        candidates: ["assets/town_square_web.jpg", "assets/seek_town_web.jpg"],
+        alt: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
+        hotspots: [
+          ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 82, 45, () => false],
+          ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 35, 55, () => false],
+          ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 52, 68, () => false],
+          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 6, 55, () => false]
+        ]
+      }
+    };
+    const sceneId = params.scene || "lavka";
+    const scene = SCENES[sceneId] || SCENES.lavka;
     const scenePanel = document.createElement("div");
     scenePanel.className = "panel hub-picture";
     scenePanel.style.padding = "0";
     scenePanel.style.overflow = "hidden";
     const picture = document.createElement("img");
     picture.className = "hub-scene";
-    picture.alt = "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432";
-    const candidates = ["assets/hub_banner_web.jpg", "assets/hub_banner.jfif", "assets/hub_banner.png", "assets/hub_banner.svg"];
+    picture.alt = scene.alt;
     let candidateIdx = 0;
     picture.addEventListener("error", () => {
       candidateIdx += 1;
-      if (candidateIdx < candidates.length) picture.src = candidates[candidateIdx];
+      if (candidateIdx < scene.candidates.length) picture.src = scene.candidates[candidateIdx];
       else picture.remove();
     });
-    picture.src = candidates[0];
+    picture.src = scene.candidates[0];
     scenePanel.appendChild(picture);
     container.appendChild(scenePanel);
-    const firstPurchaseDone = (state2.stats.itemsBought || 0) > 0;
-    const hotspots = [
-      ["\u{1F4DA}", "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438", "puzzles", 15, 42, solved === 0],
-      ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, solved > 0 && !firstPurchaseDone],
-      ["\u{1F43E}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 27, 80, false],
-      ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 67, 45, false],
-      ["\u{1F6AA}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 77, 50, firstPurchaseDone && won === 0],
-      ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 50, 13, false],
-      ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 91, 32, false]
-    ];
     const hotspotEls = {};
-    for (const [icon, label, screen, x, y, dot] of hotspots) {
+    for (const [icon, label, screen, x, y, dot] of scene.hotspots) {
       const b = document.createElement("button");
       b.className = "hotspot";
       b.style.left = `${x}%`;
       b.style.top = `${y}%`;
       b.setAttribute("aria-label", label);
-      b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot ? '<span class="hs-dot"></span>' : ""}`;
+      b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
       b.addEventListener("click", () => {
         ctx2.sfx?.("tap");
         b.classList.add("zap");
-        setTimeout(() => ctx2.go(screen), 150);
+        setTimeout(() => {
+          if (screen === "@square") rerender("square");
+          else if (screen === "@lavka") rerender("lavka");
+          else ctx2.go(screen);
+        }, 150);
       });
       scenePanel.appendChild(b);
       hotspotEls[screen] = b;
@@ -3361,22 +7494,6 @@
     const cosIcons = (state2.cosmeticsActive || []).length ? ` \xB7 \u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F: ${(state2.cosmeticsActive || []).map((id) => ({ cos_carpet: "\u{1F7E5}", cos_crest: "\u{1FAA7}", cos_flowers: "\u{1F338}", cos_fireflies: "\u2728", cos_garland: "\u{1F38F}", cos_snow: "\u2744\uFE0F" })[id] || "\u{1F380}").join(" ")}` : "";
     progress.innerHTML = `\u{1F9E9} \u0417\u0430\u0433\u0430\u0434\u043E\u043A \u0440\u0435\u0448\u0435\u043D\u043E: <b>${solved}/${ALL_PUZZLES.length}</b> \xB7 \u2694\uFE0F \u041F\u043E\u0445\u043E\u0434\u043E\u0432 \u043F\u0440\u043E\u0439\u0434\u0435\u043D\u043E: <b>${won}/${BATTLES.length}</b> \xB7 \u{1F43E} \u041A\u043E\u043C\u0430\u043D\u0434\u0430: <b>${(state2.crew || []).length}</b>${cosIcons}`;
     container.appendChild(progress);
-    const footer = document.createElement("div");
-    footer.className = "panel mt center";
-    const soundBtn = document.createElement("button");
-    soundBtn.className = "ghost small";
-    soundBtn.textContent = soundEnabled() ? "\u{1F514} \u0417\u0432\u0443\u043A: \u0432\u043A\u043B" : "\u{1F515} \u0417\u0432\u0443\u043A: \u0432\u044B\u043A\u043B";
-    soundBtn.addEventListener("click", () => {
-      const on = toggleSound();
-      soundBtn.textContent = on ? "\u{1F514} \u0417\u0432\u0443\u043A: \u0432\u043A\u043B" : "\u{1F515} \u0417\u0432\u0443\u043A: \u0432\u044B\u043A\u043B";
-      if (on) ctx2.sfx?.("coin");
-    });
-    const newBtn = document.createElement("button");
-    newBtn.className = "ghost small";
-    newBtn.textContent = "\u{1F56F}\uFE0F \u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443";
-    newBtn.addEventListener("click", () => ctx2.newGameConfirm());
-    footer.append(soundBtn, " ", newBtn);
-    container.appendChild(footer);
     const anim = document.createElement("img");
     anim.alt = "";
     anim.style.cssText = "width:100%;border-radius:14px;margin-top:14px;opacity:0.9";
@@ -3389,29 +7506,31 @@
     });
     anim.src = animCandidates[0];
     container.appendChild(anim);
-    startTutorial(ctx2, "welcome", [
-      {
-        target: picture,
-        title: "\u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C, \u0445\u043E\u0437\u044F\u0438\u043D!",
-        text: "\u042D\u0442\u043E \u0442\u0432\u043E\u044F \u043B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432. \u041A\u0430\u0436\u0434\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442 \u0432 \u043D\u0435\u0439 \u2014 \u0436\u0438\u0432\u043E\u0439: \u043F\u043E\u043B\u043A\u0438, \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u043A, \u0440\u044B\u0446\u0430\u0440\u044C, \u0434\u0432\u0435\u0440\u044C. \u041A\u043B\u0438\u043A\u0430\u0439 \u043F\u043E \u043D\u0438\u043C, \u0447\u0442\u043E\u0431\u044B \u0445\u043E\u0437\u044F\u0439\u043D\u0438\u0447\u0430\u0442\u044C."
-      },
-      {
-        target: hotspotEls.puzzles,
-        title: "\u041F\u043E\u043B\u043A\u0438 \u0441 \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C\u0438",
-        text: "\u0417\u0434\u0435\u0441\u044C \u0436\u0438\u0432\u0443\u0442 \u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438: \u0441\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438, \u0442\u043E\u0432\u0430\u0440\u044B \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445, \u043A\u043D\u0438\u0436\u043D\u044B\u0435 \u0444\u0440\u0430\u0437\u044B \u0438 \u043F\u043E\u0438\u0441\u043A \u043F\u043E\u0442\u0435\u0440\u044F\u043D\u043D\u044B\u0445 \u043C\u0435\u043B\u043E\u0447\u0435\u0439. \u0417\u0430 \u043D\u0438\u0445 \u2014 \u043C\u043E\u043D\u0435\u0442\u044B \u0438 \u043F\u0435\u0447\u0430\u0442\u0438."
-      },
-      {
-        target: hotspotEls.equip,
-        title: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F",
-        text: "\u041D\u0430\u0433\u0440\u0430\u0434\u044B \u0442\u0440\u0430\u0442\u044C \u043D\u0430 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435: \u0434\u0435\u0432\u044F\u0442\u044C \u0441\u043B\u043E\u0442\u043E\u0432, \u0434\u0432\u0443\u0440\u0443\u0447\u043D\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0437\u0430\u043D\u0438\u043C\u0430\u0435\u0442 \u043E\u0431\u0435 \u0440\u0443\u043A\u0438. \u0412\u0435\u0449\u0438 \u0440\u0435\u0430\u043B\u044C\u043D\u043E \u043C\u0435\u043D\u044F\u044E\u0442 \u0431\u043E\u0439."
-      },
-      {
-        target: hotspotEls.battles,
-        title: "\u0414\u0432\u0435\u0440\u044C \u0432 \u043F\u043E\u0445\u043E\u0434",
-        text: "\u0420\u044B\u0446\u0430\u0440\u044C \u0441\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C \u2014 \u0442\u0432\u043E\u044F \u0437\u0430\u0431\u043E\u0442\u0430 \u0432 \u0442\u043E\u043C, \u0447\u0435\u043C \u043E\u043D \u043E\u0434\u0435\u0442 \u0438 \u043A\u0442\u043E \u0441 \u043D\u0438\u043C. \u041D\u0430\u0447\u043D\u0438 \u0441 \u043F\u0435\u0440\u0432\u043E\u0439 \u0437\u0430\u0433\u0430\u0434\u043A\u0438: \u043E\u043D\u0430 \u0443\u0436\u0435 \u0436\u0434\u0451\u0442 \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445.",
-        cta: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C!"
-      }
-    ]);
+    if (sceneId === "lavka") {
+      startTutorial(ctx2, "welcome", [
+        {
+          target: picture,
+          title: "\u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C, \u0445\u043E\u0437\u044F\u0438\u043D!",
+          text: "\u042D\u0442\u043E \u0442\u0432\u043E\u044F \u043B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432. \u041A\u0430\u0436\u0434\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442 \u0432 \u043D\u0435\u0439 \u2014 \u0436\u0438\u0432\u043E\u0439: \u043F\u043E\u043B\u043A\u0438, \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u043A, \u0440\u044B\u0446\u0430\u0440\u044C, \u0434\u0432\u0435\u0440\u044C. \u041A\u043B\u0438\u043A\u0430\u0439 \u043F\u043E \u043D\u0438\u043C, \u0447\u0442\u043E\u0431\u044B \u0445\u043E\u0437\u044F\u0439\u043D\u0438\u0447\u0430\u0442\u044C."
+        },
+        {
+          target: hotspotEls.puzzles,
+          title: "\u041F\u043E\u043B\u043A\u0438 \u0441 \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C\u0438",
+          text: "\u0417\u0434\u0435\u0441\u044C \u0436\u0438\u0432\u0443\u0442 \u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438: \u0441\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438, \u0442\u043E\u0432\u0430\u0440\u044B \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445, \u043A\u043D\u0438\u0436\u043D\u044B\u0435 \u0444\u0440\u0430\u0437\u044B \u0438 \u043F\u043E\u0438\u0441\u043A \u043F\u043E\u0442\u0435\u0440\u044F\u043D\u043D\u044B\u0445 \u043C\u0435\u043B\u043E\u0447\u0435\u0439. \u0417\u0430 \u043D\u0438\u0445 \u2014 \u043C\u043E\u043D\u0435\u0442\u044B \u0438 \u043F\u0435\u0447\u0430\u0442\u0438."
+        },
+        {
+          target: hotspotEls.equip,
+          title: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F",
+          text: "\u041D\u0430\u0433\u0440\u0430\u0434\u044B \u0442\u0440\u0430\u0442\u044C \u043D\u0430 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435: \u0434\u0435\u0432\u044F\u0442\u044C \u0441\u043B\u043E\u0442\u043E\u0432, \u0434\u0432\u0443\u0440\u0443\u0447\u043D\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0437\u0430\u043D\u0438\u043C\u0430\u0435\u0442 \u043E\u0431\u0435 \u0440\u0443\u043A\u0438. \u0412\u0435\u0449\u0438 \u0440\u0435\u0430\u043B\u044C\u043D\u043E \u043C\u0435\u043D\u044F\u044E\u0442 \u0431\u043E\u0439."
+        },
+        {
+          target: hotspotEls.battles,
+          title: "\u0414\u0432\u0435\u0440\u044C \u0432 \u043F\u043E\u0445\u043E\u0434",
+          text: "\u0420\u044B\u0446\u0430\u0440\u044C \u0441\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C \u2014 \u0442\u0432\u043E\u044F \u0437\u0430\u0431\u043E\u0442\u0430 \u0432 \u0442\u043E\u043C, \u0447\u0435\u043C \u043E\u043D \u043E\u0434\u0435\u0442 \u0438 \u043A\u0442\u043E \u0441 \u043D\u0438\u043C. \u0410 \u0437\u0430 \u043E\u043A\u043D\u043E\u043C \u2014 \u043F\u043B\u043E\u0449\u0430\u0434\u044C \u0441 \u0442\u0430\u0432\u0435\u0440\u043D\u043E\u0439 \u0438 \u043A\u0443\u0437\u043D\u0438\u0446\u0435\u0439. \u041D\u0430\u0447\u043D\u0438 \u0441 \u043F\u0435\u0440\u0432\u043E\u0439 \u0437\u0430\u0433\u0430\u0434\u043A\u0438!",
+          cta: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C!"
+        }
+      ]);
+    }
   }
 
   // src/core/puzzle.js
@@ -3631,6 +7750,25 @@
     state2.moves += 1;
     return { ok: true };
   }
+  function moveItem(state2, itemId, x, y) {
+    const from = state2.placement[itemId];
+    if (!from) return placeItem(state2, itemId, x, y);
+    if (from[0] === x && from[1] === y) return { ok: true, noop: true };
+    const cell = shelfCells(state2.level).find((c) => c.pos[0] === x && c.pos[1] === y);
+    if (!cell) return { ok: false, error: "\u0421\u044E\u0434\u0430 \u043D\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C" };
+    const occupant = cellOf(state2, x, y);
+    if (occupant && occupant !== itemId) {
+      state2.history.push({ swap: [itemId, occupant], prevA: from, prevB: state2.placement[occupant] });
+      state2.placement[occupant] = from;
+      state2.placement[itemId] = [x, y];
+      state2.moves += 1;
+      return { ok: true, swapped: occupant };
+    }
+    state2.history.push({ itemId, prev: from });
+    state2.placement[itemId] = [x, y];
+    state2.moves += 1;
+    return { ok: true };
+  }
   function removeItem(state2, itemId) {
     if (!(itemId in state2.placement) || !state2.placement[itemId]) return false;
     state2.history.push({ itemId, prev: state2.placement[itemId] });
@@ -3641,7 +7779,12 @@
   function undoShelf(state2) {
     const last = state2.history.pop();
     if (!last) return false;
-    state2.placement[last.itemId] = last.prev;
+    if (last.swap) {
+      state2.placement[last.swap[0]] = last.prevA;
+      state2.placement[last.swap[1]] = last.prevB;
+    } else {
+      state2.placement[last.itemId] = last.prev;
+    }
     state2.moves += 1;
     return true;
   }
@@ -3782,32 +7925,27 @@
     return { type: "already" };
   }
 
-  // src/data/materials.js
-  var MATERIALS = [
-    { id: "slime_jelly", name: "\u0421\u043B\u0438\u0437\u044C \u043B\u0443\u0436\u0430\u0439\u043D\u0438\u043A\u0430", icon: "\u{1F7E2}", description: "\u041F\u0440\u043E\u0445\u043B\u0430\u0434\u043D\u0430\u044F \u0438 \u043F\u0435\u0440\u0435\u043B\u0438\u0432\u0430\u0435\u0442\u0441\u044F." },
-    { id: "honey", name: "\u0414\u0438\u043A\u0438\u0439 \u043C\u0451\u0434", icon: "\u{1F36F}", description: "\u0413\u0443\u0441\u0442\u043E\u0439, \u0441 \u0437\u0430\u043F\u0430\u0445\u043E\u043C \u043B\u0443\u0433\u043E\u0432\u044B\u0445 \u0442\u0440\u0430\u0432." },
-    { id: "glow_moss", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0439\u0441\u044F \u043C\u043E\u0445", icon: "\u{1F33F}", description: "\u041C\u044F\u0433\u043A\u043E \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435." },
-    { id: "moth_dust", name: "\u041F\u044B\u043B\u044C\u0446\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430", icon: "\u{1F98B}", description: "\u0423\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0435\u0441\u043B\u0438 \u043F\u043E\u043D\u044E\u0445\u0430\u0442\u044C." },
-    { id: "moss_stone", name: "\u041C\u0448\u0438\u0441\u0442\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C", icon: "\u{1F5FF}", description: "\u041A\u0430\u043C\u0435\u043D\u044C \u0432 \u043F\u043B\u043E\u0442\u043D\u043E\u0439 \u0448\u0443\u0431\u043A\u0435 \u043C\u0445\u0430." },
-    { id: "willow_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B", icon: "\u{1F333}", description: "\u0422\u0451\u043F\u043B\u0430\u044F \u0434\u0440\u0435\u0432\u0435\u0441\u0438\u043D\u0430 \u0441 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u043E\u043C." },
-    { id: "rat_tail", name: "\u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u0445\u0432\u043E\u0441\u0442", icon: "\u{1F400}", description: "\u041A\u0440\u0435\u043F\u043A\u0438\u0439 \u0438 \u0433\u0438\u0431\u043A\u0438\u0439. \u0412\u0435\u0434\u044C\u043C\u0438\u043D\u043A\u0438 \u0446\u0435\u043D\u044F\u0442." },
-    { id: "torn_cloth", name: "\u0420\u0432\u0430\u043D\u0430\u044F \u0442\u043A\u0430\u043D\u044C", icon: "\u{1F9E3}", description: "\u041D\u0438\u0447\u0435\u043C \u043D\u0435 \u043F\u0430\u0445\u043D\u0435\u0442, \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F." },
-    { id: "brick_chunk", name: "\u041E\u0431\u043B\u043E\u043C\u043E\u043A \u043A\u043B\u0430\u0434\u043A\u0438", icon: "\u{1F9F1}", description: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u0441 \u0446\u0435\u043C\u0435\u043D\u0442\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u044E." },
-    { id: "ectoplasm", name: "\u042D\u043A\u0442\u043E\u043F\u043B\u0430\u0437\u043C\u0430", icon: "\u{1F47B}", description: "\u0425\u043E\u043B\u043E\u0434\u043D\u0430\u044F \u0434\u044B\u043C\u043A\u0430 \u0432 \u0441\u043A\u043B\u044F\u043D\u043A\u0435." },
-    { id: "captain_badge", name: "\u0417\u043D\u0430\u0447\u043E\u043A \u043A\u0430\u043F\u0438\u0442\u0430\u043D\u0430", icon: "\u{1F396}\uFE0F", description: "\u041F\u043E\u0442\u0451\u0440\u0442\u044B\u0439, \u043D\u043E \u0433\u043E\u0440\u0434\u044B\u0439." },
-    { id: "ink_drop", name: "\u041A\u0430\u043F\u043B\u044F \u0447\u0435\u0440\u043D\u0438\u043B", icon: "\u{1FADF}", description: "\u041A\u043E\u043D\u0446\u0435\u043D\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0430\u044F, \u043F\u043E\u0447\u0442\u0438 \u0436\u0438\u0432\u0430\u044F." },
-    { id: "paper_scrap", name: "\u041E\u0431\u0440\u044B\u0432\u043E\u043A \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B", icon: "\u{1F4C4}", description: "\u0421 \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u043E\u0439 \u043F\u0440\u0435\u0434\u043B\u043E\u0436\u0435\u043D\u0438\u044F." },
-    { id: "page_dust", name: "\u041A\u043D\u0438\u0436\u043D\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u{1F4D6}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0441\u0442\u0430\u0440\u044B\u043C\u0438 \u0438\u0441\u0442\u043E\u0440\u0438\u044F\u043C\u0438." },
-    { id: "gold_leaf", name: "\u0421\u0443\u0441\u0430\u043B\u044C\u043D\u043E\u0435 \u0437\u043E\u043B\u043E\u0442\u043E", icon: "\u{1F342}", description: "\u0422\u043E\u043D\u044C\u0448\u0435 \u043B\u0435\u043F\u0435\u0441\u0442\u043A\u0430." },
-    { id: "last_page", name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430", icon: "\u{1F4DC}", description: "\u041D\u0430 \u043D\u0435\u0439 \u2014 \u043A\u043E\u043D\u0435\u0446 \u043B\u044E\u0431\u043E\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u0438." }
-  ];
-  var MATERIAL_BY_ID = Object.fromEntries(MATERIALS.map((m) => [m.id, m]));
-  function materialLabel(id) {
-    const m = MATERIAL_BY_ID[id];
-    return m ? `${m.icon} ${m.name}` : id;
-  }
-
   // src/ui/common.js
+  function puzzleSkipButton(ctx2, level, onSkipped) {
+    const price = skipPuzzlePrice(level);
+    const b = document.createElement("button");
+    b.className = "ghost small";
+    b.innerHTML = `\u23ED\uFE0F \u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u0437\u0430 \u{1FA99}${price}`;
+    b.title = "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u0442 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u0441\u043E\u0441\u0435\u0434\u044F\u043C (\u043D\u0430\u0433\u0440\u0430\u0434\u044B \u0443\u0440\u043E\u0432\u043D\u044F \u043D\u0435 \u0431\u0443\u0434\u0435\u0442)";
+    b.addEventListener("click", () => {
+      if (!confirm(`\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \xAB${level.name}\xBB \u0437\u0430 ${price} \u043C\u043E\u043D\u0435\u0442? \u041D\u0430\u0433\u0440\u0430\u0434\u044B \u0443\u0440\u043E\u0432\u043D\u044F \u043D\u0435 \u0431\u0443\u0434\u0435\u0442.`)) return;
+      const r = skipPuzzle(ctx2.state, level.id);
+      if (r.ok) {
+        ctx2.sfx?.("coin");
+        ctx2.toast(`\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u043F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u0430. \u0423\u0442\u0435\u0448\u0435\u043D\u0438\u0435 \u043E\u0442 \u043A\u043E\u0442\u0430: \u{1FA99}${r.consolation}`);
+        ctx2.save();
+        onSkipped?.();
+      } else {
+        ctx2.toast(r.error);
+      }
+    });
+    return b;
+  }
   function header(ctx2, title, subtitle, backTo = "hub") {
     const box = document.createElement("div");
     box.className = "panel";
@@ -3842,7 +7980,7 @@
       if (it.primary) b.className = "primary";
       b.addEventListener("click", () => {
         ctx2.sfx?.("tap");
-        ctx2.go(it.screen);
+        ctx2.go(it.screen, it.params || {});
       });
       nav.appendChild(b);
     }
@@ -3904,6 +8042,7 @@
     canvas.style.width = `${gw * CELL}px`;
     canvas.style.height = `${gh * CELL}px`;
     canvas.style.maxWidth = "100%";
+    canvas.style.touchAction = "none";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
     const side = document.createElement("div");
@@ -3938,6 +8077,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -4014,7 +8154,89 @@
         }
       }
     }
-    canvas.addEventListener("pointerdown", onTap);
+    let drag = null;
+    function cellFromEvent(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const scale = canvas.width / dpr / rect.width;
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL);
+      return x >= 0 && y >= 0 && x < level.grid[0] && y < level.grid[1] ? [x, y] : null;
+    }
+    function startPotentialDrag(ev, itemId) {
+      if (finished) return;
+      drag = { itemId, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hover: null };
+    }
+    function activateDrag(ev) {
+      const it = level.items.find((i) => i.id === drag.itemId);
+      if (!it) return;
+      const ghost = document.createElement("div");
+      ghost.className = "drag-ghost";
+      ghost.textContent = it.icon;
+      document.body.appendChild(ghost);
+      drag.ghost = ghost;
+      drag.active = true;
+      selectedItem = null;
+      ctx2.sfx?.("tap");
+    }
+    function onPointerMove(ev) {
+      if (!drag) return;
+      if (!drag.active) {
+        const dist = Math.hypot(ev.clientX - drag.startX, ev.clientY - drag.startY);
+        if (dist > 8) activateDrag(ev);
+        else return;
+      }
+      drag.ghost.style.transform = `translate(${ev.clientX - 24}px, ${ev.clientY - 24}px)`;
+      const cell = cellFromEvent(ev);
+      const key = cell ? cell.join(",") : null;
+      if ((drag.hover ? drag.hover.join(",") : null) !== key) {
+        drag.hover = cell;
+        draw();
+      }
+    }
+    function onPointerUp(ev) {
+      if (!drag) return;
+      const wasActive = drag.active;
+      const itemId = drag.itemId;
+      const cell = drag.hover;
+      if (drag.ghost) drag.ghost.remove();
+      drag = null;
+      if (!wasActive) return;
+      const trayRect = tray.getBoundingClientRect();
+      const overTray = ev.clientX >= trayRect.left && ev.clientX <= trayRect.right && ev.clientY >= trayRect.top && ev.clientY <= trayRect.bottom;
+      if (cell) {
+        const r = moveItem(puzzle, itemId, cell[0], cell[1]);
+        if (r.ok) {
+          hintMark = null;
+          ctx2.sfx?.("rotate");
+          draw();
+          if (isShelfSolved(puzzle)) finish();
+        } else {
+          ctx2.toast(r.error);
+          draw();
+        }
+      } else if (overTray && puzzle.placement[itemId]) {
+        removeItem(puzzle, itemId);
+        hintMark = null;
+        ctx2.sfx?.("tap");
+        draw();
+      } else {
+        draw();
+      }
+    }
+    canvas.addEventListener("pointerdown", (ev) => {
+      if (finished) return;
+      const cell = cellFromEvent(ev);
+      if (cell) {
+        const occupantId = Object.entries(puzzle.placement).find(([, pos]) => pos && pos[0] === cell[0] && pos[1] === cell[1])?.[0];
+        if (occupantId) {
+          startPotentialDrag(ev, occupantId);
+          return;
+        }
+      }
+      onTap(ev);
+    });
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
     function onKey(ev) {
       if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
         ev.preventDefault();
@@ -4088,6 +8310,13 @@
           g.fillRect(px + 3, py + 3, CELL - 6, CELL - 6);
         }
       }
+      if (drag?.active && drag.hover) {
+        g.strokeStyle = "rgba(255, 202, 122, 0.95)";
+        g.lineWidth = 3;
+        g.setLineDash([7, 5]);
+        g.strokeRect(drag.hover[0] * CELL + 4, drag.hover[1] * CELL + 4, CELL - 8, CELL - 8);
+        g.setLineDash([]);
+      }
       const v = violations(puzzle);
       const badItems = new Set(v.flatMap((x) => [x.itemA, x.itemB]).filter(Boolean));
       for (const [itemId, pos] of Object.entries(puzzle.placement)) {
@@ -4108,7 +8337,9 @@
         g.font = `${CELL * 0.55}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
+        if (drag?.active && drag.itemId === itemId) g.globalAlpha = 0.3;
         g.fillText(it?.icon || "\u{1F381}", cx, cy);
+        g.globalAlpha = 1;
       }
       if (hintMark && hintMark.pos && !badItems.size) {
         const [hx, hy] = hintMark.pos;
@@ -4128,6 +8359,7 @@
         b.className = "small" + (selectedItem === it.id ? " primary" : "");
         b.innerHTML = `${it.icon} ${it.name}`;
         b.title = it.tags.join(", ");
+        b.addEventListener("pointerdown", (ev) => startPotentialDrag(ev, it.id));
         b.addEventListener("click", () => {
           selectedItem = selectedItem === it.id ? null : it.id;
           ctx2.sfx?.("tap");
@@ -4144,7 +8376,9 @@
     draw();
     return () => {
       window.removeEventListener("keydown", onKey);
-      canvas.removeEventListener("pointerdown", onTap);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      if (drag?.ghost) drag.ghost.remove();
     };
   }
   function rulesText(level) {
@@ -4272,6 +8506,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -4423,46 +8658,95 @@
     return {
       level,
       found: /* @__PURE__ */ new Set(),
+      // ключи "groupId:spotIndex"
       misses: 0,
       moves: 0
     };
   }
-  function seekTargets(level) {
-    return level.scene.filter((o) => o.target);
+  function spotKey(group, index) {
+    return `${group.id}:${index}`;
   }
   function seekTap(state2, x, y) {
-    const { level } = state2;
     state2.moves += 1;
-    for (let i = level.scene.length - 1; i >= 0; i--) {
-      const o = level.scene[i];
-      const dx = x - o.x;
-      const dy = y - o.y;
-      const rr = o.r * (o.scale || 1);
-      if (dx * dx + dy * dy > rr * rr) continue;
-      if (!o.target) {
-        state2.misses += 1;
-        return { result: "decoy", object: o };
+    const matches = [];
+    for (const group of state2.level.groups) {
+      for (let i = 0; i < group.spots.length; i++) {
+        const s = group.spots[i];
+        const dx = x - s.x;
+        const dy = y - s.y;
+        if (dx * dx + dy * dy > s.r * s.r) continue;
+        matches.push({ group, spotIndex: i, spot: s, found: state2.found.has(spotKey(group, i)) });
       }
-      if (state2.found.has(o.id)) return { result: "already", object: o };
-      state2.found.add(o.id);
-      return { result: "found", object: o };
     }
-    return { result: "empty" };
+    if (matches.length === 0) return { result: "empty" };
+    const fresh = matches.find((m) => !m.found);
+    if (!fresh) return { result: "already", ...matches[0] };
+    state2.found.add(spotKey(fresh.group, fresh.spotIndex));
+    return { result: "found", ...fresh };
   }
-  function isSeekSolved(state2) {
-    return seekTargets(state2.level).every((o) => state2.found.has(o.id));
+  function groupProgress(state2, group) {
+    const found = group.spots.filter((_, i) => state2.found.has(spotKey(group, i))).length;
+    return { found, total: group.spots.length };
   }
   function seekProgress(state2) {
-    return { found: state2.found.size, total: seekTargets(state2.level).length };
+    let found = 0;
+    let total = 0;
+    const groups = state2.level.groups.map((g) => {
+      const p = groupProgress(state2, g);
+      found += p.found;
+      total += p.total;
+      return { id: g.id, label: g.label, ...p };
+    });
+    return { found, total, groups };
+  }
+  function isSeekSolved(state2) {
+    const p = seekProgress(state2);
+    return p.found === p.total;
   }
   function seekHint(state2) {
-    const rest = seekTargets(state2.level).filter((o) => !state2.found.has(o.id));
-    if (rest.length === 0) return { type: "already" };
-    return { type: "point", x: rest[0].x, y: rest[0].y, label: rest[0].label, id: rest[0].id };
+    for (const group of state2.level.groups) {
+      for (let i = 0; i < group.spots.length; i++) {
+        if (state2.found.has(spotKey(group, i))) continue;
+        const s = group.spots[i];
+        return { type: "point", x: s.x, y: s.y, label: group.label, id: group.id };
+      }
+    }
+    return { type: "already" };
+  }
+  function validateSeekLevel(level) {
+    const problems = [];
+    const [W, H] = level.sceneSize || [1e3, 650];
+    if (!level.groups || level.groups.length === 0) problems.push("\u043D\u0435\u0442 \u0433\u0440\u0443\u043F\u043F \u0446\u0435\u043B\u0435\u0439");
+    const ids = /* @__PURE__ */ new Set();
+    for (const g of level.groups || []) {
+      if (ids.has(g.id)) problems.push(`\u0434\u0443\u0431\u043B\u044C id \u0433\u0440\u0443\u043F\u043F\u044B ${g.id}`);
+      ids.add(g.id);
+      if (!g.label) problems.push(`\u0443 \u0433\u0440\u0443\u043F\u043F\u044B ${g.id} \u043D\u0435\u0442 label`);
+      if (!g.spots || g.spots.length === 0) problems.push(`\u0443 \u0433\u0440\u0443\u043F\u043F\u044B ${g.id} \u043D\u0435\u0442 \u0441\u043F\u043E\u0442\u043E\u0432`);
+      for (const s of g.spots || []) {
+        if (s.x < 0 || s.x > W || s.y < 0 || s.y > H) problems.push(`\u0441\u043F\u043E\u0442 ${g.id} \u0432\u043D\u0435 \u0441\u0446\u0435\u043D\u044B`);
+        if (!(s.r >= 12 && s.r <= 120)) problems.push(`\u0441\u043F\u043E\u0442 ${g.id}: \u0441\u0442\u0440\u0430\u043D\u043D\u044B\u0439 \u0440\u0430\u0434\u0438\u0443\u0441 ${s.r}`);
+      }
+    }
+    const all = [];
+    for (const g of level.groups || []) {
+      for (const s of g.spots || []) all.push({ g: g.id, ...s });
+    }
+    for (let i = 0; i < all.length; i++) {
+      for (let j = i + 1; j < all.length; j++) {
+        if (all[i].g === all[j].g) continue;
+        const d = Math.hypot(all[i].x - all[j].x, all[i].y - all[j].y);
+        if (d < (all[i].r + all[j].r) * 0.5) {
+          problems.push(`\u0441\u043F\u043E\u0442\u044B ${all[i].g} \u0438 ${all[j].g} \u043F\u0435\u0440\u0435\u043A\u0440\u044B\u0432\u0430\u044E\u0442\u0441\u044F`);
+        }
+      }
+    }
+    return { ok: problems.length === 0, problems };
   }
 
   // src/ui/seekView.js
-  function renderSeekPuzzle(container, ctx2, level) {
+  function renderSeekPuzzle(container, ctx2, rawLevel) {
+    const level = applySeekOverrides(ctx2.state, rawLevel);
     const puzzle = createSeekPuzzle(level);
     let hintsUsed = 0;
     let hintSpot = null;
@@ -4510,6 +8794,11 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
     controls.append(btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    const btnEdit = mkBtn("\u270F\uFE0F", () => ctx2.go("seekeditor", { id: rawLevel.id }));
+    btnEdit.classList.add("ghost");
+    btnEdit.title = "\u041F\u0440\u0430\u0432\u0438\u0442\u044C \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u043E\u0438\u0441\u043A\u0430";
+    controls.appendChild(btnEdit);
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -4577,7 +8866,8 @@
       if (r.result === "found") {
         hintSpot = null;
         ctx2.sfx?.("coin");
-        ctx2.toast(`\u041D\u0430\u0439\u0434\u0435\u043D\u043E: ${r.object.label}!`);
+        const gp = groupProgress(puzzle, r.group);
+        ctx2.toast(gp.found === gp.total ? `\u0412\u0441\u0435 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B: ${r.group.label}!` : `${r.group.label}: ${gp.found} \u0438\u0437 ${gp.total}!`);
         draw();
         if (isSeekSolved(puzzle)) finish();
       } else if (r.result === "decoy" || r.result === "empty") {
@@ -4618,21 +8908,6 @@
         });
       }, 450);
     }
-    function drawObject(g, o, fade) {
-      g.save();
-      g.translate(o.x, o.y);
-      g.rotate(o.rot || 0);
-      const size = 46 * (o.scale || 1);
-      g.shadowColor = "rgba(0, 0, 0, 0.55)";
-      g.shadowBlur = 7;
-      g.shadowOffsetY = 3;
-      g.globalAlpha = fade ? 0.4 : o.alpha ?? 1;
-      g.font = `${size}px "Segoe UI Emoji", sans-serif`;
-      g.textAlign = "center";
-      g.textBaseline = "middle";
-      g.fillText(o.icon, 0, 0);
-      g.restore();
-    }
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -4651,43 +8926,34 @@
       vig.addColorStop(1, "rgba(10,6,3,0.35)");
       g.fillStyle = vig;
       g.fillRect(0, 0, W, H);
-      for (const o of level.scene) {
-        const isFound = o.target && puzzle.found.has(o.id);
-        drawObject(g, o, isFound);
-        if (isFound) {
-          g.strokeStyle = "rgba(143, 209, 139, 0.85)";
-          g.lineWidth = 3;
-          g.beginPath();
-          g.arc(o.x, o.y, 30, 0, Math.PI * 2);
-          g.stroke();
-          g.fillStyle = "#8fd18b";
-          g.font = "bold 20px sans-serif";
-          g.textAlign = "center";
-          g.textBaseline = "middle";
-          g.fillText("\u2713", o.x + 24, o.y - 22);
-        }
-        if (hintSpot && Math.hypot(o.x - hintSpot.x, o.y - hintSpot.y) < 1) {
-          g.strokeStyle = "rgba(255, 226, 138, 0.95)";
-          g.lineWidth = 4;
-          g.setLineDash([8, 6]);
-          g.beginPath();
-          g.arc(o.x, o.y, 42, 0, Math.PI * 2);
-          g.stroke();
-          g.setLineDash([]);
-        }
-      }
-      for (const f of level.front || []) {
-        g.save();
-        g.translate(f.x, f.y);
-        g.rotate(f.rot || 0);
-        g.globalAlpha = f.alpha ?? 0.85;
-        g.shadowColor = "rgba(0,0,0,0.4)";
-        g.shadowBlur = 5;
-        g.font = `${52 * (f.scale || 1)}px "Segoe UI Emoji", sans-serif`;
-        g.textAlign = "center";
-        g.textBaseline = "middle";
-        g.fillText(f.icon, 0, 0);
-        g.restore();
+      for (const group of level.groups) {
+        group.spots.forEach((s, i) => {
+          const isFound = puzzle.found.has(`${group.id}:${i}`);
+          if (isFound) {
+            g.strokeStyle = "rgba(143, 209, 139, 0.9)";
+            g.lineWidth = 4;
+            g.beginPath();
+            g.arc(s.x, s.y, s.r * 0.9, 0, Math.PI * 2);
+            g.stroke();
+            g.fillStyle = "rgba(143, 209, 139, 0.95)";
+            g.font = "bold 20px sans-serif";
+            g.textAlign = "center";
+            g.textBaseline = "middle";
+            g.shadowColor = "rgba(0,0,0,0.6)";
+            g.shadowBlur = 4;
+            g.fillText("\u2713", s.x, s.y);
+            g.shadowBlur = 0;
+          }
+          if (hintSpot && Math.hypot(s.x - hintSpot.x, s.y - hintSpot.y) < 1) {
+            g.strokeStyle = "rgba(255, 226, 138, 0.95)";
+            g.lineWidth = 4;
+            g.setLineDash([8, 6]);
+            g.beginPath();
+            g.arc(s.x, s.y, s.r * 1.2, 0, Math.PI * 2);
+            g.stroke();
+            g.setLineDash([]);
+          }
+        });
       }
       if (missFlash) {
         g.fillStyle = "rgba(232, 138, 122, 0.35)";
@@ -4696,15 +8962,15 @@
         g.fill();
       }
       targetList.innerHTML = "";
-      for (const t of seekTargets(level)) {
-        const done = puzzle.found.has(t.id);
+      const pr = seekProgress(puzzle);
+      for (const g2 of pr.groups) {
+        const done = g2.found === g2.total;
         const row = document.createElement("div");
-        row.innerHTML = `${done ? "\u2705" : "\u{1F50D}"} ${t.label}`;
+        row.innerHTML = `${done ? "\u2705" : "\u{1F50D}"} ${g2.label} \u2014 <b>${g2.found} \u0438\u0437 ${g2.total}</b>`;
         row.style.cssText = `font-size:15px;${done ? "opacity:0.6;text-decoration:line-through" : ""}`;
         targetList.appendChild(row);
       }
-      const pr = seekProgress(puzzle);
-      statusEl.innerHTML = `\u{1F50D} \u041D\u0430\u0439\u0434\u0435\u043D\u043E: <b>${pr.found}/${pr.total}</b> &nbsp; <span class="muted">\u043F\u0440\u043E\u043C\u0430\u0445\u0438: ${puzzle.misses}</span><div class="muted" style="font-size:13px">\u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+      statusEl.innerHTML = `\u{1F50D} \u0412\u0441\u0435\u0433\u043E \u043D\u0430\u0439\u0434\u0435\u043D\u043E: <b>${pr.found} \u0438\u0437 ${pr.total}</b> &nbsp; <span class="muted">\u043F\u0440\u043E\u043C\u0430\u0445\u0438: ${puzzle.misses}</span><div class="muted" style="font-size:13px">\u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
     draw();
     return () => {
@@ -4713,11 +8979,692 @@
     };
   }
 
+  // src/core/pathPuzzle.js
+  var SIDES = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+  function connections(type, rot) {
+    switch (type) {
+      case "straight":
+        return rot % 2 === 0 ? [0, 2] : [1, 3];
+      case "corner": {
+        const m = [[0, 1], [1, 2], [2, 3], [3, 0]];
+        return m[rot % 4];
+      }
+      case "tee": {
+        return [0, 1, 2, 3].filter((s) => s !== (rot + 3) % 4);
+      }
+      case "start":
+      case "end":
+        return [rot % 4];
+      // одна открытая сторона
+      default:
+        return [];
+    }
+  }
+  function createPathPuzzle(level) {
+    return {
+      level,
+      rot: Object.fromEntries(
+        level.tiles.map((t, i) => [i, t.rot ?? 0]).filter(([, r], i) => level.tiles[i].type !== "beast")
+      ),
+      history: [],
+      moves: 0
+    };
+  }
+  function rotateTile(state2, tileIndex) {
+    const t = state2.level.tiles[tileIndex];
+    if (!t || t.type === "beast") return false;
+    if (t.fixed) return false;
+    state2.history.push({ tileIndex, prev: state2.rot[tileIndex] });
+    state2.rot[tileIndex] = (state2.rot[tileIndex] + 1) % 4;
+    state2.moves += 1;
+    return true;
+  }
+  function undoPath(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    state2.rot[last.tileIndex] = last.prev;
+    state2.moves += 1;
+    return true;
+  }
+  function resetPath(state2) {
+    for (const [idx] of Object.entries(state2.rot)) {
+      state2.rot[idx] = state2.level.tiles[idx].rot ?? 0;
+    }
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function tracePath(state2) {
+    const { level } = state2;
+    const [w] = level.grid;
+    const at = /* @__PURE__ */ new Map();
+    level.tiles.forEach((t, i) => at.set(t.pos[0] + "," + t.pos[1], i));
+    const startIdx = level.tiles.findIndex((t) => t.type === "start");
+    const endIdx = level.tiles.findIndex((t) => t.type === "end");
+    const reached = /* @__PURE__ */ new Set();
+    if (startIdx < 0 || endIdx < 0) return { solved: false, reached };
+    const queue = [startIdx];
+    reached.add(startIdx);
+    while (queue.length > 0) {
+      const i = queue.shift();
+      const t = level.tiles[i];
+      const conns = t.type === "beast" ? [] : connections(t.type, state2.rot[i] ?? t.rot ?? 0);
+      for (const side of conns) {
+        const [dx, dy] = SIDES[side];
+        const nx = t.pos[0] + dx;
+        const ny = t.pos[1] + dy;
+        const j = at.get(`${nx},${ny}`);
+        if (j === void 0 || reached.has(j)) continue;
+        const nt = level.tiles[j];
+        if (nt.type === "beast") continue;
+        const opp = (side + 2) % 4;
+        const nconns = connections(nt.type, state2.rot[j] ?? nt.rot ?? 0);
+        if (nconns.includes(opp)) {
+          reached.add(j);
+          queue.push(j);
+        }
+      }
+    }
+    return { solved: reached.has(endIdx), reached };
+  }
+  function isPathSolved(state2) {
+    return tracePath(state2).solved;
+  }
+  function solvePath(level, maxSolutions = 32) {
+    const rotatable = level.tiles.map((t, i) => ({ t, i })).filter(({ t }) => t.type !== "beast" && !t.fixed && (t.type === "straight" || t.type === "corner" || t.type === "tee" || t.type === "end"));
+    const variants = rotatable.map(({ t }) => t.type === "straight" ? [0, 1] : [0, 1, 2, 3]);
+    const solutions = [];
+    const assign = new Array(rotatable.length).fill(0);
+    function bt(k) {
+      if (solutions.length >= maxSolutions) return;
+      if (k === rotatable.length) {
+        const s = createPathPuzzle(level);
+        rotatable.forEach(({ i }, k2) => {
+          s.rot[i] = variants[k2][assign[k2]];
+        });
+        if (isPathSolved(s)) solutions.push([...assign]);
+        return;
+      }
+      for (let v = 0; v < variants[k].length; v++) {
+        assign[k] = v;
+        bt(k + 1);
+      }
+    }
+    bt(0);
+    return { count: solutions.length, solutions, rotatable: rotatable.map((r) => r.i) };
+  }
+  function pathHint(state2) {
+    const { level } = state2;
+    const { count, solutions, rotatable } = solvePath(level, 64);
+    if (count === 0) return { type: "unsolvable" };
+    let best = null;
+    let bestDist = Infinity;
+    const variants = rotatable.map((i) => {
+      const t = level.tiles[i];
+      return t.type === "straight" ? [0, 1] : [0, 1, 2, 3];
+    });
+    for (const sol of solutions) {
+      let dist = 0;
+      rotatable.forEach((idx, k2) => {
+        if (state2.rot[idx] !== variants[k2][sol[k2]]) dist++;
+      });
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = sol;
+      }
+    }
+    if (bestDist === 0) return { type: "already" };
+    const k = rotatable.findIndex((idx, k2) => state2.rot[idx] !== variants[k2][best[k2]]);
+    return { type: "rotate", tileIndex: rotatable[k] };
+  }
+
+  // src/ui/pathView.js
+  var CELL3 = 72;
+  function renderPathPuzzle(container, ctx2, level) {
+    const puzzle = createPathPuzzle(level);
+    let hintsUsed = 0;
+    let hintTile = null;
+    let finished = false;
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const canvasBox = document.createElement("div");
+    canvasBox.className = "puzzle-canvas-box";
+    const canvas = document.createElement("canvas");
+    canvas.className = "game";
+    const [gw, gh] = level.grid;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = gw * CELL3 * dpr;
+    canvas.height = gh * CELL3 * dpr;
+    canvas.style.width = `${gw * CELL3}px`;
+    canvas.style.height = `${gh * CELL3}px`;
+    canvas.style.maxWidth = "100%";
+    canvasBox.appendChild(canvas);
+    wrap.appendChild(canvasBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const legend = document.createElement("div");
+    legend.className = "panel mt";
+    legend.innerHTML = `<div class="desc" style="line-height:1.9">
+    \u{1F3E0} \u0434\u043E\u043C\u0438\u043A \u043A\u0443\u0440\u044C\u0435\u0440\u0430 \u2192 \u{1F333} \u0441\u0442\u0430\u0440\u044B\u0439 \u0434\u0443\u0431<br>
+    \u0422\u0430\u043F \u043F\u043E \u043F\u043B\u0438\u0442\u043A\u0435 \u2014 \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u0435\u0451<br>
+    \u{1F417} \u0441\u043F\u044F\u0449\u0438\u0439 \u0437\u0432\u0435\u0440\u044C \u2014 \u0442\u0443\u0434\u0430 \u043D\u0435\u043B\u044C\u0437\u044F<br>
+    \u0422\u0451\u043F\u043B\u044B\u0439 \u0441\u043B\u0435\u0434 \u2014 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0430, \u0447\u0442\u043E \u0443\u0436\u0435 \u0432\u0435\u0434\u0451\u0442 \u043E\u0442 \u0434\u043E\u043C\u0438\u043A\u0430</div>`;
+    side.appendChild(legend);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoPath(puzzle)) {
+        hintTile = null;
+        ctx2.sfx?.("tap");
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetPath(puzzle);
+      hintTile = null;
+      ctx2.sfx?.("tap");
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = pathHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h.type === "rotate") {
+        hintsUsed += 1;
+        hintTile = h.tileIndex;
+        ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u043D\u0430 \u043E\u0434\u043D\u0443 \u0438\u0437 \u043F\u043B\u0438\u0442\u043E\u043A\u2026");
+        draw();
+      } else if (h.type === "already") {
+        ctx2.toast("\u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u0443\u0436\u0435 \u0433\u043E\u0442\u043E\u0432\u0430!");
+      } else {
+        ctx2.toast("\u0425\u043C, \u0442\u0443\u0442 \u043D\u0435 \u043F\u0440\u043E\u0439\u0442\u0438. \u0421\u043A\u0430\u0436\u0438 \u0445\u043E\u0437\u044F\u0438\u043D\u0443 \u043B\u0430\u0432\u043A\u0438!");
+      }
+    }
+    function onTap(ev) {
+      if (finished) return;
+      const rect = canvas.getBoundingClientRect();
+      const scale = canvas.width / dpr / rect.width;
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL3);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL3);
+      const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
+      if (idx >= 0 && rotateTile(puzzle, idx)) {
+        hintTile = null;
+        ctx2.sfx?.("rotate");
+        draw();
+        if (isPathSolved(puzzle)) finish();
+      }
+    }
+    canvas.addEventListener("pointerdown", onTap);
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") ctx2.go("puzzles");
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      finished = true;
+      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      draw();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        showOverlay(ctx2, {
+          title: "\u{1F4E6} \u041F\u043E\u0441\u044B\u043B\u043A\u0430 \u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0430!",
+          subtitle: `\xAB${level.name}\xBB \u2014 \u043A\u0443\u0440\u044C\u0435\u0440 \u0434\u043E\u0432\u043E\u043B\u0435\u043D`,
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function draw() {
+      const g = canvas.getContext("2d");
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, gw * CELL3, gh * CELL3);
+      const { reached } = tracePath(puzzle);
+      for (let y = 0; y < gh; y++) {
+        for (let x = 0; x < gw; x++) {
+          g.fillStyle = (x + y) % 2 === 0 ? "#45523a" : "#4d5c40";
+          g.fillRect(x * CELL3, y * CELL3, CELL3, CELL3);
+        }
+      }
+      level.tiles.forEach((t, i) => {
+        const cx = t.pos[0] * CELL3 + CELL3 / 2;
+        const cy = t.pos[1] * CELL3 + CELL3 / 2;
+        const onPath = reached.has(i);
+        if (t.type !== "beast") {
+          g.fillStyle = onPath ? "#8a6f45" : "#6b5a40";
+          roundRect(g, t.pos[0] * CELL3 + 4, t.pos[1] * CELL3 + 4, CELL3 - 8, CELL3 - 8, 10);
+          g.fill();
+        }
+        if (hintTile === i) {
+          g.fillStyle = "rgba(255, 202, 122, 0.35)";
+          g.beginPath();
+          g.arc(cx, cy, CELL3 * 0.46, 0, Math.PI * 2);
+          g.fill();
+        }
+        const rot = puzzle.rot[i] ?? t.rot ?? 0;
+        const conns = connections(t.type, rot);
+        if (conns.length > 0) {
+          g.strokeStyle = onPath ? "#ffd98a" : "#4a3b28";
+          g.lineCap = "round";
+          g.lineWidth = onPath ? 10 : 12;
+          for (const side2 of conns) {
+            const [dx, dy] = SIDES[side2];
+            g.beginPath();
+            g.moveTo(cx, cy);
+            g.lineTo(cx + dx * (CELL3 / 2 - 4), cy + dy * (CELL3 / 2 - 4));
+            g.stroke();
+          }
+          g.fillStyle = onPath ? "#ffd98a" : "#4a3b28";
+          g.beginPath();
+          g.arc(cx, cy, 7, 0, Math.PI * 2);
+          g.fill();
+        }
+        const emoji = (e, size = CELL3 * 0.5) => {
+          g.font = `${size}px "Segoe UI Emoji", sans-serif`;
+          g.textAlign = "center";
+          g.textBaseline = "middle";
+          g.fillText(e, cx, cy);
+        };
+        if (t.type === "start") emoji("\u{1F3E0}");
+        else if (t.type === "end") emoji("\u{1F333}");
+        else if (t.type === "beast") emoji("\u{1F417}", CELL3 * 0.45);
+      });
+      const solvedNow = isPathSolved(puzzle);
+      statusEl.innerHTML = (solvedNow ? "\u2705 <b>\u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u0433\u043E\u0442\u043E\u0432\u0430!</b>" : `\u{1F97E} \u0421\u043B\u0435\u0434 \u043E\u0442 \u0434\u043E\u043C\u0438\u043A\u0430: <b>${reached.size}</b> \u043F\u043B\u0438\u0442\u043E\u043A`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    function roundRect(g, x, y, w, h, r) {
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.arcTo(x + w, y, x + w, y + h, r);
+      g.arcTo(x + w, y + h, x, y + h, r);
+      g.arcTo(x, y + h, x, y, r);
+      g.arcTo(x, y, x + w, y, r);
+      g.closePath();
+    }
+    draw();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      canvas.removeEventListener("pointerdown", onTap);
+    };
+  }
+
+  // src/core/teaPuzzle.js
+  function createTeaPuzzle(level) {
+    return {
+      level,
+      color: { r: 0, g: 0, b: 0 },
+      heat: 0,
+      used: {},
+      // ingredientId -> count
+      history: [],
+      moves: 0
+    };
+  }
+  function clamp100(v) {
+    return Math.max(0, Math.min(100, v));
+  }
+  function addIngredient(state2, ingredientId) {
+    const ing = state2.level.ingredients.find((i) => i.id === ingredientId);
+    if (!ing) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u0438\u043D\u0433\u0440\u0435\u0434\u0438\u0435\u043D\u0442\u0430" };
+    const usedCount = state2.used[ingredientId] || 0;
+    if (usedCount >= ing.uses) return { ok: false, error: "\u0417\u0430\u043A\u043E\u043D\u0447\u0438\u043B\u0441\u044F" };
+    state2.history.push({
+      ingredientId,
+      prev: { color: { ...state2.color }, heat: state2.heat, usedCount }
+    });
+    state2.color = {
+      r: clamp100(state2.color.r + ing.dr),
+      g: clamp100(state2.color.g + ing.dg),
+      b: clamp100(state2.color.b + ing.db)
+    };
+    state2.heat = clamp100(state2.heat + ing.heat);
+    state2.used[ingredientId] = usedCount + 1;
+    state2.moves += 1;
+    return { ok: true };
+  }
+  function undoTea(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    state2.color = last.prev.color;
+    state2.heat = last.prev.heat;
+    state2.used[last.ingredientId] = last.prev.usedCount;
+    state2.moves += 1;
+    return true;
+  }
+  function resetTea(state2) {
+    state2.color = { r: 0, g: 0, b: 0 };
+    state2.heat = 0;
+    state2.used = {};
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function teaStatus(state2) {
+    const { level } = state2;
+    const t = level.target;
+    const tol = level.tolerance;
+    const diffs = {
+      r: Math.abs(state2.color.r - t.r),
+      g: Math.abs(state2.color.g - t.g),
+      b: Math.abs(state2.color.b - t.b)
+    };
+    const colorOk = diffs.r <= tol && diffs.g <= tol && diffs.b <= tol;
+    const overheated = state2.heat > level.maxHeat;
+    return {
+      colorOk,
+      overheated,
+      diffs,
+      solved: colorOk && !overheated,
+      heat: state2.heat,
+      maxHeat: level.maxHeat
+    };
+  }
+  function isTeaSolved(state2) {
+    return teaStatus(state2).solved;
+  }
+  function solveTea(level) {
+    const ings = level.ingredients;
+    const solutions = [];
+    const assign = new Array(ings.length).fill(0);
+    function evalCombo() {
+      const color = { r: 0, g: 0, b: 0 };
+      let heat = 0;
+      ings.forEach((ing, i) => {
+        const n = assign[i];
+        color.r = clamp100(color.r + ing.dr * n);
+        color.g = clamp100(color.g + ing.dg * n);
+        color.b = clamp100(color.b + ing.db * n);
+        heat = clamp100(heat + ing.heat * n);
+      });
+      const t = level.target;
+      const ok = Math.abs(color.r - t.r) <= level.tolerance && Math.abs(color.g - t.g) <= level.tolerance && Math.abs(color.b - t.b) <= level.tolerance && heat <= level.maxHeat;
+      if (ok) solutions.push({ counts: [...assign], heat });
+    }
+    function bt(k) {
+      if (solutions.length >= 64) return;
+      if (k === ings.length) {
+        evalCombo();
+        return;
+      }
+      for (let n = 0; n <= ings[k].uses; n++) {
+        assign[k] = n;
+        bt(k + 1);
+      }
+    }
+    bt(0);
+    return { count: solutions.length, solutions };
+  }
+  function teaHint(state2) {
+    const { level } = state2;
+    const { count, solutions } = solveTea(level);
+    if (count === 0) return { type: "unsolvable" };
+    let best = null;
+    let bestCost = Infinity;
+    for (const sol of solutions) {
+      let cost = 0;
+      let feasible = true;
+      level.ingredients.forEach((ing2, i2) => {
+        const used = state2.used[ing2.id] || 0;
+        if (used > sol.counts[i2]) feasible = false;
+        else cost += sol.counts[i2] - used;
+      });
+      if (feasible && cost < bestCost) {
+        bestCost = cost;
+        best = sol;
+      }
+    }
+    if (!best) return { type: "reset", text: "\u0422\u0430\u043A \u0434\u0435\u043B\u043E \u043D\u0435 \u043F\u043E\u0439\u0434\u0451\u0442 \u2014 \u043A\u043E\u0442\u0451\u043B \u043F\u0440\u0438\u0434\u0451\u0442\u0441\u044F \u043E\u0441\u0432\u0435\u0436\u0438\u0442\u044C (\u0441\u0431\u0440\u043E\u0441)." };
+    if (bestCost === 0) return { type: "already" };
+    const i = level.ingredients.findIndex((ing2, idx) => (state2.used[ing2.id] || 0) < best.counts[idx]);
+    const ing = level.ingredients[i];
+    return { type: "add", ingredientId: ing.id, name: ing.name, icon: ing.icon };
+  }
+
+  // src/ui/teaView.js
+  function renderTeaPuzzle(container, ctx2, level) {
+    const puzzle = createTeaPuzzle(level);
+    let hintsUsed = 0;
+    let hintIngredient = null;
+    let finished = false;
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const brewPanel = document.createElement("div");
+    brewPanel.className = "panel";
+    brewPanel.style.cssText = "display:flex;gap:20px;align-items:center;flex-wrap:wrap";
+    brewPanel.innerHTML = '<div style="text-align:center"><div class="muted" style="font-size:12px">\u041A\u043E\u0442\u0451\u043B</div></div>';
+    const potBox = document.createElement("div");
+    potBox.style.cssText = "text-align:center";
+    const pot = document.createElement("div");
+    pot.style.cssText = `width:110px;height:110px;border-radius:50% 50% 46% 46%;
+    border:6px solid #4a3a29;box-shadow:inset 0 -14px 24px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.4);
+    transition:background .3s ease;position:relative;overflow:hidden`;
+    potBox.appendChild(pot);
+    const potLabel = document.createElement("div");
+    potLabel.className = "muted";
+    potLabel.style.fontSize = "12px";
+    potLabel.textContent = "\u0446\u0432\u0435\u0442 \u043E\u0442\u0432\u0430\u0440\u0430";
+    potBox.appendChild(potLabel);
+    brewPanel.appendChild(potBox);
+    const targetBox = document.createElement("div");
+    targetBox.style.cssText = "text-align:center";
+    const flask = document.createElement("div");
+    flask.style.cssText = `width:64px;height:88px;border-radius:12px 12px 20px 20px;
+    border:4px solid #4a3a29;box-shadow:inset 0 -10px 18px rgba(0,0,0,.35)`;
+    flask.style.background = rgbCss(level.target);
+    targetBox.appendChild(flask);
+    const flaskLabel = document.createElement("div");
+    flaskLabel.className = "muted";
+    flaskLabel.style.fontSize = "12px";
+    flaskLabel.textContent = "\u0437\u0430\u043A\u0430\u0437 \u043F\u0443\u0442\u043D\u0438\u043A\u0430";
+    targetBox.appendChild(flaskLabel);
+    brewPanel.appendChild(targetBox);
+    const heatBox = document.createElement("div");
+    heatBox.style.cssText = "flex:1;min-width:180px";
+    heatBox.innerHTML = '<div class="muted" style="font-size:12px;margin-bottom:4px">\u0416\u0430\u0440 \u043A\u043E\u0442\u043B\u0430</div>';
+    const heatBar = document.createElement("div");
+    heatBar.className = "hpbar";
+    heatBar.style.height = "14px";
+    const heatFill = document.createElement("div");
+    heatFill.style.background = "#e88a7a";
+    heatBar.appendChild(heatFill);
+    const heatMark = document.createElement("div");
+    heatMark.className = "muted";
+    heatMark.style.fontSize = "12px";
+    heatBox.append(heatBar, heatMark);
+    brewPanel.appendChild(heatBox);
+    wrap.appendChild(brewPanel);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const ingLabel = document.createElement("div");
+    ingLabel.className = "muted";
+    ingLabel.style.cssText = "font-size:13px;margin-bottom:6px";
+    ingLabel.textContent = "\u0418\u043D\u0433\u0440\u0435\u0434\u0438\u0435\u043D\u0442\u044B (\u0442\u0430\u043F \u2014 \u0432 \u043A\u043E\u0442\u0451\u043B):";
+    side.appendChild(ingLabel);
+    const ingGrid = document.createElement("div");
+    ingGrid.style.cssText = "display:flex;flex-wrap:wrap;gap:8px";
+    side.appendChild(ingGrid);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    controls.style.marginTop = "10px";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    function rgbCss(c) {
+      return `rgb(${Math.round(c.r * 2.55)}, ${Math.round(c.g * 2.55)}, ${Math.round(c.b * 2.55)})`;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoTea(puzzle)) {
+        hintIngredient = null;
+        ctx2.sfx?.("tap");
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetTea(puzzle);
+      hintIngredient = null;
+      ctx2.sfx?.("tap");
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = teaHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h.type === "add") {
+        hintsUsed += 1;
+        hintIngredient = h.ingredientId;
+        ctx2.toast(`\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0442\u043E\u043B\u043A\u0430\u0435\u0442 \u043D\u043E\u0441\u043E\u043C: ${h.icon} ${h.name}`);
+        draw();
+      } else if (h.type === "reset") {
+        ctx2.toast(h.text);
+      } else if (h.type === "already") {
+        ctx2.toast("\u041E\u0442\u0432\u0430\u0440 \u0443\u0436\u0435 \u0438\u0434\u0435\u0430\u043B\u0435\u043D!");
+      } else {
+        ctx2.toast("\u0425\u043C, \u0440\u0435\u0446\u0435\u043F\u0442 \u043D\u0435 \u0441\u0445\u043E\u0434\u0438\u0442\u0441\u044F. \u0421\u043A\u0430\u0436\u0438 \u0445\u043E\u0437\u044F\u0438\u043D\u0443 \u043B\u0430\u0432\u043A\u0438!");
+      }
+    }
+    function onAdd(ingId) {
+      if (finished) return;
+      const r = addIngredient(puzzle, ingId);
+      if (r.ok) {
+        hintIngredient = null;
+        ctx2.sfx?.("potion");
+        draw();
+        if (isTeaSolved(puzzle)) finish();
+      } else {
+        ctx2.toast(r.error);
+      }
+    }
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") ctx2.go("puzzles");
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      finished = true;
+      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      draw();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        showOverlay(ctx2, {
+          title: "\u{1FAD6} \u041E\u0442\u0432\u0430\u0440 \u0433\u043E\u0442\u043E\u0432!",
+          subtitle: `\xAB${level.name}\xBB \u2014 \u043F\u0443\u0442\u043D\u0438\u043A \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442`,
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function draw() {
+      pot.style.background = rgbCss(puzzle.color);
+      const st = teaStatus(puzzle);
+      heatFill.style.width = `${st.heat}%`;
+      heatFill.style.background = st.overheated ? "#d9432f" : "#e88a7a";
+      heatMark.innerHTML = st.overheated ? '<span class="warn">\u041F\u0435\u0440\u0435\u0433\u0440\u0435\u0442! \u0422\u0430\u043A\u043E\u0439 \u043E\u0442\u0432\u0430\u0440 \u043F\u0443\u0442\u043D\u0438\u043A \u043D\u0435 \u0432\u043E\u0437\u044C\u043C\u0451\u0442.</span>' : `${st.heat}/${st.maxHeat}`;
+      ingGrid.innerHTML = "";
+      for (const ing of level.ingredients) {
+        const left = ing.uses - (puzzle.used[ing.id] || 0);
+        const b = document.createElement("button");
+        b.className = "small" + (hintIngredient === ing.id ? " primary" : "");
+        b.disabled = left <= 0;
+        const effect = [
+          ing.dr ? `R${ing.dr > 0 ? "+" : ""}${ing.dr}` : "",
+          ing.dg ? `G${ing.dg > 0 ? "+" : ""}${ing.dg}` : "",
+          ing.db ? `B${ing.db > 0 ? "+" : ""}${ing.db}` : "",
+          ing.heat ? `\u0436\u0430\u0440${ing.heat > 0 ? "+" : ""}${ing.heat}` : ""
+        ].filter(Boolean).join(" ");
+        b.innerHTML = `${ing.icon} ${ing.name} <span class="badge">\xD7${left}</span>`;
+        b.title = effect;
+        b.addEventListener("click", () => onAdd(ing.id));
+        ingGrid.appendChild(b);
+      }
+      const d = st.diffs;
+      statusEl.innerHTML = (st.solved ? "\u2705 <b>\u0418\u0434\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440!</b>" : `\u{1F3AF} \u0414\u043E \u0446\u0435\u043B\u0438: <b>\xB1${Math.max(d.r, d.g, d.b)}</b> <span class="muted">(\u0434\u043E\u043F\u0443\u0441\u043A ${level.tolerance})</span>`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    draw();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+    };
+  }
+
   // src/ui/puzzleView.js
   var WORLD_LABEL = {
     meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430 \u2014 \u0441\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438 \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
     town: "\u{1F3F0} \u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A \u2014 \u043F\u043E\u043B\u043A\u0438 \u0438 \u0442\u043E\u0432\u0430\u0440\u044B \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    attic: "\u{1F4D6} \u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A \u2014 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0444\u0440\u0430\u0437 \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432"
+    attic: "\u{1F4D6} \u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A \u2014 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0444\u0440\u0430\u0437 \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    crossroads: "\u{1F31F} \u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A \u043C\u0438\u0440\u043E\u0432 \u2014 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0438 \u0438 \u0447\u0430\u0439",
+    nm: "\u{1F303} \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    sw: "\u{1F438} \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    sf: "\u{1F3AA} \u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    ash: "\u{1F525} \u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    cr: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    jade: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    deep: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    mist: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432"
   };
   function renderPuzzleList(container, ctx2) {
     const { state: state2 } = ctx2;
@@ -4750,6 +9697,14 @@
         btn.textContent = done ? "\u0415\u0449\u0451 \u0440\u0430\u0437" : "\u0420\u0435\u0448\u0430\u0442\u044C";
         btn.addEventListener("click", () => ctx2.go("puzzle", { id: p.id }));
         row.appendChild(btn);
+        if (!done) {
+          const skipBtn = puzzleSkipButton(ctx2, p, () => {
+            container.innerHTML = "";
+            renderPuzzleList(container, ctx2);
+          });
+          skipBtn.className = "small ghost";
+          row.appendChild(skipBtn);
+        }
       }
       list.appendChild(row);
     });
@@ -4762,7 +9717,7 @@
       setTimeout(() => targetRow.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
   }
-  var CELL3 = 64;
+  var CELL4 = 64;
   function renderPuzzle(container, ctx2, params) {
     const level = findPuzzle(ctx2.state, params.id);
     if (!level) {
@@ -4778,6 +9733,12 @@
     if (level.mechanic === "seek") {
       return renderSeekPuzzle(container, ctx2, level);
     }
+    if (level.mechanic === "path") {
+      return renderPathPuzzle(container, ctx2, level);
+    }
+    if (level.mechanic === "tea") {
+      return renderTeaPuzzle(container, ctx2, level);
+    }
     const puzzle = createPuzzle(level);
     let hintsUsed = 0;
     let hintCell = null;
@@ -4791,10 +9752,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL3 * dpr;
-    canvas.height = gh * CELL3 * dpr;
-    canvas.style.width = `${gw * CELL3}px`;
-    canvas.style.height = `${gh * CELL3}px`;
+    canvas.width = gw * CELL4 * dpr;
+    canvas.height = gh * CELL4 * dpr;
+    canvas.style.width = `${gw * CELL4}px`;
+    canvas.style.height = `${gh * CELL4}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -4813,6 +9774,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
     side.appendChild(controls);
     const legend = document.createElement("div");
     legend.className = "panel mt";
@@ -4864,8 +9826,8 @@
       const scaleX = canvas.width / dpr / rect.width;
       const cx = (ev.clientX - rect.left) * scaleX;
       const cy = (ev.clientY - rect.top) * scaleX;
-      const x = Math.floor(cx / CELL3);
-      const y = Math.floor(cy / CELL3);
+      const x = Math.floor(cx / CELL4);
+      const y = Math.floor(cy / CELL4);
       const idx = level.objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (idx >= 0 && level.objects[idx].type === "mirror") {
         rotateMirror(puzzle, idx);
@@ -4897,12 +9859,12 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL3, gh * CELL3);
+      g.clearRect(0, 0, gw * CELL4, gh * CELL4);
       const { lanternsLit, mothsAwake, beams } = traceLight(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL3, y * CELL3, CELL3, CELL3);
+          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
         }
       }
       g.save();
@@ -4912,16 +9874,16 @@
         g.lineWidth = pass.w;
         for (const b of beams) {
           g.beginPath();
-          g.moveTo(b.from[0] * CELL3 + CELL3 / 2, b.from[1] * CELL3 + CELL3 / 2);
-          g.lineTo(b.to[0] * CELL3 + CELL3 / 2, b.to[1] * CELL3 + CELL3 / 2);
+          g.moveTo(b.from[0] * CELL4 + CELL4 / 2, b.from[1] * CELL4 + CELL4 / 2);
+          g.lineTo(b.to[0] * CELL4 + CELL4 / 2, b.to[1] * CELL4 + CELL4 / 2);
           g.stroke();
         }
       }
       g.restore();
       level.objects.forEach((o, i) => {
-        const cx = o.pos[0] * CELL3 + CELL3 / 2;
-        const cy = o.pos[1] * CELL3 + CELL3 / 2;
-        const emoji = (e, size = CELL3 * 0.62) => {
+        const cx = o.pos[0] * CELL4 + CELL4 / 2;
+        const cy = o.pos[1] * CELL4 + CELL4 / 2;
+        const emoji = (e, size = CELL4 * 0.62) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -4932,8 +9894,8 @@
             emoji("\u2728");
             const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
             g.fillStyle = "rgba(255, 240, 190, 0.9)";
-            g.font = `bold ${CELL3 * 0.3}px sans-serif`;
-            g.fillText(dirs[o.dir], cx + CELL3 * 0.28, cy - CELL3 * 0.28);
+            g.font = `bold ${CELL4 * 0.3}px sans-serif`;
+            g.fillText(dirs[o.dir], cx + CELL4 * 0.28, cy - CELL4 * 0.28);
             break;
           }
           case "mirror": {
@@ -4941,25 +9903,25 @@
             if (hintCell && hintCell[0] === o.pos[0] && hintCell[1] === o.pos[1]) {
               g.fillStyle = "rgba(255, 202, 122, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL3 * 0.46, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL4 * 0.46, 0, Math.PI * 2);
               g.fill();
             }
             g.save();
             g.translate(cx, cy);
             g.rotate(orient === 0 ? Math.PI / 4 : -Math.PI / 4);
             g.fillStyle = "#8a6f4d";
-            g.fillRect(-CELL3 * 0.3, -3, CELL3 * 0.6, 6);
+            g.fillRect(-CELL4 * 0.3, -3, CELL4 * 0.6, 6);
             g.fillStyle = "#cfe8ff";
-            g.fillRect(-CELL3 * 0.3, -5, CELL3 * 0.6, 4);
+            g.fillRect(-CELL4 * 0.3, -5, CELL4 * 0.6, 4);
             g.restore();
-            emoji("\u{1FA9E}", CELL3 * 0.3);
+            emoji("\u{1FA9E}", CELL4 * 0.3);
             break;
           }
           case "lantern": {
             if (lanternsLit.has(i)) {
               g.fillStyle = "rgba(255, 214, 120, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL3 * 0.48, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL4 * 0.48, 0, Math.PI * 2);
               g.fill();
               emoji("\u{1F3EE}");
             } else {
@@ -4973,7 +9935,7 @@
             emoji(mothsAwake.has(i) ? "\u{1F621}" : "\u{1F98B}");
             if (mothsAwake.has(i)) {
               g.fillStyle = "rgba(232, 138, 122, 0.25)";
-              g.fillRect(o.pos[0] * CELL3, o.pos[1] * CELL3, CELL3, CELL3);
+              g.fillRect(o.pos[0] * CELL4, o.pos[1] * CELL4, CELL4, CELL4);
             }
             break;
           case "wall":
@@ -5145,6 +10107,17 @@
     layout.style.flexWrap = "wrap";
     layout.style.gap = "14px";
     layout.style.alignItems = "flex-start";
+    const dollPanel = document.createElement("div");
+    dollPanel.className = "panel";
+    dollPanel.style.textAlign = "center";
+    dollPanel.innerHTML = "<h3>\u0420\u044B\u0446\u0430\u0440\u044C</h3>";
+    const doll = document.createElement("canvas");
+    doll.width = 220;
+    doll.height = 280;
+    doll.style.maxWidth = "100%";
+    dollPanel.appendChild(doll);
+    drawKnightDoll(doll, state2);
+    layout.appendChild(dollPanel);
     const slotsPanel = document.createElement("div");
     slotsPanel.className = "panel";
     slotsPanel.style.flex = "1";
@@ -5308,6 +10281,90 @@ ${item2.description}
       renderEquip(container, ctx2);
     }
   }
+  function drawKnightDoll(canvas, state2) {
+    const g = canvas.getContext("2d");
+    const W = canvas.width;
+    const H = canvas.height;
+    const eq = state2.equipped;
+    const item2 = (slot) => eq[slot] ? ITEM_BY_ID[eq[slot]] : null;
+    const grad = g.createRadialGradient(W / 2, H * 0.4, 20, W / 2, H * 0.4, W * 0.75);
+    grad.addColorStop(0, "rgba(255, 202, 122, 0.16)");
+    grad.addColorStop(1, "rgba(255, 202, 122, 0)");
+    g.fillStyle = grad;
+    g.fillRect(0, 0, W, H);
+    const emoji = (e, x, y, size, rot = 0, alpha = 1) => {
+      g.save();
+      g.translate(x, y);
+      g.rotate(rot);
+      g.globalAlpha = alpha;
+      g.font = `${size}px "Segoe UI Emoji", sans-serif`;
+      g.textAlign = "center";
+      g.textBaseline = "middle";
+      g.shadowColor = "rgba(0,0,0,0.45)";
+      g.shadowBlur = 5;
+      g.fillText(e, 0, 0);
+      g.restore();
+    };
+    const armor = item2("armor");
+    const bodyColor = armor ? { common: "#7d8a68", rare: "#6a7fa0", epic: "#8a6fa8", legendary: "#c9a227" }[armor.rarity] || "#7d8a68" : "#8a7a62";
+    g.fillStyle = bodyColor;
+    roundRectDoll(g, W / 2 - 34, H * 0.38, 68, 86, 18);
+    g.fill();
+    g.fillStyle = "#d9b98a";
+    g.beginPath();
+    g.arc(W / 2, H * 0.3, 26, 0, Math.PI * 2);
+    g.fill();
+    g.fillStyle = "#5d4732";
+    roundRectDoll(g, W / 2 - 26, H * 0.38 + 86, 22, 40, 8);
+    g.fill();
+    roundRectDoll(g, W / 2 + 4, H * 0.38 + 86, 22, 40, 8);
+    g.fill();
+    const boots = item2("boots");
+    emoji(boots ? itemEmoji(boots) : "\u{1F9B6}", W / 2 - 15, H * 0.38 + 132, boots ? 26 : 20, 0, boots ? 1 : 0.35);
+    emoji(boots ? itemEmoji(boots) : "\u{1F9B6}", W / 2 + 15, H * 0.38 + 132, boots ? 26 : 20, 0, boots ? 1 : 0.35);
+    const helm = item2("helmet");
+    if (helm) emoji(itemEmoji(helm), W / 2, H * 0.22, 44);
+    else emoji("\u{1F642}", W / 2, H * 0.3, 30);
+    const wpn = item2("weapon");
+    if (wpn) emoji(itemEmoji(wpn), W / 2 - 62, H * 0.46, 50, Math.PI / 5);
+    const shd = item2("shield");
+    if (shd) emoji(itemEmoji(shd), W / 2 + 62, H * 0.46, 48, -Math.PI / 8);
+    const glv = item2("gloves");
+    if (glv) {
+      emoji(itemEmoji(glv), W / 2 + 38, H * 0.5, 20);
+      emoji(itemEmoji(glv), W / 2 - 38, H * 0.5, 20);
+    }
+    const amu = item2("amulet");
+    if (amu) {
+      g.fillStyle = "rgba(255, 226, 138, 0.5)";
+      g.beginPath();
+      g.arc(W / 2, H * 0.46, 16, 0, Math.PI * 2);
+      g.fill();
+      emoji(itemEmoji(amu), W / 2, H * 0.46, 22);
+    }
+    if (item2("ring1")) emoji("\u2728", W / 2 + 40, H * 0.55, 14);
+    if (item2("ring2")) emoji("\u2728", W / 2 - 40, H * 0.55, 14);
+    if (state2.pet && PET_BY_ID[state2.pet]) {
+      emoji(PET_BY_ID[state2.pet].icon, W * 0.8, H * 0.86, 34);
+    }
+    state2.consumableBelt.forEach((id, i) => {
+      const pot = ITEM_BY_ID[id];
+      if (pot) emoji(itemEmoji(pot), W / 2 - 20 + i * 22, H * 0.62, 18);
+    });
+    g.fillStyle = "#c9b294";
+    g.font = "12px sans-serif";
+    g.textAlign = "center";
+    g.fillText("\u0432\u0438\u0434 \u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u043E\u0442 \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0438", W / 2, H - 8);
+  }
+  function roundRectDoll(g, x, y, w, h, r) {
+    g.beginPath();
+    g.moveTo(x + r, y);
+    g.arcTo(x + w, y, x + w, y + h, r);
+    g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r);
+    g.arcTo(x, y, x + w, y, r);
+    g.closePath();
+  }
 
   // src/ui/shopView.js
   function renderShop(container, ctx2) {
@@ -5327,6 +10384,7 @@ ${item2.description}
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
+    const newIds = new Set(unseenShopItems(state2).map((i) => i.id));
     const buyPanel = document.createElement("div");
     buyPanel.className = "panel";
     buyPanel.innerHTML = "<h3>\u041F\u043E\u043B\u043A\u0438 \u043B\u0430\u0432\u043A\u0438</h3>";
@@ -5334,13 +10392,13 @@ ${item2.description}
     buyList.className = "list";
     for (const item2 of shopStock(state2)) {
       const row = document.createElement("div");
-      row.className = "row";
+      row.className = "row" + (newIds.has(item2.id) ? " new-item" : "");
       const priceLabel = item2.sealPrice ? `\u{1F530} ${item2.sealPrice}` : `\u{1FA99} ${item2.price}`;
       const afford = item2.sealPrice ? state2.seals >= item2.sealPrice : state2.coins >= item2.price;
       row.innerHTML = `
       <span class="icon">${itemEmoji(item2)}</span>
       <span class="grow">
-        <div class="name">${item2.name} <span class="badge ${item2.rarity}">${RARITY_LABEL[item2.rarity]}</span></div>
+        <div class="name">${item2.name}${newIds.has(item2.id) ? ' <span class="badge new-badge">\u043D\u043E\u0432\u0438\u043D\u043A\u0430</span>' : ""} <span class="badge ${item2.rarity}">${RARITY_LABEL[item2.rarity]}</span></div>
         <div class="desc">${describeItem(item2) || item2.description}</div>
       </span>
       <span class="price">${priceLabel}</span>`;
@@ -5461,6 +10519,8 @@ ${item2.description}
     }
     cosPanel.appendChild(cosList);
     container.appendChild(cosPanel);
+    markShopSeen(state2);
+    ctx2.save();
     function rerender() {
       container.innerHTML = "";
       renderShop(container, ctx2);
@@ -5536,7 +10596,20 @@ ${item2.description}
     list.className = "list";
     const won = Object.keys(state2.battlesDone).length;
     const firstUnbeaten = firstUnbeatenBattle(state2);
-    const WORLD_LABEL2 = { meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430", town: "\u{1F3F0} \u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A", attic: "\u{1F4D6} \u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A" };
+    const WORLD_LABEL2 = {
+      meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430",
+      town: "\u{1F3F0} \u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A",
+      attic: "\u{1F4D6} \u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A",
+      crossroads: "\u{1F31F} \u042D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
+      nm: "\u{1F303} \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
+      sw: "\u{1F438} \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438",
+      sf: "\u{1F3AA} \u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
+      cr: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B",
+      ash: "\u{1F525} \u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438",
+      jade: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434",
+      deep: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442",
+      mist: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B"
+    };
     let lastWorld = null;
     for (const b of BATTLES) {
       if (b.world !== lastWorld) {
@@ -5550,11 +10623,11 @@ ${item2.description}
       const row = document.createElement("div");
       row.className = "row" + (available ? "" : " locked") + (done ? " done" : "");
       if (firstUnbeaten && b.id === firstUnbeaten.id) row.dataset.scrollTarget = "1";
-      const icons = b.enemies.map((e) => ENEMY_BY_ID[e].icon).join(" ");
+      const icons = b.enemies.map((e) => ENEMY_BY_ID[typeof e === "string" ? e : e.id].icon).join(" ");
       row.innerHTML = `
       <span class="icon">${available ? done ? "\u{1F3C6}" : "\u2694\uFE0F" : "\u{1F512}"}</span>
       <span class="grow">
-        <div class="name">${b.name} ${ENEMY_BY_ID[b.enemies[0]].boss ? '<span class="badge epic">\u0411\u041E\u0421\u0421</span>' : ""}</div>
+        <div class="name">${b.name} ${ENEMY_BY_ID[typeof b.enemies[0] === "string" ? b.enemies[0] : b.enemies[0].id].boss ? '<span class="badge epic">\u0411\u041E\u0421\u0421</span>' : ""}</div>
         <div class="desc">${available ? b.tip : "\u041F\u0440\u043E\u0439\u0434\u0438 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0438\u0439 \u043F\u043E\u0445\u043E\u0434."} \xB7 \u041F\u0440\u043E\u0442\u0438\u0432: ${icons}</div>
       </span>`;
       if (available) {
@@ -5600,9 +10673,11 @@ ${item2.description}
         const d = MERC_BY_ID[id];
         return { uid: `a${i2 + 1}`, name: d.name, icon: d.icon, hp: d.hp, maxHp: d.hp, badges: /* @__PURE__ */ new Set() };
       }),
-      foes: battle.enemies.map((id, i2) => {
+      foes: battle.enemies.map((entry, i2) => {
+        const id = typeof entry === "string" ? entry : entry.id;
+        const scale = typeof entry === "string" ? 1 : entry.scale || 1;
         const d = ENEMY_BY_ID[id];
-        return { uid: `e${i2}`, name: d.name, icon: d.icon, hp: d.hp, maxHp: d.hp, badges: /* @__PURE__ */ new Set() };
+        return { uid: `e${i2}`, name: d.name, icon: d.icon, hp: Math.round(d.hp * scale), maxHp: Math.round(d.hp * scale), badges: /* @__PURE__ */ new Set() };
       })
     };
     const result = runBattle(state2, battle.id, seed);
@@ -5945,7 +11020,7 @@ ${item2.description}
     head.firstElementChild.appendChild(back);
     container.appendChild(head);
     container.appendChild(quickNav(ctx2, [
-      { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
+      { icon: "\u{1F307}", label: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", screen: "hub", params: { scene: "square" } }
     ]));
     const squadPanel = document.createElement("div");
     squadPanel.className = "panel";
@@ -6014,7 +11089,7 @@ ${item2.description}
   }
 
   // src/ui/editorView.js
-  var CELL4 = 56;
+  var CELL5 = 56;
   var PALETTE = [
     { type: "source", icon: "\u2728", label: "\u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A (\u043F\u043E\u0432\u0442\u043E\u0440\u043D\u044B\u0439 \u0442\u0430\u043F \u2014 \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C)" },
     { type: "mirror", icon: "\u{1FA9E}", label: "\u0417\u0435\u0440\u043A\u0430\u043B\u043E (\u0442\u0430\u043F \u2014 \u0441\u043C\u0435\u043D\u0438\u0442\u044C \u043E\u0440\u0438\u0435\u043D\u0442\u0430\u0446\u0438\u044E)" },
@@ -6030,9 +11105,13 @@ ${item2.description}
     newBtn.className = "primary";
     newBtn.textContent = "\u2795 \u041D\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C";
     newBtn.addEventListener("click", () => ctx2.go("editor", {}));
+    const seekBtn = document.createElement("button");
+    seekBtn.textContent = "\u{1F50D} \u0420\u0435\u0434\u0430\u043A\u0442\u043E\u0440 \u0438\u0441\u043A\u0430\u043B\u043E\u043A";
+    seekBtn.style.marginLeft = "8px";
+    seekBtn.addEventListener("click", () => ctx2.go("seekeditor", {}));
     const panel = document.createElement("div");
     panel.className = "panel";
-    panel.appendChild(newBtn);
+    panel.append(newBtn, seekBtn);
     container.appendChild(panel);
     const list = document.createElement("div");
     list.className = "list";
@@ -6282,8 +11361,8 @@ ${item2.description}
     function onTap(ev) {
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / 1 / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL4);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL4);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL5);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL5);
       if (x < 0 || y < 0 || x >= gw || y >= gh) return;
       const idx = objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (tool === "erase") {
@@ -6305,16 +11384,16 @@ ${item2.description}
     canvas.addEventListener("pointerdown", onTap);
     function draw() {
       const dpr = 1;
-      canvas.width = gw * CELL4;
-      canvas.height = gh * CELL4;
-      canvas.style.width = `${gw * CELL4}px`;
-      canvas.style.height = `${gh * CELL4}px`;
+      canvas.width = gw * CELL5;
+      canvas.height = gh * CELL5;
+      canvas.style.width = `${gw * CELL5}px`;
+      canvas.style.height = `${gh * CELL5}px`;
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
+          g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
         }
       }
       const preview = createPuzzle(currentLevel());
@@ -6324,14 +11403,14 @@ ${item2.description}
       g.lineWidth = 4;
       for (const b of beams) {
         g.beginPath();
-        g.moveTo(b.from[0] * CELL4 + CELL4 / 2, b.from[1] * CELL4 + CELL4 / 2);
-        g.lineTo(b.to[0] * CELL4 + CELL4 / 2, b.to[1] * CELL4 + CELL4 / 2);
+        g.moveTo(b.from[0] * CELL5 + CELL5 / 2, b.from[1] * CELL5 + CELL5 / 2);
+        g.lineTo(b.to[0] * CELL5 + CELL5 / 2, b.to[1] * CELL5 + CELL5 / 2);
         g.stroke();
       }
       for (const o of objects) {
-        const cx = o.pos[0] * CELL4 + CELL4 / 2;
-        const cy = o.pos[1] * CELL4 + CELL4 / 2;
-        const emoji = (e, size = CELL4 * 0.6) => {
+        const cx = o.pos[0] * CELL5 + CELL5 / 2;
+        const cy = o.pos[1] * CELL5 + CELL5 / 2;
+        const emoji = (e, size = CELL5 * 0.6) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -6341,16 +11420,16 @@ ${item2.description}
           emoji("\u2728");
           const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
           g.fillStyle = "#fff2be";
-          g.font = `bold ${CELL4 * 0.3}px sans-serif`;
-          g.fillText(dirs[o.dir ?? 1], cx + CELL4 * 0.28, cy - CELL4 * 0.28);
+          g.font = `bold ${CELL5 * 0.3}px sans-serif`;
+          g.fillText(dirs[o.dir ?? 1], cx + CELL5 * 0.28, cy - CELL5 * 0.28);
         } else if (o.type === "mirror") {
           g.save();
           g.translate(cx, cy);
           g.rotate(o.orient === 0 ? Math.PI / 4 : -Math.PI / 4);
           g.fillStyle = "#cfe8ff";
-          g.fillRect(-CELL4 * 0.3, -3, CELL4 * 0.6, 5);
+          g.fillRect(-CELL5 * 0.3, -3, CELL5 * 0.6, 5);
           g.restore();
-          emoji("\u{1FA9E}", CELL4 * 0.3);
+          emoji("\u{1FA9E}", CELL5 * 0.3);
         } else if (o.type === "lantern") emoji("\u{1F3EE}");
         else if (o.type === "moth") emoji("\u{1F98B}");
         else if (o.type === "wall") emoji("\u{1F311}");
@@ -6369,7 +11448,7 @@ ${item2.description}
       "\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0441 \u043F\u043E\u0445\u043E\u0434\u043E\u0432 \u0441\u0442\u0430\u043D\u043E\u0432\u044F\u0442\u0441\u044F \u0437\u0435\u043B\u044C\u044F\u043C\u0438 \u0438 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435\u043C. \u041D\u0430\u043A\u043E\u0432\u0430\u043B\u044C\u043D\u044F \u0433\u043E\u0440\u044F\u0447\u0430\u044F, \u043A\u043E\u0442\u0451\u043B \u0431\u0443\u043B\u044C\u043A\u0430\u0435\u0442."
     ));
     container.appendChild(quickNav(ctx2, [
-      { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
+      { icon: "\u{1F307}", label: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", screen: "hub", params: { scene: "square" } }
     ]));
     const layout = document.createElement("div");
     layout.style.cssText = "display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start";
@@ -6450,6 +11529,908 @@ ${item2.description}
     }
   }
 
+  // src/ui/sound.js
+  var ctxAudio = null;
+  var enabled = true;
+  function ac() {
+    if (!ctxAudio && typeof AudioContext !== "undefined") {
+      ctxAudio = new AudioContext();
+    }
+    return ctxAudio;
+  }
+  function initSound() {
+    enabled = typeof localStorage === "undefined" || localStorage.getItem("cozy_sound") !== "off";
+    if (typeof document === "undefined") return;
+    const unlock = () => {
+      ac()?.resume?.();
+    };
+    document.addEventListener?.("pointerdown", unlock, { once: true });
+    document.addEventListener?.("keydown", unlock, { once: true });
+  }
+  function toggleSound() {
+    enabled = !enabled;
+    try {
+      localStorage.setItem("cozy_sound", enabled ? "on" : "off");
+    } catch {
+    }
+    return enabled;
+  }
+  function soundEnabled() {
+    return enabled;
+  }
+  function tone(freq, dur, { type = "sine", gain = 0.08, delay = 0, slide = 0 } = {}) {
+    const a = ac();
+    if (!a || !enabled) return;
+    const t0 = a.currentTime + delay;
+    const osc = a.createOscillator();
+    const g = a.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t0);
+    if (slide) osc.frequency.exponentialRampToValueAtTime(Math.max(30, freq + slide), t0 + dur);
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(gain, t0 + 0.01);
+    g.gain.exponentialRampToValueAtTime(1e-4, t0 + dur);
+    osc.connect(g).connect(a.destination);
+    osc.start(t0);
+    osc.stop(t0 + dur + 0.05);
+  }
+  function sfx(name) {
+    if (!enabled) return;
+    switch (name) {
+      case "tap":
+        tone(520, 0.08, { type: "triangle", gain: 0.05 });
+        break;
+      case "rotate":
+        tone(440, 0.07, { type: "triangle", gain: 0.06, slide: 160 });
+        break;
+      case "hint":
+        tone(660, 0.15, { type: "sine", gain: 0.05 });
+        tone(880, 0.2, { delay: 0.1, gain: 0.04 });
+        break;
+      case "success":
+        [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
+        break;
+      case "coin":
+        tone(990, 0.07, { type: "square", gain: 0.03 });
+        tone(1320, 0.1, { delay: 0.06, type: "square", gain: 0.025 });
+        break;
+      case "hit":
+        tone(180, 0.08, { type: "sawtooth", gain: 0.04, slide: -60 });
+        break;
+      case "crit":
+        tone(240, 0.12, { type: "sawtooth", gain: 0.06, slide: -120 });
+        break;
+      case "potion":
+        tone(392, 0.12, { gain: 0.05 });
+        tone(523, 0.15, { delay: 0.08, gain: 0.05 });
+        break;
+      case "fail":
+        [392, 330, 262].forEach((f, i) => tone(f, 0.3, { delay: i * 0.14, gain: 0.05 }));
+        break;
+      case "moth":
+        tone(300, 0.2, { type: "square", gain: 0.04, slide: 80 });
+        break;
+      default:
+        tone(440, 0.08, { gain: 0.04 });
+    }
+  }
+
+  // src/ui/settingsView.js
+  function renderSettings(container, ctx2) {
+    const { state: state2 } = ctx2;
+    container.appendChild(header(ctx2, "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438", "\u041B\u0430\u0432\u043A\u0430 \u043F\u043E\u0434\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u043E\u0434 \u0445\u043E\u0437\u044F\u0438\u043D\u0430"));
+    const panel = document.createElement("div");
+    panel.className = "panel";
+    const modeTitle = document.createElement("h3");
+    modeTitle.textContent = "\u0420\u0435\u0436\u0438\u043C \u0431\u043E\u044F";
+    panel.appendChild(modeTitle);
+    const modes = [
+      {
+        id: "formation",
+        icon: "\u2694\uFE0F",
+        name: "\u0421\u0431\u043E\u0440 (\u043F\u043E\u043B\u0435 \u0431\u043E\u044F)",
+        desc: "\u0420\u044F\u0434\u044B \u0438 \u043F\u043E\u0440\u044F\u0434\u043E\u043A \u0431\u043E\u0439\u0446\u043E\u0432: \u0442\u0430\u043D\u043A\u0438 \u0432\u043F\u0435\u0440\u0451\u0434, \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u043D\u0430\u0437\u0430\u0434. \u0420\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0431\u043E\u0435\u043C, \u0444\u0438\u0433\u0443\u0440\u043A\u0438, \u0432\u044B\u0441\u0442\u0440\u0435\u043B\u044B \u0438 \u0443\u0434\u0430\u0440\u044B."
+      },
+      {
+        id: "classic",
+        icon: "\u{1F4DC}",
+        name: "\u041F\u0440\u043E\u0441\u0442\u043E\u0439",
+        desc: "\u0421\u043F\u043E\u043A\u043E\u0439\u043D\u044B\u0439 \u0430\u0432\u0442\u043E\u0431\u043E\u0439: \u043B\u043E\u0433 \u0441\u043E\u0431\u044B\u0442\u0438\u0439 \u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u044E\u043D\u0438\u0442\u043E\u0432. \u041A\u0430\u043A \u0431\u044B\u043B\u043E \u0438\u0437\u043D\u0430\u0447\u0430\u043B\u044C\u043D\u043E."
+      }
+    ];
+    for (const m of modes) {
+      const row = document.createElement("div");
+      row.className = "row" + (state2.settings.battleMode === m.id ? " done" : "");
+      row.style.cursor = "pointer";
+      row.innerHTML = `
+      <span class="icon">${m.icon}</span>
+      <span class="grow">
+        <div class="name">${m.name}</div>
+        <div class="desc">${m.desc}</div>
+      </span>
+      <span class="price">${state2.settings.battleMode === m.id ? "\u2713" : ""}</span>`;
+      row.addEventListener("click", () => {
+        state2.settings.battleMode = m.id;
+        ctx2.sfx?.("tap");
+        ctx2.save();
+        rerender();
+      });
+      panel.appendChild(row);
+    }
+    const soundTitle = document.createElement("h3");
+    soundTitle.textContent = "\u0417\u0432\u0443\u043A";
+    soundTitle.style.marginTop = "16px";
+    panel.appendChild(soundTitle);
+    const soundBtn = document.createElement("button");
+    soundBtn.textContent = soundEnabled() ? "\u{1F514} \u0417\u0432\u0443\u043A \u0432\u043A\u043B\u044E\u0447\u0451\u043D" : "\u{1F515} \u0417\u0432\u0443\u043A \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D";
+    soundBtn.addEventListener("click", () => {
+      const on = toggleSound();
+      soundBtn.textContent = on ? "\u{1F514} \u0417\u0432\u0443\u043A \u0432\u043A\u043B\u044E\u0447\u0451\u043D" : "\u{1F515} \u0417\u0432\u0443\u043A \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D";
+      if (on) ctx2.sfx?.("coin");
+    });
+    panel.appendChild(soundBtn);
+    const tutTitle = document.createElement("h3");
+    tutTitle.textContent = "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435";
+    tutTitle.style.marginTop = "16px";
+    panel.appendChild(tutTitle);
+    const tutBtn = document.createElement("button");
+    tutBtn.className = "ghost";
+    tutBtn.textContent = "\u{1F408} \u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0441\u043D\u043E\u0432\u0430";
+    tutBtn.addEventListener("click", () => {
+      state2.tutorial = {};
+      state2.tutorialSkipped = false;
+      ctx2.save();
+      ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043D\u043E\u0432\u0430 \u0431\u0443\u0434\u0435\u0442 \u0432\u0435\u0441\u0442\u0438 \u0442\u0435\u0431\u044F. \u041D\u0430\u0447\u043D\u0451\u043C \u0441 \u043B\u0430\u0432\u043A\u0438!");
+      ctx2.go("hub");
+    });
+    panel.appendChild(tutBtn);
+    const newTitle = document.createElement("h3");
+    newTitle.textContent = "\u041B\u0430\u0432\u043A\u0430";
+    newTitle.style.marginTop = "16px";
+    panel.appendChild(newTitle);
+    const newBtn = document.createElement("button");
+    newBtn.className = "ghost";
+    newBtn.textContent = "\u{1F56F}\uFE0F \u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443";
+    newBtn.addEventListener("click", () => ctx2.newGameConfirm());
+    panel.appendChild(newBtn);
+    container.appendChild(panel);
+    const secret = document.createElement("div");
+    secret.className = "muted center";
+    secret.style.cssText = "font-size:12px;margin-top:6px;user-select:none;cursor:default";
+    let taps = 0;
+    let revealed = false;
+    const renderSecret = () => {
+      secret.textContent = `\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432 \xB7 \u0432\u0435\u0440\u0441\u0438\u044F 0.9 \xB7 \u{1F56F}\uFE0F${taps > 0 && taps < 5 ? " \xB7 \u2026" + taps : ""}`;
+    };
+    renderSecret();
+    secret.addEventListener("click", () => {
+      if (revealed) return;
+      taps += 1;
+      if (taps >= 5) {
+        revealed = true;
+        revealCheats();
+      } else {
+        ctx2.sfx?.("tap");
+        renderSecret();
+      }
+    });
+    container.appendChild(secret);
+    function revealCheats() {
+      const box = document.createElement("div");
+      box.className = "panel";
+      box.innerHTML = `<h3>\u{1F92B} \u0422\u0430\u0439\u043D\u0430\u044F \u043A\u043E\u043C\u043D\u0430\u0442\u0430</h3>
+      <div class="muted" style="font-size:13px">\u0427\u0438\u0442-\u043A\u043E\u0434\u044B \u0434\u043B\u044F \u0442\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u044F \u0438 \u0431\u044B\u0441\u0442\u0440\u043E\u0433\u043E \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430. \u0412\u0432\u043E\u0434\u0438 \u0441\u043B\u043E\u0432\u043E \u0438 \u0436\u043C\u0438 \xAB\u0421\u043A\u0430\u0437\u0430\u0442\u044C\xBB.</div>`;
+      const row = document.createElement("div");
+      row.style.cssText = "display:flex;gap:8px;margin-top:10px";
+      const input = document.createElement("input");
+      input.placeholder = "\u0447\u0438\u0442-\u043A\u043E\u0434\u2026";
+      input.style.cssText = "font:inherit;padding:8px 12px;border-radius:10px;border:2px solid #6b553a;background:#241b12;color:#f3e6cf;flex:1";
+      const say = document.createElement("button");
+      say.className = "primary small";
+      say.textContent = "\u0421\u043A\u0430\u0437\u0430\u0442\u044C";
+      const run = () => {
+        const r = applyCheat(state2, input.value);
+        ctx2.toast(r.message);
+        if (r.ok) {
+          ctx2.sfx?.("success");
+          ctx2.save();
+        }
+        input.value = "";
+        input.focus();
+      };
+      say.addEventListener("click", run);
+      input.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") run();
+      });
+      row.append(input, say);
+      box.appendChild(row);
+      if ((state2.cheats?.used || []).length > 0) {
+        const used = document.createElement("div");
+        used.className = "muted mt";
+        used.style.fontSize = "12px";
+        used.textContent = `\u0423\u0436\u0435 \u0448\u0435\u043F\u0442\u0430\u043B\u043E\u0441\u044C: ${state2.cheats.used.join(" \xB7 ")}`;
+        box.appendChild(used);
+      }
+      secret.replaceWith(box);
+      input.focus();
+    }
+    function rerender() {
+      container.innerHTML = "";
+      renderSettings(container, ctx2);
+    }
+  }
+
+  // src/ui/formationView.js
+  var FRONT2 = [0, 1, 2];
+  function slotPos(slot, side) {
+    const row = slot % 3;
+    const y = 18 + row * 32;
+    const x = side === "ally" ? FRONT2.includes(slot) ? 30 : 8 : FRONT2.includes(slot) ? 70 : 92;
+    return [x, y];
+  }
+  function renderFormation(container, ctx2, params) {
+    const battle = BATTLE_BY_ID[params.id];
+    if (!battle || !battleAvailable(ctx2.state, battle.id)) {
+      ctx2.go("battles");
+      return;
+    }
+    const { state: state2 } = ctx2;
+    container.appendChild(header(ctx2, `${battle.name} \u2014 \u0440\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430`, battle.tip, "battles"));
+    const prepPanel = document.createElement("div");
+    prepPanel.className = "panel";
+    prepPanel.innerHTML = `<h3>\u0422\u0432\u043E\u0439 \u0441\u0442\u0440\u043E\u0439</h3>
+    <div class="muted" style="font-size:13px;margin-bottom:10px">
+    \u0422\u0430\u043F\u043D\u0438 \u0431\u043E\u0439\u0446\u0430, \u0437\u0430\u0442\u0435\u043C \u0441\u043B\u043E\u0442. \u041F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434 \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0440, \u0437\u0430\u0434\u043D\u0438\u0439 \u2014 \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0438 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430.</div>`;
+    const field = document.createElement("div");
+    field.className = "form-field";
+    prepPanel.appendChild(field);
+    const units = [
+      { key: "knight", icon: "\u{1F6E1}\uFE0F", name: "\u0420\u044B\u0446\u0430\u0440\u044C" },
+      ...state2.squadMercs.map((id, i) => ({
+        key: `merc${i}`,
+        icon: MERC_BY_ID[id].icon,
+        name: MERC_BY_ID[id].name
+      }))
+    ];
+    let selectedUnit = null;
+    const enemyEntries = battle.enemies.map((e) => typeof e === "string" ? { id: e, scale: 1 } : e);
+    const enemySlots = enemyFormationSlots(battle.enemies);
+    function slotEl(slot, side) {
+      const [x, y] = slotPos(slot, side);
+      const el = document.createElement("div");
+      el.className = "form-slot" + (FRONT2.includes(slot) ? " front" : " back");
+      el.style.left = `${x}%`;
+      el.style.top = `${y}%`;
+      el.dataset.slot = slot;
+      el.dataset.side = side;
+      return el;
+    }
+    const slotEls = {};
+    for (let s = 0; s < 6; s++) {
+      const el = slotEl(s, "ally");
+      field.appendChild(el);
+      slotEls[`ally${s}`] = el;
+      el.addEventListener("click", () => {
+        if (!selectedUnit) return;
+        moveFormationSlot(state2, selectedUnit, s);
+        selectedUnit = null;
+        ctx2.sfx?.("rotate");
+        rerender();
+      });
+    }
+    enemySlots.forEach((slot, i) => {
+      const def = ENEMY_BY_ID[enemyEntries[i].id];
+      const el = slotEl(slot, "enemy");
+      el.innerHTML = `<span class="fs-icon">${def.icon}</span>`;
+      el.classList.add("occupied", "enemy");
+      field.appendChild(el);
+    });
+    for (const u of units) {
+      const slot = state2.formation[u.key];
+      const host = slotEls[`ally${slot}`];
+      if (!host) continue;
+      host.classList.add("occupied");
+      host.innerHTML = `<span class="fs-icon">${u.icon}</span><span class="fs-name">${u.name}</span>`;
+      host.addEventListener("click", (ev) => {
+        ev.stopPropagation?.();
+        selectedUnit = selectedUnit === u.key ? null : u.key;
+        field.querySelectorAll(".form-slot").forEach((s) => s.classList.remove("selected"));
+        if (selectedUnit) host.classList.add("selected");
+        ctx2.sfx?.("tap");
+      });
+    }
+    const actions = document.createElement("div");
+    actions.style.cssText = "display:flex;gap:10px;margin-top:12px;flex-wrap:wrap";
+    const goBtn = document.createElement("button");
+    goBtn.className = "primary";
+    goBtn.textContent = "\u2694\uFE0F \u0412 \u0431\u043E\u0439!";
+    goBtn.addEventListener("click", () => startBattle());
+    actions.appendChild(goBtn);
+    prepPanel.appendChild(actions);
+    container.appendChild(prepPanel);
+    function rerender() {
+      container.innerHTML = "";
+      renderFormation(container, ctx2, params);
+    }
+    function startBattle() {
+      const seed = Date.now() % 1e5 + 1;
+      const result = runBattle(state2, battle.id, seed);
+      ctx2.save();
+      playBattle(result);
+    }
+    function playBattle(result) {
+      container.innerHTML = "";
+      container.appendChild(header(ctx2, battle.name, "\u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u0438 \u0443\u0447\u0438\u0441\u044C", "battles"));
+      const field2 = document.createElement("div");
+      field2.className = "form-field battle";
+      container.appendChild(field2);
+      const controls = document.createElement("div");
+      controls.className = "panel";
+      controls.style.cssText = "display:flex;gap:8px;align-items:center;margin-top:10px";
+      controls.append(document.createTextNode("\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C: "));
+      for (const [label, ms] of [["1x", 500], ["2x", 250], ["4x", 120]]) {
+        const b = document.createElement("button");
+        b.className = "small";
+        b.textContent = label;
+        b.addEventListener("click", () => {
+          speed = ms;
+        });
+        controls.appendChild(b);
+      }
+      const skip = document.createElement("button");
+      skip.className = "small ghost";
+      skip.textContent = "\u23ED\uFE0F \u041A \u0438\u0442\u043E\u0433\u0443";
+      skip.addEventListener("click", () => finishNow());
+      controls.appendChild(skip);
+      container.appendChild(controls);
+      const logBox = document.createElement("div");
+      logBox.className = "battle-log";
+      container.appendChild(logBox);
+      const figures = /* @__PURE__ */ new Map();
+      const unitsByUid = /* @__PURE__ */ new Map();
+      const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a.slot]));
+      const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f.slot]));
+      const unitDefs = /* @__PURE__ */ new Map();
+      unitDefs.set("a0", { name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438", icon: "\u{1F6E1}\uFE0F", hp: 0 });
+      state2.squadMercs.forEach((id, i2) => {
+        const d = MERC_BY_ID[id];
+        unitDefs.set(`a${i2 + 1}`, { name: d.name, icon: d.icon, hp: d.hp });
+      });
+      enemyEntries.forEach((e, i2) => {
+        const d = ENEMY_BY_ID[e.id];
+        unitDefs.set(`e${i2}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)) });
+      });
+      unitDefs.get("a0").hp = result.report.knightHpMax;
+      for (const [uid, def] of unitDefs) {
+        const isAlly = uid.startsWith("a");
+        const slot = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
+        if (slot === void 0) continue;
+        const [x, y] = slotPos(slot, isAlly ? "ally" : "enemy");
+        const el = document.createElement("div");
+        el.className = "unit-figure " + (isAlly ? "ally" : "enemy");
+        el.style.left = `${x}%`;
+        el.style.top = `${y}%`;
+        el.innerHTML = `
+        <div class="uf-icon">${def.icon}</div>
+        <div class="uf-name">${def.name}</div>
+        <div class="hpbar"><div style="width:100%"></div></div>`;
+        field2.appendChild(el);
+        const unit = { hp: def.hp, maxHp: def.hp, badges: /* @__PURE__ */ new Set() };
+        figures.set(uid, { el, unit, side: isAlly ? "ally" : "enemy", x, y });
+        unitsByUid.set(uid, unit);
+      }
+      let speed = 500;
+      let timer = null;
+      let i = 0;
+      let done = false;
+      function figOf(uid) {
+        return figures.get(uid) || null;
+      }
+      function setHp(uid) {
+        const f = figOf(uid);
+        if (!f) return;
+        const bar = f.el.querySelector(".hpbar > div");
+        bar.style.width = `${Math.max(0, f.unit.hp / f.unit.maxHp * 100)}%`;
+        f.el.classList.toggle("dead", f.unit.hp <= 0);
+      }
+      function logLine(cls, text) {
+        const line = document.createElement("div");
+        line.className = cls;
+        line.textContent = text;
+        logBox.appendChild(line);
+        logBox.scrollTop = logBox.scrollHeight;
+      }
+      function pulse(el, cls, ms = 480) {
+        if (!el) return;
+        el.classList.remove(cls);
+        void el.offsetWidth;
+        el.classList.add(cls);
+        setTimeout(() => el.classList.remove(cls), ms);
+      }
+      function animateHit(e) {
+        const atk = figOf(e.fromUid);
+        const def = figOf(e.toUid);
+        if (!atk || !def) return;
+        if (e.ranged) {
+          const arrow = document.createElement("div");
+          arrow.className = "projectile";
+          arrow.textContent = e.elem === "fire" ? "\u{1F525}" : "\u27B9";
+          arrow.style.left = `${atk.x}%`;
+          arrow.style.top = `${atk.y}%`;
+          field2.appendChild(arrow);
+          requestAnimationFrame(() => {
+            arrow.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
+          });
+          setTimeout(() => arrow.remove(), 340);
+          setTimeout(() => hitLand(def, e), 320);
+        } else {
+          const dx = (def.x - atk.x) * 0.5;
+          const dy = (def.y - atk.y) * 0.5;
+          atk.el.style.transition = "transform 0.14s ease";
+          atk.el.style.transform = `translate(${dx * field2.offsetWidth / 100}px, ${dy * field2.offsetHeight / 100}px)`;
+          setTimeout(() => {
+            atk.el.style.transform = "";
+            hitLand(def, e);
+          }, 160);
+        }
+      }
+      function hitLand(defFig, e) {
+        defFig.unit.hp = Math.max(0, defFig.unit.hp - e.dmg);
+        setHp(e.toUid);
+        pulse(defFig.el, e.crit ? "anim-crit" : "anim-hit", 480);
+        if (defFig.unit.hp <= 0) pulse(defFig.el, "anim-death", 650);
+      }
+      function applyEvent(e) {
+        switch (e.t) {
+          case "start":
+            logLine("sys", `\u0421\u0442\u0440\u043E\u0439 \u0432\u044B\u0441\u0442\u0440\u043E\u0435\u043D: ${e.allies.join(", ")} \u043F\u0440\u043E\u0442\u0438\u0432 ${e.foes.join(", ")}.`);
+            break;
+          case "hit":
+            animateHit(e);
+            logLine(e.crit ? "crit" : "hit", `${e.from} \u2192 ${e.to}: \u2212${e.dmg}${e.crit ? " \u041A\u0420\u0418\u0422!" : ""}`);
+            ctx2.sfx?.(e.crit ? "crit" : "hit");
+            break;
+          case "dodge":
+            logLine("sys", `${e.who} \u0443\u043A\u043B\u043E\u043D\u044F\u0435\u0442\u0441\u044F!`);
+            if (figOf(e.uid)) pulse(figOf(e.uid).el, "anim-dodge", 380);
+            break;
+          case "status": {
+            logLine("status", `${e.who}: ${statusName(e.kind)}`);
+            break;
+          }
+          case "sleeps":
+            logLine("status", `${e.who} \u0441\u043F\u0438\u0442\u2026 \u{1F634}`);
+            break;
+          case "potion": {
+            const f = figOf(e.uid);
+            if (f && e.healed) {
+              f.unit.hp = Math.min(f.unit.maxHp, f.unit.hp + e.healed);
+              setHp(e.uid);
+              pulse(f.el, "anim-heal", 700);
+            }
+            logLine("potion", `${e.who} \u043F\u044C\u0451\u0442 ${e.name}${e.healed ? ` (+${e.healed} \u2764\uFE0F)` : ""}`);
+            ctx2.sfx?.("potion");
+            break;
+          }
+        }
+      }
+      function statusName(kind) {
+        return { sleep: "\u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442 \u{1F634}", poison: "\u043E\u0442\u0440\u0430\u0432\u043B\u0435\u043D \u2620\uFE0F", slow: "\u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D \u{1F40C}", fear: "\u043E\u0445\u0432\u0430\u0447\u0435\u043D \u0441\u0442\u0440\u0430\u0445\u043E\u043C \u{1F628}", regen: "\u043F\u043E\u0434\u043A\u0440\u0435\u043F\u043B\u044F\u0435\u0442\u0441\u044F \u{1F49A}" }[kind] || kind;
+      }
+      function step() {
+        if (done) return;
+        if (i >= result.log.length) {
+          endScreen();
+          return;
+        }
+        applyEvent(result.log[i]);
+        i += 1;
+        timer = setTimeout(step, speed);
+      }
+      function finishNow() {
+        if (done) return;
+        while (i < result.log.length) {
+          i += 1;
+        }
+        for (const f of figures.values()) f.unit.hp = 0;
+        endScreen();
+      }
+      function endScreen() {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        const rep = result.report;
+        ctx2.sfx?.(rep.victory ? "success" : "fail");
+        const rewardHtml = (result.rewards || []).map(rewardText).filter(Boolean).join("<br>");
+        const nextB = rep.victory ? nextBattle(battle.id) : null;
+        const overlay = showOverlay(ctx2, {
+          title: rep.victory ? "\u{1F3C6} \u041F\u043E\u0431\u0435\u0434\u0430!" : "\u{1F319} \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C",
+          subtitle: `\u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: ${rep.dealt} \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: ${rep.taken} \xB7 \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: ${rep.foesDown}/${rep.foesTotal}` + ((rep.alliesStats || []).length > 1 ? "<br>" + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join(" \xB7 ") : ""),
+          rewards: [],
+          advice: rep.advice,
+          buttons: [
+            ...nextB ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0431\u0438\u0442\u0432\u0430 \u2192 ${nextB.name}`, primary: true, onClick: () => ctx2.go("battle", { id: nextB.id }) }] : [],
+            { label: "\u{1F392} \u041A \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0435", onClick: () => ctx2.go("equip") },
+            { label: "\u{1F501} \u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("battle", { id: battle.id }) },
+            { label: "\u041A \u043F\u043E\u0445\u043E\u0434\u0430\u043C", primary: !nextB, onClick: () => ctx2.go("battles") }
+          ]
+        });
+        if (rewardHtml) {
+          const card = overlay.querySelector(".card");
+          const rw = document.createElement("div");
+          rw.className = "rewards";
+          rw.innerHTML = rewardHtml;
+          card.insertBefore(rw, card.querySelector(".advice") || card.querySelector(".actions"));
+        }
+      }
+      step();
+    }
+  }
+
+  // src/ui/seekEditorView.js
+  function renderSeekEditorList(container, ctx2) {
+    container.appendChild(header(ctx2, "\u0420\u0435\u0434\u0430\u043A\u0442\u043E\u0440 \u0438\u0441\u043A\u0430\u043B\u043E\u043A", "\u0412\u044B\u0431\u0435\u0440\u0438 \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u2014 \u043F\u043E\u0434\u0432\u0438\u043D\u0443\u0442\u044C \u0438\u043B\u0438 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u043E\u0431\u043B\u0430\u0441\u0442\u0438", "workshop"));
+    const ovCount = Object.keys(loadSeekOverrides()).length;
+    if (ovCount > 0) {
+      const panel = document.createElement("div");
+      panel.className = "panel";
+      panel.innerHTML = `<div class="muted" style="font-size:13px">\u041F\u0440\u0430\u0432\u043E\u043A \u043D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u043E: <b>${ovCount}</b> \u2014 \u0445\u0440\u0430\u043D\u044F\u0442\u0441\u044F \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u043E \u043E\u0442 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F, \u043D\u043E\u0432\u0430\u044F \u0438\u0433\u0440\u0430 \u0438\u0445 \u043D\u0435 \u0441\u043E\u0442\u0440\u0451\u0442.</div>`;
+      const expBtn = document.createElement("button");
+      expBtn.className = "small primary";
+      expBtn.textContent = "\u{1F4E6} \u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0432\u0441\u0435\u0445 \u043F\u0440\u0430\u0432\u043E\u043A";
+      expBtn.addEventListener("click", async () => {
+        const json = JSON.stringify(loadSeekOverrides(), null, 2);
+        try {
+          await navigator.clipboard.writeText(json);
+          ctx2.toast("\u0412\u0441\u0435 \u043F\u0440\u0430\u0432\u043A\u0438 \u0432 \u0431\u0443\u0444\u0435\u0440\u0435 \u2014 \u043F\u0440\u0438\u0448\u043B\u0438 \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A\u0443, \u0432\u0448\u044C\u0451\u043C \u0432 \u0434\u0430\u043D\u043D\u044B\u0435 \u0438\u0433\u0440\u044B.");
+        } catch {
+          console.log(json);
+          ctx2.toast("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u2014 JSON \u0432 \u043A\u043E\u043D\u0441\u043E\u043B\u0438.");
+        }
+      });
+      panel.appendChild(expBtn);
+      container.appendChild(panel);
+    }
+    const list = document.createElement("div");
+    list.className = "list";
+    for (const p of SEEK_PUZZLES) {
+      const row = document.createElement("div");
+      row.className = "row";
+      const hasOverride = !!loadSeekOverrides()[p.id] || !!ctx2.state.seekOverrides?.[p.id];
+      row.innerHTML = `
+      <span class="icon">\u{1F50D}</span>
+      <span class="grow">
+        <div class="name">${p.name} ${hasOverride ? '<span class="badge rare">\u043F\u0440\u0430\u0432\u043A\u0430</span>' : ""}</div>
+        <div class="desc">\u0413\u0440\u0443\u043F\u043F: ${p.groups.length} \xB7 \u0441\u043F\u043E\u0442\u043E\u0432: ${p.groups.reduce((n, g) => n + g.spots.length, 0)}</div>
+      </span>`;
+      const btn = document.createElement("button");
+      btn.className = "small";
+      btn.textContent = "\u041F\u0440\u0430\u0432\u0438\u0442\u044C";
+      btn.addEventListener("click", () => ctx2.go("seekeditor", { id: p.id }));
+      row.appendChild(btn);
+      list.appendChild(row);
+    }
+    container.appendChild(list);
+  }
+  function renderSeekEditor(container, ctx2, params) {
+    const raw = SEEK_PUZZLES.find((p) => p.id === params.id);
+    if (!raw) {
+      ctx2.go("workshop");
+      return;
+    }
+    const base = applySeekOverrides(ctx2.state, raw);
+    let groups = JSON.parse(JSON.stringify(base.groups));
+    let selected = null;
+    let drag = null;
+    container.appendChild(header(
+      ctx2,
+      `\u041F\u0440\u0430\u0432\u043A\u0430: ${raw.name}`,
+      "\u0422\u044F\u043D\u0438 \u043A\u0440\u0443\u0433\u0438, \u0447\u0442\u043E\u0431\u044B \u0434\u0432\u0438\u0433\u0430\u0442\u044C. +/\u2212 \u043C\u0435\u043D\u044F\u0435\u0442 \u0440\u0430\u0434\u0438\u0443\u0441 (\u0438\u043B\u0438 \u043A\u043E\u043B\u0435\u0441\u043E \u043C\u044B\u0448\u0438).",
+      "workshop"
+    ));
+    const [W, H] = raw.sceneSize || [1e3, 650];
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const canvasBox = document.createElement("div");
+    canvasBox.className = "puzzle-canvas-box";
+    const canvas = document.createElement("canvas");
+    canvas.className = "game";
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = "min(100%, 880px)";
+    canvas.style.height = "auto";
+    canvas.style.touchAction = "none";
+    canvasBox.appendChild(canvas);
+    wrap.appendChild(canvasBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const infoEl = document.createElement("div");
+    infoEl.className = "puzzle-status";
+    side.appendChild(infoEl);
+    const radiusRow = document.createElement("div");
+    radiusRow.style.cssText = "display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap";
+    const minus = mkBtn("\u2796 \u0420\u0430\u0434\u0438\u0443\u0441", () => resize(-4));
+    const plus = mkBtn("\u2795 \u0420\u0430\u0434\u0438\u0443\u0441", () => resize(4));
+    radiusRow.append(minus, plus);
+    const navRow = document.createElement("div");
+    navRow.style.cssText = "display:flex;gap:8px;align-items:center;margin-bottom:10px";
+    const navPrev = mkBtn("\u2039", () => cycleSpot(-1));
+    const navLabel = document.createElement("span");
+    navLabel.className = "muted";
+    navLabel.style.fontSize = "14px";
+    navLabel.textContent = "\u2014";
+    const navNext = mkBtn("\u203A", () => cycleSpot(1));
+    navRow.append(navPrev, navLabel, navNext);
+    radiusRow.append(navRow);
+    const addModeBtn = mkBtn("\u2795 \u041A\u0440\u0443\u0436\u043E\u043A", toggleAddMode);
+    const delBtn = mkBtn("\u{1F5D1} \u0423\u0434\u0430\u043B\u0438\u0442\u044C", deleteSpot);
+    radiusRow.append(addModeBtn, delBtn);
+    side.appendChild(radiusRow);
+    const actions = document.createElement("div");
+    actions.className = "puzzle-controls";
+    const saveBtn = mkBtn("\u{1F4BE} \u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C", () => {
+      saveSeekOverride(ctx2.state, raw.id, groups);
+      ctx2.save();
+      ctx2.sfx?.("success");
+      ctx2.toast("\u041F\u0440\u0430\u0432\u043A\u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B \u0438 \u0443\u0436\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u044E\u0442 \u0432 \u0438\u0433\u0440\u0435.");
+      refreshInfo();
+    });
+    const resetBtn = mkBtn("\u{1F5D1}\uFE0F \u041A \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u043C", () => {
+      if (!confirm("\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u043F\u0440\u0430\u0432\u043A\u0438 \u044D\u0442\u043E\u0433\u043E \u0443\u0440\u043E\u0432\u043D\u044F \u043A \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u043C \u043A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u0430\u043C?")) return;
+      resetSeekOverride(ctx2.state, raw.id);
+      ctx2.save();
+      groups = JSON.parse(JSON.stringify(SEEK_PUZZLES.find((p) => p.id === raw.id).groups));
+      selected = null;
+      ctx2.toast("\u041A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u044B \u0438\u0441\u0445\u043E\u0434\u043D\u044B\u0435.");
+      draw();
+      refreshInfo();
+    });
+    const exportBtn = mkBtn("\u{1F4E4} JSON", exportJson);
+    actions.append(saveBtn, resetBtn, exportBtn);
+    side.appendChild(actions);
+    const groupsList = document.createElement("div");
+    groupsList.className = "panel mt";
+    side.appendChild(groupsList);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.className = "small";
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    let bgImage = null;
+    if (typeof Image !== "undefined") {
+      const bgName = raw.bg || `seek_${raw.world}`;
+      const candidates = [
+        `assets/${bgName}_web.jpg`,
+        `assets/${bgName}.jfif`,
+        `assets/${bgName}.png`,
+        `assets/${bgName}.svg`
+      ];
+      let idx = 0;
+      const tryNext = () => {
+        if (idx >= candidates.length) return;
+        const img = new Image();
+        img.onload = () => {
+          bgImage = img;
+          draw();
+        };
+        img.onerror = () => {
+          idx += 1;
+          tryNext();
+        };
+        img.src = candidates[idx];
+      };
+      tryNext();
+    }
+    function eventPos(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const sx = canvas.width / dpr / rect.width;
+      const sy = canvas.height / dpr / rect.height;
+      return [(ev.clientX - rect.left) * sx, (ev.clientY - rect.top) * sy];
+    }
+    function spotAt(x, y) {
+      let best = null;
+      let bestD = Infinity;
+      for (const g of groups) {
+        g.spots.forEach((s, i) => {
+          const d = Math.hypot(x - s.x, y - s.y);
+          if (d < s.r && d < bestD) {
+            bestD = d;
+            best = { groupId: g.id, spotIndex: i };
+          }
+        });
+      }
+      return best;
+    }
+    let addMode = false;
+    function toggleAddMode() {
+      addMode = !addMode;
+      addModeBtn.classList.toggle("primary", addMode);
+      ctx2.toast(addMode ? "\u0420\u0435\u0436\u0438\u043C \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F: \u0442\u0430\u043F \u043F\u043E \u0441\u0446\u0435\u043D\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442 \u043D\u043E\u0432\u044B\u0439 \u043A\u0440\u0443\u0436\u043E\u043A \u0432 \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0439 \u0432\u0438\u0434." : "\u0420\u0435\u0436\u0438\u043C \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D.");
+      if (addMode && !selected) {
+        ctx2.toast("\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0440\u0438 \u0432\u0438\u0434 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432 \u0432 \u0441\u043F\u0438\u0441\u043A\u0435 \u0441\u043F\u0440\u0430\u0432\u0430.");
+      }
+    }
+    function deleteSpot() {
+      if (!selected) {
+        ctx2.toast("\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0440\u0438 \u043E\u0431\u043B\u0430\u0441\u0442\u044C \u0442\u0430\u043F\u043E\u043C.");
+        return;
+      }
+      const gi = groups.findIndex((g2) => g2.id === selected.groupId);
+      if (gi < 0) return;
+      const g = groups[gi];
+      if (g.spots.length <= 1) {
+        if (!confirm(`\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043A\u0440\u0443\u0436\u043E\u043A \u2014 \u0432\u0438\u0434 \xAB${g.label}\xBB \u0438\u0441\u0447\u0435\u0437\u043D\u0435\u0442 \u0438\u0437 \u0443\u0440\u043E\u0432\u043D\u044F. \u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C?`)) return;
+        groups.splice(gi, 1);
+      } else {
+        g.spots.splice(selected.spotIndex, 1);
+      }
+      selected = null;
+      ctx2.sfx?.("tap");
+      draw();
+      refreshInfo();
+    }
+    function cycleSpot(dir) {
+      if (!selected) {
+        ctx2.toast("\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0440\u0438 \u0432\u0438\u0434 \u0432 \u0441\u043F\u0438\u0441\u043A\u0435.");
+        return;
+      }
+      const g = groups.find((g2) => g2.id === selected.groupId);
+      if (!g) return;
+      const n = g.spots.length;
+      selected = { groupId: g.id, spotIndex: ((selected.spotIndex + dir) % n + n) % n };
+      ctx2.sfx?.("tap");
+      draw();
+      refreshInfo();
+    }
+    canvas.addEventListener("pointerdown", (ev) => {
+      const [x, y] = eventPos(ev);
+      const hit = spotAt(x, y);
+      if (addMode && !hit) {
+        if (!selected) {
+          ctx2.toast("\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0440\u0438 \u0432\u0438\u0434 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432 \u0432 \u0441\u043F\u0438\u0441\u043A\u0435 \u0441\u043F\u0440\u0430\u0432\u0430.");
+          return;
+        }
+        const g = groups.find((g2) => g2.id === selected.groupId);
+        if (!g) return;
+        g.spots.push({ x: Math.round(x), y: Math.round(y), r: 42 });
+        selected = { groupId: g.id, spotIndex: g.spots.length - 1 };
+        ctx2.sfx?.("coin");
+        draw();
+        refreshInfo();
+        return;
+      }
+      selected = hit;
+      if (hit) {
+        drag = { startX: x, startY: y, moved: false };
+        canvas.setPointerCapture?.(ev.pointerId);
+      }
+      draw();
+      refreshInfo();
+    });
+    canvas.addEventListener("pointermove", (ev) => {
+      if (!drag || !selected) return;
+      const [x, y] = eventPos(ev);
+      if (Math.hypot(x - drag.startX, y - drag.startY) > 3) drag.moved = true;
+      if (drag.moved) {
+        const g = groups.find((g2) => g2.id === selected.groupId);
+        const s = g.spots[selected.spotIndex];
+        s.x = Math.round(Math.max(0, Math.min(W, x)));
+        s.y = Math.round(Math.max(0, Math.min(H, y)));
+        draw();
+        refreshInfo();
+      }
+    });
+    canvas.addEventListener("pointerup", () => {
+      drag = null;
+    });
+    canvas.addEventListener("wheel", (ev) => {
+      if (!selected) return;
+      ev.preventDefault();
+      resize(ev.deltaY < 0 ? 4 : -4);
+    }, { passive: false });
+    function resize(delta) {
+      if (!selected) {
+        ctx2.toast("\u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0440\u0438 \u043E\u0431\u043B\u0430\u0441\u0442\u044C \u0442\u0430\u043F\u043E\u043C.");
+        return;
+      }
+      const g = groups.find((g2) => g2.id === selected.groupId);
+      const s = g.spots[selected.spotIndex];
+      s.r = Math.max(12, Math.min(120, s.r + delta));
+      ctx2.sfx?.("tap");
+      draw();
+      refreshInfo();
+    }
+    function refreshInfo() {
+      const probe = { ...raw, groups };
+      const v = validateSeekLevel(probe);
+      let sel = "\u0422\u0430\u043F\u043D\u0438 \u043A\u0440\u0443\u0433, \u0447\u0442\u043E\u0431\u044B \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u043E\u0431\u043B\u0430\u0441\u0442\u044C.";
+      if (selected) {
+        const g = groups.find((g2) => g2.id === selected.groupId);
+        if (g) {
+          const s = g.spots[selected.spotIndex];
+          sel = `\u0412\u044B\u0431\u0440\u0430\u043D\u043E: <b>${g.label}</b> \u2116${selected.spotIndex + 1} \u0438\u0437 ${g.spots.length} \xB7 x=${s.x} y=${s.y} r=${s.r}`;
+          navLabel.textContent = `\u2116${selected.spotIndex + 1} \u0438\u0437 ${g.spots.length}`;
+        }
+      } else {
+        navLabel.textContent = "\u2014";
+      }
+      infoEl.innerHTML = sel + `<div class="muted" style="font-size:13px">${v.ok ? "\u2705 \u0423\u0440\u043E\u0432\u0435\u043D\u044C \u0432\u0430\u043B\u0438\u0434\u0435\u043D" : "\u26A0\uFE0F " + v.problems.join("; ")}</div>`;
+      groupsList.innerHTML = "";
+      for (const g of groups) {
+        const row = document.createElement("div");
+        row.style.cssText = `font-size:13px;padding:3px 6px;border-radius:6px;cursor:pointer;${selected?.groupId === g.id ? "background:rgba(255,202,122,0.15)" : ""}`;
+        row.textContent = `${g.label} \u2014 ${g.spots.length} \u0448\u0442.`;
+        row.addEventListener("click", () => {
+          if (selected?.groupId === g.id && g.spots.length > 1) {
+            cycleSpot(1);
+            return;
+          }
+          selected = { groupId: g.id, spotIndex: 0 };
+          draw();
+          refreshInfo();
+        });
+        groupsList.appendChild(row);
+      }
+    }
+    function draw() {
+      const g2d = canvas.getContext("2d");
+      g2d.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g2d.clearRect(0, 0, W, H);
+      if (bgImage) g2d.drawImage(bgImage, 0, 0, W, H);
+      else {
+        g2d.fillStyle = "#3a2f20";
+        g2d.fillRect(0, 0, W, H);
+      }
+      const palette = ["#ffd98a", "#8fd18b", "#a8d8ff", "#d3a8ff", "#ff9a7a", "#7adfd1", "#f3a6c8", "#c9e88a"];
+      groups.forEach((g, gi) => {
+        const color = palette[gi % palette.length];
+        g.spots.forEach((s, i) => {
+          const isSel = selected && selected.groupId === g.id && selected.spotIndex === i;
+          g2d.strokeStyle = color;
+          g2d.lineWidth = isSel ? 4 : 2;
+          g2d.setLineDash(isSel ? [] : [6, 5]);
+          g2d.beginPath();
+          g2d.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          g2d.stroke();
+          g2d.setLineDash([]);
+          if (isSel) {
+            g2d.fillStyle = color;
+            g2d.beginPath();
+            g2d.arc(s.x, s.y, 5, 0, Math.PI * 2);
+            g2d.fill();
+          }
+          if (selected && selected.groupId === g.id) {
+            g2d.fillStyle = color;
+            g2d.font = "bold 13px sans-serif";
+            g2d.textAlign = "center";
+            g2d.textBaseline = "middle";
+            g2d.shadowColor = "rgba(0,0,0,0.8)";
+            g2d.shadowBlur = 3;
+            g2d.fillText(String(i + 1), s.x, s.y - s.r - 10);
+            g2d.shadowBlur = 0;
+          }
+        });
+      });
+    }
+    async function exportJson() {
+      const json = JSON.stringify(groups, null, 2);
+      try {
+        await navigator.clipboard.writeText(json);
+        ctx2.toast("JSON \u0433\u0440\u0443\u043F\u043F \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u043D \u2014 \u043F\u0440\u0438\u0448\u043B\u0438 \u0440\u0430\u0437\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A\u0443, \u0432\u0448\u044C\u0451\u043C \u0432 \u0438\u0433\u0440\u0443.");
+      } catch {
+        ctx2.toast("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u043A\u043E\u043D\u0441\u043E\u043B\u044C.");
+        console.log(json);
+      }
+    }
+    draw();
+    refreshInfo();
+  }
+
   // src/ui/app.js
   var screenEl = document.getElementById("screen");
   var toastEl = document.getElementById("toast");
@@ -6469,18 +12450,21 @@ ${item2.description}
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2200);
   }
+  var lastHubScene = "lavka";
   var routes = {
-    hub: (c, p) => renderHub(c, ctx, p),
+    hub: (c, p) => renderHub(c, ctx, { scene: p.scene || lastHubScene }),
     puzzles: (c, p) => renderPuzzleList(c, ctx, p),
     puzzle: (c, p) => renderPuzzle(c, ctx, p),
     equip: (c, p) => renderEquip(c, ctx, p),
     shop: (c, p) => renderShop(c, ctx, p),
     battles: (c, p) => renderBattleList(c, ctx, p),
-    battle: (c, p) => renderBattle(c, ctx, p),
+    battle: (c, p) => state.settings?.battleMode === "formation" ? renderFormation(c, ctx, p) : renderBattle(c, ctx, p),
     tavern: (c, p) => renderTavern(c, ctx, p),
     workshop: (c, p) => renderWorkshop(c, ctx, p),
     editor: (c, p) => renderEditor(c, ctx, p),
-    craft: (c, p) => renderCraft(c, ctx, p)
+    craft: (c, p) => renderCraft(c, ctx, p),
+    settings: (c, p) => renderSettings(c, ctx, p),
+    seekeditor: (c, p) => p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p)
   };
   var currentCleanup = null;
   function go(name, params = {}) {
@@ -6512,7 +12496,10 @@ ${item2.description}
     go,
     toast,
     newGameConfirm,
-    sfx
+    sfx,
+    setHubScene(scene) {
+      lastHubScene = scene;
+    }
   };
   initSound();
   var spiderTrack = document.createElement("div");
@@ -6540,6 +12527,11 @@ ${item2.description}
     const y = Math.max(0, Math.min(shownY, (window.innerHeight || 600) - BUG_H));
     spiderMover.style.transform = `translateY(${y}px)`;
     spiderThread.style.height = `${Math.max(0, y + 8)}px`;
+    const hat = !!state.cheats?.spiderHat;
+    if (spiderBug.dataset.hat !== String(hat)) {
+      spiderBug.dataset.hat = String(hat);
+      spiderBug.textContent = hat ? "\u{1F3A9}\u{1F577}\uFE0F" : "\u{1F577}\uFE0F";
+    }
   }
   function spiderLoop() {
     shownY += (targetY - shownY) * 0.22;
@@ -6610,6 +12602,52 @@ ${item2.description}
     kickSpider();
   }, 700);
   spiderTimer.unref?.();
+  document.getElementById("settings-btn")?.addEventListener("click", () => {
+    sfx("tap");
+    go("settings");
+  });
+  var brandEl = document.querySelector(".brand");
+  var brandTaps = 0;
+  var brandTimer = null;
+  brandEl.style.cursor = "pointer";
+  brandEl.addEventListener("click", () => {
+    brandTaps += 1;
+    sfx("tap");
+    clearTimeout(brandTimer);
+    brandTimer = setTimeout(() => {
+      brandTaps = 0;
+    }, 900);
+    if (brandTaps >= 3) {
+      brandTaps = 0;
+      showAbout();
+    }
+  });
+  function showAbout() {
+    const overlay = document.createElement("div");
+    overlay.className = "overlay";
+    overlay.innerHTML = `
+    <div class="card" style="text-align:left">
+      <h2 style="text-align:center">\u{1F3EE} \u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432</h2>
+      <div class="muted center" style="margin-bottom:10px">\u0432\u0435\u0440\u0441\u0438\u044F 0.9 \xB7 \u0443\u044E\u0442\u043D\u0430\u044F \u0438\u0433\u0440\u0430-\u043C\u0430\u0433\u0430\u0437\u0438\u043D \u0441 \u043F\u0440\u0438\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F\u043C\u0438</div>
+      <p><b>\u0410\u0432\u0442\u043E\u0440:</b> K8rvin (\u0410\u043D\u0434\u0440\u0435\u0439)</p>
+      <p><b>\u0421\u0434\u0435\u043B\u0430\u043D\u043E:</b> \u0432\u0434\u0432\u043E\u0451\u043C \u2014 \u0447\u0435\u043B\u043E\u0432\u0435\u043A \u0438 \u0418\u0418-\u0430\u0433\u0435\u043D\u0442 Kimi Code.
+      \u0427\u0438\u0441\u0442\u044B\u0439 JavaScript, Canvas, SVG-\u0430\u0440\u0442, \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F. \u041D\u0438 \u0441\u0442\u0440\u043E\u0447\u043A\u0438 \u0431\u044D\u043A\u0435\u043D\u0434\u0430.</p>
+      <p><b>\u0412\u043D\u0443\u0442\u0440\u0438:</b> 6 \u043C\u0435\u0445\u0430\u043D\u0438\u043A \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A \xB7 58 \u0437\u0430\u0433\u0430\u0434\u043E\u043A \xB7 200 \u0431\u043E\u0451\u0432 \u0432 12 \u043C\u0438\u0440\u0430\u0445 \xB7
+      60+ \u0441\u0443\u0449\u0435\u0441\u0442\u0432 \xB7 \u043A\u0440\u0430\u0444\u0442 \xB7 \u043E\u0442\u0440\u044F\u0434 \xB7 \u0434\u0432\u0430 \u0440\u0435\u0436\u0438\u043C\u0430 \u0430\u0432\u0442\u043E\u0431\u043E\u044F \xB7 \u0438 \u043E\u0434\u0438\u043D \u043E\u0447\u0435\u043D\u044C \u0442\u0440\u0443\u0434\u043E\u043B\u044E\u0431\u0438\u0432\u044B\u0439 \u043F\u0430\u0443\u0447\u043E\u043A \u{1F577}\uFE0F</p>
+      <p class="muted">\u0421\u043F\u0430\u0441\u0438\u0431\u043E, \u0447\u0442\u043E \u0437\u0430\u0433\u043B\u044F\u043D\u0443\u043B \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A. \u0421\u0442\u0443\u0447\u0438 \u043F\u043E \u0432\u044B\u0432\u0435\u0441\u043A\u0435 \u0432 \u043B\u044E\u0431\u043E\u0435 \u0432\u0440\u0435\u043C\u044F.</p>
+      <div class="actions" style="text-align:center"></div>
+    </div>`;
+    const actions = overlay.querySelector(".actions");
+    const close = document.createElement("button");
+    close.className = "primary";
+    close.textContent = "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u0432 \u043B\u0430\u0432\u043A\u0443";
+    close.addEventListener("click", () => overlay.remove());
+    actions.appendChild(close);
+    overlay.addEventListener("click", (ev) => {
+      if (ev.target === overlay) overlay.remove();
+    });
+    document.body.appendChild(overlay);
+  }
   updateWallet();
   go("hub");
 })();

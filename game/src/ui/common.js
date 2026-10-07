@@ -1,6 +1,29 @@
 // Общие UI-помощники: шапка экрана и оверлей наград.
 import { ITEM_BY_ID } from '../data/items.js';
 import { materialLabel } from '../data/materials.js';
+import { skipPuzzle, skipPuzzlePrice } from '../core/state.js';
+
+// Кнопка «Пропустить загадку за монеты» для экранов головоломок.
+export function puzzleSkipButton(ctx, level, onSkipped) {
+  const price = skipPuzzlePrice(level);
+  const b = document.createElement('button');
+  b.className = 'ghost small';
+  b.innerHTML = `⏭️ Пропустить за 🪙${price}`;
+  b.title = 'Кот-хранитель подскажет решение соседям (награды уровня не будет)';
+  b.addEventListener('click', () => {
+    if (!confirm(`Пропустить «${level.name}» за ${price} монет? Награды уровня не будет.`)) return;
+    const r = skipPuzzle(ctx.state, level.id);
+    if (r.ok) {
+      ctx.sfx?.('coin');
+      ctx.toast(`Загадка пропущена. Утешение от кота: 🪙${r.consolation}`);
+      ctx.save();
+      onSkipped?.();
+    } else {
+      ctx.toast(r.error);
+    }
+  });
+  return b;
+}
 
 export function header(ctx, title, subtitle, backTo = 'hub') {
   const box = document.createElement('div');
@@ -28,7 +51,7 @@ export function header(ctx, title, subtitle, backTo = 'hub') {
 }
 
 // Плавающая панель быстрой навигации: круглые кнопки справа внизу,
-// видны в любом положении скролла. items: [{ icon, label, screen, primary? }]
+// видны в любом положении скролла. items: [{ icon, label, screen, params?, primary? }]
 export function quickNav(ctx, items) {
   const nav = document.createElement('div');
   nav.className = 'quick-nav';
@@ -37,7 +60,7 @@ export function quickNav(ctx, items) {
     b.innerHTML = `${it.icon}<span class="qn-label">${it.label}</span>`;
     b.setAttribute('aria-label', it.label);
     if (it.primary) b.className = 'primary';
-    b.addEventListener('click', () => { ctx.sfx?.('tap'); ctx.go(it.screen); });
+    b.addEventListener('click', () => { ctx.sfx?.('tap'); ctx.go(it.screen, it.params || {}); });
     nav.appendChild(b);
   }
   return nav;

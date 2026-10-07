@@ -6,6 +6,7 @@ import {
 import {
   equipFromInventory, unequipToInventory, removeFromBelt, sellItem,
 } from '../core/state.js';
+import { PET_BY_ID } from '../data/crew.js';
 import { quickNav } from './common.js';
 
 const SLOT_ICONS = {
@@ -60,6 +61,19 @@ export function renderEquip(container, ctx) {
   layout.style.flexWrap = 'wrap';
   layout.style.gap = '14px';
   layout.style.alignItems = 'flex-start';
+
+  // --- Живой рыцарь: внешний вид от экипировки ---
+  const dollPanel = document.createElement('div');
+  dollPanel.className = 'panel';
+  dollPanel.style.textAlign = 'center';
+  dollPanel.innerHTML = '<h3>Рыцарь</h3>';
+  const doll = document.createElement('canvas');
+  doll.width = 220;
+  doll.height = 280;
+  doll.style.maxWidth = '100%';
+  dollPanel.appendChild(doll);
+  drawKnightDoll(doll, state);
+  layout.appendChild(dollPanel);
 
   // --- Слоты ---
   const slotsPanel = document.createElement('div');
@@ -231,4 +245,116 @@ export function renderEquip(container, ctx) {
     container.innerHTML = '';
     renderEquip(container, ctx);
   }
+}
+
+// --- Рыцарь-бумажная кукла: внешний вид зависит от экипировки ---
+function drawKnightDoll(canvas, state) {
+  const g = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const eq = state.equipped;
+  const item = (slot) => (eq[slot] ? ITEM_BY_ID[eq[slot]] : null);
+
+  // Фон — тёплая ниша комнаты
+  const grad = g.createRadialGradient(W / 2, H * 0.4, 20, W / 2, H * 0.4, W * 0.75);
+  grad.addColorStop(0, 'rgba(255, 202, 122, 0.16)');
+  grad.addColorStop(1, 'rgba(255, 202, 122, 0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, W, H);
+
+  const emoji = (e, x, y, size, rot = 0, alpha = 1) => {
+    g.save();
+    g.translate(x, y);
+    g.rotate(rot);
+    g.globalAlpha = alpha;
+    g.font = `${size}px "Segoe UI Emoji", sans-serif`;
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    g.shadowColor = 'rgba(0,0,0,0.45)';
+    g.shadowBlur = 5;
+    g.fillText(e, 0, 0);
+    g.restore();
+  };
+
+  // Тело (цвет зависит от брони)
+  const armor = item('armor');
+  const bodyColor = armor ? { common: '#7d8a68', rare: '#6a7fa0', epic: '#8a6fa8', legendary: '#c9a227' }[armor.rarity] || '#7d8a68' : '#8a7a62';
+  g.fillStyle = bodyColor;
+  // туловище
+  roundRectDoll(g, W / 2 - 34, H * 0.38, 68, 86, 18);
+  g.fill();
+  // голова
+  g.fillStyle = '#d9b98a';
+  g.beginPath();
+  g.arc(W / 2, H * 0.3, 26, 0, Math.PI * 2);
+  g.fill();
+  // ноги
+  g.fillStyle = '#5d4732';
+  roundRectDoll(g, W / 2 - 26, H * 0.38 + 86, 22, 40, 8); g.fill();
+  roundRectDoll(g, W / 2 + 4, H * 0.38 + 86, 22, 40, 8); g.fill();
+
+  // Сапоги
+  const boots = item('boots');
+  emoji(boots ? itemEmoji(boots) : '🦶', W / 2 - 15, H * 0.38 + 132, boots ? 26 : 20, 0, boots ? 1 : 0.35);
+  emoji(boots ? itemEmoji(boots) : '🦶', W / 2 + 15, H * 0.38 + 132, boots ? 26 : 20, 0, boots ? 1 : 0.35);
+
+  // Шлем (или лицо)
+  const helm = item('helmet');
+  if (helm) emoji(itemEmoji(helm), W / 2, H * 0.22, 44);
+  else emoji('🙂', W / 2, H * 0.3, 30);
+
+  // Оружие — правая рука рыцаря (слева от зрителя)
+  const wpn = item('weapon');
+  if (wpn) emoji(itemEmoji(wpn), W / 2 - 62, H * 0.46, 50, Math.PI / 5);
+
+  // Щит — левая рука рыцаря (справа от зрителя)
+  const shd = item('shield');
+  if (shd) emoji(itemEmoji(shd), W / 2 + 62, H * 0.46, 48, -Math.PI / 8);
+
+  // Перчатки — кисти
+  const glv = item('gloves');
+  if (glv) {
+    emoji(itemEmoji(glv), W / 2 + 38, H * 0.5, 20);
+    emoji(itemEmoji(glv), W / 2 - 38, H * 0.5, 20);
+  }
+
+  // Амулет — сияние на груди
+  const amu = item('amulet');
+  if (amu) {
+    g.fillStyle = 'rgba(255, 226, 138, 0.5)';
+    g.beginPath();
+    g.arc(W / 2, H * 0.46, 16, 0, Math.PI * 2);
+    g.fill();
+    emoji(itemEmoji(amu), W / 2, H * 0.46, 22);
+  }
+
+  // Кольца — искры на кистях
+  if (item('ring1')) emoji('✨', W / 2 + 40, H * 0.55, 14);
+  if (item('ring2')) emoji('✨', W / 2 - 40, H * 0.55, 14);
+
+  // Питомец у ног
+  if (state.pet && PET_BY_ID[state.pet]) {
+    emoji(PET_BY_ID[state.pet].icon, W * 0.8, H * 0.86, 34);
+  }
+  // Зелья на поясе
+  state.consumableBelt.forEach((id, i) => {
+    const pot = ITEM_BY_ID[id];
+    if (pot) emoji(itemEmoji(pot), W / 2 - 20 + i * 22, H * 0.62, 18);
+  });
+
+  // Подпись
+  g.fillStyle = '#c9b294';
+  g.font = '12px sans-serif';
+  g.textAlign = 'center';
+  g.fillText('вид меняется от экипировки', W / 2, H - 8);
+}
+
+function roundRectDoll(g, x, y, w, h, r) {
+  g.beginPath();
+  g.moveTo(x + r, y);
+  g.arcTo(x + w, y, x + w, y + h, r);
+  g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r);
+  g.arcTo(x, y, x + w, y, r);
+  g.closePath();
 }

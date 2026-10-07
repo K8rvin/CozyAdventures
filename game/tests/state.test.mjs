@@ -4,7 +4,9 @@ import {
   newGame, addCoins, buyItem, sellItem, shopStock, equipFromInventory,
   unequipToInventory, completePuzzle, puzzleAvailable, runBattle, battleAvailable,
   saveGame, loadGame, removeFromBelt, nextPuzzle, firstUnsolvedPuzzle, ALL_PUZZLES,
-  nextBattle, firstUnbeatenBattle,
+  nextBattle, firstUnbeatenBattle, skipPuzzle, skipPuzzlePrice, applyCheat,
+  findPuzzle, applySeekOverrides, saveSeekOverride, resetSeekOverride,
+  unseenShopItems, markShopSeen, loadSeekOverrides,
 } from '../src/core/state.js';
 import { PUZZLES } from '../src/data/puzzles.js';
 import { BATTLES } from '../src/data/battles.js';
@@ -182,6 +184,30 @@ test('nextPuzzle и firstUnsolvedPuzzle', () => {
   assert.equal(firstUnsolvedPuzzle(s), null);
 });
 
+test('пропуск головоломки за монеты', () => {
+  const s = newGame();
+  s.coins = 1000;
+  const p0 = PUZZLES[0]; // md_01, монет 40 → цена 60
+  assert.equal(skipPuzzlePrice(p0), 60);
+  // Пропускаем
+  const r = skipPuzzle(s, p0.id);
+  assert.ok(r.ok);
+  assert.equal(s.coins, 1000 - 60 + Math.round(40 / 3), 'цена минус, утешение плюс');
+  assert.ok(s.puzzlesDone[p0.id].skipped, 'помечена как пропущенная');
+  assert.ok(puzzleAvailable(s, 1), 'цепочка открылась');
+  // Повторно нельзя
+  assert.equal(skipPuzzle(s, p0.id).ok, false);
+  // Закрытую цепочкой нельзя
+  const late = ALL_PUZZLES[5];
+  assert.equal(skipPuzzle(s, late.id).ok, false);
+  // Не хватает монет
+  const s2 = newGame();
+  s2.coins = 10;
+  const r2 = skipPuzzle(s2, p0.id);
+  assert.equal(r2.ok, false);
+  assert.equal(r2.price, 60);
+});
+
 test('nextBattle и firstUnbeatenBattle', () => {
   const s = newGame();
   assert.equal(nextBattle(BATTLES[0].id).id, BATTLES[1].id);
@@ -191,6 +217,82 @@ test('nextBattle и firstUnbeatenBattle', () => {
   assert.equal(firstUnbeatenBattle(s).id, BATTLES[1].id);
   for (const b of BATTLES) s.battlesDone[b.id] = { victories: 1 };
   assert.equal(firstUnbeatenBattle(s), null, 'все битвы пройдены');
+});
+
+test('чит-коды: монеты, печати, шляпа, неведомое слово', () => {
+  const s = newGame();
+  let r = applyCheat(s, 'котопёс');
+  assert.ok(r.ok);
+  assert.equal(s.coins, 80 + 1000);
+  assert.ok(s.cheats.used.includes('КОТОПЁС'));
+  r = applyCheat(s, ' ПЕЧАЛЬ ');
+  assert.ok(r.ok);
+  assert.equal(s.seals, 10);
+  r = applyCheat(s, 'паучок');
+  assert.ok(r.ok);
+  assert.equal(s.cheats.spiderHat, true);
+  r = applyCheat(s, 'паучок');
+  assert.equal(s.cheats.spiderHat, false, 'повторный ПАУЧОК снимает шляпу');
+  r = applyCheat(s, 'колдунство');
+  assert.ok(!r.ok, 'неведомое слово не срабатывает');
+  r = applyCheat(s, 'рыцарь');
+  assert.ok(s.inventory.includes('wpn_firebird_quill'));
+  r = applyCheat(s, 'колдовство');
+  assert.ok(r.ok);
+  assert.ok(Object.keys(s.materials).length > 10, 'материалы выдаются пачками');
+});
+
+test('правки искалок из редактора применяются и сбрасываются', () => {
+  const mem = {};
+  const storage = { getItem: (k) => mem[k] ?? null, setItem: (k, v) => { mem[k] = v; } };
+  const s = newGame();
+  const level = findPuzzle(s, 'sk_md_01');
+  const edited = applySeekOverrides(s, level, storage);
+  assert.deepEqual(edited.groups, level.groups, 'без правок — исходные группы');
+  const newGroups = JSON.parse(JSON.stringify(level.groups));
+  newGroups[0].spots[0].x = 111;
+  newGroups[0].spots[0].r = 55;
+  saveSeekOverride(s, 'sk_md_01', newGroups, storage);
+  const applied = applySeekOverrides(s, level, storage);
+  assert.equal(applied.groups[0].spots[0].x, 111, 'правка применена');
+  assert.equal(applied.groups[0].spots[0].r, 55);
+  assert.equal(level.groups[0].spots[0].x, 195, 'исходные данные не тронуты');
+  // Правки переживают новую игру
+  const fresh = newGame();
+  const afterNew = applySeekOverrides(fresh, level, storage);
+  assert.equal(afterNew.groups[0].spots[0].x, 111, 'новая игра не стирает правки');
+  resetSeekOverride(s, 'sk_md_01', storage);
+  assert.deepEqual(applySeekOverrides(s, level, storage).groups, level.groups, 'сброс возвращает исходные');
+});
+
+test('миграция правок искалок из старого сохранения', () => {
+  const mem = {
+    cozy_adventures_save_v2: JSON.stringify({ ...newGame(), seekOverrides: { sk_md_01: [{ id: 'x', label: 'y', spots: [{ x: 1, y: 2, r: 30 }] }] } }),
+  };
+  const storage = {
+    getItem: (k) => mem[k] ?? null,
+    setItem: (k, v) => { mem[k] = v; },
+  };
+  const loaded = loadGame(storage);
+  assert.ok(loaded);
+  assert.deepEqual(loaded.seekOverrides, {}, 'в сохранении очищено');
+  const ov = loadSeekOverrides(storage);
+  assert.ok(ov.sk_md_01, 'правки переехали в отдельное хранилище');
+});
+
+test('новинки прилавка: появились, видны, гаснут после визита', () => {
+  const s = newGame();
+  // Изначально весь стартовый ассортимент — новинка
+  assert.ok(unseenShopItems(s).length > 0);
+  markShopSeen(s);
+  assert.equal(unseenShopItems(s).length, 0, 'после визита новинок нет');
+  // После победы ассортимент растёт — появляются новинки
+  s.battlesDone.bt_bees = { victories: 1 };
+  const fresh = unseenShopItems(s);
+  assert.ok(fresh.length > 0);
+  assert.ok(fresh.every((i) => ['glv_herbalist', 'wpn_oak_mace', 'bt_merchant', 'rng_luck', 'hlm_badger'].includes(i.id)));
+  markShopSeen(s);
+  assert.equal(unseenShopItems(s).length, 0);
 });
 
 test('сохранение и загрузка', () => {

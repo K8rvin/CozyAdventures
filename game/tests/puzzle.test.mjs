@@ -25,10 +25,14 @@ test('минимум в 3 уровнях есть несколько решен�
   assert.ok(multi.length >= 3, `несколько решений должно быть хотя бы в 3 уровнях, сейчас: ${multi.length}`);
 });
 
-test('обучающий md_01 решён на старте (UI завершает его сам)', () => {
+test('обучающий md_01 требует минимальное действие — один тап по зеркалу', () => {
   const level = PUZZLES.find((l) => l.id === 'md_01');
   const s = createPuzzle(level);
-  assert.ok(isSolved(s), 'md_01 должен быть решён без единого хода');
+  assert.equal(isSolved(s), false, 'md_01 не должен решаться сам');
+  const mirrorIdx = level.objects.findIndex((o) => o.type === 'mirror');
+  assert.ok(mirrorIdx >= 0, 'зеркало обязано быть');
+  rotateMirror(s, mirrorIdx);
+  assert.ok(isSolved(s), 'один тап по зеркалу решает md_01');
 });
 
 test('уровень без решения из стартовой позиции решается поворотом', () => {
