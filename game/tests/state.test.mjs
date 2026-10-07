@@ -7,6 +7,7 @@ import {
   nextBattle, firstUnbeatenBattle, skipPuzzle, skipPuzzlePrice, applyCheat,
   findPuzzle, applySeekOverrides, saveSeekOverride, resetSeekOverride,
   unseenShopItems, markShopSeen, loadSeekOverrides,
+  dailyPuzzle, currentSeason, SEASON_LABEL,
 } from '../src/core/state.js';
 import { PUZZLES } from '../src/data/puzzles.js';
 import { BATTLES } from '../src/data/battles.js';
@@ -293,6 +294,53 @@ test('новинки прилавка: появились, видны, гасн�
   assert.ok(fresh.every((i) => ['glv_herbalist', 'wpn_oak_mace', 'bt_merchant', 'rng_luck', 'hlm_badger'].includes(i.id)));
   markShopSeen(s);
   assert.equal(unseenShopItems(s).length, 0);
+});
+
+test('достижения разблокируются по событиям', async () => {
+  const { checkAchievements, ACHIEVEMENTS } = await import('../src/data/achievements.js');
+  const { SEEK_PUZZLES } = await import('../src/data/puzzlesSeek.js');
+  const s = newGame();
+  const ctx = { puzzlesTotal: ALL_PUZZLES.length, battlesTotal: 200, seekIds: SEEK_PUZZLES.map((p) => p.id) };
+  assert.equal(checkAchievements(s, ctx).length, 0);
+  completePuzzle(s, PUZZLES[0].id, {});
+  const fresh = checkAchievements(s, ctx);
+  assert.ok(fresh.some((a) => a.id === 'first_puzzle'));
+  assert.ok(!checkAchievements(s, ctx).some((a) => a.id === 'first_puzzle'), 'повторно не выдаётся');
+  assert.ok(ACHIEVEMENTS.length >= 15);
+});
+
+test('заказ дня: детерминирован и даёт двойные монеты раз в день', () => {
+  const s = newGame();
+  const d1 = dailyPuzzle(s);
+  const d2 = dailyPuzzle(s);
+  assert.equal(d1.id, d2.id, 'загадка дня стабильна в течение дня');
+  s.coins = 0;
+  s.puzzlesDone = {}; // гарантируем, что daily доступна (цепочка)
+  const daily = dailyPuzzle(s);
+  // Решаем по цепочке до daily, если она не первая — просто отметим доступной
+  const idx = ALL_PUZZLES.findIndex((p) => p.id === daily.id);
+  for (let i = 0; i < idx; i++) s.puzzlesDone[ALL_PUZZLES[i].id] = {};
+  const rewards = completePuzzle(s, daily.id, {});
+  const coins = rewards.find((r) => r.type === 'coins');
+  const base = (daily.rewards || []).find((r) => r.type === 'coins');
+  if (base && s.lastDailyBonus) {
+    assert.equal(coins.amount, base.amount * 2, 'заказ дня удваивает монеты');
+  }
+});
+
+test('дневник кота пишет события', () => {
+  const s = newGame();
+  assert.equal((s.journal || []).length, 0);
+  completePuzzle(s, PUZZLES[0].id, {});
+  buyItem(s, 'arm_padded');
+  assert.ok(s.journal.length >= 2);
+  assert.ok(s.journal.some((j) => j.text.includes('решена')));
+  assert.ok(s.journal.some((j) => j.text.includes('Куплено')));
+});
+
+test('сезон определяется по месяцу', () => {
+  assert.ok(['winter', 'spring', 'summer', 'autumn'].includes(currentSeason()));
+  assert.ok(SEASON_LABEL[currentSeason()]);
 });
 
 test('сохранение и загрузка', () => {

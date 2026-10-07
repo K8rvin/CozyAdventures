@@ -1,7 +1,30 @@
 // Хаб-лавка: одна большая картинка с интерактивными объектами.
-import { ALL_PUZZLES, unseenShopItems } from '../core/state.js';
+import { ALL_PUZZLES, unseenShopItems, currentSeason, SEASON_LABEL } from '../core/state.js';
+import { COMPANION_BY_ID, PET_BY_ID } from '../data/crew.js';
 import { BATTLES } from '../data/battles.js';
 import { startTutorial } from './tutorial.js';
+
+// Реплики спутников и питомцев для дневника (случайная при визите)
+const CHATTER = {
+  cmp_firefly: ['✨ Светлячок кружит над полками: «Тут красиво!»', '✨ Светлячок подсвечивает самое тёмное место.'],
+  cmp_herbalist: ['🌿 Травница сушит новый сбор над очагом.', '🌿 «К котлу бы мяты…» — травница заглядывает в чайник.'],
+  cmp_cat: ['🐈 Кот-хранитель обходит полки — всё на месте.', '🐈 Кот что-то уронил и делает вид, что так и было.'],
+  cmp_smith: ['⚒️ Кузнец-подмастерье точит инструмент у окна.', '⚒️ «Броню бы подтянуть» — бормочет кузнец.'],
+  pet_puppy: ['🐕 Щенок принёс палку. Очень важную палку.', '🐕 Щенок виляет хвостом всей лавке.'],
+  pet_hedgehog: ['🦔 Ёжик свернулся в тапке. Это его тапок теперь.', '🦔 Ёжик фыркает на буханку.'],
+  pet_fox: ['🦊 Лисёнок примеряет твоё шляпное место у кассы.', '🦊 Лисёнок что-то прячет за прилавком.'],
+  pet_horse: ['🐴 Сивка фыркает у двери — скучает по дороге.', '🐴 Сивка обгладывает веник. Он был хорошим веником.'],
+  pet_owl: ['🦉 Сова считает вслух остатки на полках. Сбивается.', '🦉 Сова одобрительно ухает новому порядку.'],
+};
+
+function pickChatter(state) {
+  const active = [...(state.squadCompanions || []), state.pet].filter(Boolean);
+  const pool = active.flatMap((id) => CHATTER[id] || []);
+  if (pool.length === 0) return null;
+  const speaker = active[Math.floor(Math.random() * active.length)];
+  const lines = CHATTER[speaker];
+  return lines[Math.floor(Math.random() * lines.length)];
+}
 
 export function renderHub(container, ctx, params = {}) {
   const { state } = ctx;
@@ -37,7 +60,7 @@ export function renderHub(container, ctx, params = {}) {
         ['🍺', 'Таверна', 'tavern', 82, 45, () => false],
         ['⚒️', 'Кузница и котёл', 'craft', 35, 55, () => false],
         ['🛠️', 'Мастерская', 'workshop', 52, 68, () => false],
-        ['🏮', 'В лавку', '@lavka', 6, 55, () => false],
+        ['🏮', 'В лавку', '@lavka', 17, 47, () => false],
       ],
     },
   };
@@ -83,15 +106,49 @@ export function renderHub(container, ctx, params = {}) {
     hotspotEls[screen] = b;
   }
 
-  // Прогресс-подпись под картинкой (+ активные украшения)
+  // Прогресс-подпись под картинкой (+ сезон и активные украшения)
   const progress = document.createElement('div');
   progress.className = 'muted center mt';
   progress.style.fontSize = '14px';
+  const season = SEASON_LABEL[currentSeason()];
   const cosIcons = (state.cosmeticsActive || []).length
     ? ` · Украшения: ${(state.cosmeticsActive || []).map((id) => ({ cos_carpet: '🟥', cos_crest: '🪧', cos_flowers: '🌸', cos_fireflies: '✨', cos_garland: '🎏', cos_snow: '❄️' })[id] || '🎀').join(' ')}`
     : '';
-  progress.innerHTML = `🧩 Загадок решено: <b>${solved}/${ALL_PUZZLES.length}</b> · ⚔️ Походов пройдено: <b>${won}/${BATTLES.length}</b> · 🐾 Команда: <b>${(state.crew || []).length}</b>${cosIcons}`;
+  progress.innerHTML = `🧩 Загадок решено: <b>${solved}/${ALL_PUZZLES.length}</b> · ⚔️ Походов пройдено: <b>${won}/${BATTLES.length}</b> · 🐾 Команда: <b>${(state.crew || []).length}</b> · ${season}${cosIcons}`;
   container.appendChild(progress);
+
+  // Питомец гуляет по сцене (если есть активный)
+  if (state.pet && PET_BY_ID[state.pet]) {
+    const pet = document.createElement('div');
+    pet.className = 'hub-pet';
+    pet.textContent = PET_BY_ID[state.pet].icon;
+    scenePanel.appendChild(pet);
+  }
+
+  // --- Дневник кота и реплики команды ---
+  const chatter = pickChatter(state);
+  const journal = (state.journal || []).slice(-2).reverse();
+  if (chatter || journal.length > 0) {
+    const catPanel = document.createElement('div');
+    catPanel.className = 'panel cat-panel';
+    catPanel.innerHTML = '<span class="cat-icon">🐈</span>';
+    const body = document.createElement('div');
+    body.style.flex = '1';
+    if (chatter) {
+      const line = document.createElement('div');
+      line.className = 'cat-line';
+      line.innerHTML = chatter;
+      body.appendChild(line);
+    }
+    for (const j of journal) {
+      const entry = document.createElement('div');
+      entry.className = 'cat-entry';
+      entry.innerHTML = `${j.icon} ${j.text}`;
+      body.appendChild(entry);
+    }
+    catPanel.appendChild(body);
+    container.appendChild(catPanel);
+  }
 
   // Заставка: реалистичная картинка, фолбэк — анимированный SVG
   const anim = document.createElement('img');

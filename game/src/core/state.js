@@ -7,6 +7,9 @@ import { BOOK_PUZZLES } from '../data/puzzlesBook.js';
 import { SEEK_PUZZLES } from '../data/puzzlesSeek.js';
 import { PATH_PUZZLES } from '../data/puzzlesPath.js';
 import { TEA_PUZZLES } from '../data/puzzlesTea.js';
+import { MECH_PUZZLES } from '../data/puzzlesMech.js';
+import { CANDLE_PUZZLES } from '../data/puzzlesCandle.js';
+import { FLOW_PUZZLES } from '../data/puzzlesFlow.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
 import { COSMETIC_BY_ID } from '../data/cosmetics.js';
@@ -37,10 +40,13 @@ export function newGame() {
     puzzlesDone: {},        // id -> { moves, hintsUsed }
     battlesDone: {},        // id -> { victories }
     customPuzzles: [],      // уровни из редактора
+    lastDailyBonus: null,   // день, когда получен бонус заказа дня
     cosmeticsOwned: [],     // купленные украшения
     cosmeticsActive: [],    // выставленные украшения
     seekOverrides: {},      // правки хотспотов искалок из редактора: levelId -> groups
     shopSeenStock: [],      // id товаров прилавка, которые игрок уже видел
+    achievements: {},       // id -> timestamp разблокировки
+    journal: [],            // дневник кота: последние события [{icon, text, at}]
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
     settings: { battleMode: 'formation' }, // 'classic' | 'formation'
@@ -61,6 +67,9 @@ function migrate(state) {
   state.cosmeticsActive ||= [];
   state.seekOverrides ||= {};
   state.shopSeenStock ||= [];
+  state.lastDailyBonus ??= null;
+  state.achievements ||= {};
+  state.journal ||= [];
   state.tutorial ||= {};
   state.tutorialSkipped ??= false;
   state.settings ||= {};
@@ -133,6 +142,7 @@ export function buyItem(state, itemId) {
   }
   state.inventory.push(itemId);
   state.stats.itemsBought = (state.stats.itemsBought || 0) + 1;
+  journalPush(state, '🪙', `Куплено: ${item.name}.`);
 
   // Авто-экипировка: если слот свободен (или есть место в поясе) — надеваем сразу.
   const auto = autoEquip(state, itemId);
@@ -196,6 +206,7 @@ export function hireCrew(state, id, kind) {
   if (state[purse] < def.price) return { ok: false, error: def.currency === 'seals' ? 'Не хватает печатей' : 'Не хватает монет' };
   state[purse] -= def.price;
   state.crew.push(id);
+  journalPush(state, def.icon, `${def.name} теперь с нами!`);
   // Автоматически в отряд, если есть место
   if (kind === 'companion' && state.squadCompanions.length < 3) state.squadCompanions.push(id);
   if (kind === 'merc' && state.squadMercs.length < 2) {
@@ -310,7 +321,16 @@ export function craft(state, recipeId) {
   if (r.coins) state.coins -= r.coins;
   const count = r.result.count || 1;
   for (let i = 0; i < count; i++) state.inventory.push(r.result.itemId);
+  state.stats.itemsCrafted = (state.stats.itemsCrafted || 0) + 1;
+  journalPush(state, '⚒️', `Готово: ${r.name.toLowerCase()}.`);
   return { ok: true, itemId: r.result.itemId, count };
+}
+
+// --- Дневник кота: последние события глазами кота-хранителя ---
+export function journalPush(state, icon, text) {
+  state.journal ||= [];
+  state.journal.push({ icon, text, at: Date.now() });
+  if (state.journal.length > 30) state.journal.splice(0, state.journal.length - 30);
 }
 
 // --- Косметика лавки (только красота, без влияния на силу) ---
@@ -345,7 +365,8 @@ export function toggleCosmetic(state, id) {
 // поиск), чтобы не идти одной тематикой подряд; внутри каждой механики
 // сложность растёт по своей цепочке.
 const PUZZLE_POOL = new Map(
-  [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES]
+  [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES,
+    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES]
     .map((p) => [p.id, p]),
 );
 const CAMPAIGN_ORDER = [
@@ -362,6 +383,11 @@ const CAMPAIGN_ORDER = [
   // Искалки новых миров
   'sk_nm_01', 'sk_sw_01', 'sk_sf_01', 'sk_ash_01',
   'sk_cr_01', 'sk_jade_01', 'sk_deep_01', 'sk_mist_01',
+  // Мастерская механики, свечи и потоки покупателей — вперемешку
+  'mech_01', 'cd_01', 'flow_01', 'mech_02', 'cd_02', 'flow_02',
+  'mech_03', 'cd_03', 'flow_03', 'mech_04', 'cd_04', 'flow_04',
+  'mech_05', 'cd_05', 'flow_05', 'mech_06', 'cd_06', 'flow_06',
+  'mech_07', 'cd_07', 'flow_07', 'mech_08', 'cd_08', 'flow_08',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 
@@ -439,15 +465,28 @@ export function completePuzzle(state, puzzleId, info = {}) {
     at: Date.now(),
   };
   state.stats.puzzlesSolved += 1;
+  journalPush(state, '🧩', firstTime
+    ? `Загадка «${puzzle.name}» решена. Лавка светлеет.`
+    : `«${puzzle.name}» — снова решена, кот доволен.`);
   // Уровни из мастерской: скромная награда за повторное прохождение чужих загадок
   const rewards = puzzle.rewards || [{ type: 'coins', amount: 15 }];
+  // Заказ дня: двойные монеты за загадку дня (раз в день)
+  let dailyBonus = false;
+  if (firstTime && isDailyPuzzle(state, puzzleId) && state.lastDailyBonus !== todayKey()) {
+    dailyBonus = true;
+    state.lastDailyBonus = todayKey();
+    journalPush(state, '🌟', 'Заказ дня выполнен — путник щедро благодарит!');
+  }
   if (!firstTime) {
     const coins = rewards.find((r) => r.type === 'coins');
     const amount = coins ? Math.round(coins.amount / 3) : 10;
     addCoins(state, amount);
     return [{ type: 'coins', amount }];
   }
-  return grantRewards(state, rewards);
+  const granted = grantRewards(state, rewards.map((r) => (
+    dailyBonus && r.type === 'coins' ? { ...r, amount: r.amount * 2 } : r
+  )));
+  return granted;
 }
 
 // Пропуск головоломки за монеты: цепочка открывается, но наград нет.
@@ -475,6 +514,39 @@ export function skipPuzzle(state, puzzleId) {
   addCoins(state, consolation);
   return { ok: true, price, consolation };
 }
+
+// --- Ежедневные уютные события: заказ дня ---
+
+function dayHash(str) {
+  let h = 2166136261;
+  for (const c of str) h = Math.imul(h ^ c.codePointAt(0), 16777619);
+  return h >>> 0;
+}
+
+export function todayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// Загадка дня: детерминирована по дате и прогрессу игрока (ближайшая нерешённая).
+export function dailyPuzzle(state) {
+  const open = ALL_PUZZLES.filter((p, i) => !state.puzzlesDone[p.id] && puzzleAvailable(state, i));
+  const pool = open.length > 0 ? open.slice(0, 6) : ALL_PUZZLES.slice(-6);
+  return pool[dayHash(todayKey()) % pool.length];
+}
+
+export function isDailyPuzzle(state, puzzleId) {
+  return dailyPuzzle(state).id === puzzleId;
+}
+
+// Текущий сезон по месяцу.
+export function currentSeason() {
+  const m = new Date().getMonth();
+  return m < 2 || m === 11 ? 'winter' : m < 5 ? 'spring' : m < 8 ? 'summer' : 'autumn';
+}
+
+export const SEASON_LABEL = {
+  winter: 'Зима ❄️', spring: 'Весна 🌸', summer: 'Лето ✨', autumn: 'Осень 🍂',
+};
 
 // Следующая кампейн-головоломка после текущей (для кнопки «Следующая →»).
 export function nextPuzzle(currentId) {
@@ -554,6 +626,7 @@ function runClassicBattle(state, battle, seed) {
       at: Date.now(),
     };
     state.stats.battlesWon += 1;
+    journalPush(state, '⚔️', `Поход «${battle.name}» — победа! Рыцарь вернулся с трофеями.`);
     for (const entry of battle.enemies) {
       const enemyId = typeof entry === 'string' ? entry : entry.id;
       const scale = typeof entry === 'string' ? 1 : (entry.scale || 1);
@@ -734,6 +807,7 @@ function runFormationBattle(state, battle, seed) {
       at: Date.now(),
     };
     state.stats.battlesWon += 1;
+    journalPush(state, '⚔️', `Поход «${battle.name}» — победа! Рыцарь вернулся с трофеями.`);
     for (const entry of battle.enemies) {
       const enemyId = typeof entry === 'string' ? entry : entry.id;
       const scale = typeof entry === 'string' ? 1 : (entry.scale || 1);

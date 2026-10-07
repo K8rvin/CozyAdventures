@@ -5,7 +5,7 @@ import {
 import { hint as solverHint } from '../core/solver.js';
 import {
   puzzleAvailable, completePuzzle, findPuzzle, ALL_PUZZLES,
-  nextPuzzle, firstUnsolvedPuzzle,
+  nextPuzzle, firstUnsolvedPuzzle, isDailyPuzzle, dailyPuzzle,
 } from '../core/state.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { renderShelfPuzzle } from './shelfView.js';
@@ -13,6 +13,9 @@ import { renderBookPuzzle } from './bookView.js';
 import { renderSeekPuzzle } from './seekView.js';
 import { renderPathPuzzle } from './pathView.js';
 import { renderTeaPuzzle } from './teaView.js';
+import { renderMechPuzzle } from './mechView.js';
+import { renderCandlePuzzle } from './candleView.js';
+import { renderFlowPuzzle } from './flowView.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav, puzzleSkipButton } from './common.js';
 
@@ -54,10 +57,11 @@ export function renderPuzzleList(container, ctx) {
     row.className = 'row' + (available ? '' : ' locked') + (done ? ' done' : '');
     if (firstUnsolved && p.id === firstUnsolved.id) row.dataset.scrollTarget = '1';
     const stars = '★'.repeat(p.difficulty) + '☆'.repeat(5 - p.difficulty);
+    const isDaily = available && !done && isDailyPuzzle(state, p.id);
     row.innerHTML = `
       <span class="icon">${available ? (done ? '🏮' : '🧩') : '🔒'}</span>
       <span class="grow">
-        <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span></div>
+        <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">заказ дня ×2</span>' : ''}</div>
         <div class="desc">${available ? p.intro : 'Реши предыдущую загадку, чтобы открыть.'}</div>
       </span>`;
     if (available) {
@@ -109,6 +113,15 @@ export function renderPuzzle(container, ctx, params) {
   }
   if (level.mechanic === 'tea') {
     return renderTeaPuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'mech') {
+    return renderMechPuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'candle') {
+    return renderCandlePuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'flow') {
+    return renderFlowPuzzle(container, ctx, level);
   }
   const puzzle = createPuzzle(level);
   let hintsUsed = 0;

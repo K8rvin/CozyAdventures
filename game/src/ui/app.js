@@ -11,7 +11,12 @@ import { renderCraft } from './craftView.js';
 import { renderSettings } from './settingsView.js';
 import { renderFormation } from './formationView.js';
 import { renderSeekEditorList, renderSeekEditor } from './seekEditorView.js';
-import { initSound, sfx } from './sound.js';
+import { renderAchievements } from './achievementsView.js';
+import { checkAchievements } from '../data/achievements.js';
+import { ALL_PUZZLES } from '../core/state.js';
+import { BATTLES } from '../data/battles.js';
+import { SEEK_PUZZLES } from '../data/puzzlesSeek.js';
+import { initSound, sfx, startMusic } from './sound.js';
 
 const screenEl = document.getElementById('screen');
 const toastEl = document.getElementById('toast');
@@ -21,6 +26,16 @@ let state = loadGame() || newGame();
 function save() {
   saveGame(state);
   updateWallet();
+  // Достижения: тосты о свежих разблокировках
+  const fresh = checkAchievements(state, {
+    puzzlesTotal: ALL_PUZZLES.length,
+    battlesTotal: BATTLES.length,
+    seekIds: SEEK_PUZZLES.map((p) => p.id),
+  });
+  for (const a of fresh) {
+    setTimeout(() => { toast(`🏆 Достижение: ${a.name}!`); sfx('success'); }, 600);
+    saveGame(state);
+  }
 }
 
 function updateWallet() {
@@ -54,6 +69,7 @@ const routes = {
   craft: (c, p) => renderCraft(c, ctx, p),
   settings: (c, p) => renderSettings(c, ctx, p),
   seekeditor: (c, p) => (p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p)),
+  achievements: (c, p) => renderAchievements(c, ctx, p),
 };
 
 let currentCleanup = null;
@@ -88,6 +104,14 @@ const ctx = {
 
 // Звук инициализируется по первому взаимодействию (требование браузеров).
 initSound();
+// Музыка лавки стартует после первого взаимодействия.
+const musicUnlock = () => {
+  startMusic();
+  document.removeEventListener?.('pointerdown', musicUnlock);
+  document.removeEventListener?.('keydown', musicUnlock);
+};
+document.addEventListener?.('pointerdown', musicUnlock);
+document.addEventListener?.('keydown', musicUnlock);
 
 // Паучок = скроллбар: паутина прибита к верху трека, паучок плавно спускается.
 const spiderTrack = document.createElement('div');
@@ -197,6 +221,7 @@ const spiderTimer = setInterval(() => {
 spiderTimer.unref?.();
 
 document.getElementById('settings-btn')?.addEventListener('click', () => { sfx('tap'); go('settings'); });
+document.getElementById('achievements-btn')?.addEventListener('click', () => { sfx('tap'); go('achievements'); });
 
 // Пасхалка «Об игре»: три стука по вывеске лавки.
 const brandEl = document.querySelector('.brand');

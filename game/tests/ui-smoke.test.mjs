@@ -119,6 +119,7 @@ const { renderCraft } = await import('../src/ui/craftView.js');
 const { renderSettings } = await import('../src/ui/settingsView.js');
 const { renderFormation } = await import('../src/ui/formationView.js');
 const { renderSeekEditorList, renderSeekEditor } = await import('../src/ui/seekEditorView.js');
+const { renderAchievements } = await import('../src/ui/achievementsView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
 const { ITEM_BY_ID } = await import('../src/data/items.js');
 
@@ -163,6 +164,7 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderFormation(new El('main'), ctx, { id: 'bt_slimes' }),
     () => renderSeekEditorList(new El('main'), ctx),
     () => renderSeekEditor(new El('main'), ctx, { id: 'sk_md_01' }),
+    () => renderAchievements(new El('main'), ctx),
     () => renderWorkshop(new El('main'), ctx),
     () => renderEditor(new El('main'), ctx, {}),
   ];

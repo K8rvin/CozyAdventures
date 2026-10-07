@@ -1,0 +1,88 @@
+// Уровни «Свечи и духи»: тёмная сетка, свечи с манхэттенским светом.
+// Цель: все фонари в свете, ни один дух — нет. Стены свет не пропускают.
+// Каждый уровень проверен решателем в tests/candle.test.mjs.
+
+export const CANDLE_PUZZLES = [
+  {
+    id: 'cd_01', world: 'crossroads', mechanic: 'candle', name: 'Первая свеча', difficulty: 1,
+    grid: [4, 4],
+    walls: [],
+    lanterns: [[2, 1]],
+    spirits: [],
+    radius: 2, candleLimit: 1,
+    rewards: [{ type: 'coins', amount: 100 }],
+    intro: 'Тапни свободную клетку — поставишь свечу. Свет разойдётся на 2 клетки во все стороны. Зажги фонарь!',
+  },
+  {
+    id: 'cd_02', world: 'crossroads', mechanic: 'candle', name: 'Два фонаря', difficulty: 1,
+    grid: [5, 4],
+    walls: [[2, 2]],
+    lanterns: [[0, 0], [4, 3]],
+    spirits: [],
+    radius: 2, candleLimit: 2,
+    rewards: [{ type: 'coins', amount: 110 }],
+    intro: 'Одной свечой оба фонаря не охватить — придётся поставить две. Стена в центре свет не пропускает.',
+  },
+  {
+    id: 'cd_03', world: 'crossroads', mechanic: 'candle', name: 'Первый дух', difficulty: 2,
+    grid: [5, 4],
+    walls: [],
+    lanterns: [[3, 1]],
+    spirits: [[1, 1]],
+    radius: 2, candleLimit: 1,
+    rewards: [{ type: 'coins', amount: 120 }],
+    intro: 'Дух не переносит света — луч его тревожит. Зажги фонарь так, чтобы свет не коснулся духа.',
+  },
+  {
+    id: 'cd_04', world: 'crossroads', mechanic: 'candle', name: 'Стена-тень', difficulty: 2,
+    grid: [5, 5],
+    walls: [[2, 0], [2, 1], [2, 2], [2, 3]],
+    lanterns: [[0, 1]],
+    spirits: [[3, 1]],
+    radius: 3, candleLimit: 2,
+    rewards: [{ type: 'coins', amount: 135 }],
+    intro: 'Стены надёжно прячут от света. Свети у фонаря — дух за стеной ничего не заметит.',
+  },
+  {
+    id: 'cd_05', world: 'crossroads', mechanic: 'candle', name: 'Три фонаря', difficulty: 3,
+    grid: [6, 4],
+    walls: [[2, 1], [3, 2]],
+    lanterns: [[0, 0], [5, 0], [3, 3]],
+    spirits: [[5, 3]],
+    radius: 2, candleLimit: 3,
+    rewards: [{ type: 'coins', amount: 150 }],
+    intro: 'Три фонаря, три свечи — и дух на страже. Продумай каждый шаг.',
+  },
+  {
+    id: 'cd_06', world: 'crossroads', mechanic: 'candle', name: 'Дальний свет', difficulty: 3,
+    grid: [6, 4],
+    walls: [[1, 2], [4, 1]],
+    lanterns: [[0, 3], [5, 0]],
+    spirits: [[2, 0], [3, 3]],
+    radius: 3, candleLimit: 2,
+    rewards: [{ type: 'coins', amount: 165 }],
+    intro: 'Свечи горят ярче: радиус 3. Далёкий свет опасен — проверь, кого он заденет.',
+  },
+  {
+    id: 'cd_07', world: 'crossroads', mechanic: 'candle', name: 'Лабиринт света', difficulty: 4,
+    grid: [6, 5],
+    walls: [[2, 0], [2, 1], [2, 2], [2, 3], [4, 1], [4, 2], [4, 3], [4, 4]],
+    lanterns: [[0, 0], [3, 2], [5, 0]],
+    spirits: [[0, 4], [5, 4]],
+    radius: 3, candleLimit: 4,
+    rewards: [{ type: 'coins', amount: 185 }],
+    intro: 'Тёмные коридоры петляют. Одна удачная свеча здесь осветит сразу два фонаря.',
+  },
+  {
+    id: 'cd_08', world: 'crossroads', mechanic: 'candle', name: 'Бал духов', difficulty: 5,
+    grid: [7, 5],
+    walls: [[2, 0], [2, 1], [2, 3], [2, 4], [4, 0], [4, 1], [4, 3], [4, 4], [6, 2]],
+    lanterns: [[0, 4], [3, 2], [6, 0]],
+    spirits: [[1, 0], [3, 4], [5, 4]],
+    radius: 3, candleLimit: 5,
+    rewards: [{ type: 'coins', amount: 220 }, { type: 'seals', amount: 1 }],
+    intro: 'Три духа устроили бал в темноте. Зажги все фонари, но ни один луч не должен коснуться гостей!',
+  },
+];
+
+export const CANDLE_PUZZLE_BY_ID = Object.fromEntries(CANDLE_PUZZLES.map((p) => [p.id, p]));

@@ -1,6 +1,6 @@
 // Настройки игры: режим боя, звук, обучение, новая игра и тайные места.
 import { header } from './common.js';
-import { toggleSound, soundEnabled } from './sound.js';
+import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js';
 import { applyCheat } from '../core/state.js';
 
 export function renderSettings(container, ctx) {
@@ -57,7 +57,14 @@ export function renderSettings(container, ctx) {
     soundBtn.textContent = on ? '🔔 Звук включён' : '🔕 Звук выключен';
     if (on) ctx.sfx?.('coin');
   });
-  panel.appendChild(soundBtn);
+  const musicBtn = document.createElement('button');
+  musicBtn.textContent = musicEnabled() ? '🎵 Музыка включена' : '🎵 Музыка выключена';
+  musicBtn.style.marginLeft = '8px';
+  musicBtn.addEventListener('click', () => {
+    const on = toggleMusic();
+    musicBtn.textContent = on ? '🎵 Музыка включена' : '🎵 Музыка выключена';
+  });
+  panel.append(soundBtn, musicBtn);
 
   // --- Обучение ---
   const tutTitle = document.createElement('h3');

@@ -1248,7 +1248,8 @@
             { x: 195, y: 174, r: 56 },
             { x: 73, y: 423, r: 48 },
             { x: 175, y: 598, r: 48 },
-            { x: 706, y: 549, r: 48 }
+            { x: 706, y: 549, r: 48 },
+            { x: 355, y: 44, r: 34 }
           ]
         },
         {
@@ -1260,8 +1261,8 @@
           id: "feather",
           label: "\u041F\u0435\u0440\u044C\u044F",
           spots: [
-            { x: 594, y: 357, r: 54 },
-            { x: 430, y: 526, r: 42 },
+            { x: 584, y: 363, r: 54 },
+            { x: 425, y: 524, r: 42 },
             { x: 720, y: 183, r: 42 }
           ]
         }
@@ -2285,6 +2286,513 @@
     }
   ];
   var TEA_PUZZLE_BY_ID = Object.fromEntries(TEA_PUZZLES.map((p) => [p.id, p]));
+
+  // src/data/puzzlesMech.js
+  var MECH_PUZZLES = [
+    {
+      id: "mech_01",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u0420\u0436\u0430\u0432\u0430\u044F \u0440\u0443\u043A\u043E\u044F\u0442\u044C",
+      difficulty: 1,
+      grid: [3, 3],
+      tiles: [
+        { type: "start", pos: [0, 1], faces: [null, "pin", null, null], fixed: true },
+        { type: "gear", pos: [1, 1], rot: 3, faces: [null, "pin", null, "socket"] },
+        { type: "end", pos: [2, 1], faces: [null, null, null, "socket"], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 100 }],
+      intro: "\u0421\u0442\u0430\u0440\u0430\u044F \u0440\u0443\u043A\u043E\u044F\u0442\u044C \u0437\u0430\u0440\u0436\u0430\u0432\u0435\u043B\u0430. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0443 \u0442\u0430\u043A, \u0447\u0442\u043E\u0431\u044B \u0448\u0438\u043F \u0432\u043E\u0448\u0451\u043B \u0432 \u043F\u0430\u0437 \u2014 \u0438 \u043A\u043E\u043B\u043E\u043A\u043E\u043B\u044C\u0447\u0438\u043A \u0437\u0430\u0437\u0432\u0435\u043D\u0438\u0442."
+    },
+    {
+      id: "mech_02",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0430",
+      difficulty: 1,
+      grid: [3, 3],
+      tiles: [
+        { type: "start", pos: [0, 2], faces: ["pin", null, null, null], fixed: true },
+        { type: "gear", pos: [0, 1], rot: 2, faces: [null, "pin", "socket", null] },
+        { type: "gear", pos: [1, 1], rot: 1, faces: ["pin", null, null, "socket"] },
+        { type: "end", pos: [1, 0], faces: [null, null, "socket", null], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 110 }],
+      intro: "\u041F\u0435\u0440\u0435\u0434\u0430\u0447\u0430 \u043C\u043E\u0436\u0435\u0442 \u043F\u043E\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u0442\u044C \u0437\u0430 \u0443\u0433\u043E\u043B. \u0421\u043B\u0435\u0434\u0438, \u0433\u0434\u0435 \u0443 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0438 \u0448\u0438\u043F, \u0430 \u0433\u0434\u0435 \u043F\u0430\u0437."
+    },
+    {
+      id: "mech_03",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u041C\u0443\u0437\u044B\u043A\u0430\u043B\u044C\u043D\u0430\u044F \u0448\u043A\u0430\u0442\u0443\u043B\u043A\u0430",
+      difficulty: 2,
+      grid: [4, 3],
+      tiles: [
+        { type: "start", pos: [0, 0], faces: [null, "pin", null, null], fixed: true },
+        { type: "gear", pos: [1, 0], rot: 1, faces: [null, null, "pin", "socket"] },
+        { type: "gear", pos: [1, 1], rot: 3, faces: ["socket", "pin", null, null] },
+        { type: "gear", pos: [2, 1], rot: 2, faces: [null, "pin", null, "socket"] },
+        { type: "blocker", pos: [2, 0] },
+        { type: "end", pos: [3, 1], faces: [null, null, null, "socket"], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 120 }],
+      intro: "\u0428\u043A\u0430\u0442\u0443\u043B\u043A\u0430 \u043F\u0443\u0442\u0435\u0448\u0435\u0441\u0442\u0432\u0435\u043D\u043D\u0438\u043A\u0430 \u043C\u043E\u043B\u0447\u0438\u0442: \u043E\u0434\u043D\u0430 \u0434\u0435\u0442\u0430\u043B\u044C \u0437\u0430\u043A\u043B\u0438\u043D\u0438\u043B\u043E \u043D\u0430\u0441\u043C\u0435\u0440\u0442\u044C. \u0421\u043E\u0431\u0435\u0440\u0438 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0443 \u0432 \u043E\u0431\u0445\u043E\u0434."
+    },
+    {
+      id: "mech_04",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C",
+      difficulty: 2,
+      grid: [4, 4],
+      tiles: [
+        { type: "start", pos: [0, 3], faces: ["pin", null, null, null], fixed: true },
+        { type: "gear", pos: [0, 2], rot: 3, faces: [null, "pin", "socket", null] },
+        { type: "gear", pos: [1, 2], rot: 2, faces: ["pin", null, null, "socket"] },
+        { type: "gear", pos: [1, 1], rot: 1, faces: [null, "pin", "socket", null] },
+        { type: "gear", pos: [2, 1], rot: 1, faces: [null, null, "pin", "socket"] },
+        { type: "blocker", pos: [0, 1] },
+        { type: "blocker", pos: [2, 3] },
+        { type: "end", pos: [2, 2], faces: ["socket", null, null, null], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 130 }],
+      intro: "\u0427\u0430\u0441\u044B \u043B\u0430\u0432\u043A\u0438 \u0432\u0441\u0442\u0430\u043B\u0438. \u0417\u043C\u0435\u0439\u043A\u0430 \u0438\u0437 \u0447\u0435\u0442\u044B\u0440\u0451\u0445 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043E\u043A \u2014 \u0438 \u043C\u0430\u044F\u0442\u043D\u0438\u043A \u0441\u043D\u043E\u0432\u0430 \u043A\u0430\u0447\u043D\u0451\u0442\u0441\u044F."
+    },
+    {
+      id: "mech_05",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u041B\u0435\u0431\u0451\u0434\u043A\u0430 \u043A\u043E\u043B\u043E\u0434\u0446\u0430",
+      difficulty: 3,
+      grid: [4, 4],
+      tiles: [
+        { type: "start", pos: [0, 0], faces: [null, "pin", null, null], fixed: true },
+        { type: "gear", pos: [1, 0], rot: 1, faces: [null, "pin", null, "socket"] },
+        { type: "gear", pos: [2, 0], rot: 2, faces: [null, "socket", "pin", "socket"] },
+        { type: "gear", pos: [3, 0], rot: 0, faces: [null, null, "socket", "pin"] },
+        { type: "gear", pos: [2, 1], rot: 3, faces: ["socket", "pin", null, null] },
+        { type: "blocker", pos: [1, 1] },
+        { type: "blocker", pos: [0, 2] },
+        { type: "end", pos: [3, 1], faces: [null, null, null, "socket"], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 140 }],
+      intro: "\u0423 \u043B\u0435\u0431\u0451\u0434\u043A\u0438 \u0435\u0441\u0442\u044C \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0430 \u0441 \u0442\u0440\u0435\u043C\u044F \u0433\u0440\u0430\u043D\u044F\u043C\u0438: \u043E\u0434\u043D\u0430 \u0432\u0435\u0442\u0432\u044C \u043A\u0440\u0443\u0442\u0438\u0442 \u0445\u043E\u043B\u043E\u0441\u0442\u043E\u0435 \u043A\u043E\u043B\u0435\u0441\u043E, \u0434\u0440\u0443\u0433\u0430\u044F \u2014 \u0431\u0430\u0440\u0430\u0431\u0430\u043D \u0441 \u043A\u043E\u043B\u043E\u043A\u043E\u043B\u044C\u0447\u0438\u043A\u043E\u043C."
+    },
+    {
+      id: "mech_06",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u041C\u0435\u043B\u044C\u043D\u0438\u0447\u043D\u044B\u0439 \u043F\u0440\u0438\u0432\u043E\u0434",
+      difficulty: 3,
+      grid: [5, 4],
+      tiles: [
+        { type: "start", pos: [0, 0], faces: [null, null, "pin", null], fixed: true },
+        { type: "gear", pos: [0, 1], rot: 2, faces: ["socket", "pin", null, null] },
+        { type: "gear", pos: [1, 1], rot: 1, faces: [null, "pin", null, "socket"] },
+        { type: "gear", pos: [2, 1], rot: 3, faces: [null, null, "pin", "socket"] },
+        { type: "gear", pos: [2, 2], rot: 1, faces: ["socket", null, null, "pin"] },
+        { type: "gear", pos: [1, 2], rot: 2, faces: [null, "socket", "pin", null] },
+        { type: "blocker", pos: [0, 2] },
+        { type: "blocker", pos: [3, 1] },
+        { type: "end", pos: [1, 3], faces: ["socket", null, null, null], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 155 }],
+      intro: "\u041F\u0440\u0438\u0432\u043E\u0434 \u043C\u0438\u043D\u0438-\u043C\u0435\u043B\u044C\u043D\u0438\u0446\u044B \u043F\u0435\u0442\u043B\u044F\u0435\u0442 \u043F\u044F\u0442\u0451\u0440\u043A\u043E\u0439 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043E\u043A. \u041C\u0443\u043A\u0430 \u0441\u0430\u043C\u0430 \u0441\u0435\u0431\u044F \u043D\u0435 \u0441\u043C\u0435\u043B\u0435\u0442!"
+    },
+    {
+      id: "mech_07",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u041F\u043E\u0434\u044A\u0451\u043C\u043D\u0438\u043A \u043A\u043B\u0430\u0434\u043E\u0432\u043E\u0439",
+      difficulty: 4,
+      grid: [5, 4],
+      tiles: [
+        { type: "start", pos: [0, 3], faces: ["pin", null, null, null], fixed: true },
+        { type: "gear", pos: [0, 2], rot: 1, faces: [null, "pin", "socket", null] },
+        { type: "gear", pos: [1, 2], rot: 2, faces: ["pin", null, null, "socket"] },
+        { type: "gear", pos: [1, 1], rot: 3, faces: [null, "pin", "socket", null] },
+        { type: "gear", pos: [2, 1], rot: 1, faces: [null, null, "pin", "socket"] },
+        { type: "gear", pos: [2, 2], rot: 2, faces: ["socket", "pin", null, null] },
+        { type: "gear", pos: [3, 2], rot: 3, faces: [null, null, "pin", "socket"] },
+        { type: "gear", pos: [0, 0], rot: 0, faces: [null, "socket", null, "pin"] },
+        { type: "blocker", pos: [1, 3] },
+        { type: "blocker", pos: [4, 1] },
+        { type: "blocker", pos: [3, 0] },
+        { type: "end", pos: [3, 3], faces: ["socket", null, null, null], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 170 }],
+      intro: "\u0414\u043B\u0438\u043D\u043D\u0430\u044F \u0446\u0435\u043F\u044C \u0438\u0437 \u0448\u0435\u0441\u0442\u0438 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043E\u043A \u2014 \u0438 \u043E\u0434\u043D\u0430 \u043B\u0438\u0448\u043D\u044F\u044F \u0432\u0430\u043B\u044F\u0435\u0442\u0441\u044F \u0432 \u0443\u0433\u043B\u0443. \u041D\u0435 \u0432\u0441\u0435 \u0434\u0435\u0442\u0430\u043B\u0438 \u043E\u0431\u044F\u0437\u0430\u043D\u044B \u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C."
+    },
+    {
+      id: "mech_08",
+      world: "crossroads",
+      mechanic: "mech",
+      name: "\u042F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u044B\u0439 \u043A\u0430\u0440\u0438\u043B\u044C\u043E\u043D",
+      difficulty: 5,
+      grid: [6, 5],
+      tiles: [
+        { type: "start", pos: [0, 4], faces: [null, "pin", null, null], fixed: true },
+        { type: "gear", pos: [1, 4], rot: 1, faces: ["pin", null, null, "socket"] },
+        { type: "gear", pos: [1, 3], rot: 2, faces: [null, "pin", "socket", null] },
+        { type: "gear", pos: [2, 3], rot: 3, faces: ["pin", "socket", null, "socket"] },
+        { type: "gear", pos: [3, 3], rot: 1, faces: ["socket", null, null, "pin"] },
+        { type: "gear", pos: [2, 2], rot: 1, faces: [null, "pin", "socket", null] },
+        { type: "gear", pos: [3, 2], rot: 3, faces: [null, "pin", null, "socket"] },
+        { type: "gear", pos: [4, 2], rot: 2, faces: ["pin", null, null, "socket"] },
+        { type: "gear", pos: [4, 1], rot: 1, faces: [null, "pin", "socket", null] },
+        { type: "blocker", pos: [0, 2] },
+        { type: "blocker", pos: [2, 4] },
+        { type: "blocker", pos: [5, 3] },
+        { type: "blocker", pos: [3, 4] },
+        { type: "end", pos: [5, 1], faces: [null, null, null, "socket"], fixed: true }
+      ],
+      rewards: [{ type: "coins", amount: 220 }, { type: "seals", amount: 1 }],
+      intro: "\u0413\u043B\u0430\u0432\u043D\u044B\u0439 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C \u044F\u0440\u043C\u0430\u0440\u043A\u0438: \u0432\u043E\u0441\u0435\u043C\u044C \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043E\u043A, \u0437\u0430\u043A\u043B\u0438\u043D\u0438\u0432\u0448\u0438\u0435 \u0443\u0433\u043E\u043B\u043A\u0438 \u0438 \u0442\u0440\u043E\u0439\u043D\u0430\u044F \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0430. \u0417\u0430\u0441\u0442\u0430\u0432\u044C \u043A\u0430\u0440\u0438\u043B\u044C\u043E\u043D \u043F\u0435\u0442\u044C!"
+    }
+  ];
+  var MECH_PUZZLE_BY_ID = Object.fromEntries(MECH_PUZZLES.map((p) => [p.id, p]));
+
+  // src/data/puzzlesCandle.js
+  var CANDLE_PUZZLES = [
+    {
+      id: "cd_01",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0441\u0432\u0435\u0447\u0430",
+      difficulty: 1,
+      grid: [4, 4],
+      walls: [],
+      lanterns: [[2, 1]],
+      spirits: [],
+      radius: 2,
+      candleLimit: 1,
+      rewards: [{ type: "coins", amount: 100 }],
+      intro: "\u0422\u0430\u043F\u043D\u0438 \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u0443\u044E \u043A\u043B\u0435\u0442\u043A\u0443 \u2014 \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0448\u044C \u0441\u0432\u0435\u0447\u0443. \u0421\u0432\u0435\u0442 \u0440\u0430\u0437\u043E\u0439\u0434\u0451\u0442\u0441\u044F \u043D\u0430 2 \u043A\u043B\u0435\u0442\u043A\u0438 \u0432\u043E \u0432\u0441\u0435 \u0441\u0442\u043E\u0440\u043E\u043D\u044B. \u0417\u0430\u0436\u0433\u0438 \u0444\u043E\u043D\u0430\u0440\u044C!"
+    },
+    {
+      id: "cd_02",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u0414\u0432\u0430 \u0444\u043E\u043D\u0430\u0440\u044F",
+      difficulty: 1,
+      grid: [5, 4],
+      walls: [[2, 2]],
+      lanterns: [[0, 0], [4, 3]],
+      spirits: [],
+      radius: 2,
+      candleLimit: 2,
+      rewards: [{ type: "coins", amount: 110 }],
+      intro: "\u041E\u0434\u043D\u043E\u0439 \u0441\u0432\u0435\u0447\u043E\u0439 \u043E\u0431\u0430 \u0444\u043E\u043D\u0430\u0440\u044F \u043D\u0435 \u043E\u0445\u0432\u0430\u0442\u0438\u0442\u044C \u2014 \u043F\u0440\u0438\u0434\u0451\u0442\u0441\u044F \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0434\u0432\u0435. \u0421\u0442\u0435\u043D\u0430 \u0432 \u0446\u0435\u043D\u0442\u0440\u0435 \u0441\u0432\u0435\u0442 \u043D\u0435 \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430\u0435\u0442."
+    },
+    {
+      id: "cd_03",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0434\u0443\u0445",
+      difficulty: 2,
+      grid: [5, 4],
+      walls: [],
+      lanterns: [[3, 1]],
+      spirits: [[1, 1]],
+      radius: 2,
+      candleLimit: 1,
+      rewards: [{ type: "coins", amount: 120 }],
+      intro: "\u0414\u0443\u0445 \u043D\u0435 \u043F\u0435\u0440\u0435\u043D\u043E\u0441\u0438\u0442 \u0441\u0432\u0435\u0442\u0430 \u2014 \u043B\u0443\u0447 \u0435\u0433\u043E \u0442\u0440\u0435\u0432\u043E\u0436\u0438\u0442. \u0417\u0430\u0436\u0433\u0438 \u0444\u043E\u043D\u0430\u0440\u044C \u0442\u0430\u043A, \u0447\u0442\u043E\u0431\u044B \u0441\u0432\u0435\u0442 \u043D\u0435 \u043A\u043E\u0441\u043D\u0443\u043B\u0441\u044F \u0434\u0443\u0445\u0430."
+    },
+    {
+      id: "cd_04",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u0421\u0442\u0435\u043D\u0430-\u0442\u0435\u043D\u044C",
+      difficulty: 2,
+      grid: [5, 5],
+      walls: [[2, 0], [2, 1], [2, 2], [2, 3]],
+      lanterns: [[0, 1]],
+      spirits: [[3, 1]],
+      radius: 3,
+      candleLimit: 2,
+      rewards: [{ type: "coins", amount: 135 }],
+      intro: "\u0421\u0442\u0435\u043D\u044B \u043D\u0430\u0434\u0451\u0436\u043D\u043E \u043F\u0440\u044F\u0447\u0443\u0442 \u043E\u0442 \u0441\u0432\u0435\u0442\u0430. \u0421\u0432\u0435\u0442\u0438 \u0443 \u0444\u043E\u043D\u0430\u0440\u044F \u2014 \u0434\u0443\u0445 \u0437\u0430 \u0441\u0442\u0435\u043D\u043E\u0439 \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u0437\u0430\u043C\u0435\u0442\u0438\u0442."
+    },
+    {
+      id: "cd_05",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u0422\u0440\u0438 \u0444\u043E\u043D\u0430\u0440\u044F",
+      difficulty: 3,
+      grid: [6, 4],
+      walls: [[2, 1], [3, 2]],
+      lanterns: [[0, 0], [5, 0], [3, 3]],
+      spirits: [[5, 3]],
+      radius: 2,
+      candleLimit: 3,
+      rewards: [{ type: "coins", amount: 150 }],
+      intro: "\u0422\u0440\u0438 \u0444\u043E\u043D\u0430\u0440\u044F, \u0442\u0440\u0438 \u0441\u0432\u0435\u0447\u0438 \u2014 \u0438 \u0434\u0443\u0445 \u043D\u0430 \u0441\u0442\u0440\u0430\u0436\u0435. \u041F\u0440\u043E\u0434\u0443\u043C\u0430\u0439 \u043A\u0430\u0436\u0434\u044B\u0439 \u0448\u0430\u0433."
+    },
+    {
+      id: "cd_06",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u0414\u0430\u043B\u044C\u043D\u0438\u0439 \u0441\u0432\u0435\u0442",
+      difficulty: 3,
+      grid: [6, 4],
+      walls: [[1, 2], [4, 1]],
+      lanterns: [[0, 3], [5, 0]],
+      spirits: [[2, 0], [3, 3]],
+      radius: 3,
+      candleLimit: 2,
+      rewards: [{ type: "coins", amount: 165 }],
+      intro: "\u0421\u0432\u0435\u0447\u0438 \u0433\u043E\u0440\u044F\u0442 \u044F\u0440\u0447\u0435: \u0440\u0430\u0434\u0438\u0443\u0441 3. \u0414\u0430\u043B\u0451\u043A\u0438\u0439 \u0441\u0432\u0435\u0442 \u043E\u043F\u0430\u0441\u0435\u043D \u2014 \u043F\u0440\u043E\u0432\u0435\u0440\u044C, \u043A\u043E\u0433\u043E \u043E\u043D \u0437\u0430\u0434\u0435\u043D\u0435\u0442."
+    },
+    {
+      id: "cd_07",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u041B\u0430\u0431\u0438\u0440\u0438\u043D\u0442 \u0441\u0432\u0435\u0442\u0430",
+      difficulty: 4,
+      grid: [6, 5],
+      walls: [[2, 0], [2, 1], [2, 2], [2, 3], [4, 1], [4, 2], [4, 3], [4, 4]],
+      lanterns: [[0, 0], [3, 2], [5, 0]],
+      spirits: [[0, 4], [5, 4]],
+      radius: 3,
+      candleLimit: 4,
+      rewards: [{ type: "coins", amount: 185 }],
+      intro: "\u0422\u0451\u043C\u043D\u044B\u0435 \u043A\u043E\u0440\u0438\u0434\u043E\u0440\u044B \u043F\u0435\u0442\u043B\u044F\u044E\u0442. \u041E\u0434\u043D\u0430 \u0443\u0434\u0430\u0447\u043D\u0430\u044F \u0441\u0432\u0435\u0447\u0430 \u0437\u0434\u0435\u0441\u044C \u043E\u0441\u0432\u0435\u0442\u0438\u0442 \u0441\u0440\u0430\u0437\u0443 \u0434\u0432\u0430 \u0444\u043E\u043D\u0430\u0440\u044F."
+    },
+    {
+      id: "cd_08",
+      world: "crossroads",
+      mechanic: "candle",
+      name: "\u0411\u0430\u043B \u0434\u0443\u0445\u043E\u0432",
+      difficulty: 5,
+      grid: [7, 5],
+      walls: [[2, 0], [2, 1], [2, 3], [2, 4], [4, 0], [4, 1], [4, 3], [4, 4], [6, 2]],
+      lanterns: [[0, 4], [3, 2], [6, 0]],
+      spirits: [[1, 0], [3, 4], [5, 4]],
+      radius: 3,
+      candleLimit: 5,
+      rewards: [{ type: "coins", amount: 220 }, { type: "seals", amount: 1 }],
+      intro: "\u0422\u0440\u0438 \u0434\u0443\u0445\u0430 \u0443\u0441\u0442\u0440\u043E\u0438\u043B\u0438 \u0431\u0430\u043B \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435. \u0417\u0430\u0436\u0433\u0438 \u0432\u0441\u0435 \u0444\u043E\u043D\u0430\u0440\u0438, \u043D\u043E \u043D\u0438 \u043E\u0434\u0438\u043D \u043B\u0443\u0447 \u043D\u0435 \u0434\u043E\u043B\u0436\u0435\u043D \u043A\u043E\u0441\u043D\u0443\u0442\u044C\u0441\u044F \u0433\u043E\u0441\u0442\u0435\u0439!"
+    }
+  ];
+  var CANDLE_PUZZLE_BY_ID = Object.fromEntries(CANDLE_PUZZLES.map((p) => [p.id, p]));
+
+  // src/data/puzzlesFlow.js
+  var FLOW_PUZZLES = [
+    {
+      id: "flow_01",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u041F\u0435\u0440\u0432\u044B\u0435 \u043E\u0433\u043D\u0438",
+      difficulty: 1,
+      grid: [4, 4],
+      tiles: [
+        { type: "start", pos: [0, 1], rot: 1, color: 0, fixed: true },
+        { type: "arrow", pos: [1, 1], rot: 0 },
+        { type: "arrow", pos: [2, 1], rot: 3 },
+        { type: "stall", pos: [3, 1], color: 0 },
+        { type: "start", pos: [0, 2], rot: 1, color: 1, fixed: true },
+        { type: "arrow", pos: [1, 2], rot: 2 },
+        { type: "arrow", pos: [2, 2], rot: 0 },
+        { type: "stall", pos: [3, 2], color: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 110 }],
+      intro: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u043E\u0442\u043A\u0440\u044B\u0442! \u0422\u0430\u043F\u0430\u0439 \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u2014 \u043E\u043D\u0438 \u043F\u043E\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u044E\u0442\u0441\u044F. \u041A\u0430\u0436\u0434\u044B\u0439 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u044C \u0434\u043E\u043B\u0436\u0435\u043D \u0434\u043E\u0439\u0442\u0438 \u0434\u043E \u043B\u043E\u0442\u043A\u0430 \u0441\u0432\u043E\u0435\u0433\u043E \u0446\u0432\u0435\u0442\u0430."
+    },
+    {
+      id: "flow_02",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u0421 \u0434\u0432\u0443\u0445 \u0441\u0442\u043E\u0440\u043E\u043D",
+      difficulty: 1,
+      grid: [4, 4],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 1, color: 0, fixed: true },
+        { type: "arrow", pos: [1, 0], rot: 3 },
+        { type: "arrow", pos: [2, 0], rot: 0 },
+        { type: "arrow", pos: [2, 1], rot: 1 },
+        { type: "stall", pos: [2, 2], color: 0 },
+        { type: "start", pos: [3, 3], rot: 3, color: 1, fixed: true },
+        { type: "arrow", pos: [2, 3], rot: 1 },
+        { type: "arrow", pos: [1, 3], rot: 0 },
+        { type: "stall", pos: [0, 3], color: 1 },
+        { type: "wall", pos: [1, 1] }
+      ],
+      rewards: [{ type: "coins", amount: 120 }],
+      intro: "\u041F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0438 \u043F\u0440\u0438\u0445\u043E\u0434\u044F\u0442 \u0441 \u0440\u0430\u0437\u043D\u044B\u0445 \u043A\u043E\u043D\u0446\u043E\u0432 \u0440\u044B\u043D\u043A\u0430. \u0420\u0430\u0437\u0432\u0435\u0434\u0438 \u0438\u0445 \u043F\u0443\u0442\u0438 \u043F\u043E \u0443\u0433\u043B\u0430\u043C \u2014 \u0432\u0441\u0442\u0440\u0435\u0447\u0430\u0442\u044C\u0441\u044F \u0438\u043C \u043D\u0435\u043B\u044C\u0437\u044F."
+    },
+    {
+      id: "flow_03",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u041C\u0435\u0436\u0434\u0443 \u044F\u0449\u0438\u043A\u043E\u0432",
+      difficulty: 2,
+      grid: [5, 4],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 1, color: 0, fixed: true },
+        { type: "arrow", pos: [1, 0], rot: 3 },
+        { type: "arrow", pos: [2, 0], rot: 0 },
+        { type: "arrow", pos: [2, 1], rot: 1 },
+        { type: "arrow", pos: [2, 2], rot: 2 },
+        { type: "arrow", pos: [3, 2], rot: 0 },
+        { type: "stall", pos: [4, 2], color: 0 },
+        { type: "start", pos: [0, 3], rot: 1, color: 1, fixed: true },
+        { type: "arrow", pos: [1, 3], rot: 2 },
+        { type: "arrow", pos: [2, 3], rot: 0 },
+        { type: "stall", pos: [3, 3], color: 1 },
+        { type: "wall", pos: [3, 1] },
+        { type: "wall", pos: [1, 2] }
+      ],
+      rewards: [{ type: "coins", amount: 130 }],
+      intro: "\u041C\u0435\u0436\u0434\u0443 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430\u043C\u0438 \u0433\u0440\u0443\u0434\u044B \u044F\u0449\u0438\u043A\u043E\u0432. \u041E\u0431\u0432\u0435\u0434\u0438 \u043F\u043E\u0442\u043E\u043A \u043B\u0438\u0441\u0451\u043D\u043A\u0430 \u0441\u0432\u0435\u0440\u0445\u0443, \u0430 \u043B\u044F\u0433\u0443\u0448\u043E\u043D\u043A\u0430 \u2014 \u043D\u0438\u0436\u043D\u0438\u043C \u0440\u044F\u0434\u043E\u043C."
+    },
+    {
+      id: "flow_04",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u0422\u0440\u043E\u0435 \u043D\u0430 \u0440\u044B\u043D\u043A\u0435",
+      difficulty: 2,
+      grid: [5, 4],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 1, color: 0, fixed: true },
+        { type: "arrow", pos: [1, 0], rot: 0 },
+        { type: "arrow", pos: [2, 0], rot: 2 },
+        { type: "stall", pos: [3, 0], color: 0 },
+        { type: "start", pos: [0, 2], rot: 1, color: 1, fixed: true },
+        { type: "arrow", pos: [1, 2], rot: 0 },
+        { type: "arrow", pos: [1, 3], rot: 3 },
+        { type: "stall", pos: [2, 3], color: 1 },
+        { type: "start", pos: [4, 3], rot: 0, color: 2, fixed: true },
+        { type: "arrow", pos: [4, 2], rot: 1 },
+        { type: "arrow", pos: [4, 1], rot: 2 },
+        { type: "stall", pos: [4, 0], color: 2 },
+        { type: "wall", pos: [2, 1] },
+        { type: "wall", pos: [3, 2] }
+      ],
+      rewards: [{ type: "coins", amount: 140 }],
+      intro: "\u0421\u0435\u0433\u043E\u0434\u043D\u044F \u0442\u0440\u043E\u0435 \u0437\u0430\u0440\u0430\u0437: \u043B\u0438\u0441\u0451\u043D\u043E\u043A, \u043B\u044F\u0433\u0443\u0448\u043E\u043D\u043E\u043A \u0438 \u0441\u0438\u043D\u0438\u0447\u043A\u0430. \u041A\u0430\u0436\u0434\u043E\u043C\u0443 \u2014 \u0441\u0432\u043E\u0439 \u043B\u043E\u0442\u043E\u043A, \u0438 \u0431\u0435\u0437 \u0442\u043E\u043B\u043A\u043E\u0442\u043D\u0438!"
+    },
+    {
+      id: "flow_05",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043D\u044B\u0435 \u043F\u043E\u0442\u043E\u043A\u0438",
+      difficulty: 3,
+      grid: [5, 5],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 2, color: 0, fixed: true },
+        { type: "arrow", pos: [0, 1], rot: 0 },
+        { type: "arrow", pos: [1, 1], rot: 2 },
+        { type: "stall", pos: [2, 1], color: 0 },
+        { type: "start", pos: [4, 4], rot: 3, color: 1, fixed: true },
+        { type: "arrow", pos: [3, 4], rot: 1 },
+        { type: "arrow", pos: [2, 4], rot: 2 },
+        { type: "arrow", pos: [2, 3], rot: 0 },
+        { type: "stall", pos: [1, 3], color: 1 },
+        { type: "start", pos: [4, 0], rot: 2, color: 2, fixed: true },
+        { type: "arrow", pos: [4, 1], rot: 3 },
+        { type: "arrow", pos: [4, 2], rot: 1 },
+        { type: "stall", pos: [3, 2], color: 2 },
+        { type: "wall", pos: [1, 2] },
+        { type: "wall", pos: [0, 3] },
+        { type: "wall", pos: [3, 3] }
+      ],
+      rewards: [{ type: "coins", amount: 150 }],
+      intro: "\u041F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0438 \u0438\u0434\u0443\u0442 \u043D\u0430\u043F\u0435\u0440\u0435\u0440\u0435\u0437. \u0423\u0441\u0442\u0443\u043F\u0438 \u0434\u043E\u0440\u043E\u0433\u0443 \u0442\u0435\u043C, \u043A\u0442\u043E \u0434\u0432\u0438\u0436\u0435\u0442\u0441\u044F \u043A\u0440\u0430\u0435\u043C \u0440\u044B\u043D\u043A\u0430."
+    },
+    {
+      id: "flow_06",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u0414\u0430\u043B\u044C\u043D\u0438\u0435 \u043B\u043E\u0442\u043A\u0438",
+      difficulty: 3,
+      grid: [6, 5],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 2, color: 0, fixed: true },
+        { type: "arrow", pos: [0, 1], rot: 2 },
+        { type: "arrow", pos: [1, 1], rot: 0 },
+        { type: "arrow", pos: [2, 1], rot: 3 },
+        { type: "stall", pos: [2, 2], color: 0 },
+        { type: "start", pos: [5, 0], rot: 2, color: 1, fixed: true },
+        { type: "arrow", pos: [5, 1], rot: 1 },
+        { type: "arrow", pos: [4, 1], rot: 0 },
+        { type: "arrow", pos: [4, 2], rot: 1 },
+        { type: "stall", pos: [4, 3], color: 1 },
+        { type: "start", pos: [0, 4], rot: 1, color: 2, fixed: true },
+        { type: "arrow", pos: [1, 4], rot: 3 },
+        { type: "arrow", pos: [2, 4], rot: 2 },
+        { type: "stall", pos: [2, 3], color: 2 },
+        { type: "wall", pos: [3, 1] },
+        { type: "wall", pos: [1, 2] },
+        { type: "wall", pos: [0, 3] },
+        { type: "wall", pos: [5, 3] }
+      ],
+      rewards: [{ type: "coins", amount: 165 }],
+      intro: "\u042F\u0440\u043C\u0430\u0440\u043A\u0430 \u0433\u0443\u0434\u0438\u0442, \u043B\u043E\u0442\u043A\u0438 \u0440\u0430\u0437\u0431\u0440\u043E\u0441\u0430\u043D\u044B \u0434\u0430\u043B\u0435\u043A\u043E. \u0414\u043B\u0438\u043D\u043D\u044B\u0439 \u043E\u0431\u0445\u043E\u0434 \u2014 \u0442\u043E\u0436\u0435 \u043F\u0443\u0442\u044C."
+    },
+    {
+      id: "flow_07",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u0422\u0435\u0441\u043D\u044B\u0435 \u0440\u044F\u0434\u044B",
+      difficulty: 4,
+      grid: [6, 5],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 2, color: 0, fixed: true },
+        { type: "arrow", pos: [0, 1], rot: 3 },
+        { type: "arrow", pos: [1, 1], rot: 1 },
+        { type: "arrow", pos: [2, 1], rot: 2 },
+        { type: "stall", pos: [3, 1], color: 0 },
+        { type: "start", pos: [5, 4], rot: 0, color: 1, fixed: true },
+        { type: "arrow", pos: [5, 3], rot: 1 },
+        { type: "arrow", pos: [4, 3], rot: 2 },
+        { type: "stall", pos: [4, 2], color: 1 },
+        { type: "start", pos: [0, 4], rot: 1, color: 2, fixed: true },
+        { type: "arrow", pos: [1, 4], rot: 0 },
+        { type: "arrow", pos: [2, 4], rot: 3 },
+        { type: "arrow", pos: [2, 3], rot: 2 },
+        { type: "stall", pos: [3, 3], color: 2 },
+        { type: "wall", pos: [2, 2] },
+        { type: "wall", pos: [1, 2] },
+        { type: "wall", pos: [4, 1] }
+      ],
+      rewards: [{ type: "coins", amount: 180 }],
+      intro: "\u0420\u044F\u0434\u044B \u0442\u0435\u0441\u043D\u044B\u0435: \u043E\u0434\u043D\u0430 \u043D\u0435\u0432\u0435\u0440\u043D\u0430\u044F \u0441\u0442\u0440\u0435\u043B\u043A\u0430 \u2014 \u0438 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0438 \u0441\u0442\u043E\u043B\u043A\u043D\u0443\u0442\u0441\u044F \u043B\u0431\u0430\u043C\u0438."
+    },
+    {
+      id: "flow_08",
+      world: "crossroads",
+      mechanic: "flow",
+      name: "\u0424\u0438\u043D\u0430\u043B\u044C\u043D\u0430\u044F \u043D\u043E\u0447\u044C \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
+      difficulty: 5,
+      grid: [7, 6],
+      tiles: [
+        { type: "start", pos: [0, 0], rot: 2, color: 0, fixed: true },
+        { type: "arrow", pos: [0, 1], rot: 0 },
+        { type: "arrow", pos: [1, 1], rot: 3 },
+        { type: "stall", pos: [2, 1], color: 0 },
+        { type: "start", pos: [6, 0], rot: 2, color: 1, fixed: true },
+        { type: "arrow", pos: [6, 1], rot: 1 },
+        { type: "arrow", pos: [5, 1], rot: 3 },
+        { type: "arrow", pos: [5, 2], rot: 0 },
+        { type: "stall", pos: [4, 2], color: 1 },
+        { type: "start", pos: [0, 5], rot: 1, color: 2, fixed: true },
+        { type: "arrow", pos: [1, 5], rot: 2 },
+        { type: "arrow", pos: [2, 5], rot: 1 },
+        { type: "arrow", pos: [2, 4], rot: 3 },
+        { type: "stall", pos: [3, 4], color: 2 },
+        { type: "wall", pos: [3, 0] },
+        { type: "wall", pos: [4, 1] },
+        { type: "wall", pos: [1, 3] },
+        { type: "wall", pos: [4, 4] },
+        { type: "wall", pos: [6, 3] },
+        { type: "wall", pos: [0, 3] }
+      ],
+      rewards: [{ type: "coins", amount: 240 }, { type: "seals", amount: 1 }],
+      intro: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043D\u043E\u0447\u044C \u044F\u0440\u043C\u0430\u0440\u043A\u0438! \u0422\u0440\u0438 \u043F\u043E\u0442\u043E\u043A\u0430 \u0447\u0435\u0440\u0435\u0437 \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u2014 \u0440\u0430\u0437\u0432\u0435\u0434\u0438 \u0432\u0441\u0435\u0445 \u0431\u0435\u0437 \u0435\u0434\u0438\u043D\u043E\u0439 \u0442\u043E\u043B\u0447\u043A\u0438."
+    }
+  ];
+  var FLOW_PUZZLE_BY_ID = Object.fromEntries(FLOW_PUZZLES.map((p) => [p.id, p]));
 
   // src/data/worlds/nm.js
   var WORLD = {
@@ -6630,6 +7138,8 @@
       // id -> { victories }
       customPuzzles: [],
       // уровни из редактора
+      lastDailyBonus: null,
+      // день, когда получен бонус заказа дня
       cosmeticsOwned: [],
       // купленные украшения
       cosmeticsActive: [],
@@ -6638,6 +7148,10 @@
       // правки хотспотов искалок из редактора: levelId -> groups
       shopSeenStock: [],
       // id товаров прилавка, которые игрок уже видел
+      achievements: {},
+      // id -> timestamp разблокировки
+      journal: [],
+      // дневник кота: последние события [{icon, text, at}]
       tutorial: {},
       // пройденные этапы обучения
       tutorialSkipped: false,
@@ -6661,6 +7175,9 @@
     state2.cosmeticsActive ||= [];
     state2.seekOverrides ||= {};
     state2.shopSeenStock ||= [];
+    state2.lastDailyBonus ??= null;
+    state2.achievements ||= {};
+    state2.journal ||= [];
     state2.tutorial ||= {};
     state2.tutorialSkipped ??= false;
     state2.settings ||= {};
@@ -6719,6 +7236,7 @@
     }
     state2.inventory.push(itemId);
     state2.stats.itemsBought = (state2.stats.itemsBought || 0) + 1;
+    journalPush(state2, "\u{1FA99}", `\u041A\u0443\u043F\u043B\u0435\u043D\u043E: ${item2.name}.`);
     const auto = autoEquip(state2, itemId);
     return { ok: true, autoEquipped: auto };
   }
@@ -6766,6 +7284,7 @@
     if (state2[purse] < def.price) return { ok: false, error: def.currency === "seals" ? "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043F\u0435\u0447\u0430\u0442\u0435\u0439" : "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043C\u043E\u043D\u0435\u0442" };
     state2[purse] -= def.price;
     state2.crew.push(id);
+    journalPush(state2, def.icon, `${def.name} \u0442\u0435\u043F\u0435\u0440\u044C \u0441 \u043D\u0430\u043C\u0438!`);
     if (kind === "companion" && state2.squadCompanions.length < 3) state2.squadCompanions.push(id);
     if (kind === "merc" && state2.squadMercs.length < 2) {
       const idx = state2.squadMercs.length;
@@ -6871,7 +7390,14 @@
     if (r.coins) state2.coins -= r.coins;
     const count = r.result.count || 1;
     for (let i = 0; i < count; i++) state2.inventory.push(r.result.itemId);
+    state2.stats.itemsCrafted = (state2.stats.itemsCrafted || 0) + 1;
+    journalPush(state2, "\u2692\uFE0F", `\u0413\u043E\u0442\u043E\u0432\u043E: ${r.name.toLowerCase()}.`);
     return { ok: true, itemId: r.result.itemId, count };
+  }
+  function journalPush(state2, icon, text) {
+    state2.journal ||= [];
+    state2.journal.push({ icon, text, at: Date.now() });
+    if (state2.journal.length > 30) state2.journal.splice(0, state2.journal.length - 30);
   }
   function buyCosmetic(state2, id) {
     const def = COSMETIC_BY_ID[id];
@@ -6896,7 +7422,17 @@
     return { ok: true, active: i < 0 };
   }
   var PUZZLE_POOL = new Map(
-    [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES].map((p) => [p.id, p])
+    [
+      ...PUZZLES,
+      ...SHELF_PUZZLES,
+      ...BOOK_PUZZLES,
+      ...SEEK_PUZZLES,
+      ...PATH_PUZZLES,
+      ...TEA_PUZZLES,
+      ...MECH_PUZZLES,
+      ...CANDLE_PUZZLES,
+      ...FLOW_PUZZLES
+    ].map((p) => [p.id, p])
   );
   var CAMPAIGN_ORDER = [
     "md_01",
@@ -6962,7 +7498,32 @@
     "sk_cr_01",
     "sk_jade_01",
     "sk_deep_01",
-    "sk_mist_01"
+    "sk_mist_01",
+    // Мастерская механики, свечи и потоки покупателей — вперемешку
+    "mech_01",
+    "cd_01",
+    "flow_01",
+    "mech_02",
+    "cd_02",
+    "flow_02",
+    "mech_03",
+    "cd_03",
+    "flow_03",
+    "mech_04",
+    "cd_04",
+    "flow_04",
+    "mech_05",
+    "cd_05",
+    "flow_05",
+    "mech_06",
+    "cd_06",
+    "flow_06",
+    "mech_07",
+    "cd_07",
+    "flow_07",
+    "mech_08",
+    "cd_08",
+    "flow_08"
   ];
   var ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
   function allPuzzles(state2) {
@@ -7025,14 +7586,22 @@
       at: Date.now()
     };
     state2.stats.puzzlesSolved += 1;
+    journalPush(state2, "\u{1F9E9}", firstTime ? `\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \xAB${puzzle.name}\xBB \u0440\u0435\u0448\u0435\u043D\u0430. \u041B\u0430\u0432\u043A\u0430 \u0441\u0432\u0435\u0442\u043B\u0435\u0435\u0442.` : `\xAB${puzzle.name}\xBB \u2014 \u0441\u043D\u043E\u0432\u0430 \u0440\u0435\u0448\u0435\u043D\u0430, \u043A\u043E\u0442 \u0434\u043E\u0432\u043E\u043B\u0435\u043D.`);
     const rewards = puzzle.rewards || [{ type: "coins", amount: 15 }];
+    let dailyBonus = false;
+    if (firstTime && isDailyPuzzle(state2, puzzleId) && state2.lastDailyBonus !== todayKey()) {
+      dailyBonus = true;
+      state2.lastDailyBonus = todayKey();
+      journalPush(state2, "\u{1F31F}", "\u0417\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D \u2014 \u043F\u0443\u0442\u043D\u0438\u043A \u0449\u0435\u0434\u0440\u043E \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442!");
+    }
     if (!firstTime) {
       const coins = rewards.find((r) => r.type === "coins");
       const amount = coins ? Math.round(coins.amount / 3) : 10;
       addCoins(state2, amount);
       return [{ type: "coins", amount }];
     }
-    return grantRewards(state2, rewards);
+    const granted = grantRewards(state2, rewards.map((r) => dailyBonus && r.type === "coins" ? { ...r, amount: r.amount * 2 } : r));
+    return granted;
   }
   function skipPuzzlePrice(puzzle) {
     const coins = (puzzle.rewards || []).find((r) => r.type === "coins");
@@ -7056,6 +7625,32 @@
     addCoins(state2, consolation);
     return { ok: true, price, consolation };
   }
+  function dayHash(str) {
+    let h = 2166136261;
+    for (const c of str) h = Math.imul(h ^ c.codePointAt(0), 16777619);
+    return h >>> 0;
+  }
+  function todayKey() {
+    return (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+  }
+  function dailyPuzzle(state2) {
+    const open = ALL_PUZZLES.filter((p, i) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, i));
+    const pool = open.length > 0 ? open.slice(0, 6) : ALL_PUZZLES.slice(-6);
+    return pool[dayHash(todayKey()) % pool.length];
+  }
+  function isDailyPuzzle(state2, puzzleId) {
+    return dailyPuzzle(state2).id === puzzleId;
+  }
+  function currentSeason() {
+    const m = (/* @__PURE__ */ new Date()).getMonth();
+    return m < 2 || m === 11 ? "winter" : m < 5 ? "spring" : m < 8 ? "summer" : "autumn";
+  }
+  var SEASON_LABEL2 = {
+    winter: "\u0417\u0438\u043C\u0430 \u2744\uFE0F",
+    spring: "\u0412\u0435\u0441\u043D\u0430 \u{1F338}",
+    summer: "\u041B\u0435\u0442\u043E \u2728",
+    autumn: "\u041E\u0441\u0435\u043D\u044C \u{1F342}"
+  };
   function nextPuzzle(currentId) {
     const idx = ALL_PUZZLES.findIndex((p) => p.id === currentId);
     return idx >= 0 && idx + 1 < ALL_PUZZLES.length ? ALL_PUZZLES[idx + 1] : null;
@@ -7113,6 +7708,7 @@
         at: Date.now()
       };
       state2.stats.battlesWon += 1;
+      journalPush(state2, "\u2694\uFE0F", `\u041F\u043E\u0445\u043E\u0434 \xAB${battle.name}\xBB \u2014 \u043F\u043E\u0431\u0435\u0434\u0430! \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u0441 \u0442\u0440\u043E\u0444\u0435\u044F\u043C\u0438.`);
       for (const entry of battle.enemies) {
         const enemyId = typeof entry === "string" ? entry : entry.id;
         const scale = typeof entry === "string" ? 1 : entry.scale || 1;
@@ -7269,6 +7865,7 @@
         at: Date.now()
       };
       state2.stats.battlesWon += 1;
+      journalPush(state2, "\u2694\uFE0F", `\u041F\u043E\u0445\u043E\u0434 \xAB${battle.name}\xBB \u2014 \u043F\u043E\u0431\u0435\u0434\u0430! \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u0441 \u0442\u0440\u043E\u0444\u0435\u044F\u043C\u0438.`);
       for (const entry of battle.enemies) {
         const enemyId = typeof entry === "string" ? entry : entry.id;
         const scale = typeof entry === "string" ? 1 : entry.scale || 1;
@@ -7416,6 +8013,25 @@
   }
 
   // src/ui/hub.js
+  var CHATTER = {
+    cmp_firefly: ["\u2728 \u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A \u043A\u0440\u0443\u0436\u0438\u0442 \u043D\u0430\u0434 \u043F\u043E\u043B\u043A\u0430\u043C\u0438: \xAB\u0422\u0443\u0442 \u043A\u0440\u0430\u0441\u0438\u0432\u043E!\xBB", "\u2728 \u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A \u043F\u043E\u0434\u0441\u0432\u0435\u0447\u0438\u0432\u0430\u0435\u0442 \u0441\u0430\u043C\u043E\u0435 \u0442\u0451\u043C\u043D\u043E\u0435 \u043C\u0435\u0441\u0442\u043E."],
+    cmp_herbalist: ["\u{1F33F} \u0422\u0440\u0430\u0432\u043D\u0438\u0446\u0430 \u0441\u0443\u0448\u0438\u0442 \u043D\u043E\u0432\u044B\u0439 \u0441\u0431\u043E\u0440 \u043D\u0430\u0434 \u043E\u0447\u0430\u0433\u043E\u043C.", "\u{1F33F} \xAB\u041A \u043A\u043E\u0442\u043B\u0443 \u0431\u044B \u043C\u044F\u0442\u044B\u2026\xBB \u2014 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u0430 \u0437\u0430\u0433\u043B\u044F\u0434\u044B\u0432\u0430\u0435\u0442 \u0432 \u0447\u0430\u0439\u043D\u0438\u043A."],
+    cmp_cat: ["\u{1F408} \u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043E\u0431\u0445\u043E\u0434\u0438\u0442 \u043F\u043E\u043B\u043A\u0438 \u2014 \u0432\u0441\u0451 \u043D\u0430 \u043C\u0435\u0441\u0442\u0435.", "\u{1F408} \u041A\u043E\u0442 \u0447\u0442\u043E-\u0442\u043E \u0443\u0440\u043E\u043D\u0438\u043B \u0438 \u0434\u0435\u043B\u0430\u0435\u0442 \u0432\u0438\u0434, \u0447\u0442\u043E \u0442\u0430\u043A \u0438 \u0431\u044B\u043B\u043E."],
+    cmp_smith: ["\u2692\uFE0F \u041A\u0443\u0437\u043D\u0435\u0446-\u043F\u043E\u0434\u043C\u0430\u0441\u0442\u0435\u0440\u044C\u0435 \u0442\u043E\u0447\u0438\u0442 \u0438\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442 \u0443 \u043E\u043A\u043D\u0430.", "\u2692\uFE0F \xAB\u0411\u0440\u043E\u043D\u044E \u0431\u044B \u043F\u043E\u0434\u0442\u044F\u043D\u0443\u0442\u044C\xBB \u2014 \u0431\u043E\u0440\u043C\u043E\u0447\u0435\u0442 \u043A\u0443\u0437\u043D\u0435\u0446."],
+    pet_puppy: ["\u{1F415} \u0429\u0435\u043D\u043E\u043A \u043F\u0440\u0438\u043D\u0451\u0441 \u043F\u0430\u043B\u043A\u0443. \u041E\u0447\u0435\u043D\u044C \u0432\u0430\u0436\u043D\u0443\u044E \u043F\u0430\u043B\u043A\u0443.", "\u{1F415} \u0429\u0435\u043D\u043E\u043A \u0432\u0438\u043B\u044F\u0435\u0442 \u0445\u0432\u043E\u0441\u0442\u043E\u043C \u0432\u0441\u0435\u0439 \u043B\u0430\u0432\u043A\u0435."],
+    pet_hedgehog: ["\u{1F994} \u0401\u0436\u0438\u043A \u0441\u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u0432 \u0442\u0430\u043F\u043A\u0435. \u042D\u0442\u043E \u0435\u0433\u043E \u0442\u0430\u043F\u043E\u043A \u0442\u0435\u043F\u0435\u0440\u044C.", "\u{1F994} \u0401\u0436\u0438\u043A \u0444\u044B\u0440\u043A\u0430\u0435\u0442 \u043D\u0430 \u0431\u0443\u0445\u0430\u043D\u043A\u0443."],
+    pet_fox: ["\u{1F98A} \u041B\u0438\u0441\u0451\u043D\u043E\u043A \u043F\u0440\u0438\u043C\u0435\u0440\u044F\u0435\u0442 \u0442\u0432\u043E\u0451 \u0448\u043B\u044F\u043F\u043D\u043E\u0435 \u043C\u0435\u0441\u0442\u043E \u0443 \u043A\u0430\u0441\u0441\u044B.", "\u{1F98A} \u041B\u0438\u0441\u0451\u043D\u043E\u043A \u0447\u0442\u043E-\u0442\u043E \u043F\u0440\u044F\u0447\u0435\u0442 \u0437\u0430 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C."],
+    pet_horse: ["\u{1F434} \u0421\u0438\u0432\u043A\u0430 \u0444\u044B\u0440\u043A\u0430\u0435\u0442 \u0443 \u0434\u0432\u0435\u0440\u0438 \u2014 \u0441\u043A\u0443\u0447\u0430\u0435\u0442 \u043F\u043E \u0434\u043E\u0440\u043E\u0433\u0435.", "\u{1F434} \u0421\u0438\u0432\u043A\u0430 \u043E\u0431\u0433\u043B\u0430\u0434\u044B\u0432\u0430\u0435\u0442 \u0432\u0435\u043D\u0438\u043A. \u041E\u043D \u0431\u044B\u043B \u0445\u043E\u0440\u043E\u0448\u0438\u043C \u0432\u0435\u043D\u0438\u043A\u043E\u043C."],
+    pet_owl: ["\u{1F989} \u0421\u043E\u0432\u0430 \u0441\u0447\u0438\u0442\u0430\u0435\u0442 \u0432\u0441\u043B\u0443\u0445 \u043E\u0441\u0442\u0430\u0442\u043A\u0438 \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445. \u0421\u0431\u0438\u0432\u0430\u0435\u0442\u0441\u044F.", "\u{1F989} \u0421\u043E\u0432\u0430 \u043E\u0434\u043E\u0431\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u0443\u0445\u0430\u0435\u0442 \u043D\u043E\u0432\u043E\u043C\u0443 \u043F\u043E\u0440\u044F\u0434\u043A\u0443."]
+  };
+  function pickChatter(state2) {
+    const active = [...state2.squadCompanions || [], state2.pet].filter(Boolean);
+    const pool = active.flatMap((id) => CHATTER[id] || []);
+    if (pool.length === 0) return null;
+    const speaker = active[Math.floor(Math.random() * active.length)];
+    const lines = CHATTER[speaker];
+    return lines[Math.floor(Math.random() * lines.length)];
+  }
   function renderHub(container, ctx2, params = {}) {
     const { state: state2 } = ctx2;
     const solved = Object.keys(state2.puzzlesDone).length;
@@ -7446,7 +8062,7 @@
           ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 82, 45, () => false],
           ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 35, 55, () => false],
           ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 52, 68, () => false],
-          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 6, 55, () => false]
+          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 17, 47, () => false]
         ]
       }
     };
@@ -7491,9 +8107,39 @@
     const progress = document.createElement("div");
     progress.className = "muted center mt";
     progress.style.fontSize = "14px";
+    const season = SEASON_LABEL2[currentSeason()];
     const cosIcons = (state2.cosmeticsActive || []).length ? ` \xB7 \u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F: ${(state2.cosmeticsActive || []).map((id) => ({ cos_carpet: "\u{1F7E5}", cos_crest: "\u{1FAA7}", cos_flowers: "\u{1F338}", cos_fireflies: "\u2728", cos_garland: "\u{1F38F}", cos_snow: "\u2744\uFE0F" })[id] || "\u{1F380}").join(" ")}` : "";
-    progress.innerHTML = `\u{1F9E9} \u0417\u0430\u0433\u0430\u0434\u043E\u043A \u0440\u0435\u0448\u0435\u043D\u043E: <b>${solved}/${ALL_PUZZLES.length}</b> \xB7 \u2694\uFE0F \u041F\u043E\u0445\u043E\u0434\u043E\u0432 \u043F\u0440\u043E\u0439\u0434\u0435\u043D\u043E: <b>${won}/${BATTLES.length}</b> \xB7 \u{1F43E} \u041A\u043E\u043C\u0430\u043D\u0434\u0430: <b>${(state2.crew || []).length}</b>${cosIcons}`;
+    progress.innerHTML = `\u{1F9E9} \u0417\u0430\u0433\u0430\u0434\u043E\u043A \u0440\u0435\u0448\u0435\u043D\u043E: <b>${solved}/${ALL_PUZZLES.length}</b> \xB7 \u2694\uFE0F \u041F\u043E\u0445\u043E\u0434\u043E\u0432 \u043F\u0440\u043E\u0439\u0434\u0435\u043D\u043E: <b>${won}/${BATTLES.length}</b> \xB7 \u{1F43E} \u041A\u043E\u043C\u0430\u043D\u0434\u0430: <b>${(state2.crew || []).length}</b> \xB7 ${season}${cosIcons}`;
     container.appendChild(progress);
+    if (state2.pet && PET_BY_ID[state2.pet]) {
+      const pet = document.createElement("div");
+      pet.className = "hub-pet";
+      pet.textContent = PET_BY_ID[state2.pet].icon;
+      scenePanel.appendChild(pet);
+    }
+    const chatter = pickChatter(state2);
+    const journal = (state2.journal || []).slice(-2).reverse();
+    if (chatter || journal.length > 0) {
+      const catPanel = document.createElement("div");
+      catPanel.className = "panel cat-panel";
+      catPanel.innerHTML = '<span class="cat-icon">\u{1F408}</span>';
+      const body = document.createElement("div");
+      body.style.flex = "1";
+      if (chatter) {
+        const line = document.createElement("div");
+        line.className = "cat-line";
+        line.innerHTML = chatter;
+        body.appendChild(line);
+      }
+      for (const j of journal) {
+        const entry = document.createElement("div");
+        entry.className = "cat-entry";
+        entry.innerHTML = `${j.icon} ${j.text}`;
+        body.appendChild(entry);
+      }
+      catPanel.appendChild(body);
+      container.appendChild(catPanel);
+    }
     const anim = document.createElement("img");
     anim.alt = "";
     anim.style.cssText = "width:100%;border-radius:14px;margin-top:14px;opacity:0.9";
@@ -9651,6 +10297,1328 @@
     };
   }
 
+  // src/core/mechPuzzle.js
+  var SIDES2 = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+  function faceAt(tile, rot, side) {
+    if (!Array.isArray(tile.faces)) return null;
+    return tile.faces[((side - (rot ?? 0)) % 4 + 4) % 4] ?? null;
+  }
+  function facesMesh(a, b) {
+    return a === "pin" && b === "socket" || a === "socket" && b === "pin";
+  }
+  function createMechPuzzle(level) {
+    return {
+      level,
+      rot: Object.fromEntries(
+        level.tiles.map((t, i) => [i, t.rot ?? 0]).filter(([i]) => level.tiles[i].type !== "blocker")
+      ),
+      history: [],
+      moves: 0
+    };
+  }
+  function rotateGear(state2, tileIndex) {
+    const t = state2.level.tiles[tileIndex];
+    if (!t || t.type !== "gear") return false;
+    if (t.fixed) return false;
+    state2.history.push({ tileIndex, prev: state2.rot[tileIndex] });
+    state2.rot[tileIndex] = (state2.rot[tileIndex] + 1) % 4;
+    state2.moves += 1;
+    return true;
+  }
+  function undoMech(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    state2.rot[last.tileIndex] = last.prev;
+    state2.moves += 1;
+    return true;
+  }
+  function resetMech(state2) {
+    for (const [idx] of Object.entries(state2.rot)) {
+      state2.rot[idx] = state2.level.tiles[idx].rot ?? 0;
+    }
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function traceMech(state2) {
+    const { level } = state2;
+    const at = /* @__PURE__ */ new Map();
+    level.tiles.forEach((t, i) => at.set(t.pos.join(","), i));
+    const startIdx = level.tiles.findIndex((t) => t.type === "start");
+    const endIdx = level.tiles.findIndex((t) => t.type === "end");
+    const reached = /* @__PURE__ */ new Set();
+    if (startIdx < 0 || endIdx < 0) return { solved: false, reached };
+    const queue = [startIdx];
+    reached.add(startIdx);
+    while (queue.length > 0) {
+      const i = queue.shift();
+      const t = level.tiles[i];
+      if (t.type === "blocker") continue;
+      const rotI = state2.rot[i] ?? t.rot ?? 0;
+      for (let side = 0; side < 4; side++) {
+        const f = faceAt(t, rotI, side);
+        if (!f) continue;
+        const [dx, dy] = SIDES2[side];
+        const j = at.get(`${t.pos[0] + dx},${t.pos[1] + dy}`);
+        if (j === void 0 || reached.has(j)) continue;
+        const nt = level.tiles[j];
+        if (nt.type === "blocker") continue;
+        const nf = faceAt(nt, state2.rot[j] ?? nt.rot ?? 0, (side + 2) % 4);
+        if (facesMesh(f, nf)) {
+          reached.add(j);
+          queue.push(j);
+        }
+      }
+    }
+    return { solved: reached.has(endIdx), reached };
+  }
+  function isMechSolved(state2) {
+    return traceMech(state2).solved;
+  }
+  function gearVariants(tile) {
+    const seen = /* @__PURE__ */ new Set();
+    const out = [];
+    for (let r = 0; r < 4; r++) {
+      const key = [0, 1, 2, 3].map((s) => faceAt(tile, r, s) || "-").join("");
+      if (!seen.has(key)) {
+        seen.add(key);
+        out.push(r);
+      }
+    }
+    return out;
+  }
+  function solveMech(level, maxSolutions = 32) {
+    const tiles = level.tiles;
+    const startIdx = tiles.findIndex((t) => t.type === "start");
+    const endIdx = tiles.findIndex((t) => t.type === "end");
+    if (startIdx < 0 || endIdx < 0) return { count: 0, solutions: [], rotatable: [] };
+    const rotatable = tiles.map((t, i) => ({ t, i })).filter(({ t }) => t.type === "gear" && !t.fixed).map(({ i }) => i);
+    const variants = rotatable.map((i) => gearVariants(tiles[i]));
+    const possible = tiles.map((t) => {
+      const rots = t.type === "gear" && !t.fixed ? gearVariants(t) : [t.rot ?? 0];
+      return [0, 1, 2, 3].map((s) => new Set(rots.map((r) => faceAt(t, r, s)).filter(Boolean)));
+    });
+    const at = /* @__PURE__ */ new Map();
+    tiles.forEach((t, i) => at.set(t.pos.join(","), i));
+    const neighbors = tiles.map((t) => {
+      const list = [];
+      if (t.type === "blocker") return list;
+      for (let s = 0; s < 4; s++) {
+        const [dx, dy] = SIDES2[s];
+        const j = at.get(`${t.pos[0] + dx},${t.pos[1] + dy}`);
+        if (j !== void 0 && tiles[j].type !== "blocker") list.push({ s, j });
+      }
+      return list;
+    });
+    const rotOf = tiles.map((t) => t.type === "gear" && !t.fixed ? null : t.rot ?? 0);
+    function edgePossible(i, s, j) {
+      const fi = rotOf[i] === null ? possible[i][s] : new Set([faceAt(tiles[i], rotOf[i], s)].filter(Boolean));
+      const fj = rotOf[j] === null ? possible[j][(s + 2) % 4] : new Set([faceAt(tiles[j], rotOf[j], (s + 2) % 4)].filter(Boolean));
+      for (const a of fi) for (const b of fj) if (facesMesh(a, b)) return true;
+      return false;
+    }
+    function endReachable() {
+      const seen = /* @__PURE__ */ new Set([startIdx]);
+      const queue = [startIdx];
+      while (queue.length > 0) {
+        const i = queue.shift();
+        for (const { s, j } of neighbors[i]) {
+          if (seen.has(j)) continue;
+          if (edgePossible(i, s, j)) {
+            seen.add(j);
+            queue.push(j);
+          }
+        }
+      }
+      return seen.has(endIdx);
+    }
+    const solutions = [];
+    const assign = new Array(rotatable.length).fill(0);
+    function bt(k) {
+      if (solutions.length >= maxSolutions) return;
+      if (k === rotatable.length) {
+        const s = createMechPuzzle(level);
+        rotatable.forEach((idx, k2) => {
+          s.rot[idx] = variants[k2][assign[k2]];
+        });
+        if (isMechSolved(s)) solutions.push([...assign]);
+        return;
+      }
+      for (let v = 0; v < variants[k].length; v++) {
+        assign[k] = v;
+        rotOf[rotatable[k]] = variants[k][v];
+        if (endReachable()) bt(k + 1);
+      }
+      rotOf[rotatable[k]] = null;
+    }
+    bt(0);
+    return { count: solutions.length, solutions, rotatable };
+  }
+  function mechHint(state2) {
+    const { level } = state2;
+    const { count, solutions, rotatable } = solveMech(level, 64);
+    if (count === 0) return { type: "unsolvable" };
+    const variants = rotatable.map((i) => gearVariants(level.tiles[i]));
+    let best = null;
+    let bestDist = Infinity;
+    for (const sol of solutions) {
+      let dist = 0;
+      rotatable.forEach((idx, k2) => {
+        if (state2.rot[idx] !== variants[k2][sol[k2]]) dist++;
+      });
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = sol;
+      }
+    }
+    if (bestDist === 0) return { type: "already" };
+    const k = rotatable.findIndex((idx, k2) => state2.rot[idx] !== variants[k2][best[k2]]);
+    return { type: "rotate", tileIndex: rotatable[k] };
+  }
+
+  // src/ui/mechView.js
+  var CELL4 = 72;
+  function renderMechPuzzle(container, ctx2, level) {
+    const puzzle = createMechPuzzle(level);
+    let hintsUsed = 0;
+    let hintTile = null;
+    let finished = false;
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const canvasBox = document.createElement("div");
+    canvasBox.className = "puzzle-canvas-box";
+    const canvas = document.createElement("canvas");
+    canvas.className = "game";
+    const [gw, gh] = level.grid;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = gw * CELL4 * dpr;
+    canvas.height = gh * CELL4 * dpr;
+    canvas.style.width = `${gw * CELL4}px`;
+    canvas.style.height = `${gh * CELL4}px`;
+    canvas.style.maxWidth = "100%";
+    canvasBox.appendChild(canvas);
+    wrap.appendChild(canvasBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const legend = document.createElement("div");
+    legend.className = "panel mt";
+    legend.innerHTML = `<div class="desc" style="line-height:1.9">
+    \u{1F3A1} \u0440\u0443\u043A\u043E\u044F\u0442\u044C \u2192 \u{1F514} \u043A\u043E\u043B\u043E\u043A\u043E\u043B\u044C\u0447\u0438\u043A<br>
+    \u0422\u0430\u043F \u043F\u043E \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0435 \u2014 \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u043D\u0430 \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044C \u043E\u0431\u043E\u0440\u043E\u0442\u0430<br>
+    \u0428\u0438\u043F \u0441\u0442\u044B\u043A\u0443\u0435\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u0441 \u043F\u0430\u0437\u043E\u043C<br>
+    \u{1F529} \u0437\u0430\u043A\u043B\u0438\u043D\u0438\u0432\u0448\u0430\u044F \u0434\u0435\u0442\u0430\u043B\u044C \u2014 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0438 \u0447\u0435\u0440\u0435\u0437 \u043D\u0435\u0451 \u043D\u0435\u0442<br>
+    \u0422\u0451\u043F\u043B\u044B\u0439 \u0431\u043B\u0435\u0441\u043A \u2014 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0430, \u0447\u0442\u043E \u0443\u0436\u0435 \u0438\u0434\u0451\u0442 \u043E\u0442 \u0440\u0443\u043A\u043E\u044F\u0442\u0438</div>`;
+    side.appendChild(legend);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoMech(puzzle)) {
+        hintTile = null;
+        ctx2.sfx?.("tap");
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetMech(puzzle);
+      hintTile = null;
+      ctx2.sfx?.("tap");
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = mechHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h.type === "rotate") {
+        hintsUsed += 1;
+        hintTile = h.tileIndex;
+        ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0441\u0442\u0443\u043A\u0438\u0432\u0430\u0435\u0442 \u043F\u043E \u043E\u0434\u043D\u043E\u0439 \u0438\u0437 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043E\u043A\u2026");
+        draw();
+      } else if (h.type === "already") {
+        ctx2.toast("\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C \u0443\u0436\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442!");
+      } else {
+        ctx2.toast("\u0425\u043C, \u0442\u0443\u0442 \u0447\u0442\u043E-\u0442\u043E \u0441\u043B\u043E\u043C\u0430\u043D\u043E \u043D\u0430\u0441\u043E\u0432\u0441\u0435\u043C. \u0421\u043A\u0430\u0436\u0438 \u0445\u043E\u0437\u044F\u0438\u043D\u0443 \u043B\u0430\u0432\u043A\u0438!");
+      }
+    }
+    function onTap(ev) {
+      if (finished) return;
+      const rect = canvas.getBoundingClientRect();
+      const scale = canvas.width / dpr / rect.width;
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL4);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL4);
+      const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
+      if (idx >= 0 && rotateGear(puzzle, idx)) {
+        hintTile = null;
+        ctx2.sfx?.("rotate");
+        draw();
+        if (isMechSolved(puzzle)) finish();
+      }
+    }
+    canvas.addEventListener("pointerdown", onTap);
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") ctx2.go("puzzles");
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      finished = true;
+      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      draw();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        showOverlay(ctx2, {
+          title: "\u{1F514} \u041A\u043E\u043B\u043E\u043A\u043E\u043B\u044C\u0447\u0438\u043A \u0437\u0430\u0437\u0432\u043E\u043D\u0438\u043B!",
+          subtitle: `\xAB${level.name}\xBB \u2014 \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0430 \u0441\u043E\u0431\u0440\u0430\u043D\u0430`,
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function draw() {
+      const g = canvas.getContext("2d");
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, gw * CELL4, gh * CELL4);
+      const { reached } = traceMech(puzzle);
+      const at = /* @__PURE__ */ new Map();
+      level.tiles.forEach((t, i) => at.set(t.pos.join(","), i));
+      for (let y = 0; y < gh; y++) {
+        for (let x = 0; x < gw; x++) {
+          g.fillStyle = (x + y) % 2 === 0 ? "#3d4149" : "#353945";
+          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
+        }
+      }
+      level.tiles.forEach((t, i) => {
+        if (t.type === "blocker") return;
+        const rot = puzzle.rot[i] ?? t.rot ?? 0;
+        for (const s of [1, 2]) {
+          const f = faceAt(t, rot, s);
+          if (!f) continue;
+          const [dx, dy] = SIDES2[s];
+          const j = at.get(`${t.pos[0] + dx},${t.pos[1] + dy}`);
+          if (j === void 0) continue;
+          const nt = level.tiles[j];
+          if (nt.type === "blocker") continue;
+          const nf = faceAt(nt, puzzle.rot[j] ?? nt.rot ?? 0, (s + 2) % 4);
+          if (!facesMesh(f, nf)) continue;
+          const onPath = reached.has(i) && reached.has(j);
+          g.strokeStyle = onPath ? "#ffd98a" : "#6a6154";
+          g.lineCap = "round";
+          g.lineWidth = onPath ? 9 : 7;
+          g.beginPath();
+          g.moveTo(t.pos[0] * CELL4 + CELL4 / 2 + dx * CELL4 * 0.28, t.pos[1] * CELL4 + CELL4 / 2 + dy * CELL4 * 0.28);
+          g.lineTo(t.pos[0] * CELL4 + CELL4 / 2 + dx * CELL4 * 0.72, t.pos[1] * CELL4 + CELL4 / 2 + dy * CELL4 * 0.72);
+          g.stroke();
+        }
+      });
+      level.tiles.forEach((t, i) => {
+        const cx = t.pos[0] * CELL4 + CELL4 / 2;
+        const cy = t.pos[1] * CELL4 + CELL4 / 2;
+        const onPath = reached.has(i);
+        const rot = puzzle.rot[i] ?? t.rot ?? 0;
+        g.fillStyle = t.type === "blocker" ? "#2c2a33" : onPath ? "#7d6338" : "#52493c";
+        roundRect(g, t.pos[0] * CELL4 + 4, t.pos[1] * CELL4 + 4, CELL4 - 8, CELL4 - 8, 10);
+        g.fill();
+        if (hintTile === i) {
+          g.fillStyle = "rgba(255, 202, 122, 0.35)";
+          g.beginPath();
+          g.arc(cx, cy, CELL4 * 0.46, 0, Math.PI * 2);
+          g.fill();
+        }
+        if (t.type === "gear") {
+          drawGear(g, t, rot, cx, cy, onPath);
+        } else if (t.type === "start" || t.type === "end") {
+          g.fillStyle = onPath ? "#d9a441" : "#8d8578";
+          g.beginPath();
+          g.arc(cx, cy, CELL4 * 0.2, 0, Math.PI * 2);
+          g.fill();
+          g.strokeStyle = "#4a3b28";
+          g.lineWidth = 3;
+          g.stroke();
+          drawFaces(g, t, rot, cx, cy);
+        }
+        const emoji = (e, size = CELL4 * 0.42) => {
+          g.font = `${size}px "Segoe UI Emoji", sans-serif`;
+          g.textAlign = "center";
+          g.textBaseline = "middle";
+          g.fillText(e, cx, cy);
+        };
+        if (t.type === "start") emoji("\u{1F3A1}");
+        else if (t.type === "end") emoji("\u{1F514}");
+        else if (t.type === "blocker") emoji("\u{1F529}", CELL4 * 0.4);
+      });
+      const solvedNow = isMechSolved(puzzle);
+      statusEl.innerHTML = (solvedNow ? "\u2705 <b>\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C \u0437\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u043B!</b>" : `\u2699\uFE0F \u041F\u0435\u0440\u0435\u0434\u0430\u0447\u0430 \u043E\u0442 \u0440\u0443\u043A\u043E\u044F\u0442\u0438: <b>${reached.size}</b> \u0434\u0435\u0442\u0430\u043B\u0435\u0439`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    function drawGear(g, t, rot, cx, cy, onPath) {
+      const r = CELL4 * 0.3;
+      const body = onPath ? "#d9a441" : "#9a938a";
+      const dark = onPath ? "#8a6420" : "#5e584f";
+      g.fillStyle = dark;
+      const baseAngle = rot * Math.PI / 2;
+      for (let k = 0; k < 8; k++) {
+        const a = baseAngle + k / 8 * Math.PI * 2;
+        g.save();
+        g.translate(cx, cy);
+        g.rotate(a);
+        g.fillRect(r - 2, -3.5, 8, 7);
+        g.restore();
+      }
+      g.fillStyle = body;
+      g.beginPath();
+      g.arc(cx, cy, r, 0, Math.PI * 2);
+      g.fill();
+      g.strokeStyle = dark;
+      g.lineWidth = 3;
+      g.stroke();
+      g.fillStyle = "#3a3428";
+      g.beginPath();
+      g.arc(cx, cy, 5, 0, Math.PI * 2);
+      g.fill();
+      drawFaces(g, t, rot, cx, cy);
+    }
+    function drawFaces(g, t, rot, cx, cy) {
+      const r = CELL4 * 0.3;
+      for (let s = 0; s < 4; s++) {
+        const f = faceAt(t, rot, s);
+        if (!f) continue;
+        const [dx, dy] = SIDES2[s];
+        if (f === "pin") {
+          g.fillStyle = "#e8e0d0";
+          g.strokeStyle = "#4a3b28";
+          g.lineWidth = 2;
+          g.beginPath();
+          g.arc(cx + dx * (r + 7), cy + dy * (r + 7), 5, 0, Math.PI * 2);
+          g.fill();
+          g.stroke();
+        } else {
+          g.fillStyle = "#241f18";
+          g.beginPath();
+          g.arc(cx + dx * (r - 1), cy + dy * (r - 1), 6, 0, Math.PI * 2);
+          g.fill();
+        }
+      }
+    }
+    function roundRect(g, x, y, w, h, r) {
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.arcTo(x + w, y, x + w, y + h, r);
+      g.arcTo(x + w, y + h, x, y + h, r);
+      g.arcTo(x, y + h, x, y, r);
+      g.arcTo(x, y, x + w, y, r);
+      g.closePath();
+    }
+    draw();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      canvas.removeEventListener("pointerdown", onTap);
+    };
+  }
+
+  // src/core/candlePuzzle.js
+  function createCandlePuzzle(level) {
+    return {
+      level,
+      candles: /* @__PURE__ */ new Set(),
+      // ключи "x,y"
+      history: [],
+      // { x, y, action: 'place' | 'remove' }
+      moves: 0
+    };
+  }
+  function cellKey(x, y) {
+    return `${x},${y}`;
+  }
+  function keyOf(pos) {
+    return pos[0] + "," + pos[1];
+  }
+  function candleIndex(level) {
+    return {
+      walls: new Set((level.walls || []).map(keyOf)),
+      lanterns: new Set((level.lanterns || []).map(keyOf)),
+      spirits: new Set((level.spirits || []).map(keyOf))
+    };
+  }
+  function objectAt(level, x, y) {
+    const idx = candleIndex(level);
+    const k = cellKey(x, y);
+    if (idx.walls.has(k)) return "wall";
+    if (idx.lanterns.has(k)) return "lantern";
+    if (idx.spirits.has(k)) return "spirit";
+    return null;
+  }
+  function placeCandle(state2, x, y) {
+    const { level } = state2;
+    const [w, h] = level.grid;
+    const k = cellKey(x, y);
+    if (x < 0 || y < 0 || x >= w || y >= h) return { ok: false, error: "\u0421\u044E\u0434\u0430 \u0441\u0432\u0435\u0447\u0443 \u043D\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C" };
+    if (state2.candles.has(k)) {
+      state2.candles.delete(k);
+      state2.history.push({ x, y, action: "remove" });
+      state2.moves += 1;
+      return { ok: true, action: "remove" };
+    }
+    const obj = objectAt(level, x, y);
+    if (obj === "wall") return { ok: false, error: "\u041D\u0430 \u0441\u0442\u0435\u043D\u0443 \u0441\u0432\u0435\u0447\u0443 \u043D\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C" };
+    if (obj === "lantern") return { ok: false, error: "\u0422\u0443\u0442 \u0443\u0436\u0435 \u0441\u0442\u043E\u0438\u0442 \u0444\u043E\u043D\u0430\u0440\u044C" };
+    if (obj === "spirit") return { ok: false, error: "\u0414\u0443\u0445 \u043D\u0435 \u0434\u0430\u0441\u0442 \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0432\u0435\u0447\u0443" };
+    if (state2.candles.size >= level.candleLimit) {
+      return { ok: false, error: "\u0421\u0432\u0435\u0447\u0438 \u043A\u043E\u043D\u0447\u0438\u043B\u0438\u0441\u044C \u2014 \u0443\u0431\u0435\u0440\u0438 \u043B\u0438\u0448\u043D\u044E\u044E \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u044B\u043C \u0442\u0430\u043F\u043E\u043C" };
+    }
+    state2.candles.add(k);
+    state2.history.push({ x, y, action: "place" });
+    state2.moves += 1;
+    return { ok: true, action: "place" };
+  }
+  function undoCandle(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    const k = cellKey(last.x, last.y);
+    if (last.action === "place") state2.candles.delete(k);
+    else state2.candles.add(k);
+    state2.moves += 1;
+    return true;
+  }
+  function resetCandles(state2) {
+    state2.candles.clear();
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function litByCandle(level, cx, cy) {
+    const { walls } = candleIndex(level);
+    const [w, h] = level.grid;
+    const lit = /* @__PURE__ */ new Set([cellKey(cx, cy)]);
+    const queue = [[cx, cy, 0]];
+    while (queue.length > 0) {
+      const [x, y, d] = queue.shift();
+      if (d >= level.radius) continue;
+      for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+        const nx = x + dx;
+        const ny = y + dy;
+        if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+        const k = cellKey(nx, ny);
+        if (lit.has(k) || walls.has(k)) continue;
+        lit.add(k);
+        queue.push([nx, ny, d + 1]);
+      }
+    }
+    return lit;
+  }
+  function litCells(level, candles) {
+    const lit = /* @__PURE__ */ new Set();
+    for (const k of candles) {
+      const [x, y] = k.split(",").map(Number);
+      for (const lk of litByCandle(level, x, y)) lit.add(lk);
+    }
+    return lit;
+  }
+  function candleStatus(state2) {
+    const { level } = state2;
+    const lit = litCells(level, state2.candles);
+    const lanternsLit = level.lanterns.filter((p) => lit.has(keyOf(p))).length;
+    const spiritsLit = level.spirits.filter((p) => lit.has(keyOf(p))).length;
+    return {
+      lit,
+      placed: state2.candles.size,
+      limit: level.candleLimit,
+      lanternsLit,
+      lanternsTotal: level.lanterns.length,
+      spiritsLit,
+      spiritsTotal: level.spirits.length,
+      solved: lanternsLit === level.lanterns.length && spiritsLit === 0
+    };
+  }
+  function isCandleSolved(state2) {
+    return candleStatus(state2).solved;
+  }
+  function solveCandles(level, maxSolutions = 32) {
+    const idx = candleIndex(level);
+    const [w, h] = level.grid;
+    const candidates = [];
+    const lanternMask = [];
+    const spiritMask = [];
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const k = cellKey(x, y);
+        if (idx.walls.has(k) || idx.lanterns.has(k) || idx.spirits.has(k)) continue;
+        const lit = litByCandle(level, x, y);
+        let lm = 0;
+        let sm = 0;
+        level.lanterns.forEach((p, i) => {
+          if (lit.has(keyOf(p))) lm |= 1 << i;
+        });
+        level.spirits.forEach((p, i) => {
+          if (lit.has(keyOf(p))) sm |= 1 << i;
+        });
+        if (lm === 0) continue;
+        candidates.push([x, y]);
+        lanternMask.push(lm);
+        spiritMask.push(sm);
+      }
+    }
+    const full = (1 << level.lanterns.length) - 1;
+    const solutions = [];
+    const pick = [];
+    const maxK = Math.min(level.candleLimit, candidates.length, 6);
+    function bt(start, k) {
+      if (solutions.length >= maxSolutions) return;
+      if (pick.length === k) {
+        let lm = 0;
+        let sm = 0;
+        for (const i of pick) {
+          lm |= lanternMask[i];
+          sm |= spiritMask[i];
+        }
+        if (lm === full && sm === 0) solutions.push(pick.map((i) => [...candidates[i]]));
+        return;
+      }
+      for (let i = start; i < candidates.length; i++) {
+        pick.push(i);
+        bt(i + 1, k);
+        pick.pop();
+        if (solutions.length >= maxSolutions) return;
+      }
+    }
+    for (let k = 1; k <= maxK && solutions.length < maxSolutions; k++) bt(0, k);
+    return { count: solutions.length, solutions, candidates };
+  }
+  function candleHint(state2) {
+    const { level } = state2;
+    const { count, solutions } = solveCandles(level, 64);
+    if (count === 0) return { type: "unsolvable" };
+    let best = null;
+    let bestDist = Infinity;
+    for (const sol of solutions) {
+      const solSet = new Set(sol.map(keyOf));
+      let dist = 0;
+      for (const k of state2.candles) if (!solSet.has(k)) dist += 1;
+      for (const k of solSet) if (!state2.candles.has(k)) dist += 1;
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = sol;
+      }
+    }
+    if (bestDist === 0) return { type: "already" };
+    const bestSet = new Set(best.map(keyOf));
+    for (const k of state2.candles) {
+      if (!bestSet.has(k)) {
+        const [x, y] = k.split(",").map(Number);
+        return { type: "remove", x, y };
+      }
+    }
+    for (const [x, y] of best) {
+      if (!state2.candles.has(cellKey(x, y))) return { type: "place", x, y };
+    }
+    return { type: "already" };
+  }
+
+  // src/ui/candleView.js
+  var CELL5 = 64;
+  function renderCandlePuzzle(container, ctx2, level) {
+    const puzzle = createCandlePuzzle(level);
+    let hintsUsed = 0;
+    let hintCell = null;
+    let finished = false;
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const canvasBox = document.createElement("div");
+    canvasBox.className = "puzzle-canvas-box";
+    const canvas = document.createElement("canvas");
+    canvas.className = "game";
+    const [gw, gh] = level.grid;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = gw * CELL5 * dpr;
+    canvas.height = gh * CELL5 * dpr;
+    canvas.style.width = `${gw * CELL5}px`;
+    canvas.style.height = `${gh * CELL5}px`;
+    canvas.style.maxWidth = "100%";
+    canvasBox.appendChild(canvas);
+    wrap.appendChild(canvasBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const legend = document.createElement("div");
+    legend.className = "panel mt";
+    legend.innerHTML = `<div class="desc" style="line-height:1.9">
+    \u{1F56F}\uFE0F \u0442\u0430\u043F \u2014 \u043F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0432\u0435\u0447\u0443, \u0435\u0449\u0451 \u0442\u0430\u043F \u2014 \u0443\u0431\u0440\u0430\u0442\u044C<br>
+    \u{1F3EE} \u0432\u0441\u0435 \u0444\u043E\u043D\u0430\u0440\u0438 \u0434\u043E\u043B\u0436\u043D\u044B \u0433\u043E\u0440\u0435\u0442\u044C<br>
+    \u{1F47B} \u043D\u0438 \u043E\u0434\u0438\u043D \u0434\u0443\u0445 \u043D\u0435 \u0434\u043E\u043B\u0436\u0435\u043D \u043F\u043E\u043F\u0430\u0441\u0442\u044C \u0432 \u0441\u0432\u0435\u0442<br>
+    \u2B1B \u0441\u0442\u0435\u043D\u0430 \u0441\u0432\u0435\u0442 \u043D\u0435 \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0430\u0435\u0442</div>`;
+    side.appendChild(legend);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoCandle(puzzle)) {
+        hintCell = null;
+        ctx2.sfx?.("tap");
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetCandles(puzzle);
+      hintCell = null;
+      ctx2.sfx?.("tap");
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = candleHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h.type === "place") {
+        hintsUsed += 1;
+        hintCell = { x: h.x, y: h.y, type: "place" };
+        ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u043A\u043B\u0435\u0442\u043A\u0443 \u0434\u043B\u044F \u0441\u0432\u0435\u0447\u0438\u2026");
+        draw();
+      } else if (h.type === "remove") {
+        hintsUsed += 1;
+        hintCell = { x: h.x, y: h.y, type: "remove" };
+        ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043C\u043E\u0440\u0449\u0438\u0442\u0441\u044F \u043D\u0430 \u043E\u0434\u043D\u0443 \u0438\u0437 \u0441\u0432\u0435\u0447\u0435\u0439\u2026");
+        draw();
+      } else if (h.type === "already") {
+        ctx2.toast("\u0412\u0441\u0451 \u0443\u0436\u0435 \u0433\u043E\u0440\u0438\u0442 \u043A\u0430\u043A \u043D\u0430\u0434\u043E!");
+      } else {
+        ctx2.toast("\u0425\u043C, \u0442\u0443\u0442 \u0442\u0435\u043C\u043D\u043E \u0434\u0430\u0436\u0435 \u043A\u043E\u0442\u0443. \u0421\u043A\u0430\u0436\u0438 \u0445\u043E\u0437\u044F\u0438\u043D\u0443 \u043B\u0430\u0432\u043A\u0438!");
+      }
+    }
+    function onTap(ev) {
+      if (finished) return;
+      const rect = canvas.getBoundingClientRect();
+      const scale = canvas.width / dpr / rect.width;
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL5);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL5);
+      const r = placeCandle(puzzle, x, y);
+      if (r.ok) {
+        hintCell = null;
+        ctx2.sfx?.(r.action === "place" ? "potion" : "tap");
+        draw();
+        if (isCandleSolved(puzzle)) finish();
+      } else {
+        ctx2.toast(r.error);
+      }
+    }
+    canvas.addEventListener("pointerdown", onTap);
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") ctx2.go("puzzles");
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      finished = true;
+      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      draw();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        showOverlay(ctx2, {
+          title: "\u{1F56F}\uFE0F \u0421\u0432\u0435\u0442 \u0440\u0430\u0441\u0441\u0442\u0430\u0432\u043B\u0435\u043D!",
+          subtitle: `\xAB${level.name}\xBB \u2014 \u0444\u043E\u043D\u0430\u0440\u0438 \u0433\u043E\u0440\u044F\u0442, \u0434\u0443\u0445\u0438 \u0434\u0440\u0435\u043C\u043B\u044E\u0442`,
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function draw() {
+      const g = canvas.getContext("2d");
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, gw * CELL5, gh * CELL5);
+      const st = candleStatus(puzzle);
+      for (let y = 0; y < gh; y++) {
+        for (let x = 0; x < gw; x++) {
+          g.fillStyle = (x + y) % 2 === 0 ? "#232a3c" : "#1d2333";
+          g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
+        }
+      }
+      for (const k of st.lit) {
+        const [x, y] = k.split(",").map(Number);
+        g.fillStyle = "rgba(255, 196, 96, 0.22)";
+        g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
+      }
+      for (const [x, y] of level.walls) {
+        g.fillStyle = "#0d1017";
+        g.fillRect(x * CELL5 + 2, y * CELL5 + 2, CELL5 - 4, CELL5 - 4);
+        g.fillStyle = "#2c3140";
+        g.fillRect(x * CELL5 + 2, y * CELL5 + 2, CELL5 - 4, 6);
+      }
+      for (const k of puzzle.candles) {
+        const [x, y] = k.split(",").map(Number);
+        const cx = x * CELL5 + CELL5 / 2;
+        const cy = y * CELL5 + CELL5 / 2;
+        const glow = g.createRadialGradient(cx, cy, 4, cx, cy, CELL5 * (level.radius * 0.55));
+        glow.addColorStop(0, "rgba(255, 214, 130, 0.5)");
+        glow.addColorStop(1, "rgba(255, 214, 130, 0)");
+        g.fillStyle = glow;
+        g.beginPath();
+        g.arc(cx, cy, CELL5 * (level.radius * 0.55), 0, Math.PI * 2);
+        g.fill();
+      }
+      const emoji = (e, x, y, size = CELL5 * 0.5, alpha = 1) => {
+        g.globalAlpha = alpha;
+        g.font = `${size}px "Segoe UI Emoji", sans-serif`;
+        g.textAlign = "center";
+        g.textBaseline = "middle";
+        g.fillText(e, x * CELL5 + CELL5 / 2, y * CELL5 + CELL5 / 2);
+        g.globalAlpha = 1;
+      };
+      for (const [x, y] of level.lanterns) {
+        const lit = st.lit.has(`${x},${y}`);
+        if (lit) {
+          const cx = x * CELL5 + CELL5 / 2;
+          const cy = y * CELL5 + CELL5 / 2;
+          const halo = g.createRadialGradient(cx, cy, 4, cx, cy, CELL5 * 0.7);
+          halo.addColorStop(0, "rgba(255, 230, 150, 0.55)");
+          halo.addColorStop(1, "rgba(255, 230, 150, 0)");
+          g.fillStyle = halo;
+          g.beginPath();
+          g.arc(cx, cy, CELL5 * 0.7, 0, Math.PI * 2);
+          g.fill();
+        }
+        emoji("\u{1F3EE}", x, y, CELL5 * 0.5, lit ? 1 : 0.45);
+      }
+      for (const [x, y] of level.spirits) {
+        const lit = st.lit.has(`${x},${y}`);
+        if (lit) {
+          g.fillStyle = "rgba(160, 165, 175, 0.45)";
+          g.beginPath();
+          g.arc(x * CELL5 + CELL5 / 2, y * CELL5 + CELL5 / 2, CELL5 * 0.32, 0, Math.PI * 2);
+          g.fill();
+          emoji("\u{1F47B}", x, y, CELL5 * 0.5, 0.5);
+        } else {
+          emoji("\u{1F47B}", x, y, CELL5 * 0.5, 1);
+        }
+      }
+      for (const k of puzzle.candles) {
+        const [x, y] = k.split(",").map(Number);
+        emoji("\u{1F56F}\uFE0F", x, y);
+      }
+      if (hintCell) {
+        g.strokeStyle = hintCell.type === "place" ? "#8fd98a" : "#e88a7a";
+        g.lineWidth = 4;
+        g.beginPath();
+        g.arc(hintCell.x * CELL5 + CELL5 / 2, hintCell.y * CELL5 + CELL5 / 2, CELL5 * 0.44, 0, Math.PI * 2);
+        g.stroke();
+      }
+      const warn = st.spiritsLit > 0 ? `<div class="warn">\u{1F47B} \u0414\u0443\u0445 \u0432 \u0441\u0432\u0435\u0442\u0435: ${st.spiritsLit}! \u0422\u0430\u043A \u043D\u0435\u043B\u044C\u0437\u044F.</div>` : "";
+      statusEl.innerHTML = (st.solved ? "\u2705 <b>\u0412\u0441\u0435 \u0444\u043E\u043D\u0430\u0440\u0438 \u0433\u043E\u0440\u044F\u0442, \u0434\u0443\u0445\u0438 \u0432 \u0442\u0435\u043D\u0438!</b>" : `\u{1F56F}\uFE0F \u0421\u0432\u0435\u0447\u0438: <b>${st.placed}/${st.limit}</b> \xB7 \u{1F3EE} \u0424\u043E\u043D\u0430\u0440\u0438: <b>${st.lanternsLit}/${st.lanternsTotal}</b>` + warn) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    draw();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      canvas.removeEventListener("pointerdown", onTap);
+    };
+  }
+
+  // src/core/flowPuzzle.js
+  var DIRS = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+  var BUYER_COLORS = [
+    { buyer: "\u{1F98A}", name: "\u041B\u0438\u0441\u0451\u043D\u043E\u043A", css: "#e8965a" },
+    { buyer: "\u{1F438}", name: "\u041B\u044F\u0433\u0443\u0448\u043E\u043D\u043E\u043A", css: "#7bc47f" },
+    { buyer: "\u{1F426}", name: "\u0421\u0438\u043D\u0438\u0447\u043A\u0430", css: "#6aa9e8" }
+  ];
+  function createFlowPuzzle(level) {
+    return {
+      level,
+      rot: Object.fromEntries(
+        level.tiles.map((t, i) => [i, t.rot ?? 0]).filter(([i]) => level.tiles[i].type === "arrow")
+      ),
+      history: [],
+      moves: 0
+    };
+  }
+  function rotateFlowTile(state2, tileIndex) {
+    const t = state2.level.tiles[tileIndex];
+    if (!t || t.type !== "arrow" || t.fixed) return false;
+    state2.history.push({ tileIndex, prev: state2.rot[tileIndex] });
+    state2.rot[tileIndex] = (state2.rot[tileIndex] + 1) % 4;
+    state2.moves += 1;
+    return true;
+  }
+  function undoFlow(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    state2.rot[last.tileIndex] = last.prev;
+    state2.moves += 1;
+    return true;
+  }
+  function resetFlow(state2) {
+    for (const [idx] of Object.entries(state2.rot)) {
+      state2.rot[idx] = state2.level.tiles[idx].rot ?? 0;
+    }
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function simulateFlows(state2) {
+    const { level } = state2;
+    const [w, h] = level.grid;
+    const at = /* @__PURE__ */ new Map();
+    level.tiles.forEach((t, i) => at.set(t.pos[0] + "," + t.pos[1], i));
+    const buyers = [];
+    level.tiles.forEach((t, i) => {
+      if (t.type !== "start") return;
+      const path = [[t.pos[0], t.pos[1]]];
+      let x = t.pos[0];
+      let y = t.pos[1];
+      let dir = (t.rot ?? 0) % 4;
+      let arrived = false;
+      let reason = "steps";
+      const seen = /* @__PURE__ */ new Set([`${x},${y},${dir}`]);
+      const maxSteps = w * h * 4;
+      for (let step = 0; step < maxSteps; step++) {
+        const [dx, dy] = DIRS[dir];
+        const nx = x + dx;
+        const ny = y + dy;
+        if (nx < 0 || ny < 0 || nx >= w || ny >= h) {
+          reason = "edge";
+          break;
+        }
+        const j = at.get(`${nx},${ny}`);
+        const nt = j === void 0 ? null : level.tiles[j];
+        if (nt?.type === "wall") {
+          reason = "wall";
+          break;
+        }
+        if (nt?.type === "stall") {
+          if ((nt.color ?? 0) === (t.color ?? 0)) {
+            path.push([nx, ny]);
+            arrived = true;
+            reason = "stall";
+          } else {
+            reason = "foreign";
+          }
+          break;
+        }
+        path.push([nx, ny]);
+        x = nx;
+        y = ny;
+        if (!nt) {
+          reason = "empty";
+          break;
+        }
+        if (nt.type === "arrow") dir = (state2.rot[j] ?? nt.rot ?? 0) % 4;
+        const key = `${x},${y},${dir}`;
+        if (seen.has(key)) {
+          reason = "loop";
+          break;
+        }
+        seen.add(key);
+      }
+      buyers.push({ start: i, color: t.color ?? 0, path, arrived, reason });
+    });
+    const owners = /* @__PURE__ */ new Map();
+    buyers.forEach((b, bi) => b.path.forEach(([x, y]) => {
+      const key = `${x},${y}`;
+      if (!owners.has(key)) owners.set(key, /* @__PURE__ */ new Set());
+      owners.get(key).add(bi);
+    }));
+    const collisions = /* @__PURE__ */ new Set();
+    for (const [key, set] of owners) if (set.size > 1) collisions.add(key);
+    const arrivedCount = buyers.filter((b) => b.arrived).length;
+    const solved = buyers.length > 0 && arrivedCount === buyers.length && collisions.size === 0;
+    return { buyers, collisions, arrivedCount, solved };
+  }
+  function isFlowSolved(state2) {
+    return simulateFlows(state2).solved;
+  }
+  function solveFlow(level, maxSolutions = 32) {
+    const rotatable = level.tiles.map((t, i) => ({ t, i })).filter(({ t }) => t.type === "arrow" && !t.fixed);
+    const solutions = [];
+    const assign = new Array(rotatable.length).fill(0);
+    function bt(k) {
+      if (solutions.length >= maxSolutions) return;
+      if (k === rotatable.length) {
+        const s = createFlowPuzzle(level);
+        rotatable.forEach(({ i }, k2) => {
+          s.rot[i] = assign[k2];
+        });
+        if (isFlowSolved(s)) solutions.push([...assign]);
+        return;
+      }
+      for (let v = 0; v < 4; v++) {
+        assign[k] = v;
+        bt(k + 1);
+      }
+    }
+    bt(0);
+    return { count: solutions.length, solutions, rotatable: rotatable.map((r) => r.i) };
+  }
+  var flowSolutionCache = /* @__PURE__ */ new WeakMap();
+  function cachedSolutions(level) {
+    let c = flowSolutionCache.get(level);
+    if (!c) {
+      c = solveFlow(level, 64);
+      flowSolutionCache.set(level, c);
+    }
+    return c;
+  }
+  function flowHint(state2) {
+    const { level } = state2;
+    const { count, solutions, rotatable } = cachedSolutions(level);
+    if (count === 0) return { type: "unsolvable" };
+    let best = null;
+    let bestDist = Infinity;
+    for (const sol of solutions) {
+      let dist = 0;
+      rotatable.forEach((idx, k2) => {
+        if (state2.rot[idx] !== sol[k2]) dist++;
+      });
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = sol;
+      }
+    }
+    if (bestDist === 0) return { type: "already" };
+    const k = rotatable.findIndex((idx, k2) => state2.rot[idx] !== best[k2]);
+    return { type: "rotate", tileIndex: rotatable[k] };
+  }
+
+  // src/ui/flowView.js
+  var CELL6 = 72;
+  function renderFlowPuzzle(container, ctx2, level) {
+    const puzzle = createFlowPuzzle(level);
+    let hintsUsed = 0;
+    let hintTile = null;
+    let finished = false;
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const canvasBox = document.createElement("div");
+    canvasBox.className = "puzzle-canvas-box";
+    const canvas = document.createElement("canvas");
+    canvas.className = "game";
+    const [gw, gh] = level.grid;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = gw * CELL6 * dpr;
+    canvas.height = gh * CELL6 * dpr;
+    canvas.style.width = `${gw * CELL6}px`;
+    canvas.style.height = `${gh * CELL6}px`;
+    canvas.style.maxWidth = "100%";
+    canvasBox.appendChild(canvas);
+    wrap.appendChild(canvasBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const legend = document.createElement("div");
+    legend.className = "panel mt";
+    legend.innerHTML = `<div class="desc" style="line-height:1.9">
+    \u{1F98A}\u{1F438}\u{1F426} \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0438 \u0438\u0434\u0443\u0442 \u043F\u043E \u0441\u0442\u0440\u0435\u043B\u043A\u0430\u043C \u043E\u0442 \u0441\u0432\u043E\u0435\u0433\u043E \u0441\u0442\u0430\u0440\u0442\u0430<br>
+    \u041A\u0430\u0436\u0434\u043E\u043C\u0443 \u043D\u0443\u0436\u0435\u043D \u043B\u043E\u0442\u043E\u043A \u0421\u0412\u041E\u0415\u0413\u041E \u0446\u0432\u0435\u0442\u0430 \u{1F3EE}<br>
+    \u0422\u0430\u043F \u043F\u043E \u0441\u0442\u0440\u0435\u043B\u043A\u0435 \u2014 \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u0435\u0451<br>
+    \u041F\u0443\u0442\u0438 \u043D\u0435 \u0434\u043E\u043B\u0436\u043D\u044B \u0434\u0435\u043B\u0438\u0442\u044C \u043A\u043B\u0435\u0442\u043A\u0443 \u2014 \u0431\u0443\u0434\u0435\u0442 \u0442\u043E\u043B\u043A\u043E\u0442\u043D\u044F \u{1F4A5}<br>
+    \u{1F4E6} \u044F\u0449\u0438\u043A\u0438 \u2014 \u0442\u0443\u0434\u0430 \u043D\u0435 \u043F\u0440\u043E\u0439\u0442\u0438</div>`;
+    side.appendChild(legend);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoFlow(puzzle)) {
+        hintTile = null;
+        ctx2.sfx?.("tap");
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetFlow(puzzle);
+      hintTile = null;
+      ctx2.sfx?.("tap");
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = flowHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h.type === "rotate") {
+        hintsUsed += 1;
+        hintTile = h.tileIndex;
+        ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043A\u0438\u0432\u0430\u0435\u0442 \u043D\u0430 \u043E\u0434\u043D\u0443 \u0438\u0437 \u0441\u0442\u0440\u0435\u043B\u043E\u043A\u2026");
+        draw();
+      } else if (h.type === "already") {
+        ctx2.toast("\u041F\u043E\u0442\u043E\u043A\u0438 \u0443\u0436\u0435 \u0440\u0430\u0437\u0432\u0435\u0434\u0435\u043D\u044B!");
+      } else {
+        ctx2.toast("\u0425\u043C, \u0442\u0443\u0442 \u043D\u0435 \u0440\u0430\u0437\u0432\u0435\u0441\u0442\u0438 \u043F\u043E\u0442\u043E\u043A\u0438. \u0421\u043A\u0430\u0436\u0438 \u0445\u043E\u0437\u044F\u0438\u043D\u0443 \u043B\u0430\u0432\u043A\u0438!");
+      }
+    }
+    function onTap(ev) {
+      if (finished) return;
+      const rect = canvas.getBoundingClientRect();
+      const scale = canvas.width / dpr / rect.width;
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL6);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL6);
+      const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
+      if (idx >= 0 && rotateFlowTile(puzzle, idx)) {
+        hintTile = null;
+        ctx2.sfx?.("rotate");
+        draw();
+        if (isFlowSolved(puzzle)) finish();
+      }
+    }
+    canvas.addEventListener("pointerdown", onTap);
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") ctx2.go("puzzles");
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      finished = true;
+      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      draw();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        showOverlay(ctx2, {
+          title: "\u{1F319} \u0412\u0441\u0435 \u043B\u043E\u0442\u043A\u0438 \u043E\u0431\u0441\u043B\u0443\u0436\u0435\u043D\u044B!",
+          subtitle: `\xAB${level.name}\xBB \u2014 \u043D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u0434\u043E\u0432\u043E\u043B\u0435\u043D`,
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function draw() {
+      const g = canvas.getContext("2d");
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, gw * CELL6, gh * CELL6);
+      const sim = simulateFlows(puzzle);
+      const cellOwner = /* @__PURE__ */ new Map();
+      sim.buyers.forEach((b, bi) => b.path.forEach(([x, y]) => {
+        const key = `${x},${y}`;
+        if (!cellOwner.has(key)) cellOwner.set(key, bi);
+      }));
+      for (let y = 0; y < gh; y++) {
+        for (let x = 0; x < gw; x++) {
+          g.fillStyle = (x + y) % 2 === 0 ? "#2b2e4a" : "#323654";
+          g.fillRect(x * CELL6, y * CELL6, CELL6, CELL6);
+        }
+      }
+      level.tiles.forEach((t) => {
+        const px = t.pos[0] * CELL6;
+        const py = t.pos[1] * CELL6;
+        if (t.type === "wall") {
+          g.fillStyle = "#1e2033";
+          roundRect(g, px + 4, py + 4, CELL6 - 8, CELL6 - 8, 10);
+          g.fill();
+        } else if (t.type === "arrow") {
+          g.fillStyle = "#4a4370";
+          roundRect(g, px + 4, py + 4, CELL6 - 8, CELL6 - 8, 10);
+          g.fill();
+        }
+      });
+      sim.buyers.forEach((b, bi) => {
+        const col = BUYER_COLORS[b.color];
+        g.strokeStyle = col.css;
+        g.globalAlpha = b.arrived ? 0.85 : 0.45;
+        g.lineCap = "round";
+        g.lineJoin = "round";
+        g.lineWidth = 9;
+        g.beginPath();
+        b.path.forEach(([x, y], i) => {
+          const cx = x * CELL6 + CELL6 / 2;
+          const cy = y * CELL6 + CELL6 / 2;
+          if (i === 0) g.moveTo(cx, cy);
+          else g.lineTo(cx, cy);
+        });
+        g.stroke();
+        const [hx, hy] = b.path[b.path.length - 1];
+        g.fillStyle = col.css;
+        g.beginPath();
+        g.arc(hx * CELL6 + CELL6 / 2, hy * CELL6 + CELL6 / 2, 6, 0, Math.PI * 2);
+        g.fill();
+        g.globalAlpha = 1;
+      });
+      level.tiles.forEach((t, i) => {
+        if (t.type !== "arrow") return;
+        const cx = t.pos[0] * CELL6 + CELL6 / 2;
+        const cy = t.pos[1] * CELL6 + CELL6 / 2;
+        const owner = cellOwner.get(t.pos.join(","));
+        g.fillStyle = owner !== void 0 ? BUYER_COLORS[sim.buyers[owner].color].css : "#aab0e8";
+        const rot = puzzle.rot[i] ?? t.rot ?? 0;
+        g.save();
+        g.translate(cx, cy);
+        g.rotate(Math.PI / 2 * rot);
+        g.beginPath();
+        g.moveTo(0, -16);
+        g.lineTo(12, 2);
+        g.lineTo(5, 2);
+        g.lineTo(5, 15);
+        g.lineTo(-5, 15);
+        g.lineTo(-5, 2);
+        g.lineTo(-12, 2);
+        g.closePath();
+        g.fill();
+        g.restore();
+      });
+      if (hintTile !== null) {
+        const t = level.tiles[hintTile];
+        const cx = t.pos[0] * CELL6 + CELL6 / 2;
+        const cy = t.pos[1] * CELL6 + CELL6 / 2;
+        g.fillStyle = "rgba(255, 202, 122, 0.35)";
+        g.beginPath();
+        g.arc(cx, cy, CELL6 * 0.46, 0, Math.PI * 2);
+        g.fill();
+      }
+      const emoji = (e, cx, cy, size = CELL6 * 0.5) => {
+        g.font = `${size}px "Segoe UI Emoji", sans-serif`;
+        g.textAlign = "center";
+        g.textBaseline = "middle";
+        g.fillText(e, cx, cy);
+      };
+      const arrivedAt = new Set(
+        sim.buyers.filter((b) => b.arrived).map((b) => b.path[b.path.length - 1].join(","))
+      );
+      level.tiles.forEach((t) => {
+        const cx = t.pos[0] * CELL6 + CELL6 / 2;
+        const cy = t.pos[1] * CELL6 + CELL6 / 2;
+        if (t.type === "start") {
+          const col = BUYER_COLORS[t.color ?? 0];
+          g.fillStyle = col.css;
+          g.globalAlpha = 0.35;
+          g.beginPath();
+          g.arc(cx, cy, CELL6 * 0.42, 0, Math.PI * 2);
+          g.fill();
+          g.globalAlpha = 1;
+          emoji(col.buyer, cx, cy);
+        } else if (t.type === "stall") {
+          const col = BUYER_COLORS[t.color ?? 0];
+          if (arrivedAt.has(t.pos.join(","))) {
+            g.fillStyle = col.css;
+            g.globalAlpha = 0.45;
+            g.beginPath();
+            g.arc(cx, cy, CELL6 * 0.42, 0, Math.PI * 2);
+            g.fill();
+            g.globalAlpha = 1;
+          }
+          g.strokeStyle = col.css;
+          g.lineWidth = 4;
+          g.beginPath();
+          g.arc(cx, cy, CELL6 * 0.4, 0, Math.PI * 2);
+          g.stroke();
+          emoji("\u{1F3EE}", cx, cy);
+        } else if (t.type === "wall") {
+          emoji("\u{1F4E6}", cx, cy, CELL6 * 0.45);
+        }
+      });
+      for (const key of sim.collisions) {
+        const [x, y] = key.split(",").map(Number);
+        g.fillStyle = "rgba(255, 80, 80, 0.45)";
+        roundRect(g, x * CELL6 + 6, y * CELL6 + 6, CELL6 - 12, CELL6 - 12, 10);
+        g.fill();
+        emoji("\u{1F4A5}", x * CELL6 + CELL6 / 2, y * CELL6 + CELL6 / 2, CELL6 * 0.4);
+      }
+      const n = sim.buyers.length;
+      statusEl.innerHTML = (sim.solved ? "\u2705 <b>\u0412\u0441\u0435 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0438 \u0443 \u0441\u0432\u043E\u0438\u0445 \u043B\u043E\u0442\u043A\u043E\u0432!</b>" : `\u{1F6CD}\uFE0F \u0423 \u043B\u043E\u0442\u043A\u043E\u0432: <b>${sim.arrivedCount} \u0438\u0437 ${n}</b>` + (sim.collisions.size > 0 ? `<br>\u{1F4A5} <b>\u0422\u043E\u043B\u043A\u043E\u0442\u043D\u044F!</b> \u041F\u0443\u0442\u0438 \u043F\u0435\u0440\u0435\u0441\u0435\u043A\u0430\u044E\u0442\u0441\u044F: ${sim.collisions.size}` : "")) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    function roundRect(g, x, y, w, h, r) {
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.arcTo(x + w, y, x + w, y + h, r);
+      g.arcTo(x + w, y + h, x, y + h, r);
+      g.arcTo(x, y + h, x, y, r);
+      g.arcTo(x, y, x + w, y, r);
+      g.closePath();
+    }
+    draw();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      canvas.removeEventListener("pointerdown", onTap);
+    };
+  }
+
   // src/ui/puzzleView.js
   var WORLD_LABEL = {
     meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430 \u2014 \u0441\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438 \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
@@ -9686,10 +11654,11 @@
       row.className = "row" + (available ? "" : " locked") + (done ? " done" : "");
       if (firstUnsolved && p.id === firstUnsolved.id) row.dataset.scrollTarget = "1";
       const stars = "\u2605".repeat(p.difficulty) + "\u2606".repeat(5 - p.difficulty);
+      const isDaily = available && !done && isDailyPuzzle(state2, p.id);
       row.innerHTML = `
       <span class="icon">${available ? done ? "\u{1F3EE}" : "\u{1F9E9}" : "\u{1F512}"}</span>
       <span class="grow">
-        <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span></div>
+        <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">\u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \xD72</span>' : ""}</div>
         <div class="desc">${available ? p.intro : "\u0420\u0435\u0448\u0438 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443, \u0447\u0442\u043E\u0431\u044B \u043E\u0442\u043A\u0440\u044B\u0442\u044C."}</div>
       </span>`;
       if (available) {
@@ -9717,7 +11686,7 @@
       setTimeout(() => targetRow.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
   }
-  var CELL4 = 64;
+  var CELL7 = 64;
   function renderPuzzle(container, ctx2, params) {
     const level = findPuzzle(ctx2.state, params.id);
     if (!level) {
@@ -9739,6 +11708,15 @@
     if (level.mechanic === "tea") {
       return renderTeaPuzzle(container, ctx2, level);
     }
+    if (level.mechanic === "mech") {
+      return renderMechPuzzle(container, ctx2, level);
+    }
+    if (level.mechanic === "candle") {
+      return renderCandlePuzzle(container, ctx2, level);
+    }
+    if (level.mechanic === "flow") {
+      return renderFlowPuzzle(container, ctx2, level);
+    }
     const puzzle = createPuzzle(level);
     let hintsUsed = 0;
     let hintCell = null;
@@ -9752,10 +11730,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL4 * dpr;
-    canvas.height = gh * CELL4 * dpr;
-    canvas.style.width = `${gw * CELL4}px`;
-    canvas.style.height = `${gh * CELL4}px`;
+    canvas.width = gw * CELL7 * dpr;
+    canvas.height = gh * CELL7 * dpr;
+    canvas.style.width = `${gw * CELL7}px`;
+    canvas.style.height = `${gh * CELL7}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -9826,8 +11804,8 @@
       const scaleX = canvas.width / dpr / rect.width;
       const cx = (ev.clientX - rect.left) * scaleX;
       const cy = (ev.clientY - rect.top) * scaleX;
-      const x = Math.floor(cx / CELL4);
-      const y = Math.floor(cy / CELL4);
+      const x = Math.floor(cx / CELL7);
+      const y = Math.floor(cy / CELL7);
       const idx = level.objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (idx >= 0 && level.objects[idx].type === "mirror") {
         rotateMirror(puzzle, idx);
@@ -9859,12 +11837,12 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL4, gh * CELL4);
+      g.clearRect(0, 0, gw * CELL7, gh * CELL7);
       const { lanternsLit, mothsAwake, beams } = traceLight(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
+          g.fillRect(x * CELL7, y * CELL7, CELL7, CELL7);
         }
       }
       g.save();
@@ -9874,16 +11852,16 @@
         g.lineWidth = pass.w;
         for (const b of beams) {
           g.beginPath();
-          g.moveTo(b.from[0] * CELL4 + CELL4 / 2, b.from[1] * CELL4 + CELL4 / 2);
-          g.lineTo(b.to[0] * CELL4 + CELL4 / 2, b.to[1] * CELL4 + CELL4 / 2);
+          g.moveTo(b.from[0] * CELL7 + CELL7 / 2, b.from[1] * CELL7 + CELL7 / 2);
+          g.lineTo(b.to[0] * CELL7 + CELL7 / 2, b.to[1] * CELL7 + CELL7 / 2);
           g.stroke();
         }
       }
       g.restore();
       level.objects.forEach((o, i) => {
-        const cx = o.pos[0] * CELL4 + CELL4 / 2;
-        const cy = o.pos[1] * CELL4 + CELL4 / 2;
-        const emoji = (e, size = CELL4 * 0.62) => {
+        const cx = o.pos[0] * CELL7 + CELL7 / 2;
+        const cy = o.pos[1] * CELL7 + CELL7 / 2;
+        const emoji = (e, size = CELL7 * 0.62) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -9894,8 +11872,8 @@
             emoji("\u2728");
             const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
             g.fillStyle = "rgba(255, 240, 190, 0.9)";
-            g.font = `bold ${CELL4 * 0.3}px sans-serif`;
-            g.fillText(dirs[o.dir], cx + CELL4 * 0.28, cy - CELL4 * 0.28);
+            g.font = `bold ${CELL7 * 0.3}px sans-serif`;
+            g.fillText(dirs[o.dir], cx + CELL7 * 0.28, cy - CELL7 * 0.28);
             break;
           }
           case "mirror": {
@@ -9903,25 +11881,25 @@
             if (hintCell && hintCell[0] === o.pos[0] && hintCell[1] === o.pos[1]) {
               g.fillStyle = "rgba(255, 202, 122, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL4 * 0.46, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL7 * 0.46, 0, Math.PI * 2);
               g.fill();
             }
             g.save();
             g.translate(cx, cy);
             g.rotate(orient === 0 ? Math.PI / 4 : -Math.PI / 4);
             g.fillStyle = "#8a6f4d";
-            g.fillRect(-CELL4 * 0.3, -3, CELL4 * 0.6, 6);
+            g.fillRect(-CELL7 * 0.3, -3, CELL7 * 0.6, 6);
             g.fillStyle = "#cfe8ff";
-            g.fillRect(-CELL4 * 0.3, -5, CELL4 * 0.6, 4);
+            g.fillRect(-CELL7 * 0.3, -5, CELL7 * 0.6, 4);
             g.restore();
-            emoji("\u{1FA9E}", CELL4 * 0.3);
+            emoji("\u{1FA9E}", CELL7 * 0.3);
             break;
           }
           case "lantern": {
             if (lanternsLit.has(i)) {
               g.fillStyle = "rgba(255, 214, 120, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL4 * 0.48, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL7 * 0.48, 0, Math.PI * 2);
               g.fill();
               emoji("\u{1F3EE}");
             } else {
@@ -9935,7 +11913,7 @@
             emoji(mothsAwake.has(i) ? "\u{1F621}" : "\u{1F98B}");
             if (mothsAwake.has(i)) {
               g.fillStyle = "rgba(232, 138, 122, 0.25)";
-              g.fillRect(o.pos[0] * CELL4, o.pos[1] * CELL4, CELL4, CELL4);
+              g.fillRect(o.pos[0] * CELL7, o.pos[1] * CELL7, CELL7, CELL7);
             }
             break;
           case "wall":
@@ -11089,7 +13067,7 @@ ${item2.description}
   }
 
   // src/ui/editorView.js
-  var CELL5 = 56;
+  var CELL8 = 56;
   var PALETTE = [
     { type: "source", icon: "\u2728", label: "\u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A (\u043F\u043E\u0432\u0442\u043E\u0440\u043D\u044B\u0439 \u0442\u0430\u043F \u2014 \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C)" },
     { type: "mirror", icon: "\u{1FA9E}", label: "\u0417\u0435\u0440\u043A\u0430\u043B\u043E (\u0442\u0430\u043F \u2014 \u0441\u043C\u0435\u043D\u0438\u0442\u044C \u043E\u0440\u0438\u0435\u043D\u0442\u0430\u0446\u0438\u044E)" },
@@ -11361,8 +13339,8 @@ ${item2.description}
     function onTap(ev) {
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / 1 / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL5);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL5);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL8);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL8);
       if (x < 0 || y < 0 || x >= gw || y >= gh) return;
       const idx = objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (tool === "erase") {
@@ -11384,16 +13362,16 @@ ${item2.description}
     canvas.addEventListener("pointerdown", onTap);
     function draw() {
       const dpr = 1;
-      canvas.width = gw * CELL5;
-      canvas.height = gh * CELL5;
-      canvas.style.width = `${gw * CELL5}px`;
-      canvas.style.height = `${gh * CELL5}px`;
+      canvas.width = gw * CELL8;
+      canvas.height = gh * CELL8;
+      canvas.style.width = `${gw * CELL8}px`;
+      canvas.style.height = `${gh * CELL8}px`;
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
+          g.fillRect(x * CELL8, y * CELL8, CELL8, CELL8);
         }
       }
       const preview = createPuzzle(currentLevel());
@@ -11403,14 +13381,14 @@ ${item2.description}
       g.lineWidth = 4;
       for (const b of beams) {
         g.beginPath();
-        g.moveTo(b.from[0] * CELL5 + CELL5 / 2, b.from[1] * CELL5 + CELL5 / 2);
-        g.lineTo(b.to[0] * CELL5 + CELL5 / 2, b.to[1] * CELL5 + CELL5 / 2);
+        g.moveTo(b.from[0] * CELL8 + CELL8 / 2, b.from[1] * CELL8 + CELL8 / 2);
+        g.lineTo(b.to[0] * CELL8 + CELL8 / 2, b.to[1] * CELL8 + CELL8 / 2);
         g.stroke();
       }
       for (const o of objects) {
-        const cx = o.pos[0] * CELL5 + CELL5 / 2;
-        const cy = o.pos[1] * CELL5 + CELL5 / 2;
-        const emoji = (e, size = CELL5 * 0.6) => {
+        const cx = o.pos[0] * CELL8 + CELL8 / 2;
+        const cy = o.pos[1] * CELL8 + CELL8 / 2;
+        const emoji = (e, size = CELL8 * 0.6) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -11420,16 +13398,16 @@ ${item2.description}
           emoji("\u2728");
           const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
           g.fillStyle = "#fff2be";
-          g.font = `bold ${CELL5 * 0.3}px sans-serif`;
-          g.fillText(dirs[o.dir ?? 1], cx + CELL5 * 0.28, cy - CELL5 * 0.28);
+          g.font = `bold ${CELL8 * 0.3}px sans-serif`;
+          g.fillText(dirs[o.dir ?? 1], cx + CELL8 * 0.28, cy - CELL8 * 0.28);
         } else if (o.type === "mirror") {
           g.save();
           g.translate(cx, cy);
           g.rotate(o.orient === 0 ? Math.PI / 4 : -Math.PI / 4);
           g.fillStyle = "#cfe8ff";
-          g.fillRect(-CELL5 * 0.3, -3, CELL5 * 0.6, 5);
+          g.fillRect(-CELL8 * 0.3, -3, CELL8 * 0.6, 5);
           g.restore();
-          emoji("\u{1FA9E}", CELL5 * 0.3);
+          emoji("\u{1FA9E}", CELL8 * 0.3);
         } else if (o.type === "lantern") emoji("\u{1F3EE}");
         else if (o.type === "moth") emoji("\u{1F98B}");
         else if (o.type === "wall") emoji("\u{1F311}");
@@ -11614,6 +13592,119 @@ ${item2.description}
         tone(440, 0.08, { gain: 0.04 });
     }
   }
+  var MUSIC_KEY = "cozy_music";
+  var musicTimer = null;
+  var musicGain = null;
+  var musicNoise = null;
+  var chordIdx = 0;
+  var bellIdx = 0;
+  var CHORDS = [
+    [220, 261.63, 329.63],
+    // Am
+    [174.61, 220, 261.63],
+    // F
+    [130.81, 196, 329.63],
+    // C
+    [196, 246.94, 293.66]
+    // G
+  ];
+  var BELLS = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
+  function musicEnabledSetting() {
+    try {
+      return localStorage.getItem(MUSIC_KEY) !== "off";
+    } catch {
+      return true;
+    }
+  }
+  function startMusic() {
+    const a = ac();
+    if (!a || musicTimer || !musicEnabledSetting()) return;
+    musicGain = a.createGain();
+    musicGain.gain.value = 0;
+    musicGain.gain.linearRampToValueAtTime(0.045, a.currentTime + 2);
+    musicGain.connect(a.destination);
+    const noiseLen = a.sampleRate * 2;
+    const noiseBuf = a.createBuffer(1, noiseLen, a.sampleRate);
+    const data = noiseBuf.getChannelData(0);
+    for (let i = 0; i < noiseLen; i++) data[i] = (Math.random() * 2 - 1) * 0.12;
+    musicNoise = a.createBufferSource();
+    musicNoise.buffer = noiseBuf;
+    musicNoise.loop = true;
+    const noiseFilter = a.createBiquadFilter();
+    noiseFilter.type = "lowpass";
+    noiseFilter.frequency.value = 900;
+    const noiseGain = a.createGain();
+    noiseGain.gain.value = 0.35;
+    musicNoise.connect(noiseFilter).connect(noiseGain).connect(musicGain);
+    musicNoise.start();
+    const bar = () => {
+      if (!musicGain) return;
+      const t0 = a.currentTime + 0.05;
+      for (const f of CHORDS[chordIdx % CHORDS.length]) {
+        const osc = a.createOscillator();
+        const g = a.createGain();
+        osc.type = "triangle";
+        osc.frequency.value = f;
+        g.gain.setValueAtTime(0, t0);
+        g.gain.linearRampToValueAtTime(0.5, t0 + 0.7);
+        g.gain.linearRampToValueAtTime(1e-4, t0 + 3.6);
+        osc.connect(g).connect(musicGain);
+        osc.start(t0);
+        osc.stop(t0 + 3.7);
+      }
+      if (Math.random() < 0.65) {
+        const bt = t0 + 0.8 + Math.random() * 2.2;
+        const osc = a.createOscillator();
+        const g = a.createGain();
+        osc.type = "sine";
+        osc.frequency.value = BELLS[bellIdx++ % BELLS.length];
+        g.gain.setValueAtTime(0, bt);
+        g.gain.linearRampToValueAtTime(0.35, bt + 0.02);
+        g.gain.exponentialRampToValueAtTime(1e-4, bt + 1.6);
+        osc.connect(g).connect(musicGain);
+        osc.start(bt);
+        osc.stop(bt + 1.7);
+      }
+      chordIdx++;
+    };
+    bar();
+    musicTimer = setInterval(bar, 3600);
+  }
+  function stopMusic() {
+    if (musicTimer) {
+      clearInterval(musicTimer);
+      musicTimer = null;
+    }
+    try {
+      musicNoise?.stop();
+    } catch {
+    }
+    musicNoise = null;
+    if (musicGain) {
+      const a = ac();
+      if (a) musicGain.gain.linearRampToValueAtTime(0, a.currentTime + 0.8);
+      setTimeout(() => {
+        try {
+          musicGain?.disconnect();
+        } catch {
+        }
+        musicGain = null;
+      }, 900);
+    }
+  }
+  function toggleMusic() {
+    const on = !musicEnabledSetting();
+    try {
+      localStorage.setItem(MUSIC_KEY, on ? "on" : "off");
+    } catch {
+    }
+    if (!on) stopMusic();
+    else startMusic();
+    return on;
+  }
+  function musicEnabled() {
+    return musicEnabledSetting();
+  }
 
   // src/ui/settingsView.js
   function renderSettings(container, ctx2) {
@@ -11668,7 +13759,14 @@ ${item2.description}
       soundBtn.textContent = on ? "\u{1F514} \u0417\u0432\u0443\u043A \u0432\u043A\u043B\u044E\u0447\u0451\u043D" : "\u{1F515} \u0417\u0432\u0443\u043A \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D";
       if (on) ctx2.sfx?.("coin");
     });
-    panel.appendChild(soundBtn);
+    const musicBtn = document.createElement("button");
+    musicBtn.textContent = musicEnabled() ? "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0430" : "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u0430";
+    musicBtn.style.marginLeft = "8px";
+    musicBtn.addEventListener("click", () => {
+      const on = toggleMusic();
+      musicBtn.textContent = on ? "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0430" : "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u0430";
+    });
+    panel.append(soundBtn, musicBtn);
     const tutTitle = document.createElement("h3");
     tutTitle.textContent = "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435";
     tutTitle.style.marginTop = "16px";
@@ -12431,6 +14529,171 @@ ${item2.description}
     refreshInfo();
   }
 
+  // src/data/achievements.js
+  var ACHIEVEMENTS = [
+    {
+      id: "first_puzzle",
+      icon: "\u{1F9E9}",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430",
+      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0443.",
+      check: (s) => s.stats.puzzlesSolved >= 1
+    },
+    {
+      id: "ten_puzzles",
+      icon: "\u{1F3EE}",
+      name: "\u0414\u0435\u0441\u044F\u0442\u043A\u0430 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+      desc: "\u0420\u0435\u0448\u0438\u0442\u044C 10 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A.",
+      check: (s) => s.stats.puzzlesSolved >= 10
+    },
+    {
+      id: "meadow_master",
+      icon: "\u{1F33F}",
+      name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043E\u043F\u0443\u0448\u043A\u0438",
+      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u0422\u0438\u0445\u043E\u0439 \u043E\u043F\u0443\u0448\u043A\u0438 (md_01\u2013md_12).",
+      check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, "0")}`).every((id) => s.puzzlesDone[id])
+    },
+    {
+      id: "half_campaign",
+      icon: "\u{1F4D6}",
+      name: "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u0443\u0442\u0438",
+      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0432\u0441\u0435\u0445 \u0437\u0430\u0433\u0430\u0434\u043E\u043A \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
+      check: (s, ctx2) => s.stats.puzzlesSolved >= Math.ceil(ctx2.puzzlesTotal / 2)
+    },
+    {
+      id: "all_puzzles",
+      icon: "\u{1F31F}",
+      name: "\u041C\u0430\u0441\u0442\u0435\u0440 \u0437\u0430\u0433\u0430\u0434\u043E\u043A",
+      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
+      check: (s, ctx2) => s.stats.puzzlesSolved >= ctx2.puzzlesTotal
+    },
+    {
+      id: "first_battle",
+      icon: "\u2694\uFE0F",
+      name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u0445\u043E\u0434",
+      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043F\u0435\u0440\u0432\u043E\u043C \u0431\u043E\u044E.",
+      check: (s) => s.stats.battlesWon >= 1
+    },
+    {
+      id: "willow_down",
+      icon: "\u{1F333}",
+      name: "\u041F\u0430\u0434\u0435\u043D\u0438\u0435 \u0438\u0432\u044B",
+      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B.",
+      check: (s) => !!s.battlesDone.bt_boss_willow
+    },
+    {
+      id: "keeper_down",
+      icon: "\u{1F4D6}",
+      name: "\u041A\u043E\u043D\u0435\u0446 \u0438\u0441\u0442\u043E\u0440\u0438\u0438",
+      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B.",
+      check: (s) => !!s.battlesDone.bk_boss_keeper
+    },
+    {
+      id: "time_down",
+      icon: "\u23F3",
+      name: "\u0412\u0440\u0435\u043C\u0435\u043D\u0438 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435\u0442",
+      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F \u2014 \u0444\u0438\u043D\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u0431\u043E\u0441\u0441\u0430.",
+      check: (s) => !!s.battlesDone.mist_boss
+    },
+    {
+      id: "fifty_battles",
+      icon: "\u{1F5E1}\uFE0F",
+      name: "\u041F\u043E\u043B\u0441\u043E\u0442\u043D\u0438 \u043F\u043E\u0431\u0435\u0434",
+      desc: "\u041F\u0440\u043E\u0439\u0442\u0438 50 \u0431\u043E\u0451\u0432.",
+      check: (s) => Object.keys(s.battlesDone).length >= 50
+    },
+    {
+      id: "all_battles",
+      icon: "\u{1F451}",
+      name: "\u041F\u043E\u043A\u043E\u0440\u0438\u0442\u0435\u043B\u044C \u043C\u0438\u0440\u043E\u0432",
+      desc: "\u041F\u0440\u043E\u0439\u0442\u0438 \u0432\u0441\u0435 200 \u0431\u043E\u0451\u0432.",
+      check: (s, ctx2) => Object.keys(s.battlesDone).length >= ctx2.battlesTotal
+    },
+    {
+      id: "crew_five",
+      icon: "\u{1F43E}",
+      name: "\u0411\u043E\u043B\u044C\u0448\u0430\u044F \u0441\u0435\u043C\u044C\u044F",
+      desc: "\u041D\u0430\u043D\u044F\u0442\u044C 5 \u0447\u043B\u0435\u043D\u043E\u0432 \u043A\u043E\u043C\u0430\u043D\u0434\u044B.",
+      check: (s) => (s.crew || []).length >= 5
+    },
+    {
+      id: "first_craft",
+      icon: "\u2692\uFE0F",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430",
+      desc: "\u0421\u0434\u0435\u043B\u0430\u0442\u044C \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C \u0432 \u043A\u0443\u0437\u043D\u0438\u0446\u0435.",
+      check: (s) => (s.stats.itemsCrafted || 0) >= 1
+    },
+    {
+      id: "rich",
+      icon: "\u{1F4B0}",
+      name: "\u0417\u0432\u043E\u043D \u043F\u043E\u043B\u043D\u044B\u0445 \u043A\u0430\u0440\u043C\u0430\u043D\u043E\u0432",
+      desc: "\u0417\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u0441\u0443\u043C\u043C\u0430\u0440\u043D\u043E 5000 \u043C\u043E\u043D\u0435\u0442.",
+      check: (s) => s.stats.coinsEarned >= 5e3
+    },
+    {
+      id: "seals_five",
+      icon: "\u{1F530}",
+      name: "\u041A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u044F \u043F\u0435\u0447\u0430\u0442\u0435\u0439",
+      desc: "\u0418\u043C\u0435\u0442\u044C 5 \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430 \u043E\u0434\u043D\u043E\u0432\u0440\u0435\u043C\u0435\u043D\u043D\u043E.",
+      check: (s) => s.seals >= 5
+    },
+    {
+      id: "shopper",
+      icon: "\u{1F6CD}\uFE0F",
+      name: "\u0417\u0430\u0432\u0441\u0435\u0433\u0434\u0430\u0442\u0430\u0439 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430",
+      desc: "\u0421\u0434\u0435\u043B\u0430\u0442\u044C 20 \u043F\u043E\u043A\u0443\u043F\u043E\u043A.",
+      check: (s) => (s.stats.itemsBought || 0) >= 20
+    },
+    {
+      id: "seek_master",
+      icon: "\u{1F50D}",
+      name: "\u041E\u0440\u043B\u0438\u043D\u044B\u0439 \u0433\u043B\u0430\u0437",
+      desc: "\u041F\u0440\u043E\u0439\u0442\u0438 \u0432\u0441\u0435 \u0438\u0441\u043A\u0430\u043B\u043A\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
+      check: (s, ctx2) => ctx2.seekIds.every((id) => s.puzzlesDone[id])
+    }
+  ];
+  function checkAchievements(state2, ctx2) {
+    state2.achievements ||= {};
+    const fresh = [];
+    for (const a of ACHIEVEMENTS) {
+      if (state2.achievements[a.id]) continue;
+      if (a.check(state2, ctx2)) {
+        state2.achievements[a.id] = Date.now();
+        fresh.push(a);
+      }
+    }
+    return fresh;
+  }
+
+  // src/ui/achievementsView.js
+  function renderAchievements(container, ctx2) {
+    const { state: state2 } = ctx2;
+    const unlocked = state2.achievements || {};
+    const total = Object.keys(unlocked).length;
+    container.appendChild(header(
+      ctx2,
+      "\u0414\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u044F",
+      `${total}/${ACHIEVEMENTS.length} \u2014 \u043F\u043E\u043B\u043A\u0438 \u0442\u0440\u043E\u0444\u0435\u0435\u0432 \u043B\u0430\u0432\u043A\u0438`
+    ));
+    const list = document.createElement("div");
+    list.className = "list";
+    for (const a of ACHIEVEMENTS) {
+      const got = !!unlocked[a.id];
+      const row = document.createElement("div");
+      row.className = "row" + (got ? " done" : " locked");
+      const date = got ? new Date(unlocked[a.id]).toLocaleDateString("ru-RU") : "";
+      row.innerHTML = `
+      <span class="icon">${got ? a.icon : "\u{1F512}"}</span>
+      <span class="grow">
+        <div class="name">${a.name}</div>
+        <div class="desc">${a.desc}${date ? ` \xB7 ${date}` : ""}</div>
+      </span>
+      <span class="price">${got ? "\u2713" : ""}</span>`;
+      list.appendChild(row);
+    }
+    container.appendChild(list);
+    container.appendChild(quickNav(ctx2, [{ icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }]));
+  }
+
   // src/ui/app.js
   var screenEl = document.getElementById("screen");
   var toastEl = document.getElementById("toast");
@@ -12438,6 +14701,18 @@ ${item2.description}
   function save() {
     saveGame(state);
     updateWallet();
+    const fresh = checkAchievements(state, {
+      puzzlesTotal: ALL_PUZZLES.length,
+      battlesTotal: BATTLES.length,
+      seekIds: SEEK_PUZZLES.map((p) => p.id)
+    });
+    for (const a of fresh) {
+      setTimeout(() => {
+        toast(`\u{1F3C6} \u0414\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435: ${a.name}!`);
+        sfx("success");
+      }, 600);
+      saveGame(state);
+    }
   }
   function updateWallet() {
     document.getElementById("wallet-coins").textContent = `\u{1FA99} ${state.coins}`;
@@ -12464,7 +14739,8 @@ ${item2.description}
     editor: (c, p) => renderEditor(c, ctx, p),
     craft: (c, p) => renderCraft(c, ctx, p),
     settings: (c, p) => renderSettings(c, ctx, p),
-    seekeditor: (c, p) => p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p)
+    seekeditor: (c, p) => p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p),
+    achievements: (c, p) => renderAchievements(c, ctx, p)
   };
   var currentCleanup = null;
   function go(name, params = {}) {
@@ -12502,6 +14778,13 @@ ${item2.description}
     }
   };
   initSound();
+  var musicUnlock = () => {
+    startMusic();
+    document.removeEventListener?.("pointerdown", musicUnlock);
+    document.removeEventListener?.("keydown", musicUnlock);
+  };
+  document.addEventListener?.("pointerdown", musicUnlock);
+  document.addEventListener?.("keydown", musicUnlock);
   var spiderTrack = document.createElement("div");
   spiderTrack.id = "spidertrack";
   spiderTrack.innerHTML = '<span class="thread"></span><div class="mover"><span class="bug">\u{1F577}\uFE0F</span></div>';
@@ -12605,6 +14888,10 @@ ${item2.description}
   document.getElementById("settings-btn")?.addEventListener("click", () => {
     sfx("tap");
     go("settings");
+  });
+  document.getElementById("achievements-btn")?.addEventListener("click", () => {
+    sfx("tap");
+    go("achievements");
   });
   var brandEl = document.querySelector(".brand");
   var brandTaps = 0;
