@@ -763,12 +763,41 @@ body::-webkit-scrollbar { display: none; }
   box-shadow: 0 20px 60px rgba(0,0,0,0.6);
   animation: paper-unfold 0.32s cubic-bezier(0.2, 1.4, 0.4, 1);
 }
-.paper-full h3 { margin-top: 0; }
-.paper-full .pf-body { line-height: 1.6; font-size: 15px; }
+.paper-full h3 { margin-top: 0; color: #6b4423; }
+.paper-full .pf-body { line-height: 1.6; font-size: 15px; color: #3a2c1c; }
+.paper-full .muted { color: #6b553a; }
+.paper-full .badge { background: #6b553a; color: #ffca7a; }
+.paper-full .badge.epic { background: #4a3a5a; color: #d3a8ff; }
 .paper-full .pf-actions { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .paper-full .pf-actions button { color: var(--text); }
 .paper-full .pf-pin { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-size: 22px; }
 @keyframes paper-unfold {
   from { transform: scale(0.55) rotate(-6deg); opacity: 0; }
   to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Зоны доски объявлений */
+.board-frame {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+.board-zone {
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-content: flex-start;
+  min-height: 160px;
+}
+.board-zone-title {
+  width: 100%;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+  border-bottom: 1px dashed rgba(255, 202, 122, 0.35);
+  padding-bottom: 6px;
 }

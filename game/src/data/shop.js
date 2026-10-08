@@ -55,6 +55,7 @@ export const SHOP_STOCK = [
   { itemId: 'wpn_candle_staff', unlockAfter: 'bk_spirits' },
   { itemId: 'amu_pages', unlockAfter: 'bk_spirits' },
   { itemId: 'rng_contents', unlockAfter: 'bk_spirits' },
+  { itemId: 'shd_page_shield', unlockAfter: 'bk_spirits' },
   // После «Витражной гравюры»
   { itemId: 'wpn_firebird_quill', unlockAfter: 'bk_illustration' },
 ];

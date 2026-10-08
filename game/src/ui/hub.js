@@ -65,15 +65,23 @@ export function renderHub(container, ctx, params = {}) {
       candidates: ['assets/town_square_web.jpg', 'assets/seek_town_web.jpg'],
       alt: 'Городская площадь',
       hotspots: [
-        ['🍺', 'Таверна', 'tavern', 81, 60, () => false],
+        ['🍺', 'Таверна', 'tavern', 79, 60, () => false],
         ['⚒️', 'Кузница и котёл', 'craft', 39, 52, () => false],
         ['🛠️', 'Мастерская', 'workshop', 52, 68, () => false],
         ['📌', 'Доска объявлений', 'board', 6, 55, () => false],
         ['🏮', 'В лавку', '@lavka', 17, 47, () => false],
-        ['🗡️', 'Оружейник', 'shopArmory', 23, 30, () => hasUnseenIn(state, 'armory')],
-        ['🛡️', 'Бронник', 'shopArmorer', 57, 28, () => hasUnseenIn(state, 'armorer')],
-        ['🔮', 'Маг', 'shopMagic', 68, 60, () => hasUnseenIn(state, 'magic')],
-        ['🧪', 'Алхимик', 'shopAlchemy', 92, 30, () => hasUnseenIn(state, 'alchemy')],
+        ['🏬', 'Торговый квартал', '@market', 52, 38, () => ['armory', 'armorer', 'magic', 'alchemy'].some((k) => hasUnseenIn(state, k))],
+      ],
+    },
+    market: {
+      candidates: ['assets/town_market_web.jpg', 'assets/town_market.jfif', 'assets/town_square_web.jpg'],
+      alt: 'Торговый квартал',
+      hotspots: [
+        ['🗡️', 'Оружейник', 'shopArmory', 8, 60, () => hasUnseenIn(state, 'armory')],
+        ['🛡️', 'Бронник', 'shopArmorer', 37, 60, () => hasUnseenIn(state, 'armorer')],
+        ['🔮', 'Маг', 'shopMagic', 65, 62, () => hasUnseenIn(state, 'magic')],
+        ['🧪', 'Алхимик', 'shopAlchemy', 81, 60, () => hasUnseenIn(state, 'alchemy')],
+        ['🌇', 'На площадь', '@square', 50, 60, () => false],
       ],
     },
   };
@@ -113,6 +121,7 @@ export function renderHub(container, ctx, params = {}) {
       setTimeout(() => {
         if (screen === '@square') rerender('square');
         else if (screen === '@lavka') rerender('lavka');
+        else if (screen === '@market') rerender('market');
         else ctx.go(screen);
       }, 150);
     });

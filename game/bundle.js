@@ -15,6 +15,7 @@
     },
     {
       id: "wpn_oak_mace",
+      set: "town",
       name: "\u0414\u0443\u0431\u043E\u0432\u0430\u044F \u0431\u0443\u043B\u0430\u0432\u0430",
       slot: "weapon",
       hand: "one",
@@ -26,6 +27,7 @@
     },
     {
       id: "wpn_dagger_firefly",
+      set: "meadow",
       name: "\u041A\u0438\u043D\u0436\u0430\u043B \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u0430",
       slot: "weapon",
       hand: "one",
@@ -62,6 +64,7 @@
     },
     {
       id: "wpn_hunter_bow",
+      set: "meadow",
       name: "\u041B\u0443\u043A \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u043E\u0445\u043E\u0442\u043D\u0438\u043A\u0430",
       slot: "weapon",
       hand: "two",
@@ -75,6 +78,7 @@
     // --- Щиты ---
     {
       id: "shd_wooden",
+      set: "meadow",
       name: "\u0429\u0438\u0442 \u0438\u0437 \u043B\u0438\u043F\u044B",
       slot: "shield",
       hand: "one",
@@ -86,6 +90,7 @@
     },
     {
       id: "shd_guardian",
+      set: "town",
       name: "\u0429\u0438\u0442 \u0441\u0442\u0440\u0430\u0436\u0430 \u043B\u0430\u0432\u043A\u0438",
       slot: "shield",
       hand: "one",
@@ -99,6 +104,7 @@
     // --- Шлемы ---
     {
       id: "hlm_badger",
+      set: "meadow",
       name: "\u0428\u043B\u0435\u043C \u0441\u043E\u043D\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u0441\u0443\u043A\u0430",
       slot: "helmet",
       type: "helmet",
@@ -141,6 +147,7 @@
     },
     {
       id: "arm_silken",
+      set: "meadow",
       name: "\u0428\u0451\u043B\u043A\u043E\u0432\u044B\u0439 \u0434\u043E\u0441\u043F\u0435\u0445 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430",
       slot: "armor",
       type: "armor",
@@ -152,6 +159,7 @@
     // --- Перчатки ---
     {
       id: "glv_herbalist",
+      set: "meadow",
       name: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B",
       slot: "gloves",
       type: "gloves",
@@ -173,6 +181,7 @@
     // --- Сапоги ---
     {
       id: "bt_path",
+      set: "meadow",
       name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u0442\u0440\u043E\u043F\u0438\u043D\u043E\u043A",
       slot: "boots",
       type: "boots",
@@ -183,6 +192,7 @@
     },
     {
       id: "bt_merchant",
+      set: "meadow",
       name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u0442\u043E\u0440\u0433\u043E\u0432\u043E\u0433\u043E \u0441\u0442\u0440\u0430\u043D\u043D\u0438\u043A\u0430",
       slot: "boots",
       type: "boots",
@@ -205,6 +215,7 @@
     },
     {
       id: "amu_antidote",
+      set: "meadow",
       name: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F",
       slot: "amulet",
       type: "amulet",
@@ -216,6 +227,7 @@
     // --- Кольца ---
     {
       id: "rng_luck",
+      set: "meadow",
       name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0443\u0434\u0430\u0447\u0438",
       slot: "ring",
       type: "ring",
@@ -226,6 +238,7 @@
     },
     {
       id: "rng_crit",
+      set: "attic",
       name: "\u041A\u043E\u043B\u044C\u0446\u043E \u043A\u0440\u0438\u0442\u0430",
       slot: "ring",
       type: "ring",
@@ -236,6 +249,7 @@
     },
     {
       id: "rng_health",
+      set: "meadow",
       name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F",
       slot: "ring",
       type: "ring",
@@ -271,6 +285,7 @@
   ITEMS.push(
     {
       id: "wpn_iron_sword",
+      set: "town",
       name: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043C\u0435\u0447 \u0441\u0442\u0440\u0430\u0436\u043D\u0438\u043A\u0430",
       slot: "weapon",
       hand: "one",
@@ -294,6 +309,7 @@
     },
     {
       id: "shd_tower",
+      set: "town",
       name: "\u0411\u0430\u0448\u0435\u043D\u043D\u044B\u0439 \u0449\u0438\u0442",
       slot: "shield",
       hand: "one",
@@ -305,6 +321,7 @@
     },
     {
       id: "hlm_kettle",
+      set: "town",
       name: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u0448\u043B\u0435\u043C",
       slot: "helmet",
       type: "helmet",
@@ -315,6 +332,7 @@
     },
     {
       id: "arm_chain",
+      set: "town",
       name: "\u041A\u043E\u043B\u044C\u0447\u0443\u0433\u0430 \u0434\u0432\u043E\u0440\u043D\u0438\u043A\u0430-\u0432\u0435\u0442\u0435\u0440\u0430\u043D\u0430",
       slot: "armor",
       type: "armor",
@@ -325,6 +343,7 @@
     },
     {
       id: "glv_smithee",
+      set: "town",
       name: "\u0420\u0443\u043A\u0430\u0432\u0438\u0446\u044B \u043A\u0443\u0437\u043D\u0435\u0446\u0430",
       slot: "gloves",
       type: "gloves",
@@ -335,6 +354,7 @@
     },
     {
       id: "bt_cobble",
+      set: "town",
       name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u043F\u043E \u0431\u0440\u0443\u0441\u0447\u0430\u0442\u043A\u0435",
       slot: "boots",
       type: "boots",
@@ -345,6 +365,7 @@
     },
     {
       id: "amu_fearless",
+      set: "town",
       name: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438",
       slot: "amulet",
       type: "amulet",
@@ -356,6 +377,7 @@
     },
     {
       id: "rng_iron",
+      set: "town",
       name: "\u0416\u0435\u043B\u0435\u0437\u043D\u043E\u0435 \u043A\u043E\u043B\u044C\u0446\u043E",
       slot: "ring",
       type: "ring",
@@ -366,6 +388,7 @@
     },
     {
       id: "rng_duelist",
+      set: "town",
       name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0434\u0443\u044D\u043B\u044F\u043D\u0442\u0430",
       slot: "ring",
       type: "ring",
@@ -389,6 +412,7 @@
   ITEMS.push(
     {
       id: "wpn_candle_staff",
+      set: "attic",
       name: "\u041F\u043E\u0441\u043E\u0445 \u0441\u0432\u0435\u0447\u043D\u043E\u0433\u043E \u043C\u0430\u0433\u0430",
       slot: "weapon",
       hand: "two",
@@ -413,6 +437,7 @@
     },
     {
       id: "arm_ink_cloak",
+      set: "attic",
       name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043F\u043B\u0430\u0449",
       slot: "armor",
       type: "armor",
@@ -423,6 +448,7 @@
     },
     {
       id: "hlm_page_wanderer",
+      set: "attic",
       name: "\u041A\u043E\u043B\u043F\u0430\u043A \u0441\u0442\u0440\u0430\u043D\u043D\u0438\u043A\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446",
       slot: "helmet",
       type: "helmet",
@@ -433,6 +459,7 @@
     },
     {
       id: "glv_binder",
+      set: "attic",
       name: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u043F\u0435\u0440\u0435\u043F\u043B\u0451\u0442\u0447\u0438\u043A\u0430",
       slot: "gloves",
       type: "gloves",
@@ -443,6 +470,7 @@
     },
     {
       id: "bt_quiet_step",
+      set: "attic",
       name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u0442\u0438\u0445\u043E\u0433\u043E \u0448\u0430\u0433\u0430",
       slot: "boots",
       type: "boots",
@@ -453,6 +481,7 @@
     },
     {
       id: "amu_pages",
+      set: "attic",
       name: "\u0410\u043C\u0443\u043B\u0435\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446",
       slot: "amulet",
       type: "amulet",
@@ -464,6 +493,7 @@
     },
     {
       id: "rng_ink",
+      set: "attic",
       name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0447\u0435\u0440\u043D\u0438\u043B",
       slot: "ring",
       type: "ring",
@@ -474,6 +504,7 @@
     },
     {
       id: "rng_contents",
+      set: "attic",
       name: "\u041A\u043E\u043B\u044C\u0446\u043E \u043E\u0433\u043B\u0430\u0432\u043B\u0435\u043D\u0438\u044F",
       slot: "ring",
       type: "ring",
@@ -492,6 +523,121 @@
       stackable: true,
       effect: { kind: "cleanse_poison", resistAfter: { poison: 0.6 } },
       description: "\u0413\u043E\u0440\u044C\u043A\u0438\u0439. \u0412\u044B\u0432\u043E\u0434\u0438\u0442 \u044F\u0434 \u0438\u0437 \u043A\u0440\u043E\u0432\u0438 \u0438 \u0438\u0437 \u043A\u043D\u0438\u0433."
+    }
+  );
+  ITEMS.push(
+    {
+      id: "wpn_master_dagger",
+      set: "master",
+      name: "\u0421\u0442\u0438\u043B\u0435\u0442 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "weapon",
+      hand: "one",
+      type: "dagger",
+      rarity: "epic",
+      price: 0,
+      stats: { attack: 18, crit: 0.06 },
+      description: "\u0412\u044B\u043A\u043E\u0432\u0430\u043D \u0438\u0437 \u0441\u0432\u0435\u0442\u044F\u0449\u0435\u0433\u043E\u0441\u044F \u043C\u0445\u0430 \u0438 \u043C\u0448\u0438\u0441\u0442\u043E\u0433\u043E \u043A\u0430\u043C\u043D\u044F. \u0412 \u043B\u0430\u0432\u043A\u0435 \u0442\u0430\u043A\u043E\u0433\u043E \u043D\u0435\u0442."
+    },
+    {
+      id: "shd_master",
+      set: "master",
+      name: "\u0417\u0435\u0440\u043A\u0430\u043B\u044C\u043D\u044B\u0439 \u0449\u0438\u0442 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "epic",
+      price: 0,
+      stats: { armor: 18, block: 0.2, hp: 10 },
+      description: "\u041F\u043E\u043B\u0438\u0440\u043E\u0432\u0430\u043D \u0434\u043E \u0431\u043B\u0435\u0441\u043A\u0430 \u0442\u0440\u044F\u043F\u043A\u043E\u0439 \u0438\u0437 \u0440\u0432\u0430\u043D\u043E\u0439 \u0442\u043A\u0430\u043D\u0438 \u0438 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u044F."
+    },
+    {
+      id: "hlm_master",
+      set: "master",
+      name: "\u041E\u0431\u0440\u0443\u0447 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "helmet",
+      type: "helmet",
+      rarity: "epic",
+      price: 0,
+      stats: { hp: 14, dodge: 0.04 },
+      description: "\u041B\u0451\u0433\u043A\u0438\u0439 \u043E\u0431\u0440\u0443\u0447 \u0441 \u0441\u0435\u0440\u0434\u0446\u0435\u043C \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B \u0432\u043D\u0443\u0442\u0440\u0438."
+    },
+    {
+      id: "arm_master",
+      set: "master",
+      name: "\u041A\u0430\u043C\u0437\u043E\u043B \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "armor",
+      type: "armor",
+      rarity: "epic",
+      price: 0,
+      stats: { armor: 24, hp: 18 },
+      description: "\u0421\u0442\u0451\u0433\u0430\u043D\u044B\u0439, \u043F\u0440\u043E\u043F\u0438\u0442\u0430\u043D\u043D\u044B\u0439 \u0447\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u043C \u043E\u0442\u0432\u0430\u0440\u043E\u043C. \u0422\u0451\u043F\u043B\u044B\u0439 \u0438 \u0432\u043E\u043B\u0448\u0435\u0431\u043D\u044B\u0439."
+    },
+    {
+      id: "glv_master",
+      set: "master",
+      name: "\u041D\u0430\u043F\u0435\u0440\u0441\u0442\u043A\u0438 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "gloves",
+      type: "gloves",
+      rarity: "epic",
+      price: 0,
+      stats: { attack: 6, crit: 0.04 },
+      description: "\u041F\u0430\u043B\u044C\u0446\u044B \u0441\u0430\u043C\u0438 \u043D\u0430\u0445\u043E\u0434\u044F\u0442 \u0441\u043B\u0430\u0431\u044B\u0435 \u043C\u0435\u0441\u0442\u0430."
+    },
+    {
+      id: "bt_master",
+      set: "master",
+      name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "boots",
+      type: "boots",
+      rarity: "epic",
+      price: 0,
+      stats: { speed: 3, dodge: 0.05 },
+      description: "\u041F\u043E\u0434\u043E\u0448\u0432\u0430 \u0438\u0437 \u043A\u0440\u044B\u0441\u0438\u043D\u043E\u0433\u043E \u0445\u0432\u043E\u0441\u0442\u0430. \u0411\u0435\u0441\u0448\u0443\u043C\u043D\u044B."
+    },
+    {
+      id: "amu_master",
+      set: "master",
+      name: "\u0424\u0438\u043B\u044C\u0433\u0440\u0430\u043D\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "epic",
+      price: 0,
+      stats: { hp: 12, resist: { poison: 0.3 } },
+      description: "\u0410\u043C\u0443\u043B\u0435\u0442 \u0441 \u043F\u0443\u0447\u043A\u043E\u043C \u043F\u043B\u0430\u0443\u043D\u0430 \u0438 \u043A\u0430\u043F\u043B\u0435\u0439 \u0441\u0432\u0435\u0442\u044F\u0449\u0435\u0433\u043E\u0441\u044F \u043C\u0445\u0430."
+    },
+    {
+      id: "rng_master",
+      set: "master",
+      name: "\u041F\u0435\u0440\u0441\u0442\u0435\u043D\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "ring",
+      type: "ring",
+      rarity: "epic",
+      price: 0,
+      stats: { crit: 0.05, goldFind: 0.08 },
+      description: "\u041E\u0442\u043B\u0438\u0442 \u0438\u0437 \u043C\u0451\u0434\u0430 \u0438 \u043F\u044B\u043B\u044C\u0446\u044B \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430. \u0412\u043D\u0443\u0442\u0440\u0438 \u0448\u0435\u0432\u0435\u043B\u0438\u0442\u0441\u044F \u0443\u0434\u0430\u0447\u0430."
+    },
+    {
+      id: "rng_master_loop",
+      set: "master",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u043D\u0430\u043F\u0430\u0440\u043D\u0438\u043A\u0430 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      slot: "ring",
+      type: "ring",
+      rarity: "epic",
+      price: 0,
+      stats: { attack: 3, armor: 3 },
+      description: "\u0412\u0442\u043E\u0440\u043E\u0439 \u043F\u0435\u0440\u0441\u0442\u0435\u043D\u044C \u043F\u0430\u0440\u044B. \u0421 \u043F\u0435\u0440\u0432\u044B\u043C \u043C\u0443\u0440\u043B\u044B\u0447\u0435\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0443."
+    },
+    {
+      id: "shd_page_shield",
+      set: "attic",
+      name: "\u0429\u0438\u0442-\u043F\u0435\u0440\u0435\u043F\u043B\u0451\u0442",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "rare",
+      price: 230,
+      stats: { armor: 10, dodge: 0.05, hp: 8 },
+      description: "\u041A\u0440\u044B\u0448\u043A\u0430 \u0434\u0440\u0435\u0432\u043D\u0435\u0433\u043E \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u0430 \u043D\u0430 \u0440\u0435\u043C\u043D\u0435. \u041B\u0435\u0433\u0447\u0435 \u0434\u0435\u0440\u0435\u0432\u0430, \u043A\u0440\u0435\u043F\u0447\u0435 \u043A\u043E\u0436\u0438."
     }
   );
   var ITEM_BY_ID = Object.fromEntries(ITEMS.map((i) => [i.id, i]));
@@ -559,6 +705,7 @@
     { itemId: "wpn_candle_staff", unlockAfter: "bk_spirits" },
     { itemId: "amu_pages", unlockAfter: "bk_spirits" },
     { itemId: "rng_contents", unlockAfter: "bk_spirits" },
+    { itemId: "shd_page_shield", unlockAfter: "bk_spirits" },
     // После «Витражной гравюры»
     { itemId: "wpn_firebird_quill", unlockAfter: "bk_illustration" }
   ];
@@ -5879,130 +6026,139 @@
 
   // src/data/recipes.js
   var RECIPES = [
-    // --- Зелья ---
+    // --- Зелья (двойные порции — выгоднее лавки) ---
     {
       id: "rcp_pot_heal",
-      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0437\u0435\u043B\u044C\u0435 \u043B\u0435\u0447\u0435\u043D\u0438\u044F",
+      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0434\u0432\u0430 \u0437\u0435\u043B\u044C\u044F \u043B\u0435\u0447\u0435\u043D\u0438\u044F",
       icon: "\u{1F9EA}",
       kind: "potion",
-      result: { itemId: "pot_heal", count: 1 },
+      result: { itemId: "pot_heal", count: 2 },
       materials: { slime_jelly: 2, honey: 1 },
       unlockAfter: "bt_bees",
-      note: "\u0421\u043B\u0438\u0437\u044C \u0434\u0430\u0451\u0442 \u0442\u0435\u043B\u043E, \u043C\u0451\u0434 \u2014 \u043C\u044F\u0433\u043A\u043E\u0441\u0442\u044C."
+      note: "\u0421\u043B\u0438\u0437\u044C \u0434\u0430\u0451\u0442 \u0442\u0435\u043B\u043E, \u043C\u0451\u0434 \u2014 \u043C\u044F\u0433\u043A\u043E\u0441\u0442\u044C. \u0414\u0432\u043E\u0439\u043D\u0430\u044F \u043F\u043E\u0440\u0446\u0438\u044F."
     },
     {
       id: "rcp_pot_vigor",
-      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438",
+      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0434\u0432\u0430 \u0437\u0435\u043B\u044C\u044F \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438",
       icon: "\u{1F9EA}",
       kind: "potion",
-      result: { itemId: "pot_vigor", count: 1 },
+      result: { itemId: "pot_vigor", count: 2 },
       materials: { moth_dust: 2, honey: 1 },
       unlockAfter: "bt_moths",
-      note: "\u041F\u044B\u043B\u044C\u0446\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430 \u0432 \u043C\u0430\u043B\u044B\u0445 \u0434\u043E\u0437\u0430\u0445 \u0431\u043E\u0434\u0440\u0438\u0442."
+      note: "\u041F\u044B\u043B\u044C\u0446\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430 \u0432 \u043C\u0430\u043B\u044B\u0445 \u0434\u043E\u0437\u0430\u0445 \u0431\u043E\u0434\u0440\u0438\u0442. \u0414\u0432\u043E\u0439\u043D\u0430\u044F \u043F\u043E\u0440\u0446\u0438\u044F."
     },
     {
       id: "rcp_pot_stone",
-      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0437\u0435\u043B\u044C\u0435 \u043A\u0430\u043C\u0435\u043D\u043D\u043E\u0439 \u043A\u043E\u0436\u0438",
+      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0434\u0432\u0430 \u0437\u0435\u043B\u044C\u044F \u043A\u0430\u043C\u0435\u043D\u043D\u043E\u0439 \u043A\u043E\u0436\u0438",
       icon: "\u{1F9EA}",
       kind: "potion",
-      result: { itemId: "pot_stone", count: 1 },
+      result: { itemId: "pot_stone", count: 2 },
       materials: { brick_chunk: 2, moss_stone: 1 },
       unlockAfter: "bt_wander_golem",
-      note: "\u0420\u0430\u0441\u0442\u0432\u043E\u0440\u0438\u0442\u044C \u043A\u043B\u0430\u0434\u043A\u0443 \u2014 \u0441\u0442\u0430\u0442\u044C \u043A\u043B\u0430\u0434\u043A\u043E\u0439. \u041D\u0430 \u043E\u0434\u0438\u043D \u0431\u043E\u0439."
+      note: "\u0420\u0430\u0441\u0442\u0432\u043E\u0440\u0438\u0442\u044C \u043A\u043B\u0430\u0434\u043A\u0443 \u2014 \u0441\u0442\u0430\u0442\u044C \u043A\u043B\u0430\u0434\u043A\u043E\u0439. \u0414\u0432\u043E\u0439\u043D\u0430\u044F \u043F\u043E\u0440\u0446\u0438\u044F."
     },
     {
       id: "rcp_pot_ink",
-      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0447\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440",
+      name: "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0434\u0432\u0430 \u0447\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0445 \u043E\u0442\u0432\u0430\u0440\u0430",
       icon: "\u{1F9EA}",
       kind: "potion",
-      result: { itemId: "pot_ink", count: 1 },
+      result: { itemId: "pot_ink", count: 2 },
       materials: { ink_drop: 2, page_dust: 1 },
       unlockAfter: "bk_blots",
-      note: "\u0413\u043E\u0440\u044C\u043A\u043E, \u0437\u0430\u0442\u043E \u044F\u0434 \u0443\u0445\u043E\u0434\u0438\u0442."
+      note: "\u0413\u043E\u0440\u044C\u043A\u043E, \u0437\u0430\u0442\u043E \u044F\u0434 \u0443\u0445\u043E\u0434\u0438\u0442. \u0414\u0432\u043E\u0439\u043D\u0430\u044F \u043F\u043E\u0440\u0446\u0438\u044F."
     },
-    // --- Снаряжение ---
+    // --- Снаряжение сета «Мастер» (только крафт) ---
     {
-      id: "rcp_dagger_firefly",
-      name: "\u0412\u044B\u043A\u043E\u0432\u0430\u0442\u044C \u043A\u0438\u043D\u0436\u0430\u043B \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u0430",
+      id: "rcp_master_dagger",
+      name: "\u0412\u044B\u043A\u043E\u0432\u0430\u0442\u044C \u0421\u0442\u0438\u043B\u0435\u0442 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
       icon: "\u{1F52A}",
       kind: "gear",
-      result: { itemId: "wpn_dagger_firefly", count: 1 },
+      result: { itemId: "wpn_master_dagger", count: 1 },
       materials: { glow_moss: 3, moss_stone: 1 },
-      coins: 50,
+      coins: 80,
       unlockAfter: "bt_spirits",
-      note: "\u041C\u043E\u0445 \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u0432 \u043A\u043B\u0438\u043D\u043A\u0435, \u0435\u0441\u043B\u0438 \u0437\u043D\u0430\u0442\u044C, \u043A\u0443\u0434\u0430 \u0435\u0433\u043E \u0432\u0448\u0438\u0442\u044C."
+      note: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0439\u0441\u044F \u043C\u043E\u0445 \u0432 \u043A\u043B\u0438\u043D\u043A\u0435. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 1/9."
     },
     {
-      id: "rcp_rng_luck",
-      name: "\u0421\u043B\u0435\u043F\u0438\u0442\u044C \u043A\u043E\u043B\u044C\u0446\u043E \u0443\u0434\u0430\u0447\u0438",
+      id: "rcp_master_ring",
+      name: "\u041E\u0442\u043B\u0438\u0442\u044C \u041F\u0435\u0440\u0441\u0442\u0435\u043D\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
       icon: "\u{1F48D}",
       kind: "gear",
-      result: { itemId: "rng_luck", count: 1 },
+      result: { itemId: "rng_master", count: 1 },
       materials: { honey: 2, moth_dust: 1 },
       unlockAfter: "bt_moths",
-      note: "\u041C\u0451\u0434 \u0434\u0435\u0440\u0436\u0438\u0442 \u0444\u043E\u0440\u043C\u0443, \u043F\u044B\u043B\u044C\u0446\u0430 \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0447\u0443."
+      note: "\u041C\u0451\u0434 \u0434\u0435\u0440\u0436\u0438\u0442 \u0444\u043E\u0440\u043C\u0443, \u043F\u044B\u043B\u044C\u0446\u0430 \u2014 \u0443\u0434\u0430\u0447\u0443. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 2/9."
     },
     {
-      id: "rcp_amu_antidote",
-      name: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0430\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F",
+      id: "rcp_master_amulet",
+      name: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0424\u0438\u043B\u044C\u0433\u0440\u0430\u043D\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
       icon: "\u{1F4FF}",
       kind: "gear",
-      result: { itemId: "amu_antidote", count: 1 },
+      result: { itemId: "amu_master", count: 1 },
       materials: { rat_tail: 2, glow_moss: 2 },
       unlockAfter: "bt_rats",
-      note: "\u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u0445\u0432\u043E\u0441\u0442 \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u043C\u0430\u0433\u043D\u0438\u0442 \u0434\u043B\u044F \u044F\u0434\u0430."
+      note: "\u041F\u043B\u0430\u0443\u043D \u0438 \u043C\u043E\u0445 \u043F\u043E\u0434 \u0441\u0442\u0435\u043A\u043B\u043E\u043C. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 3/9."
     },
     {
-      id: "rcp_glv_smithee",
-      name: "\u0421\u0448\u0438\u0442\u044C \u0440\u0443\u043A\u0430\u0432\u0438\u0446\u044B \u043A\u0443\u0437\u043D\u0435\u0446\u0430",
+      id: "rcp_master_gloves",
+      name: "\u0421\u0448\u0438\u0442\u044C \u041D\u0430\u043F\u0435\u0440\u0441\u0442\u043A\u0438 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
       icon: "\u{1F9E4}",
       kind: "gear",
-      result: { itemId: "glv_smithee", count: 1 },
+      result: { itemId: "glv_master", count: 1 },
       materials: { torn_cloth: 2, brick_chunk: 1 },
       unlockAfter: "bt_bandits",
-      note: "\u0422\u043A\u0430\u043D\u044C, \u043F\u0440\u043E\u043F\u0438\u0442\u0430\u043D\u043D\u0430\u044F \u043A\u0430\u043C\u0435\u043D\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u044E, \u043D\u0435 \u0433\u043E\u0440\u0438\u0442."
+      note: "\u0422\u043A\u0430\u043D\u044C \u0432 \u043A\u0430\u043C\u0435\u043D\u043D\u043E\u0439 \u043F\u044B\u043B\u0438 \u043D\u0435 \u0433\u043E\u0440\u0438\u0442. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 4/9."
     },
     {
-      id: "rcp_shd_guardian",
-      name: "\u0412\u044B\u043A\u043E\u0432\u0430\u0442\u044C \u0449\u0438\u0442 \u0441\u0442\u0440\u0430\u0436\u0430 \u043B\u0430\u0432\u043A\u0438",
+      id: "rcp_master_shield",
+      name: "\u0412\u044B\u043A\u043E\u0432\u0430\u0442\u044C \u0417\u0435\u0440\u043A\u0430\u043B\u044C\u043D\u044B\u0439 \u0449\u0438\u0442",
       icon: "\u{1F6E1}\uFE0F",
       kind: "gear",
-      result: { itemId: "shd_guardian", count: 1 },
+      result: { itemId: "shd_master", count: 1 },
       materials: { moss_stone: 2, brick_chunk: 2, torn_cloth: 1 },
-      coins: 80,
+      coins: 100,
       unlockAfter: "bt_golem",
-      note: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u043D\u0430\u0434\u0451\u0436\u043D\u044B\u0439, \u0441 \u043C\u044F\u0433\u043A\u043E\u0439 \u043F\u043E\u0434\u043A\u043B\u0430\u0434\u043A\u043E\u0439."
+      note: "\u041F\u043E\u043B\u0438\u0440\u043E\u0432\u043A\u0430 \u0434\u043E \u0437\u0435\u0440\u043A\u0430\u043B\u0430. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 5/9."
     },
     {
-      id: "rcp_lumberaxe",
-      name: "\u0412\u044B\u043A\u043E\u0432\u0430\u0442\u044C \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430",
-      icon: "\u{1FA93}",
+      id: "rcp_master_helmet",
+      name: "\u0421\u043F\u043B\u0435\u0441\u0442\u0438 \u041E\u0431\u0440\u0443\u0447 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      icon: "\u{1FA96}",
       kind: "gear",
-      result: { itemId: "wpn_lumberaxe", count: 1 },
-      materials: { willow_heart: 1, brick_chunk: 2 },
-      coins: 120,
+      result: { itemId: "hlm_master", count: 1 },
+      materials: { willow_heart: 1, moth_dust: 2 },
       unlockAfter: "bt_boss_willow",
-      note: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0438\u0432\u044B \u043F\u043E\u043C\u043D\u0438\u0442, \u043A\u0430\u043A \u0440\u0430\u0441\u0442\u0438 \u2014 \u0438 \u043A\u0430\u043A \u0440\u0443\u0431\u0438\u0442\u044C."
+      note: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0438\u0432\u044B \u0432 \u043E\u0431\u0440\u0443\u0447\u0435. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 6/9."
     },
     {
-      id: "rcp_rng_ink",
-      name: "\u041E\u0442\u043B\u0438\u0442\u044C \u043A\u043E\u043B\u044C\u0446\u043E \u0447\u0435\u0440\u043D\u0438\u043B",
+      id: "rcp_master_armor",
+      name: "\u0421\u0448\u0438\u0442\u044C \u041A\u0430\u043C\u0437\u043E\u043B \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      icon: "\u{1F9E5}",
+      kind: "gear",
+      result: { itemId: "arm_master", count: 1 },
+      materials: { ink_drop: 3, torn_cloth: 2, moss_stone: 1 },
+      unlockAfter: "bk_blots",
+      note: "\u041F\u0440\u043E\u043F\u0438\u0442\u0430\u043D \u0447\u0435\u0440\u043D\u0438\u043B\u0430\u043C\u0438. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 7/9."
+    },
+    {
+      id: "rcp_master_boots",
+      name: "\u0421\u043A\u043B\u0435\u0438\u0442\u044C \u0421\u0430\u043F\u043E\u0433\u0438 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      icon: "\u{1F97E}",
+      kind: "gear",
+      result: { itemId: "bt_master", count: 1 },
+      materials: { rat_tail: 2, page_dust: 1, torn_cloth: 1 },
+      unlockAfter: "bk_moths",
+      note: "\u0411\u0435\u0441\u0448\u0443\u043C\u043D\u044B\u0435, \u043A\u0430\u043A \u043F\u0435\u0440\u0435\u0432\u043E\u0440\u043E\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 8/9."
+    },
+    {
+      id: "rcp_master_loop",
+      name: "\u041E\u0442\u043B\u0438\u0442\u044C \u041A\u043E\u043B\u044C\u0446\u043E \u043D\u0430\u043F\u0430\u0440\u043D\u0438\u043A\u0430",
       icon: "\u{1F48D}",
       kind: "gear",
-      result: { itemId: "rng_ink", count: 1 },
-      materials: { ink_drop: 3, paper_scrap: 1 },
-      unlockAfter: "bk_blots",
-      note: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0437\u0430\u0441\u0442\u044B\u0432\u0430\u044E\u0442, \u043D\u043E \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u044E\u0442 \u043F\u0438\u0441\u0430\u0442\u044C."
-    },
-    {
-      id: "rcp_amu_pages",
-      name: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0430\u043C\u0443\u043B\u0435\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446",
-      icon: "\u{1F4FF}",
-      kind: "gear",
-      result: { itemId: "amu_pages", count: 1 },
-      materials: { page_dust: 3, gold_leaf: 1, ectoplasm: 1 },
+      result: { itemId: "rng_master_loop", count: 1 },
+      materials: { gold_leaf: 1, ink_drop: 1 },
       unlockAfter: "bk_illustration",
-      note: "\u041F\u044B\u043B\u044C \u0432\u0435\u043A\u043E\u0432, \u0437\u043E\u043B\u043E\u0442\u043E \u0438 \u043A\u0430\u043F\u043B\u044F \u043F\u043E\u0442\u0443\u0441\u0442\u043E\u0440\u043E\u043D\u043D\u0435\u0433\u043E."
+      note: "\u041F\u0430\u0440\u043D\u043E\u0435 \u043A \u043F\u0435\u0440\u0441\u0442\u043D\u044E. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 9/9 \u2014 \u0441\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451!"
     }
   ];
   var RECIPE_BY_ID = Object.fromEntries(RECIPES.map((r) => [r.id, r]));
@@ -6035,6 +6191,42 @@
     const m = MATERIAL_BY_ID[id];
     return m ? `${m.icon} ${m.name}` : id;
   }
+
+  // src/data/sets.js
+  var SETS = {
+    meadow: {
+      name: "\u041E\u043F\u0443\u0448\u043A\u0430",
+      tiers: {
+        3: { stats: { speed: 3, dodge: 0.05 }, desc: "\u041B\u0451\u0433\u043A\u043E\u0441\u0442\u044C \u043B\u0435\u0441\u0430: \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C +3, \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 +5%" },
+        6: { stats: { crit: 0.08 }, traits: ["bonus_spirit"], desc: "\u0417\u043E\u0432 \u0434\u0443\u0445\u043E\u0432: \u043A\u0440\u0438\u0442 +8%, \u0443\u0440\u043E\u043D \u043F\u043E \u0434\u0443\u0445\u0430\u043C \xD71.3" },
+        9: { traits: ["regen_ally"], desc: "\u0414\u044B\u0445\u0430\u043D\u0438\u0435 \u043E\u043F\u0443\u0448\u043A\u0438: \u0440\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u0432\u0441\u044E \u0431\u0438\u0442\u0432\u0443" }
+      }
+    },
+    town: {
+      name: "\u0414\u0432\u043E\u0440\u043D\u0438\u043A",
+      tiers: {
+        3: { stats: { armor: 8 }, desc: "\u0422\u043E\u043B\u0449\u0438\u043D\u0430 \u0441\u0442\u0435\u043D: \u0431\u0440\u043E\u043D\u044F +8" },
+        6: { stats: { block: 0.1, hp: 20 }, desc: "\u0421\u0442\u0440\u0430\u0436 \u0434\u0432\u043E\u0440\u0430: \u0431\u043B\u043E\u043A +10%, \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435 +20" },
+        9: { traits: ["first_hit_reduction"], desc: "\u041D\u0435\u0441\u043E\u043A\u0440\u0443\u0448\u0438\u043C\u043E\u0441\u0442\u044C: \u043F\u0435\u0440\u0432\u044B\u0439 \u0443\u0434\u0430\u0440 \u0432 \u0431\u043E\u044E \u221220%" }
+      }
+    },
+    attic: {
+      name: "\u0427\u0435\u0440\u0434\u0430\u043A",
+      tiers: {
+        3: { stats: {}, resist: { poison: 0.15, sleep: 0.15 }, desc: "\u041F\u044B\u043B\u044C \u0432\u0435\u043A\u043E\u0432: \u0441\u043E\u043F\u0440. \u044F\u0434\u0443 \u0438 \u0441\u043D\u0443 +15%" },
+        6: { stats: { dodge: 0.08 }, desc: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u0430\u044F \u043B\u0451\u0433\u043A\u043E\u0441\u0442\u044C: \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 +8%" },
+        9: { traits: ["fearless"], desc: "\u0422\u0438\u0448\u0438\u043D\u0430 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0438: \u0438\u043C\u043C\u0443\u043D\u0438\u0442\u0435\u0442 \u043A \u0441\u0442\u0440\u0430\u0445\u0443" }
+      }
+    },
+    master: {
+      name: "\u041C\u0430\u0441\u0442\u0435\u0440",
+      tiers: {
+        3: { stats: { attack: 5 }, desc: "\u0420\u0443\u043A\u0430 \u043C\u0430\u0441\u0442\u0435\u0440\u0430: \u0430\u0442\u0430\u043A\u0430 +5" },
+        6: { stats: { crit: 0.06 }, desc: "\u0422\u043E\u0447\u043D\u043E\u0441\u0442\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430: \u043A\u0440\u0438\u0442 +6%" },
+        9: { traits: ["pierce"], desc: "\u0413\u043B\u0430\u0437 \u043C\u0430\u0441\u0442\u0435\u0440\u0430: \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435 \u0431\u0440\u043E\u043D\u0438 \u0432\u0434\u0432\u043E\u0435" }
+      }
+    }
+  };
 
   // src/core/items.js
   var SLOTS = ["weapon", "helmet", "shield", "gloves", "armor", "boots", "amulet", "ring1", "ring2"];
@@ -6098,6 +6290,7 @@
   function collectStats(equipment) {
     const s = { ...KNIGHT_BASE, resist: { ...KNIGHT_BASE.resist } };
     const traits = [];
+    const setCounts = {};
     for (const slot of SLOTS) {
       const id = equipment[slot];
       if (!id) continue;
@@ -6113,12 +6306,34 @@
         }
       }
       if (item2.traits) traits.push(...item2.traits);
+      if (item2.set) setCounts[item2.set] = (setCounts[item2.set] || 0) + 1;
+    }
+    const activeSets = [];
+    for (const [setKey, count] of Object.entries(setCounts)) {
+      const def = SETS[setKey];
+      if (!def) continue;
+      for (const tier of [3, 6, 9]) {
+        if (count >= tier) {
+          const t = def.tiers[tier];
+          if (!t) continue;
+          if (t.stats) {
+            for (const [k, v] of Object.entries(t.stats)) s[k] = (s[k] || 0) + v;
+          }
+          if (t.resist) {
+            for (const [rk, rv] of Object.entries(t.resist)) {
+              s.resist[rk] = 1 - (1 - (s.resist[rk] || 0)) * (1 - rv);
+            }
+          }
+          if (t.traits) traits.push(...t.traits);
+          activeSets.push({ set: setKey, name: def.name, count, tier, desc: t.desc });
+        }
+      }
     }
     s.hp = Math.max(1, s.hp);
     s.crit = Math.min(0.95, Math.max(0, s.crit));
     s.dodge = Math.min(0.8, Math.max(0, s.dodge));
     s.block = Math.min(0.8, Math.max(0, s.block));
-    return { stats: s, traits };
+    return { stats: s, traits, activeSets };
   }
   function describeItem(item2) {
     const parts = [];
@@ -8160,15 +8375,23 @@
         candidates: ["assets/town_square_web.jpg", "assets/seek_town_web.jpg"],
         alt: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
         hotspots: [
-          ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 81, 60, () => false],
+          ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 79, 60, () => false],
           ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 39, 52, () => false],
           ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 52, 68, () => false],
           ["\u{1F4CC}", "\u0414\u043E\u0441\u043A\u0430 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0439", "board", 6, 55, () => false],
           ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 17, 47, () => false],
-          ["\u{1F5E1}\uFE0F", "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", "shopArmory", 23, 30, () => hasUnseenIn(state2, "armory")],
-          ["\u{1F6E1}\uFE0F", "\u0411\u0440\u043E\u043D\u043D\u0438\u043A", "shopArmorer", 57, 28, () => hasUnseenIn(state2, "armorer")],
-          ["\u{1F52E}", "\u041C\u0430\u0433", "shopMagic", 68, 60, () => hasUnseenIn(state2, "magic")],
-          ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 92, 30, () => hasUnseenIn(state2, "alchemy")]
+          ["\u{1F3EC}", "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B", "@market", 52, 38, () => ["armory", "armorer", "magic", "alchemy"].some((k) => hasUnseenIn(state2, k))]
+        ]
+      },
+      market: {
+        candidates: ["assets/town_market_web.jpg", "assets/town_market.jfif", "assets/town_square_web.jpg"],
+        alt: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B",
+        hotspots: [
+          ["\u{1F5E1}\uFE0F", "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", "shopArmory", 8, 60, () => hasUnseenIn(state2, "armory")],
+          ["\u{1F6E1}\uFE0F", "\u0411\u0440\u043E\u043D\u043D\u0438\u043A", "shopArmorer", 37, 60, () => hasUnseenIn(state2, "armorer")],
+          ["\u{1F52E}", "\u041C\u0430\u0433", "shopMagic", 65, 62, () => hasUnseenIn(state2, "magic")],
+          ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 81, 60, () => hasUnseenIn(state2, "alchemy")],
+          ["\u{1F307}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 50, 60, () => false]
         ]
       }
     };
@@ -8208,6 +8431,7 @@
         setTimeout(() => {
           if (screen === "@square") rerender("square");
           else if (screen === "@lavka") rerender("lavka");
+          else if (screen === "@market") rerender("market");
           else ctx2.go(screen);
         }, 150);
       });
@@ -12289,7 +12513,7 @@ ${item2.description}
     statsPanel.style.flex = "1";
     statsPanel.style.minWidth = "260px";
     statsPanel.innerHTML = "<h3>\u0425\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438</h3>";
-    const { stats, traits } = collectStats(state2.equipped);
+    const { stats, traits, activeSets } = collectStats(state2.equipped);
     const sgrid = document.createElement("div");
     sgrid.className = "stats-grid";
     const rows = [
@@ -12312,6 +12536,15 @@ ${item2.description}
       sgrid.appendChild(d);
     }
     statsPanel.appendChild(sgrid);
+    if ((activeSets || []).length > 0) {
+      const setBox = document.createElement("div");
+      setBox.className = "panel mt";
+      setBox.style.background = "#3d3328";
+      setBox.innerHTML = '<h3 style="margin-top:0">\u2728 \u0421\u0435\u0442\u043E\u0432\u044B\u0435 \u044D\u0444\u0444\u0435\u043A\u0442\u044B</h3>' + activeSets.map(
+        (st) => `<div style="font-size:14px;margin-bottom:4px"><b>\u0421\u0435\u0442 \xAB${st.name}\xBB ${st.count}/9</b> \xB7 \u0442\u0438\u0440 ${st.tier}: <span class="muted">${st.desc}</span></div>`
+      ).join("");
+      statsPanel.appendChild(setBox);
+    }
     if (traits.length > 0) {
       const t = document.createElement("div");
       t.className = "muted mt";
@@ -15009,7 +15242,17 @@ ${item2.description}
     const board = document.createElement("div");
     board.className = "board-frame";
     let colorIdx = 0;
-    const addNote = (opts) => {
+    const makeZone = (title) => {
+      const zone = document.createElement("div");
+      zone.className = "board-zone";
+      const zt = document.createElement("div");
+      zt.className = "board-zone-title";
+      zt.textContent = title;
+      zone.appendChild(zt);
+      board.appendChild(zone);
+      return zone;
+    };
+    const addNote = (zone, opts) => {
       const note = document.createElement("button");
       note.className = "paper-note";
       const rot = colorIdx * 7 % 13 - 6;
@@ -15017,10 +15260,11 @@ ${item2.description}
       note.style.background = PAPER_COLORS[colorIdx++ % PAPER_COLORS.length];
       note.innerHTML = `<span class="pn-icon">${opts.icon}</span><span class="pn-title">${opts.title}</span>`;
       note.addEventListener("click", (ev) => unfoldNote(ev.currentTarget, opts));
-      board.appendChild(note);
+      zone.appendChild(note);
     };
+    const lettersZone = makeZone("\u2709\uFE0F \u041F\u0438\u0441\u044C\u043C\u0430 \u0436\u0438\u0442\u0435\u043B\u0435\u0439");
     for (const l of seededLetters(state2)) {
-      addNote({
+      addNote(lettersZone, {
         icon: l.icon,
         title: `\u041F\u0438\u0441\u044C\u043C\u043E: ${l.from}`,
         kind: "letter",
@@ -15028,13 +15272,14 @@ ${item2.description}
         body: l.text
       });
     }
+    const wantedZone = makeZone("\u{1F3AF} \u0420\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0435 \u043B\u0438\u0441\u0442\u044B");
     for (const w of WANTED_BATTLES) {
       const available = battleAvailable(state2, w.id);
       const done = !!state2.battlesDone[w.id];
       const icons = w.enemies.map((e) => ENEMY_BY_ID[typeof e === "string" ? e : e.id].icon).join(" ");
-      addNote({
+      addNote(wantedZone, {
         icon: "\u{1F3AF}",
-        title: w.name.replace("\u0420\u043E\u0437\u044B\u0441\u043A: ", "\u0420\u041E\u0417\u042B\u0421\u041A"),
+        title: w.name.replace("\u0420\u043E\u0437\u044B\u0441\u043A: ", "\u0420\u041E\u0417\u042B\u0421\u041A \u2014 "),
         kind: "wanted",
         heading: `\u{1F3AF} ${w.name}`,
         body: `${available ? w.tip : "\u041F\u043E\u0431\u0435\u0434\u0438 \u0431\u043E\u0441\u0441\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E \u043C\u0438\u0440\u0430, \u0438 \u043B\u0438\u0441\u0442 \u043F\u043E\u044F\u0432\u0438\u0442\u0441\u044F."}<br><br>\u041F\u0440\u043E\u0442\u0438\u0432: ${icons}`,
@@ -15042,7 +15287,8 @@ ${item2.description}
         done
       });
     }
-    addNote({
+    const logZone = makeZone("\u{1F4DC} \u041B\u0435\u0442\u043E\u043F\u0438\u0441\u044C");
+    addNote(logZone, {
       icon: "\u{1F4DC}",
       title: "\u041B\u0435\u0442\u043E\u043F\u0438\u0441\u044C \u043B\u0430\u0432\u043A\u0438",
       kind: "log",

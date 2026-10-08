@@ -56,15 +56,18 @@ export function unequip(equipment, slot) {
   return id;
 }
 
-// Итоговые характеристики рыцаря = база + сумма предметов.
+// Итоговые характеристики рыцаря = база + сумма предметов + сетовые эффекты.
 export const KNIGHT_BASE = {
   hp: 60, attack: 8, armor: 6, speed: 10, crit: 0.05, dodge: 0.03, block: 0,
   goldFind: 0, itemFind: 0, resist: {},
 };
 
+import { SETS } from '../data/sets.js';
+
 export function collectStats(equipment) {
   const s = { ...KNIGHT_BASE, resist: { ...KNIGHT_BASE.resist } };
   const traits = [];
+  const setCounts = {}; // setKey -> число надетых предметов сета
   for (const slot of SLOTS) {
     const id = equipment[slot];
     if (!id) continue;
@@ -81,12 +84,37 @@ export function collectStats(equipment) {
       }
     }
     if (item.traits) traits.push(...item.traits);
+    if (item.set) setCounts[item.set] = (setCounts[item.set] || 0) + 1;
   }
+
+  // Сетовые эффекты: 3/6/9 предметов одного сета
+  const activeSets = [];
+  for (const [setKey, count] of Object.entries(setCounts)) {
+    const def = SETS[setKey];
+    if (!def) continue;
+    for (const tier of [3, 6, 9]) {
+      if (count >= tier) {
+        const t = def.tiers[tier];
+        if (!t) continue;
+        if (t.stats) {
+          for (const [k, v] of Object.entries(t.stats)) s[k] = (s[k] || 0) + v;
+        }
+        if (t.resist) {
+          for (const [rk, rv] of Object.entries(t.resist)) {
+            s.resist[rk] = 1 - (1 - (s.resist[rk] || 0)) * (1 - rv);
+          }
+        }
+        if (t.traits) traits.push(...t.traits);
+        activeSets.push({ set: setKey, name: def.name, count, tier, desc: t.desc });
+      }
+    }
+  }
+
   s.hp = Math.max(1, s.hp);
   s.crit = Math.min(0.95, Math.max(0, s.crit));
   s.dodge = Math.min(0.8, Math.max(0, s.dodge));
   s.block = Math.min(0.8, Math.max(0, s.block));
-  return { stats: s, traits };
+  return { stats: s, traits, activeSets };
 }
 
 // Краткое текстовое описание характеристик предмета для UI.

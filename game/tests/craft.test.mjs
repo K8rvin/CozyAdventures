@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGame, craft, canCraft, recipeList, runBattle,
+  newGame, craft, canCraft, recipeList, runBattle, shopStock,
 } from '../src/core/state.js';
 import { RECIPES } from '../src/data/recipes.js';
 import { ITEM_BY_ID } from '../src/data/items.js';
@@ -45,17 +45,30 @@ test('рецепт недоступен до нужного боя', () => {
   assert.ok(recipeList(s).some((r) => r.id === 'rcp_pot_heal'));
 });
 
-test('крафт за монеты списывает монеты', () => {
+test('крафт за монеты списывает монеты, результат уникален (не из лавки)', () => {
   const s = newGame();
-  s.coins = 200;
+  s.coins = 300;
   s.battlesDone.bt_golem = { victories: 1 };
   s.materials = { moss_stone: 2, brick_chunk: 2, torn_cloth: 1 };
-  const r = craft(s, 'rcp_shd_guardian');
+  const r = craft(s, 'rcp_master_shield');
   assert.ok(r.ok);
-  assert.equal(s.coins, 200 - 80);
-  assert.ok(s.inventory.includes('shd_guardian'));
+  assert.equal(s.coins, 300 - 100);
+  assert.ok(s.inventory.includes('shd_master'));
   // Повторно — не хватает материалов
-  assert.equal(craft(s, 'rcp_shd_guardian').ok, false);
+  assert.equal(craft(s, 'rcp_master_shield').ok, false);
+  // Крафтовый предмет не продаётся в лавках
+  assert.ok(!shopStock(s).some((i) => i.id === 'shd_master'), 'сет Мастер только из крафта');
+});
+
+test('зелья крафтятся двойными порциями', () => {
+  const s = newGame();
+  s.battlesDone.bt_bees = { victories: 1 };
+  s.materials = { slime_jelly: 4, honey: 2 };
+  const before = s.inventory.filter((i) => i === 'pot_heal').length;
+  const r = craft(s, 'rcp_pot_heal');
+  assert.ok(r.ok);
+  const after = s.inventory.filter((i) => i === 'pot_heal').length;
+  assert.equal(after - before, 2, 'порций ровно две');
 });
 
 test('материалы реально добываются в боях', () => {

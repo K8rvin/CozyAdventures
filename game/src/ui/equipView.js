@@ -143,7 +143,7 @@ export function renderEquip(container, ctx) {
   statsPanel.style.flex = '1';
   statsPanel.style.minWidth = '260px';
   statsPanel.innerHTML = '<h3>Характеристики</h3>';
-  const { stats, traits } = collectStats(state.equipped);
+  const { stats, traits, activeSets } = collectStats(state.equipped);
   const sgrid = document.createElement('div');
   sgrid.className = 'stats-grid';
   const rows = [
@@ -166,6 +166,17 @@ export function renderEquip(container, ctx) {
     sgrid.appendChild(d);
   }
   statsPanel.appendChild(sgrid);
+  // Сетовые эффекты
+  if ((activeSets || []).length > 0) {
+    const setBox = document.createElement('div');
+    setBox.className = 'panel mt';
+    setBox.style.background = '#3d3328';
+    setBox.innerHTML = '<h3 style="margin-top:0">✨ Сетовые эффекты</h3>' +
+      activeSets.map((st) =>
+        `<div style="font-size:14px;margin-bottom:4px"><b>Сет «${st.name}» ${st.count}/9</b> · тир ${st.tier}: <span class="muted">${st.desc}</span></div>`
+      ).join('');
+    statsPanel.appendChild(setBox);
+  }
   if (traits.length > 0) {
     const t = document.createElement('div');
     t.className = 'muted mt';

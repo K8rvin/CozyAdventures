@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img">
+<defs>
+  <linearGradient id="beer" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#FBBF24"/>
+    <stop offset="45%" stop-color="#F59E0B"/>
+    <stop offset="100%" stop-color="#D97706"/>
+  </linearGradient>
+  <linearGradient id="foamG" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#FFFBEB"/>
+    <stop offset="100%" stop-color="#FEF3C7"/>
+  </linearGradient>
+  <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="b"/>
+    <feFlood flood-color="#FDE68A" flood-opacity="0.7" result="c"/>
+    <feComposite in="c" in2="b" operator="in" result="g"/>
+    <feMerge>
+      <feMergeNode in="g"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+</defs>
+<!-- soft ground glow -->
+<ellipse cx="32" cy="55" rx="18" ry="6.5" fill="#FDE68A" opacity="0.45"/>
+<!-- handle -->
+<path d="M 42 22.5 C 56.2 22.5 56.2 44.2 42 44.2 L 39 44.2 C 39 44.2 48.8 44.2 48.8 33.35 C 48.8 22.5 39 22.5 39 22.5 Z" fill="#FFFBEB" stroke="#7C2D12" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+<!-- mug body -->
+<rect x="13.5" y="20.5" width="31" height="32" rx="9.5" ry="9.5" fill="url(#beer)" stroke="#7C2D12" stroke-width="2.6" stroke-linejoin="round"/>
+<!-- bottom thickness -->
+<path d="M 15.5 46.5 C 15.5 50.2 19.2 52.5 29 52.5 C 38.8 52.5 42.5 50.2 42.5 46.5 L 42.5 44 C 42.5 47.2 38.5 48.8 29 48.8 C 19.5 48.8 15.5 47.2 15.5 44 Z" fill="#92400E" opacity="0.95"/>
+<!-- beer highlight -->
+<rect x="18.2" y="27.5" width="6.2" height="16" rx="3.1" fill="#FFFBEB" opacity="0.42"/>
+<rect x="18.2" y="27.5" width="2.6" height="16" rx="1.3" fill="white" opacity="0.55"/>
+<!-- bubbles in beer -->
+<circle cx="26.5" cy="38" r="1.4" fill="white" opacity="0.9"/>
+<circle cx="30.2" cy="42.5" r="1" fill="white" opacity="0.85"/>
+<circle cx="24.8" cy="45.2" r="0.9" fill="white" opacity="0.7"/>
+<circle cx="34.5" cy="36.8" r="1.1" fill="white" opacity="0.8"/>
+<!-- FOAM - main mass -->
+<g filter="url(#softGlow)" stroke="#7C2D12" stroke-width="2.2" stroke-linejoin="round">
+  <!-- top fluffy cloud -->
+  <ellipse cx="29.2" cy="18.2" rx="15.2" ry="9.2" fill="url(#foamG)"/>
+  <circle cx="18.2" cy="21.2" r="6.8" fill="url(#foamG)"/>
+  <circle cx="40.2" cy="21.5" r="6.5" fill="url(#foamG)"/>
+  <circle cx="24.5" cy="12.2" r="6.2" fill="#FFFBEB"/>
+  <circle cx="33.8" cy="11.8" r="7" fill="#FFFBEB"/>
+  <!-- drips -->
+  <path d="M 19.5 25.5 C 19.5 30.8 21.2 33.5 23.2 33.5 C 25.2 33.5 26.2 30.2 26.2 25.8" fill="#FFFBEB" stroke-linecap="round"/>
+  <path d="M 28.2 27.2 C 28.2 32.5 29.5 36.8 31.8 36.8 C 34.1 36.8 34.8 32.2 34.8 27" fill="#FFFBEB" stroke-linecap="round"/>
+  <path d="M 37 25.8 C 37 29.2 37.8 31 39.4 31 C 41 31 41.8 29 41.8 25.5" fill="#FFFBEB" stroke-linecap="round"/>
+</g>
+<!-- foam top highlights / bubbles -->
+<circle cx="26.8" cy="15.2" r="1.6" fill="white" opacity="0.95"/>
+<circle cx="31.5" cy="17.8" r="1.1" fill="white" opacity="0.9"/>
+<circle cx="22.2" cy="18.5" r="0.9" fill="white" opacity="0.85"/>
+<circle cx="36.2" cy="15.8" r="1" fill="white" opacity="0.85"/>
+<!-- small sparkle -->
+<g fill="white" opacity="0.95">
+  <circle cx="38.8" cy="9.2" r="1.1"/>
+  <circle cx="16.2" cy="13.5" r="0.9"/>
+</g>
+</svg>

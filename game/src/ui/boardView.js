@@ -73,7 +73,17 @@ export function renderBoard(container, ctx) {
   board.className = 'board-frame';
 
   let colorIdx = 0;
-  const addNote = (opts) => {
+  const makeZone = (title) => {
+    const zone = document.createElement('div');
+    zone.className = 'board-zone';
+    const zt = document.createElement('div');
+    zt.className = 'board-zone-title';
+    zt.textContent = title;
+    zone.appendChild(zt);
+    board.appendChild(zone);
+    return zone;
+  };
+  const addNote = (zone, opts) => {
     const note = document.createElement('button');
     note.className = 'paper-note';
     const rot = ((colorIdx * 7) % 13) - 6; // разброс наклона
@@ -81,24 +91,26 @@ export function renderBoard(container, ctx) {
     note.style.background = PAPER_COLORS[colorIdx++ % PAPER_COLORS.length];
     note.innerHTML = `<span class="pn-icon">${opts.icon}</span><span class="pn-title">${opts.title}</span>`;
     note.addEventListener('click', (ev) => unfoldNote(ev.currentTarget, opts));
-    board.appendChild(note);
+    zone.appendChild(note);
   };
 
-  // Письма от жителей
+  // Зона 1: письма от жителей
+  const lettersZone = makeZone('✉️ Письма жителей');
   for (const l of seededLetters(state)) {
-    addNote({
+    addNote(lettersZone, {
       icon: l.icon, title: `Письмо: ${l.from}`, kind: 'letter',
       heading: `✉️ ${l.from}`, body: l.text,
     });
   }
 
-  // Розыскные листы
+  // Зона 2: розыскные листы
+  const wantedZone = makeZone('🎯 Розыскные листы');
   for (const w of WANTED_BATTLES) {
     const available = battleAvailable(state, w.id);
     const done = !!state.battlesDone[w.id];
     const icons = w.enemies.map((e) => ENEMY_BY_ID[typeof e === 'string' ? e : e.id].icon).join(' ');
-    addNote({
-      icon: '🎯', title: w.name.replace('Розыск: ', 'РОЗЫСК'), kind: 'wanted',
+    addNote(wantedZone, {
+      icon: '🎯', title: w.name.replace('Розыск: ', 'РОЗЫСК — '), kind: 'wanted',
       heading: `🎯 ${w.name}`,
       body: `${available ? w.tip : 'Победи босса соответствующего мира, и лист появится.'}<br><br>Против: ${icons}`,
       action: available ? { label: done ? '⚔️ Снова ловить' : '⚔️ Ловить!', go: () => ctx.go('battle', { id: w.id }) } : null,
@@ -106,8 +118,9 @@ export function renderBoard(container, ctx) {
     });
   }
 
-  // Летопись (сводно одной бумажкой)
-  addNote({
+  // Зона 3: летопись
+  const logZone = makeZone('📜 Летопись');
+  addNote(logZone, {
     icon: '📜', title: 'Летопись лавки', kind: 'log',
     heading: '📜 История лавки',
     body: CHANGELOG.map(([v, t]) => `<b>v${v}</b> — ${t}`).join('<br><br>'),

@@ -189,6 +189,25 @@ no watermark --ar 3:1
 Размер: ≥1500×500 (как hub_banner). Сохранить как `assets/town_square.jfif` —
 игра подхватит (цепочка `town_square_web.jpg → seek_town_web.jpg`).
 
+## 1c. town_market.png — торговый квартал (лавки: оружейник, бронник, маг, алхимик)
+
+Квартал, где четыре лавки чётко читаются по углам и имеют вывески-предметы.
+
+```
+A cozy medieval merchant quarter, wide banner, storybook watercolor 
+illustration with gentle ink outlines, warm evening light. Four distinct 
+small shops around a cobblestone lane, each with a clear hanging sign: 
+a WEAPONSMITH on the left with a sword sign and blades in the window; 
+an ARMORER next with a shield sign, a mail hauberk and a helmet on 
+display; a MAGIC SHOP right of center with a crystal ball sign, glowing 
+vials and starry drapes; an ALCHEMIST shop on the right with a potion 
+flask sign, bubbling cauldrons and herb bundles. Warm lantern light, 
+flower pots, a cat sleeping on a windowsill, no people, no text, 
+no watermark --ar 3:1
+```
+
+Размер: ≥1500×500 (как hub_banner). Сохранить как `assets/town_market.jfif`.
+
 ## 5. icon_knight.png — портрет рыцаря (128×128)
 
 ```

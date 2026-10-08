@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img">
+<defs>
+<radialGradient id="gLight" cx="0.5" cy="0.45" r="0.75">
+<stop offset="0%" stop-color="#FFFDF0"/>
+<stop offset="32%" stop-color="#FFEC9A"/>
+<stop offset="58%" stop-color="#FFC35A"/>
+<stop offset="82%" stop-color="#FF8E2A"/>
+<stop offset="100%" stop-color="#E86A0A"/>
+</radialGradient>
+<linearGradient id="gWood" x1="0%" y1="0%" x2="100%" y2="0%">
+<stop offset="0%" stop-color="#B86A1A"/>
+<stop offset="22%" stop-color="#D98A26"/>
+<stop offset="50%" stop-color="#E9A23A"/>
+<stop offset="78%" stop-color="#D98A26"/>
+<stop offset="100%" stop-color="#9A4D12"/>
+</linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="b1"/>
+<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.9 0" />
+</filter>
+<filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="2.6" result="bl"/>
+<feComposite in="SourceGraphic" in2="bl" operator="over"/>
+</filter>
+</defs>
+<!-- Mossy hill base - organic round bottom -->
+<ellipse cx="32" cy="53.2" rx="26.5" ry="11.2" fill="#8FB255"/>
+<ellipse cx="32" cy="54.8" rx="22" ry="7.5" fill="#7A9A3E"/>
+<ellipse cx="25.5" cy="52.5" rx="6.5" ry="3.2" fill="#A8C97C" opacity="0.95"/>
+<ellipse cx="38.8" cy="51.8" rx="5.2" ry="2.6" fill="#A8C97C" opacity="0.9"/>
+<!-- soft warm halo around door -->
+<circle cx="32" cy="32.5" r="22.2" fill="none" stroke="#FFC94A" stroke-width="3.5" opacity="0.22" filter="url(#softGlow)"/>
+<!-- outer round door frame - cream stone/wood -->
+<circle cx="32" cy="32.5" r="21" fill="#FFF6D6" stroke="#5E3A18" stroke-width="2.4" stroke-linejoin="round"/>
+<circle cx="32" cy="32.5" r="19" fill="#5E3A18" opacity="1"/>
+<!-- warm light inside -->
+<circle cx="32.8" cy="32.5" r="17.8" fill="url(#gLight)"/>
+<!-- light spill onto ground -->
+<ellipse cx="34.5" cy="50.2" rx="11.5" ry="3.8" fill="#FFD36A" opacity="0.92"/>
+<ellipse cx="34.5" cy="50.2" rx="7.5" ry="1.9" fill="#FFF2B8" opacity="0.95"/>
+<!-- wooden door slightly open - thick rounded shape -->
+<path d="M 14.5 32.5 A 17.5 17.5 0 0 1 43 18.9 L 40.2 20.3 A 16 15.8 0 0 0 40.2 44.7 L 43 46.1 A 17.5 17.5 0 0 1 14.5 32.5 Z" fill="url(#gWood)" stroke="#5E3A18" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/>
+<!-- vertical planks -->
+<path d="M 23.2 18.8 L 23.2 46.2" stroke="#5E3A18" stroke-width="1.35" stroke-linecap="round" opacity="0.95"/>
+<path d="M 32.2 16.2 L 32.2 48.7" stroke="#5E3A18" stroke-width="1.35" stroke-linecap="round" opacity="0.95"/>
+<!-- horizontal braces -->
+<path d="M 15.8 26.2 H 41" stroke="#5E3A18" stroke-width="1.6" stroke-linecap="round" opacity="0.95"/>
+<path d="M 15.8 38.8 H 41" stroke="#5E3A18" stroke-width="1.6" stroke-linecap="round" opacity="0.95"/>
+<!-- wood highlight top -->
+<path d="M 17.5 23 A 17.5 17.5 0 0 1 30 16.2" fill="none" stroke="#FFD98A" stroke-width="1.7" stroke-linecap="round" opacity="0.55"/>
+<!-- door thickness inner shading -->
+<path d="M 40.2 20.3 A 16 15.8 0 0 0 40.2 44.7 L 43 46.1 L 43 18.9 Z" fill="#7A3A0A" opacity="0.32"/>
+<!-- brass knob -->
+<g>
+<circle cx="36.2" cy="32.6" r="3.1" fill="#5E3A18" opacity="0.35"/>
+<circle cx="36.2" cy="32.4" r="2.6" fill="#FFC94A" stroke="#7A4D0A" stroke-width="1.05"/>
+<circle cx="35.4" cy="31.5" r="0.9" fill="#FFF6B8" opacity="0.95"/>
+<circle cx="36.2" cy="32.4" r="0.55" fill="#7A4D0A" opacity="0.9"/>
+</g>
+<!-- keyhole / detail -->
+<ellipse cx="32.2" cy="32.5" rx="0.45" ry="0.7" fill="#3D2208" opacity="0.7"/>
+<!-- moss tufts on frame top -->
+<g fill="#7A9A3E" stroke="#5A7A2E" stroke-width="0.7" stroke-linejoin="round">
+<path d="M 18.5 18.2 C 20.2 14.8 24.5 13.5 26.8 16.2 C 24.2 16.8 22 17.4 18.5 18.2 Z"/>
+<path d="M 43.2 16.5 C 45.6 13.9 49.2 14.6 50.8 18.1 C 48.2 17.6 45.8 17 43.2 16.5 Z"/>
+</g>
+<g fill="#A8C97C" opacity="0.95">
+<ellipse cx="22.2" cy="16.5" rx="1.4" ry="1"/>
+<ellipse cx="46.8" cy="17.2" rx="1.2" ry="0.9"/>
+</g>
+</svg>

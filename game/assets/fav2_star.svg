@@ -1,0 +1,47 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img">
+<defs>
+  <radialGradient id="starFill" cx="50%" cy="38%" r="72%">
+    <stop offset="0%" stop-color="#FFFDE7"/>
+    <stop offset="18%" stop-color="#FFF1A6"/>
+    <stop offset="38%" stop-color="#FFD23C"/>
+    <stop offset="62%" stop-color="#FFA412"/>
+    <stop offset="82%" stop-color="#EF7D00"/>
+    <stop offset="100%" stop-color="#C85A00"/>
+  </radialGradient>
+  <radialGradient id="coreFill" cx="50%" cy="45%" r="60%">
+    <stop offset="0%" stop-color="#FFFFFF"/>
+    <stop offset="30%" stop-color="#FFF8C5"/>
+    <stop offset="58%" stop-color="#FFE066"/>
+    <stop offset="85%" stop-color="#FFB300"/>
+    <stop offset="100%" stop-color="#FF8F00"/>
+  </radialGradient>
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" result="b"/>
+    <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.55 0"/>
+  </filter>
+</defs>
+<!-- soft outer glow -->
+<path d="M32 5.5 C33.9 17.2 46.8 30.1 58.5 32 C46.8 33.9 33.9 46.8 32 58.5 C30.1 46.8 17.2 33.9 5.5 32 C17.2 30.1 30.1 17.2 32 5.5 Z" fill="#FFC53A" opacity="0.42" filter="url(#glow)"/>
+<!-- main 4-pointed star crystal -->
+<path d="M32 5.5 C33.9 17.2 46.8 30.1 58.5 32 C46.8 33.9 33.9 46.8 32 58.5 C30.1 46.8 17.2 33.9 5.5 32 C17.2 30.1 30.1 17.2 32 5.5 Z" fill="url(#starFill)" stroke="#8E4D00" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<!-- inner facet highlight -->
+<path d="M32 14.2 C32.9 20.8 43.2 31.1 49.8 32 C43.2 32.9 32.9 43.2 32 49.8 C31.1 43.2 20.8 32.9 14.2 32 C20.8 31.1 31.1 20.8 32 14.2 Z" fill="#FFF8D6" opacity="0.38"/>
+<path d="M32 17.5 C32.7 22.2 41.8 31.3 46.5 32 C41.8 32.7 32.7 41.8 32 46.5 C31.3 41.8 22.2 32.7 17.5 32 C22.2 31.3 31.3 22.2 32 17.5 Z" fill="none" stroke="#FFFDE7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+<!-- golden glowing core -->
+<circle cx="32" cy="32" r="8.2" fill="url(#coreFill)" stroke="#FFFDE7" stroke-width="1.3"/>
+<circle cx="30.3" cy="30.2" r="2.3" fill="#FFFFFF" opacity="0.9"/>
+<circle cx="30" cy="30" r="1" fill="#FFFFFF" opacity="1"/>
+<!-- small sparkles -->
+<g fill="#FFFDE7" stroke="#E68A00" stroke-width="0.5" stroke-linejoin="round">
+  <path d="M0 -3.8 L0.9 -0.95 L3.8 0 L0.9 0.95 L0 3.8 L-0.9 0.95 L-3.8 0 L-0.9 -0.95 Z" transform="translate(51.2 11.8)"/>
+  <path d="M0 -2.9 L0.7 -0.7 L2.9 0 L0.7 0.7 L0 2.9 L-0.7 0.7 L-2.9 0 L-0.7 -0.7 Z" transform="translate(12.2 15.2)"/>
+  <path d="M0 -2.6 L0.62 -0.62 L2.6 0 L0.62 0.62 L0 2.6 L-0.62 0.62 L-2.6 0 L-0.62 -0.62 Z" transform="translate(52.2 50.8)"/>
+  <path d="M0 -2.1 L0.5 -0.5 L2.1 0 L0.5 0.5 L0 2.1 L-0.5 0.5 L-2.1 0 L-0.5 -0.5 Z" transform="translate(11.8 47.5)"/>
+</g>
+<!-- tiny glitter dots -->
+<g fill="#FFFFFF" opacity="0.95">
+  <circle cx="46.5" cy="18.2" r="0.95"/>
+  <circle cx="18.8" cy="42.5" r="0.8"/>
+  <circle cx="42.2" cy="46.2" r="0.75"/>
+</g>
+</svg>
