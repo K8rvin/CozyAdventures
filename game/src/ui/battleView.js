@@ -43,6 +43,7 @@ export function renderBattleList(container, ctx) {
   };
   let lastWorld = null;
   for (const b of BATTLES) {
+    if (b.wanted) continue; // розыскные живут на доске объявлений
     if (b.world !== lastWorld) {
       lastWorld = b.world;
       const wh = document.createElement('h3');

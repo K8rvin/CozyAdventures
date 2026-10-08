@@ -1,39 +1,25 @@
-// Прилавок: покупка и продажа + косметика лавки.
+// Лавка на перекрёстке (украшения + скупка) и тематические лавки площади.
 import { ITEM_BY_ID, RARITY_LABEL } from '../data/items.js';
 import { itemEmoji } from './equipView.js';
 import { describeItem, SLOTS, SLOT_LABEL } from '../core/items.js';
-import { shopStock, buyItem, sellItem, buyCosmetic, toggleCosmetic, unseenShopItems, markShopSeen } from '../core/state.js';
+import {
+  shopStock, buyItem, sellItem, buyCosmetic, toggleCosmetic,
+  unseenShopItems, markShopSeen,
+} from '../core/state.js';
 import { COSMETICS, SEASON_LABEL } from '../data/cosmetics.js';
+import { SHOPS, itemsForShop } from '../data/shop.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav } from './common.js';
 
-export function renderShop(container, ctx) {
+// --- Список товаров (общий строитель) ---
+function buildBuyList(container, ctx, items, newIds) {
   const { state } = ctx;
-
-  const head = document.createElement('div');
-  head.className = 'panel';
-  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">Прилавок</h2></div>
-    <div class="muted">Звон монет, деревянные полки, тёплый свет. Ассортимент растёт с победами рыцаря.</div>`;
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← Назад';
-  back.addEventListener('click', () => ctx.go('hub'));
-  head.firstElementChild.appendChild(back);
-  container.appendChild(head);
-  container.appendChild(quickNav(ctx, [
-    { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
-    { icon: '🏠', label: 'В лавку', screen: 'hub' },
-  ]));
-
-  // --- Покупка ---
-  const newIds = new Set(unseenShopItems(state).map((i) => i.id));
-  const buyPanel = document.createElement('div');
-  buyPanel.className = 'panel';
-  buyPanel.innerHTML = '<h3>Полки лавки</h3>';
   const buyList = document.createElement('div');
   buyList.className = 'list';
-  for (const item of shopStock(state)) {
+  if (items.length === 0) {
+    buyList.innerHTML = '<div class="muted">Полки пока пусты — возвращайся после побед рыцаря.</div>';
+  }
+  for (const item of items) {
     const row = document.createElement('div');
     row.className = 'row' + (newIds.has(item.id) ? ' new-item' : '');
     const priceLabel = item.sealPrice ? `🔰 ${item.sealPrice}` : `🪙 ${item.price}`;
@@ -64,7 +50,7 @@ export function renderShop(container, ctx) {
         else if (r.autoEquipped?.slot) ctx.toast(`Куплено: ${item.name} — уже надето!`);
         else ctx.toast(`Куплено: ${item.name}. Лежит в сундуке (Комната рыцаря).`);
         ctx.save();
-        rerender();
+        rerenderCurrent();
       } else {
         ctx.toast(r.error);
       }
@@ -72,11 +58,46 @@ export function renderShop(container, ctx) {
     row.appendChild(btn);
     buyList.appendChild(row);
   }
-  buyPanel.appendChild(buyList);
-  container.appendChild(buyPanel);
+  container.appendChild(buyList);
+}
 
-  // Обучение первой покупке: подсвечиваем первую доступную кнопку
-  const firstBuy = buyList.querySelector?.('button:not([disabled])');
+let currentRerender = () => {};
+function rerenderCurrent() {
+  currentRerender();
+}
+
+// --- Тематическая лавка на площади ---
+export function renderMarket(container, ctx, shopKey) {
+  const { state } = ctx;
+  const shop = SHOPS[shopKey];
+  if (!shop) { ctx.go('hub', { scene: 'square' }); return; }
+
+  const head = document.createElement('div');
+  head.className = 'panel';
+  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0">${shop.icon} ${shop.name}</h2></div>
+    <div class="muted">${shop.desc}</div>`;
+  const back = document.createElement('button');
+  back.className = 'ghost small';
+  back.textContent = '← На площадь';
+  back.addEventListener('click', () => ctx.go('hub', { scene: 'square' }));
+  head.firstElementChild.appendChild(back);
+  container.appendChild(head);
+  container.appendChild(quickNav(ctx, [
+    { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
+    { icon: '🌇', label: 'На площадь', screen: 'hub', params: { scene: 'square' } },
+  ]));
+
+  const newIds = new Set(unseenShopItems(state).map((i) => i.id));
+  const buyPanel = document.createElement('div');
+  buyPanel.className = 'panel';
+  buyPanel.innerHTML = '<h3>Витрина</h3>';
+  container.appendChild(buyPanel);
+  const items = itemsForShop(state, shopKey, shopStock(state));
+  buildBuyList(buyPanel, ctx, items, newIds);
+
+  // Обучение первой покупке — и в тематической лавке
+  const firstBuy = buyPanel.querySelector?.('button:not([disabled])');
   if (firstBuy && (state.stats.itemsBought || 0) === 0) {
     startTutorial(ctx, 'first_purchase', [
       {
@@ -87,6 +108,35 @@ export function renderShop(container, ctx) {
       },
     ]);
   }
+
+  markShopSeen(state);
+  ctx.save();
+
+  currentRerender = () => {
+    container.innerHTML = '';
+    renderMarket(container, ctx, shopKey);
+  };
+}
+
+// --- Лавка на перекрёстке: украшения и скупка ---
+export function renderShop(container, ctx) {
+  const { state } = ctx;
+
+  const head = document.createElement('div');
+  head.className = 'panel';
+  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0">Прилавок лавки</h2></div>
+    <div class="muted">Украшения для дома и скупка твоих находок. Снаряжение — в лавках площади.</div>`;
+  const back = document.createElement('button');
+  back.className = 'ghost small';
+  back.textContent = '← Назад';
+  back.addEventListener('click', () => ctx.go('hub'));
+  head.firstElementChild.appendChild(back);
+  container.appendChild(head);
+  container.appendChild(quickNav(ctx, [
+    { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
+    { icon: '🏠', label: 'В лавку', screen: 'hub' },
+  ]));
 
   // --- Продажа ---
   const sellPanel = document.createElement('div');
@@ -115,7 +165,7 @@ export function renderShop(container, ctx) {
       if (r.ok) {
         ctx.toast(`Продано: ${item.name} за ${r.price} монет`);
         ctx.save();
-        rerender();
+        rerenderCurrent();
       }
     });
     row.appendChild(btn);
@@ -149,12 +199,12 @@ export function renderShop(container, ctx) {
       btn.disabled = c.sealPrice ? state.seals < c.sealPrice : state.coins < c.price;
       btn.addEventListener('click', () => {
         const r = buyCosmetic(state, c.id);
-        if (r.ok) { ctx.toast(`${c.name} — уже в лавке!`); ctx.sfx?.('success'); ctx.save(); rerender(); }
+        if (r.ok) { ctx.toast(`${c.name} — уже в лавке!`); ctx.sfx?.('success'); ctx.save(); rerenderCurrent(); }
         else ctx.toast(r.error);
       });
     } else {
       btn.textContent = active ? 'Убрать' : 'Выставить';
-      btn.addEventListener('click', () => { toggleCosmetic(state, c.id); ctx.save(); rerender(); });
+      btn.addEventListener('click', () => { toggleCosmetic(state, c.id); ctx.save(); rerenderCurrent(); });
     }
     row.appendChild(btn);
     cosList.appendChild(row);
@@ -162,20 +212,14 @@ export function renderShop(container, ctx) {
   cosPanel.appendChild(cosList);
   container.appendChild(cosPanel);
 
-  // Ассортимент просмотрен — в следующий раз точка и метки погаснут
-  markShopSeen(state);
-  ctx.save();
-
-  function rerender() {
+  currentRerender = () => {
     container.innerHTML = '';
     renderShop(container, ctx);
-  }
+  };
 }
 
 // --- Подсказка-сравнение «Сейчас надето» ---
 let compareEl = null;
-
-export { showCompareTip, hideCompareTip };
 
 function showCompareTip(state, item, anchor) {
   hideCompareTip();
@@ -199,7 +243,6 @@ function showCompareTip(state, item, anchor) {
       return `<div class="ct-item">${itemEmoji(cur)} ${cur.name}</div>` +
         `<div class="ct-stats">${describeItem(cur) || cur.description}</div>`;
     }).join('');
-    // Подсказка выгоды: разница атаки/брони/здоровья
     const diff = quickDiff(state, item, slotsToShow);
     if (diff) html += `<div class="ct-stats" style="margin-top:4px">${diff}</div>`;
   }
@@ -228,3 +271,5 @@ function quickDiff(state, item, slotsToShow) {
 function hideCompareTip() {
   if (compareEl) { compareEl.remove(); compareEl = null; }
 }
+
+export { showCompareTip, hideCompareTip };

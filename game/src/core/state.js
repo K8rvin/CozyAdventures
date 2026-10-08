@@ -41,6 +41,7 @@ export function newGame() {
     battlesDone: {},        // id -> { victories }
     customPuzzles: [],      // уровни из редактора
     lastDailyBonus: null,   // день, когда получен бонус заказа дня
+    lastCatGift: null,      // день последнего подарка от кота
     cosmeticsOwned: [],     // купленные украшения
     cosmeticsActive: [],    // выставленные украшения
     seekOverrides: {},      // правки хотспотов искалок из редактора: levelId -> groups
@@ -68,6 +69,8 @@ function migrate(state) {
   state.seekOverrides ||= {};
   state.shopSeenStock ||= [];
   state.lastDailyBonus ??= null;
+  state.lastCatGift ??= null;
+  state.stats.catPets ||= 0;
   state.achievements ||= {};
   state.journal ||= [];
   state.tutorial ||= {};
@@ -515,6 +518,30 @@ export function skipPuzzle(state, puzzleId) {
   return { ok: true, price, consolation };
 }
 
+// --- Погладить кота (интерактив в лавке) ---
+
+const CAT_LINES = [
+  'Мррр… кот урчит, как маленький очаг.',
+  'Кот потянулся и прижался головой к ладони.',
+  'Ур-р-р-р… усы дрожат от удовольствия.',
+  'Кот перевернулся на спину — это высшее доверие.',
+  'Тихий «мяу» в ответ. Полки мурлычут в такт.',
+];
+
+export function petTheCat(state) {
+  state.stats.catPets = (state.stats.catPets || 0) + 1;
+  const line = CAT_LINES[state.stats.catPets % CAT_LINES.length];
+  journalPush(state, '🐈', line);
+  let gift = 0;
+  if (state.lastCatGift !== todayKey()) {
+    state.lastCatGift = todayKey();
+    gift = 2;
+    addCoins(state, gift);
+    journalPush(state, '🐈', 'Кот что-то накопал за прилавком: +2 монеты!');
+  }
+  return { pets: state.stats.catPets, line, gift };
+}
+
 // --- Ежедневные уютные события: заказ дня ---
 
 function dayHash(str) {
@@ -567,7 +594,7 @@ export function nextBattle(currentId) {
 
 // Первая доступная непройденная битва (для автоскролла списка походов).
 export function firstUnbeatenBattle(state) {
-  return BATTLES.find((b) => !state.battlesDone[b.id] && battleAvailable(state, b.id)) || null;
+  return BATTLES.find((b) => !b.wanted && !state.battlesDone[b.id] && battleAvailable(state, b.id)) || null;
 }
 
 // --- Бои ---

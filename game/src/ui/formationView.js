@@ -81,13 +81,73 @@ export function renderFormation(container, ctx, params) {
     field.appendChild(el);
   });
 
-  // Юниты на слотах
+  // --- Перетаскивание бойцов (тап-выбор сохраняется) ---
+  let unitDrag = null; // { key, startX, startY, active, ghost, hoverSlot }
+  let hoverSlotEl = null;
+
+  function findSlotAt(x, y) {
+    for (let s = 0; s < 6; s++) {
+      const el = slotEls[`ally${s}`];
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return s;
+    }
+    return null;
+  }
+
+  function onDragMove(ev) {
+    if (!unitDrag) return;
+    if (!unitDrag.active) {
+      if (Math.hypot(ev.clientX - unitDrag.startX, ev.clientY - unitDrag.startY) < 8) return;
+      const u = units.find((x) => x.key === unitDrag.key);
+      if (!u) return;
+      const ghost = document.createElement('div');
+      ghost.className = 'drag-ghost';
+      ghost.textContent = u.icon;
+      document.body.appendChild(ghost);
+      unitDrag.ghost = ghost;
+      unitDrag.active = true;
+      selectedUnit = null;
+      ctx.sfx?.('tap');
+    }
+    unitDrag.ghost.style.transform = `translate(${ev.clientX - 22}px, ${ev.clientY - 22}px)`;
+    const slot = findSlotAt(ev.clientX, ev.clientY);
+    if (slot !== unitDrag.hoverSlot) {
+      hoverSlotEl?.classList.remove('selected');
+      hoverSlotEl = slot !== null ? slotEls[`ally${slot}`] : null;
+      hoverSlotEl?.classList.add('selected');
+      unitDrag.hoverSlot = slot;
+    }
+  }
+
+  function onDragEnd() {
+    if (!unitDrag) return;
+    const { key, active, hoverSlot, ghost } = unitDrag;
+    ghost?.remove();
+    hoverSlotEl?.classList.remove('selected');
+    unitDrag = null;
+    if (!active || hoverSlot === null || hoverSlot === undefined) return;
+    moveFormationSlot(state, key, hoverSlot);
+    ctx.sfx?.('rotate');
+    ctx.save();
+    rerender();
+  }
+
+  window.addEventListener('pointermove', onDragMove);
+  window.addEventListener('pointerup', onDragEnd);
+
+  // Юниты на слотах (тап выбирает, перетаскивание двигает)
   for (const u of units) {
     const slot = state.formation[u.key];
     const host = slotEls[`ally${slot}`];
     if (!host) continue;
     host.classList.add('occupied');
     host.innerHTML = `<span class="fs-icon">${u.icon}</span><span class="fs-name">${u.name}</span>`;
+    host.style.touchAction = 'none';
+    host.addEventListener('pointerdown', (ev) => {
+      unitDrag = { key: u.key, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hoverSlot: null };
+      ev.preventDefault();
+    });
     host.addEventListener('click', (ev) => {
       ev.stopPropagation?.();
       selectedUnit = selectedUnit === u.key ? null : u.key;
@@ -347,4 +407,11 @@ export function renderFormation(container, ctx, params) {
 
     step();
   }
+
+  // Очистка слушателей перетаскивания при уходе со страницы
+  return () => {
+    window.removeEventListener('pointermove', onDragMove);
+    window.removeEventListener('pointerup', onDragEnd);
+    if (unitDrag?.ghost) unitDrag.ghost.remove();
+  };
 }

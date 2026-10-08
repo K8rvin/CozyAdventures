@@ -1,5 +1,12 @@
 // Хаб-лавка: одна большая картинка с интерактивными объектами.
-import { ALL_PUZZLES, unseenShopItems, currentSeason, SEASON_LABEL } from '../core/state.js';
+import { ALL_PUZZLES, unseenShopItems, currentSeason, SEASON_LABEL, petTheCat, shopStock } from '../core/state.js';
+import { itemsForShop } from '../data/shop.js';
+
+// Есть ли новинки в конкретной лавке площади
+function hasUnseenIn(state, shopKey) {
+  const unseen = new Set(unseenShopItems(state).map((i) => i.id));
+  return itemsForShop(state, shopKey, shopStock(state)).some((i) => unseen.has(i.id));
+}
 import { COMPANION_BY_ID, PET_BY_ID } from '../data/crew.js';
 import { BATTLES } from '../data/battles.js';
 import { startTutorial } from './tutorial.js';
@@ -51,16 +58,22 @@ export function renderHub(container, ctx, params = {}) {
         ['🛡️', 'Комната рыцаря', 'equip', 67, 45, () => false],
         ['🌆', 'На площадь', '@square', 77, 50, () => false],
         ['🪟', 'В поход', 'battles', 93, 45, () => firstPurchaseDone && won === 0],
+        ['🐈', 'Погладить кота', '@cat', 27, 80, () => false],
       ],
     },
     square: {
       candidates: ['assets/town_square_web.jpg', 'assets/seek_town_web.jpg'],
       alt: 'Городская площадь',
       hotspots: [
-        ['🍺', 'Таверна', 'tavern', 82, 45, () => false],
-        ['⚒️', 'Кузница и котёл', 'craft', 35, 55, () => false],
+        ['🍺', 'Таверна', 'tavern', 81, 60, () => false],
+        ['⚒️', 'Кузница и котёл', 'craft', 39, 52, () => false],
         ['🛠️', 'Мастерская', 'workshop', 52, 68, () => false],
+        ['📌', 'Доска объявлений', 'board', 6, 55, () => false],
         ['🏮', 'В лавку', '@lavka', 17, 47, () => false],
+        ['🗡️', 'Оружейник', 'shopArmory', 23, 30, () => hasUnseenIn(state, 'armory')],
+        ['🛡️', 'Бронник', 'shopArmorer', 57, 28, () => hasUnseenIn(state, 'armorer')],
+        ['🔮', 'Маг', 'shopMagic', 68, 60, () => hasUnseenIn(state, 'magic')],
+        ['🧪', 'Алхимик', 'shopAlchemy', 92, 30, () => hasUnseenIn(state, 'alchemy')],
       ],
     },
   };
@@ -94,6 +107,7 @@ export function renderHub(container, ctx, params = {}) {
     b.setAttribute('aria-label', label);
     b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ''}`;
     b.addEventListener('click', () => {
+      if (screen === '@cat') { petCat(b); return; }
       ctx.sfx?.('tap');
       b.classList.add('zap');
       setTimeout(() => {
@@ -116,6 +130,28 @@ export function renderHub(container, ctx, params = {}) {
     : '';
   progress.innerHTML = `🧩 Загадок решено: <b>${solved}/${ALL_PUZZLES.length}</b> · ⚔️ Походов пройдено: <b>${won}/${BATTLES.length}</b> · 🐾 Команда: <b>${(state.crew || []).length}</b> · ${season}${cosIcons}`;
   container.appendChild(progress);
+
+  // Погладить кота: сердечки, мурлыкание, дневник, ежедневный подарок
+  function petCat(btn) {
+    ctx.sfx?.('purr');
+    const r = petTheCat(state);
+    ctx.save();
+    // Сердечки взлетают от кота
+    const rect = btn.getBoundingClientRect();
+    for (let i = 0; i < 4; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'cat-heart';
+      heart.textContent = ['❤️', '🧡', '💛'][i % 3];
+      heart.style.left = `${rect.left + rect.width / 2 + (i - 1.5) * 16}px`;
+      heart.style.top = `${rect.top + window.scrollY}px`;
+      heart.style.animationDelay = `${i * 0.08}s`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1200);
+    }
+    ctx.toast(r.gift > 0 ? `${r.line} ${'🪙+2!'}` : r.line);
+    // Мягкая перерисовка дневника без ухода со сцены
+    rerender(sceneId);
+  }
 
   // Питомец гуляет по сцене (если есть активный)
   if (state.pet && PET_BY_ID[state.pet]) {

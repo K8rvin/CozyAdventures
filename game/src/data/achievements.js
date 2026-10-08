@@ -85,6 +85,11 @@ export const ACHIEVEMENTS = [
     desc: 'Пройти все искалки кампании.',
     check: (s, ctx) => ctx.seekIds.every((id) => s.puzzlesDone[id]),
   },
+  {
+    id: 'cat_friend', icon: '🐈', name: 'Мурлыкало',
+    desc: 'Погладить кота-хранителя 25 раз.',
+    check: (s) => (s.stats.catPets || 0) >= 25,
+  },
 ];
 
 // Проверяет новые разблокировки. Возвращает массив свежеразблокированных.

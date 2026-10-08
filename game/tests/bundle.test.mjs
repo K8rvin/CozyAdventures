@@ -21,7 +21,7 @@ class El {
   constructor(tag) {
     this.tagName = tag;
     this.children = [];
-    this.style = {};
+    this.style = { setProperty: () => {} };
     this.classList = {
       _s: new Set(),
       add: (...c) => c.forEach((x) => this.classList._s.add(x)),

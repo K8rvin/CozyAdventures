@@ -7,7 +7,7 @@ import {
   nextBattle, firstUnbeatenBattle, skipPuzzle, skipPuzzlePrice, applyCheat,
   findPuzzle, applySeekOverrides, saveSeekOverride, resetSeekOverride,
   unseenShopItems, markShopSeen, loadSeekOverrides,
-  dailyPuzzle, currentSeason, SEASON_LABEL,
+  dailyPuzzle, currentSeason, SEASON_LABEL, petTheCat,
 } from '../src/core/state.js';
 import { PUZZLES } from '../src/data/puzzles.js';
 import { BATTLES } from '../src/data/battles.js';
@@ -326,6 +326,14 @@ test('заказ дня: детерминирован и даёт двойные
   if (base && s.lastDailyBonus) {
     assert.equal(coins.amount, base.amount * 2, 'заказ дня удваивает монеты');
   }
+  // Бонус забран — в тот же день больше не выдаётся
+  s.puzzlesDone = {};
+  const idx2 = ALL_PUZZLES.findIndex((p) => p.id === dailyPuzzle(s).id);
+  for (let i = 0; i < idx2; i++) s.puzzlesDone[ALL_PUZZLES[i].id] = {};
+  const rewards2 = completePuzzle(s, dailyPuzzle(s).id, {});
+  const coins2 = rewards2.find((r) => r.type === 'coins');
+  const base2 = (dailyPuzzle(s).rewards || []).find((r) => r.type === 'coins');
+  assert.notEqual(coins2.amount, (base2?.amount || 0) * 2, 'второй бонус в тот же день не выдаётся');
 });
 
 test('дневник кота пишет события', () => {
@@ -341,6 +349,39 @@ test('дневник кота пишет события', () => {
 test('сезон определяется по месяцу', () => {
   assert.ok(['winter', 'spring', 'summer', 'autumn'].includes(currentSeason()));
   assert.ok(SEASON_LABEL[currentSeason()]);
+});
+
+test('погладить кота: счётчик, дневник, ежедневный подарок', () => {
+  const s = newGame();
+  s.coins = 0;
+  const r1 = petTheCat(s);
+  assert.equal(r1.pets, 1);
+  assert.equal(r1.gift, 2, 'первый раз за день — монетка от кота');
+  assert.equal(s.coins, 2);
+  const r2 = petTheCat(s);
+  assert.equal(r2.pets, 2);
+  assert.equal(r2.gift, 0, 'повторно в тот же день — без монет');
+  assert.equal(s.coins, 2);
+  assert.ok(s.journal.some((j) => j.text.includes('Кот что-то накопал')));
+  assert.ok(s.stats.catPets === 2);
+});
+
+test('тематические лавки: весь ассортимент распределён без пересечений', async () => {
+  const { SHOPS, itemsForShop } = await import('../src/data/shop.js');
+  const s = newGame();
+  for (const id of Object.keys(s.battlesDone = {})) { /* noop */ }
+  // Открываем весь ассортимент
+  const { BATTLES } = await import('../src/data/battles.js');
+  for (const b of BATTLES) s.battlesDone[b.id] = { victories: 1 };
+  const all = shopStock(s);
+  const distributed = ['armory', 'armorer', 'magic', 'alchemy']
+    .flatMap((k) => itemsForShop(s, k, all).map((i) => i.id));
+  assert.equal(new Set(distributed).size, distributed.length, 'без дублей между лавками');
+  assert.equal(distributed.length, all.length, 'каждый товар попадает в ровно одну лавку');
+  // Зелья — только у алхимика
+  assert.ok(itemsForShop(s, 'alchemy', all).every((i) => i.slot === 'consumable'));
+  assert.ok(itemsForShop(s, 'armory', all).every((i) => i.slot === 'weapon'));
+  assert.ok(itemsForShop(s, 'magic', all).every((i) => i.slot === 'amulet' || i.slot === 'ring'));
 });
 
 test('сохранение и загрузка', () => {

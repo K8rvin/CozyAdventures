@@ -254,4 +254,8 @@ for (const w of WORLDS) {
   if (w?.battles) BATTLES.push(...w.battles);
 }
 
+// Розыскные листы (показываются на доске объявлений, не в списке походов)
+import { WANTED_BATTLES } from './wanted.js';
+BATTLES.push(...WANTED_BATTLES);
+
 export const BATTLE_BY_ID = Object.fromEntries(BATTLES.map((b) => [b.id, b]));

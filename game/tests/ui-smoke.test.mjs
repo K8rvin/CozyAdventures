@@ -23,7 +23,7 @@ class El {
   constructor(tag) {
     this.tagName = tag;
     this.children = [];
-    this.style = {};
+    this.style = { setProperty: () => {} };
     this.classList = {
       _s: new Set(),
       add: (...c) => c.forEach((x) => this.classList._s.add(x)),
@@ -120,6 +120,8 @@ const { renderSettings } = await import('../src/ui/settingsView.js');
 const { renderFormation } = await import('../src/ui/formationView.js');
 const { renderSeekEditorList, renderSeekEditor } = await import('../src/ui/seekEditorView.js');
 const { renderAchievements } = await import('../src/ui/achievementsView.js');
+const { renderBoard } = await import('../src/ui/boardView.js');
+const { renderMarket } = await import('../src/ui/shopView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
 const { ITEM_BY_ID } = await import('../src/data/items.js');
 
@@ -165,6 +167,11 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderSeekEditorList(new El('main'), ctx),
     () => renderSeekEditor(new El('main'), ctx, { id: 'sk_md_01' }),
     () => renderAchievements(new El('main'), ctx),
+    () => renderBoard(new El('main'), ctx),
+    () => renderMarket(new El('main'), ctx, 'armory'),
+    () => renderMarket(new El('main'), ctx, 'armorer'),
+    () => renderMarket(new El('main'), ctx, 'magic'),
+    () => renderMarket(new El('main'), ctx, 'alchemy'),
     () => renderWorkshop(new El('main'), ctx),
     () => renderEditor(new El('main'), ctx, {}),
   ];

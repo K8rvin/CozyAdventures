@@ -59,6 +59,37 @@ export const SHOP_STOCK = [
   { itemId: 'wpn_firebird_quill', unlockAfter: 'bk_illustration' },
 ];
 
+// Тематические лавки города (площадь): ассортимент выводится из SHOP_STOCK
+// по типу предмета. Лавка на перекрёстке продаёт украшения и скупает товары.
+export const SHOPS = {
+  armory: {
+    name: 'Оружейник «Сталь и верность»', icon: '🗡️',
+    desc: 'Клинки и древковое. Звон металла, запах масла.',
+    types: ['sword', 'mace', 'dagger', 'greatsword', 'greataxe', 'bow', 'staff'],
+  },
+  armorer: {
+    name: 'Бронник «Дуб и железо»', icon: '🛡️',
+    desc: 'Щиты, шлемы, броня, перчатки и сапоги. Меряют на глаз и не ошибаются.',
+    types: ['shield', 'helmet', 'armor', 'gloves', 'boots'],
+  },
+  magic: {
+    name: 'Маг «Луна и чернила»', icon: '🔮',
+    desc: 'Амулеты и кольца, светящиеся склянки, звёздная пыль.',
+    types: ['amulet', 'ring'],
+  },
+  alchemy: {
+    name: 'Алхимик «Котёл и роса»', icon: '🧪',
+    desc: 'Зелья, отвары и настойки. Булькает круглый год.',
+    types: ['potion'],
+  },
+};
+
+export function itemsForShop(state, shopKey, allItems) {
+  const shop = SHOPS[shopKey];
+  if (!shop) return [];
+  return allItems.filter((i) => shop.types.includes(i.slot === 'consumable' ? 'potion' : i.type));
+}
+
 // Таверна и конюшня: найм спутников, питомцев и наёмников.
 // kind: companion | pet | merc
 export const CREW_STOCK = [

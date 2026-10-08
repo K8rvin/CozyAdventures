@@ -28,6 +28,19 @@ export function soundEnabled() {
   return enabled;
 }
 
+// Проиграть аудиофайл; вернуть true, если файл есть и звук запущен.
+function playAudio(src, volume = 1) {
+  if (!enabled || typeof Audio === 'undefined') return false;
+  try {
+    const a = new Audio(src);
+    a.volume = volume;
+    a.play().catch(() => false);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function tone(freq, dur, { type = 'sine', gain = 0.08, delay = 0, slide = 0 } = {}) {
   const a = ac();
   if (!a || !enabled) return;
@@ -62,6 +75,15 @@ export function sfx(name) {
       [392, 330, 262].forEach((f, i) => tone(f, 0.3, { delay: i * 0.14, gain: 0.05 }));
       break;
     case 'moth': tone(300, 0.2, { type: 'square', gain: 0.04, slide: 80 }); break;
+    case 'purr': {
+      // Настоящее мурлыкание кота (assets/…_1sec.mp3), фолбэк — синтез
+      if (playAudio('assets/3d-zvuk-murchanie-koshki_1sec.mp3', 0.7)) break;
+      for (let i = 0; i < 5; i++) {
+        tone(65, 0.09, { type: 'sawtooth', gain: 0.05, delay: i * 0.11 });
+        tone(80, 0.09, { type: 'sawtooth', gain: 0.03, delay: i * 0.11 + 0.05 });
+      }
+      break;
+    }
     default: tone(440, 0.08, { gain: 0.04 });
   }
 }

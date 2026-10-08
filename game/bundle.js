@@ -562,6 +562,37 @@
     // После «Витражной гравюры»
     { itemId: "wpn_firebird_quill", unlockAfter: "bk_illustration" }
   ];
+  var SHOPS = {
+    armory: {
+      name: "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A \xAB\u0421\u0442\u0430\u043B\u044C \u0438 \u0432\u0435\u0440\u043D\u043E\u0441\u0442\u044C\xBB",
+      icon: "\u{1F5E1}\uFE0F",
+      desc: "\u041A\u043B\u0438\u043D\u043A\u0438 \u0438 \u0434\u0440\u0435\u0432\u043A\u043E\u0432\u043E\u0435. \u0417\u0432\u043E\u043D \u043C\u0435\u0442\u0430\u043B\u043B\u0430, \u0437\u0430\u043F\u0430\u0445 \u043C\u0430\u0441\u043B\u0430.",
+      types: ["sword", "mace", "dagger", "greatsword", "greataxe", "bow", "staff"]
+    },
+    armorer: {
+      name: "\u0411\u0440\u043E\u043D\u043D\u0438\u043A \xAB\u0414\u0443\u0431 \u0438 \u0436\u0435\u043B\u0435\u0437\u043E\xBB",
+      icon: "\u{1F6E1}\uFE0F",
+      desc: "\u0429\u0438\u0442\u044B, \u0448\u043B\u0435\u043C\u044B, \u0431\u0440\u043E\u043D\u044F, \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0438 \u0441\u0430\u043F\u043E\u0433\u0438. \u041C\u0435\u0440\u044F\u044E\u0442 \u043D\u0430 \u0433\u043B\u0430\u0437 \u0438 \u043D\u0435 \u043E\u0448\u0438\u0431\u0430\u044E\u0442\u0441\u044F.",
+      types: ["shield", "helmet", "armor", "gloves", "boots"]
+    },
+    magic: {
+      name: "\u041C\u0430\u0433 \xAB\u041B\u0443\u043D\u0430 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430\xBB",
+      icon: "\u{1F52E}",
+      desc: "\u0410\u043C\u0443\u043B\u0435\u0442\u044B \u0438 \u043A\u043E\u043B\u044C\u0446\u0430, \u0441\u0432\u0435\u0442\u044F\u0449\u0438\u0435\u0441\u044F \u0441\u043A\u043B\u044F\u043D\u043A\u0438, \u0437\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043F\u044B\u043B\u044C.",
+      types: ["amulet", "ring"]
+    },
+    alchemy: {
+      name: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A \xAB\u041A\u043E\u0442\u0451\u043B \u0438 \u0440\u043E\u0441\u0430\xBB",
+      icon: "\u{1F9EA}",
+      desc: "\u0417\u0435\u043B\u044C\u044F, \u043E\u0442\u0432\u0430\u0440\u044B \u0438 \u043D\u0430\u0441\u0442\u043E\u0439\u043A\u0438. \u0411\u0443\u043B\u044C\u043A\u0430\u0435\u0442 \u043A\u0440\u0443\u0433\u043B\u044B\u0439 \u0433\u043E\u0434.",
+      types: ["potion"]
+    }
+  };
+  function itemsForShop(state2, shopKey, allItems) {
+    const shop = SHOPS[shopKey];
+    if (!shop) return [];
+    return allItems.filter((i) => shop.types.includes(i.slot === "consumable" ? "potion" : i.type));
+  }
   var CREW_STOCK = [
     { id: "cmp_firefly", kind: "companion", unlockAfter: "bt_slimes" },
     { id: "cmp_cat", kind: "companion", unlockAfter: "bt_slimes" },
@@ -5238,6 +5269,46 @@
   var WORLDS = [WORLD, WORLD2, WORLD3, WORLD4, WORLD5, WORLD6, WORLD7, WORLD8];
   var WORLD_BY_ID = Object.fromEntries(WORLDS.map((w) => [w.id, w]));
 
+  // src/data/wanted.js
+  var WANTED_BATTLES = [
+    {
+      id: "wnt_bee_queen",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0430 \u0434\u0438\u043A\u0438\u0445 \u043F\u0447\u0451\u043B",
+      world: "meadow",
+      wanted: true,
+      enemies: [{ id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }],
+      unlockAfter: "bt_boss_willow",
+      tip: "\u0420\u043E\u0439 \u0438\u0437 \u0447\u0435\u0442\u044B\u0440\u0451\u0445 \u0443\u0441\u0438\u043B\u0435\u043D\u043D\u044B\u0445 \u043F\u0447\u0451\u043B. \u0410\u043D\u0442\u0438\u0434\u043E\u0442 \u0438 \u0440\u0430\u0441\u0441\u0435\u0447\u0435\u043D\u0438\u0435."
+    },
+    {
+      id: "wnt_rat_king",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u0431\u0430\u0440\u043E\u043D",
+      world: "town",
+      wanted: true,
+      enemies: [{ id: "rat_thief", scale: 2 }, { id: "rat_thief", scale: 2 }, { id: "bandit", scale: 1.9 }],
+      unlockAfter: "bt_boss_captain",
+      tip: "\u0411\u0430\u0440\u043E\u043D \u0438 \u0435\u0433\u043E \u0448\u0430\u0439\u043A\u0430. \u041F\u043E\u0434\u043A\u043E\u0432\u044B \u0432\u0435\u0440\u0451\u0432\u043E\u043A \u043D\u0435 \u0432\u044F\u0436\u0443\u0442 \u2014 \u0431\u0435\u0440\u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435."
+    },
+    {
+      id: "wnt_ink_lord",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041F\u043E\u0432\u0435\u043B\u0438\u0442\u0435\u043B\u044C \u043A\u043B\u044F\u043A\u0441",
+      world: "attic",
+      wanted: true,
+      enemies: [{ id: "ink_blot", scale: 2.1 }, { id: "paper_spirit", scale: 2 }, { id: "ink_blot", scale: 2.1 }],
+      unlockAfter: "bk_boss_keeper",
+      tip: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0442\u0435\u043A\u0443\u0447\u0438 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B. \u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440 \u2014 \u0432 \u043F\u043E\u044F\u0441."
+    },
+    {
+      id: "wnt_lantern_thief",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041F\u043E\u0445\u0438\u0442\u0438\u0442\u0435\u043B\u044C \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+      world: "nm",
+      wanted: true,
+      enemies: [{ id: "nm_shadow", scale: 2.2 }, { id: "nm_moth", scale: 2.1 }],
+      unlockAfter: "nm_boss",
+      tip: "\u0422\u0435\u043D\u044C \u0438 \u0435\u0451 \u043C\u043E\u0442\u044B\u043B\u0451\u043A \u0432\u043E\u0440\u0443\u044E\u0442 \u0441\u0432\u0435\u0442 \u0441 \u0440\u044B\u043D\u043A\u0430. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u0438 \u043E\u0442\u0432\u0430\u0433\u0430!"
+    }
+  ];
+
   // src/data/battles.js
   var BATTLES = [
     {
@@ -5568,6 +5639,7 @@
   for (const w of WORLDS) {
     if (w?.battles) BATTLES.push(...w.battles);
   }
+  BATTLES.push(...WANTED_BATTLES);
   var BATTLE_BY_ID = Object.fromEntries(BATTLES.map((b) => [b.id, b]));
 
   // src/data/crew.js
@@ -7140,6 +7212,8 @@
       // уровни из редактора
       lastDailyBonus: null,
       // день, когда получен бонус заказа дня
+      lastCatGift: null,
+      // день последнего подарка от кота
       cosmeticsOwned: [],
       // купленные украшения
       cosmeticsActive: [],
@@ -7176,6 +7250,8 @@
     state2.seekOverrides ||= {};
     state2.shopSeenStock ||= [];
     state2.lastDailyBonus ??= null;
+    state2.lastCatGift ??= null;
+    state2.stats.catPets ||= 0;
     state2.achievements ||= {};
     state2.journal ||= [];
     state2.tutorial ||= {};
@@ -7625,6 +7701,26 @@
     addCoins(state2, consolation);
     return { ok: true, price, consolation };
   }
+  var CAT_LINES = [
+    "\u041C\u0440\u0440\u0440\u2026 \u043A\u043E\u0442 \u0443\u0440\u0447\u0438\u0442, \u043A\u0430\u043A \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439 \u043E\u0447\u0430\u0433.",
+    "\u041A\u043E\u0442 \u043F\u043E\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0438 \u043F\u0440\u0438\u0436\u0430\u043B\u0441\u044F \u0433\u043E\u043B\u043E\u0432\u043E\u0439 \u043A \u043B\u0430\u0434\u043E\u043D\u0438.",
+    "\u0423\u0440-\u0440-\u0440-\u0440\u2026 \u0443\u0441\u044B \u0434\u0440\u043E\u0436\u0430\u0442 \u043E\u0442 \u0443\u0434\u043E\u0432\u043E\u043B\u044C\u0441\u0442\u0432\u0438\u044F.",
+    "\u041A\u043E\u0442 \u043F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043D\u0430 \u0441\u043F\u0438\u043D\u0443 \u2014 \u044D\u0442\u043E \u0432\u044B\u0441\u0448\u0435\u0435 \u0434\u043E\u0432\u0435\u0440\u0438\u0435.",
+    "\u0422\u0438\u0445\u0438\u0439 \xAB\u043C\u044F\u0443\xBB \u0432 \u043E\u0442\u0432\u0435\u0442. \u041F\u043E\u043B\u043A\u0438 \u043C\u0443\u0440\u043B\u044B\u0447\u0443\u0442 \u0432 \u0442\u0430\u043A\u0442."
+  ];
+  function petTheCat(state2) {
+    state2.stats.catPets = (state2.stats.catPets || 0) + 1;
+    const line = CAT_LINES[state2.stats.catPets % CAT_LINES.length];
+    journalPush(state2, "\u{1F408}", line);
+    let gift = 0;
+    if (state2.lastCatGift !== todayKey()) {
+      state2.lastCatGift = todayKey();
+      gift = 2;
+      addCoins(state2, gift);
+      journalPush(state2, "\u{1F408}", "\u041A\u043E\u0442 \u0447\u0442\u043E-\u0442\u043E \u043D\u0430\u043A\u043E\u043F\u0430\u043B \u0437\u0430 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C: +2 \u043C\u043E\u043D\u0435\u0442\u044B!");
+    }
+    return { pets: state2.stats.catPets, line, gift };
+  }
   function dayHash(str) {
     let h = 2166136261;
     for (const c of str) h = Math.imul(h ^ c.codePointAt(0), 16777619);
@@ -7663,7 +7759,7 @@
     return idx >= 0 && idx + 1 < BATTLES.length ? BATTLES[idx + 1] : null;
   }
   function firstUnbeatenBattle(state2) {
-    return BATTLES.find((b) => !state2.battlesDone[b.id] && battleAvailable(state2, b.id)) || null;
+    return BATTLES.find((b) => !b.wanted && !state2.battlesDone[b.id] && battleAvailable(state2, b.id)) || null;
   }
   function battleAvailable(state2, battleId) {
     const b = BATTLE_BY_ID[battleId];
@@ -8013,6 +8109,10 @@
   }
 
   // src/ui/hub.js
+  function hasUnseenIn(state2, shopKey) {
+    const unseen = new Set(unseenShopItems(state2).map((i) => i.id));
+    return itemsForShop(state2, shopKey, shopStock(state2)).some((i) => unseen.has(i.id));
+  }
   var CHATTER = {
     cmp_firefly: ["\u2728 \u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A \u043A\u0440\u0443\u0436\u0438\u0442 \u043D\u0430\u0434 \u043F\u043E\u043B\u043A\u0430\u043C\u0438: \xAB\u0422\u0443\u0442 \u043A\u0440\u0430\u0441\u0438\u0432\u043E!\xBB", "\u2728 \u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A \u043F\u043E\u0434\u0441\u0432\u0435\u0447\u0438\u0432\u0430\u0435\u0442 \u0441\u0430\u043C\u043E\u0435 \u0442\u0451\u043C\u043D\u043E\u0435 \u043C\u0435\u0441\u0442\u043E."],
     cmp_herbalist: ["\u{1F33F} \u0422\u0440\u0430\u0432\u043D\u0438\u0446\u0430 \u0441\u0443\u0448\u0438\u0442 \u043D\u043E\u0432\u044B\u0439 \u0441\u0431\u043E\u0440 \u043D\u0430\u0434 \u043E\u0447\u0430\u0433\u043E\u043C.", "\u{1F33F} \xAB\u041A \u043A\u043E\u0442\u043B\u0443 \u0431\u044B \u043C\u044F\u0442\u044B\u2026\xBB \u2014 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u0430 \u0437\u0430\u0433\u043B\u044F\u0434\u044B\u0432\u0430\u0435\u0442 \u0432 \u0447\u0430\u0439\u043D\u0438\u043A."],
@@ -8052,17 +8152,23 @@
           ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, () => solved > 0 && !firstPurchaseDone || unseenShopItems(state2).length > 0],
           ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 67, 45, () => false],
           ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 77, 50, () => false],
-          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0]
+          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0],
+          ["\u{1F408}", "\u041F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C \u043A\u043E\u0442\u0430", "@cat", 27, 80, () => false]
         ]
       },
       square: {
         candidates: ["assets/town_square_web.jpg", "assets/seek_town_web.jpg"],
         alt: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
         hotspots: [
-          ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 82, 45, () => false],
-          ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 35, 55, () => false],
+          ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 81, 60, () => false],
+          ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 39, 52, () => false],
           ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 52, 68, () => false],
-          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 17, 47, () => false]
+          ["\u{1F4CC}", "\u0414\u043E\u0441\u043A\u0430 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0439", "board", 6, 55, () => false],
+          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 17, 47, () => false],
+          ["\u{1F5E1}\uFE0F", "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", "shopArmory", 23, 30, () => hasUnseenIn(state2, "armory")],
+          ["\u{1F6E1}\uFE0F", "\u0411\u0440\u043E\u043D\u043D\u0438\u043A", "shopArmorer", 57, 28, () => hasUnseenIn(state2, "armorer")],
+          ["\u{1F52E}", "\u041C\u0430\u0433", "shopMagic", 68, 60, () => hasUnseenIn(state2, "magic")],
+          ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 92, 30, () => hasUnseenIn(state2, "alchemy")]
         ]
       }
     };
@@ -8093,6 +8199,10 @@
       b.setAttribute("aria-label", label);
       b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
       b.addEventListener("click", () => {
+        if (screen === "@cat") {
+          petCat(b);
+          return;
+        }
         ctx2.sfx?.("tap");
         b.classList.add("zap");
         setTimeout(() => {
@@ -8111,6 +8221,24 @@
     const cosIcons = (state2.cosmeticsActive || []).length ? ` \xB7 \u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F: ${(state2.cosmeticsActive || []).map((id) => ({ cos_carpet: "\u{1F7E5}", cos_crest: "\u{1FAA7}", cos_flowers: "\u{1F338}", cos_fireflies: "\u2728", cos_garland: "\u{1F38F}", cos_snow: "\u2744\uFE0F" })[id] || "\u{1F380}").join(" ")}` : "";
     progress.innerHTML = `\u{1F9E9} \u0417\u0430\u0433\u0430\u0434\u043E\u043A \u0440\u0435\u0448\u0435\u043D\u043E: <b>${solved}/${ALL_PUZZLES.length}</b> \xB7 \u2694\uFE0F \u041F\u043E\u0445\u043E\u0434\u043E\u0432 \u043F\u0440\u043E\u0439\u0434\u0435\u043D\u043E: <b>${won}/${BATTLES.length}</b> \xB7 \u{1F43E} \u041A\u043E\u043C\u0430\u043D\u0434\u0430: <b>${(state2.crew || []).length}</b> \xB7 ${season}${cosIcons}`;
     container.appendChild(progress);
+    function petCat(btn) {
+      ctx2.sfx?.("purr");
+      const r = petTheCat(state2);
+      ctx2.save();
+      const rect = btn.getBoundingClientRect();
+      for (let i = 0; i < 4; i++) {
+        const heart = document.createElement("div");
+        heart.className = "cat-heart";
+        heart.textContent = ["\u2764\uFE0F", "\u{1F9E1}", "\u{1F49B}"][i % 3];
+        heart.style.left = `${rect.left + rect.width / 2 + (i - 1.5) * 16}px`;
+        heart.style.top = `${rect.top + window.scrollY}px`;
+        heart.style.animationDelay = `${i * 0.08}s`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1200);
+      }
+      ctx2.toast(r.gift > 0 ? `${r.line} ${"\u{1FA99}+2!"}` : r.line);
+      rerender(sceneId);
+    }
     if (state2.pet && PET_BY_ID[state2.pet]) {
       const pet = document.createElement("div");
       pet.className = "hub-pet";
@@ -11654,7 +11782,8 @@
       row.className = "row" + (available ? "" : " locked") + (done ? " done" : "");
       if (firstUnsolved && p.id === firstUnsolved.id) row.dataset.scrollTarget = "1";
       const stars = "\u2605".repeat(p.difficulty) + "\u2606".repeat(5 - p.difficulty);
-      const isDaily = available && !done && isDailyPuzzle(state2, p.id);
+      const dailyClaimed = state2.lastDailyBonus === todayKey();
+      const isDaily = available && !done && !dailyClaimed && isDailyPuzzle(state2, p.id);
       row.innerHTML = `
       <span class="icon">${available ? done ? "\u{1F3EE}" : "\u{1F9E9}" : "\u{1F512}"}</span>
       <span class="grow">
@@ -12345,30 +12474,14 @@ ${item2.description}
   }
 
   // src/ui/shopView.js
-  function renderShop(container, ctx2) {
+  function buildBuyList(container, ctx2, items, newIds) {
     const { state: state2 } = ctx2;
-    const head = document.createElement("div");
-    head.className = "panel";
-    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A</h2></div>
-    <div class="muted">\u0417\u0432\u043E\u043D \u043C\u043E\u043D\u0435\u0442, \u0434\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u044B\u0435 \u043F\u043E\u043B\u043A\u0438, \u0442\u0451\u043F\u043B\u044B\u0439 \u0441\u0432\u0435\u0442. \u0410\u0441\u0441\u043E\u0440\u0442\u0438\u043C\u0435\u043D\u0442 \u0440\u0430\u0441\u0442\u0451\u0442 \u0441 \u043F\u043E\u0431\u0435\u0434\u0430\u043C\u0438 \u0440\u044B\u0446\u0430\u0440\u044F.</div>`;
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go("hub"));
-    head.firstElementChild.appendChild(back);
-    container.appendChild(head);
-    container.appendChild(quickNav(ctx2, [
-      { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
-      { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
-    ]));
-    const newIds = new Set(unseenShopItems(state2).map((i) => i.id));
-    const buyPanel = document.createElement("div");
-    buyPanel.className = "panel";
-    buyPanel.innerHTML = "<h3>\u041F\u043E\u043B\u043A\u0438 \u043B\u0430\u0432\u043A\u0438</h3>";
     const buyList = document.createElement("div");
     buyList.className = "list";
-    for (const item2 of shopStock(state2)) {
+    if (items.length === 0) {
+      buyList.innerHTML = '<div class="muted">\u041F\u043E\u043B\u043A\u0438 \u043F\u043E\u043A\u0430 \u043F\u0443\u0441\u0442\u044B \u2014 \u0432\u043E\u0437\u0432\u0440\u0430\u0449\u0430\u0439\u0441\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u0431\u0435\u0434 \u0440\u044B\u0446\u0430\u0440\u044F.</div>';
+    }
+    for (const item2 of items) {
       const row = document.createElement("div");
       row.className = "row" + (newIds.has(item2.id) ? " new-item" : "");
       const priceLabel = item2.sealPrice ? `\u{1F530} ${item2.sealPrice}` : `\u{1FA99} ${item2.price}`;
@@ -12398,7 +12511,7 @@ ${item2.description}
           else if (r.autoEquipped?.slot) ctx2.toast(`\u041A\u0443\u043F\u043B\u0435\u043D\u043E: ${item2.name} \u2014 \u0443\u0436\u0435 \u043D\u0430\u0434\u0435\u0442\u043E!`);
           else ctx2.toast(`\u041A\u0443\u043F\u043B\u0435\u043D\u043E: ${item2.name}. \u041B\u0435\u0436\u0438\u0442 \u0432 \u0441\u0443\u043D\u0434\u0443\u043A\u0435 (\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F).`);
           ctx2.save();
-          rerender();
+          rerenderCurrent();
         } else {
           ctx2.toast(r.error);
         }
@@ -12406,9 +12519,43 @@ ${item2.description}
       row.appendChild(btn);
       buyList.appendChild(row);
     }
-    buyPanel.appendChild(buyList);
+    container.appendChild(buyList);
+  }
+  var currentRerender = () => {
+  };
+  function rerenderCurrent() {
+    currentRerender();
+  }
+  function renderMarket(container, ctx2, shopKey) {
+    const { state: state2 } = ctx2;
+    const shop = SHOPS[shopKey];
+    if (!shop) {
+      ctx2.go("hub", { scene: "square" });
+      return;
+    }
+    const head = document.createElement("div");
+    head.className = "panel";
+    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0">${shop.icon} ${shop.name}</h2></div>
+    <div class="muted">${shop.desc}</div>`;
+    const back = document.createElement("button");
+    back.className = "ghost small";
+    back.textContent = "\u2190 \u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C";
+    back.addEventListener("click", () => ctx2.go("hub", { scene: "square" }));
+    head.firstElementChild.appendChild(back);
+    container.appendChild(head);
+    container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
+      { icon: "\u{1F307}", label: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", screen: "hub", params: { scene: "square" } }
+    ]));
+    const newIds = new Set(unseenShopItems(state2).map((i) => i.id));
+    const buyPanel = document.createElement("div");
+    buyPanel.className = "panel";
+    buyPanel.innerHTML = "<h3>\u0412\u0438\u0442\u0440\u0438\u043D\u0430</h3>";
     container.appendChild(buyPanel);
-    const firstBuy = buyList.querySelector?.("button:not([disabled])");
+    const items = itemsForShop(state2, shopKey, shopStock(state2));
+    buildBuyList(buyPanel, ctx2, items, newIds);
+    const firstBuy = buyPanel.querySelector?.("button:not([disabled])");
     if (firstBuy && (state2.stats.itemsBought || 0) === 0) {
       startTutorial(ctx2, "first_purchase", [
         {
@@ -12419,6 +12566,30 @@ ${item2.description}
         }
       ]);
     }
+    markShopSeen(state2);
+    ctx2.save();
+    currentRerender = () => {
+      container.innerHTML = "";
+      renderMarket(container, ctx2, shopKey);
+    };
+  }
+  function renderShop(container, ctx2) {
+    const { state: state2 } = ctx2;
+    const head = document.createElement("div");
+    head.className = "panel";
+    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+    <h2 style="margin:0">\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u043B\u0430\u0432\u043A\u0438</h2></div>
+    <div class="muted">\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u0434\u043E\u043C\u0430 \u0438 \u0441\u043A\u0443\u043F\u043A\u0430 \u0442\u0432\u043E\u0438\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A. \u0421\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u2014 \u0432 \u043B\u0430\u0432\u043A\u0430\u0445 \u043F\u043B\u043E\u0449\u0430\u0434\u0438.</div>`;
+    const back = document.createElement("button");
+    back.className = "ghost small";
+    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
+    back.addEventListener("click", () => ctx2.go("hub"));
+    head.firstElementChild.appendChild(back);
+    container.appendChild(head);
+    container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
+      { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
+    ]));
     const sellPanel = document.createElement("div");
     sellPanel.className = "panel";
     sellPanel.innerHTML = `<h3>\u041F\u0440\u043E\u0434\u0430\u0442\u044C \u0438\u0437 \u0441\u0443\u043D\u0434\u0443\u043A\u0430 (\u0437\u0430 \u043F\u043E\u043B\u0446\u0435\u043D\u044B)</h3>`;
@@ -12445,7 +12616,7 @@ ${item2.description}
         if (r.ok) {
           ctx2.toast(`\u041F\u0440\u043E\u0434\u0430\u043D\u043E: ${item2.name} \u0437\u0430 ${r.price} \u043C\u043E\u043D\u0435\u0442`);
           ctx2.save();
-          rerender();
+          rerenderCurrent();
         }
       });
       row.appendChild(btn);
@@ -12481,7 +12652,7 @@ ${item2.description}
             ctx2.toast(`${c.name} \u2014 \u0443\u0436\u0435 \u0432 \u043B\u0430\u0432\u043A\u0435!`);
             ctx2.sfx?.("success");
             ctx2.save();
-            rerender();
+            rerenderCurrent();
           } else ctx2.toast(r.error);
         });
       } else {
@@ -12489,7 +12660,7 @@ ${item2.description}
         btn.addEventListener("click", () => {
           toggleCosmetic(state2, c.id);
           ctx2.save();
-          rerender();
+          rerenderCurrent();
         });
       }
       row.appendChild(btn);
@@ -12497,12 +12668,10 @@ ${item2.description}
     }
     cosPanel.appendChild(cosList);
     container.appendChild(cosPanel);
-    markShopSeen(state2);
-    ctx2.save();
-    function rerender() {
+    currentRerender = () => {
       container.innerHTML = "";
       renderShop(container, ctx2);
-    }
+    };
   }
   var compareEl = null;
   function showCompareTip(state2, item2, anchor) {
@@ -12590,6 +12759,7 @@ ${item2.description}
     };
     let lastWorld = null;
     for (const b of BATTLES) {
+      if (b.wanted) continue;
       if (b.world !== lastWorld) {
         lastWorld = b.world;
         const wh = document.createElement("h3");
@@ -13536,6 +13706,17 @@ ${item2.description}
   function soundEnabled() {
     return enabled;
   }
+  function playAudio(src, volume = 1) {
+    if (!enabled || typeof Audio === "undefined") return false;
+    try {
+      const a = new Audio(src);
+      a.volume = volume;
+      a.play().catch(() => false);
+      return true;
+    } catch {
+      return false;
+    }
+  }
   function tone(freq, dur, { type = "sine", gain = 0.08, delay = 0, slide = 0 } = {}) {
     const a = ac();
     if (!a || !enabled) return;
@@ -13588,6 +13769,14 @@ ${item2.description}
       case "moth":
         tone(300, 0.2, { type: "square", gain: 0.04, slide: 80 });
         break;
+      case "purr": {
+        if (playAudio("assets/3d-zvuk-murchanie-koshki_1sec.mp3", 0.7)) break;
+        for (let i = 0; i < 5; i++) {
+          tone(65, 0.09, { type: "sawtooth", gain: 0.05, delay: i * 0.11 });
+          tone(80, 0.09, { type: "sawtooth", gain: 0.03, delay: i * 0.11 + 0.05 });
+        }
+        break;
+      }
       default:
         tone(440, 0.08, { gain: 0.04 });
     }
@@ -13923,12 +14112,66 @@ ${item2.description}
       el.classList.add("occupied", "enemy");
       field.appendChild(el);
     });
+    let unitDrag = null;
+    let hoverSlotEl = null;
+    function findSlotAt(x, y) {
+      for (let s = 0; s < 6; s++) {
+        const el = slotEls[`ally${s}`];
+        if (!el) continue;
+        const r = el.getBoundingClientRect();
+        if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return s;
+      }
+      return null;
+    }
+    function onDragMove(ev) {
+      if (!unitDrag) return;
+      if (!unitDrag.active) {
+        if (Math.hypot(ev.clientX - unitDrag.startX, ev.clientY - unitDrag.startY) < 8) return;
+        const u = units.find((x) => x.key === unitDrag.key);
+        if (!u) return;
+        const ghost = document.createElement("div");
+        ghost.className = "drag-ghost";
+        ghost.textContent = u.icon;
+        document.body.appendChild(ghost);
+        unitDrag.ghost = ghost;
+        unitDrag.active = true;
+        selectedUnit = null;
+        ctx2.sfx?.("tap");
+      }
+      unitDrag.ghost.style.transform = `translate(${ev.clientX - 22}px, ${ev.clientY - 22}px)`;
+      const slot = findSlotAt(ev.clientX, ev.clientY);
+      if (slot !== unitDrag.hoverSlot) {
+        hoverSlotEl?.classList.remove("selected");
+        hoverSlotEl = slot !== null ? slotEls[`ally${slot}`] : null;
+        hoverSlotEl?.classList.add("selected");
+        unitDrag.hoverSlot = slot;
+      }
+    }
+    function onDragEnd() {
+      if (!unitDrag) return;
+      const { key, active, hoverSlot, ghost } = unitDrag;
+      ghost?.remove();
+      hoverSlotEl?.classList.remove("selected");
+      unitDrag = null;
+      if (!active || hoverSlot === null || hoverSlot === void 0) return;
+      moveFormationSlot(state2, key, hoverSlot);
+      ctx2.sfx?.("rotate");
+      ctx2.save();
+      rerender();
+    }
+    window.addEventListener("pointermove", onDragMove);
+    window.addEventListener("pointerup", onDragEnd);
     for (const u of units) {
       const slot = state2.formation[u.key];
       const host = slotEls[`ally${slot}`];
       if (!host) continue;
       host.classList.add("occupied");
       host.innerHTML = `<span class="fs-icon">${u.icon}</span><span class="fs-name">${u.name}</span>`;
+      host.style.touchAction = "none";
+      host.addEventListener("pointerdown", (ev) => {
+        unitDrag = { key: u.key, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hoverSlot: null };
+        ev.preventDefault();
+      });
       host.addEventListener("click", (ev) => {
         ev.stopPropagation?.();
         selectedUnit = selectedUnit === u.key ? null : u.key;
@@ -14163,6 +14406,11 @@ ${item2.description}
       }
       step();
     }
+    return () => {
+      window.removeEventListener("pointermove", onDragMove);
+      window.removeEventListener("pointerup", onDragEnd);
+      if (unitDrag?.ghost) unitDrag.ghost.remove();
+    };
   }
 
   // src/ui/seekEditorView.js
@@ -14649,6 +14897,13 @@ ${item2.description}
       name: "\u041E\u0440\u043B\u0438\u043D\u044B\u0439 \u0433\u043B\u0430\u0437",
       desc: "\u041F\u0440\u043E\u0439\u0442\u0438 \u0432\u0441\u0435 \u0438\u0441\u043A\u0430\u043B\u043A\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
       check: (s, ctx2) => ctx2.seekIds.every((id) => s.puzzlesDone[id])
+    },
+    {
+      id: "cat_friend",
+      icon: "\u{1F408}",
+      name: "\u041C\u0443\u0440\u043B\u044B\u043A\u0430\u043B\u043E",
+      desc: "\u041F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C \u043A\u043E\u0442\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F 25 \u0440\u0430\u0437.",
+      check: (s) => (s.stats.catPets || 0) >= 25
     }
   ];
   function checkAchievements(state2, ctx2) {
@@ -14692,6 +14947,145 @@ ${item2.description}
     }
     container.appendChild(list);
     container.appendChild(quickNav(ctx2, [{ icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }]));
+  }
+
+  // src/ui/boardView.js
+  var BASE_LETTERS = [
+    { icon: "\u{1F9FA}", from: "\u041F\u0440\u0430\u0447\u043A\u0430 \u0441 \u0440\u0435\u043A\u0438", text: "\u041A\u0442\u043E-\u0442\u043E \u043D\u0430\u043A\u043E\u043B\u043E\u0442\u0438\u043B \u0434\u0440\u043E\u0432 \u0443 \u043C\u043E\u0435\u0433\u043E \u043F\u043B\u043E\u0442\u0430 \u0438 \u043D\u0435 \u0432\u0437\u044F\u043B \u043F\u043B\u0430\u0442\u0443. \u0415\u0441\u043B\u0438 \u044D\u0442\u043E \u0432\u0430\u0448\u0430 \u043B\u0430\u0432\u043A\u0430 \u2014 \u0441\u043F\u0430\u0441\u0438\u0431\u043E!" },
+    { icon: "\u{1F9D9}\u200D\u2640\uFE0F", from: "\u0422\u0440\u0430\u0432\u043D\u0438\u0446\u0430 \u0441 \u0442\u043E\u043F\u0435\u0439", text: "\u042F\u0433\u043E\u0434\u044B \u0441\u043D\u043E\u0432\u0430 \u0441\u0432\u0435\u0442\u044F\u0442\u0441\u044F. \u0417\u043D\u0430\u0447\u0438\u0442, \u043A\u0442\u043E-\u0442\u043E \u0437\u0430\u0431\u043E\u0442\u0438\u0442\u0441\u044F \u043E \u043C\u0438\u0440\u0435. \u0417\u0430\u0445\u043E\u0434\u0438\u0442\u0435 \u0437\u0430 \u043E\u0442\u0432\u0430\u0440\u043E\u043C." },
+    { icon: "\u{1F468}\u200D\u{1F33E}", from: "\u0424\u0435\u0440\u043C\u0435\u0440 \u0441 \u044E\u0433\u0430", text: "\u041C\u043E\u044F \u043A\u043E\u0437\u0430 \u0437\u0430\u0431\u043B\u0443\u0434\u0438\u043B\u0430\u0441\u044C \u0438 \u0432\u0435\u0440\u043D\u0443\u043B\u0430\u0441\u044C \u0441\u044B\u0442\u0430\u044F. \u041D\u0430 \u043E\u0448\u0435\u0439\u043D\u0438\u043A\u0435 \u2014 \u043B\u0435\u043D\u0442\u043E\u0447\u043A\u0430 \u0432\u0430\u0448\u0435\u0439 \u043B\u0430\u0432\u043A\u0438." },
+    { icon: "\u{1F4DA}", from: "\u0411\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0440\u044C", text: "\u0428\u0451\u043F\u043E\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446 \u0441\u0442\u0430\u043B \u0434\u043E\u0431\u0440\u0435\u0435. \u0414\u0435\u0440\u0436\u0438\u0442\u0435 \u044D\u0442\u043E \u0432 \u0441\u0435\u043A\u0440\u0435\u0442\u0435, \u043D\u043E \u044F \u0441\u043A\u0443\u0447\u0430\u044E \u043F\u043E \u043A\u043B\u044F\u043A\u0441\u0430\u043C." },
+    { icon: "\u{1F56F}\uFE0F", from: "\u0424\u043E\u043D\u0430\u0440\u0449\u0438\u043A", text: "\u0424\u043E\u043D\u0430\u0440\u0438 \u043D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u0433\u043E\u0440\u044F\u0442 \u044F\u0440\u0447\u0435 \u0441 \u0442\u0435\u0445 \u043F\u043E\u0440, \u043A\u0430\u043A \u043B\u0430\u0432\u043A\u0430 \u043E\u0442\u043A\u0440\u044B\u043B\u0430\u0441\u044C. \u0421\u0442\u0440\u0430\u043D\u043D\u043E, \u043F\u0440\u0430\u0432\u0434\u0430?" },
+    { icon: "\u{1F40C}", from: "\u041F\u043E\u0447\u0442\u0430\u043B\u044C\u043E\u043D-\u0443\u043B\u0438\u0442\u043A\u0430", text: "\u041C\u0435\u0434\u043B\u0435\u043D\u043D\u043E, \u043D\u043E \u0432\u0435\u0440\u043D\u043E: \u043F\u0438\u0441\u044C\u043C\u043E \u0448\u043B\u043E \u0442\u0440\u0438 \u0434\u043D\u044F. \u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435, \u043A\u0430\u043A \u0432\u0441\u0435\u0433\u0434\u0430." }
+  ];
+  function playerLetters(state2) {
+    const out = [];
+    if (state2.battlesDone.bt_boss_willow) {
+      out.push({ icon: "\u{1F333}", from: "\u041B\u0435\u0441\u043D\u0438\u043A \u0441 \u043E\u043F\u0443\u0448\u043A\u0438", text: "\u0421\u0442\u0430\u0440\u0430\u044F \u0438\u0432\u0430 \u0441\u043D\u043E\u0432\u0430 \u0448\u0443\u043C\u0438\u0442 \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u043E. \u041F\u0435\u0440\u0435\u0434\u0430\u0439\u0442\u0435 \u0440\u044B\u0446\u0430\u0440\u044E \u2014 \u043A\u043E\u0440\u043D\u0438 \u0435\u0433\u043E \u043F\u043E\u043C\u043D\u044F\u0442." });
+    }
+    if (state2.battlesDone.bt_boss_captain) {
+      out.push({ icon: "\u{1F482}", from: "\u0421\u0442\u0440\u0430\u0436\u0430 \u0434\u0432\u043E\u0440\u0438\u043A\u0430", text: "\u041A\u0430\u043F\u0438\u0442\u0430\u043D \u043D\u0430\u043A\u043E\u043D\u0435\u0446 \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442. \u0412\u0430\u0448 \u0440\u044B\u0446\u0430\u0440\u044C \u0431\u0443\u0434\u0435\u0442 \u0443\u043F\u043E\u043C\u044F\u043D\u0443\u0442 \u0432 \u0440\u0430\u043F\u043E\u0440\u0442\u0435. \u041A\u0443\u0440\u0441\u0438\u0432\u043E\u043C." });
+    }
+    if (state2.battlesDone.bk_boss_keeper) {
+      out.push({ icon: "\u{1F4D6}", from: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0447\u0435\u0440\u0434\u0430\u043A\u0430", text: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0434\u043E\u043F\u0438\u0441\u0430\u043D\u0430. \u0422\u0438\u0448\u0438\u043D\u0430 \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0435 \u0441\u0442\u0430\u043B\u0430 \u0442\u0451\u043F\u043B\u043E\u0439." });
+    }
+    if ((state2.crew || []).length >= 3) {
+      out.push({ icon: "\u{1F37A}", from: "\u0425\u043E\u0437\u044F\u0438\u043D \u0442\u0430\u0432\u0435\u0440\u043D\u044B", text: "\u0412\u0430\u0448\u0438 \u043B\u044E\u0434\u0438 \u043F\u043B\u0430\u0442\u044F\u0442 \u0447\u0435\u0441\u0442\u043D\u043E \u0438 \u043F\u043E\u044E\u0442 \u0442\u0438\u0445\u043E. \u0422\u0430\u043A\u0438\u0445 \u043E\u0442\u0440\u044F\u0434\u043E\u0432 \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442." });
+    }
+    if (Object.keys(state2.puzzlesDone).length >= 20) {
+      out.push({ icon: "\u{1F9E9}", from: "\u0421\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044C \u0441 \u0440\u044B\u043D\u043A\u0430", text: "\u041F\u0440\u043E \u0432\u0430\u0448\u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u0443\u0436\u0435 \u0440\u0430\u0441\u0441\u043A\u0430\u0437\u044B\u0432\u0430\u044E\u0442 \u0434\u0435\u0442\u044F\u043C. \u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u0437\u0430\u0433\u0430\u0434\u043E\u043A! \u0425\u043E\u0434\u044F\u0442 \u043B\u0435\u0433\u0435\u043D\u0434\u044B." });
+    }
+    if ((state2.stats.catPets || 0) >= 10) {
+      out.push({ icon: "\u{1F408}", from: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C", text: "\u041C\u044F\u0443. \u041C\u044F\u0443-\u043C\u044F\u0443. \u041C\u0420\u0420\u0420\u0420. (\u041F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u043E: \u043F\u043E\u0439\u043C\u0430\u043D\u043D\u044B\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A.)" });
+    }
+    return out;
+  }
+  function seededLetters(state2) {
+    const day = todayKey();
+    let h = 2166136261;
+    for (const c of day) h = Math.imul(h ^ c.codePointAt(0), 16777619);
+    const pool = [...playerLetters(state2), ...BASE_LETTERS];
+    const count = Math.min(pool.length, 4);
+    const picked = [];
+    for (let i = 0; i < count; i++) {
+      h = h * 1664525 + 1013904223 >>> 0;
+      picked.push(pool.splice(h % pool.length, 1)[0]);
+    }
+    return picked;
+  }
+  var CHANGELOG = [
+    ["0.9", "\u0416\u0438\u0432\u0430\u044F \u043B\u0430\u0432\u043A\u0430: \u043C\u0443\u0437\u044B\u043A\u0430, \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u044F, \u0434\u043D\u0435\u0432\u043D\u0438\u043A \u043A\u043E\u0442\u0430, \u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F; \u043C\u0435\u0445\u0430\u043D\u0438\u043A\u0438 \u2014 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u044B, \u0441\u0432\u0435\u0447\u0438, \u043F\u043E\u0442\u043E\u043A\u0438; 86 \u0437\u0430\u0433\u0430\u0434\u043E\u043A, 200 \u0431\u043E\u0451\u0432, 12 \u043C\u0438\u0440\u043E\u0432."],
+    ["0.8", "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C, \u0438\u0441\u043A\u0430\u043B\u043A\u0438 \u043F\u043E \u043D\u0430\u0440\u0438\u0441\u043E\u0432\u0430\u043D\u043D\u044B\u043C \u0441\u0446\u0435\u043D\u0430\u043C, \u0440\u0435\u0434\u0430\u043A\u0442\u043E\u0440 \u0445\u043E\u0442\u0441\u043F\u043E\u0442\u043E\u0432, \u0447\u0438\u0442-\u043A\u043E\u0434\u044B, \u043F\u0430\u0443\u0447\u043E\u043A-\u0441\u043A\u0440\u043E\u043B\u043B\u0431\u0430\u0440."],
+    ["0.7", "\u0420\u0435\u0436\u0438\u043C \u0431\u043E\u044F \xAB\u0421\u0431\u043E\u0440\xBB \u0441 \u0440\u044F\u0434\u0430\u043C\u0438 \u0438 \u0440\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u043E\u0439; \u044D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430."],
+    ["0.6", "\u041C\u0438\u0440\u044B \u0438 \u0446\u0435\u043F\u043E\u0447\u043A\u0438 \u0431\u043E\u0451\u0432, \u043E\u0442\u0440\u044F\u0434 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432, \u043A\u0440\u0430\u0444\u0442, \u043A\u043E\u0441\u043C\u0435\u0442\u0438\u043A\u0430 \u043B\u0430\u0432\u043A\u0438."],
+    ["0.5", "\u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A \u0438 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0444\u0440\u0430\u0437; \u0435\u0437\u0434\u043E\u0432\u044B\u0435 \u0438 \u043B\u0435\u0442\u0430\u044E\u0449\u0438\u0435 \u043F\u0438\u0442\u043E\u043C\u0446\u044B."],
+    ["0.4", "\u041F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432, \u043F\u043E\u043B\u043A\u0438 \u0438 \u0442\u043E\u0432\u0430\u0440\u044B, \u0442\u0430\u0432\u0435\u0440\u043D\u0430, \u0437\u0432\u0443\u043A."],
+    ["0.3", "\u0421\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438: \u043F\u0435\u0440\u0432\u0430\u044F \u043C\u0435\u0445\u0430\u043D\u0438\u043A\u0430, \u043F\u0435\u0440\u0432\u044B\u0439 \u0440\u044B\u0446\u0430\u0440\u044C, \u043F\u0435\u0440\u0432\u044B\u0439 \u0430\u0432\u0442\u043E\u0431\u043E\u0439."]
+  ];
+  var PAPER_COLORS = ["#f7ead7", "#f3dfca", "#e8d8f0", "#d8e8d0", "#fde8e0", "#e0ecf5", "#f5f0d8"];
+  function renderBoard(container, ctx2) {
+    const { state: state2 } = ctx2;
+    container.appendChild(header(ctx2, "\u0414\u043E\u0441\u043A\u0430 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0439", "\u0411\u0443\u043C\u0430\u0436\u043A\u0438 \u043D\u0430 \u0434\u043E\u0441\u043A\u0435 \u0443 \u0444\u043E\u043D\u0442\u0430\u043D\u0430. \u0422\u0430\u043F\u043D\u0438 \u2014 \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0435\u0448\u044C.", "hub"));
+    const board = document.createElement("div");
+    board.className = "board-frame";
+    let colorIdx = 0;
+    const addNote = (opts) => {
+      const note = document.createElement("button");
+      note.className = "paper-note";
+      const rot = colorIdx * 7 % 13 - 6;
+      note.style.setProperty("--rot", `${rot}deg`);
+      note.style.background = PAPER_COLORS[colorIdx++ % PAPER_COLORS.length];
+      note.innerHTML = `<span class="pn-icon">${opts.icon}</span><span class="pn-title">${opts.title}</span>`;
+      note.addEventListener("click", (ev) => unfoldNote(ev.currentTarget, opts));
+      board.appendChild(note);
+    };
+    for (const l of seededLetters(state2)) {
+      addNote({
+        icon: l.icon,
+        title: `\u041F\u0438\u0441\u044C\u043C\u043E: ${l.from}`,
+        kind: "letter",
+        heading: `\u2709\uFE0F ${l.from}`,
+        body: l.text
+      });
+    }
+    for (const w of WANTED_BATTLES) {
+      const available = battleAvailable(state2, w.id);
+      const done = !!state2.battlesDone[w.id];
+      const icons = w.enemies.map((e) => ENEMY_BY_ID[typeof e === "string" ? e : e.id].icon).join(" ");
+      addNote({
+        icon: "\u{1F3AF}",
+        title: w.name.replace("\u0420\u043E\u0437\u044B\u0441\u043A: ", "\u0420\u041E\u0417\u042B\u0421\u041A"),
+        kind: "wanted",
+        heading: `\u{1F3AF} ${w.name}`,
+        body: `${available ? w.tip : "\u041F\u043E\u0431\u0435\u0434\u0438 \u0431\u043E\u0441\u0441\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0433\u043E \u043C\u0438\u0440\u0430, \u0438 \u043B\u0438\u0441\u0442 \u043F\u043E\u044F\u0432\u0438\u0442\u0441\u044F."}<br><br>\u041F\u0440\u043E\u0442\u0438\u0432: ${icons}`,
+        action: available ? { label: done ? "\u2694\uFE0F \u0421\u043D\u043E\u0432\u0430 \u043B\u043E\u0432\u0438\u0442\u044C" : "\u2694\uFE0F \u041B\u043E\u0432\u0438\u0442\u044C!", go: () => ctx2.go("battle", { id: w.id }) } : null,
+        done
+      });
+    }
+    addNote({
+      icon: "\u{1F4DC}",
+      title: "\u041B\u0435\u0442\u043E\u043F\u0438\u0441\u044C \u043B\u0430\u0432\u043A\u0438",
+      kind: "log",
+      heading: "\u{1F4DC} \u0418\u0441\u0442\u043E\u0440\u0438\u044F \u043B\u0430\u0432\u043A\u0438",
+      body: CHANGELOG.map(([v, t]) => `<b>v${v}</b> \u2014 ${t}`).join("<br><br>")
+    });
+    container.appendChild(board);
+    container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F307}", label: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", screen: "hub", params: { scene: "square" }, primary: true }
+    ]));
+    function unfoldNote(noteEl, opts) {
+      ctx2.sfx?.("hint");
+      const overlay = document.createElement("div");
+      overlay.className = "overlay paper-overlay";
+      const paper = document.createElement("div");
+      paper.className = "paper-full";
+      paper.style.background = noteEl.style.background;
+      paper.innerHTML = `
+      <div class="pf-pin">\u{1F4CC}</div>
+      <h3>${opts.heading}</h3>
+      <div class="pf-body">${opts.body}</div>
+      <div class="pf-actions"></div>`;
+      const actions = paper.querySelector(".pf-actions");
+      if (opts.action) {
+        const btn = document.createElement("button");
+        btn.className = "primary";
+        btn.textContent = opts.action.label;
+        btn.addEventListener("click", () => {
+          overlay.remove();
+          opts.action.go();
+        });
+        actions.appendChild(btn);
+      }
+      const close = document.createElement("button");
+      close.textContent = "\u041F\u0440\u0438\u0431\u0438\u0442\u044C \u043E\u0431\u0440\u0430\u0442\u043D\u043E \u{1F4CC}";
+      close.addEventListener("click", () => overlay.remove());
+      actions.appendChild(close);
+      overlay.appendChild(paper);
+      overlay.addEventListener("click", (ev) => {
+        if (ev.target === overlay) overlay.remove();
+      });
+      document.body.appendChild(overlay);
+    }
   }
 
   // src/ui/app.js
@@ -14740,7 +15134,12 @@ ${item2.description}
     craft: (c, p) => renderCraft(c, ctx, p),
     settings: (c, p) => renderSettings(c, ctx, p),
     seekeditor: (c, p) => p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p),
-    achievements: (c, p) => renderAchievements(c, ctx, p)
+    achievements: (c, p) => renderAchievements(c, ctx, p),
+    board: (c, p) => renderBoard(c, ctx, p),
+    shopArmory: (c) => renderMarket(c, ctx, "armory"),
+    shopArmorer: (c) => renderMarket(c, ctx, "armorer"),
+    shopMagic: (c) => renderMarket(c, ctx, "magic"),
+    shopAlchemy: (c) => renderMarket(c, ctx, "alchemy")
   };
   var currentCleanup = null;
   function go(name, params = {}) {

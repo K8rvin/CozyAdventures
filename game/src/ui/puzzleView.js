@@ -5,7 +5,7 @@ import {
 import { hint as solverHint } from '../core/solver.js';
 import {
   puzzleAvailable, completePuzzle, findPuzzle, ALL_PUZZLES,
-  nextPuzzle, firstUnsolvedPuzzle, isDailyPuzzle, dailyPuzzle,
+  nextPuzzle, firstUnsolvedPuzzle, isDailyPuzzle, dailyPuzzle, todayKey,
 } from '../core/state.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { renderShelfPuzzle } from './shelfView.js';
@@ -57,7 +57,9 @@ export function renderPuzzleList(container, ctx) {
     row.className = 'row' + (available ? '' : ' locked') + (done ? ' done' : '');
     if (firstUnsolved && p.id === firstUnsolved.id) row.dataset.scrollTarget = '1';
     const stars = '★'.repeat(p.difficulty) + '☆'.repeat(5 - p.difficulty);
-    const isDaily = available && !done && isDailyPuzzle(state, p.id);
+    // «Заказ дня ×2» виден только пока бонус не забран сегодня
+    const dailyClaimed = state.lastDailyBonus === todayKey();
+    const isDaily = available && !done && !dailyClaimed && isDailyPuzzle(state, p.id);
     row.innerHTML = `
       <span class="icon">${available ? (done ? '🏮' : '🧩') : '🔒'}</span>
       <span class="grow">
