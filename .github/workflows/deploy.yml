@@ -29,9 +29,17 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      # На сайт идёт только то, что нужно игре в рантайме
+      - name: Stage site
+        working-directory: game
+        run: |
+          mkdir -p ../site
+          cp index.html bundle.js styles.css ../site/
+          cp -r assets ../site/
+          touch ../site/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: game
+          path: site
 
   deploy:
     needs: build
