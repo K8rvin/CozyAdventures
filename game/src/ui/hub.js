@@ -55,7 +55,7 @@ export function renderHub(container, ctx, params = {}) {
       hotspots: [
         ['📚', 'Головоломки', 'puzzles', 10, 42, () => solved === 0],
         ['🪙', 'Прилавок', 'shop', 43, 55, () => (solved > 0 && !firstPurchaseDone) || unseenShopItems(state).length > 0],
-        ['🛡️', 'Комната рыцаря', 'equip', 68, 46, () => false],
+        ['🛡️', 'Комната рыцаря', 'equip', 68, 50, () => false],
         ['🌆', 'На площадь', '@square', 77, 52, () => false],
         ['🪟', 'В поход', 'battles', 93, 45, () => firstPurchaseDone && won === 0],
       ],
