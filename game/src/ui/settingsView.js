@@ -1,4 +1,4 @@
-// Настройки игры: режим боя, звук, обучение, новая игра и тайные места.
+// Настройки игры: звук, обучение, новая игра и тайные места.
 import { header } from './common.js';
 import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js';
 import { applyCheat } from '../core/state.js';
@@ -9,41 +9,6 @@ export function renderSettings(container, ctx) {
 
   const panel = document.createElement('div');
   panel.className = 'panel';
-
-  // --- Режим боя ---
-  const modeTitle = document.createElement('h3');
-  modeTitle.textContent = 'Режим боя';
-  panel.appendChild(modeTitle);
-
-  const modes = [
-    {
-      id: 'formation', icon: '⚔️', name: 'Сбор (поле боя)',
-      desc: 'Ряды и порядок бойцов: танки вперёд, стрелки назад. Расстановка перед боем, фигурки, выстрелы и удары.',
-    },
-    {
-      id: 'classic', icon: '📜', name: 'Простой',
-      desc: 'Спокойный автобой: лог событий и карточки юнитов. Как было изначально.',
-    },
-  ];
-  for (const m of modes) {
-    const row = document.createElement('div');
-    row.className = 'row' + (state.settings.battleMode === m.id ? ' done' : '');
-    row.style.cursor = 'pointer';
-    row.innerHTML = `
-      <span class="icon">${m.icon}</span>
-      <span class="grow">
-        <div class="name">${m.name}</div>
-        <div class="desc">${m.desc}</div>
-      </span>
-      <span class="price">${state.settings.battleMode === m.id ? '✓' : ''}</span>`;
-    row.addEventListener('click', () => {
-      state.settings.battleMode = m.id;
-      ctx.sfx?.('tap');
-      ctx.save();
-      rerender();
-    });
-    panel.appendChild(row);
-  }
 
   // --- Звук ---
   const soundTitle = document.createElement('h3');

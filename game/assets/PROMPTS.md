@@ -363,8 +363,8 @@ not readable letters, no watermark --ar 4:3
 
 ## 9. Кот лавки и спутники — assets/crew/*.png (белый фон, полный рост)
 
-Кот живёт в лавке всегда (лежит на подушке, клик = погладить). Спутники
-появляются после найма, даже если не в отряде. Тот же стиль storybook
+Кот-хранитель и спутники появляются после найма, даже если не в отряде.
+Кот лежит на подушке, клик = погладить. Тот же стиль storybook
 watercolor, что питомцы и сцены.
 ФОН: проси ровный белый (`plain solid white background`) — НЕ «transparent
 background», иначе модель рисует серо-белые клетки псевдо-прозрачности,
@@ -379,7 +379,7 @@ solid white background, no ground, no shadow, no text, cozy fantasy game
 character
 ```
 
-### 9.1 cat.png — кот лавки на подушке (показывается всегда)
+### 9.1 cmp_cat.png — Кот-хранитель на подушке (появляется после найма)
 
 ВАЖНО: этот арт кладётся ПОВЕРХ кота, уже нарисованного в hub_banner —
 нужно полностью перекрыть нарисованных кота и подушку. В кадре ТОЛЬКО
@@ -429,7 +429,7 @@ brown, full body, three-quarter view facing left, isolated on a plain solid
 white background, no ground, no shadow, no text, cozy fantasy game character
 ```
 
-Сохранять как `assets/crew/cat.png`, `cmp_firefly.png`, `cmp_herbalist.png`,
+Сохранять как `assets/crew/cmp_cat.png`, `cmp_firefly.png`, `cmp_herbalist.png`,
 `cmp_smith.png` и прислать мне — вырежу белый фон скриптом, сохраню
 как прозрачные PNG, и игра подхватит их автоматически (без файла
 показывает иконку-эмодзи). Если тулза умеет настоящий PNG с альфой —

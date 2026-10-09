@@ -18,7 +18,6 @@ if (!world) {
 // Типовой эндгейм-билд: топовая экипировка трёх ярусов + полный отряд.
 function endgameState() {
   const s = newGame();
-  s.settings.battleMode = 'formation';
   s.coins = 99999;
   s.seals = 99;
   // Разблокируем все бои, чтобы runBattle работал по цепочке мира

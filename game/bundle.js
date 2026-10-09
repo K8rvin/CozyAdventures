@@ -6826,382 +6826,9 @@
   }
   var ENEMY_BY_ID = Object.fromEntries(ENEMIES.map((e) => [e.id, e]));
 
-  // src/core/battle.js
+  // src/core/formBattle.js
   var GAUGE_FULL = 100;
   var MAX_TICKS = 5e3;
-  function makeEnemy(id, scale = 1) {
-    const def = ENEMY_BY_ID[id];
-    const hp = Math.round(def.hp * scale);
-    return {
-      id,
-      side: "enemy",
-      name: def.name,
-      icon: def.icon,
-      boss: !!def.boss,
-      hp,
-      maxHp: hp,
-      attack: Math.round(def.attack * scale),
-      armor: Math.round(def.armor * scale),
-      speed: def.speed,
-      crit: def.crit || 0,
-      dodge: def.dodge || 0,
-      block: 0,
-      elem: def.elem || "phys",
-      skills: def.skills || [],
-      tags: def.tags || [],
-      resist: {},
-      statuses: [],
-      gauge: 0,
-      cooldowns: {},
-      stats: { dealt: 0, taken: 0 }
-    };
-  }
-  function makeKnight(knightStats, traits, consumables) {
-    const statuses = [];
-    if ((traits || []).includes("regen_ally")) {
-      statuses.push({ kind: "regen", ticks: 9999, dmg: 1, source: "\u0422\u0440\u0430\u0432\u043D\u0438\u0446\u0430" });
-    }
-    const resist = { ...knightStats.resist || {} };
-    if ((traits || []).includes("fearless")) resist.fear = 1;
-    const potions = (consumables || []).map((c) => {
-      const p = { ...c, used: false };
-      if (p.effect?.kind === "shield" && p.effect.atStart) {
-        statuses.push({ kind: "shield", amount: p.effect.amount });
-        p.used = true;
-      }
-      return p;
-    });
-    return {
-      id: "knight",
-      side: "ally",
-      name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438",
-      icon: "\u{1F6E1}\uFE0F",
-      hp: knightStats.hp,
-      maxHp: knightStats.hp,
-      attack: knightStats.attack,
-      armor: knightStats.armor,
-      speed: knightStats.speed,
-      crit: knightStats.crit,
-      dodge: knightStats.dodge,
-      block: knightStats.block,
-      elem: "phys",
-      skills: [],
-      tags: [],
-      traits: traits || [],
-      resist,
-      potions,
-      statuses,
-      gauge: 0,
-      cooldowns: {},
-      stats: { dealt: 0, taken: 0, sleptTicks: 0, poisonTicks: 0 }
-    };
-  }
-  function makeMerc(def) {
-    return {
-      id: def.id,
-      side: "ally",
-      name: def.name,
-      icon: def.icon,
-      hp: def.hp,
-      maxHp: def.hp,
-      attack: def.attack,
-      armor: def.armor,
-      speed: def.speed,
-      crit: def.crit || 0,
-      dodge: def.dodge || 0,
-      block: def.block || 0,
-      elem: "phys",
-      skills: def.skills || [],
-      tags: def.tags || [],
-      resist: {},
-      traits: [],
-      statuses: [],
-      gauge: 0,
-      cooldowns: {},
-      stats: { dealt: 0, taken: 0 }
-    };
-  }
-  function hasStatus(u, kind) {
-    return u.statuses.some((s) => s.kind === kind);
-  }
-  function addStatus(u, status2) {
-    const existing = u.statuses.find((s) => s.kind === status2.kind);
-    if (existing) Object.assign(existing, status2);
-    else u.statuses.push(status2);
-  }
-  function resistOf(u, kind) {
-    return u.resist[kind] || 0;
-  }
-  function computeDamage(attacker, defender, rng, log, opts = {}) {
-    if (!opts.neverMiss && rng.chance(defender.dodge)) {
-      log.push({ t: "dodge", who: defender.name, uid: defender.uid });
-      return 0;
-    }
-    let mult = 1;
-    if (attacker.traits?.includes("bonus_spirit") && defender.tags?.includes("spirit")) mult *= 1.3;
-    const elem = opts.elem || attacker.elem || "phys";
-    if (elem !== "phys") mult *= 1 - resistOf(defender, elem);
-    let armor = defender.armor;
-    if (attacker.traits?.includes("pierce")) armor *= 0.5;
-    mult *= 100 / (100 + Math.max(0, armor));
-    let crit = false;
-    if (rng.chance(attacker.crit)) {
-      mult *= 1.75;
-      crit = true;
-    }
-    if (hasStatus(attacker, "fear")) mult *= 0.7;
-    let blocked = false;
-    if (rng.chance(defender.block)) {
-      mult *= 0.6;
-      blocked = true;
-    }
-    if (defender.traits?.includes("first_hit_reduction") && defender.stats.taken === 0) mult *= 0.8;
-    const raw = (opts.base ?? attacker.attack) * (opts.skillMult || 1) * mult;
-    const dmg = Math.max(1, Math.round(raw));
-    let remaining = dmg;
-    const shield = defender.statuses.find((s) => s.kind === "shield");
-    if (shield) {
-      const absorbed = Math.min(shield.amount, remaining);
-      shield.amount -= absorbed;
-      remaining -= absorbed;
-      if (shield.amount <= 0) defender.statuses = defender.statuses.filter((s) => s !== shield);
-    }
-    defender.hp -= remaining;
-    defender.stats.taken += remaining;
-    attacker.stats.dealt += remaining;
-    log.push({
-      t: "hit",
-      from: attacker.name,
-      to: defender.name,
-      fromUid: attacker.uid,
-      toUid: defender.uid,
-      dmg: remaining,
-      crit,
-      blocked,
-      elem
-    });
-    return remaining;
-  }
-  function tryApplyStatus(attacker, defender, kind, chance, status2, rng, log) {
-    const effective = chance * (1 - resistOf(defender, kind));
-    if (rng.chance(effective)) {
-      addStatus(defender, status2);
-      log.push({ t: "status", who: defender.name, uid: defender.uid, kind });
-      return true;
-    }
-    return false;
-  }
-  function pickTarget(attacker, foes, rng) {
-    const alive = foes.filter((f) => f.hp > 0);
-    if (alive.length === 0) return null;
-    if (attacker.traits?.includes("ranged") || attacker.tags?.includes("ranged")) {
-      return alive.reduce((a, b) => a.hp < b.hp ? a : b);
-    }
-    return rng.pick(alive);
-  }
-  function checkPotions(unit, log) {
-    if (!unit.potions || unit.hp <= 0) return;
-    for (const p of unit.potions) {
-      if (p.used) continue;
-      if (p.effect.kind === "heal" && unit.hp / unit.maxHp <= p.effect.atHpBelow) {
-        p.used = true;
-        const healed = Math.min(p.effect.amount, unit.maxHp - unit.hp);
-        unit.hp += healed;
-        log.push({ t: "potion", who: unit.name, uid: unit.uid, name: p.name, healed });
-      }
-      if (p.effect.kind?.startsWith("cleanse_")) {
-        const statusKind = p.effect.kind.slice(8);
-        if (hasStatus(unit, statusKind)) {
-          p.used = true;
-          unit.statuses = unit.statuses.filter((s) => s.kind !== statusKind);
-          if (p.effect.resistAfter) {
-            for (const [k, v] of Object.entries(p.effect.resistAfter)) {
-              unit.resist[k] = Math.max(unit.resist[k] || 0, v);
-            }
-          }
-          log.push({ t: "potion", who: unit.name, uid: unit.uid, name: p.name, cleansed: statusKind });
-        }
-      }
-    }
-  }
-  function act(unit, allies, foes, rng, log, tick) {
-    const sleep = unit.statuses.find((s) => s.kind === "sleep");
-    if (sleep) {
-      sleep.ticks -= 1;
-      if (sleep.ticks <= 0) unit.statuses = unit.statuses.filter((s) => s !== sleep);
-      log.push({ t: "sleeps", who: unit.name, uid: unit.uid });
-      return;
-    }
-    const target = pickTarget(unit, foes, rng);
-    if (!target) return;
-    const skill = unit.skills[0] && unit.skills[(unit.cooldowns._next || 0) % unit.skills.length];
-    unit.cooldowns._next = (unit.cooldowns._next || 0) + 1;
-    switch (skill) {
-      case "pollen_sleep":
-        computeDamage(unit, target, rng, log, { skillMult: 0.6 });
-        tryApplyStatus(unit, target, "sleep", 0.3, { kind: "sleep", ticks: 18 }, rng, log);
-        break;
-      case "sting_poison":
-        computeDamage(unit, target, rng, log);
-        tryApplyStatus(unit, target, "poison", 0.5, { kind: "poison", ticks: 40, dmg: 2 }, rng, log);
-        break;
-      case "sting_poison_weak":
-        computeDamage(unit, target, rng, log);
-        tryApplyStatus(unit, target, "poison", 0.25, { kind: "poison", ticks: 30, dmg: 1 }, rng, log);
-        break;
-      case "slow_spores":
-        computeDamage(unit, target, rng, log, { skillMult: 0.7 });
-        tryApplyStatus(unit, target, "slow", 0.5, { kind: "slow", ticks: 40, factor: 0.6 }, rng, log);
-        break;
-      case "heavy_blow":
-        computeDamage(unit, target, rng, log, { skillMult: 1.6 });
-        break;
-      case "spit_fire":
-        computeDamage(unit, target, rng, log, { elem: "fire", skillMult: 1.1 });
-        break;
-      case "fear_chill":
-        computeDamage(unit, target, rng, log, { skillMult: 0.8 });
-        tryApplyStatus(unit, target, "fear", 0.5, { kind: "fear", ticks: 35 }, rng, log);
-        break;
-      case "aimed_shot":
-        computeDamage(unit, target, rng, log, { skillMult: 1.35, neverMiss: true });
-        break;
-      case "regen_ally_skill": {
-        const wounded = allies.filter((a) => a.hp > 0).sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
-        if (wounded && wounded.hp < wounded.maxHp * 0.8) {
-          addStatus(wounded, { kind: "regen", ticks: 25, dmg: 2, source: unit.name });
-          log.push({ t: "status", who: wounded.name, uid: wounded.uid, kind: "regen", from: unit.name });
-        } else {
-          computeDamage(unit, target, rng, log, { skillMult: 0.8 });
-        }
-        break;
-      }
-      default: {
-        if (unit.traits?.includes("cleave_small")) {
-          const alive = foes.filter((f) => f.hp > 0);
-          computeDamage(unit, target, rng, log);
-          for (const other of alive) {
-            if (other !== target) computeDamage(unit, other, rng, log, { skillMult: 0.4 });
-          }
-        } else {
-          computeDamage(unit, target, rng, log);
-        }
-      }
-    }
-  }
-  function simulateBattle(alliesInput, enemyIds, seed = 1) {
-    const rng = makeRng(seed);
-    const allies = Array.isArray(alliesInput) ? alliesInput : [alliesInput];
-    const knight = allies[0];
-    const foes = enemyIds.map((entry) => typeof entry === "string" ? makeEnemy(entry) : makeEnemy(entry.id, entry.scale));
-    allies.forEach((u, i) => {
-      u.uid = `a${i}`;
-    });
-    foes.forEach((u, i) => {
-      u.uid = `e${i}`;
-    });
-    const log = [{ t: "start", allies: allies.map((a) => a.name), foes: foes.map((f) => f.name) }];
-    let tick = 0;
-    while (tick < MAX_TICKS) {
-      tick++;
-      for (const u of [...allies, ...foes]) {
-        if (u.hp <= 0) continue;
-        for (const s of [...u.statuses]) {
-          if (s.kind === "poison") {
-            s.ticks -= 1;
-            u.hp -= s.dmg;
-            u.stats.taken += s.dmg;
-            if (u.stats.poisonTicks !== void 0) u.stats.poisonTicks++;
-            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
-          }
-          if (s.kind === "regen") {
-            s.ticks -= 1;
-            u.hp = Math.min(u.maxHp, u.hp + s.dmg);
-            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
-          }
-          if (s.kind === "fear") {
-            s.ticks -= 1;
-            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
-          }
-        }
-      }
-      for (const u of [...allies, ...foes]) {
-        if (u.hp <= 0) continue;
-        checkPotions(u, log);
-        let spd = u.speed;
-        const slow = u.statuses.find((s) => s.kind === "slow");
-        if (slow) {
-          spd *= slow.factor;
-          slow.ticks -= 1;
-          if (slow.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== slow);
-        }
-        u.gauge += spd;
-      }
-      const ready = [...allies, ...foes].filter((u) => u.hp > 0 && u.gauge >= GAUGE_FULL).sort((a, b) => b.gauge - a.gauge);
-      for (const u of ready) {
-        if (u.gauge < GAUGE_FULL || u.hp <= 0) continue;
-        u.gauge -= GAUGE_FULL;
-        const myAllies = u.side === "ally" ? allies : foes;
-        const myFoes = u.side === "ally" ? foes : allies;
-        act(u, myAllies, myFoes, rng, log, tick);
-        if (u.side === "ally" && hasStatus(u, "sleep")) u.stats.sleptTicks++;
-      }
-      if (foes.every((f) => f.hp <= 0) || allies.every((a) => a.hp <= 0)) break;
-    }
-    const victory = foes.every((f) => f.hp <= 0) && allies.some((a) => a.hp > 0);
-    const report = buildReport(knight, allies, foes, victory, log);
-    return { victory, log, report, ticks: tick };
-  }
-  function buildReport(knight, allies, foes, victory, log) {
-    const deathCause = knight.hp > 0 ? null : inferDeathCause(knight, log);
-    return {
-      victory,
-      knightHpLeft: Math.max(0, knight.hp),
-      knightHpMax: knight.maxHp,
-      dealt: allies.reduce((sum, a) => sum + a.stats.dealt, 0),
-      taken: knight.stats.taken,
-      alliesDown: allies.filter((a) => a.hp <= 0).map((a) => a.name),
-      alliesStats: allies.map((a) => ({ name: a.name, icon: a.icon, dealt: a.stats.dealt, taken: a.stats.taken, alive: a.hp > 0 })),
-      foesDown: foes.filter((f) => f.hp <= 0).length,
-      foesTotal: foes.length,
-      slept: knight.stats.sleptTicks > 0,
-      poisoned: knight.stats.poisonTicks > 0,
-      deathCause,
-      advice: victory ? null : adviceFor(knight, allies, foes, deathCause)
-    };
-  }
-  function inferDeathCause(knight, log) {
-    const hits = log.filter((e) => e.t === "hit" && e.to === knight.name);
-    const last = hits[hits.length - 1];
-    if (knight.stats.sleptTicks > 0) return "sleep";
-    if (knight.stats.poisonTicks > 20) return "poison";
-    if (last && last.elem === "fire") return "fire";
-    return "phys";
-  }
-  function adviceFor(knight, allies, foes, cause) {
-    switch (cause) {
-      case "sleep":
-        return "\u0420\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0443\u043B \u043E\u0442 \u043F\u044B\u043B\u044C\u0446\u044B \u043D\u043E\u0447\u043D\u044B\u0445 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439 \u0448\u043B\u0435\u043C \u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435\u043C \u0441\u043D\u0443 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438.";
-      case "poison":
-        return "\u042F\u0434 \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u043E \u0441\u044A\u0435\u0434\u0430\u043B \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435. \u041F\u043E\u043C\u043E\u0433\u0443\u0442 \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B \u0438\u043B\u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F.";
-      case "fire":
-        return "\u041E\u0433\u043E\u043D\u044C \u0436\u0451\u0433 \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u0441\u0438\u043B\u044C\u043D\u043E. \u041F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F \u0430\u043C\u0443\u043B\u0435\u0442 \u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435\u043C \u043E\u0433\u043D\u044E.";
-      default: {
-        const tough = foes.some((f) => f.armor >= 14);
-        if (knight.stats.dealt < 50 && tough) {
-          return "\u0423\u0440\u043E\u043D \u0435\u0434\u0432\u0430 \u043F\u0440\u043E\u0431\u0438\u0432\u0430\u043B \u0442\u043E\u043B\u0441\u0442\u0443\u044E \u0448\u043A\u0443\u0440\u0443. \u041D\u0443\u0436\u043D\u043E \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u043E\u0442\u044F\u0436\u0435\u043B\u0435\u0435 \u2014 \u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, \u0434\u0432\u0443\u0440\u0443\u0447\u043D\u043E\u0435.";
-        }
-        if (allies.length === 1) {
-          return "\u0420\u044B\u0446\u0430\u0440\u044C \u0434\u0440\u0430\u043B\u0441\u044F \u0432 \u043E\u0434\u0438\u043D\u043E\u0447\u043A\u0443. \u0412 \u0442\u0430\u0432\u0435\u0440\u043D\u0435 \u043C\u043E\u0436\u043D\u043E \u043D\u0430\u043D\u044F\u0442\u044C \u043F\u043E\u043C\u043E\u0449\u043D\u0438\u043A\u0430 \u2014 \u043D\u0430\u043F\u0440\u0438\u043C\u0435\u0440, \u043B\u0443\u0447\u043D\u0438\u0446\u0443 \u0438\u043B\u0438 \u0433\u0440\u043E\u043C\u0438\u043B\u0443.";
-        }
-        return "\u041D\u0435 \u0445\u0432\u0430\u0442\u0438\u043B\u043E \u0436\u0438\u0432\u0443\u0447\u0435\u0441\u0442\u0438. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0431\u0440\u043E\u043D\u044E, \u0449\u0438\u0442 \u0438 \u043D\u0435 \u0437\u0430\u0431\u0443\u0434\u044C \u0437\u0435\u043B\u044C\u0435 \u043B\u0435\u0447\u0435\u043D\u0438\u044F.";
-      }
-    }
-  }
-
-  // src/core/formBattle.js
-  var GAUGE_FULL2 = 100;
-  var MAX_TICKS2 = 5e3;
   var FRONT = [0, 1, 2];
   var BACK = [3, 4, 5];
   function isRanged(unit) {
@@ -7300,15 +6927,15 @@
       stats: { dealt: 0, taken: 0 }
     };
   }
-  function hasStatus2(u, kind) {
+  function hasStatus(u, kind) {
     return u.statuses.some((s) => s.kind === kind);
   }
-  function addStatus2(u, status2) {
+  function addStatus(u, status2) {
     const ex = u.statuses.find((s) => s.kind === status2.kind);
     if (ex) Object.assign(ex, status2);
     else u.statuses.push(status2);
   }
-  function computeDamage2(attacker, defender, rng, log, opts = {}) {
+  function computeDamage(attacker, defender, rng, log, opts = {}) {
     if (!opts.neverMiss && rng.chance(defender.dodge)) {
       log.push({ t: "dodge", who: defender.name, uid: defender.uid });
       return 0;
@@ -7326,7 +6953,7 @@
       crit = true;
     }
     if (rng.chance(defender.block)) mult *= 0.6;
-    if (hasStatus2(attacker, "fear")) mult *= 0.7;
+    if (hasStatus(attacker, "fear")) mult *= 0.7;
     if (defender.traits?.includes("first_hit_reduction") && defender.stats.taken === 0) mult *= 0.8;
     const dmg = Math.max(1, Math.round((opts.base ?? attacker.attack) * (opts.skillMult || 1) * mult));
     let remaining = dmg;
@@ -7335,7 +6962,10 @@
       const absorbed = Math.min(shield.amount, remaining);
       shield.amount -= absorbed;
       remaining -= absorbed;
-      if (shield.amount <= 0) defender.statuses = defender.statuses.filter((s) => s !== shield);
+      if (shield.amount <= 0) {
+        defender.statuses = defender.statuses.filter((s) => s !== shield);
+        log.push({ t: "status_end", who: defender.name, uid: defender.uid, kind: "shield" });
+      }
     }
     defender.hp -= remaining;
     defender.stats.taken += remaining;
@@ -7353,16 +6983,16 @@
     });
     return remaining;
   }
-  function tryApplyStatus2(attacker, defender, kind, chance, status2, rng, log) {
+  function tryApplyStatus(attacker, defender, kind, chance, status2, rng, log) {
     const effective = chance * (1 - (defender.resist[kind] || 0));
     if (rng.chance(effective)) {
-      addStatus2(defender, status2);
+      addStatus(defender, status2);
       log.push({ t: "status", who: defender.name, uid: defender.uid, kind });
       return true;
     }
     return false;
   }
-  function pickTarget2(attacker, foes, rng) {
+  function pickTarget(attacker, foes, rng) {
     const alive = foes.filter((f) => f.hp > 0);
     if (alive.length === 0) return null;
     if (isRanged(attacker)) {
@@ -7373,7 +7003,7 @@
     const pool = row.length > 0 ? row : alive;
     return rng.pick(pool);
   }
-  function checkPotions2(unit, log) {
+  function checkPotions(unit, log) {
     if (!unit.potions || unit.hp <= 0) return;
     for (const p of unit.potions) {
       if (p.used) continue;
@@ -7385,7 +7015,7 @@
       }
       if (p.effect.kind?.startsWith("cleanse_")) {
         const statusKind = p.effect.kind.slice(8);
-        if (hasStatus2(unit, statusKind)) {
+        if (hasStatus(unit, statusKind)) {
           p.used = true;
           unit.statuses = unit.statuses.filter((s) => s.kind !== statusKind);
           if (p.effect.resistAfter) {
@@ -7398,55 +7028,58 @@
       }
     }
   }
-  function act2(unit, allies, foes, rng, log) {
+  function act(unit, allies, foes, rng, log) {
     const sleep = unit.statuses.find((s) => s.kind === "sleep");
     if (sleep) {
       sleep.ticks -= 1;
-      if (sleep.ticks <= 0) unit.statuses = unit.statuses.filter((s) => s !== sleep);
+      if (sleep.ticks <= 0) {
+        unit.statuses = unit.statuses.filter((s) => s !== sleep);
+        log.push({ t: "status_end", who: unit.name, uid: unit.uid, kind: "sleep" });
+      }
       log.push({ t: "sleeps", who: unit.name, uid: unit.uid });
       return;
     }
-    const target = pickTarget2(unit, foes, rng);
+    const target = pickTarget(unit, foes, rng);
     if (!target) return;
     const skill = unit.skills[0] && unit.skills[(unit._next || 0) % unit.skills.length];
     unit._next = (unit._next || 0) + 1;
     switch (skill) {
       case "pollen_sleep":
-        computeDamage2(unit, target, rng, log, { skillMult: 0.6 });
-        tryApplyStatus2(unit, target, "sleep", 0.3, { kind: "sleep", ticks: 18 }, rng, log);
+        computeDamage(unit, target, rng, log, { skillMult: 0.6 });
+        tryApplyStatus(unit, target, "sleep", 0.3, { kind: "sleep", ticks: 18 }, rng, log);
         break;
       case "sting_poison":
-        computeDamage2(unit, target, rng, log);
-        tryApplyStatus2(unit, target, "poison", 0.5, { kind: "poison", ticks: 40, dmg: 2 }, rng, log);
+        computeDamage(unit, target, rng, log);
+        tryApplyStatus(unit, target, "poison", 0.5, { kind: "poison", ticks: 40, dmg: 2 }, rng, log);
         break;
       case "sting_poison_weak":
-        computeDamage2(unit, target, rng, log);
-        tryApplyStatus2(unit, target, "poison", 0.25, { kind: "poison", ticks: 30, dmg: 1 }, rng, log);
+        computeDamage(unit, target, rng, log);
+        tryApplyStatus(unit, target, "poison", 0.25, { kind: "poison", ticks: 30, dmg: 1 }, rng, log);
         break;
       case "slow_spores":
-        computeDamage2(unit, target, rng, log, { skillMult: 0.7 });
-        tryApplyStatus2(unit, target, "slow", 0.5, { kind: "slow", ticks: 40, factor: 0.6 }, rng, log);
+        computeDamage(unit, target, rng, log, { skillMult: 0.7 });
+        tryApplyStatus(unit, target, "slow", 0.5, { kind: "slow", ticks: 40, factor: 0.6 }, rng, log);
         break;
       case "heavy_blow":
-        computeDamage2(unit, target, rng, log, { skillMult: 1.6 });
+        computeDamage(unit, target, rng, log, { skillMult: 1.6 });
         break;
       case "fear_chill":
-        computeDamage2(unit, target, rng, log, { skillMult: 0.8 });
-        tryApplyStatus2(unit, target, "fear", 0.5, { kind: "fear", ticks: 35 }, rng, log);
+        computeDamage(unit, target, rng, log, { skillMult: 0.8 });
+        tryApplyStatus(unit, target, "fear", 0.5, { kind: "fear", ticks: 35 }, rng, log);
         break;
       case "spit_fire":
-        computeDamage2(unit, target, rng, log, { elem: "fire", skillMult: 1.1 });
+        computeDamage(unit, target, rng, log, { elem: "fire", skillMult: 1.1 });
         break;
       case "aimed_shot":
-        computeDamage2(unit, target, rng, log, { skillMult: 1.35, neverMiss: true });
+        computeDamage(unit, target, rng, log, { skillMult: 1.35, neverMiss: true });
         break;
       case "regen_ally_skill": {
         const wounded = allies.filter((a) => a.hp > 0).sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
         if (wounded && wounded.hp < wounded.maxHp * 0.8) {
-          addStatus2(wounded, { kind: "regen", ticks: 25, dmg: 2 });
+          addStatus(wounded, { kind: "regen", ticks: 25, dmg: 2 });
           log.push({ t: "status", who: wounded.name, uid: wounded.uid, kind: "regen", from: unit.name });
         } else {
-          computeDamage2(unit, target, rng, log, { skillMult: 0.8 });
+          computeDamage(unit, target, rng, log, { skillMult: 0.8 });
         }
         break;
       }
@@ -7454,10 +7087,10 @@
         if (unit.traits?.includes("cleave_small")) {
           const row = foes.filter((f) => f.hp > 0 && FRONT.includes(f.slot));
           const others = row.filter((f) => f !== target);
-          computeDamage2(unit, target, rng, log);
-          for (const other of others) computeDamage2(unit, other, rng, log, { skillMult: 0.4 });
+          computeDamage(unit, target, rng, log);
+          for (const other of others) computeDamage(unit, other, rng, log, { skillMult: 0.4 });
         } else {
-          computeDamage2(unit, target, rng, log);
+          computeDamage(unit, target, rng, log);
         }
       }
     }
@@ -7466,8 +7099,14 @@
     const rng = makeRng(seed);
     const log = [{ t: "start", allies: allies.map((a) => a.name), foes: foes.map((f) => f.name) }];
     const knight = allies[0];
+    for (const u of [...allies, ...foes]) {
+      for (const s of u.statuses) {
+        log.push({ t: "status", who: u.name, uid: u.uid, kind: s.kind });
+      }
+    }
+    const endStatus = (u, s) => log.push({ t: "status_end", who: u.name, uid: u.uid, kind: s.kind });
     let tick = 0;
-    while (tick < MAX_TICKS2) {
+    while (tick < MAX_TICKS) {
       tick++;
       for (const u of [...allies, ...foes]) {
         if (u.hp <= 0) continue;
@@ -7477,45 +7116,62 @@
             u.hp -= s.dmg;
             u.stats.taken += s.dmg;
             if (u.stats.poisonTicks !== void 0) u.stats.poisonTicks++;
-            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+            log.push({ t: "dot", uid: u.uid, kind: "poison", dmg: s.dmg });
+            if (s.ticks <= 0) {
+              u.statuses = u.statuses.filter((x) => x !== s);
+              endStatus(u, s);
+            }
           }
           if (s.kind === "regen") {
             s.ticks -= 1;
-            u.hp = Math.min(u.maxHp, u.hp + s.dmg);
-            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+            const healed = Math.min(s.dmg, u.maxHp - u.hp);
+            u.hp += healed;
+            if (healed > 0) log.push({ t: "dot", uid: u.uid, kind: "regen", dmg: -healed });
+            if (s.ticks <= 0) {
+              u.statuses = u.statuses.filter((x) => x !== s);
+              endStatus(u, s);
+            }
           }
           if (s.kind === "fear") {
             s.ticks -= 1;
-            if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+            if (s.ticks <= 0) {
+              u.statuses = u.statuses.filter((x) => x !== s);
+              endStatus(u, s);
+            }
           }
         }
       }
       for (const u of [...allies, ...foes]) {
         if (u.hp <= 0) continue;
-        checkPotions2(u, log);
+        checkPotions(u, log);
         let spd = u.speed;
         const slow = u.statuses.find((s) => s.kind === "slow");
         if (slow) {
           spd *= slow.factor;
           slow.ticks -= 1;
-          if (slow.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== slow);
+          if (slow.ticks <= 0) {
+            u.statuses = u.statuses.filter((x) => x !== slow);
+            endStatus(u, slow);
+          }
         }
         u.gauge += spd;
       }
-      const ready = [...allies, ...foes].filter((u) => u.hp > 0 && u.gauge >= GAUGE_FULL2).sort((a, b) => b.gauge - a.gauge);
+      const ready = [...allies, ...foes].filter((u) => u.hp > 0 && u.gauge >= GAUGE_FULL).sort((a, b) => b.gauge - a.gauge);
       for (const u of ready) {
-        if (u.gauge < GAUGE_FULL2 || u.hp <= 0) continue;
-        u.gauge -= GAUGE_FULL2;
+        if (u.gauge < GAUGE_FULL || u.hp <= 0) continue;
+        u.gauge -= GAUGE_FULL;
         const myAllies = u.side === "ally" ? allies : foes;
         const myFoes = u.side === "ally" ? foes : allies;
-        act2(u, myAllies, myFoes, rng, log);
-        if (u.side === "ally" && hasStatus2(u, "sleep")) u.stats.sleptTicks++;
+        act(u, myAllies, myFoes, rng, log);
+        if (u.side === "ally" && hasStatus(u, "sleep")) u.stats.sleptTicks++;
       }
       if (foes.every((f) => f.hp <= 0) || allies.every((a) => a.hp <= 0)) break;
     }
     const victory = foes.every((f) => f.hp <= 0) && allies.some((a) => a.hp > 0);
+    const timedOut = !victory && tick >= MAX_TICKS;
     const report = {
       victory,
+      timedOut,
       knightHpLeft: Math.max(0, knight.hp),
       knightHpMax: knight.maxHp,
       dealt: allies.reduce((s, a) => s + a.stats.dealt, 0),
@@ -7527,7 +7183,7 @@
       slept: knight.stats.sleptTicks > 0,
       poisoned: knight.stats.poisonTicks > 0,
       deathCause: knight.hp > 0 ? null : inferCause(knight),
-      advice: victory ? null : adviceFor2(knight, allies, foes, inferCause(knight))
+      advice: victory ? null : timedOut ? "\u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u0432\u0440\u0430\u0433\u043E\u0432 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0434\u043E\u0431\u0438\u0442\u044C \u0432\u043E\u0432\u0440\u0435\u043C\u044F. \u041F\u043E\u0434\u043D\u0438\u043C\u0430\u0439 \u0430\u0442\u0430\u043A\u0443: \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u043E\u043C\u043E\u0449\u043D\u0435\u0435, \u043A\u0440\u0438\u0442, \u043F\u0440\u043E\u0431\u0438\u0432\u0430\u043D\u0438\u0435 \u0431\u0440\u043E\u043D\u0438 \u2014 \u0438\u043B\u0438 \u043F\u043E\u0437\u043E\u0432\u0438 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432." : adviceFor(knight, allies, foes, inferCause(knight))
     };
     return { victory, log, report, ticks: tick };
   }
@@ -7536,7 +7192,7 @@
     if (knight.stats.poisonTicks > 20) return "poison";
     return "phys";
   }
-  function adviceFor2(knight, allies, foes, cause) {
+  function adviceFor(knight, allies, foes, cause) {
     if (cause === "sleep") {
       return "\u0420\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0443\u043B \u043D\u0430 \u043F\u043E\u0441\u0442\u0443. \u0428\u043B\u0435\u043C \u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435\u043C \u0441\u043D\u0443 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u2014 \u0438 \u043F\u043E\u0440\u044F\u0434\u043E\u043A.";
     }
@@ -7614,8 +7270,8 @@
       // пройденные этапы обучения
       tutorialSkipped: false,
       // игрок пропустил обучение целиком
-      settings: { battleMode: "formation" },
-      // 'classic' | 'formation'
+      settings: {},
+      // пользовательские настройки
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
       cheats: { used: [], spiderHat: false },
@@ -7641,7 +7297,7 @@
     state2.tutorial ||= {};
     state2.tutorialSkipped ??= false;
     state2.settings ||= {};
-    state2.settings.battleMode ||= "formation";
+    delete state2.settings.battleMode;
     state2.formation ||= { knight: 1, merc0: 0, merc1: 5 };
     state2.cheats ||= { used: [], spiderHat: false };
     state2.materials ||= {};
@@ -8164,58 +7820,7 @@
   function runBattle(state2, battleId, seed = 1) {
     const battle = BATTLE_BY_ID[battleId];
     if (!battle || !battleAvailable(state2, battleId)) return null;
-    if ((state2.settings?.battleMode || "formation") === "formation") {
-      return runFormationBattle(state2, battle, seed);
-    }
-    return runClassicBattle(state2, battle, seed);
-  }
-  function runClassicBattle(state2, battle, seed) {
-    const { stats, traits } = collectStats(state2.equipped);
-    for (const cid of state2.squadCompanions) {
-      const c = COMPANION_BY_ID[cid];
-      if (!c) continue;
-      for (const [k, v] of Object.entries(c.bonus || {})) stats[k] = (stats[k] || 0) + v;
-      if (c.trait) traits.push(c.trait);
-    }
-    if (state2.pet && PET_BY_ID[state2.pet]) {
-      for (const [k, v] of Object.entries(PET_BY_ID[state2.pet].bonus || {})) {
-        stats[k] = (stats[k] || 0) + v;
-      }
-    }
-    const consumables = state2.consumableBelt.map((id) => ITEM_BY_ID[id]).filter(Boolean).map((item2) => ({ itemId: item2.id, name: item2.name, effect: item2.effect }));
-    const knight = makeKnight(stats, traits, consumables);
-    const allies = [knight, ...state2.squadMercs.map((id) => makeMerc(MERC_BY_ID[id])).filter((m) => m.hp)];
-    const result = simulateBattle(allies, battle.enemies, seed);
-    const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
-    for (const used of usedIds) {
-      const i = state2.consumableBelt.indexOf(used);
-      if (i >= 0) state2.consumableBelt.splice(i, 1);
-    }
-    let rewards = [];
-    if (result.victory) {
-      const firstTime = !state2.battlesDone[battle.id];
-      state2.battlesDone[battle.id] = {
-        victories: (state2.battlesDone[battle.id]?.victories || 0) + 1,
-        at: Date.now()
-      };
-      state2.stats.battlesWon += 1;
-      journalPush(state2, "\u2694\uFE0F", `\u041F\u043E\u0445\u043E\u0434 \xAB${battle.name}\xBB \u2014 \u043F\u043E\u0431\u0435\u0434\u0430! \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u0441 \u0442\u0440\u043E\u0444\u0435\u044F\u043C\u0438.`);
-      for (const entry of battle.enemies) {
-        const enemyId = typeof entry === "string" ? entry : entry.id;
-        const scale = typeof entry === "string" ? 1 : entry.scale || 1;
-        const def = enemyReward(enemyId, stats, seed);
-        for (const r of def) {
-          if (r.type === "coins") r.amount = Math.round(r.amount * scale);
-          rewards.push(r);
-        }
-      }
-      grantRewards(state2, rewards, {});
-      if (traits.includes("heal_after_battle")) {
-        rewards.push({ type: "note", text: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0447\u0430\u0433\u0430 \u0441\u043E\u0433\u0440\u0435\u043B \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F." });
-      }
-      if (!firstTime) rewards = rewards.map((r) => r.type === "coins" ? { ...r, amount: Math.round(r.amount * 0.5) } : r);
-    }
-    return { ...result, rewards, battle };
+    return runFormationBattle(state2, battle, seed);
   }
   function enemyReward(enemyId, knightStats, seed) {
     const def = enemyRewardDef(enemyId);
@@ -8673,7 +8278,7 @@
       scenePanel.appendChild(el);
     }
     const CREW_SPOTS = [
-      { id: "cat", always: true, icon: "\u{1F408}", name: "\u041A\u043E\u0442 \u043B\u0430\u0432\u043A\u0438 \u2014 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C", scene: "lavka", x: 30, y: 97, size: 145, pet: true },
+      { id: "cmp_cat", icon: "\u{1F408}", name: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u2014 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C", scene: "lavka", x: 30, y: 97, size: 145, pet: true },
       { id: "cmp_firefly", scene: "lavka", x: 47, y: 15, size: 46 },
       { id: "cmp_herbalist", scene: "lavka", x: 19, y: 97, size: 145 },
       { id: "cmp_smith", scene: "square", x: 45, y: 86, size: 50 }
@@ -14008,326 +13613,6 @@ ${item2.description}
       }
     }
   }
-  function renderBattle(container, ctx2, params) {
-    const battle = BATTLE_BY_ID[params.id];
-    if (!battle) {
-      ctx2.go("battles");
-      return;
-    }
-    const { state: state2 } = ctx2;
-    const seed = Date.now() % 1e5 + 1;
-    const { stats: kstats } = collectStats(state2.equipped);
-    const display = {
-      knight: { uid: "a0", name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438", icon: "\u{1F6E1}\uFE0F", hp: kstats.hp, maxHp: kstats.hp, badges: /* @__PURE__ */ new Set() },
-      mercs: state2.squadMercs.map((id, i2) => {
-        const d = MERC_BY_ID[id];
-        return { uid: `a${i2 + 1}`, name: d.name, icon: d.icon, hp: d.hp, maxHp: d.hp, badges: /* @__PURE__ */ new Set() };
-      }),
-      foes: battle.enemies.map((entry, i2) => {
-        const id = typeof entry === "string" ? entry : entry.id;
-        const scale = typeof entry === "string" ? 1 : entry.scale || 1;
-        const d = ENEMY_BY_ID[id];
-        return { uid: `e${i2}`, name: d.name, icon: d.icon, hp: Math.round(d.hp * scale), maxHp: Math.round(d.hp * scale), badges: /* @__PURE__ */ new Set() };
-      })
-    };
-    const result = runBattle(state2, battle.id, seed);
-    if (!result) {
-      ctx2.go("battles");
-      return;
-    }
-    ctx2.save();
-    const head = document.createElement("div");
-    head.className = "panel";
-    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">${battle.name}</h2></div>`;
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => {
-      stop();
-      ctx2.go("battles");
-    });
-    head.firstElementChild.appendChild(back);
-    container.appendChild(head);
-    const arena = document.createElement("div");
-    arena.className = "battle-arena";
-    const knightCard = unitCard(display.knight, "ally");
-    arena.appendChild(knightCard.el);
-    const mercCards = display.mercs.map((m) => {
-      const c = unitCard(m, "ally");
-      arena.appendChild(c.el);
-      return c;
-    });
-    const vs = document.createElement("div");
-    vs.style.alignSelf = "center";
-    vs.style.fontSize = "22px";
-    vs.textContent = "\u2694\uFE0F";
-    arena.appendChild(vs);
-    const foeCards = display.foes.map((f) => {
-      const c = unitCard(f, "enemy");
-      arena.appendChild(c.el);
-      return c;
-    });
-    container.appendChild(arena);
-    const controls = document.createElement("div");
-    controls.className = "panel";
-    controls.style.display = "flex";
-    controls.style.gap = "8px";
-    controls.style.alignItems = "center";
-    const speedLabel = document.createElement("span");
-    speedLabel.textContent = "\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C:";
-    const b1 = speedBtn("1x", 350);
-    const b2 = speedBtn("2x", 170);
-    const b4 = speedBtn("4x", 80);
-    const skip = document.createElement("button");
-    skip.className = "small ghost";
-    skip.textContent = "\u23ED\uFE0F \u041A \u0438\u0442\u043E\u0433\u0443";
-    skip.addEventListener("click", () => finishNow());
-    controls.append(speedLabel, b1, b2, b4, skip);
-    container.appendChild(controls);
-    const logBox = document.createElement("div");
-    logBox.className = "battle-log";
-    container.appendChild(logBox);
-    let speed = 350;
-    let timer = null;
-    let i = 0;
-    let done = false;
-    function speedBtn(label, ms) {
-      const b = document.createElement("button");
-      b.className = "small";
-      b.textContent = label;
-      b.addEventListener("click", () => {
-        speed = ms;
-      });
-      return b;
-    }
-    function unitCard(u, side) {
-      const el = document.createElement("div");
-      el.className = "unit-card";
-      el.dataset.side = side;
-      el.innerHTML = `
-      <div class="uicon">${u.icon}</div>
-      <div class="name" style="font-size:13px;font-weight:600">${u.name}</div>
-      <div class="status-badges"></div>
-      <div class="hpbar"><div style="width:100%"></div></div>`;
-      return { el, u };
-    }
-    function pulse(el, cls, ms = 500) {
-      if (!el) return;
-      el.classList.remove(cls);
-      void el.offsetWidth;
-      el.classList.add(cls);
-      setTimeout(() => el.classList.remove(cls), ms);
-    }
-    function floatNumber(card, text, cls = "") {
-      const n = document.createElement("div");
-      n.className = `dmg-number ${cls}`;
-      n.textContent = text;
-      card.el.appendChild(n);
-      setTimeout(() => n.remove(), 850);
-    }
-    function animateAttack(attackerCard, targetCard, dmg, crit) {
-      const side = attackerCard?.el?.dataset.side === "enemy" ? "enemy" : "ally";
-      pulse(attackerCard?.el, `anim-lunge-${side}`, 350);
-      setTimeout(() => {
-        if (crit) pulse(targetCard?.el, "anim-crit", 550);
-        else pulse(targetCard?.el, "anim-hit", 480);
-        floatNumber(targetCard, `\u2212${dmg}`, crit ? "crit" : "");
-        if (targetCard && targetCard.u.hp <= 0) pulse(targetCard.el, "anim-death", 650);
-      }, 120);
-    }
-    function applyEvent(e) {
-      const findUnit = (uid, name) => {
-        const all = [
-          { card: knightCard, u: display.knight },
-          ...display.mercs.map((m, i2) => ({ card: mercCards[i2], u: m })),
-          ...display.foes.map((f, i2) => ({ card: foeCards[i2], u: f }))
-        ];
-        if (uid) {
-          const hit = all.find((x) => x.u.uid === uid);
-          if (hit) return hit;
-        }
-        return all.find((x) => x.u.name === name) || null;
-      };
-      const line = document.createElement("div");
-      switch (e.t) {
-        case "start":
-          line.className = "sys";
-          line.textContent = `\u0420\u044B\u0446\u0430\u0440\u044C \u0432\u044B\u0445\u043E\u0434\u0438\u0442: ${e.foes.join(", ")}.`;
-          break;
-        case "hit": {
-          const target = findUnit(e.toUid, e.to);
-          const attacker = findUnit(e.fromUid, e.from);
-          if (target) {
-            target.u.hp = Math.max(0, target.u.hp - e.dmg);
-            updateCard(target.card, target.u);
-            if (attacker) animateAttack(attacker.card, target.card, e.dmg, e.crit);
-          }
-          line.className = e.crit ? "crit" : "hit";
-          line.textContent = `${e.from} \u2192 ${e.to}: \u2212${e.dmg}${e.crit ? " \u041A\u0420\u0418\u0422!" : ""}${e.blocked ? " (\u0431\u043B\u043E\u043A)" : ""}`;
-          ctx2.sfx?.(e.crit ? "crit" : "hit");
-          break;
-        }
-        case "dodge": {
-          const target = findUnit(e.uid, e.who);
-          if (target) pulse(target.card.el, "anim-dodge", 380);
-          line.className = "sys";
-          line.textContent = `${e.who} \u0443\u043A\u043B\u043E\u043D\u044F\u0435\u0442\u0441\u044F!`;
-          break;
-        }
-        case "status": {
-          const target = findUnit(e.uid, e.who);
-          const EMOJI = { sleep: "\u{1F634}", poison: "\u2620\uFE0F", slow: "\u{1F40C}", shield: "\u{1F530}", fear: "\u{1F628}", regen: "\u{1F49A}" };
-          if (target) {
-            target.u.badges.add(EMOJI[e.kind] || "\u2733\uFE0F");
-            updateCard(target.card, target.u);
-          }
-          line.className = "status";
-          const NAMES = { sleep: "\u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442", poison: "\u043E\u0442\u0440\u0430\u0432\u043B\u0435\u043D", slow: "\u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D", fear: "\u043E\u0445\u0432\u0430\u0447\u0435\u043D \u0441\u0442\u0440\u0430\u0445\u043E\u043C", regen: "\u043F\u043E\u0434\u043A\u0440\u0435\u043F\u043B\u044F\u0435\u0442\u0441\u044F \u043D\u0430\u0441\u0442\u043E\u0435\u043C" };
-          line.textContent = `${e.who} ${NAMES[e.kind] || e.kind}${e.from ? ` (${e.from})` : ""}`;
-          break;
-        }
-        case "sleeps":
-          line.className = "status";
-          line.textContent = `${e.who} \u0441\u043F\u0438\u0442\u2026 \u{1F634}`;
-          break;
-        case "potion": {
-          const target = findUnit(e.uid, e.who);
-          if (target && e.healed) {
-            target.u.hp = Math.min(target.u.maxHp, target.u.hp + e.healed);
-            target.u.badges.delete("\u2620\uFE0F");
-            updateCard(target.card, target.u);
-            pulse(target.card.el, "anim-heal", 750);
-            floatNumber(target.card, `+${e.healed}`, "heal");
-          }
-          if (target && e.cleansed) {
-            const CLEANSE_BADGE = { sleep: "\u{1F634}", poison: "\u2620\uFE0F" };
-            target.u.badges.delete(CLEANSE_BADGE[e.cleansed] || "\u2733\uFE0F");
-            updateCard(target.card, target.u);
-            pulse(target.card.el, "anim-heal", 750);
-          }
-          const CLEANSE_TEXT = { sleep: " \u2014 \u0441\u043E\u043D \u043A\u0430\u043A \u0440\u0443\u043A\u043E\u0439 \u0441\u043D\u044F\u043B\u043E!", poison: " \u2014 \u044F\u0434 \u0432\u044B\u0432\u0435\u0434\u0435\u043D!" };
-          line.className = "potion";
-          line.textContent = `${e.who} \u043F\u044C\u0451\u0442 ${e.name}${e.healed ? ` (+${e.healed} \u2764\uFE0F)` : ""}${e.cleansed ? CLEANSE_TEXT[e.cleansed] || "" : ""}`;
-          ctx2.sfx?.("potion");
-          break;
-        }
-        default:
-          return;
-      }
-      logBox.appendChild(line);
-      logBox.scrollTop = logBox.scrollHeight;
-    }
-    function updateCard(card, u) {
-      const bar = card.el.querySelector(".hpbar > div");
-      bar.style.width = `${Math.max(0, u.hp / u.maxHp * 100)}%`;
-      card.el.querySelector(".status-badges").textContent = [...u.badges].join(" ");
-      card.el.classList.toggle("dead", u.hp <= 0);
-    }
-    function step() {
-      if (done) return;
-      if (i >= result.log.length) {
-        endScreen();
-        return;
-      }
-      applyEvent(result.log[i]);
-      i += 1;
-      timer = setTimeout(step, speed);
-    }
-    function finishNow() {
-      if (done) return;
-      while (i < result.log.length) {
-        applyEvent(result.log[i]);
-        i += 1;
-      }
-      endScreen();
-    }
-    function endScreen() {
-      if (done) return;
-      done = true;
-      clearTimeout(timer);
-      const rep = result.report;
-      ctx2.sfx?.(rep.victory ? "success" : "fail");
-      const overlay = document.createElement("div");
-      overlay.className = "overlay";
-      const rewardHtml = (result.rewards || []).map((r) => {
-        if (r.type === "coins") return `\u{1FA99} ${r.amount} \u043C\u043E\u043D\u0435\u0442`;
-        if (r.type === "seals") return `\u{1F530} ${r.amount} \u043F\u0435\u0447\u0430\u0442\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430`;
-        if (r.type === "material") return `\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B: ${materialLabel(r.id)}${r.amount > 1 ? ` \xD7${r.amount}` : ""}`;
-        if (r.type === "item") return `\u{1F381} ${ITEM_BY_ID[r.id]?.name || r.id}`;
-        return "";
-      }).filter(Boolean).join("<br>");
-      overlay.innerHTML = `
-      <div class="card">
-        <h2>${rep.victory ? "\u{1F3C6} \u041F\u043E\u0431\u0435\u0434\u0430!" : "\u{1F319} \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C"}</h2>
-        <div class="muted">
-          \u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: <b>${rep.dealt}</b> \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: <b>${rep.taken}</b> \xB7
-          \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: <b>${rep.foesDown}/${rep.foesTotal}</b>
-        </div>
-        ${(rep.alliesStats || []).length > 1 ? `<div class="muted" style="font-size:13px;margin-top:6px">${rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join("<br>")}</div>` : ""}
-        ${rep.victory && rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ""}
-        ${rep.advice ? `<div class="advice">\u{1F4A1} ${rep.advice}</div>` : ""}
-        <div class="actions"></div>
-      </div>`;
-      const actions = overlay.querySelector(".actions");
-      const nextB = rep.victory ? nextBattle(battle.id) : null;
-      if (nextB) {
-        const nextBtn = document.createElement("button");
-        nextBtn.className = "primary";
-        nextBtn.textContent = `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0431\u0438\u0442\u0432\u0430 \u2192 ${nextB.name}`;
-        nextBtn.addEventListener("click", () => {
-          overlay.remove();
-          ctx2.go("battle", { id: nextB.id });
-        });
-        actions.appendChild(nextBtn);
-      }
-      const toEquip = document.createElement("button");
-      toEquip.textContent = "\u{1F392} \u041A \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0435";
-      toEquip.addEventListener("click", () => {
-        overlay.remove();
-        ctx2.go("equip");
-      });
-      const again = document.createElement("button");
-      again.textContent = "\u{1F501} \u0415\u0449\u0451 \u0440\u0430\u0437";
-      again.addEventListener("click", () => {
-        overlay.remove();
-        ctx2.go("battle", { id: battle.id });
-      });
-      const toList = document.createElement("button");
-      if (!nextB) toList.className = "primary";
-      toList.textContent = "\u041A \u043F\u043E\u0445\u043E\u0434\u0430\u043C";
-      toList.addEventListener("click", () => {
-        overlay.remove();
-        ctx2.go("battles");
-      });
-      actions.append(toList, rep.victory ? again : toEquip, rep.victory ? toEquip : again);
-      document.body.appendChild(overlay);
-    }
-    function onKey(ev) {
-      if (ev.key === " ") {
-        ev.preventDefault();
-        if (done) return;
-        if (timer) {
-          clearTimeout(timer);
-          timer = null;
-        } else step();
-      }
-      if (ev.key === "Escape") {
-        stop();
-        ctx2.go("battles");
-      }
-    }
-    window.addEventListener("keydown", onKey);
-    function stop() {
-      done = true;
-      clearTimeout(timer);
-    }
-    step();
-    return () => {
-      stop();
-      window.removeEventListener("keydown", onKey);
-    };
-  }
 
   // src/ui/tavernView.js
   var KIND_LABEL = {
@@ -15102,42 +14387,6 @@ ${item2.description}
     container.appendChild(header(ctx2, "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438", "\u041B\u0430\u0432\u043A\u0430 \u043F\u043E\u0434\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u043E\u0434 \u0445\u043E\u0437\u044F\u0438\u043D\u0430"));
     const panel = document.createElement("div");
     panel.className = "panel";
-    const modeTitle = document.createElement("h3");
-    modeTitle.textContent = "\u0420\u0435\u0436\u0438\u043C \u0431\u043E\u044F";
-    panel.appendChild(modeTitle);
-    const modes = [
-      {
-        id: "formation",
-        icon: "\u2694\uFE0F",
-        name: "\u0421\u0431\u043E\u0440 (\u043F\u043E\u043B\u0435 \u0431\u043E\u044F)",
-        desc: "\u0420\u044F\u0434\u044B \u0438 \u043F\u043E\u0440\u044F\u0434\u043E\u043A \u0431\u043E\u0439\u0446\u043E\u0432: \u0442\u0430\u043D\u043A\u0438 \u0432\u043F\u0435\u0440\u0451\u0434, \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u043D\u0430\u0437\u0430\u0434. \u0420\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0431\u043E\u0435\u043C, \u0444\u0438\u0433\u0443\u0440\u043A\u0438, \u0432\u044B\u0441\u0442\u0440\u0435\u043B\u044B \u0438 \u0443\u0434\u0430\u0440\u044B."
-      },
-      {
-        id: "classic",
-        icon: "\u{1F4DC}",
-        name: "\u041F\u0440\u043E\u0441\u0442\u043E\u0439",
-        desc: "\u0421\u043F\u043E\u043A\u043E\u0439\u043D\u044B\u0439 \u0430\u0432\u0442\u043E\u0431\u043E\u0439: \u043B\u043E\u0433 \u0441\u043E\u0431\u044B\u0442\u0438\u0439 \u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0438 \u044E\u043D\u0438\u0442\u043E\u0432. \u041A\u0430\u043A \u0431\u044B\u043B\u043E \u0438\u0437\u043D\u0430\u0447\u0430\u043B\u044C\u043D\u043E."
-      }
-    ];
-    for (const m of modes) {
-      const row = document.createElement("div");
-      row.className = "row" + (state2.settings.battleMode === m.id ? " done" : "");
-      row.style.cursor = "pointer";
-      row.innerHTML = `
-      <span class="icon">${m.icon}</span>
-      <span class="grow">
-        <div class="name">${m.name}</div>
-        <div class="desc">${m.desc}</div>
-      </span>
-      <span class="price">${state2.settings.battleMode === m.id ? "\u2713" : ""}</span>`;
-      row.addEventListener("click", () => {
-        state2.settings.battleMode = m.id;
-        ctx2.sfx?.("tap");
-        ctx2.save();
-        rerender();
-      });
-      panel.appendChild(row);
-    }
     const soundTitle = document.createElement("h3");
     soundTitle.textContent = "\u0417\u0432\u0443\u043A";
     soundTitle.style.marginTop = "16px";
@@ -15455,6 +14704,7 @@ ${item2.description}
         el.innerHTML = `
         <div class="uf-icon">${def.icon}</div>
         <div class="uf-name">${def.name}</div>
+        <div class="uf-badges"></div>
         <div class="hpbar"><div style="width:100%"></div></div>`;
         field2.appendChild(el);
         const unit = { hp: def.hp, maxHp: def.hp, badges: /* @__PURE__ */ new Set() };
@@ -15474,6 +14724,19 @@ ${item2.description}
         const bar = f.el.querySelector(".hpbar > div");
         bar.style.width = `${Math.max(0, f.unit.hp / f.unit.maxHp * 100)}%`;
         f.el.classList.toggle("dead", f.unit.hp <= 0);
+      }
+      const STATUS_ICON = {
+        poison: "\u2620\uFE0F",
+        sleep: "\u{1F634}",
+        slow: "\u{1F40C}",
+        fear: "\u{1F628}",
+        regen: "\u{1F49A}",
+        shield: "\u{1F6E1}\uFE0F"
+      };
+      function renderBadges(fig) {
+        const box = fig.el.querySelector(".uf-badges");
+        if (!box) return;
+        box.textContent = [...fig.unit.badges].map((k) => STATUS_ICON[k] || "\u2754").join("");
       }
       function logLine(cls, text) {
         const line = document.createElement("div");
@@ -15537,7 +14800,30 @@ ${item2.description}
             if (figOf(e.uid)) pulse(figOf(e.uid).el, "anim-dodge", 380);
             break;
           case "status": {
+            const f = figOf(e.uid);
+            if (f) {
+              f.unit.badges.add(e.kind);
+              renderBadges(f);
+              pulse(f.el, "anim-status", 500);
+            }
             logLine("status", `${e.who}: ${statusName(e.kind)}`);
+            break;
+          }
+          case "status_end": {
+            const f = figOf(e.uid);
+            if (f) {
+              f.unit.badges.delete(e.kind);
+              renderBadges(f);
+            }
+            break;
+          }
+          case "dot": {
+            const f = figOf(e.uid);
+            if (f) {
+              f.unit.hp = Math.max(0, Math.min(f.unit.maxHp, f.unit.hp - e.dmg));
+              setHp(e.uid);
+              pulse(f.el, e.kind === "poison" ? "anim-poison" : "anim-heal", 320);
+            }
             break;
           }
           case "sleeps":
@@ -15550,6 +14836,10 @@ ${item2.description}
               setHp(e.uid);
               pulse(f.el, "anim-heal", 700);
             }
+            if (f && e.cleansed) {
+              f.unit.badges.delete(e.cleansed);
+              renderBadges(f);
+            }
             logLine("potion", `${e.who} \u043F\u044C\u0451\u0442 ${e.name}${e.healed ? ` (+${e.healed} \u2764\uFE0F)` : ""}`);
             ctx2.sfx?.("potion");
             break;
@@ -15557,7 +14847,7 @@ ${item2.description}
         }
       }
       function statusName(kind) {
-        return { sleep: "\u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442 \u{1F634}", poison: "\u043E\u0442\u0440\u0430\u0432\u043B\u0435\u043D \u2620\uFE0F", slow: "\u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D \u{1F40C}", fear: "\u043E\u0445\u0432\u0430\u0447\u0435\u043D \u0441\u0442\u0440\u0430\u0445\u043E\u043C \u{1F628}", regen: "\u043F\u043E\u0434\u043A\u0440\u0435\u043F\u043B\u044F\u0435\u0442\u0441\u044F \u{1F49A}" }[kind] || kind;
+        return { sleep: "\u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442 \u{1F634}", poison: "\u043E\u0442\u0440\u0430\u0432\u043B\u0435\u043D \u2620\uFE0F", slow: "\u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D \u{1F40C}", fear: "\u043E\u0445\u0432\u0430\u0447\u0435\u043D \u0441\u0442\u0440\u0430\u0445\u043E\u043C \u{1F628}", regen: "\u043F\u043E\u0434\u043A\u0440\u0435\u043F\u043B\u044F\u0435\u0442\u0441\u044F \u{1F49A}", shield: "\u043F\u043E\u0434 \u0449\u0438\u0442\u043E\u043C \u0437\u0435\u043B\u044C\u044F \u{1F6E1}\uFE0F" }[kind] || kind;
       }
       function step() {
         if (done) return;
@@ -15567,6 +14857,10 @@ ${item2.description}
         }
         applyEvent(result.log[i]);
         i += 1;
+        while (i < result.log.length && result.log[i].t === "dot") {
+          applyEvent(result.log[i]);
+          i += 1;
+        }
         timer = setTimeout(step, speed);
       }
       function finishNow() {
@@ -15587,7 +14881,7 @@ ${item2.description}
         const nextB = rep.victory ? nextBattle(battle.id) : null;
         const overlay = showOverlay(ctx2, {
           title: rep.victory ? "\u{1F3C6} \u041F\u043E\u0431\u0435\u0434\u0430!" : "\u{1F319} \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C",
-          subtitle: `\u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: ${rep.dealt} \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: ${rep.taken} \xB7 \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: ${rep.foesDown}/${rep.foesTotal}` + ((rep.alliesStats || []).length > 1 ? "<br>" + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join(" \xB7 ") : ""),
+          subtitle: `\u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: ${rep.dealt} \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: ${rep.taken} \xB7 \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: ${rep.foesDown}/${rep.foesTotal}` + (rep.timedOut ? "<br>\u23F3 \u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u0432\u044B\u044F\u0432\u043B\u0435\u043D." : "") + ((rep.alliesStats || []).length > 1 ? "<br>" + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join(" \xB7 ") : ""),
           rewards: [],
           advice: rep.advice,
           buttons: [
@@ -16341,7 +15635,7 @@ ${item2.description}
     equip: (c, p) => renderEquip(c, ctx, p),
     shop: (c, p) => renderShop(c, ctx, p),
     battles: (c, p) => renderBattleList(c, ctx, p),
-    battle: (c, p) => state.settings?.battleMode === "formation" ? renderFormation(c, ctx, p) : renderBattle(c, ctx, p),
+    battle: (c, p) => renderFormation(c, ctx, p),
     tavern: (c, p) => renderTavern(c, ctx, p),
     workshop: (c, p) => renderWorkshop(c, ctx, p),
     editor: (c, p) => renderEditor(c, ctx, p),

@@ -243,6 +243,7 @@ export function renderFormation(container, ctx, params) {
       el.innerHTML = `
         <div class="uf-icon">${def.icon}</div>
         <div class="uf-name">${def.name}</div>
+        <div class="uf-badges"></div>
         <div class="hpbar"><div style="width:100%"></div></div>`;
       field2.appendChild(el);
       const unit = { hp: def.hp, maxHp: def.hp, badges: new Set() };
@@ -265,6 +266,16 @@ export function renderFormation(container, ctx, params) {
       const bar = f.el.querySelector('.hpbar > div');
       bar.style.width = `${Math.max(0, (f.unit.hp / f.unit.maxHp) * 100)}%`;
       f.el.classList.toggle('dead', f.unit.hp <= 0);
+    }
+
+    // Значки состояний на фигурке (яд, сон и т.п.)
+    const STATUS_ICON = {
+      poison: '☠️', sleep: '😴', slow: '🐌', fear: '😨', regen: '💚', shield: '🛡️',
+    };
+    function renderBadges(fig) {
+      const box = fig.el.querySelector('.uf-badges');
+      if (!box) return;
+      box.textContent = [...fig.unit.badges].map((k) => STATUS_ICON[k] || '❔').join('');
     }
 
     function logLine(cls, text) {
@@ -335,7 +346,31 @@ export function renderFormation(container, ctx, params) {
           if (figOf(e.uid)) pulse(figOf(e.uid).el, 'anim-dodge', 380);
           break;
         case 'status': {
+          const f = figOf(e.uid);
+          if (f) {
+            f.unit.badges.add(e.kind);
+            renderBadges(f);
+            pulse(f.el, 'anim-status', 500);
+          }
           logLine('status', `${e.who}: ${statusName(e.kind)}`);
+          break;
+        }
+        case 'status_end': {
+          const f = figOf(e.uid);
+          if (f) {
+            f.unit.badges.delete(e.kind);
+            renderBadges(f);
+          }
+          break;
+        }
+        case 'dot': {
+          // Тик яда/регенерации: полоса HP движется, без строки в логе
+          const f = figOf(e.uid);
+          if (f) {
+            f.unit.hp = Math.max(0, Math.min(f.unit.maxHp, f.unit.hp - e.dmg));
+            setHp(e.uid);
+            pulse(f.el, e.kind === 'poison' ? 'anim-poison' : 'anim-heal', 320);
+          }
           break;
         }
         case 'sleeps':
@@ -348,6 +383,10 @@ export function renderFormation(container, ctx, params) {
             setHp(e.uid);
             pulse(f.el, 'anim-heal', 700);
           }
+          if (f && e.cleansed) {
+            f.unit.badges.delete(e.cleansed);
+            renderBadges(f);
+          }
           logLine('potion', `${e.who} пьёт ${e.name}${e.healed ? ` (+${e.healed} ❤️)` : ''}`);
           ctx.sfx?.('potion');
           break;
@@ -356,7 +395,7 @@ export function renderFormation(container, ctx, params) {
     }
 
     function statusName(kind) {
-      return { sleep: 'засыпает 😴', poison: 'отравлен ☠️', slow: 'замедлен 🐌', fear: 'охвачен страхом 😨', regen: 'подкрепляется 💚' }[kind] || kind;
+      return { sleep: 'засыпает 😴', poison: 'отравлен ☠️', slow: 'замедлен 🐌', fear: 'охвачен страхом 😨', regen: 'подкрепляется 💚', shield: 'под щитом зелья 🛡️' }[kind] || kind;
     }
 
     function step() {
@@ -364,6 +403,11 @@ export function renderFormation(container, ctx, params) {
       if (i >= result.log.length) { endScreen(); return; }
       applyEvent(result.log[i]);
       i += 1;
+      // Тики яда/регенерации применяем мгновенно, не тратя темп боя
+      while (i < result.log.length && result.log[i].t === 'dot') {
+        applyEvent(result.log[i]);
+        i += 1;
+      }
       timer = setTimeout(step, speed);
     }
 
@@ -386,6 +430,7 @@ export function renderFormation(container, ctx, params) {
       const overlay = showOverlay(ctx, {
         title: rep.victory ? '🏆 Победа!' : '🌙 Рыцарь вернулся отдохнуть',
         subtitle: `Урона нанесено: ${rep.dealt} · Получено: ${rep.taken} · Врагов повержено: ${rep.foesDown}/${rep.foesTotal}` +
+          (rep.timedOut ? '<br>⏳ Бой затянулся до предела — победитель не выявлен.' : '') +
           ((rep.alliesStats || []).length > 1 ? '<br>' + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} урона${a.alive ? '' : ' (пал)'}`).join(' · ') : ''),
         rewards: [],
         advice: rep.advice,

@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 import {
   newGame, hireCrew, toggleCompanion, toggleMerc, setPet, crewStock, runBattle,
 } from '../src/core/state.js';
-import { makeKnight, makeMerc, simulateBattle } from '../src/core/battle.js';
+import {
+  makeFormationKnight, makeFormationMerc, makeFormationEnemy,
+  simulateFormationBattle,
+} from '../src/core/formBattle.js';
 import { COMPANIONS, PETS, MERCENARIES, MERC_BY_ID } from '../src/data/crew.js';
 import { CREW_STOCK } from '../src/data/shop.js';
 
@@ -67,26 +70,31 @@ test('лимиты отряда: 3 спутника, 2 наёмника, 1 пи�
 });
 
 test('наёмник реально участвует в бою', () => {
-  const merc = makeMerc(MERC_BY_ID.merc_archer);
-  const knight = makeKnight({ hp: 60, attack: 8, armor: 6, speed: 10, crit: 0.05, dodge: 0.03, block: 0, resist: {} }, [], []);
-  const r = simulateBattle([knight, merc], ['slime_meadow', 'slime_meadow'], 1);
+  const merc = makeFormationMerc(MERC_BY_ID.merc_archer, 4, 1);
+  const knight = makeFormationKnight(
+    { hp: 60, attack: 8, armor: 6, speed: 10, crit: 0.05, dodge: 0.03, block: 0, resist: {} },
+    [], [], 1);
+  const foes = [makeFormationEnemy('slime_meadow', 1, 0, 0), makeFormationEnemy('slime_meadow', 1, 1, 1)];
+  const r = simulateFormationBattle([knight, merc], foes, 1);
   assert.equal(r.victory, true);
   assert.ok(r.log.some((e) => e.t === 'hit' && e.from === 'Лесная лучница'), 'лучница должна атаковать');
   assert.ok(r.report.alliesStats.length === 2);
 });
 
 test('травница даёт регенерацию рыцарю', () => {
-  const knight = makeKnight(
+  const knight = makeFormationKnight(
     { hp: 60, attack: 8, armor: 6, speed: 10, crit: 0.05, dodge: 0.03, block: 0, resist: {} },
-    ['regen_ally'], [],
-  );
+    ['regen_ally'], [], 1);
   assert.ok(knight.statuses.some((s) => s.kind === 'regen'), 'статус регенерации на старте боя');
 });
 
 test('ведьминка лечит союзника в бою', () => {
-  const witch = makeMerc(MERC_BY_ID.merc_witch);
-  const knight = makeKnight({ hp: 60, attack: 6, armor: 4, speed: 10, crit: 0.05, dodge: 0, block: 0, resist: {} }, [], []);
-  const r = simulateBattle([knight, witch], ['golem_moss'], 6);
+  const witch = makeFormationMerc(MERC_BY_ID.merc_witch, 4, 1);
+  const knight = makeFormationKnight(
+    { hp: 60, attack: 6, armor: 4, speed: 10, crit: 0.05, dodge: 0, block: 0, resist: {} },
+    [], [], 1);
+  const foes = [makeFormationEnemy('golem_moss', 1, 0, 0)];
+  const r = simulateFormationBattle([knight, witch], foes, 6);
   assert.ok(r.log.some((e) => e.t === 'status' && e.kind === 'regen'), 'ведьминка должна наложить regen');
 });
 

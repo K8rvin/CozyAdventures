@@ -201,7 +201,7 @@ export function renderHub(container, ctx, params = {}) {
   // появляются, когда наняты (активность в отряде не обязательна).
   // Картинка assets/crew/<id>.png; если её нет — иконка-фолбэк.
   const CREW_SPOTS = [
-    { id: 'cat', always: true, icon: '🐈', name: 'Кот лавки — погладить', scene: 'lavka', x: 30, y: 97, size: 145, pet: true },
+    { id: 'cmp_cat', icon: '🐈', name: 'Кот-хранитель — погладить', scene: 'lavka', x: 30, y: 97, size: 145, pet: true },
     { id: 'cmp_firefly', scene: 'lavka', x: 47, y: 15, size: 46 },
     { id: 'cmp_herbalist', scene: 'lavka', x: 19, y: 97, size: 145 },
     { id: 'cmp_smith', scene: 'square', x: 45, y: 86, size: 50 },

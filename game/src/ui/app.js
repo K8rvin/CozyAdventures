@@ -4,7 +4,7 @@ import { renderHub } from './hub.js';
 import { renderPuzzleList, renderPuzzle } from './puzzleView.js';
 import { renderEquip } from './equipView.js';
 import { renderShop } from './shopView.js';
-import { renderBattleList, renderBattle } from './battleView.js';
+import { renderBattleList } from './battleView.js';
 import { renderTavern } from './tavernView.js';
 import { renderEditor, renderWorkshop } from './editorView.js';
 import { renderCraft } from './craftView.js';
@@ -62,9 +62,7 @@ const routes = {
   equip: (c, p) => renderEquip(c, ctx, p),
   shop: (c, p) => renderShop(c, ctx, p),
   battles: (c, p) => renderBattleList(c, ctx, p),
-  battle: (c, p) => (state.settings?.battleMode === 'formation'
-    ? renderFormation(c, ctx, p)
-    : renderBattle(c, ctx, p)),
+  battle: (c, p) => renderFormation(c, ctx, p),
   tavern: (c, p) => renderTavern(c, ctx, p),
   workshop: (c, p) => renderWorkshop(c, ctx, p),
   editor: (c, p) => renderEditor(c, ctx, p),

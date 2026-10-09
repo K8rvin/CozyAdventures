@@ -633,6 +633,28 @@ body::-webkit-scrollbar { display: none; }
 .unit-figure.enemy .uf-icon { transform: scaleX(-1); }
 .unit-figure.dead { opacity: 0.3; filter: grayscale(1); }
 .unit-figure.dead .uf-icon { transform: rotate(-70deg); transition: transform 0.4s ease; }
+.unit-figure .uf-badges {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  font-size: 14px;
+  letter-spacing: -2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+.unit-figure.anim-status { animation: glow-status 0.5s ease; }
+.unit-figure.anim-poison { animation: flash-poison 0.32s ease; }
+.unit-figure.anim-heal { animation: glow-heal 0.7s ease; }
+.unit-figure.anim-hit { animation: shake-hit 0.3s ease, flash-damage 0.45s ease; }
+.unit-figure.anim-crit { animation: shake-hit 0.3s ease, flash-crit 0.5s ease; }
+@keyframes glow-status {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 12px rgba(200, 140, 255, 0.9)); }
+}
+@keyframes flash-poison {
+  0%, 100% { filter: none; }
+  50% { filter: drop-shadow(0 0 10px rgba(140, 220, 90, 0.95)); }
+}
 
 .projectile {
   position: absolute;

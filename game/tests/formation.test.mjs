@@ -83,9 +83,8 @@ test('авторасстановка врагов: во всех боях кам
   }
 });
 
-test('runBattle в режиме formation проходит бой и даёт награду', () => {
+test('runBattle проходит бой и даёт награду', () => {
   const s = newGame();
-  s.settings.battleMode = 'formation';
   const r = runBattle(s, 'bt_slimes', 1);
   assert.ok(r);
   assert.equal(r.victory, true);
@@ -93,13 +92,45 @@ test('runBattle в режиме formation проходит бой и даёт н
   assert.ok(s.battlesDone.bt_slimes);
 });
 
-test('runBattle в режиме classic использует старый движок', () => {
-  const s = newGame();
-  s.settings.battleMode = 'classic';
-  const r = runBattle(s, 'bt_slimes', 1);
-  assert.ok(r);
-  assert.equal(r.victory, true);
-  assert.equal(r.formation, undefined);
+test('статусы видны в логе: наложение, тики и снятие', () => {
+  const knight = makeFormationKnight(
+    { hp: 500, attack: 1, armor: 0, speed: 10, crit: 0, dodge: 0, block: 0, resist: {} },
+    [], [], 1);
+  const adder = makeFormationEnemy('moth_night', 1, 3, 0);
+  adder.skills = ['sting_poison'];
+  adder.hp = adder.maxHp = 300; // живёт долго — яд успеет и наложиться, и истечь
+  const r = simulateFormationBattle([knight], [adder], 3);
+  assert.ok(r.log.some((e) => e.t === 'status' && e.kind === 'poison'), 'наложение яда в логе');
+  assert.ok(r.log.some((e) => e.t === 'dot' && e.kind === 'poison'), 'тики яда в логе');
+  assert.ok(r.log.some((e) => e.t === 'status_end' && e.kind === 'poison'), 'истечение яда в логе');
+});
+
+test('щит зелья виден с самого начала и снимается при разрушении', () => {
+  const knight = makeFormationKnight(
+    { hp: 300, attack: 1, armor: 0, speed: 10, crit: 0, dodge: 0, block: 0, resist: {} },
+    [],
+    [{ name: 'Зелье стены', effect: { kind: 'shield', amount: 15, atStart: true } }],
+    1);
+  const foe = makeFormationEnemy('slime_meadow', 1, 0, 0);
+  foe.hp = foe.maxHp = 300; // слизень живёт долго и пробьёт щит
+  const r = simulateFormationBattle([knight], [foe], 1);
+  const firstStatus = r.log.find((e) => e.t === 'status');
+  assert.equal(firstStatus?.kind, 'shield', 'стартовый щит объявлен первым событием статуса');
+  assert.ok(r.log.some((e) => e.t === 'status_end' && e.kind === 'shield'), 'разрушение щита в логе');
+});
+
+test('лимит ходов: затянувшийся бой — поражение с честным советом', () => {
+  const knight = makeFormationKnight(
+    { hp: 50, attack: 5, armor: 2, speed: 10, crit: 0, dodge: 0, block: 0, resist: {} },
+    [], [], 1);
+  const wall = makeFormationEnemy('slime_meadow', 1, 0, 0);
+  wall.dodge = 1; // не попасть никогда
+  wall.speed = 0; // и сам не ходит — чистый тупик
+  const r = simulateFormationBattle([knight], [wall], 1);
+  assert.equal(r.victory, false);
+  assert.equal(r.report.timedOut, true);
+  assert.ok(r.report.knightHpLeft > 0, 'рыцарь жив, но бой остановлен лимитом');
+  assert.ok(r.report.advice.includes('затянулся'), 'совет объясняет лимит ходов');
 });
 
 test('moveFormationSlot меняет слоты местами', () => {
@@ -119,7 +150,6 @@ test('экспедиции масштабируют врагов', () => {
     'bt_reading', 'bt_archive', 'bt_inkwell', 'bk_boss_keeper']) {
     s.battlesDone[id] = { victories: 1 };
   }
-  s.settings.battleMode = 'formation';
   const r = runBattle(s, 'ex_01', 1);
   assert.ok(r, 'экспедиция доступна после всех боссов');
   const slime = r.formation.foes[0];

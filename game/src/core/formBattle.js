@@ -105,7 +105,10 @@ function computeDamage(attacker, defender, rng, log, opts = {}) {
     const absorbed = Math.min(shield.amount, remaining);
     shield.amount -= absorbed;
     remaining -= absorbed;
-    if (shield.amount <= 0) defender.statuses = defender.statuses.filter((s) => s !== shield);
+    if (shield.amount <= 0) {
+      defender.statuses = defender.statuses.filter((s) => s !== shield);
+      log.push({ t: 'status_end', who: defender.name, uid: defender.uid, kind: 'shield' });
+    }
   }
   defender.hp -= remaining;
   defender.stats.taken += remaining;
@@ -171,7 +174,10 @@ function act(unit, allies, foes, rng, log) {
   const sleep = unit.statuses.find((s) => s.kind === 'sleep');
   if (sleep) {
     sleep.ticks -= 1;
-    if (sleep.ticks <= 0) unit.statuses = unit.statuses.filter((s) => s !== sleep);
+    if (sleep.ticks <= 0) {
+      unit.statuses = unit.statuses.filter((s) => s !== sleep);
+      log.push({ t: 'status_end', who: unit.name, uid: unit.uid, kind: 'sleep' });
+    }
     log.push({ t: 'sleeps', who: unit.name, uid: unit.uid });
     return;
   }
@@ -236,10 +242,21 @@ function act(unit, allies, foes, rng, log) {
 }
 
 // units: [...allies, ...foes] со slot'ами. Возвращает { victory, log, report, ticks }
+// События лога: start, hit, dodge, status (наложен), status_end (снят/истёк),
+// sleeps, potion, dot (тик яда/регенерации — для UI, воспроизводится мгновенно).
 export function simulateFormationBattle(allies, foes, seed = 1) {
   const rng = makeRng(seed);
   const log = [{ t: 'start', allies: allies.map((a) => a.name), foes: foes.map((f) => f.name) }];
   const knight = allies[0];
+
+  // Начальные статусы (щит зелья, регенерация черты) — показать сразу
+  for (const u of [...allies, ...foes]) {
+    for (const s of u.statuses) {
+      log.push({ t: 'status', who: u.name, uid: u.uid, kind: s.kind });
+    }
+  }
+
+  const endStatus = (u, s) => log.push({ t: 'status_end', who: u.name, uid: u.uid, kind: s.kind });
 
   let tick = 0;
   while (tick < MAX_TICKS) {
@@ -252,16 +269,28 @@ export function simulateFormationBattle(allies, foes, seed = 1) {
           u.hp -= s.dmg;
           u.stats.taken += s.dmg;
           if (u.stats.poisonTicks !== undefined) u.stats.poisonTicks++;
-          if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+          log.push({ t: 'dot', uid: u.uid, kind: 'poison', dmg: s.dmg });
+          if (s.ticks <= 0) {
+            u.statuses = u.statuses.filter((x) => x !== s);
+            endStatus(u, s);
+          }
         }
         if (s.kind === 'regen') {
           s.ticks -= 1;
-          u.hp = Math.min(u.maxHp, u.hp + s.dmg);
-          if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+          const healed = Math.min(s.dmg, u.maxHp - u.hp);
+          u.hp += healed;
+          if (healed > 0) log.push({ t: 'dot', uid: u.uid, kind: 'regen', dmg: -healed });
+          if (s.ticks <= 0) {
+            u.statuses = u.statuses.filter((x) => x !== s);
+            endStatus(u, s);
+          }
         }
         if (s.kind === 'fear') {
           s.ticks -= 1;
-          if (s.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== s);
+          if (s.ticks <= 0) {
+            u.statuses = u.statuses.filter((x) => x !== s);
+            endStatus(u, s);
+          }
         }
       }
     }
@@ -273,7 +302,10 @@ export function simulateFormationBattle(allies, foes, seed = 1) {
       if (slow) {
         spd *= slow.factor;
         slow.ticks -= 1;
-        if (slow.ticks <= 0) u.statuses = u.statuses.filter((x) => x !== slow);
+        if (slow.ticks <= 0) {
+          u.statuses = u.statuses.filter((x) => x !== slow);
+          endStatus(u, slow);
+        }
       }
       u.gauge += spd;
     }
@@ -291,8 +323,11 @@ export function simulateFormationBattle(allies, foes, seed = 1) {
   }
 
   const victory = foes.every((f) => f.hp <= 0) && allies.some((a) => a.hp > 0);
+  // Лимит ходов: бой затянулся, победитель не выявлен — засчитывается поражение
+  const timedOut = !victory && tick >= MAX_TICKS;
   const report = {
     victory,
+    timedOut,
     knightHpLeft: Math.max(0, knight.hp),
     knightHpMax: knight.maxHp,
     dealt: allies.reduce((s, a) => s + a.stats.dealt, 0),
@@ -304,7 +339,11 @@ export function simulateFormationBattle(allies, foes, seed = 1) {
     slept: knight.stats.sleptTicks > 0,
     poisoned: knight.stats.poisonTicks > 0,
     deathCause: knight.hp > 0 ? null : inferCause(knight),
-    advice: victory ? null : adviceFor(knight, allies, foes, inferCause(knight)),
+    advice: victory
+      ? null
+      : timedOut
+        ? 'Бой затянулся до предела — врагов не удалось добить вовремя. Поднимай атаку: оружие помощнее, крит, пробивание брони — или позови наёмников.'
+        : adviceFor(knight, allies, foes, inferCause(knight)),
   };
   return { victory, log, report, ticks: tick };
 }

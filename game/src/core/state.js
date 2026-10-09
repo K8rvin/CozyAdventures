@@ -17,7 +17,6 @@ import { COSMETIC_BY_ID } from '../data/cosmetics.js';
 import { RECIPES, RECIPE_BY_ID } from '../data/recipes.js';
 import { MATERIALS } from '../data/materials.js';
 import { emptyEquipment, equip, unequip, collectStats, isShieldBlocked } from './items.js';
-import { makeKnight, makeMerc, simulateBattle } from './battle.js';
 import {
   makeFormationKnight, makeFormationMerc, makeFormationEnemy,
   simulateFormationBattle, enemyFormationSlots,
@@ -51,7 +50,7 @@ export function newGame() {
     journal: [],            // дневник кота: последние события [{icon, text, at}]
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
-    settings: { battleMode: 'formation' }, // 'classic' | 'formation'
+    settings: {}, // пользовательские настройки
     formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
     cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
@@ -77,7 +76,7 @@ function migrate(state) {
   state.tutorial ||= {};
   state.tutorialSkipped ??= false;
   state.settings ||= {};
-  state.settings.battleMode ||= 'formation';
+  delete state.settings.battleMode; // режим «простой» упразднён, бой всегда «сбор»
   state.formation ||= { knight: 1, merc0: 0, merc1: 5 };
   state.cheats ||= { used: [], spiderHat: false };
   state.materials ||= {};
@@ -615,69 +614,7 @@ export function battleAvailable(state, battleId) {
 export function runBattle(state, battleId, seed = 1) {
   const battle = BATTLE_BY_ID[battleId];
   if (!battle || !battleAvailable(state, battleId)) return null;
-  if ((state.settings?.battleMode || 'formation') === 'formation') {
-    return runFormationBattle(state, battle, seed);
-  }
-  return runClassicBattle(state, battle, seed);
-}
-
-function runClassicBattle(state, battle, seed) {
-
-  const { stats, traits } = collectStats(state.equipped);
-  // Бонусы спутников и питомца
-  for (const cid of state.squadCompanions) {
-    const c = COMPANION_BY_ID[cid];
-    if (!c) continue;
-    for (const [k, v] of Object.entries(c.bonus || {})) stats[k] = (stats[k] || 0) + v;
-    if (c.trait) traits.push(c.trait);
-  }
-  if (state.pet && PET_BY_ID[state.pet]) {
-    for (const [k, v] of Object.entries(PET_BY_ID[state.pet].bonus || {})) {
-      stats[k] = (stats[k] || 0) + v;
-    }
-  }
-  const consumables = state.consumableBelt
-    .map((id) => ITEM_BY_ID[id])
-    .filter(Boolean)
-    .map((item) => ({ itemId: item.id, name: item.name, effect: item.effect }));
-
-  const knight = makeKnight(stats, traits, consumables);
-  const allies = [knight, ...state.squadMercs.map((id) => makeMerc(MERC_BY_ID[id])).filter((m) => m.hp)];
-  const result = simulateBattle(allies, battle.enemies, seed);
-
-  // Использованные зелья уходят из пояса.
-  const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
-  for (const used of usedIds) {
-    const i = state.consumableBelt.indexOf(used);
-    if (i >= 0) state.consumableBelt.splice(i, 1);
-  }
-
-  let rewards = [];
-  if (result.victory) {
-    const firstTime = !state.battlesDone[battle.id];
-    state.battlesDone[battle.id] = {
-      victories: (state.battlesDone[battle.id]?.victories || 0) + 1,
-      at: Date.now(),
-    };
-    state.stats.battlesWon += 1;
-    journalPush(state, '⚔️', `Поход «${battle.name}» — победа! Рыцарь вернулся с трофеями.`);
-    for (const entry of battle.enemies) {
-      const enemyId = typeof entry === 'string' ? entry : entry.id;
-      const scale = typeof entry === 'string' ? 1 : (entry.scale || 1);
-      const def = enemyReward(enemyId, stats, seed);
-      for (const r of def) {
-        if (r.type === 'coins') r.amount = Math.round(r.amount * scale);
-        rewards.push(r);
-      }
-    }
-    grantRewards(state, rewards, {});
-    // Лечение после боя от амулета очага.
-    if (traits.includes('heal_after_battle')) {
-      rewards.push({ type: 'note', text: 'Амулет очага согрел рыцаря после боя.' });
-    }
-    if (!firstTime) rewards = rewards.map((r) => (r.type === 'coins' ? { ...r, amount: Math.round(r.amount * 0.5) } : r));
-  }
-  return { ...result, rewards, battle };
+  return runFormationBattle(state, battle, seed);
 }
 
 function enemyReward(enemyId, knightStats, seed) {
