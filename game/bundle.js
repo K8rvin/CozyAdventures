@@ -1469,10 +1469,13 @@
           id: "cone",
           label: "\u0428\u0438\u0448\u043A\u0438",
           spots: [
-            { x: 406, y: 39, r: 18 },
+            { x: 406, y: 39, r: 20 },
             { x: 335, y: 215, r: 22 },
             { x: 617, y: 583, r: 32 },
-            { x: 871, y: 278, r: 26 }
+            { x: 871, y: 278, r: 26 },
+            { x: 141, y: 544, r: 26 },
+            { x: 508, y: 618, r: 38 },
+            { x: 753, y: 68, r: 22 }
           ]
         },
         {
@@ -8541,7 +8544,7 @@
         // Хотспоты: [icon, label, screen, x%, y%, showDot]
         hotspots: [
           ["\u{1F4DA}", "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438", "puzzles", 10, 42, () => solved === 0],
-          ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, () => solved > 0 && !firstPurchaseDone || unseenShopItems(state2).length > 0],
+          ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, () => false],
           ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 68, 50, () => false],
           ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 77, 52, () => false],
           ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0]
@@ -13663,6 +13666,7 @@ ${item2.description}
   // src/ui/shopView.js
   function buildBuyList(container, ctx2, items, newIds) {
     const { state: state2 } = ctx2;
+    const btnByItemId = {};
     const buyList = document.createElement("div");
     buyList.className = "list";
     if (items.length === 0) {
@@ -13705,8 +13709,10 @@ ${item2.description}
       });
       row.appendChild(btn);
       buyList.appendChild(row);
+      btnByItemId[item2.id] = btn;
     }
     container.appendChild(buyList);
+    return btnByItemId;
   }
   var currentRerender = () => {
   };
@@ -13741,17 +13747,22 @@ ${item2.description}
     buyPanel.innerHTML = "<h3>\u0412\u0438\u0442\u0440\u0438\u043D\u0430</h3>";
     container.appendChild(buyPanel);
     const items = itemsForShop(state2, shopKey, shopStock(state2));
-    buildBuyList(buyPanel, ctx2, items, newIds);
-    const firstBuy = buyPanel.querySelector?.("button:not([disabled])");
-    if (firstBuy && (state2.stats.itemsBought || 0) === 0) {
-      startTutorial(ctx2, "first_purchase", [
-        {
-          target: firstBuy,
-          title: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0430",
-          text: "\u041C\u043E\u043D\u0435\u0442\u044B \u0441 \u0437\u0430\u0433\u0430\u0434\u043E\u043A \u2014 \u044D\u0442\u043E \u0442\u043E\u0432\u0430\u0440\u044B \u0434\u043B\u044F \u0440\u044B\u0446\u0430\u0440\u044F. \u0412\u044B\u0431\u0435\u0440\u0438 \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C \u043F\u043E \u0434\u0443\u0448\u0435 \u0438 \u043D\u0430\u0436\u043C\u0438 \xAB\u041A\u0443\u043F\u0438\u0442\u044C\xBB: \u0432\u0435\u0449\u044C \u043B\u044F\u0436\u0435\u0442 \u0432 \u0441\u0443\u043D\u0434\u0443\u043A, \u0430 \u043D\u0430\u0434\u0435\u0442\u044C \u0435\u0451 \u043C\u043E\u0436\u043D\u043E \u0432 \u043A\u043E\u043C\u043D\u0430\u0442\u0435 \u0440\u044B\u0446\u0430\u0440\u044F.",
-          cta: "\u041F\u043E\u043A\u0443\u043F\u0430\u044E!"
-        }
-      ]);
+    const btnByItemId = buildBuyList(buyPanel, ctx2, items, newIds);
+    if ((state2.stats.itemsBought || 0) === 0) {
+      const owned = /* @__PURE__ */ new Set([...state2.inventory || [], ...Object.values(state2.equipped || {})]);
+      const afford = (it) => it.sealPrice ? state2.seals >= it.sealPrice : state2.coins >= it.price;
+      const target = items.find((it) => !owned.has(it.id) && afford(it));
+      const firstBuy = target ? btnByItemId[target.id] : null;
+      if (firstBuy) {
+        startTutorial(ctx2, "first_purchase", [
+          {
+            target: firstBuy,
+            title: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0430",
+            text: "\u041C\u043E\u043D\u0435\u0442\u044B \u0441 \u0437\u0430\u0433\u0430\u0434\u043E\u043A \u2014 \u044D\u0442\u043E \u0442\u043E\u0432\u0430\u0440\u044B \u0434\u043B\u044F \u0440\u044B\u0446\u0430\u0440\u044F. \u0412\u044B\u0431\u0435\u0440\u0438 \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C \u043F\u043E \u0434\u0443\u0448\u0435 \u0438 \u043D\u0430\u0436\u043C\u0438 \xAB\u041A\u0443\u043F\u0438\u0442\u044C\xBB: \u0432\u0435\u0449\u044C \u043B\u044F\u0436\u0435\u0442 \u0432 \u0441\u0443\u043D\u0434\u0443\u043A, \u0430 \u043D\u0430\u0434\u0435\u0442\u044C \u0435\u0451 \u043C\u043E\u0436\u043D\u043E \u0432 \u043A\u043E\u043C\u043D\u0430\u0442\u0435 \u0440\u044B\u0446\u0430\u0440\u044F.",
+            cta: "\u041F\u043E\u043A\u0443\u043F\u0430\u044E!"
+          }
+        ]);
+      }
     }
     markShopSeen(state2);
     ctx2.save();
@@ -13775,6 +13786,10 @@ ${item2.description}
     container.appendChild(head);
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
+      { icon: "\u{1F5E1}\uFE0F", label: "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", screen: "shopArmory" },
+      { icon: "\u{1F6E1}\uFE0F", label: "\u0411\u0440\u043E\u043D\u043D\u0438\u043A", screen: "shopArmorer" },
+      { icon: "\u{1F52E}", label: "\u041C\u0430\u0433", screen: "shopMagic" },
+      { icon: "\u{1F9EA}", label: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", screen: "shopAlchemy" },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
     const sellPanel = document.createElement("div");

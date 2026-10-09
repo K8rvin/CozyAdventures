@@ -11,9 +11,10 @@ import { SHOPS, itemsForShop } from '../data/shop.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav } from './common.js';
 
-// --- Список товаров (общий строитель) ---
+// --- Список товаров (общий строитель). Возвращает карту itemId -> кнопка «Купить» ---
 function buildBuyList(container, ctx, items, newIds) {
   const { state } = ctx;
+  const btnByItemId = {};
   const buyList = document.createElement('div');
   buyList.className = 'list';
   if (items.length === 0) {
@@ -57,8 +58,10 @@ function buildBuyList(container, ctx, items, newIds) {
     });
     row.appendChild(btn);
     buyList.appendChild(row);
+    btnByItemId[item.id] = btn;
   }
   container.appendChild(buyList);
+  return btnByItemId;
 }
 
 let currentRerender = () => {};
@@ -94,19 +97,25 @@ export function renderMarket(container, ctx, shopKey) {
   buyPanel.innerHTML = '<h3>Витрина</h3>';
   container.appendChild(buyPanel);
   const items = itemsForShop(state, shopKey, shopStock(state));
-  buildBuyList(buyPanel, ctx, items, newIds);
+  const btnByItemId = buildBuyList(buyPanel, ctx, items, newIds);
 
-  // Обучение первой покупке — и в тематической лавке
-  const firstBuy = buyPanel.querySelector?.('button:not([disabled])');
-  if (firstBuy && (state.stats.itemsBought || 0) === 0) {
-    startTutorial(ctx, 'first_purchase', [
-      {
-        target: firstBuy,
-        title: 'Первая покупка',
-        text: 'Монеты с загадок — это товары для рыцаря. Выбери что-нибудь по душе и нажми «Купить»: вещь ляжет в сундук, а надеть её можно в комнате рыцаря.',
-        cta: 'Покупаю!',
-      },
-    ]);
+  // Обучение первой покупке: целимся в первую вещь, которой у игрока ЕЩЁ НЕТ
+  // (начальный «Дедов меч» уже надет — предлагать его бессмысленно)
+  if ((state.stats.itemsBought || 0) === 0) {
+    const owned = new Set([...(state.inventory || []), ...Object.values(state.equipped || {})]);
+    const afford = (it) => (it.sealPrice ? state.seals >= it.sealPrice : state.coins >= it.price);
+    const target = items.find((it) => !owned.has(it.id) && afford(it));
+    const firstBuy = target ? btnByItemId[target.id] : null;
+    if (firstBuy) {
+      startTutorial(ctx, 'first_purchase', [
+        {
+          target: firstBuy,
+          title: 'Первая покупка',
+          text: 'Монеты с загадок — это товары для рыцаря. Выбери что-нибудь по душе и нажми «Купить»: вещь ляжет в сундук, а надеть её можно в комнате рыцаря.',
+          cta: 'Покупаю!',
+        },
+      ]);
+    }
   }
 
   markShopSeen(state);
@@ -135,6 +144,10 @@ export function renderShop(container, ctx) {
   container.appendChild(head);
   container.appendChild(quickNav(ctx, [
     { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
+    { icon: '🗡️', label: 'Оружейник', screen: 'shopArmory' },
+    { icon: '🛡️', label: 'Бронник', screen: 'shopArmorer' },
+    { icon: '🔮', label: 'Маг', screen: 'shopMagic' },
+    { icon: '🧪', label: 'Алхимик', screen: 'shopAlchemy' },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },
   ]));
 
