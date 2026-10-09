@@ -233,3 +233,219 @@ watercolor illustration, gentle and inviting, no text --ar 2:1
 - Размеры: баннер ≥1500×500, сцены поиска ≥1600×1000, иконка ≥256×256, заставка ≥1600×800.
 - Если модель пишет текст/буквы — добавь в негативный промпт: `text, letters, watermark, signature, frame`.
 - Сцены поиска в игре кладутся под сетку с полупрозрачным затемнением — можно чуть ярче, чем кажется нужным.
+
+---
+
+## 7. Питомцы — assets/pets/*.png (прозрачный фон, полный рост)
+
+Пять питомцев, которые живут на сценах лавки и площади. Нужны ОТДЕЛЬНЫЕ
+картинки на прозрачном фоне (PNG with transparent background / isolated
+character). Стиль — тот же storybook watercolor с мягким чернильным контуром,
+что и сцены лавки/площади, чтобы звери сидели в них как родные.
+Все смотрят вправо (в профиль или три четверти), мягкий тёплый свет слева,
+БЕЗ фона, тени-пятна, текста и рамок. Высота ~600–800 px.
+
+Общий кусок стиля для всех промтов (добавляй в конец каждого):
+
+```
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette of amber, honey and deep brown, full body, side or three-quarter view
+facing right, isolated on a transparent background, no ground, no shadow,
+no text, no frame, cozy fantasy game character
+```
+
+### 7.1 pet_hedgehog.png — Ёжик (живёт в лавке)
+
+```
+A small cute hedgehog sitting among flour sacks in a cozy shop, soft rounded
+spines with a few autumn leaves and a tiny mushroom stuck in them, curious
+black bead eyes, slightly chubby, paws tucked under, storybook watercolor
+illustration with gentle ink outlines, warm candlelit palette of amber, honey
+and deep brown, full body, side view facing right, isolated on a transparent
+background, no ground, no shadow, no text, cozy fantasy game character
+```
+
+### 7.2 pet_fox.png — Лисёнок (живёт в лавке)
+
+```
+A young red fox sitting upright with a fluffy curled tail, clever squinting
+eyes and a sly little smile, one ear tilted, wearing a tiny green shopkeeper
+kerchief around the neck, storybook watercolor illustration with gentle ink
+outlines, warm candlelit palette of amber, honey and deep brown, full body,
+three-quarter view facing right, isolated on a transparent background,
+no ground, no shadow, no text, cozy fantasy game character
+```
+
+### 7.3 pet_puppy.png — Щенок (живёт в лавке)
+
+```
+A small fluffy puppy sitting with head tilted, holding an old leather coin
+pouch gently in its teeth, wagging tail slightly blurred in motion, big warm
+brown eyes, floppy ears, storybook watercolor illustration with gentle ink
+outlines, warm candlelit palette of amber, honey and deep brown, full body,
+three-quarter view facing right, isolated on a transparent background,
+no ground, no shadow, no text, cozy fantasy game character
+```
+
+### 7.4 pet_owl.png — Сова-библиотекарь (живёт в лавке)
+
+```
+A small round tawny owl perched with one wing holding a tiny bookmark ribbon,
+wearing miniature round spectacles, wise sleepy eyes, soft layered feathers
+in warm brown and cream, storybook watercolor illustration with gentle ink
+outlines, warm candlelit palette of amber, honey and deep brown, full body,
+side view facing right, isolated on a transparent background, no perch,
+no ground, no shadow, no text, cozy fantasy game character
+```
+
+### 7.5 pet_horse.png — Сивка, ездовая лошадь (живёт на площади у доски объявлений)
+
+```
+A sturdy gentle draft horse with a soft grey-dappled coat, calm kind eyes,
+a simple leather saddle with a small rolled travel blanket and a brass
+lantern hanging from the saddle, a few oats stuck in the mane, storybook
+watercolor illustration with gentle ink outlines, warm afternoon palette of
+amber, honey and deep brown, full body, side view facing right, isolated on
+a transparent background, no ground, no shadow, no text, cozy fantasy game
+character
+```
+
+Сохранять как `assets/pets/pet_hedgehog.png`, `pet_fox.png`, `pet_puppy.png`,
+`pet_owl.png`, `pet_horse.png` — игра подхватит их автоматически
+(пока файла нет, показывается иконка-эмодзи).
+
+Если модель не умеет прозрачный фон — генерируй на чистом белом и вырежи,
+или скажи мне, вырежу фон скриптом сам.
+
+---
+
+## 8. Варка зелий — ассеты алхимического стола
+
+Механика «Варка по рецепту»: котёл и ингредиенты рисуются поверх фона-стола,
+книга — отдельной вставкой. Стиль тот же storybook watercolor, что и у сцен
+лавки и площади.
+
+### 8.1 brew_table.png — главный ассет: стол алхимика (САМЫЙ ВАЖНЫЙ)
+
+ВАЖНО: центр нижней половины должен быть СВОБОДЕН — туда игра ставит котёл
+(круг ~30% ширины). Ингредиенты и приборы — по краям и в верхней части.
+
+```
+Cozy alchemist workbench seen from a slightly elevated front view, storybook
+watercolor illustration with gentle ink outlines, warm candlelight: a heavy
+oak table filling the frame, its center-left lower area EMPTY for a cauldron,
+while the edges and background are richly detailed — glass potion bottles of
+amber, green and violet, labeled jars with dried herbs, a brass mortar and
+pestle, a wooden spoon, a small brazier with coals, candles, a scales with
+brass weights, hanging dried lavender and garlic above, scrolls tucked at
+the side, honey pot, berries in a bowl, feathers, soft amber glow with deep
+brown shadows, no cauldron in the center, no text, no watermark --ar 16:10
+```
+
+Сохранить как `assets/brew_table.jfif` (я сам сожму в `brew_table_web.jpg`).
+
+### 8.2 recipe_book.png — раскрытая книга рецептов (для заставки механики)
+
+```
+An open antique recipe book on a wooden table, seen from above at a slight
+angle, storybook watercolor illustration with gentle ink outlines: yellowed
+pages with handwritten-style scribbles and small painted illustrations of a
+cauldron, herbs, a mortar, a spoon and flames, ink blots, a pressed dried
+flower between the pages, a quill lying across the spine, warm candlelight
+from the left, cozy and loved, handwritten text is decorative scribbles,
+not readable letters, no watermark --ar 4:3
+```
+
+Сохранить как `assets/recipe_book.jfif`. Пока файла нет, книга в игре
+рисуется CSS-пергаментом — ассет добавим фоном в панель рецепта.
+
+---
+
+## 9. Кот лавки и спутники — assets/crew/*.png (белый фон, полный рост)
+
+Кот живёт в лавке всегда (лежит на подушке, клик = погладить). Спутники
+появляются после найма, даже если не в отряде. Тот же стиль storybook
+watercolor, что питомцы и сцены.
+ФОН: проси ровный белый (`plain solid white background`) — НЕ «transparent
+background», иначе модель рисует серо-белые клетки псевдо-прозрачности,
+а они вырезаются грязно. Белый фон я вырежу скриптом без потерь.
+
+Общий хвост стиля для всех:
+
+```
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette of amber, honey and deep brown, full body, isolated on a plain
+solid white background, no ground, no shadow, no text, cozy fantasy game
+character
+```
+
+### 9.1 cat.png — кот лавки на подушке (показывается всегда)
+
+ВАЖНО: этот арт кладётся ПОВЕРХ кота, уже нарисованного в hub_banner —
+нужно полностью перекрыть нарисованных кота и подушку. В кадре ТОЛЬКО
+кот и подушка (без табурета — он остаётся от фона), тот же ракурс
+(вид сбоку), голова вправо. Кот крупно, по центру, подушка снизу.
+
+```
+A plump ginger shop cat curled asleep on a round burgundy velvet cushion
+with tassels, cat's tail wrapped over its paws, head resting to the right,
+one ear twitching, content and warm, only the cat and the cushion in frame,
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette of amber, honey and deep brown, side view facing right, isolated
+on a plain solid white background, no stool, no ground, no shadow, no text,
+cozy fantasy game character
+```
+
+### 9.2 cmp_firefly.png — Светлячок (порхает в лавке, крупный план)
+
+```
+A large friendly firefly with a glowing warm-yellow abdomen, delicate
+translucent wings with watercolor veins, tiny smiling face, soft light halo
+around the abdomen, storybook watercolor illustration with gentle ink
+outlines, warm candlelit palette, isolated on a plain solid white
+background, no shadow, no text, cozy fantasy game character
+```
+
+### 9.3 cmp_herbalist.png — Травница (стоит у полок в лавке)
+
+```
+A kind middle-aged herbalist woman in a moss-green apron over a linen dress,
+a wicker basket of fresh herbs on her arm, a sprig of lavender in her hand,
+hair in a bun with a knitted shawl, gentle smile, storybook watercolor
+illustration with gentle ink outlines, warm candlelit palette of amber,
+honey and deep brown, full body, three-quarter view facing right, isolated
+on a plain solid white background, no ground, no shadow, no text, cozy
+fantasy game character
+```
+
+### 9.4 cmp_smith.png — Кузнец-подмастерье (стоит на площади у кузницы)
+
+```
+A young stocky blacksmith apprentice with rolled-up sleeves, a leather apron,
+a small hammer resting on his shoulder, a few soot smudges on his cheerful
+face, rolled trousers and sturdy boots, storybook watercolor illustration
+with gentle ink outlines, warm afternoon palette of amber, honey and deep
+brown, full body, three-quarter view facing left, isolated on a plain solid
+white background, no ground, no shadow, no text, cozy fantasy game character
+```
+
+Сохранять как `assets/crew/cat.png`, `cmp_firefly.png`, `cmp_herbalist.png`,
+`cmp_smith.png` и прислать мне — вырежу белый фон скриптом, сохраню
+как прозрачные PNG, и игра подхватит их автоматически (без файла
+показывает иконку-эмодзи). Если тулза умеет настоящий PNG с альфой —
+тоже годится, тогда резать не нужно.
+
+---
+
+## Заметка про фон при генерации персонажей (питомцы, спутники, кот)
+
+- ЛУЧШЕ ВСЕГО: проси `isolated on a plain solid white background, no shadow`
+  вместо «transparent background» — ровный белый фон я вырезаю скриптом
+  без потерь.
+- ИЗБЕГАТЬ: шахматных клеток «псевдо-прозрачности» (серо-белая клетка) —
+  это модель нарисовала паттерн как картинку; контур персонажа после
+  вырезания получается грязным. Если получил клетки — перегенерируй
+  с формулировкой про белый фон.
+- Настоящий PNG с альфа-каналом — тоже отлично, тогда вообще ничего
+  резать не нужно.
+- Равномерный серый фон — допустимо, справлюсь, но белый надёжнее.

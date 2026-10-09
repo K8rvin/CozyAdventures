@@ -69,6 +69,20 @@ test('авторасстановка врагов: ближние вперёд, 
   assert.equal(slots[2], 1); // босс — центр
 });
 
+test('авторасстановка врагов: слоты не повторяются даже у 4 одинаковых крыс', () => {
+  const slots = enemyFormationSlots(['rat_thief', 'rat_thief', 'rat_thief', 'rat_thief']);
+  assert.equal(new Set(slots).size, slots.length, `слоты наслоились: ${slots}`);
+  for (const s of slots) assert.ok(s >= 0 && s <= 5, `слот вне поля: ${s}`);
+});
+
+test('авторасстановка врагов: во всех боях кампании слоты уникальны', async () => {
+  const { BATTLES } = await import('../src/data/battles.js');
+  for (const b of BATTLES) {
+    const slots = enemyFormationSlots(b.enemies);
+    assert.equal(new Set(slots).size, slots.length, `${b.id}: слоты наслоились: ${slots}`);
+  }
+});
+
 test('runBattle в режиме formation проходит бой и даёт награду', () => {
   const s = newGame();
   s.settings.battleMode = 'formation';

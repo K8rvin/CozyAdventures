@@ -1548,26 +1548,27 @@
         {
           id: "dog",
           label: "\u0421\u043F\u044F\u0449\u0438\u0435 \u0441\u043E\u0431\u0430\u043A\u0438",
-          spots: [{ x: 188, y: 180, r: R + 12 }, { x: 156, y: 496, r: R + 12 }]
+          spots: [{ x: 182, y: 188, r: 42 }, { x: 153, y: 510, r: 54 }]
         },
         {
           id: "bread",
           label: "\u0411\u0443\u0445\u0430\u043D\u043A\u0438 \u0445\u043B\u0435\u0431\u0430",
           spots: [
-            { x: 634, y: 232, r: R },
-            { x: 588, y: 265, r: R },
-            { x: 675, y: 281, r: R }
+            { x: 645, y: 218, r: 22 },
+            { x: 588, y: 256, r: 30 },
+            { x: 635, y: 280, r: 30 },
+            { x: 722, y: 597, r: 42 }
           ]
         },
         {
           id: "cheese",
           label: "\u0413\u043E\u043B\u043E\u0432\u043A\u0438 \u0441\u044B\u0440\u0430",
-          spots: [{ x: 603, y: 196, r: R + 4 }]
+          spots: [{ x: 589, y: 182, r: 36 }]
         },
         {
           id: "rope",
           label: "\u041C\u043E\u0442\u043A\u0438 \u0432\u0435\u0440\u0451\u0432\u043A\u0438",
-          spots: [{ x: 781, y: 451, r: R }, { x: 787, y: 496, r: R }]
+          spots: [{ x: 785, y: 456, r: 30 }, { x: 310, y: 620, r: 34 }, { x: 552, y: 133, r: 26 }]
         }
       ],
       rewards: [{ type: "coins", amount: 130 }],
@@ -1586,33 +1587,37 @@
           id: "keys",
           label: "\u0421\u0442\u0430\u0440\u0438\u043D\u043D\u044B\u0435 \u043A\u043B\u044E\u0447\u0438",
           spots: [
-            { x: 706, y: 496, r: R },
-            { x: 688, y: 510, r: R },
-            { x: 656, y: 503, r: R }
+            { x: 724, y: 465, r: 22 },
+            { x: 689, y: 478, r: 26 },
+            { x: 709, y: 589, r: 18 },
+            { x: 332, y: 323, r: 18 }
           ]
         },
         {
           id: "candle",
           label: "\u0421\u0432\u0435\u0447\u0438",
           spots: [
-            { x: 206, y: 379, r: R },
-            { x: 656, y: 209, r: R },
-            { x: 150, y: 405, r: R }
+            { x: 227, y: 397, r: 22 },
+            { x: 661, y: 163, r: 18 },
+            { x: 191, y: 396, r: 22 },
+            { x: 152, y: 425, r: 22 },
+            { x: 115, y: 452, r: 16 },
+            { x: 91, y: 468, r: 18 }
           ]
         },
         {
           id: "openbook",
           label: "\u0420\u0430\u0441\u043A\u0440\u044B\u0442\u044B\u0435 \u043A\u043D\u0438\u0433\u0438",
           spots: [
-            { x: 281, y: 457, r: R },
-            { x: 531, y: 457, r: R },
-            { x: 238, y: 163, r: R }
+            { x: 335, y: 485, r: 86 },
+            { x: 561, y: 518, r: 62 },
+            { x: 139, y: 159, r: 26 }
           ]
         },
         {
           id: "chest",
           label: "\u0427\u0435\u043C\u043E\u0434\u0430\u043D\u0447\u0438\u043A\u0438",
-          spots: [{ x: 394, y: 274, r: R }, { x: 56, y: 522, r: R }]
+          spots: [{ x: 373, y: 289, r: 42 }, { x: 427, y: 235, r: 42 }]
         }
       ],
       rewards: [{ type: "coins", amount: 150 }],
@@ -2971,6 +2976,177 @@
     }
   ];
   var FLOW_PUZZLE_BY_ID = Object.fromEntries(FLOW_PUZZLES.map((p) => [p.id, p]));
+
+  // src/data/puzzlesBrew.js
+  var WATER = { id: "water", name: "\u0420\u043E\u0434\u043D\u0438\u043A\u043E\u0432\u0430\u044F \u0432\u043E\u0434\u0430", icon: "\u{1F4A7}" };
+  var HONEY = { id: "honey", name: "\u0414\u0438\u043A\u0438\u0439 \u043C\u0451\u0434", icon: "\u{1F36F}" };
+  var CHAMOMILE = { id: "chamomile", name: "\u0420\u043E\u043C\u0430\u0448\u043A\u0430", icon: "\u{1F33C}" };
+  var MINT = { id: "mint", name: "\u041C\u044F\u0442\u0430 \u043F\u0435\u0440\u0435\u0447\u043D\u0430\u044F", icon: "\u{1F33F}" };
+  var BERRIES = { id: "berries", name: "\u041B\u0435\u0441\u043D\u044B\u0435 \u044F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}" };
+  var MUSHROOM = { id: "mushroom", name: "\u0421\u0432\u0435\u0442\u043B\u044F\u043A\u043E\u0432\u044B\u0439 \u0433\u0440\u0438\u0431", icon: "\u{1F344}" };
+  var MOSS = { id: "moss", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0439\u0441\u044F \u043C\u043E\u0445", icon: "\u{1F7E2}" };
+  var FEATHER = { id: "feather", name: "\u041F\u0435\u0440\u043E \u0441\u043E\u0432\u044B", icon: "\u{1FAB6}" };
+  var SPIDER = { id: "spider", name: "\u041F\u0430\u0443\u0442\u0438\u043D\u043D\u0430\u044F \u043D\u0438\u0442\u044C", icon: "\u{1F578}\uFE0F" };
+  var ROSE = { id: "rose", name: "\u041B\u0435\u043F\u0435\u0441\u0442\u043A\u0438 \u0440\u043E\u0437", icon: "\u{1F339}" };
+  var SALT = { id: "salt", name: "\u0421\u043E\u043B\u044C", icon: "\u{1F9C2}" };
+  var CHESTNUT = { id: "chestnut", name: "\u041A\u0430\u0448\u0442\u0430\u043D", icon: "\u{1F330}" };
+  var STAR = { id: "star", name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u{1F31F}" };
+  var INK = { id: "ink", name: "\u041A\u0430\u043F\u043B\u044F \u0447\u0435\u0440\u043D\u0438\u043B", icon: "\u{1FADF}" };
+  var ICE = { id: "ice", name: "\u041B\u044C\u0434\u0438\u043D\u043A\u0430", icon: "\u{1F9CA}" };
+  var PEPPER = { id: "pepper", name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u0446", icon: "\u{1F336}\uFE0F" };
+  var BREW_PUZZLES = [
+    {
+      id: "brew_01",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u0420\u043E\u043C\u0430\u0448\u043A\u043E\u0432\u044B\u0439 \u0434\u043B\u044F \u043A\u043E\u0442\u0438\u043A\u0430",
+      difficulty: 1,
+      ingredients: [WATER, CHAMOMILE, HONEY],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "add", ingredient: "chamomile" },
+        { do: "stir" }
+      ],
+      rewards: [{ type: "coins", amount: 110 }],
+      intro: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u0440\u043E\u0441\u0442\u0443\u0434\u0438\u043B \u043D\u043E\u0441. \u0421\u0432\u0430\u0440\u0438 \u043F\u043E \u043A\u043D\u0438\u0433\u0435: \u0448\u0430\u0433\u0438 \u043F\u043E\u0434\u0441\u0432\u0435\u0447\u0435\u043D\u044B, \u043E\u0448\u0438\u0431\u0438\u0442\u044C\u0441\u044F \u043C\u043E\u0436\u043D\u043E \u0442\u0440\u0438\u0436\u0434\u044B."
+    },
+    {
+      id: "brew_02",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u0421\u043E\u0433\u0440\u0435\u0432\u0430\u044E\u0449\u0438\u0439 \u0434\u043B\u044F \u0441\u0442\u043E\u0440\u043E\u0436\u0430",
+      difficulty: 1,
+      ingredients: [WATER, HONEY, BERRIES, ICE],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "heat" },
+        { do: "add", ingredient: "honey" },
+        { do: "stir" }
+      ],
+      rewards: [{ type: "coins", amount: 120 }],
+      intro: "\u0421\u0442\u043E\u0440\u043E\u0436 \u043C\u0451\u0440\u0437\u043D\u0435\u0442 \u0443 \u0434\u0432\u0435\u0440\u0438. \u0412\u043E\u0434\u0443 \u0441\u043D\u0430\u0447\u0430\u043B\u0430 \u0433\u0440\u0435\u0435\u043C \u2014 \u0438\u043D\u0430\u0447\u0435 \u043C\u0451\u0434 \u043D\u0435 \u043F\u043E\u0439\u0434\u0451\u0442."
+    },
+    {
+      id: "brew_03",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u041C\u044F\u0442\u043D\u044B\u0439 \u043E\u0442 \u043D\u0435\u0440\u0432\u043E\u0432",
+      difficulty: 2,
+      ingredients: [WATER, MINT, CHAMOMILE, HONEY, SALT],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "crush", ingredient: "mint" },
+        { do: "stir" },
+        { do: "wait" },
+        { do: "cool" }
+      ],
+      rewards: [{ type: "coins", amount: 140 }],
+      intro: "\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446 \u0441 \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u0434\u0435\u0440\u0433\u0430\u0435\u0442\u0441\u044F. \u041C\u044F\u0442\u0443 \u0441\u043F\u0435\u0440\u0432\u0430 \u0440\u0430\u0441\u0442\u043E\u043B\u043A\u0438 \u0432 \u0441\u0442\u0443\u043F\u0435 \u2014 \u0436\u043C\u0438 \u043D\u0430 \u0441\u0442\u0443\u043F\u043A\u0443, \u043F\u043E\u0442\u043E\u043C \u043D\u0430 \u043C\u044F\u0442\u0443."
+    },
+    {
+      id: "brew_04",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u0413\u0440\u0438\u0431\u043D\u043E\u0439 \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A",
+      difficulty: 2,
+      ingredients: [WATER, MUSHROOM, MOSS, BERRIES, SALT],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "heat" },
+        { do: "add", ingredient: "mushroom" },
+        { do: "stir" },
+        { do: "wait" },
+        { do: "cool" }
+      ],
+      rewards: [{ type: "coins", amount: 150 }],
+      intro: "\u0417\u0435\u043B\u044C\u0435, \u0447\u0442\u043E \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435. \u0413\u0440\u0438\u0431 \u043A\u043B\u0430\u0434\u0451\u043C \u0442\u043E\u043B\u044C\u043A\u043E \u0432 \u0433\u043E\u0440\u044F\u0447\u0443\u044E \u0432\u043E\u0434\u0443."
+    },
+    {
+      id: "brew_05",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u042F\u0433\u043E\u0434\u043D\u043E\u0435 \u043E\u0431\u043E\u0434\u0440\u044F\u044E\u0449\u0435\u0435",
+      difficulty: 3,
+      ingredients: [WATER, BERRIES, CHESTNUT, HONEY, MUSHROOM, SALT, ICE, FEATHER],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "add", ingredient: "berries" },
+        { do: "crush", ingredient: "chestnut" },
+        { do: "heat" },
+        { do: "stir" },
+        { do: "add", ingredient: "honey" },
+        { do: "wait" }
+      ],
+      rewards: [{ type: "coins", amount: 180 }],
+      intro: "\u0414\u043B\u044F \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u0435\u0440\u0435\u0434 \u043F\u043E\u0445\u043E\u0434\u043E\u043C. \u0421\u0442\u043E\u043B \u043F\u043E\u043B\u043E\u043D \u043B\u0438\u0448\u043D\u0435\u0433\u043E \u2014 \u0433\u043B\u044F\u0434\u0438 \u0432 \u043A\u043D\u0438\u0433\u0443, \u0430 \u043D\u0435 \u043F\u043E \u0441\u0442\u043E\u0440\u043E\u043D\u0430\u043C."
+    },
+    {
+      id: "brew_06",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u0421\u043E\u0432\u0438\u043D\u043E\u0435 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438",
+      difficulty: 3,
+      ingredients: [WATER, FEATHER, MINT, CHAMOMILE, BERRIES, SALT],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "heat" },
+        { do: "add", ingredient: "feather" },
+        { do: "stir" },
+        { do: "add", ingredient: "mint" },
+        { do: "cool" }
+      ],
+      hideRecipe: true,
+      peekSeconds: 10,
+      rewards: [{ type: "coins", amount: 210 }],
+      intro: "\u0421\u043E\u0432\u0430-\u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0440\u044C \u0434\u0438\u043A\u0442\u0443\u0435\u0442 \u043D\u0430 \u043F\u0430\u043C\u044F\u0442\u044C: \u0440\u0435\u0446\u0435\u043F\u0442 \u0432\u0438\u0434\u0435\u043D 10 \u0441\u0435\u043A\u0443\u043D\u0434, \u043F\u043E\u0442\u043E\u043C \u043A\u043D\u0438\u0433\u0430 \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F. \u0417\u0430\u043F\u043E\u043C\u0438\u043D\u0430\u0439!"
+    },
+    {
+      id: "brew_07",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u041F\u0430\u0443\u0442\u0438\u043D\u043D\u044B\u0439 \u0434\u043B\u044F \u0441\u043B\u0435\u0434\u043E\u043F\u044B\u0442\u0430",
+      difficulty: 4,
+      ingredients: [WATER, SPIDER, HONEY, MOSS, MUSHROOM, ROSE, ICE, INK],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "crush", ingredient: "spider" },
+        { do: "add", ingredient: "honey" },
+        { do: "heat" },
+        { do: "stir" },
+        { do: "wait" },
+        { do: "add", ingredient: "moss" },
+        { do: "stir" }
+      ],
+      hideRecipe: true,
+      peekSeconds: 8,
+      rewards: [{ type: "coins", amount: 250 }, { type: "seals", amount: 1 }],
+      intro: "\u0421\u043B\u0435\u0434\u043E\u043F\u044B\u0442 \u043F\u043B\u0430\u0442\u0438\u0442 \u043F\u0435\u0447\u0430\u0442\u044C\u044E. 8 \u0441\u0435\u043A\u0443\u043D\u0434 \u043D\u0430 \u0440\u0435\u0446\u0435\u043F\u0442 \u0438\u0437 \u0432\u043E\u0441\u044C\u043C\u0438 \u0448\u0430\u0433\u043E\u0432 \u2014 \u043F\u043E\u0442\u043E\u043C \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438."
+    },
+    {
+      id: "brew_08",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u044D\u043B\u0438\u043A\u0441\u0438\u0440 \u043C\u0430\u0441\u0442\u0435\u0440\u0430",
+      difficulty: 5,
+      ingredients: [WATER, STAR, HONEY, ROSE, FEATHER, INK, SALT, MUSHROOM, ICE, BERRIES, PEPPER],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "heat" },
+        { do: "crush", ingredient: "star" },
+        { do: "stir" },
+        { do: "add", ingredient: "honey" },
+        { do: "wait" },
+        { do: "add", ingredient: "rose" },
+        { do: "cool" },
+        { do: "add", ingredient: "feather" },
+        { do: "stir" }
+      ],
+      hideRecipe: true,
+      peekSeconds: 8,
+      rewards: [{ type: "coins", amount: 320 }, { type: "seals", amount: 2 }],
+      intro: "\u0412\u0435\u0440\u0448\u0438\u043D\u0430 \u0430\u043B\u0445\u0438\u043C\u0438\u0438: \u0434\u0435\u0441\u044F\u0442\u044C \u0448\u0430\u0433\u043E\u0432, \u043F\u043E\u043B\u043D\u044B\u0439 \u0441\u0442\u043E\u043B \u043E\u0442\u0432\u043B\u0435\u043A\u0430\u044E\u0449\u0435\u0433\u043E \u0438 \u0432\u0441\u0435\u0433\u043E 8 \u0441\u0435\u043A\u0443\u043D\u0434 \u043D\u0430 \u0440\u0435\u0446\u0435\u043F\u0442."
+    }
+  ];
 
   // src/data/worlds/nm.js
   var WORLD = {
@@ -7374,29 +7550,19 @@
     return "\u041D\u0435 \u0445\u0432\u0430\u0442\u0438\u043B\u043E \u043C\u043E\u0449\u0438. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0443, \u0437\u0435\u043B\u044C\u044F \u0438 \u0440\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0443: \u0442\u0430\u043D\u043A\u0438 \u0432\u043F\u0435\u0440\u0451\u0434, \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u043D\u0430\u0437\u0430\u0434.";
   }
   function enemyFormationSlots(enemyEntries) {
-    const slots = [];
-    let front = 0;
-    let back = 3;
-    for (const entry of enemyEntries) {
+    const used = /* @__PURE__ */ new Set();
+    const take = (prefs) => {
+      const slot = prefs.find((s) => !used.has(s)) ?? prefs[0];
+      used.add(slot);
+      return slot;
+    };
+    return enemyEntries.map((entry) => {
       const id = typeof entry === "string" ? entry : entry.id;
       const def = ENEMY_BY_ID[id];
-      if (def.boss) {
-        slots.push(1);
-        continue;
-      }
+      if (def.boss) return take([1, 0, 2, 4, 3, 5]);
       const melee = !def.skills.some((s) => s === "pollen_sleep" || s === "fear_chill");
-      if (melee) {
-        slots.push(FRONT[front % 3]);
-        front++;
-      } else {
-        slots.push(BACK[back % 3]);
-        back++;
-        if (back % 3 === 0 && front < 3) {
-          back = 3;
-        }
-      }
-    }
-    return slots;
+      return melee ? take([0, 1, 2, 3, 4, 5]) : take([3, 4, 5, 0, 1, 2]);
+    });
   }
 
   // src/core/state.js
@@ -7722,7 +7888,8 @@
       ...TEA_PUZZLES,
       ...MECH_PUZZLES,
       ...CANDLE_PUZZLES,
-      ...FLOW_PUZZLES
+      ...FLOW_PUZZLES,
+      ...BREW_PUZZLES
     ].map((p) => [p.id, p])
   );
   var CAMPAIGN_ORDER = [
@@ -7814,7 +7981,16 @@
     "flow_07",
     "mech_08",
     "cd_08",
-    "flow_08"
+    "flow_08",
+    // Алхимический стол: варка зелий по рецепту (с brew_06 — на память)
+    "brew_01",
+    "brew_02",
+    "brew_03",
+    "brew_04",
+    "brew_05",
+    "brew_06",
+    "brew_07",
+    "brew_08"
   ];
   var ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
   function allPuzzles(state2) {
@@ -7871,6 +8047,7 @@
     const puzzle = findPuzzle(state2, puzzleId);
     if (!puzzle) return null;
     const firstTime = !state2.puzzlesDone[puzzleId];
+    const isDaily = firstTime && state2.lastDailyBonus !== todayKey() && isDailyPuzzle(state2, puzzleId);
     state2.puzzlesDone[puzzleId] = {
       moves: info.moves ?? 0,
       hintsUsed: info.hintsUsed ?? 0,
@@ -7880,7 +8057,7 @@
     journalPush(state2, "\u{1F9E9}", firstTime ? `\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \xAB${puzzle.name}\xBB \u0440\u0435\u0448\u0435\u043D\u0430. \u041B\u0430\u0432\u043A\u0430 \u0441\u0432\u0435\u0442\u043B\u0435\u0435\u0442.` : `\xAB${puzzle.name}\xBB \u2014 \u0441\u043D\u043E\u0432\u0430 \u0440\u0435\u0448\u0435\u043D\u0430, \u043A\u043E\u0442 \u0434\u043E\u0432\u043E\u043B\u0435\u043D.`);
     const rewards = puzzle.rewards || [{ type: "coins", amount: 15 }];
     let dailyBonus = false;
-    if (firstTime && isDailyPuzzle(state2, puzzleId) && state2.lastDailyBonus !== todayKey()) {
+    if (isDaily) {
       dailyBonus = true;
       state2.lastDailyBonus = todayKey();
       journalPush(state2, "\u{1F31F}", "\u0417\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D \u2014 \u043F\u0443\u0442\u043D\u0438\u043A \u0449\u0435\u0434\u0440\u043E \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442!");
@@ -8336,7 +8513,7 @@
     pet_puppy: ["\u{1F415} \u0429\u0435\u043D\u043E\u043A \u043F\u0440\u0438\u043D\u0451\u0441 \u043F\u0430\u043B\u043A\u0443. \u041E\u0447\u0435\u043D\u044C \u0432\u0430\u0436\u043D\u0443\u044E \u043F\u0430\u043B\u043A\u0443.", "\u{1F415} \u0429\u0435\u043D\u043E\u043A \u0432\u0438\u043B\u044F\u0435\u0442 \u0445\u0432\u043E\u0441\u0442\u043E\u043C \u0432\u0441\u0435\u0439 \u043B\u0430\u0432\u043A\u0435."],
     pet_hedgehog: ["\u{1F994} \u0401\u0436\u0438\u043A \u0441\u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u0432 \u0442\u0430\u043F\u043A\u0435. \u042D\u0442\u043E \u0435\u0433\u043E \u0442\u0430\u043F\u043E\u043A \u0442\u0435\u043F\u0435\u0440\u044C.", "\u{1F994} \u0401\u0436\u0438\u043A \u0444\u044B\u0440\u043A\u0430\u0435\u0442 \u043D\u0430 \u0431\u0443\u0445\u0430\u043D\u043A\u0443."],
     pet_fox: ["\u{1F98A} \u041B\u0438\u0441\u0451\u043D\u043E\u043A \u043F\u0440\u0438\u043C\u0435\u0440\u044F\u0435\u0442 \u0442\u0432\u043E\u0451 \u0448\u043B\u044F\u043F\u043D\u043E\u0435 \u043C\u0435\u0441\u0442\u043E \u0443 \u043A\u0430\u0441\u0441\u044B.", "\u{1F98A} \u041B\u0438\u0441\u0451\u043D\u043E\u043A \u0447\u0442\u043E-\u0442\u043E \u043F\u0440\u044F\u0447\u0435\u0442 \u0437\u0430 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C."],
-    pet_horse: ["\u{1F434} \u0421\u0438\u0432\u043A\u0430 \u0444\u044B\u0440\u043A\u0430\u0435\u0442 \u0443 \u0434\u0432\u0435\u0440\u0438 \u2014 \u0441\u043A\u0443\u0447\u0430\u0435\u0442 \u043F\u043E \u0434\u043E\u0440\u043E\u0433\u0435.", "\u{1F434} \u0421\u0438\u0432\u043A\u0430 \u043E\u0431\u0433\u043B\u0430\u0434\u044B\u0432\u0430\u0435\u0442 \u0432\u0435\u043D\u0438\u043A. \u041E\u043D \u0431\u044B\u043B \u0445\u043E\u0440\u043E\u0448\u0438\u043C \u0432\u0435\u043D\u0438\u043A\u043E\u043C."],
+    pet_horse: ["\u{1F434} \u0421\u0438\u0432\u043A\u0430 \u0444\u044B\u0440\u043A\u0430\u0435\u0442 \u0443 \u0434\u0432\u0435\u0440\u0438 \u2014 \u0441\u043A\u0443\u0447\u0430\u0435\u0442 \u043F\u043E \u0434\u043E\u0440\u043E\u0433\u0435.", "\u{1F434} \u0421\u0438\u0432\u043A\u0430 \u043E\u0431\u0433\u043B\u0430\u0434\u044B\u0432\u0430\u0435\u0442 \u0432\u0435\u043D\u0438\u043A. \u0425\u043E\u0440\u043E\u0448\u0438\u0439 \u0431\u044B\u043B \u0432\u0435\u043D\u0438\u043A."],
     pet_owl: ["\u{1F989} \u0421\u043E\u0432\u0430 \u0441\u0447\u0438\u0442\u0430\u0435\u0442 \u0432\u0441\u043B\u0443\u0445 \u043E\u0441\u0442\u0430\u0442\u043A\u0438 \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445. \u0421\u0431\u0438\u0432\u0430\u0435\u0442\u0441\u044F.", "\u{1F989} \u0421\u043E\u0432\u0430 \u043E\u0434\u043E\u0431\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u0443\u0445\u0430\u0435\u0442 \u043D\u043E\u0432\u043E\u043C\u0443 \u043F\u043E\u0440\u044F\u0434\u043A\u0443."]
   };
   function pickChatter(state2) {
@@ -8363,12 +8540,11 @@
         alt: "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432",
         // Хотспоты: [icon, label, screen, x%, y%, showDot]
         hotspots: [
-          ["\u{1F4DA}", "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438", "puzzles", 15, 42, () => solved === 0],
+          ["\u{1F4DA}", "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438", "puzzles", 10, 42, () => solved === 0],
           ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, () => solved > 0 && !firstPurchaseDone || unseenShopItems(state2).length > 0],
-          ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 67, 45, () => false],
-          ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 77, 50, () => false],
-          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0],
-          ["\u{1F408}", "\u041F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C \u043A\u043E\u0442\u0430", "@cat", 27, 80, () => false]
+          ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 68, 46, () => false],
+          ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 77, 52, () => false],
+          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0]
         ]
       },
       square: {
@@ -8376,22 +8552,22 @@
         alt: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
         hotspots: [
           ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 79, 60, () => false],
-          ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 39, 52, () => false],
-          ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 52, 68, () => false],
-          ["\u{1F4CC}", "\u0414\u043E\u0441\u043A\u0430 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0439", "board", 6, 55, () => false],
-          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 17, 47, () => false],
-          ["\u{1F3EC}", "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B", "@market", 52, 38, () => ["armory", "armorer", "magic", "alchemy"].some((k) => hasUnseenIn(state2, k))]
+          ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 39, 58, () => false],
+          ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 53, 68, () => false],
+          ["\u{1F4CC}", "\u0414\u043E\u0441\u043A\u0430 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0439", "board", 7, 59, () => false],
+          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 17, 50, () => false],
+          ["\u{1F3EC}", "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B", "@market", 58, 38, () => ["armory", "armorer", "magic", "alchemy"].some((k) => hasUnseenIn(state2, k))]
         ]
       },
       market: {
         candidates: ["assets/town_market_web.jpg", "assets/town_market.jfif", "assets/town_square_web.jpg"],
         alt: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B",
         hotspots: [
-          ["\u{1F5E1}\uFE0F", "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", "shopArmory", 8, 60, () => hasUnseenIn(state2, "armory")],
-          ["\u{1F6E1}\uFE0F", "\u0411\u0440\u043E\u043D\u043D\u0438\u043A", "shopArmorer", 37, 60, () => hasUnseenIn(state2, "armorer")],
-          ["\u{1F52E}", "\u041C\u0430\u0433", "shopMagic", 65, 62, () => hasUnseenIn(state2, "magic")],
-          ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 81, 60, () => hasUnseenIn(state2, "alchemy")],
-          ["\u{1F307}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 50, 60, () => false]
+          ["\u{1F5E1}\uFE0F", "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", "shopArmory", 7, 60, () => hasUnseenIn(state2, "armory")],
+          ["\u{1F6E1}\uFE0F", "\u0411\u0440\u043E\u043D\u043D\u0438\u043A", "shopArmorer", 35, 60, () => hasUnseenIn(state2, "armorer")],
+          ["\u{1F52E}", "\u041C\u0430\u0433", "shopMagic", 63, 62, () => hasUnseenIn(state2, "magic")],
+          ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 80, 60, () => hasUnseenIn(state2, "alchemy")],
+          ["\u{1F307}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 52, 60, () => false]
         ]
       }
     };
@@ -8422,10 +8598,6 @@
       b.setAttribute("aria-label", label);
       b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
       b.addEventListener("click", () => {
-        if (screen === "@cat") {
-          petCat(b);
-          return;
-        }
         ctx2.sfx?.("tap");
         b.classList.add("zap");
         setTimeout(() => {
@@ -8463,11 +8635,78 @@
       ctx2.toast(r.gift > 0 ? `${r.line} ${"\u{1FA99}+2!"}` : r.line);
       rerender(sceneId);
     }
-    if (state2.pet && PET_BY_ID[state2.pet]) {
-      const pet = document.createElement("div");
-      pet.className = "hub-pet";
-      pet.textContent = PET_BY_ID[state2.pet].icon;
-      scenePanel.appendChild(pet);
+    const PET_SPOTS = {
+      pet_hedgehog: { scene: "square", x: 30, y: 82, size: 62 },
+      pet_fox: { scene: "lavka", x: 34, y: 75, size: 90 },
+      pet_puppy: { scene: "lavka", x: 87, y: 88, size: 92, flip: true },
+      pet_owl: { scene: "lavka", x: 58, y: 26, size: 64 },
+      pet_horse: { scene: "square", x: 90, y: 90, size: 130 }
+    };
+    for (const [petId, spot] of Object.entries(PET_SPOTS)) {
+      if (spot.scene !== sceneId || !(state2.crew || []).includes(petId) || !PET_BY_ID[petId]) continue;
+      const def = PET_BY_ID[petId];
+      const isActive = state2.pet === petId;
+      const el = document.createElement("div");
+      el.className = `hub-pet${isActive ? " active" : ""}`;
+      el.style.left = `${spot.x}%`;
+      el.style.top = `${spot.y}%`;
+      el.title = isActive ? `${def.name} \u2014 \u0438\u0434\u0451\u0442 \u0441 \u0442\u043E\u0431\u043E\u0439 \u0432 \u043F\u043E\u0445\u043E\u0434\u044B` : def.name;
+      const img = document.createElement("img");
+      img.src = `assets/pets/${petId}.png`;
+      img.alt = def.name;
+      img.style.width = `${spot.size}px`;
+      if (spot.flip) img.style.transform = "scaleX(-1)";
+      img.addEventListener("error", () => {
+        img.remove();
+        el.textContent = def.icon;
+        el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+      });
+      el.appendChild(img);
+      el.addEventListener("click", () => {
+        ctx2.sfx?.("tap");
+        const lines = CHATTER[petId] || [def.name];
+        ctx2.toast(lines[Math.floor(Math.random() * lines.length)]);
+      });
+      scenePanel.appendChild(el);
+    }
+    const CREW_SPOTS = [
+      { id: "cat", always: true, icon: "\u{1F408}", name: "\u041A\u043E\u0442 \u043B\u0430\u0432\u043A\u0438 \u2014 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C", scene: "lavka", x: 30, y: 97, size: 145, pet: true },
+      { id: "cmp_firefly", scene: "lavka", x: 47, y: 15, size: 46 },
+      { id: "cmp_herbalist", scene: "lavka", x: 19, y: 97, size: 145 },
+      { id: "cmp_smith", scene: "square", x: 45, y: 86, size: 50 }
+    ];
+    for (const spot of CREW_SPOTS) {
+      const owned = spot.always || (state2.crew || []).includes(spot.id);
+      if (spot.scene !== sceneId || !owned) continue;
+      const def = COMPANION_BY_ID[spot.id];
+      const name = spot.name || def?.name || spot.id;
+      const icon = spot.icon || def?.icon || "\u{1F43E}";
+      const el = document.createElement("div");
+      el.className = "hub-pet";
+      el.style.left = `${spot.x}%`;
+      el.style.top = `${spot.y}%`;
+      el.title = name;
+      const img = document.createElement("img");
+      img.src = `assets/crew/${spot.id}.png`;
+      img.alt = name;
+      img.style.width = `${spot.size}px`;
+      if (spot.flip) img.style.transform = "scaleX(-1)";
+      img.addEventListener("error", () => {
+        img.remove();
+        el.textContent = icon;
+        el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+      });
+      el.appendChild(img);
+      el.addEventListener("click", () => {
+        if (spot.pet) {
+          petCat(el);
+          return;
+        }
+        ctx2.sfx?.("tap");
+        const lines = CHATTER[spot.id] || [name];
+        ctx2.toast(lines[Math.floor(Math.random() * lines.length)]);
+      });
+      scenePanel.appendChild(el);
     }
     const chatter = pickChatter(state2);
     const journal = (state2.journal || []).slice(-2).reverse();
@@ -9019,8 +9258,8 @@
   }
 
   // src/ui/shelfView.js
-  var CELL = 64;
   function renderShelfPuzzle(container, ctx2, level) {
+    const CELL8 = Math.max(80, Math.min(120, Math.floor(500 / level.grid[0])));
     const puzzle = createShelfPuzzle(level);
     let selectedItem = null;
     let hintsUsed = 0;
@@ -9035,14 +9274,32 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL * dpr;
-    canvas.height = gh * CELL * dpr;
-    canvas.style.width = `${gw * CELL}px`;
-    canvas.style.height = `${gh * CELL}px`;
+    canvas.width = gw * CELL8 * dpr;
+    canvas.height = gh * CELL8 * dpr;
+    canvas.style.width = `${gw * CELL8}px`;
+    canvas.style.height = `${gh * CELL8}px`;
     canvas.style.maxWidth = "100%";
     canvas.style.touchAction = "none";
     canvasBox.appendChild(canvas);
-    wrap.appendChild(canvasBox);
+    const leftCol = document.createElement("div");
+    leftCol.style.cssText = "display:flex;flex-direction:column;gap:10px;flex:0 1 auto;min-width:0";
+    leftCol.appendChild(canvasBox);
+    const trayPanel = document.createElement("div");
+    trayPanel.className = "panel";
+    trayPanel.style.padding = "10px 14px";
+    const trayLabel = document.createElement("div");
+    trayLabel.className = "muted";
+    trayLabel.textContent = "\u0422\u043E\u0432\u0430\u0440\u044B: \u0442\u0430\u043F\u043D\u0438, \u0437\u0430\u0442\u0435\u043C \u043A\u043B\u0435\u0442\u043A\u0443 \u2014 \u0438\u043B\u0438 \u043F\u0440\u043E\u0441\u0442\u043E \u043F\u0435\u0440\u0435\u0442\u0430\u0449\u0438 \u043D\u0430 \u043F\u043E\u043B\u043A\u0443";
+    trayLabel.style.fontSize = "13px";
+    trayLabel.style.marginBottom = "8px";
+    trayPanel.appendChild(trayLabel);
+    const tray = document.createElement("div");
+    tray.style.display = "flex";
+    tray.style.flexWrap = "wrap";
+    tray.style.gap = "10px";
+    trayPanel.appendChild(tray);
+    leftCol.appendChild(trayPanel);
+    wrap.appendChild(leftCol);
     const side = document.createElement("div");
     side.className = "puzzle-side";
     const intro = document.createElement("div");
@@ -9057,17 +9314,6 @@
     const statusEl = document.createElement("div");
     statusEl.className = "puzzle-status";
     side.appendChild(statusEl);
-    const trayLabel = document.createElement("div");
-    trayLabel.className = "muted";
-    trayLabel.textContent = "\u041B\u043E\u0442\u043E\u043A (\u0442\u0430\u043F\u043D\u0438 \u0442\u043E\u0432\u0430\u0440, \u0437\u0430\u0442\u0435\u043C \u043A\u043B\u0435\u0442\u043A\u0443):";
-    trayLabel.style.fontSize = "13px";
-    trayLabel.style.marginTop = "8px";
-    side.appendChild(trayLabel);
-    const tray = document.createElement("div");
-    tray.style.display = "flex";
-    tray.style.flexWrap = "wrap";
-    tray.style.gap = "8px";
-    side.appendChild(tray);
     const controls = document.createElement("div");
     controls.className = "puzzle-controls";
     controls.style.marginTop = "10px";
@@ -9127,8 +9373,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL8);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL8);
       const occupantId = Object.entries(puzzle.placement).find(([, pos]) => pos && pos[0] === x && pos[1] === y)?.[0];
       if (occupantId) {
         removeItem(puzzle, occupantId);
@@ -9156,8 +9402,8 @@
     function cellFromEvent(ev) {
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL8);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL8);
       return x >= 0 && y >= 0 && x < level.grid[0] && y < level.grid[1] ? [x, y] : null;
     }
     function startPotentialDrag(ev, itemId) {
@@ -9269,50 +9515,50 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL, gh * CELL);
+      g.clearRect(0, 0, gw * CELL8, gh * CELL8);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#4a4038" : "#524840";
-          g.fillRect(x * CELL, y * CELL, CELL, CELL);
+          g.fillRect(x * CELL8, y * CELL8, CELL8, CELL8);
         }
       }
       for (const c of level.cells) {
-        const px = c.pos[0] * CELL;
-        const py = c.pos[1] * CELL;
+        const px = c.pos[0] * CELL8;
+        const py = c.pos[1] * CELL8;
         if (c.kind === "shelf") {
           g.fillStyle = "#6b5335";
-          g.fillRect(px + 3, py + 3, CELL - 6, CELL - 6);
+          g.fillRect(px + 3, py + 3, CELL8 - 6, CELL8 - 6);
           g.fillStyle = "#7d6444";
-          g.fillRect(px + 3, py + 3, CELL - 6, 8);
+          g.fillRect(px + 3, py + 3, CELL8 - 6, 8);
         } else if (c.kind === "light") {
           g.fillStyle = "#6b5335";
-          g.fillRect(px + 3, py + 3, CELL - 6, CELL - 6);
+          g.fillRect(px + 3, py + 3, CELL8 - 6, CELL8 - 6);
           const grad = g.createRadialGradient(
-            px + CELL / 2,
-            py + CELL / 2,
+            px + CELL8 / 2,
+            py + CELL8 / 2,
             4,
-            px + CELL / 2,
-            py + CELL / 2,
-            CELL / 2
+            px + CELL8 / 2,
+            py + CELL8 / 2,
+            CELL8 / 2
           );
           grad.addColorStop(0, "rgba(255, 226, 138, 0.5)");
           grad.addColorStop(1, "rgba(255, 226, 138, 0.05)");
           g.fillStyle = grad;
-          g.fillRect(px, py, CELL, CELL);
-          g.font = `${CELL * 0.22}px sans-serif`;
+          g.fillRect(px, py, CELL8, CELL8);
+          g.font = `${CELL8 * 0.22}px sans-serif`;
           g.textAlign = "right";
           g.textBaseline = "top";
-          g.fillText("\u2600\uFE0F", px + CELL - 4, py + 4);
+          g.fillText("\u2600\uFE0F", px + CELL8 - 4, py + 4);
         } else {
           g.fillStyle = "#33291f";
-          g.fillRect(px + 3, py + 3, CELL - 6, CELL - 6);
+          g.fillRect(px + 3, py + 3, CELL8 - 6, CELL8 - 6);
         }
       }
       if (drag?.active && drag.hover) {
         g.strokeStyle = "rgba(255, 202, 122, 0.95)";
         g.lineWidth = 3;
         g.setLineDash([7, 5]);
-        g.strokeRect(drag.hover[0] * CELL + 4, drag.hover[1] * CELL + 4, CELL - 8, CELL - 8);
+        g.strokeRect(drag.hover[0] * CELL8 + 4, drag.hover[1] * CELL8 + 4, CELL8 - 8, CELL8 - 8);
         g.setLineDash([]);
       }
       const v = violations(puzzle);
@@ -9320,19 +9566,19 @@
       for (const [itemId, pos] of Object.entries(puzzle.placement)) {
         if (!pos) continue;
         const it = level.items.find((i) => i.id === itemId);
-        const cx = pos[0] * CELL + CELL / 2;
-        const cy = pos[1] * CELL + CELL / 2;
+        const cx = pos[0] * CELL8 + CELL8 / 2;
+        const cy = pos[1] * CELL8 + CELL8 / 2;
         if (badItems.has(itemId)) {
           g.fillStyle = "rgba(232, 138, 122, 0.3)";
-          g.fillRect(pos[0] * CELL + 3, pos[1] * CELL + 3, CELL - 6, CELL - 6);
+          g.fillRect(pos[0] * CELL8 + 3, pos[1] * CELL8 + 3, CELL8 - 6, CELL8 - 6);
         }
         if (hintMark && hintMark.itemId === itemId) {
           g.fillStyle = "rgba(255, 202, 122, 0.35)";
           g.beginPath();
-          g.arc(cx, cy, CELL * 0.46, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL8 * 0.46, 0, Math.PI * 2);
           g.fill();
         }
-        g.font = `${CELL * 0.55}px "Segoe UI Emoji", sans-serif`;
+        g.font = `${CELL8 * 0.55}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
         if (drag?.active && drag.itemId === itemId) g.globalAlpha = 0.3;
@@ -9346,7 +9592,7 @@
           g.strokeStyle = "rgba(255, 202, 122, 0.8)";
           g.lineWidth = 3;
           g.setLineDash([6, 4]);
-          g.strokeRect(hx * CELL + 5, hy * CELL + 5, CELL - 10, CELL - 10);
+          g.strokeRect(hx * CELL8 + 5, hy * CELL8 + 5, CELL8 - 10, CELL8 - 10);
           g.setLineDash([]);
         }
       }
@@ -9355,6 +9601,8 @@
         if (puzzle.placement[it.id]) continue;
         const b = document.createElement("button");
         b.className = "small" + (selectedItem === it.id ? " primary" : "");
+        b.style.fontSize = "16px";
+        b.style.padding = "8px 12px";
         b.innerHTML = `${it.icon} ${it.name}`;
         b.title = it.tags.join(", ");
         b.addEventListener("pointerdown", (ev) => startPotentialDrag(ev, it.id));
@@ -9456,7 +9704,7 @@
   }
 
   // src/ui/bookView.js
-  var CELL2 = 60;
+  var CELL = 60;
   function renderBookPuzzle(container, ctx2, level) {
     const puzzle = createBookPuzzle(level);
     const path = pathCells(level);
@@ -9473,10 +9721,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL2 * dpr;
-    canvas.height = gh * CELL2 * dpr;
-    canvas.style.width = `${gw * CELL2}px`;
-    canvas.style.height = `${gh * CELL2}px`;
+    canvas.width = gw * CELL * dpr;
+    canvas.height = gh * CELL * dpr;
+    canvas.style.width = `${gw * CELL}px`;
+    canvas.style.height = `${gh * CELL}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -9548,8 +9796,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL2);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL2);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL);
       const idx = path.findIndex(([px, py]) => px === x && py === y);
       if (idx < 0) return;
       if (puzzle.letters[idx] === "\u2726") {
@@ -9610,36 +9858,36 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL2, gh * CELL2);
+      g.clearRect(0, 0, gw * CELL, gh * CELL);
       g.fillStyle = "#4d4231";
-      g.fillRect(0, 0, gw * CELL2, gh * CELL2);
+      g.fillRect(0, 0, gw * CELL, gh * CELL);
       const correct = /* @__PURE__ */ new Set();
       for (let i = 0; i < level.phrase.length; i++) {
         if (puzzle.letters[i] === level.phrase[i]) correct.add(i);
       }
       for (const [bx, by] of level.blots || []) {
-        g.font = `${CELL2 * 0.6}px "Segoe UI Emoji", sans-serif`;
+        g.font = `${CELL * 0.6}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
-        g.fillText("\u{1FADF}", bx * CELL2 + CELL2 / 2, by * CELL2 + CELL2 / 2);
+        g.fillText("\u{1FADF}", bx * CELL + CELL / 2, by * CELL + CELL / 2);
       }
       path.forEach(([x, y], i) => {
-        const px = x * CELL2;
-        const py = y * CELL2;
+        const px = x * CELL;
+        const py = y * CELL;
         const letter = puzzle.letters[i];
         const isFixed = letter === "\u2726";
         g.fillStyle = isFixed ? "#3a3226" : correct.has(i) ? "#5d6b3f" : "#6b5a3d";
-        g.fillRect(px + 3, py + 3, CELL2 - 6, CELL2 - 6);
+        g.fillRect(px + 3, py + 3, CELL - 6, CELL - 6);
         if (selected === i || hintPair && (hintPair.i === i || hintPair.j === i)) {
           g.strokeStyle = "#ffca7a";
           g.lineWidth = 3;
-          g.strokeRect(px + 3, py + 3, CELL2 - 6, CELL2 - 6);
+          g.strokeRect(px + 3, py + 3, CELL - 6, CELL - 6);
         }
-        g.font = `${isFixed ? CELL2 * 0.4 : CELL2 * 0.55}px "Segoe UI Emoji", serif`;
+        g.font = `${isFixed ? CELL * 0.4 : CELL * 0.55}px "Segoe UI Emoji", serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
         g.fillStyle = isFixed ? "#ffca7a" : "#f3e6cf";
-        g.fillText(letter, px + CELL2 / 2, py + CELL2 / 2 + 2);
+        g.fillText(letter, px + CELL / 2, py + CELL / 2 + 2);
       });
       const pr = bookProgress(puzzle);
       statusEl.innerHTML = `\u{1F4DC} \u0411\u0443\u043A\u0432\u044B \u043D\u0430 \u043C\u0435\u0441\u0442\u0430\u0445: <b>${pr.ok}/${pr.total}</b><div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
@@ -10116,7 +10364,7 @@
   }
 
   // src/ui/pathView.js
-  var CELL3 = 72;
+  var CELL2 = 72;
   function renderPathPuzzle(container, ctx2, level) {
     const puzzle = createPathPuzzle(level);
     let hintsUsed = 0;
@@ -10131,10 +10379,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL3 * dpr;
-    canvas.height = gh * CELL3 * dpr;
-    canvas.style.width = `${gw * CELL3}px`;
-    canvas.style.height = `${gh * CELL3}px`;
+    canvas.width = gw * CELL2 * dpr;
+    canvas.height = gh * CELL2 * dpr;
+    canvas.style.width = `${gw * CELL2}px`;
+    canvas.style.height = `${gh * CELL2}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -10205,8 +10453,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL3);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL3);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL2);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL2);
       const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
       if (idx >= 0 && rotateTile(puzzle, idx)) {
         hintTile = null;
@@ -10250,27 +10498,27 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL3, gh * CELL3);
+      g.clearRect(0, 0, gw * CELL2, gh * CELL2);
       const { reached } = tracePath(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#45523a" : "#4d5c40";
-          g.fillRect(x * CELL3, y * CELL3, CELL3, CELL3);
+          g.fillRect(x * CELL2, y * CELL2, CELL2, CELL2);
         }
       }
       level.tiles.forEach((t, i) => {
-        const cx = t.pos[0] * CELL3 + CELL3 / 2;
-        const cy = t.pos[1] * CELL3 + CELL3 / 2;
+        const cx = t.pos[0] * CELL2 + CELL2 / 2;
+        const cy = t.pos[1] * CELL2 + CELL2 / 2;
         const onPath = reached.has(i);
         if (t.type !== "beast") {
           g.fillStyle = onPath ? "#8a6f45" : "#6b5a40";
-          roundRect(g, t.pos[0] * CELL3 + 4, t.pos[1] * CELL3 + 4, CELL3 - 8, CELL3 - 8, 10);
+          roundRect(g, t.pos[0] * CELL2 + 4, t.pos[1] * CELL2 + 4, CELL2 - 8, CELL2 - 8, 10);
           g.fill();
         }
         if (hintTile === i) {
           g.fillStyle = "rgba(255, 202, 122, 0.35)";
           g.beginPath();
-          g.arc(cx, cy, CELL3 * 0.46, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL2 * 0.46, 0, Math.PI * 2);
           g.fill();
         }
         const rot = puzzle.rot[i] ?? t.rot ?? 0;
@@ -10283,7 +10531,7 @@
             const [dx, dy] = SIDES[side2];
             g.beginPath();
             g.moveTo(cx, cy);
-            g.lineTo(cx + dx * (CELL3 / 2 - 4), cy + dy * (CELL3 / 2 - 4));
+            g.lineTo(cx + dx * (CELL2 / 2 - 4), cy + dy * (CELL2 / 2 - 4));
             g.stroke();
           }
           g.fillStyle = onPath ? "#ffd98a" : "#4a3b28";
@@ -10291,7 +10539,7 @@
           g.arc(cx, cy, 7, 0, Math.PI * 2);
           g.fill();
         }
-        const emoji = (e, size = CELL3 * 0.5) => {
+        const emoji = (e, size = CELL2 * 0.5) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -10299,7 +10547,7 @@
         };
         if (t.type === "start") emoji("\u{1F3E0}");
         else if (t.type === "end") emoji("\u{1F333}");
-        else if (t.type === "beast") emoji("\u{1F417}", CELL3 * 0.45);
+        else if (t.type === "beast") emoji("\u{1F417}", CELL2 * 0.45);
       });
       const solvedNow = isPathSolved(puzzle);
       statusEl.innerHTML = (solvedNow ? "\u2705 <b>\u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u0433\u043E\u0442\u043E\u0432\u0430!</b>" : `\u{1F97E} \u0421\u043B\u0435\u0434 \u043E\u0442 \u0434\u043E\u043C\u0438\u043A\u0430: <b>${reached.size}</b> \u043F\u043B\u0438\u0442\u043E\u043A`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
@@ -10828,7 +11076,7 @@
   }
 
   // src/ui/mechView.js
-  var CELL4 = 72;
+  var CELL3 = 72;
   function renderMechPuzzle(container, ctx2, level) {
     const puzzle = createMechPuzzle(level);
     let hintsUsed = 0;
@@ -10843,10 +11091,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL4 * dpr;
-    canvas.height = gh * CELL4 * dpr;
-    canvas.style.width = `${gw * CELL4}px`;
-    canvas.style.height = `${gh * CELL4}px`;
+    canvas.width = gw * CELL3 * dpr;
+    canvas.height = gh * CELL3 * dpr;
+    canvas.style.width = `${gw * CELL3}px`;
+    canvas.style.height = `${gh * CELL3}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -10918,8 +11166,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL4);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL4);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL3);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL3);
       const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
       if (idx >= 0 && rotateGear(puzzle, idx)) {
         hintTile = null;
@@ -10963,14 +11211,14 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL4, gh * CELL4);
+      g.clearRect(0, 0, gw * CELL3, gh * CELL3);
       const { reached } = traceMech(puzzle);
       const at = /* @__PURE__ */ new Map();
       level.tiles.forEach((t, i) => at.set(t.pos.join(","), i));
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3d4149" : "#353945";
-          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
+          g.fillRect(x * CELL3, y * CELL3, CELL3, CELL3);
         }
       }
       level.tiles.forEach((t, i) => {
@@ -10991,23 +11239,23 @@
           g.lineCap = "round";
           g.lineWidth = onPath ? 9 : 7;
           g.beginPath();
-          g.moveTo(t.pos[0] * CELL4 + CELL4 / 2 + dx * CELL4 * 0.28, t.pos[1] * CELL4 + CELL4 / 2 + dy * CELL4 * 0.28);
-          g.lineTo(t.pos[0] * CELL4 + CELL4 / 2 + dx * CELL4 * 0.72, t.pos[1] * CELL4 + CELL4 / 2 + dy * CELL4 * 0.72);
+          g.moveTo(t.pos[0] * CELL3 + CELL3 / 2 + dx * CELL3 * 0.28, t.pos[1] * CELL3 + CELL3 / 2 + dy * CELL3 * 0.28);
+          g.lineTo(t.pos[0] * CELL3 + CELL3 / 2 + dx * CELL3 * 0.72, t.pos[1] * CELL3 + CELL3 / 2 + dy * CELL3 * 0.72);
           g.stroke();
         }
       });
       level.tiles.forEach((t, i) => {
-        const cx = t.pos[0] * CELL4 + CELL4 / 2;
-        const cy = t.pos[1] * CELL4 + CELL4 / 2;
+        const cx = t.pos[0] * CELL3 + CELL3 / 2;
+        const cy = t.pos[1] * CELL3 + CELL3 / 2;
         const onPath = reached.has(i);
         const rot = puzzle.rot[i] ?? t.rot ?? 0;
         g.fillStyle = t.type === "blocker" ? "#2c2a33" : onPath ? "#7d6338" : "#52493c";
-        roundRect(g, t.pos[0] * CELL4 + 4, t.pos[1] * CELL4 + 4, CELL4 - 8, CELL4 - 8, 10);
+        roundRect(g, t.pos[0] * CELL3 + 4, t.pos[1] * CELL3 + 4, CELL3 - 8, CELL3 - 8, 10);
         g.fill();
         if (hintTile === i) {
           g.fillStyle = "rgba(255, 202, 122, 0.35)";
           g.beginPath();
-          g.arc(cx, cy, CELL4 * 0.46, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL3 * 0.46, 0, Math.PI * 2);
           g.fill();
         }
         if (t.type === "gear") {
@@ -11015,14 +11263,14 @@
         } else if (t.type === "start" || t.type === "end") {
           g.fillStyle = onPath ? "#d9a441" : "#8d8578";
           g.beginPath();
-          g.arc(cx, cy, CELL4 * 0.2, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL3 * 0.2, 0, Math.PI * 2);
           g.fill();
           g.strokeStyle = "#4a3b28";
           g.lineWidth = 3;
           g.stroke();
           drawFaces(g, t, rot, cx, cy);
         }
-        const emoji = (e, size = CELL4 * 0.42) => {
+        const emoji = (e, size = CELL3 * 0.42) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -11030,13 +11278,13 @@
         };
         if (t.type === "start") emoji("\u{1F3A1}");
         else if (t.type === "end") emoji("\u{1F514}");
-        else if (t.type === "blocker") emoji("\u{1F529}", CELL4 * 0.4);
+        else if (t.type === "blocker") emoji("\u{1F529}", CELL3 * 0.4);
       });
       const solvedNow = isMechSolved(puzzle);
       statusEl.innerHTML = (solvedNow ? "\u2705 <b>\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C \u0437\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u043B!</b>" : `\u2699\uFE0F \u041F\u0435\u0440\u0435\u0434\u0430\u0447\u0430 \u043E\u0442 \u0440\u0443\u043A\u043E\u044F\u0442\u0438: <b>${reached.size}</b> \u0434\u0435\u0442\u0430\u043B\u0435\u0439`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
     function drawGear(g, t, rot, cx, cy, onPath) {
-      const r = CELL4 * 0.3;
+      const r = CELL3 * 0.3;
       const body = onPath ? "#d9a441" : "#9a938a";
       const dark = onPath ? "#8a6420" : "#5e584f";
       g.fillStyle = dark;
@@ -11063,7 +11311,7 @@
       drawFaces(g, t, rot, cx, cy);
     }
     function drawFaces(g, t, rot, cx, cy) {
-      const r = CELL4 * 0.3;
+      const r = CELL3 * 0.3;
       for (let s = 0; s < 4; s++) {
         const f = faceAt(t, rot, s);
         if (!f) continue;
@@ -11298,7 +11546,7 @@
   }
 
   // src/ui/candleView.js
-  var CELL5 = 64;
+  var CELL4 = 64;
   function renderCandlePuzzle(container, ctx2, level) {
     const puzzle = createCandlePuzzle(level);
     let hintsUsed = 0;
@@ -11313,10 +11561,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL5 * dpr;
-    canvas.height = gh * CELL5 * dpr;
-    canvas.style.width = `${gw * CELL5}px`;
-    canvas.style.height = `${gh * CELL5}px`;
+    canvas.width = gw * CELL4 * dpr;
+    canvas.height = gh * CELL4 * dpr;
+    canvas.style.width = `${gw * CELL4}px`;
+    canvas.style.height = `${gh * CELL4}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -11392,8 +11640,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL5);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL5);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL4);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL4);
       const r = placeCandle(puzzle, x, y);
       if (r.ok) {
         hintCell = null;
@@ -11439,70 +11687,70 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL5, gh * CELL5);
+      g.clearRect(0, 0, gw * CELL4, gh * CELL4);
       const st = candleStatus(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#232a3c" : "#1d2333";
-          g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
+          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
         }
       }
       for (const k of st.lit) {
         const [x, y] = k.split(",").map(Number);
         g.fillStyle = "rgba(255, 196, 96, 0.22)";
-        g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
+        g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
       }
       for (const [x, y] of level.walls) {
         g.fillStyle = "#0d1017";
-        g.fillRect(x * CELL5 + 2, y * CELL5 + 2, CELL5 - 4, CELL5 - 4);
+        g.fillRect(x * CELL4 + 2, y * CELL4 + 2, CELL4 - 4, CELL4 - 4);
         g.fillStyle = "#2c3140";
-        g.fillRect(x * CELL5 + 2, y * CELL5 + 2, CELL5 - 4, 6);
+        g.fillRect(x * CELL4 + 2, y * CELL4 + 2, CELL4 - 4, 6);
       }
       for (const k of puzzle.candles) {
         const [x, y] = k.split(",").map(Number);
-        const cx = x * CELL5 + CELL5 / 2;
-        const cy = y * CELL5 + CELL5 / 2;
-        const glow = g.createRadialGradient(cx, cy, 4, cx, cy, CELL5 * (level.radius * 0.55));
+        const cx = x * CELL4 + CELL4 / 2;
+        const cy = y * CELL4 + CELL4 / 2;
+        const glow = g.createRadialGradient(cx, cy, 4, cx, cy, CELL4 * (level.radius * 0.55));
         glow.addColorStop(0, "rgba(255, 214, 130, 0.5)");
         glow.addColorStop(1, "rgba(255, 214, 130, 0)");
         g.fillStyle = glow;
         g.beginPath();
-        g.arc(cx, cy, CELL5 * (level.radius * 0.55), 0, Math.PI * 2);
+        g.arc(cx, cy, CELL4 * (level.radius * 0.55), 0, Math.PI * 2);
         g.fill();
       }
-      const emoji = (e, x, y, size = CELL5 * 0.5, alpha = 1) => {
+      const emoji = (e, x, y, size = CELL4 * 0.5, alpha = 1) => {
         g.globalAlpha = alpha;
         g.font = `${size}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
-        g.fillText(e, x * CELL5 + CELL5 / 2, y * CELL5 + CELL5 / 2);
+        g.fillText(e, x * CELL4 + CELL4 / 2, y * CELL4 + CELL4 / 2);
         g.globalAlpha = 1;
       };
       for (const [x, y] of level.lanterns) {
         const lit = st.lit.has(`${x},${y}`);
         if (lit) {
-          const cx = x * CELL5 + CELL5 / 2;
-          const cy = y * CELL5 + CELL5 / 2;
-          const halo = g.createRadialGradient(cx, cy, 4, cx, cy, CELL5 * 0.7);
+          const cx = x * CELL4 + CELL4 / 2;
+          const cy = y * CELL4 + CELL4 / 2;
+          const halo = g.createRadialGradient(cx, cy, 4, cx, cy, CELL4 * 0.7);
           halo.addColorStop(0, "rgba(255, 230, 150, 0.55)");
           halo.addColorStop(1, "rgba(255, 230, 150, 0)");
           g.fillStyle = halo;
           g.beginPath();
-          g.arc(cx, cy, CELL5 * 0.7, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL4 * 0.7, 0, Math.PI * 2);
           g.fill();
         }
-        emoji("\u{1F3EE}", x, y, CELL5 * 0.5, lit ? 1 : 0.45);
+        emoji("\u{1F3EE}", x, y, CELL4 * 0.5, lit ? 1 : 0.45);
       }
       for (const [x, y] of level.spirits) {
         const lit = st.lit.has(`${x},${y}`);
         if (lit) {
           g.fillStyle = "rgba(160, 165, 175, 0.45)";
           g.beginPath();
-          g.arc(x * CELL5 + CELL5 / 2, y * CELL5 + CELL5 / 2, CELL5 * 0.32, 0, Math.PI * 2);
+          g.arc(x * CELL4 + CELL4 / 2, y * CELL4 + CELL4 / 2, CELL4 * 0.32, 0, Math.PI * 2);
           g.fill();
-          emoji("\u{1F47B}", x, y, CELL5 * 0.5, 0.5);
+          emoji("\u{1F47B}", x, y, CELL4 * 0.5, 0.5);
         } else {
-          emoji("\u{1F47B}", x, y, CELL5 * 0.5, 1);
+          emoji("\u{1F47B}", x, y, CELL4 * 0.5, 1);
         }
       }
       for (const k of puzzle.candles) {
@@ -11513,7 +11761,7 @@
         g.strokeStyle = hintCell.type === "place" ? "#8fd98a" : "#e88a7a";
         g.lineWidth = 4;
         g.beginPath();
-        g.arc(hintCell.x * CELL5 + CELL5 / 2, hintCell.y * CELL5 + CELL5 / 2, CELL5 * 0.44, 0, Math.PI * 2);
+        g.arc(hintCell.x * CELL4 + CELL4 / 2, hintCell.y * CELL4 + CELL4 / 2, CELL4 * 0.44, 0, Math.PI * 2);
         g.stroke();
       }
       const warn = st.spiritsLit > 0 ? `<div class="warn">\u{1F47B} \u0414\u0443\u0445 \u0432 \u0441\u0432\u0435\u0442\u0435: ${st.spiritsLit}! \u0422\u0430\u043A \u043D\u0435\u043B\u044C\u0437\u044F.</div>` : "";
@@ -11690,7 +11938,7 @@
   }
 
   // src/ui/flowView.js
-  var CELL6 = 72;
+  var CELL5 = 72;
   function renderFlowPuzzle(container, ctx2, level) {
     const puzzle = createFlowPuzzle(level);
     let hintsUsed = 0;
@@ -11705,10 +11953,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL6 * dpr;
-    canvas.height = gh * CELL6 * dpr;
-    canvas.style.width = `${gw * CELL6}px`;
-    canvas.style.height = `${gh * CELL6}px`;
+    canvas.width = gw * CELL5 * dpr;
+    canvas.height = gh * CELL5 * dpr;
+    canvas.style.width = `${gw * CELL5}px`;
+    canvas.style.height = `${gh * CELL5}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -11780,8 +12028,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL6);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL6);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL5);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL5);
       const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
       if (idx >= 0 && rotateFlowTile(puzzle, idx)) {
         hintTile = null;
@@ -11825,7 +12073,7 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL6, gh * CELL6);
+      g.clearRect(0, 0, gw * CELL5, gh * CELL5);
       const sim = simulateFlows(puzzle);
       const cellOwner = /* @__PURE__ */ new Map();
       sim.buyers.forEach((b, bi) => b.path.forEach(([x, y]) => {
@@ -11835,19 +12083,19 @@
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#2b2e4a" : "#323654";
-          g.fillRect(x * CELL6, y * CELL6, CELL6, CELL6);
+          g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
         }
       }
       level.tiles.forEach((t) => {
-        const px = t.pos[0] * CELL6;
-        const py = t.pos[1] * CELL6;
+        const px = t.pos[0] * CELL5;
+        const py = t.pos[1] * CELL5;
         if (t.type === "wall") {
           g.fillStyle = "#1e2033";
-          roundRect(g, px + 4, py + 4, CELL6 - 8, CELL6 - 8, 10);
+          roundRect(g, px + 4, py + 4, CELL5 - 8, CELL5 - 8, 10);
           g.fill();
         } else if (t.type === "arrow") {
           g.fillStyle = "#4a4370";
-          roundRect(g, px + 4, py + 4, CELL6 - 8, CELL6 - 8, 10);
+          roundRect(g, px + 4, py + 4, CELL5 - 8, CELL5 - 8, 10);
           g.fill();
         }
       });
@@ -11860,8 +12108,8 @@
         g.lineWidth = 9;
         g.beginPath();
         b.path.forEach(([x, y], i) => {
-          const cx = x * CELL6 + CELL6 / 2;
-          const cy = y * CELL6 + CELL6 / 2;
+          const cx = x * CELL5 + CELL5 / 2;
+          const cy = y * CELL5 + CELL5 / 2;
           if (i === 0) g.moveTo(cx, cy);
           else g.lineTo(cx, cy);
         });
@@ -11869,14 +12117,14 @@
         const [hx, hy] = b.path[b.path.length - 1];
         g.fillStyle = col.css;
         g.beginPath();
-        g.arc(hx * CELL6 + CELL6 / 2, hy * CELL6 + CELL6 / 2, 6, 0, Math.PI * 2);
+        g.arc(hx * CELL5 + CELL5 / 2, hy * CELL5 + CELL5 / 2, 6, 0, Math.PI * 2);
         g.fill();
         g.globalAlpha = 1;
       });
       level.tiles.forEach((t, i) => {
         if (t.type !== "arrow") return;
-        const cx = t.pos[0] * CELL6 + CELL6 / 2;
-        const cy = t.pos[1] * CELL6 + CELL6 / 2;
+        const cx = t.pos[0] * CELL5 + CELL5 / 2;
+        const cy = t.pos[1] * CELL5 + CELL5 / 2;
         const owner = cellOwner.get(t.pos.join(","));
         g.fillStyle = owner !== void 0 ? BUYER_COLORS[sim.buyers[owner].color].css : "#aab0e8";
         const rot = puzzle.rot[i] ?? t.rot ?? 0;
@@ -11897,14 +12145,14 @@
       });
       if (hintTile !== null) {
         const t = level.tiles[hintTile];
-        const cx = t.pos[0] * CELL6 + CELL6 / 2;
-        const cy = t.pos[1] * CELL6 + CELL6 / 2;
+        const cx = t.pos[0] * CELL5 + CELL5 / 2;
+        const cy = t.pos[1] * CELL5 + CELL5 / 2;
         g.fillStyle = "rgba(255, 202, 122, 0.35)";
         g.beginPath();
-        g.arc(cx, cy, CELL6 * 0.46, 0, Math.PI * 2);
+        g.arc(cx, cy, CELL5 * 0.46, 0, Math.PI * 2);
         g.fill();
       }
-      const emoji = (e, cx, cy, size = CELL6 * 0.5) => {
+      const emoji = (e, cx, cy, size = CELL5 * 0.5) => {
         g.font = `${size}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
@@ -11914,14 +12162,14 @@
         sim.buyers.filter((b) => b.arrived).map((b) => b.path[b.path.length - 1].join(","))
       );
       level.tiles.forEach((t) => {
-        const cx = t.pos[0] * CELL6 + CELL6 / 2;
-        const cy = t.pos[1] * CELL6 + CELL6 / 2;
+        const cx = t.pos[0] * CELL5 + CELL5 / 2;
+        const cy = t.pos[1] * CELL5 + CELL5 / 2;
         if (t.type === "start") {
           const col = BUYER_COLORS[t.color ?? 0];
           g.fillStyle = col.css;
           g.globalAlpha = 0.35;
           g.beginPath();
-          g.arc(cx, cy, CELL6 * 0.42, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL5 * 0.42, 0, Math.PI * 2);
           g.fill();
           g.globalAlpha = 1;
           emoji(col.buyer, cx, cy);
@@ -11931,26 +12179,26 @@
             g.fillStyle = col.css;
             g.globalAlpha = 0.45;
             g.beginPath();
-            g.arc(cx, cy, CELL6 * 0.42, 0, Math.PI * 2);
+            g.arc(cx, cy, CELL5 * 0.42, 0, Math.PI * 2);
             g.fill();
             g.globalAlpha = 1;
           }
           g.strokeStyle = col.css;
           g.lineWidth = 4;
           g.beginPath();
-          g.arc(cx, cy, CELL6 * 0.4, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL5 * 0.4, 0, Math.PI * 2);
           g.stroke();
           emoji("\u{1F3EE}", cx, cy);
         } else if (t.type === "wall") {
-          emoji("\u{1F4E6}", cx, cy, CELL6 * 0.45);
+          emoji("\u{1F4E6}", cx, cy, CELL5 * 0.45);
         }
       });
       for (const key of sim.collisions) {
         const [x, y] = key.split(",").map(Number);
         g.fillStyle = "rgba(255, 80, 80, 0.45)";
-        roundRect(g, x * CELL6 + 6, y * CELL6 + 6, CELL6 - 12, CELL6 - 12, 10);
+        roundRect(g, x * CELL5 + 6, y * CELL5 + 6, CELL5 - 12, CELL5 - 12, 10);
         g.fill();
-        emoji("\u{1F4A5}", x * CELL6 + CELL6 / 2, y * CELL6 + CELL6 / 2, CELL6 * 0.4);
+        emoji("\u{1F4A5}", x * CELL5 + CELL5 / 2, y * CELL5 + CELL5 / 2, CELL5 * 0.4);
       }
       const n = sim.buyers.length;
       statusEl.innerHTML = (sim.solved ? "\u2705 <b>\u0412\u0441\u0435 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0438 \u0443 \u0441\u0432\u043E\u0438\u0445 \u043B\u043E\u0442\u043A\u043E\u0432!</b>" : `\u{1F6CD}\uFE0F \u0423 \u043B\u043E\u0442\u043A\u043E\u0432: <b>${sim.arrivedCount} \u0438\u0437 ${n}</b>` + (sim.collisions.size > 0 ? `<br>\u{1F4A5} <b>\u0422\u043E\u043B\u043A\u043E\u0442\u043D\u044F!</b> \u041F\u0443\u0442\u0438 \u043F\u0435\u0440\u0435\u0441\u0435\u043A\u0430\u044E\u0442\u0441\u044F: ${sim.collisions.size}` : "")) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
@@ -11971,6 +12219,390 @@
     };
   }
 
+  // src/core/brewPuzzle.js
+  var BREW_ACTIONS = {
+    add: { icon: "\u{1FAD9}", label: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C" },
+    crush: { icon: "\u{1F963}", label: "\u0420\u0430\u0441\u0442\u043E\u043B\u043E\u0447\u044C \u0432 \u0441\u0442\u0443\u043F\u0435" },
+    stir: { icon: "\u{1F944}", label: "\u0420\u0430\u0437\u043C\u0435\u0448\u0430\u0442\u044C" },
+    heat: { icon: "\u{1F525}", label: "\u041F\u043E\u0434\u043E\u0433\u0440\u0435\u0442\u044C" },
+    cool: { icon: "\u2744\uFE0F", label: "\u041E\u0441\u0442\u0443\u0434\u0438\u0442\u044C" },
+    wait: { icon: "\u23F3", label: "\u0414\u0430\u0442\u044C \u043D\u0430\u0441\u0442\u043E\u044F\u0442\u044C\u0441\u044F" }
+  };
+  var BREW_MAX_MISTAKES = 3;
+  function createBrewPuzzle(level) {
+    return {
+      level,
+      progress: 0,
+      // сколько шагов рецепта выполнено верно
+      mistakes: 0,
+      // ошибки в текущей варке (3 = порча)
+      spoiled: 0,
+      // сколько раз зелье было испорчено
+      history: [],
+      // успешно выполненные действия (для отмены)
+      moves: 0
+    };
+  }
+  function sameAction(a, b) {
+    return !!a && !!b && a.do === b.do && (a.ingredient ?? null) === (b.ingredient ?? null);
+  }
+  function expectedStep(state2) {
+    return state2.level.recipe[state2.progress] || null;
+  }
+  function doBrewAction(state2, action) {
+    if (!action || !BREW_ACTIONS[action.do]) return { ok: false, error: "\u0422\u0430\u043A \u043D\u0435 \u0432\u0430\u0440\u044F\u0442" };
+    if (action.do === "add" || action.do === "crush") {
+      if (!state2.level.ingredients.some((i) => i.id === action.ingredient)) {
+        return { ok: false, error: "\u041D\u0430 \u0441\u0442\u043E\u043B\u0435 \u0442\u0430\u043A\u043E\u0433\u043E \u043D\u0435\u0442" };
+      }
+    }
+    if (isBrewSolved(state2)) return { ok: false, error: "\u0417\u0435\u043B\u044C\u0435 \u0443\u0436\u0435 \u0433\u043E\u0442\u043E\u0432\u043E" };
+    const exp = expectedStep(state2);
+    state2.moves += 1;
+    if (sameAction(action, exp)) {
+      state2.history.push({ do: action.do, ingredient: action.ingredient ?? null });
+      state2.progress += 1;
+      return { ok: true, solved: isBrewSolved(state2) };
+    }
+    state2.mistakes += 1;
+    if (state2.mistakes >= BREW_MAX_MISTAKES) {
+      state2.progress = 0;
+      state2.history = [];
+      state2.mistakes = 0;
+      state2.spoiled += 1;
+      return { ok: false, mistake: true, spoiled: true, expected: exp };
+    }
+    return { ok: false, mistake: true, spoiled: false, expected: exp };
+  }
+  function undoBrew(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    state2.progress -= 1;
+    state2.moves += 1;
+    return true;
+  }
+  function resetBrew(state2) {
+    state2.progress = 0;
+    state2.mistakes = 0;
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function isBrewSolved(state2) {
+    return state2.progress >= state2.level.recipe.length;
+  }
+  function brewHint(state2) {
+    const step = expectedStep(state2);
+    if (!step) return { type: "already" };
+    return { type: "step", step, index: state2.progress, total: state2.level.recipe.length };
+  }
+  function brewStepText(level, step) {
+    const ing = step.ingredient ? level.ingredients.find((i) => i.id === step.ingredient) : null;
+    const ingLabel = ing ? `${ing.icon} ${ing.name}` : step.ingredient || "?";
+    switch (step.do) {
+      case "add":
+        return `\u0414\u043E\u0431\u0430\u0432\u044C ${ingLabel}`;
+      case "crush":
+        return `\u0420\u0430\u0441\u0442\u043E\u043B\u043A\u0438 \u0432 \u0441\u0442\u0443\u043F\u0435: ${ingLabel}`;
+      case "stir":
+        return "\u0420\u0430\u0437\u043C\u0435\u0448\u0430\u0439 \u043B\u043E\u0436\u043A\u043E\u0439";
+      case "heat":
+        return "\u041F\u043E\u0434\u043E\u0433\u0440\u0435\u0439 \u043D\u0430 \u043E\u0433\u043D\u0435";
+      case "cool":
+        return "\u041E\u0441\u0442\u0443\u0434\u0438 \u043A\u043E\u0442\u0451\u043B";
+      case "wait":
+        return "\u0414\u0430\u0439 \u043D\u0430\u0441\u0442\u043E\u044F\u0442\u044C\u0441\u044F";
+      default:
+        return "?";
+    }
+  }
+
+  // src/ui/brewView.js
+  var POTION_COLORS = ["#6fb7d9", "#7fc98f", "#d9c26f", "#d9915f", "#b565a8", "#6f4fa8"];
+  function renderBrewPuzzle(container, ctx2, level) {
+    const puzzle = createBrewPuzzle(level);
+    let hintsUsed = 0;
+    let hintAction = null;
+    let crushMode = false;
+    let finished = false;
+    let recipeHidden = false;
+    const timers = [];
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const scene = document.createElement("div");
+    scene.className = "panel brew-scene";
+    const bg = document.createElement("img");
+    bg.className = "brew-table-bg";
+    bg.alt = "";
+    const bgCandidates = ["assets/brew_table_web.jpg", "assets/brew_table.jfif", "assets/brew_table.png"];
+    let bgIdx = 0;
+    bg.addEventListener("error", () => {
+      bgIdx += 1;
+      if (bgIdx < bgCandidates.length) bg.src = bgCandidates[bgIdx];
+      else bg.remove();
+    });
+    bg.src = bgCandidates[0];
+    scene.appendChild(bg);
+    const pot = document.createElement("div");
+    pot.className = "brew-pot";
+    const potion = document.createElement("div");
+    potion.className = "brew-potion";
+    pot.appendChild(potion);
+    const smoke = document.createElement("div");
+    smoke.className = "brew-smoke";
+    smoke.textContent = "\u{1F4A8}";
+    pot.appendChild(smoke);
+    const fire = document.createElement("div");
+    fire.className = "brew-fire";
+    pot.appendChild(fire);
+    scene.appendChild(pot);
+    const tools = document.createElement("div");
+    tools.className = "brew-tools";
+    const toolDefs = [
+      { do: "stir", icon: "\u{1F944}", label: "\u0420\u0430\u0437\u043C\u0435\u0448\u0430\u0442\u044C" },
+      { do: "heat", icon: "\u{1F525}", label: "\u041F\u043E\u0434\u043E\u0433\u0440\u0435\u0442\u044C" },
+      { do: "cool", icon: "\u2744\uFE0F", label: "\u041E\u0441\u0442\u0443\u0434\u0438\u0442\u044C" },
+      { do: "wait", icon: "\u23F3", label: "\u041D\u0430\u0441\u0442\u043E\u044F\u0442\u044C\u0441\u044F" }
+    ];
+    const toolBtns = {};
+    for (const t of toolDefs) {
+      const b = document.createElement("button");
+      b.className = "small";
+      b.innerHTML = `${t.icon} ${t.label}`;
+      b.addEventListener("click", () => onAction({ do: t.do }));
+      tools.appendChild(b);
+      toolBtns[t.do] = b;
+    }
+    const mortar = document.createElement("button");
+    mortar.className = "small";
+    mortar.innerHTML = "\u{1F963} \u0421\u0442\u0443\u043F\u043A\u0430";
+    mortar.title = "\u0416\u043C\u0438 \u0441\u0442\u0443\u043F\u043A\u0443, \u043F\u043E\u0442\u043E\u043C \u2014 \u0447\u0442\u043E \u0440\u0430\u0441\u0442\u043E\u043B\u043E\u0447\u044C";
+    mortar.addEventListener("click", () => {
+      crushMode = !crushMode;
+      ctx2.sfx?.("tap");
+      draw();
+    });
+    tools.appendChild(mortar);
+    scene.appendChild(tools);
+    const ingRow = document.createElement("div");
+    ingRow.className = "brew-ings";
+    scene.appendChild(ingRow);
+    wrap.appendChild(scene);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const book = document.createElement("div");
+    book.className = "brew-book";
+    side.appendChild(book);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    controls.style.marginTop = "10px";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    if (level.hideRecipe) {
+      recipeHidden = false;
+      const peek = document.createElement("div");
+      peek.className = "overlay";
+      peek.innerHTML = `
+      <div class="card">
+        <h2>\u{1F4D6} \u0417\u0430\u043F\u043E\u043C\u0438\u043D\u0430\u0439!</h2>
+        <div class="muted">\u041A\u043D\u0438\u0433\u0430 \u0437\u0430\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0447\u0435\u0440\u0435\u0437 <b>${level.peekSeconds}</b> \u0441\u0435\u043A\u2026</div>
+        <div class="brew-peek-list">${level.recipe.map((s, i) => `<div>${i + 1}. ${brewStepText(level, s)}</div>`).join("")}</div>
+      </div>`;
+      document.body.appendChild(peek);
+      timers.push(setTimeout(() => {
+        peek.remove();
+        recipeHidden = true;
+        ctx2.toast("\u{1F4D5} \u041A\u043D\u0438\u0433\u0430 \u0437\u0430\u043A\u0440\u044B\u043B\u0430\u0441\u044C. \u0414\u0430\u043B\u044C\u0448\u0435 \u2014 \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438! \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 \u043D\u0430\u043F\u043E\u043C\u043D\u0438\u0442 \u0448\u0430\u0433.");
+        draw();
+      }, level.peekSeconds * 1e3));
+      peek.addEventListener("click", () => {
+        peek.remove();
+        recipeHidden = true;
+        draw();
+      });
+    }
+    function heatLevel() {
+      let n = 0;
+      for (const h of puzzle.history) {
+        if (h.do === "heat") n = Math.min(3, n + 1);
+        if (h.do === "cool") n = 0;
+      }
+      return n;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoBrew(puzzle)) {
+        hintAction = null;
+        ctx2.sfx?.("tap");
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetBrew(puzzle);
+      hintAction = null;
+      crushMode = false;
+      ctx2.sfx?.("tap");
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = brewHint(puzzle);
+      if (h.type === "step") {
+        hintsUsed += 1;
+        hintAction = h.step;
+        ctx2.sfx?.("hint");
+        ctx2.toast(`\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442: \xAB${brewStepText(level, h.step)}\xBB`);
+        draw();
+      } else {
+        ctx2.toast("\u0417\u0435\u043B\u044C\u0435 \u0443\u0436\u0435 \u0433\u043E\u0442\u043E\u0432\u043E!");
+      }
+    }
+    function onAction(action) {
+      if (finished) return;
+      if (action.do === "add" && crushMode) {
+        action = { do: "crush", ingredient: action.ingredient };
+        crushMode = false;
+      }
+      const r = doBrewAction(puzzle, action);
+      if (r.ok) {
+        hintAction = null;
+        ctx2.sfx?.(action.do === "add" || action.do === "crush" ? "potion" : "tap");
+        pulsePot();
+        draw();
+        if (r.solved) finish();
+        return;
+      }
+      if (r.mistake) {
+        ctx2.sfx?.("tap");
+        puffSmoke();
+        if (r.spoiled) {
+          ctx2.toast("\u{1F4A8} \u0417\u0435\u043B\u044C\u0435 \u0438\u0441\u043F\u043E\u0440\u0447\u0435\u043D\u043E! \u041F\u0443\u0437\u044B\u0440\u0438\u0442\u0441\u044F \u0447\u0451\u0440\u043D\u044B\u043C\u2026 \u0412\u0430\u0440\u0438\u043C \u0437\u0430\u043D\u043E\u0432\u043E.");
+        } else {
+          ctx2.toast(`\u041D\u0435 \u0442\u043E\u0442 \u0448\u0430\u0433! \u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes} \u0438\u0437 ${BREW_MAX_MISTAKES}. \u041A\u043E\u0442 \u043C\u043E\u0440\u0449\u0438\u0442\u0441\u044F \u043E\u0442 \u0437\u0430\u043F\u0430\u0445\u0430.`);
+        }
+        draw();
+        return;
+      }
+      ctx2.toast(r.error || "\u041D\u0435 \u0432\u044B\u0445\u043E\u0434\u0438\u0442");
+    }
+    function pulsePot() {
+      pot.classList.remove("bubble");
+      void pot.offsetWidth;
+      pot.classList.add("bubble");
+      timers.push(setTimeout(() => pot.classList.remove("bubble"), 900));
+    }
+    function puffSmoke() {
+      smoke.classList.remove("puff");
+      void smoke.offsetWidth;
+      smoke.classList.add("puff");
+      pot.classList.remove("shake");
+      void pot.offsetWidth;
+      pot.classList.add("shake");
+      timers.push(setTimeout(() => {
+        smoke.classList.remove("puff");
+        pot.classList.remove("shake");
+      }, 900));
+    }
+    function finish() {
+      finished = true;
+      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      draw();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        showOverlay(ctx2, {
+          title: "\u2697\uFE0F \u0417\u0435\u043B\u044C\u0435 \u043F\u043E\u043B\u0443\u0447\u0438\u043B\u043E\u0441\u044C!",
+          subtitle: `\xAB${level.name}\xBB \u2014 \u0441\u0432\u0430\u0440\u0435\u043D\u043E \u043F\u043E \u0432\u0441\u0435\u043C \u043F\u0440\u0430\u0432\u0438\u043B\u0430\u043C${puzzle.spoiled ? ` (\u0438\u0441\u043F\u043E\u0440\u0447\u0435\u043D\u043E \u043A\u043E\u0442\u043B\u043E\u0432: ${puzzle.spoiled})` : ""}`,
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function draw() {
+      const total = level.recipe.length;
+      const ci = Math.min(POTION_COLORS.length - 1, Math.floor(puzzle.progress / total * POTION_COLORS.length));
+      potion.style.background = POTION_COLORS[puzzle.progress === 0 ? 0 : ci];
+      potion.style.height = `${20 + puzzle.progress / total * 65}%`;
+      const hl = heatLevel();
+      fire.textContent = hl > 0 ? "\u{1F525}".repeat(hl) : "";
+      mortar.className = "small" + (crushMode ? " primary" : "");
+      mortar.innerHTML = crushMode ? "\u{1F963} \u0427\u0442\u043E \u0442\u043E\u043B\u0447\u0451\u043C?" : "\u{1F963} \u0421\u0442\u0443\u043F\u043A\u0430";
+      ingRow.innerHTML = "";
+      for (const ing of level.ingredients) {
+        const b = document.createElement("button");
+        b.className = "small brew-ing";
+        const isHint = hintAction && (hintAction.do === "add" || hintAction.do === "crush") && hintAction.ingredient === ing.id;
+        if (isHint) b.className += " primary";
+        b.innerHTML = `${ing.icon} ${ing.name}`;
+        b.title = crushMode ? `\u0420\u0430\u0441\u0442\u043E\u043B\u043E\u0447\u044C: ${ing.name}` : ing.name;
+        b.addEventListener("click", () => onAction({ do: "add", ingredient: ing.id }));
+        ingRow.appendChild(b);
+      }
+      for (const [d, btn] of Object.entries(toolBtns)) {
+        btn.className = "small" + (hintAction && hintAction.do === d ? " primary" : "");
+      }
+      book.innerHTML = '<div class="brew-book-title">\u{1F4D6} \u0420\u0435\u0446\u0435\u043F\u0442</div>';
+      level.recipe.forEach((s, i) => {
+        const row = document.createElement("div");
+        const done = i < puzzle.progress;
+        const current = i === puzzle.progress && !finished;
+        row.className = "brew-step" + (done ? " done" : "") + (current ? " current" : "");
+        const hidden = recipeHidden && !done;
+        row.textContent = done ? `${i + 1}. ${brewStepText(level, s)} \u2713` : hidden ? `${i + 1}. \xB7 \xB7 \xB7` : `${i + 1}. ${brewStepText(level, s)}`;
+        book.appendChild(row);
+      });
+      if (recipeHidden) {
+        const note = document.createElement("div");
+        note.className = "brew-book-note";
+        note.textContent = "\u{1F4D5} \u041A\u043D\u0438\u0433\u0430 \u0437\u0430\u043A\u0440\u044B\u0442\u0430 \u2014 \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438!";
+        book.appendChild(note);
+      }
+      const hearts = "\u2716".repeat(puzzle.mistakes) + "\u2796".repeat(Math.max(0, BREW_MAX_MISTAKES - puzzle.mistakes));
+      statusEl.innerHTML = `\u2697\uFE0F \u0428\u0430\u0433 <b>${Math.min(puzzle.progress + (finished ? 0 : 1), total)} \u0438\u0437 ${total}</b> \xB7 \u041E\u0448\u0438\u0431\u043A\u0438: ${hearts}` + (puzzle.spoiled ? ` \xB7 <span class="warn">\u0438\u0441\u043F\u043E\u0440\u0447\u0435\u043D\u043E \u043A\u043E\u0442\u043B\u043E\u0432: ${puzzle.spoiled}</span>` : "") + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") ctx2.go("puzzles");
+    }
+    window.addEventListener("keydown", onKey);
+    draw();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      for (const t of timers) clearTimeout(t);
+    };
+  }
+
   // src/ui/puzzleView.js
   var WORLD_LABEL = {
     meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430 \u2014 \u0441\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438 \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
@@ -11984,7 +12616,8 @@
     cr: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
     jade: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
     deep: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    mist: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432"
+    mist: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+    brew: "\u2697\uFE0F \u0410\u043B\u0445\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0441\u0442\u043E\u043B \u2014 \u0432\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439 \u043F\u043E \u0440\u0435\u0446\u0435\u043F\u0442\u0443"
   };
   function renderPuzzleList(container, ctx2) {
     const { state: state2 } = ctx2;
@@ -12039,7 +12672,7 @@
       setTimeout(() => targetRow.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
   }
-  var CELL7 = 64;
+  var CELL6 = 64;
   function renderPuzzle(container, ctx2, params) {
     const level = findPuzzle(ctx2.state, params.id);
     if (!level) {
@@ -12070,6 +12703,9 @@
     if (level.mechanic === "flow") {
       return renderFlowPuzzle(container, ctx2, level);
     }
+    if (level.mechanic === "brew") {
+      return renderBrewPuzzle(container, ctx2, level);
+    }
     const puzzle = createPuzzle(level);
     let hintsUsed = 0;
     let hintCell = null;
@@ -12083,10 +12719,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL7 * dpr;
-    canvas.height = gh * CELL7 * dpr;
-    canvas.style.width = `${gw * CELL7}px`;
-    canvas.style.height = `${gh * CELL7}px`;
+    canvas.width = gw * CELL6 * dpr;
+    canvas.height = gh * CELL6 * dpr;
+    canvas.style.width = `${gw * CELL6}px`;
+    canvas.style.height = `${gh * CELL6}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -12157,8 +12793,8 @@
       const scaleX = canvas.width / dpr / rect.width;
       const cx = (ev.clientX - rect.left) * scaleX;
       const cy = (ev.clientY - rect.top) * scaleX;
-      const x = Math.floor(cx / CELL7);
-      const y = Math.floor(cy / CELL7);
+      const x = Math.floor(cx / CELL6);
+      const y = Math.floor(cy / CELL6);
       const idx = level.objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (idx >= 0 && level.objects[idx].type === "mirror") {
         rotateMirror(puzzle, idx);
@@ -12190,12 +12826,12 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL7, gh * CELL7);
+      g.clearRect(0, 0, gw * CELL6, gh * CELL6);
       const { lanternsLit, mothsAwake, beams } = traceLight(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL7, y * CELL7, CELL7, CELL7);
+          g.fillRect(x * CELL6, y * CELL6, CELL6, CELL6);
         }
       }
       g.save();
@@ -12205,16 +12841,16 @@
         g.lineWidth = pass.w;
         for (const b of beams) {
           g.beginPath();
-          g.moveTo(b.from[0] * CELL7 + CELL7 / 2, b.from[1] * CELL7 + CELL7 / 2);
-          g.lineTo(b.to[0] * CELL7 + CELL7 / 2, b.to[1] * CELL7 + CELL7 / 2);
+          g.moveTo(b.from[0] * CELL6 + CELL6 / 2, b.from[1] * CELL6 + CELL6 / 2);
+          g.lineTo(b.to[0] * CELL6 + CELL6 / 2, b.to[1] * CELL6 + CELL6 / 2);
           g.stroke();
         }
       }
       g.restore();
       level.objects.forEach((o, i) => {
-        const cx = o.pos[0] * CELL7 + CELL7 / 2;
-        const cy = o.pos[1] * CELL7 + CELL7 / 2;
-        const emoji = (e, size = CELL7 * 0.62) => {
+        const cx = o.pos[0] * CELL6 + CELL6 / 2;
+        const cy = o.pos[1] * CELL6 + CELL6 / 2;
+        const emoji = (e, size = CELL6 * 0.62) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -12225,8 +12861,8 @@
             emoji("\u2728");
             const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
             g.fillStyle = "rgba(255, 240, 190, 0.9)";
-            g.font = `bold ${CELL7 * 0.3}px sans-serif`;
-            g.fillText(dirs[o.dir], cx + CELL7 * 0.28, cy - CELL7 * 0.28);
+            g.font = `bold ${CELL6 * 0.3}px sans-serif`;
+            g.fillText(dirs[o.dir], cx + CELL6 * 0.28, cy - CELL6 * 0.28);
             break;
           }
           case "mirror": {
@@ -12234,25 +12870,25 @@
             if (hintCell && hintCell[0] === o.pos[0] && hintCell[1] === o.pos[1]) {
               g.fillStyle = "rgba(255, 202, 122, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL7 * 0.46, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL6 * 0.46, 0, Math.PI * 2);
               g.fill();
             }
             g.save();
             g.translate(cx, cy);
             g.rotate(orient === 0 ? Math.PI / 4 : -Math.PI / 4);
             g.fillStyle = "#8a6f4d";
-            g.fillRect(-CELL7 * 0.3, -3, CELL7 * 0.6, 6);
+            g.fillRect(-CELL6 * 0.3, -3, CELL6 * 0.6, 6);
             g.fillStyle = "#cfe8ff";
-            g.fillRect(-CELL7 * 0.3, -5, CELL7 * 0.6, 4);
+            g.fillRect(-CELL6 * 0.3, -5, CELL6 * 0.6, 4);
             g.restore();
-            emoji("\u{1FA9E}", CELL7 * 0.3);
+            emoji("\u{1FA9E}", CELL6 * 0.3);
             break;
           }
           case "lantern": {
             if (lanternsLit.has(i)) {
               g.fillStyle = "rgba(255, 214, 120, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL7 * 0.48, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL6 * 0.48, 0, Math.PI * 2);
               g.fill();
               emoji("\u{1F3EE}");
             } else {
@@ -12266,7 +12902,7 @@
             emoji(mothsAwake.has(i) ? "\u{1F621}" : "\u{1F98B}");
             if (mothsAwake.has(i)) {
               g.fillStyle = "rgba(232, 138, 122, 0.25)";
-              g.fillRect(o.pos[0] * CELL7, o.pos[1] * CELL7, CELL7, CELL7);
+              g.fillRect(o.pos[0] * CELL6, o.pos[1] * CELL6, CELL6, CELL6);
             }
             break;
           case "wall":
@@ -12621,89 +13257,407 @@ ${item2.description}
       renderEquip(container, ctx2);
     }
   }
+  var RARITY_PAL = {
+    common: { main: "#8a7a62", dark: "#5d4732", trim: "#6b553a" },
+    rare: { main: "#6a7fa0", dark: "#44536e", trim: "#a8d8ff" },
+    epic: { main: "#7a5a9a", dark: "#553d6d", trim: "#d3a8ff" },
+    legendary: { main: "#b8902a", dark: "#8a6a1a", trim: "#ffd98a" }
+  };
   function drawKnightDoll(canvas, state2) {
     const g = canvas.getContext("2d");
     const W = canvas.width;
     const H = canvas.height;
     const eq = state2.equipped;
     const item2 = (slot) => eq[slot] ? ITEM_BY_ID[eq[slot]] : null;
-    const grad = g.createRadialGradient(W / 2, H * 0.4, 20, W / 2, H * 0.4, W * 0.75);
-    grad.addColorStop(0, "rgba(255, 202, 122, 0.16)");
-    grad.addColorStop(1, "rgba(255, 202, 122, 0)");
-    g.fillStyle = grad;
+    const pal = (it) => RARITY_PAL[it?.rarity] || RARITY_PAL.common;
+    const cx = W / 2;
+    const bg = g.createRadialGradient(cx, H * 0.35, 30, cx, H * 0.45, W * 0.75);
+    bg.addColorStop(0, "rgba(255, 202, 122, 0.20)");
+    bg.addColorStop(1, "rgba(255, 202, 122, 0)");
+    g.fillStyle = bg;
     g.fillRect(0, 0, W, H);
-    const emoji = (e, x, y, size, rot = 0, alpha = 1) => {
-      g.save();
-      g.translate(x, y);
-      g.rotate(rot);
-      g.globalAlpha = alpha;
-      g.font = `${size}px "Segoe UI Emoji", sans-serif`;
-      g.textAlign = "center";
-      g.textBaseline = "middle";
-      g.shadowColor = "rgba(0,0,0,0.45)";
-      g.shadowBlur = 5;
-      g.fillText(e, 0, 0);
-      g.restore();
-    };
-    const armor = item2("armor");
-    const bodyColor = armor ? { common: "#7d8a68", rare: "#6a7fa0", epic: "#8a6fa8", legendary: "#c9a227" }[armor.rarity] || "#7d8a68" : "#8a7a62";
-    g.fillStyle = bodyColor;
-    roundRectDoll(g, W / 2 - 34, H * 0.38, 68, 86, 18);
-    g.fill();
-    g.fillStyle = "#d9b98a";
+    g.fillStyle = "rgba(0,0,0,0.3)";
     g.beginPath();
-    g.arc(W / 2, H * 0.3, 26, 0, Math.PI * 2);
+    g.ellipse(cx, H * 0.92, 62, 10, 0, 0, Math.PI * 2);
     g.fill();
-    g.fillStyle = "#5d4732";
-    roundRectDoll(g, W / 2 - 26, H * 0.38 + 86, 22, 40, 8);
-    g.fill();
-    roundRectDoll(g, W / 2 + 4, H * 0.38 + 86, 22, 40, 8);
-    g.fill();
+    const el = (x, y, rx, ry, fill) => {
+      g.fillStyle = fill;
+      g.beginPath();
+      g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+      g.fill();
+    };
+    const rr = (x, y, w, h, r, fill) => {
+      g.fillStyle = fill;
+      g.beginPath();
+      g.moveTo(x + r, y);
+      g.arcTo(x + w, y, x + w, y + h, r);
+      g.arcTo(x + w, y + h, x, y + h, r);
+      g.arcTo(x, y + h, x, y, r);
+      g.arcTo(x, y, x + w, y, r);
+      g.closePath();
+      g.fill();
+    };
     const boots = item2("boots");
-    emoji(boots ? itemEmoji(boots) : "\u{1F9B6}", W / 2 - 15, H * 0.38 + 132, boots ? 26 : 20, 0, boots ? 1 : 0.35);
-    emoji(boots ? itemEmoji(boots) : "\u{1F9B6}", W / 2 + 15, H * 0.38 + 132, boots ? 26 : 20, 0, boots ? 1 : 0.35);
+    const legCol = boots ? pal(boots).dark : "#4a3a29";
+    rr(cx - 26, H * 0.62, 20, 52, 7, legCol);
+    rr(cx + 6, H * 0.62, 20, 52, 7, legCol);
+    const bootCol = boots ? pal(boots).main : "#6b5335";
+    rr(cx - 28, H * 0.79, 26, 20, 6, bootCol);
+    rr(cx + 4, H * 0.79, 26, 20, 6, bootCol);
+    rr(cx - 28, H * 0.79, 26, 6, 4, boots ? pal(boots).trim : "#4a3a29");
+    rr(cx + 4, H * 0.79, 26, 6, 4, boots ? pal(boots).trim : "#4a3a29");
+    const armor = item2("armor");
+    const torsoY = H * 0.4;
+    const torsoH = 82;
+    const drawTorso = (main, dark, style) => {
+      rr(cx - 36, torsoY, 72, torsoH, 20, main);
+      el(cx - 40, torsoY + 14, 14, 12, dark);
+      el(cx + 40, torsoY + 14, 14, 12, dark);
+      if (style === "mail") {
+        g.fillStyle = "rgba(0,0,0,0.18)";
+        for (let yy = torsoY + 10; yy < torsoY + torsoH - 8; yy += 9) {
+          for (let xx = cx - 30; xx < cx + 32; xx += 9) {
+            g.fillRect(xx, yy, 3, 3);
+          }
+        }
+      }
+      if (style === "plates") {
+        g.fillStyle = dark;
+        for (let yy = torsoY + 16; yy < torsoY + torsoH - 6; yy += 18) g.fillRect(cx - 32, yy, 64, 5);
+      }
+      if (style === "cloth") {
+        g.strokeStyle = dark;
+        g.lineWidth = 2;
+        g.setLineDash([5, 5]);
+        g.beginPath();
+        g.moveTo(cx, torsoY + 6);
+        g.lineTo(cx, torsoY + torsoH - 8);
+        g.stroke();
+        g.setLineDash([]);
+      }
+      if (style === "robe") {
+        g.fillStyle = dark;
+        g.beginPath();
+        g.moveTo(cx - 36, torsoY + 20);
+        g.lineTo(cx + 36, torsoY + 20);
+        g.lineTo(cx + 30, torsoY + torsoH + 18);
+        g.lineTo(cx - 30, torsoY + torsoH + 18);
+        g.closePath();
+        g.fill();
+      }
+    };
+    switch (armor?.id) {
+      case "arm_padded":
+        drawTorso("#a08a62", "#6b5535", "cloth");
+        break;
+      case "arm_oak_guardian":
+        drawTorso("#7a5a38", "#4a3a24", "plates");
+        break;
+      case "arm_silken":
+        drawTorso("#6fae9d", "#4a7a6d", "cloth");
+        break;
+      case "arm_chain":
+        drawTorso("#7d94b8", "#4a5a78", "mail");
+        break;
+      case "arm_ink_cloak":
+        drawTorso("#4a3a5a", "#332844", "robe");
+        break;
+      case "arm_master":
+        drawTorso("#3a5a8a", "#27405e", "plates");
+        break;
+      default: {
+        if (armor) drawTorso(pal(armor).main, pal(armor).dark, "mail");
+        else drawTorso("#8a7a62", "#6b5a48", "cloth");
+      }
+    }
+    el(cx, torsoY + 6, 22, 8, armor ? pal(armor).trim : "#6b5a48");
+    rr(cx - 34, torsoY + torsoH - 16, 68, 9, 3, "#3a2c1c");
+    state2.consumableBelt.forEach((id, i) => {
+      const px = cx - 22 + i * 16;
+      rr(px, torsoY + torsoH - 10, 8, 14, 3, "#7a4a5a");
+      rr(px + 2, torsoY + torsoH - 14, 4, 5, 2, "#c9b294");
+    });
+    const headY = H * 0.27;
+    el(cx, headY, 24, 26, "#d9b98a");
     const helm = item2("helmet");
-    if (helm) emoji(itemEmoji(helm), W / 2, H * 0.22, 44);
-    else emoji("\u{1F642}", W / 2, H * 0.3, 30);
-    const wpn = item2("weapon");
-    if (wpn) emoji(itemEmoji(wpn), W / 2 - 62, H * 0.46, 50, Math.PI / 5);
-    const shd = item2("shield");
-    if (shd) emoji(itemEmoji(shd), W / 2 + 62, H * 0.46, 48, -Math.PI / 8);
+    switch (helm?.id) {
+      case void 0:
+      case null:
+        el(cx, headY - 12, 24, 14, "#6b4a2f");
+        el(cx - 8, headY + 2, 3, 4, "#33241a");
+        el(cx + 8, headY + 2, 3, 4, "#33241a");
+        g.strokeStyle = "#8a5a3a";
+        g.lineWidth = 2;
+        g.beginPath();
+        g.arc(cx, headY + 6, 9, 0.2, Math.PI - 0.2);
+        g.stroke();
+        break;
+      case "hlm_leather":
+        el(cx, headY - 10, 26, 18, "#7a5a3a");
+        rr(cx - 26, headY - 12, 52, 10, 5, "#5d4732");
+        break;
+      case "hlm_badger":
+        el(cx, headY - 8, 26, 16, "#8a9098");
+        el(cx - 16, headY - 22, 7, 9, "#8a9098");
+        el(cx + 16, headY - 22, 7, 9, "#8a9098");
+        rr(cx - 26, headY - 12, 52, 8, 4, "#6a7078");
+        break;
+      case "hlm_kettle":
+        el(cx, headY - 10, 22, 16, "#9aa2ac");
+        rr(cx - 30, headY - 12, 60, 7, 3, "#7a828c");
+        rr(cx - 4, headY - 26, 8, 6, 2, "#c9b294");
+        break;
+      case "hlm_page_wanderer":
+        g.fillStyle = "#4a3a5a";
+        g.beginPath();
+        g.moveTo(cx - 24, headY - 8);
+        g.quadraticCurveTo(cx, headY - 52, cx + 24, headY - 8);
+        g.closePath();
+        g.fill();
+        rr(cx - 26, headY - 10, 52, 8, 4, "#332844");
+        el(cx + 6, headY - 30, 3, 4, "#ffd98a");
+        break;
+      case "hlm_master":
+        rr(cx - 20, headY - 16, 40, 7, 3, "#c9a227");
+        el(cx, headY - 14, 4, 5, "#ffd98a");
+        break;
+      default:
+        el(cx, headY - 8, 26, 16, pal(helm).main);
+        rr(cx - 26, headY - 12, 52, 8, 4, pal(helm).dark);
+    }
     const glv = item2("gloves");
-    if (glv) {
-      emoji(itemEmoji(glv), W / 2 + 38, H * 0.5, 20);
-      emoji(itemEmoji(glv), W / 2 - 38, H * 0.5, 20);
+    const handCol = glv ? pal(glv).main : "#d9b98a";
+    const wpn = item2("weapon");
+    const twoHanded = wpn?.hand === "two";
+    if (!twoHanded) {
+      el(cx - 40, torsoY + 40, 9, 10, handCol);
+      el(cx + 40, torsoY + 40, 9, 10, handCol);
+      if (item2("ring1")) {
+        el(cx - 40, torsoY + 34, 3, 3, "#ffd98a");
+      }
+      if (item2("ring2")) {
+        el(cx + 40, torsoY + 34, 3, 3, "#ffd98a");
+      }
+    }
+    if (wpn) {
+      const steel = "#c8d4dc";
+      const steelDark = "#8a98a4";
+      const angle = twoHanded ? -0.44 : -0.28;
+      const ax = cx - 46;
+      const ay = torsoY + 46;
+      g.save();
+      g.translate(ax, ay);
+      g.rotate(angle);
+      g.shadowColor = "rgba(0,0,0,0.4)";
+      g.shadowBlur = 4;
+      switch (wpn.type) {
+        case "sword":
+          rr(-4.5, -106, 9, 98, 4.5, steel);
+          g.beginPath();
+          g.moveTo(0, -114);
+          g.lineTo(6, -104);
+          g.lineTo(-6, -104);
+          g.closePath();
+          g.fillStyle = steel;
+          g.fill();
+          rr(-18, -12, 36, 7, 3, "#c9a227");
+          rr(-3, -5, 6, 22, 3, "#4a3a29");
+          break;
+        case "mace":
+          rr(-3.5, -72, 7, 72, 3, "#6b5335");
+          el(0, -84, 18, 18, steelDark);
+          g.fillStyle = steelDark;
+          for (let a = 0; a < 8; a++) {
+            const ang = a / 8 * Math.PI * 2;
+            g.beginPath();
+            g.arc(Math.cos(ang) * 18, -84 + Math.sin(ang) * 18, 4, 0, Math.PI * 2);
+            g.fill();
+          }
+          el(0, -84, 7, 7, steel);
+          break;
+        case "dagger":
+          rr(-3.5, -64, 7, 60, 3.5, steel);
+          g.beginPath();
+          g.moveTo(0, -72);
+          g.lineTo(5, -62);
+          g.lineTo(-5, -62);
+          g.closePath();
+          g.fillStyle = steel;
+          g.fill();
+          rr(-12, -8, 24, 6, 3, "#c9a227");
+          rr(-2.5, -2, 5, 15, 2, "#4a3a29");
+          break;
+        case "greatsword":
+          rr(-7.5, -138, 15, 126, 7, steel);
+          rr(-7.5, -138, 15, 20, 7, steelDark);
+          rr(-22, -16, 44, 9, 4, "#c9a227");
+          rr(-4.5, -7, 9, 26, 4, "#4a3a29");
+          el(0, -128, 5, 5, "#ffd98a");
+          break;
+        case "greataxe":
+          rr(-4, -100, 8, 96, 4, "#6b5335");
+          g.fillStyle = steel;
+          g.beginPath();
+          g.moveTo(-4, -98);
+          g.quadraticCurveTo(-44, -88, -36, -52);
+          g.lineTo(-4, -62);
+          g.closePath();
+          g.fill();
+          rr(-8, -106, 16, 7, 3, steelDark);
+          break;
+        case "bow": {
+          g.strokeStyle = "#8a5a3a";
+          g.lineWidth = 5.5;
+          g.lineCap = "round";
+          g.beginPath();
+          g.moveTo(0, -88);
+          g.quadraticCurveTo(-24, -52, -18, -6);
+          g.quadraticCurveTo(-14, 40, 0, 76);
+          g.stroke();
+          g.strokeStyle = "#a06a42";
+          g.lineWidth = 2;
+          g.beginPath();
+          g.moveTo(0, -86);
+          g.quadraticCurveTo(-21, -52, -16, -7);
+          g.quadraticCurveTo(-12, 38, 0, 74);
+          g.stroke();
+          g.strokeStyle = "#d9cdb8";
+          g.lineWidth = 1.6;
+          g.beginPath();
+          g.moveTo(0, -88);
+          g.lineTo(0, 76);
+          g.stroke();
+          rr(-21, -14, 8, 16, 3, "#4a3a29");
+          g.strokeStyle = "#c9b294";
+          g.lineWidth = 2.5;
+          g.beginPath();
+          g.moveTo(4, -4);
+          g.lineTo(-28, -9);
+          g.stroke();
+          g.fillStyle = steel;
+          g.beginPath();
+          g.moveTo(-36, -10);
+          g.lineTo(-27, -13);
+          g.lineTo(-27, -6);
+          g.closePath();
+          g.fill();
+          g.strokeStyle = "#e8dcc8";
+          g.lineWidth = 1.6;
+          g.beginPath();
+          g.moveTo(2, -4);
+          g.lineTo(-3, -11);
+          g.moveTo(3, -2);
+          g.lineTo(-1, 4);
+          g.stroke();
+          break;
+        }
+        case "staff":
+          rr(-4, -110, 6, 108, 3, "#5d4732");
+          el(0, -114, 13, 13, "#ffb85a");
+          el(0, -114, 22, 22, "rgba(255,184,90,0.35)");
+          el(0, -114, 5, 5, "#fff2be");
+          break;
+        default:
+          rr(-4.5, -106, 9, 98, 4.5, steel);
+          rr(-18, -12, 36, 7, 3, "#c9a227");
+          rr(-3, -5, 6, 22, 3, "#4a3a29");
+      }
+      g.restore();
+      if (twoHanded) {
+        const GRIP2H = {
+          greatsword: [[0, -2], [0, 16]],
+          greataxe: [[0, -34], [0, -8]],
+          staff: [[0, -44], [0, -14]],
+          bow: [[-17, -6], [2, -4]]
+          // рука на рукояти лука и на тетиве
+        };
+        const grips = GRIP2H[wpn.type] || [[0, -2], [0, 20]];
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        const toWorld = ([x, y]) => [ax + x * cos - y * sin, ay + x * sin + y * cos];
+        const [h1, h2] = grips.map(toWorld);
+        g.shadowColor = "rgba(0,0,0,0.4)";
+        g.shadowBlur = 4;
+        el(h1[0], h1[1], 9, 10, handCol);
+        el(h2[0], h2[1], 9, 10, handCol);
+        if (item2("ring1")) el(h2[0], h2[1] - 6, 3, 3, "#ffd98a");
+        if (item2("ring2")) el(h2[0] + 5, h2[1] - 3, 3, 3, "#ffd98a");
+        g.shadowBlur = 0;
+      }
+    }
+    const shd = item2("shield");
+    if (shd) {
+      const sx = cx + 48;
+      const sy = torsoY + 46;
+      g.save();
+      g.shadowColor = "rgba(0,0,0,0.4)";
+      g.shadowBlur = 4;
+      const drawKite = (main, trim, boss) => {
+        g.fillStyle = main;
+        g.beginPath();
+        g.moveTo(sx - 28, sy - 44);
+        g.lineTo(sx + 28, sy - 44);
+        g.lineTo(sx + 28, sy + 14);
+        g.quadraticCurveTo(sx, sy + 44, sx - 28, sy + 14);
+        g.closePath();
+        g.fill();
+        g.strokeStyle = trim;
+        g.lineWidth = 5;
+        g.stroke();
+        if (boss) el(sx, sy - 14, 9, 9, boss);
+      };
+      switch (shd.id) {
+        case "shd_wooden":
+          el(sx, sy, 32, 35, "#8a6a45");
+          el(sx, sy, 21, 23, "#7a5a38");
+          el(sx, sy, 9, 9, "#6b5335");
+          break;
+        case "shd_tower":
+          rr(sx - 21, sy - 46, 42, 84, 9, "#8a9098");
+          rr(sx - 21, sy - 46, 42, 13, 7, "#6a7078");
+          el(sx, sy - 8, 8, 8, "#4a3a29");
+          g.fillStyle = "rgba(255,255,255,0.15)";
+          g.fillRect(sx - 16, sy - 38, 8, 68);
+          break;
+        case "shd_master":
+          drawKite("#b8c8d8", "#ffd98a", "#e8f4ff");
+          g.fillStyle = "rgba(255,255,255,0.5)";
+          g.beginPath();
+          g.moveTo(sx - 18, sy - 38);
+          g.lineTo(sx - 5, sy - 38);
+          g.lineTo(sx - 13, sy + 8);
+          g.lineTo(sx - 21, sy + 3);
+          g.closePath();
+          g.fill();
+          break;
+        case "shd_page_shield":
+          rr(sx - 22, sy - 38, 44, 74, 7, "#6b4a2f");
+          rr(sx - 22, sy - 38, 12, 74, 7, "#4a3320");
+          el(sx + 3, sy, 6, 7, "#c9a227");
+          break;
+        default:
+          drawKite(pal(shd).main, pal(shd).trim, pal(shd).trim);
+      }
+      g.restore();
     }
     const amu = item2("amulet");
     if (amu) {
-      g.fillStyle = "rgba(255, 226, 138, 0.5)";
+      g.strokeStyle = "#c9b294";
+      g.lineWidth = 2;
       g.beginPath();
-      g.arc(W / 2, H * 0.46, 16, 0, Math.PI * 2);
-      g.fill();
-      emoji(itemEmoji(amu), W / 2, H * 0.46, 22);
+      g.moveTo(cx - 10, torsoY + 4);
+      g.quadraticCurveTo(cx, torsoY + 18, cx + 10, torsoY + 4);
+      g.stroke();
+      el(cx, torsoY + 24, 6, 7, pal(amu).trim);
+      el(cx, torsoY + 24, 10, 12, "rgba(255,226,138,0.3)");
     }
-    if (item2("ring1")) emoji("\u2728", W / 2 + 40, H * 0.55, 14);
-    if (item2("ring2")) emoji("\u2728", W / 2 - 40, H * 0.55, 14);
     if (state2.pet && PET_BY_ID[state2.pet]) {
-      emoji(PET_BY_ID[state2.pet].icon, W * 0.8, H * 0.86, 34);
+      const e = PET_BY_ID[state2.pet].icon;
+      g.font = '30px "Segoe UI Emoji", sans-serif';
+      g.textAlign = "center";
+      g.textBaseline = "middle";
+      g.fillText(e, W * 0.82, H * 0.86);
     }
-    state2.consumableBelt.forEach((id, i) => {
-      const pot = ITEM_BY_ID[id];
-      if (pot) emoji(itemEmoji(pot), W / 2 - 20 + i * 22, H * 0.62, 18);
-    });
-    g.fillStyle = "#c9b294";
-    g.font = "12px sans-serif";
-    g.textAlign = "center";
-    g.fillText("\u0432\u0438\u0434 \u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u043E\u0442 \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0438", W / 2, H - 8);
-  }
-  function roundRectDoll(g, x, y, w, h, r) {
-    g.beginPath();
-    g.moveTo(x + r, y);
-    g.arcTo(x + w, y, x + w, y + h, r);
-    g.arcTo(x + w, y + h, x, y + h, r);
-    g.arcTo(x, y + h, x, y, r);
-    g.arcTo(x, y, x + w, y, r);
-    g.closePath();
   }
 
   // src/ui/shopView.js
@@ -12773,13 +13727,13 @@ ${item2.description}
     <div class="muted">${shop.desc}</div>`;
     const back = document.createElement("button");
     back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C";
-    back.addEventListener("click", () => ctx2.go("hub", { scene: "square" }));
+    back.textContent = "\u2190 \u0412 \u043A\u0432\u0430\u0440\u0442\u0430\u043B";
+    back.addEventListener("click", () => ctx2.go("hub", { scene: "market" }));
     head.firstElementChild.appendChild(back);
     container.appendChild(head);
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
-      { icon: "\u{1F307}", label: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", screen: "hub", params: { scene: "square" } }
+      { icon: "\u{1F3EC}", label: "\u0412 \u0442\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B", screen: "hub", params: { scene: "market" } }
     ]));
     const newIds = new Set(unseenShopItems(state2).map((i) => i.id));
     const buyPanel = document.createElement("div");
@@ -13470,7 +14424,7 @@ ${item2.description}
   }
 
   // src/ui/editorView.js
-  var CELL8 = 56;
+  var CELL7 = 56;
   var PALETTE = [
     { type: "source", icon: "\u2728", label: "\u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A (\u043F\u043E\u0432\u0442\u043E\u0440\u043D\u044B\u0439 \u0442\u0430\u043F \u2014 \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C)" },
     { type: "mirror", icon: "\u{1FA9E}", label: "\u0417\u0435\u0440\u043A\u0430\u043B\u043E (\u0442\u0430\u043F \u2014 \u0441\u043C\u0435\u043D\u0438\u0442\u044C \u043E\u0440\u0438\u0435\u043D\u0442\u0430\u0446\u0438\u044E)" },
@@ -13482,22 +14436,21 @@ ${item2.description}
   function renderWorkshop(container, ctx2) {
     const { state: state2 } = ctx2;
     container.appendChild(header(ctx2, "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F \u0443\u0440\u043E\u0432\u043D\u0435\u0439", "\u0421\u043E\u0437\u0434\u0430\u0432\u0430\u0439 \u0441\u0432\u043E\u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u2014 \u0440\u0435\u0448\u0430\u0442\u0435\u043B\u044C \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442 \u0438\u0445 \u0447\u0435\u0441\u0442\u043D\u043E\u0441\u0442\u044C"));
-    const newBtn = document.createElement("button");
-    newBtn.className = "primary";
-    newBtn.textContent = "\u2795 \u041D\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C";
-    newBtn.addEventListener("click", () => ctx2.go("editor", {}));
     const seekBtn = document.createElement("button");
     seekBtn.textContent = "\u{1F50D} \u0420\u0435\u0434\u0430\u043A\u0442\u043E\u0440 \u0438\u0441\u043A\u0430\u043B\u043E\u043A";
-    seekBtn.style.marginLeft = "8px";
     seekBtn.addEventListener("click", () => ctx2.go("seekeditor", {}));
+    const newBtn = document.createElement("button");
+    newBtn.textContent = "\u{1FA9E} \u041D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u043E \u0441\u0432\u0435\u0442\u043E\u043C";
+    newBtn.style.marginLeft = "8px";
+    newBtn.addEventListener("click", () => ctx2.go("editor", {}));
     const panel = document.createElement("div");
     panel.className = "panel";
-    panel.append(newBtn, seekBtn);
+    panel.append(seekBtn, newBtn);
     container.appendChild(panel);
     const list = document.createElement("div");
     list.className = "list";
     if (state2.customPuzzles.length === 0) {
-      list.innerHTML = '<div class="muted panel">\u041F\u043E\u043A\u0430 \u043F\u0443\u0441\u0442\u043E. \u041D\u0430\u0436\u043C\u0438 \xAB\u041D\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C\xBB \u0438 \u0441\u043E\u0431\u0435\u0440\u0438 \u0441\u0432\u043E\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443!</div>';
+      list.innerHTML = '<div class="muted panel">\u041F\u043E\u043A\u0430 \u043F\u0443\u0441\u0442\u043E. \u041D\u0430\u0436\u043C\u0438 \xAB\u041D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u043E \u0441\u0432\u0435\u0442\u043E\u043C\xBB \u0438 \u0441\u043E\u0431\u0435\u0440\u0438 \u0441\u0432\u043E\u044E!</div>';
     }
     for (const p of state2.customPuzzles) {
       const row = document.createElement("div");
@@ -13544,7 +14497,7 @@ ${item2.description}
     let gh = existing?.grid?.[1] || 6;
     let objects = existing ? existing.objects.map((o) => ({ ...o, pos: [...o.pos] })) : [];
     let tool = "mirror";
-    container.appendChild(header(ctx2, existing ? "\u041F\u0440\u0430\u0432\u043A\u0430 \u0443\u0440\u043E\u0432\u043D\u044F" : "\u041D\u043E\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C", "\u041C\u0435\u0445\u0430\u043D\u0438\u043A\u0430 \xAB\u0421\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438\xBB", "workshop"));
+    container.appendChild(header(ctx2, existing ? "\u041F\u0440\u0430\u0432\u043A\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0438" : "\u041D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430", "\u041C\u0435\u0445\u0430\u043D\u0438\u043A\u0430 \xAB\u0421\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438\xBB", "workshop"));
     const settings = document.createElement("div");
     settings.className = "panel";
     settings.style.display = "flex";
@@ -13742,8 +14695,8 @@ ${item2.description}
     function onTap(ev) {
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / 1 / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL8);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL8);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL7);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL7);
       if (x < 0 || y < 0 || x >= gw || y >= gh) return;
       const idx = objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (tool === "erase") {
@@ -13765,16 +14718,16 @@ ${item2.description}
     canvas.addEventListener("pointerdown", onTap);
     function draw() {
       const dpr = 1;
-      canvas.width = gw * CELL8;
-      canvas.height = gh * CELL8;
-      canvas.style.width = `${gw * CELL8}px`;
-      canvas.style.height = `${gh * CELL8}px`;
+      canvas.width = gw * CELL7;
+      canvas.height = gh * CELL7;
+      canvas.style.width = `${gw * CELL7}px`;
+      canvas.style.height = `${gh * CELL7}px`;
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL8, y * CELL8, CELL8, CELL8);
+          g.fillRect(x * CELL7, y * CELL7, CELL7, CELL7);
         }
       }
       const preview = createPuzzle(currentLevel());
@@ -13784,14 +14737,14 @@ ${item2.description}
       g.lineWidth = 4;
       for (const b of beams) {
         g.beginPath();
-        g.moveTo(b.from[0] * CELL8 + CELL8 / 2, b.from[1] * CELL8 + CELL8 / 2);
-        g.lineTo(b.to[0] * CELL8 + CELL8 / 2, b.to[1] * CELL8 + CELL8 / 2);
+        g.moveTo(b.from[0] * CELL7 + CELL7 / 2, b.from[1] * CELL7 + CELL7 / 2);
+        g.lineTo(b.to[0] * CELL7 + CELL7 / 2, b.to[1] * CELL7 + CELL7 / 2);
         g.stroke();
       }
       for (const o of objects) {
-        const cx = o.pos[0] * CELL8 + CELL8 / 2;
-        const cy = o.pos[1] * CELL8 + CELL8 / 2;
-        const emoji = (e, size = CELL8 * 0.6) => {
+        const cx = o.pos[0] * CELL7 + CELL7 / 2;
+        const cy = o.pos[1] * CELL7 + CELL7 / 2;
+        const emoji = (e, size = CELL7 * 0.6) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -13801,16 +14754,16 @@ ${item2.description}
           emoji("\u2728");
           const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
           g.fillStyle = "#fff2be";
-          g.font = `bold ${CELL8 * 0.3}px sans-serif`;
-          g.fillText(dirs[o.dir ?? 1], cx + CELL8 * 0.28, cy - CELL8 * 0.28);
+          g.font = `bold ${CELL7 * 0.3}px sans-serif`;
+          g.fillText(dirs[o.dir ?? 1], cx + CELL7 * 0.28, cy - CELL7 * 0.28);
         } else if (o.type === "mirror") {
           g.save();
           g.translate(cx, cy);
           g.rotate(o.orient === 0 ? Math.PI / 4 : -Math.PI / 4);
           g.fillStyle = "#cfe8ff";
-          g.fillRect(-CELL8 * 0.3, -3, CELL8 * 0.6, 5);
+          g.fillRect(-CELL7 * 0.3, -3, CELL7 * 0.6, 5);
           g.restore();
-          emoji("\u{1FA9E}", CELL8 * 0.3);
+          emoji("\u{1FA9E}", CELL7 * 0.3);
         } else if (o.type === "lantern") emoji("\u{1F3EE}");
         else if (o.type === "moth") emoji("\u{1F98B}");
         else if (o.type === "wall") emoji("\u{1F311}");
@@ -14694,7 +15647,7 @@ ${item2.description}
   function renderSeekEditor(container, ctx2, params) {
     const raw = SEEK_PUZZLES.find((p) => p.id === params.id);
     if (!raw) {
-      ctx2.go("workshop");
+      ctx2.go("seekeditor");
       return;
     }
     const base = applySeekOverrides(ctx2.state, raw);
@@ -14705,7 +15658,7 @@ ${item2.description}
       ctx2,
       `\u041F\u0440\u0430\u0432\u043A\u0430: ${raw.name}`,
       "\u0422\u044F\u043D\u0438 \u043A\u0440\u0443\u0433\u0438, \u0447\u0442\u043E\u0431\u044B \u0434\u0432\u0438\u0433\u0430\u0442\u044C. +/\u2212 \u043C\u0435\u043D\u044F\u0435\u0442 \u0440\u0430\u0434\u0438\u0443\u0441 (\u0438\u043B\u0438 \u043A\u043E\u043B\u0435\u0441\u043E \u043C\u044B\u0448\u0438).",
-      "workshop"
+      "seekeditor"
     ));
     const [W, H] = raw.sceneSize || [1e3, 650];
     const wrap = document.createElement("div");

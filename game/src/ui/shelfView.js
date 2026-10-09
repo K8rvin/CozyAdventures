@@ -6,9 +6,9 @@ import {
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay , puzzleSkipButton } from './common.js';
 
-const CELL = 64;
-
 export function renderShelfPuzzle(container, ctx, level) {
+  // Крупные клетки: целимся в ширину поля ~500px, маленькие сетки — крупнее
+  const CELL = Math.max(80, Math.min(120, Math.floor(500 / level.grid[0])));
   const puzzle = createShelfPuzzle(level);
   let selectedItem = null; // id предмета из лотка
   let hintsUsed = 0;
@@ -33,7 +33,28 @@ export function renderShelfPuzzle(container, ctx, level) {
   canvas.style.maxWidth = '100%';
   canvas.style.touchAction = 'none'; // перетаскивание без прокрутки страницы
   canvasBox.appendChild(canvas);
-  wrap.appendChild(canvasBox);
+  // Левая колонка: поле + лоток ПОД полками — удобнее перетаскивать
+  const leftCol = document.createElement('div');
+  leftCol.style.cssText = 'display:flex;flex-direction:column;gap:10px;flex:0 1 auto;min-width:0';
+  leftCol.appendChild(canvasBox);
+
+  // Лоток с товарами — под полем
+  const trayPanel = document.createElement('div');
+  trayPanel.className = 'panel';
+  trayPanel.style.padding = '10px 14px';
+  const trayLabel = document.createElement('div');
+  trayLabel.className = 'muted';
+  trayLabel.textContent = 'Товары: тапни, затем клетку — или просто перетащи на полку';
+  trayLabel.style.fontSize = '13px';
+  trayLabel.style.marginBottom = '8px';
+  trayPanel.appendChild(trayLabel);
+  const tray = document.createElement('div');
+  tray.style.display = 'flex';
+  tray.style.flexWrap = 'wrap';
+  tray.style.gap = '10px';
+  trayPanel.appendChild(tray);
+  leftCol.appendChild(trayPanel);
+  wrap.appendChild(leftCol);
 
   const side = document.createElement('div');
   side.className = 'puzzle-side';
@@ -52,19 +73,6 @@ export function renderShelfPuzzle(container, ctx, level) {
   const statusEl = document.createElement('div');
   statusEl.className = 'puzzle-status';
   side.appendChild(statusEl);
-
-  // Лоток с товарами
-  const trayLabel = document.createElement('div');
-  trayLabel.className = 'muted';
-  trayLabel.textContent = 'Лоток (тапни товар, затем клетку):';
-  trayLabel.style.fontSize = '13px';
-  trayLabel.style.marginTop = '8px';
-  side.appendChild(trayLabel);
-  const tray = document.createElement('div');
-  tray.style.display = 'flex';
-  tray.style.flexWrap = 'wrap';
-  tray.style.gap = '8px';
-  side.appendChild(tray);
 
   const controls = document.createElement('div');
   controls.className = 'puzzle-controls';
@@ -371,6 +379,8 @@ export function renderShelfPuzzle(container, ctx, level) {
       if (puzzle.placement[it.id]) continue;
       const b = document.createElement('button');
       b.className = 'small' + (selectedItem === it.id ? ' primary' : '');
+      b.style.fontSize = '16px';
+      b.style.padding = '8px 12px';
       b.innerHTML = `${it.icon} ${it.name}`;
       b.title = it.tags.join(', ');
       b.addEventListener('pointerdown', (ev) => startPotentialDrag(ev, it.id));

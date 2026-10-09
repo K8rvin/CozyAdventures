@@ -10,6 +10,7 @@ import { TEA_PUZZLES } from '../data/puzzlesTea.js';
 import { MECH_PUZZLES } from '../data/puzzlesMech.js';
 import { CANDLE_PUZZLES } from '../data/puzzlesCandle.js';
 import { FLOW_PUZZLES } from '../data/puzzlesFlow.js';
+import { BREW_PUZZLES } from '../data/puzzlesBrew.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
 import { COSMETIC_BY_ID } from '../data/cosmetics.js';
@@ -369,7 +370,7 @@ export function toggleCosmetic(state, id) {
 // сложность растёт по своей цепочке.
 const PUZZLE_POOL = new Map(
   [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES,
-    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES]
+    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES]
     .map((p) => [p.id, p]),
 );
 const CAMPAIGN_ORDER = [
@@ -391,6 +392,9 @@ const CAMPAIGN_ORDER = [
   'mech_03', 'cd_03', 'flow_03', 'mech_04', 'cd_04', 'flow_04',
   'mech_05', 'cd_05', 'flow_05', 'mech_06', 'cd_06', 'flow_06',
   'mech_07', 'cd_07', 'flow_07', 'mech_08', 'cd_08', 'flow_08',
+  // Алхимический стол: варка зелий по рецепту (с brew_06 — на память)
+  'brew_01', 'brew_02', 'brew_03', 'brew_04',
+  'brew_05', 'brew_06', 'brew_07', 'brew_08',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 
@@ -462,6 +466,9 @@ export function completePuzzle(state, puzzleId, info = {}) {
   const puzzle = findPuzzle(state, puzzleId);
   if (!puzzle) return null;
   const firstTime = !state.puzzlesDone[puzzleId];
+  // Заказ дня определяем ДО отметки о решении: после неё загадка выпадает
+  // из списка открытых, dailyPuzzle укажет на другую и бонус никогда не дойдёт.
+  const isDaily = firstTime && state.lastDailyBonus !== todayKey() && isDailyPuzzle(state, puzzleId);
   state.puzzlesDone[puzzleId] = {
     moves: info.moves ?? 0,
     hintsUsed: info.hintsUsed ?? 0,
@@ -475,7 +482,7 @@ export function completePuzzle(state, puzzleId, info = {}) {
   const rewards = puzzle.rewards || [{ type: 'coins', amount: 15 }];
   // Заказ дня: двойные монеты за загадку дня (раз в день)
   let dailyBonus = false;
-  if (firstTime && isDailyPuzzle(state, puzzleId) && state.lastDailyBonus !== todayKey()) {
+  if (isDaily) {
     dailyBonus = true;
     state.lastDailyBonus = todayKey();
     journalPush(state, '🌟', 'Заказ дня выполнен — путник щедро благодарит!');

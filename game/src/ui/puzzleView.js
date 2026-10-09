@@ -16,6 +16,7 @@ import { renderTeaPuzzle } from './teaView.js';
 import { renderMechPuzzle } from './mechView.js';
 import { renderCandlePuzzle } from './candleView.js';
 import { renderFlowPuzzle } from './flowView.js';
+import { renderBrewPuzzle } from './brewView.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav, puzzleSkipButton } from './common.js';
 
@@ -32,6 +33,7 @@ const WORLD_LABEL = {
   jade: '🎋 Нефритовый сад — поиск предметов',
   deep: '🐚 Подводный грот — поиск предметов',
   mist: '⏳ Туманные часы — поиск предметов',
+  brew: '⚗️ Алхимический стол — варка зелий по рецепту',
 };
 
 // --- Список уровней ---
@@ -124,6 +126,9 @@ export function renderPuzzle(container, ctx, params) {
   }
   if (level.mechanic === 'flow') {
     return renderFlowPuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'brew') {
+    return renderBrewPuzzle(container, ctx, level);
   }
   const puzzle = createPuzzle(level);
   let hintsUsed = 0;

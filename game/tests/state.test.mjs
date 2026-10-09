@@ -7,7 +7,7 @@ import {
   nextBattle, firstUnbeatenBattle, skipPuzzle, skipPuzzlePrice, applyCheat,
   findPuzzle, applySeekOverrides, saveSeekOverride, resetSeekOverride,
   unseenShopItems, markShopSeen, loadSeekOverrides,
-  dailyPuzzle, currentSeason, SEASON_LABEL, petTheCat,
+  dailyPuzzle, currentSeason, SEASON_LABEL, petTheCat, todayKey, isDailyPuzzle,
 } from '../src/core/state.js';
 import { PUZZLES } from '../src/data/puzzles.js';
 import { BATTLES } from '../src/data/battles.js';
@@ -323,9 +323,14 @@ test('заказ дня: детерминирован и даёт двойные
   const rewards = completePuzzle(s, daily.id, {});
   const coins = rewards.find((r) => r.type === 'coins');
   const base = (daily.rewards || []).find((r) => r.type === 'coins');
-  if (base && s.lastDailyBonus) {
-    assert.equal(coins.amount, base.amount * 2, 'заказ дня удваивает монеты');
-  }
+  assert.equal(s.lastDailyBonus, todayKey(), 'бонус заказа дня выдан и записан');
+  assert.equal(coins.amount, base.amount * 2, 'заказ дня удваивает монеты');
+  // Регрессия: условие значка «заказ дня ×2» из списка загадок после выдачи
+  // бонуса ложно для любой нерешённой загадки (dailyClaimed = true)
+  const badgeWouldShow = (id) =>
+    !s.puzzlesDone[id] && s.lastDailyBonus !== todayKey() && isDailyPuzzle(s, id);
+  const anyBadge = ALL_PUZZLES.some((p) => badgeWouldShow(p.id));
+  assert.equal(anyBadge, false, 'после выдачи бонуса значок ни у кого не горит');
   // Бонус забран — в тот же день больше не выдаётся
   s.puzzlesDone = {};
   const idx2 = ALL_PUZZLES.findIndex((p) => p.id === dailyPuzzle(s).id);

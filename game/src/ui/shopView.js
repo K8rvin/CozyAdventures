@@ -79,13 +79,13 @@ export function renderMarket(container, ctx, shopKey) {
     <div class="muted">${shop.desc}</div>`;
   const back = document.createElement('button');
   back.className = 'ghost small';
-  back.textContent = '← На площадь';
-  back.addEventListener('click', () => ctx.go('hub', { scene: 'square' }));
+  back.textContent = '← В квартал';
+  back.addEventListener('click', () => ctx.go('hub', { scene: 'market' }));
   head.firstElementChild.appendChild(back);
   container.appendChild(head);
   container.appendChild(quickNav(ctx, [
     { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
-    { icon: '🌇', label: 'На площадь', screen: 'hub', params: { scene: 'square' } },
+    { icon: '🏬', label: 'В торговый квартал', screen: 'hub', params: { scene: 'market' } },
   ]));
 
   const newIds = new Set(unseenShopItems(state).map((i) => i.id));

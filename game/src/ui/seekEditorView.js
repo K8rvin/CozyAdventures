@@ -54,7 +54,7 @@ export function renderSeekEditorList(container, ctx) {
 
 export function renderSeekEditor(container, ctx, params) {
   const raw = SEEK_PUZZLES.find((p) => p.id === params.id);
-  if (!raw) { ctx.go('workshop'); return; }
+  if (!raw) { ctx.go('seekeditor'); return; }
   const base = applySeekOverrides(ctx.state, raw);
   // Рабочая копия групп
   let groups = JSON.parse(JSON.stringify(base.groups));
@@ -62,7 +62,7 @@ export function renderSeekEditor(container, ctx, params) {
   let drag = null;
 
   container.appendChild(header(ctx, `Правка: ${raw.name}`,
-    'Тяни круги, чтобы двигать. +/− меняет радиус (или колесо мыши).', 'workshop'));
+    'Тяни круги, чтобы двигать. +/− меняет радиус (или колесо мыши).', 'seekeditor'));
 
   const [W, H] = raw.sceneSize || [1000, 650];
   const wrap = document.createElement('div');

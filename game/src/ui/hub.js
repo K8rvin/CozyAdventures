@@ -20,7 +20,7 @@ const CHATTER = {
   pet_puppy: ['🐕 Щенок принёс палку. Очень важную палку.', '🐕 Щенок виляет хвостом всей лавке.'],
   pet_hedgehog: ['🦔 Ёжик свернулся в тапке. Это его тапок теперь.', '🦔 Ёжик фыркает на буханку.'],
   pet_fox: ['🦊 Лисёнок примеряет твоё шляпное место у кассы.', '🦊 Лисёнок что-то прячет за прилавком.'],
-  pet_horse: ['🐴 Сивка фыркает у двери — скучает по дороге.', '🐴 Сивка обгладывает веник. Он был хорошим веником.'],
+  pet_horse: ['🐴 Сивка фыркает у двери — скучает по дороге.', '🐴 Сивка обгладывает веник. Хороший был веник.'],
   pet_owl: ['🦉 Сова считает вслух остатки на полках. Сбивается.', '🦉 Сова одобрительно ухает новому порядку.'],
 };
 
@@ -53,12 +53,11 @@ export function renderHub(container, ctx, params = {}) {
       alt: 'Лавка на перекрёстке миров',
       // Хотспоты: [icon, label, screen, x%, y%, showDot]
       hotspots: [
-        ['📚', 'Головоломки', 'puzzles', 15, 42, () => solved === 0],
+        ['📚', 'Головоломки', 'puzzles', 10, 42, () => solved === 0],
         ['🪙', 'Прилавок', 'shop', 43, 55, () => (solved > 0 && !firstPurchaseDone) || unseenShopItems(state).length > 0],
-        ['🛡️', 'Комната рыцаря', 'equip', 67, 45, () => false],
-        ['🌆', 'На площадь', '@square', 77, 50, () => false],
+        ['🛡️', 'Комната рыцаря', 'equip', 68, 46, () => false],
+        ['🌆', 'На площадь', '@square', 77, 52, () => false],
         ['🪟', 'В поход', 'battles', 93, 45, () => firstPurchaseDone && won === 0],
-        ['🐈', 'Погладить кота', '@cat', 27, 80, () => false],
       ],
     },
     square: {
@@ -66,22 +65,22 @@ export function renderHub(container, ctx, params = {}) {
       alt: 'Городская площадь',
       hotspots: [
         ['🍺', 'Таверна', 'tavern', 79, 60, () => false],
-        ['⚒️', 'Кузница и котёл', 'craft', 39, 52, () => false],
-        ['🛠️', 'Мастерская', 'workshop', 52, 68, () => false],
-        ['📌', 'Доска объявлений', 'board', 6, 55, () => false],
-        ['🏮', 'В лавку', '@lavka', 17, 47, () => false],
-        ['🏬', 'Торговый квартал', '@market', 52, 38, () => ['armory', 'armorer', 'magic', 'alchemy'].some((k) => hasUnseenIn(state, k))],
+        ['⚒️', 'Кузница и котёл', 'craft', 39, 58, () => false],
+        ['🛠️', 'Мастерская', 'workshop', 53, 68, () => false],
+        ['📌', 'Доска объявлений', 'board', 7, 59, () => false],
+        ['🏮', 'В лавку', '@lavka', 17, 50, () => false],
+        ['🏬', 'Торговый квартал', '@market', 58, 38, () => ['armory', 'armorer', 'magic', 'alchemy'].some((k) => hasUnseenIn(state, k))],
       ],
     },
     market: {
       candidates: ['assets/town_market_web.jpg', 'assets/town_market.jfif', 'assets/town_square_web.jpg'],
       alt: 'Торговый квартал',
       hotspots: [
-        ['🗡️', 'Оружейник', 'shopArmory', 8, 60, () => hasUnseenIn(state, 'armory')],
-        ['🛡️', 'Бронник', 'shopArmorer', 37, 60, () => hasUnseenIn(state, 'armorer')],
-        ['🔮', 'Маг', 'shopMagic', 65, 62, () => hasUnseenIn(state, 'magic')],
-        ['🧪', 'Алхимик', 'shopAlchemy', 81, 60, () => hasUnseenIn(state, 'alchemy')],
-        ['🌇', 'На площадь', '@square', 50, 60, () => false],
+        ['🗡️', 'Оружейник', 'shopArmory', 7, 60, () => hasUnseenIn(state, 'armory')],
+        ['🛡️', 'Бронник', 'shopArmorer', 35, 60, () => hasUnseenIn(state, 'armorer')],
+        ['🔮', 'Маг', 'shopMagic', 63, 62, () => hasUnseenIn(state, 'magic')],
+        ['🧪', 'Алхимик', 'shopAlchemy', 80, 60, () => hasUnseenIn(state, 'alchemy')],
+        ['🌇', 'На площадь', '@square', 52, 60, () => false],
       ],
     },
   };
@@ -115,7 +114,6 @@ export function renderHub(container, ctx, params = {}) {
     b.setAttribute('aria-label', label);
     b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ''}`;
     b.addEventListener('click', () => {
-      if (screen === '@cat') { petCat(b); return; }
       ctx.sfx?.('tap');
       b.classList.add('zap');
       setTimeout(() => {
@@ -162,12 +160,81 @@ export function renderHub(container, ctx, params = {}) {
     rerender(sceneId);
   }
 
-  // Питомец гуляет по сцене (если есть активный)
-  if (state.pet && PET_BY_ID[state.pet]) {
-    const pet = document.createElement('div');
-    pet.className = 'hub-pet';
-    pet.textContent = PET_BY_ID[state.pet].icon;
-    scenePanel.appendChild(pet);
+  // Питомцы — все купленные, каждый на своём месте в своей сцене.
+  // Картинка assets/pets/<id>.png; если её нет — иконка-фолбэк.
+  const PET_SPOTS = {
+    pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 62 },
+    pet_fox: { scene: 'lavka', x: 34, y: 75, size: 90 },
+    pet_puppy: { scene: 'lavka', x: 87, y: 88, size: 92, flip: true },
+    pet_owl: { scene: 'lavka', x: 58, y: 26, size: 64 },
+    pet_horse: { scene: 'square', x: 90, y: 90, size: 130 },
+  };
+  for (const [petId, spot] of Object.entries(PET_SPOTS)) {
+    if (spot.scene !== sceneId || !(state.crew || []).includes(petId) || !PET_BY_ID[petId]) continue;
+    const def = PET_BY_ID[petId];
+    const isActive = state.pet === petId;
+    const el = document.createElement('div');
+    el.className = `hub-pet${isActive ? ' active' : ''}`;
+    el.style.left = `${spot.x}%`;
+    el.style.top = `${spot.y}%`;
+    el.title = isActive ? `${def.name} — идёт с тобой в походы` : def.name;
+    const img = document.createElement('img');
+    img.src = `assets/pets/${petId}.png`;
+    img.alt = def.name;
+    img.style.width = `${spot.size}px`;
+    if (spot.flip) img.style.transform = 'scaleX(-1)';
+    img.addEventListener('error', () => {
+      img.remove();
+      el.textContent = def.icon;
+      el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+    });
+    el.appendChild(img);
+    el.addEventListener('click', () => {
+      ctx.sfx?.('tap');
+      const lines = CHATTER[petId] || [def.name];
+      ctx.toast(lines[Math.floor(Math.random() * lines.length)]);
+    });
+    scenePanel.appendChild(el);
+  }
+
+  // Кот лавки (всегда на подушке, клик = погладить) и спутники —
+  // появляются, когда наняты (активность в отряде не обязательна).
+  // Картинка assets/crew/<id>.png; если её нет — иконка-фолбэк.
+  const CREW_SPOTS = [
+    { id: 'cat', always: true, icon: '🐈', name: 'Кот лавки — погладить', scene: 'lavka', x: 30, y: 97, size: 145, pet: true },
+    { id: 'cmp_firefly', scene: 'lavka', x: 47, y: 15, size: 46 },
+    { id: 'cmp_herbalist', scene: 'lavka', x: 19, y: 97, size: 145 },
+    { id: 'cmp_smith', scene: 'square', x: 45, y: 86, size: 50 },
+  ];
+  for (const spot of CREW_SPOTS) {
+    const owned = spot.always || (state.crew || []).includes(spot.id);
+    if (spot.scene !== sceneId || !owned) continue;
+    const def = COMPANION_BY_ID[spot.id];
+    const name = spot.name || def?.name || spot.id;
+    const icon = spot.icon || def?.icon || '🐾';
+    const el = document.createElement('div');
+    el.className = 'hub-pet';
+    el.style.left = `${spot.x}%`;
+    el.style.top = `${spot.y}%`;
+    el.title = name;
+    const img = document.createElement('img');
+    img.src = `assets/crew/${spot.id}.png`;
+    img.alt = name;
+    img.style.width = `${spot.size}px`;
+    if (spot.flip) img.style.transform = 'scaleX(-1)';
+    img.addEventListener('error', () => {
+      img.remove();
+      el.textContent = icon;
+      el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+    });
+    el.appendChild(img);
+    el.addEventListener('click', () => {
+      if (spot.pet) { petCat(el); return; }
+      ctx.sfx?.('tap');
+      const lines = CHATTER[spot.id] || [name];
+      ctx.toast(lines[Math.floor(Math.random() * lines.length)]);
+    });
+    scenePanel.appendChild(el);
   }
 
   // --- Дневник кота и реплики команды ---

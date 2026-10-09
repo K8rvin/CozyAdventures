@@ -332,24 +332,20 @@ function adviceFor(knight, allies, foes, cause) {
   return 'Не хватило мощи. Проверь экипировку, зелья и расстановку: танки вперёд, стрелки назад.';
 }
 
-// Авторасстановка врагов: ближние вперёд, остальные назад, босс в центр.
+// Авторасстановка врагов: каждый занимает СВОЙ слот — ближние вперёд,
+// стрелки назад, босс предпочитает центр переднего ряда.
 export function enemyFormationSlots(enemyEntries) {
-  const slots = [];
-  let front = 0;
-  let back = 3;
-  for (const entry of enemyEntries) {
+  const used = new Set();
+  const take = (prefs) => {
+    const slot = prefs.find((s) => !used.has(s)) ?? prefs[0];
+    used.add(slot);
+    return slot;
+  };
+  return enemyEntries.map((entry) => {
     const id = typeof entry === 'string' ? entry : entry.id;
     const def = ENEMY_BY_ID[id];
-    if (def.boss) { slots.push(1); continue; } // босс в центр переднего ряда
+    if (def.boss) return take([1, 0, 2, 4, 3, 5]); // босс в центр переднего ряда
     const melee = !def.skills.some((s) => s === 'pollen_sleep' || s === 'fear_chill');
-    if (melee) {
-      slots.push(FRONT[front % 3]);
-      front++;
-    } else {
-      slots.push(BACK[back % 3]);
-      back++;
-      if (back % 3 === 0 && front < 3) { back = 3; }
-    }
-  }
-  return slots;
+    return melee ? take([0, 1, 2, 3, 4, 5]) : take([3, 4, 5, 0, 1, 2]);
+  });
 }

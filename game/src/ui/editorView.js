@@ -21,23 +21,22 @@ export function renderWorkshop(container, ctx) {
   const { state } = ctx;
   container.appendChild(header(ctx, 'Мастерская уровней', 'Создавай свои загадки — решатель проверит их честность'));
 
-  const newBtn = document.createElement('button');
-  newBtn.className = 'primary';
-  newBtn.textContent = '➕ Новый уровень';
-  newBtn.addEventListener('click', () => ctx.go('editor', {}));
   const seekBtn = document.createElement('button');
   seekBtn.textContent = '🔍 Редактор искалок';
-  seekBtn.style.marginLeft = '8px';
   seekBtn.addEventListener('click', () => ctx.go('seekeditor', {}));
+  const newBtn = document.createElement('button');
+  newBtn.textContent = '🪞 Новая загадка со светом';
+  newBtn.style.marginLeft = '8px';
+  newBtn.addEventListener('click', () => ctx.go('editor', {}));
   const panel = document.createElement('div');
   panel.className = 'panel';
-  panel.append(newBtn, seekBtn);
+  panel.append(seekBtn, newBtn);
   container.appendChild(panel);
 
   const list = document.createElement('div');
   list.className = 'list';
   if (state.customPuzzles.length === 0) {
-    list.innerHTML = '<div class="muted panel">Пока пусто. Нажми «Новый уровень» и собери свою загадку!</div>';
+    list.innerHTML = '<div class="muted panel">Пока пусто. Нажми «Новая загадка со светом» и собери свою!</div>';
   }
   for (const p of state.customPuzzles) {
     const row = document.createElement('div');
@@ -90,7 +89,7 @@ export function renderEditor(container, ctx, params) {
   let objects = existing ? existing.objects.map((o) => ({ ...o, pos: [...o.pos] })) : [];
   let tool = 'mirror';
 
-  container.appendChild(header(ctx, existing ? 'Правка уровня' : 'Новый уровень', 'Механика «Свет и фонарики»', 'workshop'));
+  container.appendChild(header(ctx, existing ? 'Правка загадки' : 'Новая загадка', 'Механика «Свет и фонарики»', 'workshop'));
 
   // Настройки
   const settings = document.createElement('div');
