@@ -86,14 +86,32 @@ test('тексты шагов — по-русски, без латинских �
   }
 });
 
-test('все 8 уровней валидны и решаются своим рецептом', () => {
-  assert.equal(BREW_PUZZLES.length, 8);
+test('все 10 уровней валидны и решаются своим рецептом', () => {
+  assert.equal(BREW_PUZZLES.length, 10);
   const ids = new Set(BREW_PUZZLES.map((l) => l.id));
-  assert.equal(ids.size, 8, 'id уровней дублируются');
+  assert.equal(ids.size, 10, 'id уровней дублируются');
   for (const level of BREW_PUZZLES) {
     const v = validateBrewLevel(level);
     assert.ok(v.ok, `${level.id}: ${v.problems.join('; ')}`);
   }
+});
+
+test('вариативный шаг anyOf: засчитывается любой вариант, текст с «ИЛИ»', () => {
+  const L9 = BREW_PUZZLES.find((l) => l.id === 'brew_09');
+  const p = createBrewPuzzle(L9);
+  doBrewAction(p, { do: 'add', ingredient: 'water' });
+  doBrewAction(p, { do: 'heat' });
+  // Шаг 3 — «ягоды ИЛИ мёд»: мёд тоже годится
+  const r = doBrewAction(p, { do: 'add', ingredient: 'honey' });
+  assert.equal(r.ok, true, 'вариант anyOf должен засчитаться');
+  assert.equal(p.progress, 3);
+  // Не из списка — ошибка
+  const bad = doBrewAction(p, { do: 'add', ingredient: 'salt' });
+  assert.equal(bad.mistake, true);
+  // Текст шага содержит ИЛИ
+  const stepText = brewStepText(L9, L9.recipe[2]);
+  assert.ok(stepText.includes(' ИЛИ '), `текст anyOf без ИЛИ: ${stepText}`);
+  assert.ok(!/[a-zA-Z]/.test(stepText), 'английское в тексте anyOf');
 });
 
 test('уровни на память — только поздние и с временем показа рецепта', () => {

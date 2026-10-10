@@ -58,6 +58,26 @@ function tone(freq, dur, { type = 'sine', gain = 0.08, delay = 0, slide = 0 } = 
   osc.stop(t0 + dur + 0.05);
 }
 
+// Шумовая вспышка через фильтр: шелесты, трение, пара.
+function noiseBurst(dur, { freq = 2000, q = 1, gain = 0.05, delay = 0, type = 'bandpass' } = {}) {
+  const a = ac();
+  if (!a || !enabled) return;
+  const len = Math.max(1, Math.floor(a.sampleRate * dur));
+  const buf = a.createBuffer(1, len, a.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+  const src = a.createBufferSource();
+  src.buffer = buf;
+  const f = a.createBiquadFilter();
+  f.type = type;
+  f.frequency.value = freq;
+  f.Q.value = q;
+  const g = a.createGain();
+  g.gain.value = gain;
+  src.connect(f).connect(g).connect(a.destination);
+  src.start(a.currentTime + delay);
+}
+
 export function sfx(name) {
   if (!enabled) return;
   switch (name) {
@@ -75,6 +95,20 @@ export function sfx(name) {
       [392, 330, 262].forEach((f, i) => tone(f, 0.3, { delay: i * 0.14, gain: 0.05 }));
       break;
     case 'moth': tone(300, 0.2, { type: 'square', gain: 0.04, slide: 80 }); break;
+    case 'bubble': {
+      // Бульки кипящего котла
+      for (let i = 0; i < 3; i++) {
+        tone(100 + Math.random() * 90, 0.09, { type: 'sine', gain: 0.05, delay: i * 0.07, slide: 50 });
+      }
+      noiseBurst(0.16, { freq: 750, gain: 0.018 });
+      break;
+    }
+    case 'page': {
+      // Перелистывание страницы
+      noiseBurst(0.15, { freq: 2800, gain: 0.05 });
+      noiseBurst(0.12, { freq: 3400, gain: 0.03, delay: 0.09 });
+      break;
+    }
     case 'purr': {
       // Настоящее мурлыкание кота (assets/…_1sec.mp3), фолбэк — синтез
       if (playAudio('assets/3d-zvuk-murchanie-koshki_1sec.mp3', 0.7)) break;

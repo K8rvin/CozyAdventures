@@ -101,6 +101,12 @@ export function renderBrewPuzzle(container, ctx, level) {
 
   const book = document.createElement('div');
   book.className = 'brew-book';
+  const bookBg = document.createElement('img');
+  bookBg.className = 'brew-book-bg';
+  bookBg.alt = '';
+  bookBg.addEventListener('error', () => bookBg.remove());
+  bookBg.src = 'assets/recipe_book_web.jpg';
+  book.appendChild(bookBg);
   side.appendChild(book);
 
   const statusEl = document.createElement('div');
@@ -140,6 +146,7 @@ export function renderBrewPuzzle(container, ctx, level) {
         }</div>
       </div>`;
     document.body.appendChild(peek);
+    ctx.sfx?.('page');
     timers.push(setTimeout(() => {
       peek.remove();
       recipeHidden = true;
@@ -200,7 +207,7 @@ export function renderBrewPuzzle(container, ctx, level) {
     const r = doBrewAction(puzzle, action);
     if (r.ok) {
       hintAction = null;
-      ctx.sfx?.(action.do === 'add' || action.do === 'crush' ? 'potion' : 'tap');
+      ctx.sfx?.(action.do === 'add' || action.do === 'crush' ? 'potion' : 'bubble');
       pulsePot();
       draw();
       if (r.solved) finish();
@@ -275,12 +282,12 @@ export function renderBrewPuzzle(container, ctx, level) {
     mortar.innerHTML = crushMode ? '🥣 Что толчём?' : '🥣 Ступка';
 
     // Ингредиенты
+    const hintOpts = hintAction ? (Array.isArray(hintAction.anyOf) ? hintAction.anyOf : [hintAction]) : [];
     ingRow.innerHTML = '';
     for (const ing of level.ingredients) {
       const b = document.createElement('button');
       b.className = 'small brew-ing';
-      const isHint = hintAction && (hintAction.do === 'add' || hintAction.do === 'crush')
-        && hintAction.ingredient === ing.id;
+      const isHint = hintOpts.some((o) => (o.do === 'add' || o.do === 'crush') && o.ingredient === ing.id);
       if (isHint) b.className += ' primary';
       b.innerHTML = `${ing.icon} ${ing.name}`;
       b.title = crushMode ? `Растолочь: ${ing.name}` : ing.name;
@@ -289,7 +296,7 @@ export function renderBrewPuzzle(container, ctx, level) {
     }
     // Подсветка инструмента из подсказки
     for (const [d, btn] of Object.entries(toolBtns)) {
-      btn.className = 'small' + (hintAction && hintAction.do === d ? ' primary' : '');
+      btn.className = 'small' + (hintOpts.some((o) => o.do === d) ? ' primary' : '');
     }
 
     // Книга рецептов

@@ -86,6 +86,7 @@ export function renderPuzzleList(container, ctx) {
   });
   container.appendChild(list);
   container.appendChild(quickNav(ctx, [
+    { icon: '📖', label: 'Книга рецептов', screen: 'brewbook' },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },
   ]));
 

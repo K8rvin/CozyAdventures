@@ -38,6 +38,13 @@ function sameAction(a, b) {
   return !!a && !!b && a.do === b.do && (a.ingredient ?? null) === (b.ingredient ?? null);
 }
 
+// Шаг подходит под действие? Шаг-вариативный (anyOf) принимает любой из вариантов.
+function stepMatches(step, action) {
+  if (!step) return false;
+  if (Array.isArray(step.anyOf)) return step.anyOf.some((o) => sameAction(o, action));
+  return sameAction(step, action);
+}
+
 export function expectedStep(state) {
   return state.level.recipe[state.progress] || null;
 }
@@ -58,7 +65,7 @@ export function doBrewAction(state, action) {
 
   const exp = expectedStep(state);
   state.moves += 1;
-  if (sameAction(action, exp)) {
+  if (stepMatches(exp, action)) {
     state.history.push({ do: action.do, ingredient: action.ingredient ?? null });
     state.progress += 1;
     return { ok: true, solved: isBrewSolved(state) };
@@ -103,7 +110,7 @@ export function brewHint(state) {
 }
 
 // Русская фраза шага рецепта: «Добавь 🍯 Дикий мёд», «Размешай ложкой»…
-export function brewStepText(level, step) {
+function brewActionText(level, step) {
   const ing = step.ingredient
     ? level.ingredients.find((i) => i.id === step.ingredient)
     : null;
@@ -119,6 +126,13 @@ export function brewStepText(level, step) {
   }
 }
 
+export function brewStepText(level, step) {
+  if (Array.isArray(step?.anyOf)) {
+    return step.anyOf.map((o) => brewActionText(level, o)).join(' ИЛИ ');
+  }
+  return brewActionText(level, step);
+}
+
 // Валидация уровня для конвейера и тестов.
 export function validateBrewLevel(level) {
   const problems = [];
@@ -132,24 +146,32 @@ export function validateBrewLevel(level) {
   const ingIds = new Set((level.ingredients || []).map((i) => i.id));
   if (ingIds.size !== level.ingredients.length) problems.push('дубли ингредиентов на столе');
   let adds = 0;
-  level.recipe.forEach((step, i) => {
-    if (!BREW_ACTIONS[step.do]) problems.push(`шаг ${i + 1}: неизвестное действие «${step.do}»`);
+  const checkAction = (step, label) => {
+    if (!BREW_ACTIONS[step.do]) problems.push(`шаг ${label}: неизвестное действие «${step.do}»`);
     if (step.do === 'add' || step.do === 'crush') {
       adds += 1;
       if (!ingIds.has(step.ingredient)) {
-        problems.push(`шаг ${i + 1}: ингредиента «${step.ingredient}» нет на столе`);
+        problems.push(`шаг ${label}: ингредиента «${step.ingredient}» нет на столе`);
       }
     } else if (step.ingredient) {
-      problems.push(`шаг ${i + 1}: действие «${step.do}» не принимает ингредиент`);
+      problems.push(`шаг ${label}: действие «${step.do}» не принимает ингредиент`);
+    }
+  };
+  level.recipe.forEach((step, i) => {
+    if (Array.isArray(step.anyOf)) {
+      if (step.anyOf.length === 0) problems.push(`шаг ${i + 1}: пустой anyOf`);
+      step.anyOf.forEach((o, k) => checkAction(o, `${i + 1}.${k + 1}`));
+    } else {
+      checkAction(step, `${i + 1}`);
     }
   });
   if (adds === 0) problems.push('в рецепте ни разу ничего не добавляют в котёл');
   if (level.hideRecipe && !(level.peekSeconds > 0)) {
     problems.push('режим памяти без peekSeconds — игрок не увидит рецепт совсем');
   }
-  // Рецепт сам — решение: проигрываем его и проверяем, что варка сходится
+  // Рецепт сам — решение: проигрываем его (из anyOf берём первый вариант)
   const s = createBrewPuzzle(level);
-  for (const step of level.recipe) doBrewAction(s, step);
+  for (const step of level.recipe) doBrewAction(s, Array.isArray(step.anyOf) ? step.anyOf[0] : step);
   if (!isBrewSolved(s)) problems.push('рецепт не приводит к готовому зелью');
   return { ok: problems.length === 0, problems, solutionCount: 1 };
 }

@@ -3148,6 +3148,48 @@
       peekSeconds: 8,
       rewards: [{ type: "coins", amount: 320 }, { type: "seals", amount: 2 }],
       intro: "\u0412\u0435\u0440\u0448\u0438\u043D\u0430 \u0430\u043B\u0445\u0438\u043C\u0438\u0438: \u0434\u0435\u0441\u044F\u0442\u044C \u0448\u0430\u0433\u043E\u0432, \u043F\u043E\u043B\u043D\u044B\u0439 \u0441\u0442\u043E\u043B \u043E\u0442\u0432\u043B\u0435\u043A\u0430\u044E\u0449\u0435\u0433\u043E \u0438 \u0432\u0441\u0435\u0433\u043E 8 \u0441\u0435\u043A\u0443\u043D\u0434 \u043D\u0430 \u0440\u0435\u0446\u0435\u043F\u0442."
+    },
+    {
+      id: "brew_09",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u0423\u043A\u0440\u0435\u043F\u043B\u044F\u044E\u0449\u0435\u0435 \u043D\u0430 \u0432\u043A\u0443\u0441",
+      difficulty: 4,
+      ingredients: [WATER, BERRIES, HONEY, CHESTNUT, MINT, SALT, PEPPER, INK],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "heat" },
+        { anyOf: [{ do: "add", ingredient: "berries" }, { do: "add", ingredient: "honey" }] },
+        { do: "stir" },
+        { anyOf: [{ do: "crush", ingredient: "chestnut" }, { do: "crush", ingredient: "mint" }] },
+        { do: "wait" },
+        { do: "cool" }
+      ],
+      rewards: [{ type: "coins", amount: 280 }, { type: "seals", amount: 1 }],
+      intro: "\u0420\u0435\u0446\u0435\u043F\u0442 \u0440\u0430\u0441\u043F\u043B\u044B\u0432\u0447\u0430\u0442, \u043A\u0430\u043A \u043F\u0430\u043C\u044F\u0442\u044C \u0431\u0430\u0431\u0443\u0448\u043A\u0438: \u043A\u043E\u0435-\u0433\u0434\u0435 \u043D\u0430\u043F\u0438\u0441\u0430\u043D\u043E \xAB\u0447\u0442\u043E \u043F\u043E\u0434 \u0440\u0443\u043A\u043E\u0439\xBB. \u0427\u0438\u0442\u0430\u0439 \xAB\u0418\u041B\u0418\xBB \u2014 \u0433\u043E\u0434\u0438\u0442\u0441\u044F \u043B\u044E\u0431\u043E\u0439 \u0432\u0430\u0440\u0438\u0430\u043D\u0442."
+    },
+    {
+      id: "brew_10",
+      world: "brew",
+      mechanic: "brew",
+      name: "\u042D\u043B\u0438\u043A\u0441\u0438\u0440 \u0445\u043E\u0437\u044F\u0438\u043D\u0430 \u043B\u0430\u0432\u043A\u0438",
+      difficulty: 5,
+      ingredients: [WATER, STAR, ROSE, FEATHER, BERRIES, HONEY, MOSS, PEPPER, ICE, INK],
+      recipe: [
+        { do: "add", ingredient: "water" },
+        { do: "heat" },
+        { anyOf: [{ do: "add", ingredient: "star" }, { do: "crush", ingredient: "star" }] },
+        { do: "stir" },
+        { anyOf: [{ do: "add", ingredient: "rose" }, { do: "add", ingredient: "berries" }] },
+        { do: "wait" },
+        { do: "cool" },
+        { anyOf: [{ do: "add", ingredient: "feather" }, { do: "add", ingredient: "moss" }] },
+        { do: "stir" }
+      ],
+      hideRecipe: true,
+      peekSeconds: 8,
+      rewards: [{ type: "coins", amount: 360 }, { type: "seals", amount: 3 }],
+      intro: "\u0422\u0432\u043E\u0439 \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u0440\u0435\u0446\u0435\u043F\u0442, \u0445\u043E\u0437\u044F\u0438\u043D. \u0412\u0430\u0440\u0438\u0430\u043D\u0442\u044B \xAB\u0418\u041B\u0418\xBB \u2014 \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438, 8 \u0441\u0435\u043A\u0443\u043D\u0434. \u0413\u043E\u0440\u0434\u0438\u0441\u044C."
     }
   ];
 
@@ -7649,7 +7691,9 @@
     "brew_05",
     "brew_06",
     "brew_07",
-    "brew_08"
+    "brew_08",
+    "brew_09",
+    "brew_10"
   ];
   var ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
   function allPuzzles(state2) {
@@ -8260,7 +8304,7 @@
       el.style.top = `${spot.y}%`;
       el.title = isActive ? `${def.name} \u2014 \u0438\u0434\u0451\u0442 \u0441 \u0442\u043E\u0431\u043E\u0439 \u0432 \u043F\u043E\u0445\u043E\u0434\u044B` : def.name;
       const img = document.createElement("img");
-      img.src = `assets/pets/${petId}.png`;
+      img.src = `assets/pets/${petId}.webp`;
       img.alt = def.name;
       img.style.width = `${spot.size}px`;
       if (spot.flip) img.style.transform = "scaleX(-1)";
@@ -8295,7 +8339,7 @@
       el.style.top = `${spot.y}%`;
       el.title = name;
       const img = document.createElement("img");
-      img.src = `assets/crew/${spot.id}.png`;
+      img.src = `assets/crew/${spot.id}.webp`;
       img.alt = name;
       img.style.width = `${spot.size}px`;
       if (spot.flip) img.style.transform = "scaleX(-1)";
@@ -8315,6 +8359,34 @@
         ctx2.toast(lines[Math.floor(Math.random() * lines.length)]);
       });
       scenePanel.appendChild(el);
+    }
+    const fx = (cls, style, content) => {
+      const e = document.createElement("div");
+      e.className = `cos-fx ${cls}`;
+      e.style.cssText = style;
+      if (content) e.innerHTML = content;
+      scenePanel.appendChild(e);
+    };
+    if (sceneId === "lavka") {
+      const cos = new Set(state2.cosmeticsActive || []);
+      if (cos.has("cos_carpet")) fx("cos-carpet", "left:36%;top:78%;width:26%;height:16%");
+      if (cos.has("cos_crest")) fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432");
+      if (cos.has("cos_flowers")) {
+        fx("sway", "left:11%;top:33%;font-size:26px", "\u{1F338}");
+        fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}");
+        fx("sway", "left:63%;top:44%;font-size:24px;animation-delay:1s", "\u{1F33C}");
+      }
+      if (cos.has("cos_fireflies")) {
+        for (let i = 0; i < 5; i++) fx("firefly", `left:${35 + i * 7}%;top:${38 + i % 3 * 8}%;animation-delay:${i * 0.7}s`);
+      }
+      if (cos.has("cos_garland")) fx("sway", "left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px", "\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}");
+      if (cos.has("cos_snow")) {
+        for (let i = 0; i < 8; i++) fx("snowflake", `left:${86 + i % 4 * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, "\u2744");
+      }
+      for (let i = 0; i < 6; i++) fx("dust", `left:${20 + i * 12}%;top:${22 + i % 3 * 14}%;animation-delay:${i * 0.9}s`);
+    }
+    if (sceneId === "square") {
+      for (let i = 0; i < 3; i++) fx("smokepuff", `left:${33 + i}%;top:16%;animation-delay:${i * 1.3}s`);
     }
     const chatter = pickChatter(state2);
     const journal = (state2.journal || []).slice(-2).reverse();
@@ -11854,6 +11926,11 @@
   function sameAction(a, b) {
     return !!a && !!b && a.do === b.do && (a.ingredient ?? null) === (b.ingredient ?? null);
   }
+  function stepMatches(step, action) {
+    if (!step) return false;
+    if (Array.isArray(step.anyOf)) return step.anyOf.some((o) => sameAction(o, action));
+    return sameAction(step, action);
+  }
   function expectedStep(state2) {
     return state2.level.recipe[state2.progress] || null;
   }
@@ -11867,7 +11944,7 @@
     if (isBrewSolved(state2)) return { ok: false, error: "\u0417\u0435\u043B\u044C\u0435 \u0443\u0436\u0435 \u0433\u043E\u0442\u043E\u0432\u043E" };
     const exp = expectedStep(state2);
     state2.moves += 1;
-    if (sameAction(action, exp)) {
+    if (stepMatches(exp, action)) {
       state2.history.push({ do: action.do, ingredient: action.ingredient ?? null });
       state2.progress += 1;
       return { ok: true, solved: isBrewSolved(state2) };
@@ -11903,7 +11980,7 @@
     if (!step) return { type: "already" };
     return { type: "step", step, index: state2.progress, total: state2.level.recipe.length };
   }
-  function brewStepText(level, step) {
+  function brewActionText(level, step) {
     const ing = step.ingredient ? level.ingredients.find((i) => i.id === step.ingredient) : null;
     const ingLabel = ing ? `${ing.icon} ${ing.name}` : step.ingredient || "?";
     switch (step.do) {
@@ -11922,6 +11999,12 @@
       default:
         return "?";
     }
+  }
+  function brewStepText(level, step) {
+    if (Array.isArray(step?.anyOf)) {
+      return step.anyOf.map((o) => brewActionText(level, o)).join(" \u0418\u041B\u0418 ");
+    }
+    return brewActionText(level, step);
   }
 
   // src/ui/brewView.js
@@ -12004,6 +12087,12 @@
     side.appendChild(intro);
     const book = document.createElement("div");
     book.className = "brew-book";
+    const bookBg = document.createElement("img");
+    bookBg.className = "brew-book-bg";
+    bookBg.alt = "";
+    bookBg.addEventListener("error", () => bookBg.remove());
+    bookBg.src = "assets/recipe_book_web.jpg";
+    book.appendChild(bookBg);
     side.appendChild(book);
     const statusEl = document.createElement("div");
     statusEl.className = "puzzle-status";
@@ -12036,6 +12125,7 @@
         <div class="brew-peek-list">${level.recipe.map((s, i) => `<div>${i + 1}. ${brewStepText(level, s)}</div>`).join("")}</div>
       </div>`;
       document.body.appendChild(peek);
+      ctx2.sfx?.("page");
       timers.push(setTimeout(() => {
         peek.remove();
         recipeHidden = true;
@@ -12094,7 +12184,7 @@
       const r = doBrewAction(puzzle, action);
       if (r.ok) {
         hintAction = null;
-        ctx2.sfx?.(action.do === "add" || action.do === "crush" ? "potion" : "tap");
+        ctx2.sfx?.(action.do === "add" || action.do === "crush" ? "potion" : "bubble");
         pulsePot();
         draw();
         if (r.solved) finish();
@@ -12161,11 +12251,12 @@
       fire.textContent = hl > 0 ? "\u{1F525}".repeat(hl) : "";
       mortar.className = "small" + (crushMode ? " primary" : "");
       mortar.innerHTML = crushMode ? "\u{1F963} \u0427\u0442\u043E \u0442\u043E\u043B\u0447\u0451\u043C?" : "\u{1F963} \u0421\u0442\u0443\u043F\u043A\u0430";
+      const hintOpts = hintAction ? Array.isArray(hintAction.anyOf) ? hintAction.anyOf : [hintAction] : [];
       ingRow.innerHTML = "";
       for (const ing of level.ingredients) {
         const b = document.createElement("button");
         b.className = "small brew-ing";
-        const isHint = hintAction && (hintAction.do === "add" || hintAction.do === "crush") && hintAction.ingredient === ing.id;
+        const isHint = hintOpts.some((o) => (o.do === "add" || o.do === "crush") && o.ingredient === ing.id);
         if (isHint) b.className += " primary";
         b.innerHTML = `${ing.icon} ${ing.name}`;
         b.title = crushMode ? `\u0420\u0430\u0441\u0442\u043E\u043B\u043E\u0447\u044C: ${ing.name}` : ing.name;
@@ -12173,7 +12264,7 @@
         ingRow.appendChild(b);
       }
       for (const [d, btn] of Object.entries(toolBtns)) {
-        btn.className = "small" + (hintAction && hintAction.do === d ? " primary" : "");
+        btn.className = "small" + (hintOpts.some((o) => o.do === d) ? " primary" : "");
       }
       book.innerHTML = '<div class="brew-book-title">\u{1F4D6} \u0420\u0435\u0446\u0435\u043F\u0442</div>';
       level.recipe.forEach((s, i) => {
@@ -12273,6 +12364,7 @@
     });
     container.appendChild(list);
     container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F4D6}", label: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", screen: "brewbook" },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
     const targetRow = list.querySelector?.('[data-scroll-target="1"]');
@@ -14219,6 +14311,24 @@ ${item2.description}
     osc.start(t0);
     osc.stop(t0 + dur + 0.05);
   }
+  function noiseBurst(dur, { freq = 2e3, q = 1, gain = 0.05, delay = 0, type = "bandpass" } = {}) {
+    const a = ac();
+    if (!a || !enabled) return;
+    const len = Math.max(1, Math.floor(a.sampleRate * dur));
+    const buf = a.createBuffer(1, len, a.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    const src = a.createBufferSource();
+    src.buffer = buf;
+    const f = a.createBiquadFilter();
+    f.type = type;
+    f.frequency.value = freq;
+    f.Q.value = q;
+    const g = a.createGain();
+    g.gain.value = gain;
+    src.connect(f).connect(g).connect(a.destination);
+    src.start(a.currentTime + delay);
+  }
   function sfx(name) {
     if (!enabled) return;
     switch (name) {
@@ -14255,6 +14365,18 @@ ${item2.description}
       case "moth":
         tone(300, 0.2, { type: "square", gain: 0.04, slide: 80 });
         break;
+      case "bubble": {
+        for (let i = 0; i < 3; i++) {
+          tone(100 + Math.random() * 90, 0.09, { type: "sine", gain: 0.05, delay: i * 0.07, slide: 50 });
+        }
+        noiseBurst(0.16, { freq: 750, gain: 0.018 });
+        break;
+      }
+      case "page": {
+        noiseBurst(0.15, { freq: 2800, gain: 0.05 });
+        noiseBurst(0.12, { freq: 3400, gain: 0.03, delay: 0.09 });
+        break;
+      }
       case "purr": {
         if (playAudio("assets/3d-zvuk-murchanie-koshki_1sec.mp3", 0.7)) break;
         for (let i = 0; i < 5; i++) {
@@ -15444,6 +15566,31 @@ ${item2.description}
     container.appendChild(quickNav(ctx2, [{ icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }]));
   }
 
+  // src/ui/brewBookView.js
+  function renderBrewBook(container, ctx2) {
+    const { state: state2 } = ctx2;
+    ctx2.sfx?.("page");
+    container.appendChild(header(ctx2, "\u{1F4D6} \u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", "\u0417\u0435\u043B\u044C\u044F \u0430\u043B\u0445\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0433\u043E \u0441\u0442\u043E\u043B\u0430 \u2014 \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u044F \u0445\u043E\u0437\u044F\u0438\u043D\u0430", "puzzles"));
+    const list = document.createElement("div");
+    list.className = "list";
+    for (const level of BREW_PUZZLES) {
+      const done = !!state2.puzzlesDone[level.id];
+      const stars = "\u2605".repeat(level.difficulty) + "\u2606".repeat(5 - level.difficulty);
+      const entry = document.createElement("div");
+      entry.className = "panel brew-book-entry";
+      const steps = done ? level.recipe.map((s, i) => `<div class="brew-step done">${i + 1}. ${brewStepText(level, s)}</div>`).join("") : '<div class="muted">\u0415\u0449\u0451 \u043D\u0435 \u0441\u0432\u0430\u0440\u0435\u043D\u043E \u2014 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0441\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u0435\u0440\u0432\u043E\u0439 \u0432\u0430\u0440\u043A\u0438.</div>';
+      entry.innerHTML = `
+      <div class="name" style="font-weight:700">${done ? "\u2697\uFE0F" : "\u{1F512}"} ${level.name} <span class="badge">${stars}</span></div>
+      <div class="brew-book-steps">${steps}</div>`;
+      list.appendChild(entry);
+    }
+    container.appendChild(list);
+    container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F9E9}", label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", screen: "puzzles", primary: true },
+      { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
+    ]));
+  }
+
   // src/ui/boardView.js
   var BASE_LETTERS = [
     { icon: "\u{1F9FA}", from: "\u041F\u0440\u0430\u0447\u043A\u0430 \u0441 \u0440\u0435\u043A\u0438", text: "\u041A\u0442\u043E-\u0442\u043E \u043D\u0430\u043A\u043E\u043B\u043E\u0442\u0438\u043B \u0434\u0440\u043E\u0432 \u0443 \u043C\u043E\u0435\u0433\u043E \u043F\u043B\u043E\u0442\u0430 \u0438 \u043D\u0435 \u0432\u0437\u044F\u043B \u043F\u043B\u0430\u0442\u0443. \u0415\u0441\u043B\u0438 \u044D\u0442\u043E \u0432\u0430\u0448\u0430 \u043B\u0430\u0432\u043A\u0430 \u2014 \u0441\u043F\u0430\u0441\u0438\u0431\u043E!" },
@@ -15643,6 +15790,7 @@ ${item2.description}
     settings: (c, p) => renderSettings(c, ctx, p),
     seekeditor: (c, p) => p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p),
     achievements: (c, p) => renderAchievements(c, ctx, p),
+    brewbook: (c, p) => renderBrewBook(c, ctx, p),
     board: (c, p) => renderBoard(c, ctx, p),
     shopArmory: (c) => renderMarket(c, ctx, "armory"),
     shopArmorer: (c) => renderMarket(c, ctx, "armorer"),

@@ -1,0 +1,17 @@
+{
+  "name": "Лавка на перекрёстке миров",
+  "short_name": "Лавка чудес",
+  "description": "Уютная игра про хозяина волшебной лавки: загадки, варка зелий и походы рыцаря.",
+  "lang": "ru",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#241a12",
+  "theme_color": "#3d2f22",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

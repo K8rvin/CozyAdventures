@@ -161,7 +161,7 @@ export function renderHub(container, ctx, params = {}) {
   }
 
   // Питомцы — все купленные, каждый на своём месте в своей сцене.
-  // Картинка assets/pets/<id>.png; если её нет — иконка-фолбэк.
+  // Картинка assets/pets/<id>.webp; если её нет — иконка-фолбэк.
   const PET_SPOTS = {
     pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 62 },
     pet_fox: { scene: 'lavka', x: 34, y: 75, size: 90 },
@@ -179,7 +179,7 @@ export function renderHub(container, ctx, params = {}) {
     el.style.top = `${spot.y}%`;
     el.title = isActive ? `${def.name} — идёт с тобой в походы` : def.name;
     const img = document.createElement('img');
-    img.src = `assets/pets/${petId}.png`;
+    img.src = `assets/pets/${petId}.webp`;
     img.alt = def.name;
     img.style.width = `${spot.size}px`;
     if (spot.flip) img.style.transform = 'scaleX(-1)';
@@ -197,9 +197,9 @@ export function renderHub(container, ctx, params = {}) {
     scenePanel.appendChild(el);
   }
 
-  // Кот лавки (всегда на подушке, клик = погладить) и спутники —
+  // Кот-хранитель (после найма, клик = погладить) и спутники —
   // появляются, когда наняты (активность в отряде не обязательна).
-  // Картинка assets/crew/<id>.png; если её нет — иконка-фолбэк.
+  // Картинка assets/crew/<id>.webp; если её нет — иконка-фолбэк.
   const CREW_SPOTS = [
     { id: 'cmp_cat', icon: '🐈', name: 'Кот-хранитель — погладить', scene: 'lavka', x: 30, y: 97, size: 145, pet: true },
     { id: 'cmp_firefly', scene: 'lavka', x: 47, y: 15, size: 46 },
@@ -218,7 +218,7 @@ export function renderHub(container, ctx, params = {}) {
     el.style.top = `${spot.y}%`;
     el.title = name;
     const img = document.createElement('img');
-    img.src = `assets/crew/${spot.id}.png`;
+    img.src = `assets/crew/${spot.id}.webp`;
     img.alt = name;
     img.style.width = `${spot.size}px`;
     if (spot.flip) img.style.transform = 'scaleX(-1)';
@@ -235,6 +235,38 @@ export function renderHub(container, ctx, params = {}) {
       ctx.toast(lines[Math.floor(Math.random() * lines.length)]);
     });
     scenePanel.appendChild(el);
+  }
+
+  // --- Украшения лавки и живая атмосфера на сценах ---
+  const fx = (cls, style, content) => {
+    const e = document.createElement('div');
+    e.className = `cos-fx ${cls}`;
+    e.style.cssText = style;
+    if (content) e.innerHTML = content;
+    scenePanel.appendChild(e);
+  };
+  if (sceneId === 'lavka') {
+    const cos = new Set(state.cosmeticsActive || []);
+    if (cos.has('cos_carpet')) fx('cos-carpet', 'left:36%;top:78%;width:26%;height:16%');
+    if (cos.has('cos_crest')) fx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров');
+    if (cos.has('cos_flowers')) {
+      fx('sway', 'left:11%;top:33%;font-size:26px', '🌸');
+      fx('sway', 'left:22%;top:60%;font-size:22px;animation-delay:.5s', '🌷');
+      fx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼');
+    }
+    if (cos.has('cos_fireflies')) {
+      for (let i = 0; i < 5; i++) fx('firefly', `left:${35 + i * 7}%;top:${38 + (i % 3) * 8}%;animation-delay:${i * 0.7}s`);
+    }
+    if (cos.has('cos_garland')) fx('sway', 'left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px', '🎏🍂🎏🍂🎏🍂🎏');
+    if (cos.has('cos_snow')) {
+      for (let i = 0; i < 8; i++) fx('snowflake', `left:${86 + (i % 4) * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, '❄');
+    }
+    // Пыльинки в лучах света — всегда
+    for (let i = 0; i < 6; i++) fx('dust', `left:${20 + i * 12}%;top:${22 + (i % 3) * 14}%;animation-delay:${i * 0.9}s`);
+  }
+  if (sceneId === 'square') {
+    // Дымок из трубы кузницы
+    for (let i = 0; i < 3; i++) fx('smokepuff', `left:${33 + i}%;top:16%;animation-delay:${i * 1.3}s`);
   }
 
   // --- Дневник кота и реплики команды ---

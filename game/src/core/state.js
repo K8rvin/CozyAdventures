@@ -393,7 +393,7 @@ const CAMPAIGN_ORDER = [
   'mech_07', 'cd_07', 'flow_07', 'mech_08', 'cd_08', 'flow_08',
   // Алхимический стол: варка зелий по рецепту (с brew_06 — на память)
   'brew_01', 'brew_02', 'brew_03', 'brew_04',
-  'brew_05', 'brew_06', 'brew_07', 'brew_08',
+  'brew_05', 'brew_06', 'brew_07', 'brew_08', 'brew_09', 'brew_10',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 
