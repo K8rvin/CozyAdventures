@@ -8616,24 +8616,24 @@
       }
       if (cos.has("cos_flowers")) {
         const spots = [
-          ["left:8%;top:26%;width:80px", () => fx("sway", "left:11%;top:33%;font-size:26px", "\u{1F338}")],
-          ["left:20%;top:56%;width:64px", () => fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}")],
-          ["left:60%;top:38%;width:72px", () => fx("sway", "left:63%;top:44%;font-size:24px;animation-delay:1s", "\u{1F33C}")]
+          //['left:24%;top:20%;width:60px', () => fx('sway', 'left:11%;top:33%;font-size:26px', '🌸')],
+          ["left:50%;top:76%;width:74px", () => fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}")]
+          //['left:60%;top:41%;width:60px', () => fx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼')],
         ];
         for (const [style, stub] of spots) {
           fxImg("cos_flowers", style + ";animation:fx-sway 3.6s ease-in-out infinite alternate", stub);
         }
       }
       if (cos.has("cos_fireflies")) {
-        fxImg("cos_fireflies", "left:38%;top:34%;width:150px;animation:fx-float 5s ease-in-out infinite alternate", () => {
+        fxImg("cos_fireflies", "left:22%;top:22%;width:80px;animation:fx-float 5s ease-in-out infinite alternate", () => {
           for (let i = 0; i < 5; i++) fx("firefly", `left:${35 + i * 7}%;top:${38 + i % 3 * 8}%;animation-delay:${i * 0.7}s`);
         });
       }
       if (cos.has("cos_garland")) {
-        fxImg("cos_garland", "left:12%;top:2%;width:58%;animation:fx-sway 4s ease-in-out infinite alternate;transform-origin:top center", () => fx("sway", "left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px", "\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}"));
+        fxImg("cos_garland", "left:60%;top:20%;width:32%;animation:fx-sway 4s ease-in-out infinite alternate;transform-origin:top center", () => fx("sway", "left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px", "\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}"));
       }
       if (cos.has("cos_snow")) {
-        fxImg("cos_snow", "left:87%;top:28%;width:11%", () => {
+        fxImg("cos_snow", "left:89%;top:30%;width:8%", () => {
           for (let i = 0; i < 8; i++) fx("snowflake", `left:${86 + i % 4 * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, "\u2744");
         });
       }
