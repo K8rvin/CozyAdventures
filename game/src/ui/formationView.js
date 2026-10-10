@@ -4,19 +4,35 @@ import { ENEMY_BY_ID } from '../data/enemies.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { MERC_BY_ID } from '../data/crew.js';
 import { runBattle, moveFormationSlot, nextBattle, battleAvailable } from '../core/state.js';
-import { enemyFormationSlots } from '../core/formBattle.js';
+import { enemyFormationSlots, slotToCell } from '../core/formBattle.js';
 import { header, showOverlay, rewardText } from './common.js';
 
 const FRONT = [0, 1, 2];
 
-// Позиции слотов в процентах поля: [x%, y%]
+// Клетка поля [col, row] → позиция в процентах (8 колонок × 3 ряда)
+function cellPos(c, r) {
+  return [5 + c * 12.5, 18 + r * 32];
+}
+
+// Слот расстановки (0–5) → позиция на экране расстановки
 function slotPos(slot, side) {
-  const row = slot % 3;
-  const y = 18 + row * 32;
-  const x = side === 'ally'
-    ? (FRONT.includes(slot) ? 30 : 8)
-    : (FRONT.includes(slot) ? 70 : 92);
-  return [x, y];
+  return cellPos(...slotToCell(slot, side));
+}
+
+// Фон поля боя по миру битвы (фолбэк — без фона)
+function addFieldBg(fieldEl, world) {
+  const bg = document.createElement('img');
+  bg.className = 'form-field-bg';
+  bg.alt = '';
+  const cands = [`assets/battle_bg_${world}_web.jpg`, `assets/battle_bg_${world}.jfif`];
+  let i = 0;
+  bg.addEventListener('error', () => {
+    i += 1;
+    if (i < cands.length) bg.src = cands[i];
+    else bg.remove();
+  });
+  bg.src = cands[0];
+  fieldEl.prepend(bg);
 }
 
 export function renderFormation(container, ctx, params) {
@@ -35,6 +51,7 @@ export function renderFormation(container, ctx, params) {
 
   const field = document.createElement('div');
   field.className = 'form-field';
+  addFieldBg(field, battle.world);
   prepPanel.appendChild(field);
 
   const units = [
@@ -157,6 +174,44 @@ export function renderFormation(container, ctx, params) {
     });
   }
 
+  // --- Тактика команды и тумблер пояса ---
+  const tacticBox = document.createElement('div');
+  tacticBox.style.cssText = 'display:flex;gap:6px;align-items:center;margin-top:12px;flex-wrap:wrap';
+  const tacticTitle = document.createElement('span');
+  tacticTitle.textContent = 'Тактика:';
+  tacticBox.appendChild(tacticTitle);
+  const TACTICS = [
+    ['defense', '🛡 Защита', 'Держим строй: броня ×1.25 и уклонение +12%, атака ×0.85'],
+    ['balance', '⚖ Баланс', 'Обычный бой без модификаторов'],
+    ['offense', '⚔ Нападение', 'Все вперёд: атака ×1.2 и скорость ×1.1, броня ×0.85, уклонение −8%'],
+  ];
+  for (const [id, label, tip] of TACTICS) {
+    const b = document.createElement('button');
+    b.className = 'small' + ((state.settings.tactic || 'balance') === id ? ' primary' : '');
+    b.textContent = label;
+    b.title = tip;
+    b.addEventListener('click', () => {
+      state.settings.tactic = id;
+      ctx.sfx?.('tap');
+      ctx.save();
+      rerender();
+    });
+    tacticBox.appendChild(b);
+  }
+  const beltLabel = document.createElement('label');
+  beltLabel.style.cssText = 'display:flex;gap:6px;align-items:center;cursor:pointer;margin-left:8px;font-size:14px';
+  const beltCheck = document.createElement('input');
+  beltCheck.type = 'checkbox';
+  beltCheck.checked = state.settings.useBeltItems !== false;
+  beltCheck.addEventListener('change', () => {
+    state.settings.useBeltItems = beltCheck.checked;
+    ctx.sfx?.('tap');
+    ctx.save();
+  });
+  beltLabel.append(beltCheck, (() => { const s = document.createElement('span'); s.textContent = 'Использовать предметы с пояса'; return s; })());
+  tacticBox.appendChild(beltLabel);
+  prepPanel.appendChild(tacticBox);
+
   // Кнопка «В бой!»
   const actions = document.createElement('div');
   actions.style.cssText = 'display:flex;gap:10px;margin-top:12px;flex-wrap:wrap';
@@ -182,11 +237,50 @@ export function renderFormation(container, ctx, params) {
   }
 
   function playBattle(result) {
-    container.innerHTML = '';
-    container.appendChild(header(ctx, battle.name, 'Бой идёт сам — смотри и учись', 'battles'));
+    // Имена/иконки фигурок из состояния и состава битвы
+    const unitDefs = new Map();
+    unitDefs.set('a0', { name: 'Рыцарь лавки', icon: '🛡️', hp: result.report.knightHpMax });
+    state.squadMercs.forEach((id, i) => {
+      const d = MERC_BY_ID[id];
+      unitDefs.set(`a${i + 1}`, { name: d.name, icon: d.icon, hp: d.hp });
+    });
+    enemyEntries.forEach((e, i) => {
+      const d = ENEMY_BY_ID[e.id];
+      unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)) });
+    });
+    playBattleReplay(container, ctx, {
+      title: battle.name, backTo: 'battles', world: battle.world, result, unitDefs,
+      overlayButtons: (rep) => {
+        const nextB = rep.victory ? nextBattle(battle.id) : null;
+        return [
+          ...(nextB ? [{ label: `Следующая битва → ${nextB.name}`, primary: true, onClick: () => ctx.go('battle', { id: nextB.id }) }] : []),
+          { label: '🎒 К экипировке', onClick: () => ctx.go('equip') },
+          ...(rep.victory ? [] : [
+            { label: '🍺 В таверну — усилить отряд', onClick: () => ctx.go('tavern') },
+            { label: '🏬 В торговый квартал — снаряжение', onClick: () => ctx.go('hub', { scene: 'market' }) },
+          ]),
+          { label: '🔁 Ещё раз', onClick: () => ctx.go('battle', { id: battle.id }) },
+          { label: 'К походам', primary: !nextB, onClick: () => ctx.go('battles') },
+        ];
+      },
+    });
+  }
+
+  // Очистка слушателей перетаскивания при уходе со страницы
+  return () => {
+    window.removeEventListener('pointermove', onDragMove);
+    window.removeEventListener('pointerup', onDragEnd);
+    if (unitDrag?.ghost) unitDrag.ghost.remove();
+  };
+}
+
+export function playBattleReplay(container, ctx, { title, backTo = 'battles', world, result, unitDefs, overlayButtons }) {
+  container.innerHTML = '';
+  container.appendChild(header(ctx, title, 'Бой идёт сам — смотри и учись', backTo));
 
     const field2 = document.createElement('div');
     field2.className = 'form-field battle';
+    addFieldBg(field2, world);
     container.appendChild(field2);
 
     const controls = document.createElement('div');
@@ -214,28 +308,14 @@ export function renderFormation(container, ctx, params) {
     // Фигурки по uid
     const figures = new Map(); // uid -> {el, unit, side}
     const unitsByUid = new Map();
-    const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a.slot]));
-    const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f.slot]));
-
-    // Имена/иконки берём из первого start-события лога нельзя — собираем из state/battle
-    const unitDefs = new Map();
-    unitDefs.set('a0', { name: 'Рыцарь лавки', icon: '🛡️', hp: 0 });
-    state.squadMercs.forEach((id, i) => {
-      const d = MERC_BY_ID[id];
-      unitDefs.set(`a${i + 1}`, { name: d.name, icon: d.icon, hp: d.hp });
-    });
-    enemyEntries.forEach((e, i) => {
-      const d = ENEMY_BY_ID[e.id];
-      unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)) });
-    });
-    // HP рыцаря: из отчёта
-    unitDefs.get('a0').hp = result.report.knightHpMax;
+    const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a.cell]));
+    const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f.cell]));
 
     for (const [uid, def] of unitDefs) {
       const isAlly = uid.startsWith('a');
-      const slot = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
-      if (slot === undefined) continue;
-      const [x, y] = slotPos(slot, isAlly ? 'ally' : 'enemy');
+      const cell = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
+      if (!cell) continue;
+      const [x, y] = cellPos(cell[0], cell[1]);
       const el = document.createElement('div');
       el.className = 'unit-figure ' + (isAlly ? 'ally' : 'enemy');
       el.style.left = `${x}%`;
@@ -338,8 +418,12 @@ export function renderFormation(container, ctx, params) {
           break;
         case 'hit':
           animateHit(e);
-          logLine(e.crit ? 'crit' : 'hit', `${e.from} → ${e.to}: −${e.dmg}${e.crit ? ' КРИТ!' : ''}`);
+          logLine(e.crit ? 'crit' : 'hit',
+            `${e.from} → ${e.to}${e.skillName ? ` (${e.skillName})` : ''}: −${e.dmg}${e.crit ? ' КРИТ!' : ''}`);
           ctx.sfx?.(e.crit ? 'crit' : 'hit');
+          break;
+        case 'status_fail':
+          logLine('sys', `${e.who}: ${{ poison: 'яд не привился', sleep: 'сон не подействовал', slow: 'споры не привились', fear: 'страх не подействовал' }[e.kind] || 'статус не прошёл'}`);
           break;
         case 'dodge':
           logLine('sys', `${e.who} уклоняется!`);
@@ -361,6 +445,25 @@ export function renderFormation(container, ctx, params) {
             f.unit.badges.delete(e.kind);
             renderBadges(f);
           }
+          break;
+        }
+        case 'move': {
+          // Шаг по полю: фигурка плавно переезжает на новую клетку
+          const f = figOf(e.uid);
+          if (f) {
+            const [nx, ny] = cellPos(e.to[0], e.to[1]);
+            f.x = nx;
+            f.y = ny;
+            f.el.style.left = `${nx}%`;
+            f.el.style.top = `${ny}%`;
+          }
+          break;
+        }
+        case 'scroll': {
+          logLine('potion', `📜 Рыцарь читает: ${e.name}!`);
+          ctx.sfx?.('crit');
+          const f = figOf(e.uid);
+          if (f) pulse(f.el, 'anim-status', 500);
           break;
         }
         case 'dot': {
@@ -402,13 +505,16 @@ export function renderFormation(container, ctx, params) {
       if (done) return;
       if (i >= result.log.length) { endScreen(); return; }
       applyEvent(result.log[i]);
+      const applied = result.log[i];
       i += 1;
       // Тики яда/регенерации применяем мгновенно, не тратя темп боя
       while (i < result.log.length && result.log[i].t === 'dot') {
         applyEvent(result.log[i]);
         i += 1;
       }
-      timer = setTimeout(step, speed);
+      // Шаги по полю — ускоренно, чтобы манёвр не затягивал бой
+      const delay = applied.t === 'move' ? Math.max(70, speed * 0.3) : speed;
+      timer = setTimeout(step, delay);
     }
 
     function finishNow() {
@@ -426,7 +532,6 @@ export function renderFormation(container, ctx, params) {
       const rep = result.report;
       ctx.sfx?.(rep.victory ? 'success' : 'fail');
       const rewardHtml = (result.rewards || []).map(rewardText).filter(Boolean).join('<br>');
-      const nextB = rep.victory ? nextBattle(battle.id) : null;
       const overlay = showOverlay(ctx, {
         title: rep.victory ? '🏆 Победа!' : '🌙 Рыцарь вернулся отдохнуть',
         subtitle: `Урона нанесено: ${rep.dealt} · Получено: ${rep.taken} · Врагов повержено: ${rep.foesDown}/${rep.foesTotal}` +
@@ -434,17 +539,7 @@ export function renderFormation(container, ctx, params) {
           ((rep.alliesStats || []).length > 1 ? '<br>' + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} урона${a.alive ? '' : ' (пал)'}`).join(' · ') : ''),
         rewards: [],
         advice: rep.advice,
-        buttons: [
-          ...(nextB ? [{ label: `Следующая битва → ${nextB.name}`, primary: true, onClick: () => ctx.go('battle', { id: nextB.id }) }] : []),
-          { label: '🎒 К экипировке', onClick: () => ctx.go('equip') },
-          // Поражение: пути усиления — таверна (отряд) и торговый квартал (снаряжение)
-          ...(rep.victory ? [] : [
-            { label: '🍺 В таверну — усилить отряд', onClick: () => ctx.go('tavern') },
-            { label: '🏬 В торговый квартал — снаряжение', onClick: () => ctx.go('hub', { scene: 'market' }) },
-          ]),
-          { label: '🔁 Ещё раз', onClick: () => ctx.go('battle', { id: battle.id }) },
-          { label: 'К походам', primary: !nextB, onClick: () => ctx.go('battles') },
-        ],
+        buttons: overlayButtons(rep),
       });
       if (rewardHtml) {
         const card = overlay.querySelector('.card');
@@ -458,10 +553,3 @@ export function renderFormation(container, ctx, params) {
     step();
   }
 
-  // Очистка слушателей перетаскивания при уходе со страницы
-  return () => {
-    window.removeEventListener('pointermove', onDragMove);
-    window.removeEventListener('pointerup', onDragEnd);
-    if (unitDrag?.ghost) unitDrag.ghost.remove();
-  };
-}

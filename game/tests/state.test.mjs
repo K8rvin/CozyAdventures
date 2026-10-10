@@ -383,10 +383,11 @@ test('тематические лавки: весь ассортимент ра�
     .flatMap((k) => itemsForShop(s, k, all).map((i) => i.id));
   assert.equal(new Set(distributed).size, distributed.length, 'без дублей между лавками');
   assert.equal(distributed.length, all.length, 'каждый товар попадает в ровно одну лавку');
-  // Зелья — только у алхимика
-  assert.ok(itemsForShop(s, 'alchemy', all).every((i) => i.slot === 'consumable'));
+  // Зелья — только у алхимика, свитки — только у мага
+  assert.ok(itemsForShop(s, 'alchemy', all).every((i) => i.type === 'potion'));
   assert.ok(itemsForShop(s, 'armory', all).every((i) => i.slot === 'weapon'));
-  assert.ok(itemsForShop(s, 'magic', all).every((i) => i.slot === 'amulet' || i.slot === 'ring'));
+  assert.ok(itemsForShop(s, 'magic', all).every((i) => i.slot === 'amulet' || i.slot === 'ring' || i.type === 'scroll'));
+  assert.ok(itemsForShop(s, 'magic', all).some((i) => i.type === 'scroll'), 'витрина Мага содержит свитки');
 });
 
 test('сохранение и загрузка', () => {

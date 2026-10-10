@@ -123,6 +123,7 @@ const { renderAchievements } = await import('../src/ui/achievementsView.js');
 const { renderBoard } = await import('../src/ui/boardView.js');
 const { renderMarket } = await import('../src/ui/shopView.js');
 const { renderBrewBook } = await import('../src/ui/brewBookView.js');
+const { renderSandbox } = await import('../src/ui/sandboxView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
 const { ITEM_BY_ID } = await import('../src/data/items.js');
 
@@ -160,6 +161,7 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'brew_06' }), // варка на память
     () => renderPuzzle(new El('main'), ctx, { id: 'brew_09' }), // варка с вариантами
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
+    () => renderSandbox(new El('main'), ctx), // конструктор боя
     () => renderEquip(new El('main'), ctx),
     () => renderShop(new El('main'), ctx),
     () => renderBattleList(new El('main'), ctx),

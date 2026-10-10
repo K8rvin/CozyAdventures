@@ -566,3 +566,106 @@ no watermark
 Когда сгенерируешь — пришли файл: вырежу фон, положу в
 `assets/cosmetics/cos_crest.webp`, и уберу из кода текстовую подложку
 (табличка будет полностью картинкой).
+
+---
+
+## 11. Фоны поля боя — assets/battle_bg_<world>_web.jpg (12 миров)
+
+Фон под фигурки в бою «сбор» (поле 8×3 клетки). ВАЖНО для всех: широкий
+формат ~16:10, вид сверху под углом (как настольная игра), ЦЕНТР КАДРА
+ПУСТОЙ — ровная земля/полянка под юнитов, детали и персонажи по краям.
+БЕЗ текста, водяных знаков, людей и животных крупным планом.
+Файлы: `assets/battle_bg_<world>.jfif` (я сожму в `_web.jpg`).
+
+Общий хвост стиля для всех промтов:
+
+```
+storybook watercolor illustration with gentle ink outlines, warm palette,
+top-down angled view like a tabletop game board, EMPTY center area of flat
+ground for game pieces, details only around the edges, no people, no text,
+no watermark --ar 16:10
+```
+
+### 11.1 battle_bg_meadow — Тихая опушка
+```
+A sunny forest glade battlefield: soft green grass, clover and tiny
+wildflowers in the empty center, mossy roots, ferns and spotted mushrooms
+crowding the edges, fireflies in the air, dappled warm light, + хвост стиля
+```
+
+### 11.2 battle_bg_town — Средневековый дворик
+```
+A medieval market courtyard battlefield: cobblestone pavement with an
+empty center, wooden crates, barrels, a market cart and striped awnings
+pushed to the edges, warm afternoon light, pigeons at the borders, + хвост
+```
+
+### 11.3 battle_bg_attic — Книжный чердак
+```
+An old library attic battlefield: wooden plank floor with a clear empty
+center, towering book stacks, scrolls, candles and a globe along the edges,
+dust motes in warm light beams from a round window, + хвост стиля
+```
+
+### 11.4 battle_bg_crossroads — Перекрёсток миров
+```
+A magical crossroads battlefield at dusk: a clearing where glowing paths
+of four worlds meet, soft luminescent grass in the empty center, floating
+lanterns, portal arches and signposts at the edges, fireflies rising, + хвост
+```
+
+### 11.5 battle_bg_nm — Ночной рынок
+```
+A cozy night market battlefield: paper lanterns strung overhead, an empty
+lantern-lit plaza center, food stalls and fabric awnings around the edges,
+warm bokeh lights, steam rising, deep blue night, + хвост стиля
+```
+
+### 11.6 battle_bg_sw — Сказочные топи
+```
+A fairytale swamp battlefield at twilight: a mossy hummock clearing with
+an empty center, glowing mushrooms and fireflies at the edges, crooked
+willow roots, soft teal-green mist, lily pads on dark water around, + хвост
+```
+
+### 11.7 battle_bg_sf — Звёздная ярмарка
+```
+A starlight fairground battlefield at night: an empty circus-ring clearing
+with soft grass, garlands of lights, striped tents and floating star
+lanterns at the edges, gentle purple-teal glow, + хвост стиля
+```
+
+### 11.8 battle_bg_ash — Пепельные степи / Кузница
+```
+A forge battlefield inside a smithy: a clear stone floor center, anvils,
+tool racks and a glowing furnace with embers along the edges, warm orange
+light and drifting sparks, dark iron tones, + хвост стиля
+```
+
+### 11.9 battle_bg_cr — Хрустальные горы
+```
+A crystal mountain battlefield: a smooth stone plateau with an empty
+center, glowing quartz clusters and crystalline formations around the
+edges, cool blue-violet light with warm sun accents, + хвост стиля
+```
+
+### 11.10 battle_bg_jade — Нефритовый сад
+```
+A jade garden battlefield: a raked-sand and moss clearing with an empty
+center, bamboo, stone lanterns and a small arched bridge at the edges,
+soft morning mist, calm green-teal palette, cherry petals drifting, + хвост
+```
+
+### 11.11 battle_bg_deep — Подводный грот
+```
+An underwater grotto battlefield: a sandy cavern floor with an empty
+center, corals, shells and glowing anemones around the edges, soft blue
+light rays from a crack above, drifting bubbles, + хвост стиля
+```
+
+### 11.12 battle_bg_mist — Туманные часы
+```
+A misty clockwork battlefield: a floating stone platform with an empty
+center, giant blurred clock faces, gears and hourglasses in the fog around
+the edges, silver-blue mist with warm brass accents, + хвост стиля
+```

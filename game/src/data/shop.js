@@ -28,6 +28,12 @@ export const SHOP_STOCK = [
   { itemId: 'arm_oak_guardian', unlockAfter: 'bt_golem' },
   { itemId: 'amu_hearth', unlockAfter: 'bt_golem' },
   { itemId: 'wpn_lumberaxe', unlockAfter: 'bt_golem' },
+  // Свитки заклинаний (лавка Мага)
+  { itemId: 'scr_fire_arrow', unlockAfter: 'bt_golem' },
+  { itemId: 'scr_heal_mist', unlockAfter: 'bt_rats' },
+  { itemId: 'scr_frost', unlockAfter: 'bt_bandits' },
+  { itemId: 'scr_storm', unlockAfter: 'bk_blots' },
+  { itemId: 'scr_fire_step', unlockAfter: 'bk_spirits' },
   // Мир 2: после «Крысиного переулка»
   { itemId: 'wpn_iron_sword', unlockAfter: 'bt_rats' },
   { itemId: 'hlm_kettle', unlockAfter: 'bt_rats' },
@@ -75,8 +81,8 @@ export const SHOPS = {
   },
   magic: {
     name: 'Маг «Луна и чернила»', icon: '🔮',
-    desc: 'Амулеты и кольца, светящиеся склянки, звёздная пыль.',
-    types: ['amulet', 'ring'],
+    desc: 'Амулеты и кольца, свитки заклинаний, звёздная пыль.',
+    types: ['amulet', 'ring', 'scroll'],
   },
   alchemy: {
     name: 'Алхимик «Котёл и роса»', icon: '🧪',
@@ -88,7 +94,7 @@ export const SHOPS = {
 export function itemsForShop(state, shopKey, allItems) {
   const shop = SHOPS[shopKey];
   if (!shop) return [];
-  return allItems.filter((i) => shop.types.includes(i.slot === 'consumable' ? 'potion' : i.type));
+  return allItems.filter((i) => shop.types.includes(i.type));
 }
 
 // Таверна и конюшня: найм спутников, питомцев и наёмников.

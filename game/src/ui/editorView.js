@@ -28,9 +28,14 @@ export function renderWorkshop(container, ctx) {
   newBtn.textContent = '🪞 Новая загадка со светом';
   newBtn.style.marginLeft = '8px';
   newBtn.addEventListener('click', () => ctx.go('editor', {}));
+  const sandboxBtn = document.createElement('button');
+  sandboxBtn.textContent = '⚔️ Конструктор боя';
+  sandboxBtn.style.marginLeft = '8px';
+  sandboxBtn.title = 'Песочница: собери обе команды и проверь симуляцию';
+  sandboxBtn.addEventListener('click', () => ctx.go('sandbox'));
   const panel = document.createElement('div');
   panel.className = 'panel';
-  panel.append(seekBtn, newBtn);
+  panel.append(seekBtn, newBtn, sandboxBtn);
   container.appendChild(panel);
 
   const list = document.createElement('div');

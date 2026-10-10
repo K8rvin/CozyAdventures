@@ -280,6 +280,62 @@
       stackable: true,
       effect: { kind: "cleanse_sleep", resistAfter: { sleep: 0.6 } },
       description: "\u0421\u043D\u0438\u043C\u0430\u0435\u0442 \u0441\u043E\u043D \u0438 \u0431\u043E\u0434\u0440\u0438\u0442 \u0434\u043E \u043A\u043E\u043D\u0446\u0430 \u0431\u043E\u044F."
+    },
+    // --- Свитки заклинаний (пояс) ---
+    {
+      id: "scr_fire_arrow",
+      name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0441\u0442\u0440\u0435\u043B\u044B \u043E\u0433\u043D\u044F",
+      slot: "consumable",
+      type: "scroll",
+      rarity: "rare",
+      price: 90,
+      stackable: true,
+      effect: { kind: "scroll_fire_arrow", dmg: 25 },
+      description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0431\u044C\u0451\u0442 \u043E\u0433\u043D\u0451\u043C \u0441\u0430\u043C\u043E\u0433\u043E \u0436\u0438\u0432\u0443\u0447\u0435\u0433\u043E \u0432\u0440\u0430\u0433\u0430, \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u044F \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0431\u0440\u043E\u043D\u0438."
+    },
+    {
+      id: "scr_heal_mist",
+      name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0446\u0435\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \u0440\u043E\u0441\u044B",
+      slot: "consumable",
+      type: "scroll",
+      rarity: "rare",
+      price: 120,
+      stackable: true,
+      effect: { kind: "scroll_heal_mist", amount: 20 },
+      description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u043B\u0435\u0447\u0438\u0442 \u0432\u0435\u0441\u044C \u043E\u0442\u0440\u044F\u0434 \u043D\u0430 20 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F."
+    },
+    {
+      id: "scr_frost",
+      name: "\u0421\u0432\u0438\u0442\u043E\u043A \u043B\u0435\u0434\u044F\u043D\u044B\u0445 \u043E\u043A\u043E\u0432",
+      slot: "consumable",
+      type: "scroll",
+      rarity: "rare",
+      price: 140,
+      stackable: true,
+      effect: { kind: "scroll_frost", ticks: 40, factor: 0.6 },
+      description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0432\u0441\u0435\u0445 \u0432\u0440\u0430\u0433\u043E\u0432 \u2014 \u043E\u043D\u0438 \u0440\u0435\u0436\u0435 \u0445\u043E\u0434\u044F\u0442."
+    },
+    {
+      id: "scr_storm",
+      name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0433\u0440\u043E\u0437\u044B",
+      slot: "consumable",
+      type: "scroll",
+      rarity: "epic",
+      price: 160,
+      stackable: true,
+      effect: { kind: "scroll_storm", dmg: 22 },
+      description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0431\u044C\u0451\u0442 \u043C\u043E\u043B\u043D\u0438\u0435\u0439 \u0434\u0432\u0443\u0445 \u0441\u0430\u043C\u044B\u0445 \u0445\u0440\u0443\u043F\u043A\u0438\u0445 \u0432\u0440\u0430\u0433\u043E\u0432."
+    },
+    {
+      id: "scr_fire_step",
+      name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0448\u0430\u0433\u0430 \u043E\u0433\u043D\u044F",
+      slot: "consumable",
+      type: "scroll",
+      rarity: "epic",
+      price: 240,
+      stackable: true,
+      effect: { kind: "scroll_fire_step", dmg: 18 },
+      description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0431\u044C\u0451\u0442 \u043E\u0433\u043D\u0451\u043C \u043F\u043E \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u2014 \u0437\u0430\u0434\u0435\u0432\u0430\u0435\u0442 \u0412\u0421\u0415\u0425 \u0432\u0440\u0430\u0433\u043E\u0432. \u0414\u043E\u0440\u043E\u0433\u043E."
     }
   ];
   ITEMS.push(
@@ -420,7 +476,7 @@
       rarity: "epic",
       price: 420,
       stats: { attack: 34, speed: -2 },
-      traits: ["pierce"],
+      traits: ["pierce", "ranged"],
       description: "\u041F\u043B\u0430\u043C\u044F \u043D\u0430 \u043A\u043E\u043D\u0446\u0435 \u043F\u0440\u043E\u0448\u0438\u0432\u0430\u0435\u0442 \u0434\u0430\u0436\u0435 \u043A\u0430\u043C\u0435\u043D\u044C. \u041E\u0431\u0435 \u0440\u0443\u043A\u0438 \u0437\u0430\u043D\u044F\u0442\u044B."
     },
     {
@@ -678,6 +734,12 @@
     { itemId: "arm_oak_guardian", unlockAfter: "bt_golem" },
     { itemId: "amu_hearth", unlockAfter: "bt_golem" },
     { itemId: "wpn_lumberaxe", unlockAfter: "bt_golem" },
+    // Свитки заклинаний (лавка Мага)
+    { itemId: "scr_fire_arrow", unlockAfter: "bt_golem" },
+    { itemId: "scr_heal_mist", unlockAfter: "bt_rats" },
+    { itemId: "scr_frost", unlockAfter: "bt_bandits" },
+    { itemId: "scr_storm", unlockAfter: "bk_blots" },
+    { itemId: "scr_fire_step", unlockAfter: "bk_spirits" },
     // Мир 2: после «Крысиного переулка»
     { itemId: "wpn_iron_sword", unlockAfter: "bt_rats" },
     { itemId: "hlm_kettle", unlockAfter: "bt_rats" },
@@ -725,8 +787,8 @@
     magic: {
       name: "\u041C\u0430\u0433 \xAB\u041B\u0443\u043D\u0430 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430\xBB",
       icon: "\u{1F52E}",
-      desc: "\u0410\u043C\u0443\u043B\u0435\u0442\u044B \u0438 \u043A\u043E\u043B\u044C\u0446\u0430, \u0441\u0432\u0435\u0442\u044F\u0449\u0438\u0435\u0441\u044F \u0441\u043A\u043B\u044F\u043D\u043A\u0438, \u0437\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043F\u044B\u043B\u044C.",
-      types: ["amulet", "ring"]
+      desc: "\u0410\u043C\u0443\u043B\u0435\u0442\u044B \u0438 \u043A\u043E\u043B\u044C\u0446\u0430, \u0441\u0432\u0438\u0442\u043A\u0438 \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0439, \u0437\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043F\u044B\u043B\u044C.",
+      types: ["amulet", "ring", "scroll"]
     },
     alchemy: {
       name: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A \xAB\u041A\u043E\u0442\u0451\u043B \u0438 \u0440\u043E\u0441\u0430\xBB",
@@ -738,7 +800,7 @@
   function itemsForShop(state2, shopKey, allItems) {
     const shop = SHOPS[shopKey];
     if (!shop) return [];
-    return allItems.filter((i) => shop.types.includes(i.slot === "consumable" ? "potion" : i.type));
+    return allItems.filter((i) => shop.types.includes(i.type));
   }
   var CREW_STOCK = [
     { id: "cmp_firefly", kind: "companion", unlockAfter: "bt_slimes" },
@@ -1919,40 +1981,45 @@
           id: "cave",
           label: "\u0422\u0451\u043F\u043B\u044B\u0435 \u043F\u0435\u0449\u0435\u0440\u044B",
           spots: [
-            { x: 106, y: 483, r: R + 6 },
-            { x: 644, y: 542, r: R + 6 },
-            { x: 894, y: 523, r: R + 6 },
-            { x: 838, y: 124, r: R + 6 }
+            { x: 102, y: 498, r: 64 },
+            { x: 649, y: 558, r: 52 },
+            { x: 905, y: 526, r: 60 },
+            { x: 859, y: 131, r: 80 }
           ]
         },
         {
           id: "icelantern",
           label: "\u041B\u0435\u0434\u044F\u043D\u044B\u0435 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438",
-          spots: [{ x: 209, y: 68, r: R }, { x: 225, y: 258, r: R }]
+          spots: [{ x: 204, y: 88, r: 30 }, { x: 225, y: 258, r: 34 }]
         },
         {
           id: "rope2",
           label: "\u0410\u043B\u044C\u043F\u0438\u043D\u0438\u0441\u0442\u0441\u043A\u0438\u0435 \u0432\u0435\u0440\u0451\u0432\u043A\u0438",
           spots: [
-            { x: 247, y: 108, r: R },
-            { x: 291, y: 245, r: R },
-            { x: 753, y: 245, r: R },
-            { x: 975, y: 424, r: R }
+            { x: 247, y: 108, r: 34 },
+            { x: 291, y: 245, r: 42 },
+            { x: 768, y: 248, r: 42 },
+            { x: 975, y: 424, r: 42 },
+            { x: 205, y: 605, r: 34 }
           ]
         },
         {
           id: "crate",
           label: "\u042F\u0449\u0438\u043A\u0438 \u044D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438",
-          spots: [{ x: 678, y: 193, r: R }, { x: 322, y: 480, r: R }]
+          spots: [{ x: 685, y: 199, r: 42 }, { x: 322, y: 480, r: 34 }]
         },
         {
           id: "gem",
           label: "\u0421\u0430\u043C\u043E\u0446\u0432\u0435\u0442\u044B",
           spots: [
-            { x: 122, y: 183, r: R },
-            { x: 159, y: 163, r: R },
-            { x: 72, y: 359, r: R },
-            { x: 747, y: 424, r: R }
+            { x: 124, y: 187, r: 22 },
+            { x: 161, y: 169, r: 26 },
+            { x: 77, y: 360, r: 26 },
+            { x: 749, y: 429, r: 26 },
+            { x: 122, y: 383, r: 22 },
+            { x: 770, y: 196, r: 26 },
+            { x: 248, y: 584, r: 26 },
+            { x: 179, y: 574, r: 26 }
           ]
         }
       ],
@@ -6865,9 +6932,39 @@
   var GAUGE_FULL = 100;
   var MAX_TICKS = 5e3;
   var FRONT = [0, 1, 2];
-  var BACK = [3, 4, 5];
+  var COLS = 8;
+  var ROWS = 3;
+  var RANGED_SKILLS = [
+    "spit_fire",
+    "pollen_sleep",
+    "slow_spores",
+    "fear_chill",
+    "aimed_shot",
+    "sting_poison",
+    "sting_poison_weak",
+    "regen_ally_skill"
+  ];
   function isRanged(unit) {
     return unit.tags?.includes("ranged") || unit.traits?.includes("ranged");
+  }
+  function unitRange(unit) {
+    if (isRanged(unit)) return 99;
+    if (unit.caster) return 2;
+    return 1;
+  }
+  function effectiveRange(unit, allies) {
+    if (isRanged(unit)) return 99;
+    if (!unit.caster) return 1;
+    const screened = allies.some((a) => a !== unit && a.hp > 0 && !a.caster);
+    return screened ? 2 : 1;
+  }
+  function slotToCell(slot, side) {
+    const row = slot % 3;
+    if (side === "ally") return [FRONT.includes(slot) ? 1 : 0, row];
+    return [FRONT.includes(slot) ? 6 : 7, row];
+  }
+  function cellDist(a, b) {
+    return Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]));
   }
   function makeFormationKnight(knightStats, traits, consumables, slot) {
     const statuses = [];
@@ -6888,6 +6985,7 @@
       name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438",
       icon: "\u{1F6E1}\uFE0F",
       slot,
+      cell: slotToCell(slot, "ally"),
       hp: knightStats.hp,
       maxHp: knightStats.hp,
       attack: knightStats.attack,
@@ -6908,12 +7006,14 @@
     };
   }
   function makeFormationMerc(def, slot, index) {
+    const caster = (def.skills || []).some((s) => RANGED_SKILLS.includes(s)) && !(def.tags || []).includes("ranged");
     return {
       uid: `a${index}`,
       side: "ally",
       name: def.name,
       icon: def.icon,
       slot,
+      cell: slotToCell(slot, "ally"),
       hp: def.hp,
       maxHp: def.hp,
       attack: def.attack,
@@ -6926,6 +7026,7 @@
       skills: def.skills || [],
       tags: def.tags || [],
       traits: [],
+      caster,
       resist: {},
       potions: [],
       statuses: [],
@@ -6936,14 +7037,17 @@
   function makeFormationEnemy(id, scale, slot, index) {
     const def = ENEMY_BY_ID[id];
     const hp = Math.round(def.hp * (scale || 1));
+    const caster = (def.skills || []).some((s) => RANGED_SKILLS.includes(s)) && !(def.tags || []).includes("ranged");
     return {
       uid: `e${index}`,
       side: "enemy",
       name: def.name,
       icon: def.icon,
       slot,
+      cell: slotToCell(slot, "enemy"),
       boss: !!def.boss,
-      tags: def.tags || [],
+      tags: [...def.tags || []],
+      caster,
       hp,
       maxHp: hp,
       attack: Math.round(def.attack * (scale || 1)),
@@ -6980,7 +7084,7 @@
     const elem = opts.elem || attacker.elem || "phys";
     if (elem !== "phys") mult *= 1 - (defender.resist[elem] || 0);
     let armor = defender.armor;
-    if (attacker.traits?.includes("pierce")) armor *= 0.5;
+    if (attacker.traits?.includes("pierce") || opts.pierce) armor *= 0.5;
     mult *= 100 / (100 + Math.max(0, armor));
     let crit = false;
     if (rng.chance(attacker.crit)) {
@@ -7014,7 +7118,8 @@
       dmg: remaining,
       crit,
       elem,
-      ranged: isRanged(attacker)
+      ranged: isRanged(attacker),
+      skillName: opts.skillName || null
     });
     return remaining;
   }
@@ -7025,18 +7130,48 @@
       log.push({ t: "status", who: defender.name, uid: defender.uid, kind });
       return true;
     }
+    log.push({ t: "status_fail", who: defender.name, uid: defender.uid, kind });
     return false;
   }
-  function pickTarget(attacker, foes, rng) {
+  function pickTarget(attacker, foes, rng, range) {
+    const inRange = foes.filter((f) => f.hp > 0 && cellDist(attacker.cell, f.cell) <= range);
+    if (inRange.length === 0) return null;
+    return inRange.reduce((a, b) => a.hp < b.hp ? a : b);
+  }
+  function nearestEnemy(unit, foes) {
     const alive = foes.filter((f) => f.hp > 0);
     if (alive.length === 0) return null;
-    if (isRanged(attacker)) {
-      return alive.reduce((a, b) => a.hp < b.hp ? a : b);
+    return alive.reduce((a, b) => cellDist(unit.cell, a.cell) < cellDist(unit.cell, b.cell) ? a : b);
+  }
+  function stepToward(unit, goal, allUnits, log) {
+    const [cx, cy] = unit.cell;
+    const occupied = new Set(
+      allUnits.filter((u) => u !== unit && u.hp > 0).map((u) => u.cell.join(","))
+    );
+    const curDist = cellDist(unit.cell, goal.cell);
+    let best = null;
+    let bestDist = curDist;
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        if (dx === 0 && dy === 0) continue;
+        const nx = cx + dx;
+        const ny = cy + dy;
+        if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) continue;
+        if (occupied.has(`${nx},${ny}`)) continue;
+        const d = cellDist([nx, ny], goal.cell);
+        const dc = Math.sign(goal.cell[0] - cx);
+        const score = d * 10 + (dx === dc && dc !== 0 ? 0 : 1);
+        if (d < bestDist || d === bestDist && best && score < best.score) {
+          best = { cell: [nx, ny], d, score };
+          bestDist = d;
+        }
+      }
     }
-    const frontAlive = alive.filter((f) => FRONT.includes(f.slot));
-    const row = frontAlive.length > 0 ? frontAlive : alive.filter((f) => BACK.includes(f.slot));
-    const pool = row.length > 0 ? row : alive;
-    return rng.pick(pool);
+    if (!best || best.d >= curDist) return false;
+    const from = unit.cell;
+    unit.cell = best.cell;
+    log.push({ t: "move", uid: unit.uid, from, to: unit.cell });
+    return true;
   }
   function checkPotions(unit, log) {
     if (!unit.potions || unit.hp <= 0) return;
@@ -7063,7 +7198,49 @@
       }
     }
   }
-  function act(unit, allies, foes, rng, log) {
+  function useScrolls(unit, allies, foes, rng, log) {
+    if (!unit.potions?.length) return;
+    for (const p of unit.potions) {
+      if (p.used || !p.effect?.kind?.startsWith("scroll_")) continue;
+      const eff = p.effect;
+      const alive = foes.filter((f) => f.hp > 0);
+      if (eff.kind !== "scroll_heal_mist" && alive.length === 0) continue;
+      p.used = true;
+      log.push({ t: "scroll", uid: unit.uid, name: p.name, kind: eff.kind });
+      switch (eff.kind) {
+        case "scroll_fire_arrow": {
+          const t = alive.reduce((a, b) => a.hp > b.hp ? a : b);
+          computeDamage(unit, t, rng, log, { base: eff.dmg, elem: "fire", pierce: true });
+          break;
+        }
+        case "scroll_fire_step": {
+          for (const t of alive) computeDamage(unit, t, rng, log, { base: eff.dmg, elem: "fire" });
+          break;
+        }
+        case "scroll_storm": {
+          const weakest = [...alive].sort((a, b) => a.hp - b.hp).slice(0, 2);
+          for (const t of weakest) computeDamage(unit, t, rng, log, { base: eff.dmg, elem: "storm" });
+          break;
+        }
+        case "scroll_frost": {
+          for (const t of alive) {
+            addStatus(t, { kind: "slow", ticks: eff.ticks || 40, factor: eff.factor || 0.6 });
+            log.push({ t: "status", who: t.name, uid: t.uid, kind: "slow" });
+          }
+          break;
+        }
+        case "scroll_heal_mist": {
+          for (const a of allies.filter((x) => x.hp > 0)) {
+            const healed = Math.min(eff.amount, a.maxHp - a.hp);
+            a.hp += healed;
+            if (healed > 0) log.push({ t: "dot", uid: a.uid, kind: "regen", dmg: -healed });
+          }
+          break;
+        }
+      }
+    }
+  }
+  function act(unit, allies, foes, rng, log, tactic, allUnits) {
     const sleep = unit.statuses.find((s) => s.kind === "sleep");
     if (sleep) {
       sleep.ticks -= 1;
@@ -7072,41 +7249,74 @@
         log.push({ t: "status_end", who: unit.name, uid: unit.uid, kind: "sleep" });
       }
       log.push({ t: "sleeps", who: unit.name, uid: unit.uid });
-      return;
+      return GAUGE_FULL;
     }
-    const target = pickTarget(unit, foes, rng);
-    if (!target) return;
-    const skill = unit.skills[0] && unit.skills[(unit._next || 0) % unit.skills.length];
+    if (unit.uid === "a0") useScrolls(unit, allies, foes, rng, log);
+    if (unit.skills.includes("regen_ally_skill")) {
+      const wounded = allies.filter((a) => a.hp > 0).sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
+      if (wounded && wounded.hp < wounded.maxHp * 0.8 && !hasStatus(wounded, "regen")) {
+        addStatus(wounded, { kind: "regen", ticks: 25, dmg: 2 });
+        log.push({ t: "status", who: wounded.name, uid: wounded.uid, kind: "regen", from: unit.name });
+        return GAUGE_FULL;
+      }
+    }
+    const range = effectiveRange(unit, allies);
+    const target = pickTarget(unit, foes, rng, range);
+    if (!target) {
+      const meleeFoeAlive = foes.some((f) => f.hp > 0 && !isRanged(f) && !f.caster);
+      const holds = tactic === "defense" && unit.side === "ally" && !isRanged(unit) && meleeFoeAlive;
+      if (!holds) {
+        const goal = nearestEnemy(unit, foes);
+        if (goal) stepToward(unit, goal, allUnits, log);
+      }
+      return GAUGE_FULL / 2;
+    }
+    const SKILL_NAMES = {
+      sting_poison: "\u0436\u0430\u043B\u0438\u0442 \u044F\u0434\u043E\u043C",
+      sting_poison_weak: "\u0436\u0430\u043B\u0438\u0442 \u0441\u043B\u0430\u0431\u044B\u043C \u044F\u0434\u043E\u043C",
+      pollen_sleep: "\u0432\u0435\u0435\u0442 \u0441\u043E\u043D\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u0446\u043E\u0439",
+      slow_spores: "\u0432\u044B\u043F\u0443\u0441\u043A\u0430\u0435\u0442 \u0441\u043F\u043E\u0440\u044B",
+      fear_chill: "\u043D\u0430\u0441\u044B\u043B\u0430\u0435\u0442 \u0441\u0442\u0440\u0430\u0445",
+      spit_fire: "\u043F\u043B\u044E\u0451\u0442 \u043E\u0433\u043D\u0451\u043C",
+      aimed_shot: "\u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u044B\u0439 \u0432\u044B\u0441\u0442\u0440\u0435\u043B",
+      heavy_blow: "\u0442\u044F\u0436\u0451\u043B\u044B\u0439 \u0443\u0434\u0430\u0440",
+      regen_ally_skill: "\u0446\u0435\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u043D\u0430\u0441\u0442\u043E\u0439"
+    };
+    let skill = unit.skills[0] && unit.skills[(unit._next || 0) % unit.skills.length];
     unit._next = (unit._next || 0) + 1;
+    if (skill === "regen_ally_skill" && unit.skills.length > 1) {
+      skill = unit.skills.find((s) => s !== "regen_ally_skill");
+    }
+    const sName = SKILL_NAMES[skill] || null;
     switch (skill) {
       case "pollen_sleep":
-        computeDamage(unit, target, rng, log, { skillMult: 0.6 });
+        computeDamage(unit, target, rng, log, { skillMult: 0.6, skillName: sName });
         tryApplyStatus(unit, target, "sleep", 0.3, { kind: "sleep", ticks: 18 }, rng, log);
         break;
       case "sting_poison":
-        computeDamage(unit, target, rng, log);
+        computeDamage(unit, target, rng, log, { skillName: sName });
         tryApplyStatus(unit, target, "poison", 0.5, { kind: "poison", ticks: 40, dmg: 2 }, rng, log);
         break;
       case "sting_poison_weak":
-        computeDamage(unit, target, rng, log);
+        computeDamage(unit, target, rng, log, { skillName: sName });
         tryApplyStatus(unit, target, "poison", 0.25, { kind: "poison", ticks: 30, dmg: 1 }, rng, log);
         break;
       case "slow_spores":
-        computeDamage(unit, target, rng, log, { skillMult: 0.7 });
+        computeDamage(unit, target, rng, log, { skillMult: 0.7, skillName: sName });
         tryApplyStatus(unit, target, "slow", 0.5, { kind: "slow", ticks: 40, factor: 0.6 }, rng, log);
         break;
       case "heavy_blow":
-        computeDamage(unit, target, rng, log, { skillMult: 1.6 });
+        computeDamage(unit, target, rng, log, { skillMult: 1.6, skillName: sName });
         break;
       case "fear_chill":
-        computeDamage(unit, target, rng, log, { skillMult: 0.8 });
+        computeDamage(unit, target, rng, log, { skillMult: 0.8, skillName: sName });
         tryApplyStatus(unit, target, "fear", 0.5, { kind: "fear", ticks: 35 }, rng, log);
         break;
       case "spit_fire":
-        computeDamage(unit, target, rng, log, { elem: "fire", skillMult: 1.1 });
+        computeDamage(unit, target, rng, log, { elem: "fire", skillMult: 1.1, skillName: sName });
         break;
       case "aimed_shot":
-        computeDamage(unit, target, rng, log, { skillMult: 1.35, neverMiss: true });
+        computeDamage(unit, target, rng, log, { skillMult: 1.35, neverMiss: true, skillName: sName });
         break;
       case "regen_ally_skill": {
         const wounded = allies.filter((a) => a.hp > 0).sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
@@ -7114,14 +7324,14 @@
           addStatus(wounded, { kind: "regen", ticks: 25, dmg: 2 });
           log.push({ t: "status", who: wounded.name, uid: wounded.uid, kind: "regen", from: unit.name });
         } else {
-          computeDamage(unit, target, rng, log, { skillMult: 0.8 });
+          computeDamage(unit, target, rng, log, { skillMult: 0.8, skillName: sName });
         }
         break;
       }
       default: {
         if (unit.traits?.includes("cleave_small")) {
-          const row = foes.filter((f) => f.hp > 0 && FRONT.includes(f.slot));
-          const others = row.filter((f) => f !== target);
+          const range2 = unitRange(unit);
+          const others = foes.filter((f) => f !== target && f.hp > 0 && cellDist(unit.cell, f.cell) <= range2);
           computeDamage(unit, target, rng, log);
           for (const other of others) computeDamage(unit, other, rng, log, { skillMult: 0.4 });
         } else {
@@ -7129,9 +7339,24 @@
         }
       }
     }
+    return GAUGE_FULL;
   }
-  function simulateFormationBattle(allies, foes, seed = 1) {
+  function simulateFormationBattle(allies, foes, seed = 1, tactic = "balance") {
     const rng = makeRng(seed);
+    if (tactic === "defense") {
+      for (const u of allies) {
+        u.attack = Math.max(1, Math.round(u.attack * 0.85));
+        u.armor = Math.round(u.armor * 1.25);
+        u.dodge = (u.dodge || 0) + 0.12;
+      }
+    } else if (tactic === "offense") {
+      for (const u of allies) {
+        u.attack = Math.max(1, Math.round(u.attack * 1.2));
+        u.speed = u.speed * 1.1;
+        u.armor = Math.round(u.armor * 0.85);
+        u.dodge = Math.max(0, (u.dodge || 0) - 0.08);
+      }
+    }
     const log = [{ t: "start", allies: allies.map((a) => a.name), foes: foes.map((f) => f.name) }];
     const knight = allies[0];
     for (const u of [...allies, ...foes]) {
@@ -7194,10 +7419,10 @@
       const ready = [...allies, ...foes].filter((u) => u.hp > 0 && u.gauge >= GAUGE_FULL).sort((a, b) => b.gauge - a.gauge);
       for (const u of ready) {
         if (u.gauge < GAUGE_FULL || u.hp <= 0) continue;
-        u.gauge -= GAUGE_FULL;
         const myAllies = u.side === "ally" ? allies : foes;
         const myFoes = u.side === "ally" ? foes : allies;
-        act(u, myAllies, myFoes, rng, log);
+        const cost = act(u, myAllies, myFoes, rng, log, tactic, [...allies, ...foes]);
+        u.gauge -= cost ?? GAUGE_FULL;
         if (u.side === "ally" && hasStatus(u, "sleep")) u.stats.sleptTicks++;
       }
       if (foes.every((f) => f.hp <= 0) || allies.every((a) => a.hp <= 0)) break;
@@ -7305,8 +7530,8 @@
       // пройденные этапы обучения
       tutorialSkipped: false,
       // игрок пропустил обучение целиком
-      settings: {},
-      // пользовательские настройки
+      settings: { useBeltItems: true, tactic: "balance" },
+      // настройки боя
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
       cheats: { used: [], spiderHat: false },
@@ -7333,6 +7558,8 @@
     state2.tutorialSkipped ??= false;
     state2.settings ||= {};
     delete state2.settings.battleMode;
+    state2.settings.useBeltItems ??= true;
+    state2.settings.tactic ??= "balance";
     state2.formation ||= { knight: 1, merc0: 0, merc1: 5 };
     state2.cheats ||= { used: [], spiderHat: false };
     state2.materials ||= {};
@@ -7973,7 +8200,7 @@
         stats[k] = (stats[k] || 0) + v;
       }
     }
-    const consumables = state2.consumableBelt.map((id) => ITEM_BY_ID[id]).filter(Boolean).map((item2) => ({ itemId: item2.id, name: item2.name, effect: item2.effect }));
+    const consumables = state2.settings.useBeltItems === false ? [] : state2.consumableBelt.map((id) => ITEM_BY_ID[id]).filter(Boolean).map((item2) => ({ itemId: item2.id, name: item2.name, effect: item2.effect }));
     const knight = makeFormationKnight(stats, traits, consumables, state2.formation.knight ?? 1);
     const allies = [knight];
     state2.squadMercs.forEach((id, i) => {
@@ -7984,7 +8211,11 @@
     const entries = battle.enemies.map((e) => typeof e === "string" ? { id: e, scale: 1 } : e);
     const slots = enemyFormationSlots(battle.enemies);
     const foes = entries.map((e, i) => makeFormationEnemy(e.id, e.scale, slots[i], i));
-    const result = simulateFormationBattle(allies, foes, seed);
+    const initialFormation = {
+      allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
+      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] }))
+    };
+    const result = simulateFormationBattle(allies, foes, seed, state2.settings.tactic || "balance");
     const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
     for (const used of usedIds) {
       const i = state2.consumableBelt.indexOf(used);
@@ -8018,10 +8249,8 @@
       ...result,
       rewards,
       battle,
-      formation: {
-        allies: allies.map((a) => ({ uid: a.uid, slot: a.slot })),
-        foes: foes.map((f) => ({ uid: f.uid, slot: f.slot }))
-      }
+      formation: initialFormation
+      // начальные клетки (не конец боя!)
     };
   }
 
@@ -13860,9 +14089,14 @@ ${item2.description}
     newBtn.textContent = "\u{1FA9E} \u041D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u043E \u0441\u0432\u0435\u0442\u043E\u043C";
     newBtn.style.marginLeft = "8px";
     newBtn.addEventListener("click", () => ctx2.go("editor", {}));
+    const sandboxBtn = document.createElement("button");
+    sandboxBtn.textContent = "\u2694\uFE0F \u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440 \u0431\u043E\u044F";
+    sandboxBtn.style.marginLeft = "8px";
+    sandboxBtn.title = "\u041F\u0435\u0441\u043E\u0447\u043D\u0438\u0446\u0430: \u0441\u043E\u0431\u0435\u0440\u0438 \u043E\u0431\u0435 \u043A\u043E\u043C\u0430\u043D\u0434\u044B \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u0438\u043C\u0443\u043B\u044F\u0446\u0438\u044E";
+    sandboxBtn.addEventListener("click", () => ctx2.go("sandbox"));
     const panel = document.createElement("div");
     panel.className = "panel";
-    panel.append(seekBtn, newBtn);
+    panel.append(seekBtn, newBtn, sandboxBtn);
     container.appendChild(panel);
     const list = document.createElement("div");
     list.className = "list";
@@ -14646,11 +14880,25 @@ ${item2.description}
 
   // src/ui/formationView.js
   var FRONT2 = [0, 1, 2];
+  function cellPos(c, r) {
+    return [5 + c * 12.5, 18 + r * 32];
+  }
   function slotPos(slot, side) {
-    const row = slot % 3;
-    const y = 18 + row * 32;
-    const x = side === "ally" ? FRONT2.includes(slot) ? 30 : 8 : FRONT2.includes(slot) ? 70 : 92;
-    return [x, y];
+    return cellPos(...slotToCell(slot, side));
+  }
+  function addFieldBg(fieldEl, world) {
+    const bg = document.createElement("img");
+    bg.className = "form-field-bg";
+    bg.alt = "";
+    const cands = [`assets/battle_bg_${world}_web.jpg`, `assets/battle_bg_${world}.jfif`];
+    let i = 0;
+    bg.addEventListener("error", () => {
+      i += 1;
+      if (i < cands.length) bg.src = cands[i];
+      else bg.remove();
+    });
+    bg.src = cands[0];
+    fieldEl.prepend(bg);
   }
   function renderFormation(container, ctx2, params) {
     const battle = BATTLE_BY_ID[params.id];
@@ -14667,6 +14915,7 @@ ${item2.description}
     \u0422\u0430\u043F\u043D\u0438 \u0431\u043E\u0439\u0446\u0430, \u0437\u0430\u0442\u0435\u043C \u0441\u043B\u043E\u0442. \u041F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434 \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0440, \u0437\u0430\u0434\u043D\u0438\u0439 \u2014 \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0438 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430.</div>`;
     const field = document.createElement("div");
     field.className = "form-field";
+    addFieldBg(field, battle.world);
     prepPanel.appendChild(field);
     const units = [
       { key: "knight", icon: "\u{1F6E1}\uFE0F", name: "\u0420\u044B\u0446\u0430\u0440\u044C" },
@@ -14777,6 +15026,46 @@ ${item2.description}
         ctx2.sfx?.("tap");
       });
     }
+    const tacticBox = document.createElement("div");
+    tacticBox.style.cssText = "display:flex;gap:6px;align-items:center;margin-top:12px;flex-wrap:wrap";
+    const tacticTitle = document.createElement("span");
+    tacticTitle.textContent = "\u0422\u0430\u043A\u0442\u0438\u043A\u0430:";
+    tacticBox.appendChild(tacticTitle);
+    const TACTICS = [
+      ["defense", "\u{1F6E1} \u0417\u0430\u0449\u0438\u0442\u0430", "\u0414\u0435\u0440\u0436\u0438\u043C \u0441\u0442\u0440\u043E\u0439: \u0431\u0440\u043E\u043D\u044F \xD71.25 \u0438 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 +12%, \u0430\u0442\u0430\u043A\u0430 \xD70.85"],
+      ["balance", "\u2696 \u0411\u0430\u043B\u0430\u043D\u0441", "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0431\u043E\u0439 \u0431\u0435\u0437 \u043C\u043E\u0434\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440\u043E\u0432"],
+      ["offense", "\u2694 \u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435", "\u0412\u0441\u0435 \u0432\u043F\u0435\u0440\u0451\u0434: \u0430\u0442\u0430\u043A\u0430 \xD71.2 \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \xD71.1, \u0431\u0440\u043E\u043D\u044F \xD70.85, \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u22128%"]
+    ];
+    for (const [id, label, tip] of TACTICS) {
+      const b = document.createElement("button");
+      b.className = "small" + ((state2.settings.tactic || "balance") === id ? " primary" : "");
+      b.textContent = label;
+      b.title = tip;
+      b.addEventListener("click", () => {
+        state2.settings.tactic = id;
+        ctx2.sfx?.("tap");
+        ctx2.save();
+        rerender();
+      });
+      tacticBox.appendChild(b);
+    }
+    const beltLabel = document.createElement("label");
+    beltLabel.style.cssText = "display:flex;gap:6px;align-items:center;cursor:pointer;margin-left:8px;font-size:14px";
+    const beltCheck = document.createElement("input");
+    beltCheck.type = "checkbox";
+    beltCheck.checked = state2.settings.useBeltItems !== false;
+    beltCheck.addEventListener("change", () => {
+      state2.settings.useBeltItems = beltCheck.checked;
+      ctx2.sfx?.("tap");
+      ctx2.save();
+    });
+    beltLabel.append(beltCheck, (() => {
+      const s = document.createElement("span");
+      s.textContent = "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u0441 \u043F\u043E\u044F\u0441\u0430";
+      return s;
+    })());
+    tacticBox.appendChild(beltLabel);
+    prepPanel.appendChild(tacticBox);
     const actions = document.createElement("div");
     actions.style.cssText = "display:flex;gap:10px;margin-top:12px;flex-wrap:wrap";
     const goBtn = document.createElement("button");
@@ -14797,267 +15086,304 @@ ${item2.description}
       playBattle(result);
     }
     function playBattle(result) {
-      container.innerHTML = "";
-      container.appendChild(header(ctx2, battle.name, "\u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u0438 \u0443\u0447\u0438\u0441\u044C", "battles"));
-      const field2 = document.createElement("div");
-      field2.className = "form-field battle";
-      container.appendChild(field2);
-      const controls = document.createElement("div");
-      controls.className = "panel";
-      controls.style.cssText = "display:flex;gap:8px;align-items:center;margin-top:10px";
-      controls.append(document.createTextNode("\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C: "));
-      for (const [label, ms] of [["1x", 500], ["2x", 250], ["4x", 120]]) {
-        const b = document.createElement("button");
-        b.className = "small";
-        b.textContent = label;
-        b.addEventListener("click", () => {
-          speed = ms;
-        });
-        controls.appendChild(b);
-      }
-      const skip = document.createElement("button");
-      skip.className = "small ghost";
-      skip.textContent = "\u23ED\uFE0F \u041A \u0438\u0442\u043E\u0433\u0443";
-      skip.addEventListener("click", () => finishNow());
-      controls.appendChild(skip);
-      container.appendChild(controls);
-      const logBox = document.createElement("div");
-      logBox.className = "battle-log";
-      container.appendChild(logBox);
-      const figures = /* @__PURE__ */ new Map();
-      const unitsByUid = /* @__PURE__ */ new Map();
-      const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a.slot]));
-      const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f.slot]));
       const unitDefs = /* @__PURE__ */ new Map();
-      unitDefs.set("a0", { name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438", icon: "\u{1F6E1}\uFE0F", hp: 0 });
-      state2.squadMercs.forEach((id, i2) => {
+      unitDefs.set("a0", { name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438", icon: "\u{1F6E1}\uFE0F", hp: result.report.knightHpMax });
+      state2.squadMercs.forEach((id, i) => {
         const d = MERC_BY_ID[id];
-        unitDefs.set(`a${i2 + 1}`, { name: d.name, icon: d.icon, hp: d.hp });
+        unitDefs.set(`a${i + 1}`, { name: d.name, icon: d.icon, hp: d.hp });
       });
-      enemyEntries.forEach((e, i2) => {
+      enemyEntries.forEach((e, i) => {
         const d = ENEMY_BY_ID[e.id];
-        unitDefs.set(`e${i2}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)) });
+        unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)) });
       });
-      unitDefs.get("a0").hp = result.report.knightHpMax;
-      for (const [uid, def] of unitDefs) {
-        const isAlly = uid.startsWith("a");
-        const slot = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
-        if (slot === void 0) continue;
-        const [x, y] = slotPos(slot, isAlly ? "ally" : "enemy");
-        const el = document.createElement("div");
-        el.className = "unit-figure " + (isAlly ? "ally" : "enemy");
-        el.style.left = `${x}%`;
-        el.style.top = `${y}%`;
-        el.innerHTML = `
-        <div class="uf-icon">${def.icon}</div>
-        <div class="uf-name">${def.name}</div>
-        <div class="uf-badges"></div>
-        <div class="hpbar"><div style="width:100%"></div></div>`;
-        field2.appendChild(el);
-        const unit = { hp: def.hp, maxHp: def.hp, badges: /* @__PURE__ */ new Set() };
-        figures.set(uid, { el, unit, side: isAlly ? "ally" : "enemy", x, y });
-        unitsByUid.set(uid, unit);
-      }
-      let speed = 500;
-      let timer = null;
-      let i = 0;
-      let done = false;
-      function figOf(uid) {
-        return figures.get(uid) || null;
-      }
-      function setHp(uid) {
-        const f = figOf(uid);
-        if (!f) return;
-        const bar = f.el.querySelector(".hpbar > div");
-        bar.style.width = `${Math.max(0, f.unit.hp / f.unit.maxHp * 100)}%`;
-        f.el.classList.toggle("dead", f.unit.hp <= 0);
-      }
-      const STATUS_ICON = {
-        poison: "\u2620\uFE0F",
-        sleep: "\u{1F634}",
-        slow: "\u{1F40C}",
-        fear: "\u{1F628}",
-        regen: "\u{1F49A}",
-        shield: "\u{1F6E1}\uFE0F"
-      };
-      function renderBadges(fig) {
-        const box = fig.el.querySelector(".uf-badges");
-        if (!box) return;
-        box.textContent = [...fig.unit.badges].map((k) => STATUS_ICON[k] || "\u2754").join("");
-      }
-      function logLine(cls, text) {
-        const line = document.createElement("div");
-        line.className = cls;
-        line.textContent = text;
-        logBox.appendChild(line);
-        logBox.scrollTop = logBox.scrollHeight;
-      }
-      function pulse(el, cls, ms = 480) {
-        if (!el) return;
-        el.classList.remove(cls);
-        void el.offsetWidth;
-        el.classList.add(cls);
-        setTimeout(() => el.classList.remove(cls), ms);
-      }
-      function animateHit(e) {
-        const atk = figOf(e.fromUid);
-        const def = figOf(e.toUid);
-        if (!atk || !def) return;
-        if (e.ranged) {
-          const arrow = document.createElement("div");
-          arrow.className = "projectile";
-          arrow.textContent = e.elem === "fire" ? "\u{1F525}" : "\u27B9";
-          arrow.style.left = `${atk.x}%`;
-          arrow.style.top = `${atk.y}%`;
-          field2.appendChild(arrow);
-          requestAnimationFrame(() => {
-            arrow.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
-          });
-          setTimeout(() => arrow.remove(), 340);
-          setTimeout(() => hitLand(def, e), 320);
-        } else {
-          const dx = (def.x - atk.x) * 0.5;
-          const dy = (def.y - atk.y) * 0.5;
-          atk.el.style.transition = "transform 0.14s ease";
-          atk.el.style.transform = `translate(${dx * field2.offsetWidth / 100}px, ${dy * field2.offsetHeight / 100}px)`;
-          setTimeout(() => {
-            atk.el.style.transform = "";
-            hitLand(def, e);
-          }, 160);
-        }
-      }
-      function hitLand(defFig, e) {
-        defFig.unit.hp = Math.max(0, defFig.unit.hp - e.dmg);
-        setHp(e.toUid);
-        pulse(defFig.el, e.crit ? "anim-crit" : "anim-hit", 480);
-        if (defFig.unit.hp <= 0) pulse(defFig.el, "anim-death", 650);
-      }
-      function applyEvent(e) {
-        switch (e.t) {
-          case "start":
-            logLine("sys", `\u0421\u0442\u0440\u043E\u0439 \u0432\u044B\u0441\u0442\u0440\u043E\u0435\u043D: ${e.allies.join(", ")} \u043F\u0440\u043E\u0442\u0438\u0432 ${e.foes.join(", ")}.`);
-            break;
-          case "hit":
-            animateHit(e);
-            logLine(e.crit ? "crit" : "hit", `${e.from} \u2192 ${e.to}: \u2212${e.dmg}${e.crit ? " \u041A\u0420\u0418\u0422!" : ""}`);
-            ctx2.sfx?.(e.crit ? "crit" : "hit");
-            break;
-          case "dodge":
-            logLine("sys", `${e.who} \u0443\u043A\u043B\u043E\u043D\u044F\u0435\u0442\u0441\u044F!`);
-            if (figOf(e.uid)) pulse(figOf(e.uid).el, "anim-dodge", 380);
-            break;
-          case "status": {
-            const f = figOf(e.uid);
-            if (f) {
-              f.unit.badges.add(e.kind);
-              renderBadges(f);
-              pulse(f.el, "anim-status", 500);
-            }
-            logLine("status", `${e.who}: ${statusName(e.kind)}`);
-            break;
-          }
-          case "status_end": {
-            const f = figOf(e.uid);
-            if (f) {
-              f.unit.badges.delete(e.kind);
-              renderBadges(f);
-            }
-            break;
-          }
-          case "dot": {
-            const f = figOf(e.uid);
-            if (f) {
-              f.unit.hp = Math.max(0, Math.min(f.unit.maxHp, f.unit.hp - e.dmg));
-              setHp(e.uid);
-              pulse(f.el, e.kind === "poison" ? "anim-poison" : "anim-heal", 320);
-            }
-            break;
-          }
-          case "sleeps":
-            logLine("status", `${e.who} \u0441\u043F\u0438\u0442\u2026 \u{1F634}`);
-            break;
-          case "potion": {
-            const f = figOf(e.uid);
-            if (f && e.healed) {
-              f.unit.hp = Math.min(f.unit.maxHp, f.unit.hp + e.healed);
-              setHp(e.uid);
-              pulse(f.el, "anim-heal", 700);
-            }
-            if (f && e.cleansed) {
-              f.unit.badges.delete(e.cleansed);
-              renderBadges(f);
-            }
-            logLine("potion", `${e.who} \u043F\u044C\u0451\u0442 ${e.name}${e.healed ? ` (+${e.healed} \u2764\uFE0F)` : ""}`);
-            ctx2.sfx?.("potion");
-            break;
-          }
-        }
-      }
-      function statusName(kind) {
-        return { sleep: "\u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442 \u{1F634}", poison: "\u043E\u0442\u0440\u0430\u0432\u043B\u0435\u043D \u2620\uFE0F", slow: "\u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D \u{1F40C}", fear: "\u043E\u0445\u0432\u0430\u0447\u0435\u043D \u0441\u0442\u0440\u0430\u0445\u043E\u043C \u{1F628}", regen: "\u043F\u043E\u0434\u043A\u0440\u0435\u043F\u043B\u044F\u0435\u0442\u0441\u044F \u{1F49A}", shield: "\u043F\u043E\u0434 \u0449\u0438\u0442\u043E\u043C \u0437\u0435\u043B\u044C\u044F \u{1F6E1}\uFE0F" }[kind] || kind;
-      }
-      function step() {
-        if (done) return;
-        if (i >= result.log.length) {
-          endScreen();
-          return;
-        }
-        applyEvent(result.log[i]);
-        i += 1;
-        while (i < result.log.length && result.log[i].t === "dot") {
-          applyEvent(result.log[i]);
-          i += 1;
-        }
-        timer = setTimeout(step, speed);
-      }
-      function finishNow() {
-        if (done) return;
-        while (i < result.log.length) {
-          i += 1;
-        }
-        for (const f of figures.values()) f.unit.hp = 0;
-        endScreen();
-      }
-      function endScreen() {
-        if (done) return;
-        done = true;
-        clearTimeout(timer);
-        const rep = result.report;
-        ctx2.sfx?.(rep.victory ? "success" : "fail");
-        const rewardHtml = (result.rewards || []).map(rewardText).filter(Boolean).join("<br>");
-        const nextB = rep.victory ? nextBattle(battle.id) : null;
-        const overlay = showOverlay(ctx2, {
-          title: rep.victory ? "\u{1F3C6} \u041F\u043E\u0431\u0435\u0434\u0430!" : "\u{1F319} \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C",
-          subtitle: `\u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: ${rep.dealt} \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: ${rep.taken} \xB7 \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: ${rep.foesDown}/${rep.foesTotal}` + (rep.timedOut ? "<br>\u23F3 \u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u0432\u044B\u044F\u0432\u043B\u0435\u043D." : "") + ((rep.alliesStats || []).length > 1 ? "<br>" + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join(" \xB7 ") : ""),
-          rewards: [],
-          advice: rep.advice,
-          buttons: [
+      playBattleReplay(container, ctx2, {
+        title: battle.name,
+        backTo: "battles",
+        world: battle.world,
+        result,
+        unitDefs,
+        overlayButtons: (rep) => {
+          const nextB = rep.victory ? nextBattle(battle.id) : null;
+          return [
             ...nextB ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0431\u0438\u0442\u0432\u0430 \u2192 ${nextB.name}`, primary: true, onClick: () => ctx2.go("battle", { id: nextB.id }) }] : [],
             { label: "\u{1F392} \u041A \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0435", onClick: () => ctx2.go("equip") },
-            // Поражение: пути усиления — таверна (отряд) и торговый квартал (снаряжение)
             ...rep.victory ? [] : [
               { label: "\u{1F37A} \u0412 \u0442\u0430\u0432\u0435\u0440\u043D\u0443 \u2014 \u0443\u0441\u0438\u043B\u0438\u0442\u044C \u043E\u0442\u0440\u044F\u0434", onClick: () => ctx2.go("tavern") },
               { label: "\u{1F3EC} \u0412 \u0442\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B \u2014 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435", onClick: () => ctx2.go("hub", { scene: "market" }) }
             ],
             { label: "\u{1F501} \u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("battle", { id: battle.id }) },
             { label: "\u041A \u043F\u043E\u0445\u043E\u0434\u0430\u043C", primary: !nextB, onClick: () => ctx2.go("battles") }
-          ]
-        });
-        if (rewardHtml) {
-          const card = overlay.querySelector(".card");
-          const rw = document.createElement("div");
-          rw.className = "rewards";
-          rw.innerHTML = rewardHtml;
-          card.insertBefore(rw, card.querySelector(".advice") || card.querySelector(".actions"));
+          ];
         }
-      }
-      step();
+      });
     }
     return () => {
       window.removeEventListener("pointermove", onDragMove);
       window.removeEventListener("pointerup", onDragEnd);
       if (unitDrag?.ghost) unitDrag.ghost.remove();
     };
+  }
+  function playBattleReplay(container, ctx2, { title, backTo = "battles", world, result, unitDefs, overlayButtons }) {
+    container.innerHTML = "";
+    container.appendChild(header(ctx2, title, "\u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u0438 \u0443\u0447\u0438\u0441\u044C", backTo));
+    const field2 = document.createElement("div");
+    field2.className = "form-field battle";
+    addFieldBg(field2, world);
+    container.appendChild(field2);
+    const controls = document.createElement("div");
+    controls.className = "panel";
+    controls.style.cssText = "display:flex;gap:8px;align-items:center;margin-top:10px";
+    controls.append(document.createTextNode("\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C: "));
+    for (const [label, ms] of [["1x", 500], ["2x", 250], ["4x", 120]]) {
+      const b = document.createElement("button");
+      b.className = "small";
+      b.textContent = label;
+      b.addEventListener("click", () => {
+        speed = ms;
+      });
+      controls.appendChild(b);
+    }
+    const skip = document.createElement("button");
+    skip.className = "small ghost";
+    skip.textContent = "\u23ED\uFE0F \u041A \u0438\u0442\u043E\u0433\u0443";
+    skip.addEventListener("click", () => finishNow());
+    controls.appendChild(skip);
+    container.appendChild(controls);
+    const logBox = document.createElement("div");
+    logBox.className = "battle-log";
+    container.appendChild(logBox);
+    const figures = /* @__PURE__ */ new Map();
+    const unitsByUid = /* @__PURE__ */ new Map();
+    const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a.cell]));
+    const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f.cell]));
+    for (const [uid, def] of unitDefs) {
+      const isAlly = uid.startsWith("a");
+      const cell = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
+      if (!cell) continue;
+      const [x, y] = cellPos(cell[0], cell[1]);
+      const el = document.createElement("div");
+      el.className = "unit-figure " + (isAlly ? "ally" : "enemy");
+      el.style.left = `${x}%`;
+      el.style.top = `${y}%`;
+      el.innerHTML = `
+        <div class="uf-icon">${def.icon}</div>
+        <div class="uf-name">${def.name}</div>
+        <div class="uf-badges"></div>
+        <div class="hpbar"><div style="width:100%"></div></div>`;
+      field2.appendChild(el);
+      const unit = { hp: def.hp, maxHp: def.hp, badges: /* @__PURE__ */ new Set() };
+      figures.set(uid, { el, unit, side: isAlly ? "ally" : "enemy", x, y });
+      unitsByUid.set(uid, unit);
+    }
+    let speed = 500;
+    let timer = null;
+    let i = 0;
+    let done = false;
+    function figOf(uid) {
+      return figures.get(uid) || null;
+    }
+    function setHp(uid) {
+      const f = figOf(uid);
+      if (!f) return;
+      const bar = f.el.querySelector(".hpbar > div");
+      bar.style.width = `${Math.max(0, f.unit.hp / f.unit.maxHp * 100)}%`;
+      f.el.classList.toggle("dead", f.unit.hp <= 0);
+    }
+    const STATUS_ICON = {
+      poison: "\u2620\uFE0F",
+      sleep: "\u{1F634}",
+      slow: "\u{1F40C}",
+      fear: "\u{1F628}",
+      regen: "\u{1F49A}",
+      shield: "\u{1F6E1}\uFE0F"
+    };
+    function renderBadges(fig) {
+      const box = fig.el.querySelector(".uf-badges");
+      if (!box) return;
+      box.textContent = [...fig.unit.badges].map((k) => STATUS_ICON[k] || "\u2754").join("");
+    }
+    function logLine(cls, text) {
+      const line = document.createElement("div");
+      line.className = cls;
+      line.textContent = text;
+      logBox.appendChild(line);
+      logBox.scrollTop = logBox.scrollHeight;
+    }
+    function pulse(el, cls, ms = 480) {
+      if (!el) return;
+      el.classList.remove(cls);
+      void el.offsetWidth;
+      el.classList.add(cls);
+      setTimeout(() => el.classList.remove(cls), ms);
+    }
+    function animateHit(e) {
+      const atk = figOf(e.fromUid);
+      const def = figOf(e.toUid);
+      if (!atk || !def) return;
+      if (e.ranged) {
+        const arrow = document.createElement("div");
+        arrow.className = "projectile";
+        arrow.textContent = e.elem === "fire" ? "\u{1F525}" : "\u27B9";
+        arrow.style.left = `${atk.x}%`;
+        arrow.style.top = `${atk.y}%`;
+        field2.appendChild(arrow);
+        requestAnimationFrame(() => {
+          arrow.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
+        });
+        setTimeout(() => arrow.remove(), 340);
+        setTimeout(() => hitLand(def, e), 320);
+      } else {
+        const dx = (def.x - atk.x) * 0.5;
+        const dy = (def.y - atk.y) * 0.5;
+        atk.el.style.transition = "transform 0.14s ease";
+        atk.el.style.transform = `translate(${dx * field2.offsetWidth / 100}px, ${dy * field2.offsetHeight / 100}px)`;
+        setTimeout(() => {
+          atk.el.style.transform = "";
+          hitLand(def, e);
+        }, 160);
+      }
+    }
+    function hitLand(defFig, e) {
+      defFig.unit.hp = Math.max(0, defFig.unit.hp - e.dmg);
+      setHp(e.toUid);
+      pulse(defFig.el, e.crit ? "anim-crit" : "anim-hit", 480);
+      if (defFig.unit.hp <= 0) pulse(defFig.el, "anim-death", 650);
+    }
+    function applyEvent(e) {
+      switch (e.t) {
+        case "start":
+          logLine("sys", `\u0421\u0442\u0440\u043E\u0439 \u0432\u044B\u0441\u0442\u0440\u043E\u0435\u043D: ${e.allies.join(", ")} \u043F\u0440\u043E\u0442\u0438\u0432 ${e.foes.join(", ")}.`);
+          break;
+        case "hit":
+          animateHit(e);
+          logLine(
+            e.crit ? "crit" : "hit",
+            `${e.from} \u2192 ${e.to}${e.skillName ? ` (${e.skillName})` : ""}: \u2212${e.dmg}${e.crit ? " \u041A\u0420\u0418\u0422!" : ""}`
+          );
+          ctx2.sfx?.(e.crit ? "crit" : "hit");
+          break;
+        case "status_fail":
+          logLine("sys", `${e.who}: ${{ poison: "\u044F\u0434 \u043D\u0435 \u043F\u0440\u0438\u0432\u0438\u043B\u0441\u044F", sleep: "\u0441\u043E\u043D \u043D\u0435 \u043F\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u043E\u0432\u0430\u043B", slow: "\u0441\u043F\u043E\u0440\u044B \u043D\u0435 \u043F\u0440\u0438\u0432\u0438\u043B\u0438\u0441\u044C", fear: "\u0441\u0442\u0440\u0430\u0445 \u043D\u0435 \u043F\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u043E\u0432\u0430\u043B" }[e.kind] || "\u0441\u0442\u0430\u0442\u0443\u0441 \u043D\u0435 \u043F\u0440\u043E\u0448\u0451\u043B"}`);
+          break;
+        case "dodge":
+          logLine("sys", `${e.who} \u0443\u043A\u043B\u043E\u043D\u044F\u0435\u0442\u0441\u044F!`);
+          if (figOf(e.uid)) pulse(figOf(e.uid).el, "anim-dodge", 380);
+          break;
+        case "status": {
+          const f = figOf(e.uid);
+          if (f) {
+            f.unit.badges.add(e.kind);
+            renderBadges(f);
+            pulse(f.el, "anim-status", 500);
+          }
+          logLine("status", `${e.who}: ${statusName(e.kind)}`);
+          break;
+        }
+        case "status_end": {
+          const f = figOf(e.uid);
+          if (f) {
+            f.unit.badges.delete(e.kind);
+            renderBadges(f);
+          }
+          break;
+        }
+        case "move": {
+          const f = figOf(e.uid);
+          if (f) {
+            const [nx, ny] = cellPos(e.to[0], e.to[1]);
+            f.x = nx;
+            f.y = ny;
+            f.el.style.left = `${nx}%`;
+            f.el.style.top = `${ny}%`;
+          }
+          break;
+        }
+        case "scroll": {
+          logLine("potion", `\u{1F4DC} \u0420\u044B\u0446\u0430\u0440\u044C \u0447\u0438\u0442\u0430\u0435\u0442: ${e.name}!`);
+          ctx2.sfx?.("crit");
+          const f = figOf(e.uid);
+          if (f) pulse(f.el, "anim-status", 500);
+          break;
+        }
+        case "dot": {
+          const f = figOf(e.uid);
+          if (f) {
+            f.unit.hp = Math.max(0, Math.min(f.unit.maxHp, f.unit.hp - e.dmg));
+            setHp(e.uid);
+            pulse(f.el, e.kind === "poison" ? "anim-poison" : "anim-heal", 320);
+          }
+          break;
+        }
+        case "sleeps":
+          logLine("status", `${e.who} \u0441\u043F\u0438\u0442\u2026 \u{1F634}`);
+          break;
+        case "potion": {
+          const f = figOf(e.uid);
+          if (f && e.healed) {
+            f.unit.hp = Math.min(f.unit.maxHp, f.unit.hp + e.healed);
+            setHp(e.uid);
+            pulse(f.el, "anim-heal", 700);
+          }
+          if (f && e.cleansed) {
+            f.unit.badges.delete(e.cleansed);
+            renderBadges(f);
+          }
+          logLine("potion", `${e.who} \u043F\u044C\u0451\u0442 ${e.name}${e.healed ? ` (+${e.healed} \u2764\uFE0F)` : ""}`);
+          ctx2.sfx?.("potion");
+          break;
+        }
+      }
+    }
+    function statusName(kind) {
+      return { sleep: "\u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442 \u{1F634}", poison: "\u043E\u0442\u0440\u0430\u0432\u043B\u0435\u043D \u2620\uFE0F", slow: "\u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D \u{1F40C}", fear: "\u043E\u0445\u0432\u0430\u0447\u0435\u043D \u0441\u0442\u0440\u0430\u0445\u043E\u043C \u{1F628}", regen: "\u043F\u043E\u0434\u043A\u0440\u0435\u043F\u043B\u044F\u0435\u0442\u0441\u044F \u{1F49A}", shield: "\u043F\u043E\u0434 \u0449\u0438\u0442\u043E\u043C \u0437\u0435\u043B\u044C\u044F \u{1F6E1}\uFE0F" }[kind] || kind;
+    }
+    function step() {
+      if (done) return;
+      if (i >= result.log.length) {
+        endScreen();
+        return;
+      }
+      applyEvent(result.log[i]);
+      const applied = result.log[i];
+      i += 1;
+      while (i < result.log.length && result.log[i].t === "dot") {
+        applyEvent(result.log[i]);
+        i += 1;
+      }
+      const delay = applied.t === "move" ? Math.max(70, speed * 0.3) : speed;
+      timer = setTimeout(step, delay);
+    }
+    function finishNow() {
+      if (done) return;
+      while (i < result.log.length) {
+        i += 1;
+      }
+      for (const f of figures.values()) f.unit.hp = 0;
+      endScreen();
+    }
+    function endScreen() {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      const rep = result.report;
+      ctx2.sfx?.(rep.victory ? "success" : "fail");
+      const rewardHtml = (result.rewards || []).map(rewardText).filter(Boolean).join("<br>");
+      const overlay = showOverlay(ctx2, {
+        title: rep.victory ? "\u{1F3C6} \u041F\u043E\u0431\u0435\u0434\u0430!" : "\u{1F319} \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C",
+        subtitle: `\u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: ${rep.dealt} \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: ${rep.taken} \xB7 \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: ${rep.foesDown}/${rep.foesTotal}` + (rep.timedOut ? "<br>\u23F3 \u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u0432\u044B\u044F\u0432\u043B\u0435\u043D." : "") + ((rep.alliesStats || []).length > 1 ? "<br>" + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join(" \xB7 ") : ""),
+        rewards: [],
+        advice: rep.advice,
+        buttons: overlayButtons(rep)
+      });
+      if (rewardHtml) {
+        const card = overlay.querySelector(".card");
+        const rw = document.createElement("div");
+        rw.className = "rewards";
+        rw.innerHTML = rewardHtml;
+        card.insertBefore(rw, card.querySelector(".advice") || card.querySelector(".actions"));
+      }
+    }
+    step();
   }
 
   // src/ui/seekEditorView.js
@@ -15596,6 +15922,190 @@ ${item2.description}
     container.appendChild(quickNav(ctx2, [{ icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }]));
   }
 
+  // src/ui/sandboxView.js
+  var MAX_TEAM = 6;
+  function renderSandbox(container, ctx2) {
+    const { state: state2 } = ctx2;
+    const picked = renderSandbox._picked ||= { allies: ["merc_guard", "merc_archer"], foes: ["slime_meadow", "slime_meadow"] };
+    container.appendChild(header(
+      ctx2,
+      "\u2694\uFE0F \u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440 \u0431\u043E\u044F",
+      "\u0421\u043E\u0431\u0435\u0440\u0438 \u043E\u0431\u0435 \u043A\u043E\u043C\u0430\u043D\u0434\u044B \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u0438\u043C\u0443\u043B\u044F\u0446\u0438\u044E: \u043E\u0434\u0438\u043D \u0431\u043E\u0439 \u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0438\u043B\u0438 \u0441\u0435\u0440\u0438\u044F \u043D\u0430 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0443",
+      "workshop"
+    ));
+    function rerender() {
+      container.innerHTML = "";
+      renderSandbox(container, ctx2);
+    }
+    function teamPanel(title, pool, list, getDef) {
+      const panel = document.createElement("div");
+      panel.className = "panel";
+      const h = document.createElement("h3");
+      h.textContent = `${title} (${list.length}/${MAX_TEAM})`;
+      h.style.marginTop = "0";
+      panel.appendChild(h);
+      const team = document.createElement("div");
+      team.style.cssText = "display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:34px";
+      if (list.length === 0) {
+        team.innerHTML = '<span class="muted">\u041F\u0443\u0441\u0442\u043E \u2014 \u0434\u043E\u0431\u0430\u0432\u044C \u0431\u043E\u0439\u0446\u043E\u0432 \u043D\u0438\u0436\u0435</span>';
+      }
+      list.forEach((id, i) => {
+        const d = getDef(id);
+        const chip = document.createElement("button");
+        chip.className = "small primary";
+        chip.textContent = `${d.icon} ${d.name} \u2715`;
+        chip.title = "\u0423\u0431\u0440\u0430\u0442\u044C \u0438\u0437 \u043A\u043E\u043C\u0430\u043D\u0434\u044B";
+        chip.addEventListener("click", () => {
+          ctx2.sfx?.("tap");
+          list.splice(i, 1);
+          rerender();
+        });
+        team.appendChild(chip);
+      });
+      panel.appendChild(team);
+      const grid = document.createElement("div");
+      grid.style.cssText = "display:flex;flex-wrap:wrap;gap:6px;max-height:190px;overflow-y:auto";
+      for (const id of pool) {
+        const d = getDef(id);
+        const b = document.createElement("button");
+        b.className = "small";
+        const count = list.filter((x) => x === id).length;
+        b.innerHTML = `${d.icon} ${d.name}${d.boss ? ' <span class="badge epic">\u0411\u041E\u0421\u0421</span>' : ""}${count ? ` \xD7${count}` : ""}`;
+        b.title = d.description || `${d.hp}\u2764 \u0430\u0442\u043A ${d.attack} \u0431\u0440\u043D ${d.armor} \u0441\u043A\u0440 ${d.speed}`;
+        b.disabled = list.length >= MAX_TEAM;
+        b.addEventListener("click", () => {
+          ctx2.sfx?.("tap");
+          list.push(id);
+          rerender();
+        });
+        grid.appendChild(b);
+      }
+      panel.appendChild(grid);
+      return panel;
+    }
+    container.appendChild(teamPanel(
+      "\u0422\u0432\u043E\u0439 \u043E\u0442\u0440\u044F\u0434 \u2014 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u0438",
+      MERCENARIES.map((m) => m.id),
+      picked.allies,
+      (id) => MERC_BY_ID[id]
+    ));
+    container.appendChild(teamPanel(
+      "\u041F\u0440\u043E\u0442\u0438\u0432\u043D\u0438\u043A",
+      Object.values(ENEMY_BY_ID).map((e) => e.id),
+      picked.foes,
+      (id) => ENEMY_BY_ID[id]
+    ));
+    const tacticBox = document.createElement("div");
+    tacticBox.className = "panel";
+    tacticBox.style.cssText = "display:flex;gap:6px;align-items:center;flex-wrap:wrap";
+    const tacticTitle = document.createElement("span");
+    tacticTitle.textContent = "\u0422\u0430\u043A\u0442\u0438\u043A\u0430 \u0441\u043E\u044E\u0437\u043D\u0438\u043A\u043E\u0432:";
+    tacticBox.appendChild(tacticTitle);
+    for (const [id, label] of [["defense", "\u{1F6E1} \u0417\u0430\u0449\u0438\u0442\u0430"], ["balance", "\u2696 \u0411\u0430\u043B\u0430\u043D\u0441"], ["offense", "\u2694 \u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435"]]) {
+      const b = document.createElement("button");
+      b.className = "small" + ((state2.settings.tactic || "balance") === id ? " primary" : "");
+      b.textContent = label;
+      b.addEventListener("click", () => {
+        state2.settings.tactic = id;
+        ctx2.sfx?.("tap");
+        ctx2.save();
+        rerender();
+      });
+      tacticBox.appendChild(b);
+    }
+    container.appendChild(tacticBox);
+    const actions = document.createElement("div");
+    actions.style.cssText = "display:flex;gap:10px;flex-wrap:wrap";
+    const oneBtn = document.createElement("button");
+    oneBtn.className = "primary";
+    oneBtn.textContent = "\u2694\uFE0F \u041E\u0434\u0438\u043D \u0431\u043E\u0439 \u2014 \u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C";
+    oneBtn.disabled = picked.allies.length === 0 || picked.foes.length === 0;
+    oneBtn.addEventListener("click", () => runOne());
+    const seriesBtn = document.createElement("button");
+    seriesBtn.textContent = "\u{1F4CA} \u0421\u0435\u0440\u0438\u044F \xD730 \u2014 \u0432\u0438\u043D\u0440\u0435\u0439\u0442";
+    seriesBtn.disabled = picked.allies.length === 0 || picked.foes.length === 0;
+    seriesBtn.addEventListener("click", () => runSeries());
+    actions.append(oneBtn, seriesBtn);
+    container.appendChild(actions);
+    const seriesOut = document.createElement("div");
+    container.appendChild(seriesOut);
+    function buildUnits() {
+      const sorted = [...picked.allies].map((id) => MERC_BY_ID[id]).sort((a, b) => b.armor + b.hp / 20 - (a.armor + a.hp / 20));
+      const allies = sorted.map((def, i) => {
+        const slot = i < 3 ? i : i;
+        return makeFormationMerc(def, slot, i);
+      });
+      const foeSlots = enemyFormationSlots(picked.foes);
+      const foes = picked.foes.map((id, i) => makeFormationEnemy(id, 1, foeSlots[i], i));
+      return { allies, foes };
+    }
+    function buildUnitDefs() {
+      const unitDefs = /* @__PURE__ */ new Map();
+      const sorted = [...picked.allies].map((id) => MERC_BY_ID[id]).sort((a, b) => b.armor + b.hp / 20 - (a.armor + a.hp / 20));
+      sorted.forEach((d, i) => unitDefs.set(`a${i}`, { name: d.name, icon: d.icon, hp: d.hp }));
+      picked.foes.forEach((id, i) => {
+        const d = ENEMY_BY_ID[id];
+        unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: d.hp });
+      });
+      return unitDefs;
+    }
+    function formationOf(allies, foes) {
+      return {
+        allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
+        foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] }))
+      };
+    }
+    function runOne() {
+      const { allies, foes } = buildUnits();
+      const formation = formationOf(allies, foes);
+      const seed = Date.now() % 1e5 + 1;
+      const result = simulateFormationBattle(allies, foes, seed, state2.settings.tactic || "balance");
+      result.formation = formation;
+      result.rewards = [];
+      playBattleReplay(container, ctx2, {
+        title: "\u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043E\u0447\u043D\u044B\u0439 \u0431\u043E\u0439",
+        backTo: "sandbox",
+        world: "meadow",
+        result,
+        unitDefs: buildUnitDefs(),
+        overlayButtons: () => [
+          { label: "\u{1F501} \u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => {
+            container.innerHTML = "";
+            renderSandbox(container, ctx2);
+            runOne();
+          } },
+          { label: "\u{1F4CA} \u0421\u0435\u0440\u0438\u044F \xD730", onClick: () => {
+            container.innerHTML = "";
+            renderSandbox(container, ctx2);
+            runSeries();
+          } },
+          { label: "\u{1F9EA} \u041A \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0443", primary: true, onClick: () => {
+            container.innerHTML = "";
+            renderSandbox(container, ctx2);
+          } }
+        ]
+      });
+    }
+    function runSeries() {
+      const N = 30;
+      let wins = 0;
+      let ticksSum = 0;
+      for (let seed = 1; seed <= N; seed++) {
+        const { allies, foes } = buildUnits();
+        const r = simulateFormationBattle(allies, foes, seed * 7 + 1, state2.settings.tactic || "balance");
+        if (r.victory) wins++;
+        ticksSum += r.ticks;
+      }
+      ctx2.sfx?.(wins >= N / 2 ? "success" : "fail");
+      seriesOut.innerHTML = "";
+      const panel = document.createElement("div");
+      panel.className = "panel";
+      panel.innerHTML = `<h3 style="margin-top:0">\u{1F4CA} \u0421\u0435\u0440\u0438\u044F \u0438\u0437 ${N}: \u043F\u043E\u0431\u0435\u0434 \u043E\u0442\u0440\u044F\u0434\u0430 \u2014 <b>${wins}/${N}</b> (${Math.round(wins / N * 100)}%)</h3>
+      <div class="muted">\u0421\u0440\u0435\u0434\u043D\u044F\u044F \u0434\u043B\u0438\u043D\u0430 \u0431\u043E\u044F: ${Math.round(ticksSum / N)} \u0442\u0438\u043A\u043E\u0432 \xB7 \u0442\u0430\u043A\u0442\u0438\u043A\u0430: ${{ defense: "\u{1F6E1} \u0417\u0430\u0449\u0438\u0442\u0430", balance: "\u2696 \u0411\u0430\u043B\u0430\u043D\u0441", offense: "\u2694 \u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435" }[state2.settings.tactic || "balance"]}</div>`;
+      seriesOut.appendChild(panel);
+    }
+  }
+
   // src/ui/brewBookView.js
   function renderBrewBook(container, ctx2) {
     const { state: state2 } = ctx2;
@@ -15821,6 +16331,7 @@ ${item2.description}
     seekeditor: (c, p) => p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p),
     achievements: (c, p) => renderAchievements(c, ctx, p),
     brewbook: (c, p) => renderBrewBook(c, ctx, p),
+    sandbox: (c, p) => renderSandbox(c, ctx, p),
     board: (c, p) => renderBoard(c, ctx, p),
     shopArmory: (c) => renderMarket(c, ctx, "armory"),
     shopArmorer: (c) => renderMarket(c, ctx, "armorer"),

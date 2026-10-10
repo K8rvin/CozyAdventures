@@ -595,6 +595,15 @@ body::-webkit-scrollbar { display: none; }
   overflow: hidden;
   box-shadow: inset 0 0 40px rgba(0,0,0,0.35);
 }
+.form-field-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  pointer-events: none;
+}
 .form-slot {
   position: absolute;
   width: 76px;
@@ -621,7 +630,7 @@ body::-webkit-scrollbar { display: none; }
   width: 84px;
   transform: translate(-50%, -50%);
   text-align: center;
-  transition: transform 0.18s ease;
+  transition: transform 0.18s ease, left 0.28s ease, top 0.28s ease;
   z-index: 3;
 }
 .unit-figure .uf-icon {

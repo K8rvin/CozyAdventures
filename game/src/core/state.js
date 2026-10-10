@@ -50,7 +50,7 @@ export function newGame() {
     journal: [],            // дневник кота: последние события [{icon, text, at}]
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
-    settings: {}, // пользовательские настройки
+    settings: { useBeltItems: true, tactic: 'balance' }, // настройки боя
     formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
     cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
@@ -77,6 +77,8 @@ function migrate(state) {
   state.tutorialSkipped ??= false;
   state.settings ||= {};
   delete state.settings.battleMode; // режим «простой» упразднён, бой всегда «сбор»
+  state.settings.useBeltItems ??= true;
+  state.settings.tactic ??= 'balance';
   state.formation ||= { knight: 1, merc0: 0, merc1: 5 };
   state.cheats ||= { used: [], spiderHat: false };
   state.materials ||= {};
@@ -745,10 +747,12 @@ function runFormationBattle(state, battle, seed) {
       stats[k] = (stats[k] || 0) + v;
     }
   }
-  const consumables = state.consumableBelt
-    .map((id) => ITEM_BY_ID[id])
-    .filter(Boolean)
-    .map((item) => ({ itemId: item.id, name: item.name, effect: item.effect }));
+  const consumables = state.settings.useBeltItems === false
+    ? []
+    : state.consumableBelt
+      .map((id) => ITEM_BY_ID[id])
+      .filter(Boolean)
+      .map((item) => ({ itemId: item.id, name: item.name, effect: item.effect }));
 
   const knight = makeFormationKnight(stats, traits, consumables, state.formation.knight ?? 1);
   const allies = [knight];
@@ -762,7 +766,13 @@ function runFormationBattle(state, battle, seed) {
   const slots = enemyFormationSlots(battle.enemies);
   const foes = entries.map((e, i) => makeFormationEnemy(e.id, e.scale, slots[i], i));
 
-  const result = simulateFormationBattle(allies, foes, seed);
+  // Начальные клетки для расстановки фигурок — ДО прогона боя
+  const initialFormation = {
+    allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
+    foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] })),
+  };
+
+  const result = simulateFormationBattle(allies, foes, seed, state.settings.tactic || 'balance');
 
   const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
   for (const used of usedIds) {
@@ -796,10 +806,7 @@ function runFormationBattle(state, battle, seed) {
   }
   return {
     ...result, rewards, battle,
-    formation: {
-      allies: allies.map((a) => ({ uid: a.uid, slot: a.slot })),
-      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot })),
-    },
+    formation: initialFormation, // начальные клетки (не конец боя!)
   };
 }
 

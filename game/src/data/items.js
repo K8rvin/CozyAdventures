@@ -165,6 +165,37 @@ export const ITEMS = [
     effect: { kind: 'cleanse_sleep', resistAfter: { sleep: 0.6 } },
     description: 'Снимает сон и бодрит до конца боя.',
   },
+  // --- Свитки заклинаний (пояс) ---
+  {
+    id: 'scr_fire_arrow', name: 'Свиток стрелы огня', slot: 'consumable', type: 'scroll',
+    rarity: 'rare', price: 90, stackable: true,
+    effect: { kind: 'scroll_fire_arrow', dmg: 25 },
+    description: 'В начале боя бьёт огнём самого живучего врага, игнорируя половину брони.',
+  },
+  {
+    id: 'scr_heal_mist', name: 'Свиток целительной росы', slot: 'consumable', type: 'scroll',
+    rarity: 'rare', price: 120, stackable: true,
+    effect: { kind: 'scroll_heal_mist', amount: 20 },
+    description: 'В начале боя лечит весь отряд на 20 здоровья.',
+  },
+  {
+    id: 'scr_frost', name: 'Свиток ледяных оков', slot: 'consumable', type: 'scroll',
+    rarity: 'rare', price: 140, stackable: true,
+    effect: { kind: 'scroll_frost', ticks: 40, factor: 0.6 },
+    description: 'В начале боя замедляет всех врагов — они реже ходят.',
+  },
+  {
+    id: 'scr_storm', name: 'Свиток грозы', slot: 'consumable', type: 'scroll',
+    rarity: 'epic', price: 160, stackable: true,
+    effect: { kind: 'scroll_storm', dmg: 22 },
+    description: 'В начале боя бьёт молнией двух самых хрупких врагов.',
+  },
+  {
+    id: 'scr_fire_step', name: 'Свиток шага огня', slot: 'consumable', type: 'scroll',
+    rarity: 'epic', price: 240, stackable: true,
+    effect: { kind: 'scroll_fire_step', dmg: 18 },
+    description: 'В начале боя бьёт огнём по площади — задевает ВСЕХ врагов. Дорого.',
+  },
 ];
 
 // --- Мир 2: железный ярус Средневекового дворика ---
@@ -245,7 +276,7 @@ ITEMS.push(
     id: 'wpn_candle_staff', set: 'attic', name: 'Посох свечного мага', slot: 'weapon', hand: 'two', type: 'staff',
     rarity: 'epic', price: 420,
     stats: { attack: 34, speed: -2 },
-    traits: ['pierce'],
+    traits: ['pierce', 'ranged'],
     description: 'Пламя на конце прошивает даже камень. Обе руки заняты.',
   },
   {
