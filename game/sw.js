@@ -1,8 +1,7 @@
 // Service Worker: офлайн-режим игры «Лавка на перекрёстке миров».
-// Стратегия: cache-first для всего своего origin (игра — чистая статика),
-// в фоне подтягиваем свежее. При новой версии бандла (деплой) кэш
-// пересоздаётся по изменившемуся имени.
-const CACHE = 'cozy-adventures-v1';
+// Документ и код — network-first (свежее сразу, офлайн — из кэша),
+// ассеты — cache-first (картинки/звуки меняются редко, кэш ускоряет).
+const CACHE = 'cozy-adventures-v2';
 
 // Ядро: то, без чего игра не откроется офлайн.
 const CORE = [
@@ -32,19 +31,32 @@ self.addEventListener('activate', (ev) => {
   );
 });
 
+function put(cache, request, response) {
+  if (response && response.ok) cache.put(request, response.clone());
+  return response;
+}
+
 self.addEventListener('fetch', (ev) => {
   const url = new URL(ev.request.url);
   if (ev.request.method !== 'GET' || url.origin !== self.location.origin) return;
-  ev.respondWith(
-    caches.match(ev.request, { ignoreSearch: true }).then((cached) => {
-      const fresh = fetch(ev.request).then((resp) => {
-        if (resp && resp.ok) {
-          const copy = resp.clone();
-          caches.open(CACHE).then((c) => c.put(ev.request, copy));
-        }
-        return resp;
-      }).catch(() => cached);
+  const isAsset = url.pathname.includes('/assets/');
+
+  ev.respondWith((async () => {
+    const cache = await caches.open(CACHE);
+    if (isAsset) {
+      // Ассеты: сначала кэш, в фоне — обновление
+      const cached = await cache.match(ev.request, { ignoreSearch: true });
+      const fresh = fetch(ev.request)
+        .then((r) => put(cache, ev.request, r))
+        .catch(() => cached);
       return cached || fresh;
-    }),
-  );
+    }
+    // Документ/код/манифест: сначала сеть, офлайн — кэш
+    try {
+      return await fetch(ev.request).then((r) => put(cache, ev.request, r));
+    } catch {
+      const cached = await cache.match(ev.request, { ignoreSearch: true });
+      return cached || Response.error();
+    }
+  })());
 });

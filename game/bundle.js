@@ -8373,6 +8373,10 @@
       img.style.cssText = style + (rot ? `;transform:rotate(${rot}deg)` : "");
       img.alt = "";
       img.addEventListener("error", () => {
+        if (img.src.endsWith(".webp")) {
+          img.src = `assets/cosmetics/${id}.png`;
+          return;
+        }
         img.remove();
         stub?.();
       });
@@ -8396,6 +8400,10 @@
         im.alt = "";
         im.style.width = "100%";
         im.addEventListener("error", () => {
+          if (im.src.endsWith(".webp")) {
+            im.src = "assets/cosmetics/cos_crest.png";
+            return;
+          }
           wrap.remove();
           fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432");
         });

@@ -245,7 +245,7 @@ export function renderHub(container, ctx, params = {}) {
     if (content) e.innerHTML = content;
     scenePanel.appendChild(e);
   };
-  // Арт-оверлей: assets/cosmetics/<id>.webp, при отсутствии файла — CSS-заглушка.
+  // Арт-оверлей: assets/cosmetics/<id>.webp → фолбэк исходный .png → CSS-заглушка.
   // Настройка под сцену: style — позиция (left/top/width), 4-й аргумент —
   // поворот в градусах (положительный — по часовой стрелке).
   const fxImg = (id, style, stub, rot) => {
@@ -253,7 +253,11 @@ export function renderHub(container, ctx, params = {}) {
     img.className = 'cos-fx cos-img';
     img.style.cssText = style + (rot ? `;transform:rotate(${rot}deg)` : '');
     img.alt = '';
-    img.addEventListener('error', () => { img.remove(); stub?.(); });
+    img.addEventListener('error', () => {
+      if (img.src.endsWith('.webp')) { img.src = `assets/cosmetics/${id}.png`; return; }
+      img.remove();
+      stub?.();
+    });
     img.src = `assets/cosmetics/${id}.webp`;
     scenePanel.appendChild(img);
     return img;
@@ -274,6 +278,7 @@ export function renderHub(container, ctx, params = {}) {
       im.alt = '';
       im.style.width = '100%';
       im.addEventListener('error', () => {
+        if (im.src.endsWith('.webp')) { im.src = 'assets/cosmetics/cos_crest.png'; return; }
         wrap.remove();
         fx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров');
       });
