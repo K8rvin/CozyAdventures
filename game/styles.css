@@ -1055,22 +1055,6 @@ body::-webkit-scrollbar { display: none; }
 .brew-book-steps { margin-top: 6px; font-size: 14px; line-height: 1.7; }
 .brew-book-steps .brew-step.done { color: var(--muted); text-decoration: none; }
 
-/* Арт-оверлеи украшений */
-.cos-crest-wrap { position: absolute; }
-.cos-crest-label {
-  position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 34%;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: #4a3320;
-  text-shadow: 0 1px 0 rgba(255, 230, 180, 0.6);
-  line-height: 1.25;
-  pointer-events: none;
-}
-
 /* Подсказка «поверни устройство» на мобильных (портрет) */
 #rotate-hint {
   position: fixed;

@@ -8390,26 +8390,7 @@
         fxImg("cos_carpet", "left:52%;top:74%;width:30%", () => fx("cos-carpet", "left:36%;top:78%;width:26%;height:16%"), 10);
       }
       if (cos.has("cos_crest")) {
-        const wrap = document.createElement("div");
-        wrap.className = "cos-fx cos-crest-wrap";
-        wrap.style.cssText = "left:36%;top:3%;width:200px";
-        const label = document.createElement("span");
-        label.className = "cos-crest-label";
-        label.textContent = "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432";
-        const im = document.createElement("img");
-        im.alt = "";
-        im.style.width = "100%";
-        im.addEventListener("error", () => {
-          if (im.src.endsWith(".webp")) {
-            im.src = "assets/cosmetics/cos_crest.png";
-            return;
-          }
-          wrap.remove();
-          fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432");
-        });
-        im.src = "assets/cosmetics/cos_crest.webp";
-        wrap.append(im, label);
-        scenePanel.appendChild(wrap);
+        fxImg("cos_crest", "left:71%;top:9%;width:85px", () => fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432"), -4);
       }
       if (cos.has("cos_flowers")) {
         const spots = [

@@ -268,23 +268,8 @@ export function renderHub(container, ctx, params = {}) {
       fxImg('cos_carpet', 'left:52%;top:74%;width:30%', () => fx('cos-carpet', 'left:36%;top:78%;width:26%;height:16%'), 10);
     }
     if (cos.has('cos_crest')) {
-      const wrap = document.createElement('div');
-      wrap.className = 'cos-fx cos-crest-wrap';
-      wrap.style.cssText = 'left:36%;top:3%;width:200px';
-      const label = document.createElement('span');
-      label.className = 'cos-crest-label';
-      label.textContent = 'Лавка на перекрёстке миров';
-      const im = document.createElement('img');
-      im.alt = '';
-      im.style.width = '100%';
-      im.addEventListener('error', () => {
-        if (im.src.endsWith('.webp')) { im.src = 'assets/cosmetics/cos_crest.png'; return; }
-        wrap.remove();
-        fx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров');
-      });
-      im.src = 'assets/cosmetics/cos_crest.webp';
-      wrap.append(im, label);
-      scenePanel.appendChild(wrap);
+      // Текст зашит в картинку (генерация), подложки больше нет
+      fxImg('cos_crest', 'left:71%;top:9%;width:85px', () => fx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров'),-4);
     }
     if (cos.has('cos_flowers')) {
       const spots = [

@@ -537,3 +537,32 @@ no text, no watermark --ar 3:4
 
 Сохранять как `assets/cosmetics/cos_*.png` (или пришли как есть — переименую).
 Места на сцене подгоню сам: укажи только, если что-то по смыслу не совпало.
+
+### 10.2b. cos_crest.png — вывеска С ТЕКСТОМ (замена версии без букв)
+
+Текст — частью картинки, резной/выжженной вязью. Формулировка рассчитана
+на модели, которые умеют текст (Ideogram, gpt-image-1, Flux pro —
+Midjourney и SD кириллицу чаще портят). Если буквы ломаются —
+перегенерируй 2–3 раза или смени модель; короткая надпись обычно
+получается не с первой попытки.
+
+```
+A carved wooden shop signboard hanging from two short chains, rounded plank
+with a decorative burned-in border of leaves and a tiny lantern emblem on
+top, with the Cyrillic text "Лавка на перекрёстке миров" beautifully
+hand-lettered in two centered lines, fantasy storybook calligraphy,
+letters carved and burned dark into the warm wood, perfectly readable,
+storybook watercolor illustration with gentle ink outlines, warm palette,
+front view, isolated on a plain solid white background, no shadow,
+no watermark
+```
+
+Важные детали для модели:
+- Текст РОВНО такой: «Лавка на перекрёстке миров» — с буквой Ё.
+- Две строки, по центру: «Лавка на» / «перекрёстке миров».
+- Если модель упорно пишет «перекрестке» или ломает «Ё» — добавь в конец:
+  `the letter Ё must have two dots on top, correct Russian spelling`.
+
+Когда сгенерируешь — пришли файл: вырежу фон, положу в
+`assets/cosmetics/cos_crest.webp`, и уберу из кода текстовую подложку
+(табличка будет полностью картинкой).
