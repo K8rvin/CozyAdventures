@@ -37,19 +37,19 @@ export const COMPANIONS = [
 export const PETS = [
   {
     id: 'pet_puppy', name: 'Щенок', icon: '🐕',
-    price: 80, currency: 'coins',
+    price: 160, currency: 'coins',
     bonus: { goldFind: 0.15 },
     description: 'Бежит рядом и собирает монеты после боя.',
   },
   {
     id: 'pet_hedgehog', name: 'Ёжик', icon: '🦔',
-    price: 95, currency: 'coins',
+    price: 190, currency: 'coins',
     bonus: { itemFind: 0.12 },
     description: 'Находит мелкие предметы в траве.',
   },
   {
     id: 'pet_fox', name: 'Лисёнок', icon: '🦊',
-    price: 3, currency: 'seals',
+    price: 5, currency: 'seals',
     bonus: { crit: 0.04, goldFind: 0.05 },
     description: 'Хитрый взгляд помогает находить слабые места врагов.',
   },
@@ -60,28 +60,28 @@ export const PETS = [
 export const MERCENARIES = [
   {
     id: 'merc_archer', name: 'Лесная лучница', icon: '🏹', race: 'эльф', role: 'стрелок',
-    price: 120, currency: 'coins',
+    price: 240, currency: 'coins',
     hp: 40, attack: 14, armor: 4, speed: 12, crit: 0.12, dodge: 0.08,
     skills: ['aimed_shot'], tags: ['forest', 'ranged'],
     description: 'Бьёт самого хрупкого врага прицельным выстрелом.',
   },
   {
     id: 'merc_guard', name: 'Дворовый громила', icon: '🔨', race: 'человек', role: 'танк',
-    price: 150, currency: 'coins',
+    price: 300, currency: 'coins',
     hp: 85, attack: 9, armor: 16, speed: 6, crit: 0.03, dodge: 0, block: 0.2,
     skills: [], tags: ['town'],
     description: 'Держит удар, пока рыцарь работает.',
   },
   {
     id: 'merc_witch', name: 'Ведьминка с топей', icon: '🧪', race: 'человек', role: 'поддержка',
-    price: 200, currency: 'coins',
+    price: 400, currency: 'coins',
     hp: 45, attack: 8, armor: 5, speed: 9, crit: 0.05, dodge: 0.05,
     skills: ['sting_poison', 'regen_ally_skill'], tags: ['swamp'],
     description: 'Травит врагов и подливает рыцарю живительный настой.',
   },
   {
     id: 'merc_knight_errant', name: 'Странствующий клинок', icon: '⚔️', race: 'человек', role: 'боец',
-    price: 4, currency: 'seals',
+    price: 6, currency: 'seals',
     hp: 70, attack: 16, armor: 12, speed: 10, crit: 0.1, dodge: 0.05, block: 0.1,
     skills: ['heavy_blow'], tags: ['town'],
     description: 'Ищет лавку на перекрёстке миров. Кажется, нашёл.',
@@ -92,13 +92,13 @@ export const MERCENARIES = [
 PETS.push(
   {
     id: 'pet_horse', name: 'Сивка', icon: '🐴', kind: 'riding',
-    price: 260, currency: 'coins',
+    price: 450, currency: 'coins',
     bonus: { speed: 2, materialsFind: 0.5 },
     description: 'Ездовой: быстрее дороги, больше материалов после боя.',
   },
   {
     id: 'pet_owl', name: 'Сова-библиотекарь', icon: '🦉', kind: 'flying',
-    price: 4, currency: 'seals',
+    price: 6, currency: 'seals',
     bonus: { dodge: 0.05, crit: 0.03 },
     description: 'Летающий помощник: видит слабые места и снижает шанс засады.',
   },

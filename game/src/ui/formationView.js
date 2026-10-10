@@ -437,6 +437,11 @@ export function renderFormation(container, ctx, params) {
         buttons: [
           ...(nextB ? [{ label: `Следующая битва → ${nextB.name}`, primary: true, onClick: () => ctx.go('battle', { id: nextB.id }) }] : []),
           { label: '🎒 К экипировке', onClick: () => ctx.go('equip') },
+          // Поражение: пути усиления — таверна (отряд) и торговый квартал (снаряжение)
+          ...(rep.victory ? [] : [
+            { label: '🍺 В таверну — усилить отряд', onClick: () => ctx.go('tavern') },
+            { label: '🏬 В торговый квартал — снаряжение', onClick: () => ctx.go('hub', { scene: 'market' }) },
+          ]),
           { label: '🔁 Ещё раз', onClick: () => ctx.go('battle', { id: battle.id }) },
           { label: 'К походам', primary: !nextB, onClick: () => ctx.go('battles') },
         ],
