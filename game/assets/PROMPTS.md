@@ -449,3 +449,91 @@ white background, no ground, no shadow, no text, cozy fantasy game character
 - Настоящий PNG с альфа-каналом — тоже отлично, тогда вообще ничего
   резать не нужно.
 - Равномерный серый фон — допустимо, справлюсь, но белый надёжнее.
+
+---
+
+## 10. Украшения лавки — assets/cosmetics/*.png (белый фон, вырежу скриптом)
+
+Арт-оверлеи для внешек (покупаются в прилавке, включаются/выключаются).
+Кладутся поверх сцены лавки, поэтому — изолированные объекты на белом фоне,
+тот же storybook watercolor со свечной палитрой. После генерации пришли
+как есть — вырежу фон, сожму в webp и заменю CSS-заглушки.
+
+Общий хвост стиля:
+
+```
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette of amber, honey and deep brown, isolated on a plain solid white
+background, no ground, no shadow, no text, cozy fantasy game prop
+```
+
+### 10.1 cos_carpet.png — Ковёр хранителя (вид строго сверху)
+
+```
+An ornate oval braided rug viewed strictly from above, deep burgundy with
+amber and cream folk patterns of tiny lanterns and swirls, tasselled edge,
+storybook watercolor illustration with gentle ink outlines, warm palette,
+flat top-down view, isolated on a plain solid white background, no shadow,
+no text, cozy fantasy game prop
+```
+
+### 10.2 cos_crest.png — Фирменная вывеска (БЕЗ БУКВ — надпись добавлю кодом)
+
+ВАЖНО: кириллицу модели портят. Табличка пустая, текст положу поверх сам.
+
+```
+A blank carved wooden shop signboard hanging from two short chains with a
+metal ring, rounded plank with a decorative burned-in border of leaves and
+a tiny lantern emblem in the center-top, EMPTY writing surface, no letters
+at all, storybook watercolor illustration with gentle ink outlines, warm
+palette, front view, isolated on a plain solid white background, no shadow,
+no text, cozy fantasy game prop
+```
+
+### 10.3 cos_flowers.png — Кадка с весенними цветами (пойдёт в 2–3 места полок)
+
+```
+A small wooden bucket pot with lush spring flowers — violets, daisies and
+fresh green herbs spilling over the rim, a few petals fallen beside,
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette, side view, isolated on a plain solid white background, no ground,
+no shadow, no text, cozy fantasy game prop
+```
+
+### 10.4 cos_fireflies.png — Гроздь светлячков (будет медленно дрейфовать)
+
+```
+A loose cluster of six glowing fireflies with warm golden light halos and
+soft watercolor glow, tiny delicate wings, different positions as if mid-
+flight, storybook watercolor illustration, warm amber glow on a plain solid
+white background, no ground, no shadow, no text, cozy fantasy game prop
+```
+
+### 10.5 cos_garland.png — Гирлянда из флажков и жёлудей (ШИРОКАЯ, под потолок)
+
+ВАЖНО: широкая композиция ~5:1, верёвочка слегка провисает дугой.
+
+```
+A long hanging garland on a sagging rope: small triangular fabric flags in
+mustard, burgundy and moss green alternating with brown acorns and tiny
+dried orange slices, gentle downward arc, storybook watercolor illustration
+with gentle ink outlines, warm palette, isolated on a plain solid white
+background, no shadow, no text, cozy fantasy game prop --ar 5:1
+```
+
+### 10.6 cos_snow.png — Снежный вид за окном (оверлей на окно лавки)
+
+ВАЖНО: это заплатка на окно сцены (правый край лавки) — зимняя версия
+того же вида: туманная поляна, но в снегу, вертикальная ~3:4.
+
+```
+A winter forest glade seen through a window: misty snowy meadow, dark
+spruce silhouettes in falling snow, soft blue-grey twilight with one warm
+distant lantern light, gentle snowflakes, storybook watercolor illustration
+with gentle ink outlines, cold palette with a warm accent, vertical
+composition, isolated on a plain solid white background, no window frame,
+no text, no watermark --ar 3:4
+```
+
+Сохранять как `assets/cosmetics/cos_*.png` (или пришли как есть — переименую).
+Места на сцене подгоню сам: укажи только, если что-то по смыслу не совпало.

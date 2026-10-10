@@ -8291,7 +8291,7 @@
       pet_hedgehog: { scene: "square", x: 30, y: 82, size: 62 },
       pet_fox: { scene: "lavka", x: 34, y: 75, size: 90 },
       pet_puppy: { scene: "lavka", x: 87, y: 88, size: 92, flip: true },
-      pet_owl: { scene: "lavka", x: 58, y: 26, size: 64 },
+      pet_owl: { scene: "lavka", x: 55, y: 65, size: 64 },
       pet_horse: { scene: "square", x: 90, y: 90, size: 130 }
     };
     for (const [petId, spot] of Object.entries(PET_SPOTS)) {
@@ -8367,21 +8367,64 @@
       if (content) e.innerHTML = content;
       scenePanel.appendChild(e);
     };
+    const fxImg = (id, style, stub, rot) => {
+      const img = document.createElement("img");
+      img.className = "cos-fx cos-img";
+      img.style.cssText = style + (rot ? `;transform:rotate(${rot}deg)` : "");
+      img.alt = "";
+      img.addEventListener("error", () => {
+        img.remove();
+        stub?.();
+      });
+      img.src = `assets/cosmetics/${id}.webp`;
+      scenePanel.appendChild(img);
+      return img;
+    };
     if (sceneId === "lavka") {
       const cos = new Set(state2.cosmeticsActive || []);
-      if (cos.has("cos_carpet")) fx("cos-carpet", "left:36%;top:78%;width:26%;height:16%");
-      if (cos.has("cos_crest")) fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432");
+      if (cos.has("cos_carpet")) {
+        fxImg("cos_carpet", "left:52%;top:74%;width:30%", () => fx("cos-carpet", "left:36%;top:78%;width:26%;height:16%"), 10);
+      }
+      if (cos.has("cos_crest")) {
+        const wrap = document.createElement("div");
+        wrap.className = "cos-fx cos-crest-wrap";
+        wrap.style.cssText = "left:36%;top:3%;width:200px";
+        const label = document.createElement("span");
+        label.className = "cos-crest-label";
+        label.textContent = "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432";
+        const im = document.createElement("img");
+        im.alt = "";
+        im.style.width = "100%";
+        im.addEventListener("error", () => {
+          wrap.remove();
+          fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432");
+        });
+        im.src = "assets/cosmetics/cos_crest.webp";
+        wrap.append(im, label);
+        scenePanel.appendChild(wrap);
+      }
       if (cos.has("cos_flowers")) {
-        fx("sway", "left:11%;top:33%;font-size:26px", "\u{1F338}");
-        fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}");
-        fx("sway", "left:63%;top:44%;font-size:24px;animation-delay:1s", "\u{1F33C}");
+        const spots = [
+          ["left:8%;top:26%;width:80px", () => fx("sway", "left:11%;top:33%;font-size:26px", "\u{1F338}")],
+          ["left:20%;top:56%;width:64px", () => fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}")],
+          ["left:60%;top:38%;width:72px", () => fx("sway", "left:63%;top:44%;font-size:24px;animation-delay:1s", "\u{1F33C}")]
+        ];
+        for (const [style, stub] of spots) {
+          fxImg("cos_flowers", style + ";animation:fx-sway 3.6s ease-in-out infinite alternate", stub);
+        }
       }
       if (cos.has("cos_fireflies")) {
-        for (let i = 0; i < 5; i++) fx("firefly", `left:${35 + i * 7}%;top:${38 + i % 3 * 8}%;animation-delay:${i * 0.7}s`);
+        fxImg("cos_fireflies", "left:38%;top:34%;width:150px;animation:fx-float 5s ease-in-out infinite alternate", () => {
+          for (let i = 0; i < 5; i++) fx("firefly", `left:${35 + i * 7}%;top:${38 + i % 3 * 8}%;animation-delay:${i * 0.7}s`);
+        });
       }
-      if (cos.has("cos_garland")) fx("sway", "left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px", "\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}");
+      if (cos.has("cos_garland")) {
+        fxImg("cos_garland", "left:12%;top:2%;width:58%;animation:fx-sway 4s ease-in-out infinite alternate;transform-origin:top center", () => fx("sway", "left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px", "\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}"));
+      }
       if (cos.has("cos_snow")) {
-        for (let i = 0; i < 8; i++) fx("snowflake", `left:${86 + i % 4 * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, "\u2744");
+        fxImg("cos_snow", "left:87%;top:28%;width:11%", () => {
+          for (let i = 0; i < 8; i++) fx("snowflake", `left:${86 + i % 4 * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, "\u2744");
+        });
       }
       for (let i = 0; i < 6; i++) fx("dust", `left:${20 + i * 12}%;top:${22 + i % 3 * 14}%;animation-delay:${i * 0.9}s`);
     }

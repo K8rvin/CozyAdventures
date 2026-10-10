@@ -22,7 +22,45 @@
 </header>
 <main id="screen"></main>
 <div id="toast"></div>
+<div id="rotate-hint" hidden>
+  <div class="rh-card">
+    <div class="rh-icon">🔄📱</div>
+    <div class="rh-title">Поверни устройство</div>
+    <div class="rh-text">Лавке удобнее в горизонтальном положении.</div>
+    <div class="rh-actions">
+      <button id="rh-fullscreen" class="primary">📺 Во весь экран (горизонталь)</button>
+      <button id="rh-dismiss" class="ghost small">Продолжить так</button>
+    </div>
+  </div>
+</div>
 <script src="bundle.js"></script>
+<script>
+(function () {
+  var hint = document.getElementById('rotate-hint');
+  var mq = window.matchMedia('(orientation: portrait)');
+  var coarse = window.matchMedia('(pointer: coarse)');
+  var dismissed = false;
+  function update() {
+    hint.hidden = dismissed || !coarse.matches || !mq.matches;
+  }
+  mq.addEventListener?.('change', update);
+  update();
+  document.getElementById('rh-dismiss').addEventListener('click', function () {
+    dismissed = true;
+    update();
+  });
+  document.getElementById('rh-fullscreen').addEventListener('click', function () {
+    var el = document.documentElement;
+    var req = el.requestFullscreen || el.webkitRequestFullscreen;
+    var p = req ? req.call(el) : Promise.reject();
+    Promise.resolve(p).then(function () {
+      return screen.orientation?.lock?.('landscape').catch(function () {});
+    }).catch(function () {});
+    dismissed = true;
+    update();
+  });
+})();
+</script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
