@@ -276,7 +276,7 @@ ITEMS.push(
     id: 'wpn_candle_staff', set: 'attic', name: 'Посох свечного мага', slot: 'weapon', hand: 'two', type: 'staff',
     rarity: 'epic', price: 420,
     stats: { attack: 34, speed: -2 },
-    traits: ['pierce', 'ranged'],
+    traits: ['pierce', 'ranged', 'magic'],
     description: 'Пламя на конце прошивает даже камень. Обе руки заняты.',
   },
   {

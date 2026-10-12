@@ -3,7 +3,7 @@ import { ITEM_BY_ID, RARITY_LABEL } from '../data/items.js';
 import { itemEmoji } from './equipView.js';
 import { describeItem, SLOTS, SLOT_LABEL } from '../core/items.js';
 import {
-  shopStock, buyItem, sellItem, buyCosmetic, toggleCosmetic,
+  shopStock, buyItem, buyCosmetic, toggleCosmetic,
   unseenShopItems, markShopSeen,
 } from '../core/state.js';
 import { COSMETICS, SEASON_LABEL } from '../data/cosmetics.js';
@@ -150,42 +150,6 @@ export function renderShop(container, ctx) {
     { icon: '🧪', label: 'Алхимик', screen: 'shopAlchemy' },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },
   ]));
-
-  // --- Продажа ---
-  const sellPanel = document.createElement('div');
-  sellPanel.className = 'panel';
-  sellPanel.innerHTML = `<h3>Продать из сундука (за полцены)</h3>`;
-  const sellList = document.createElement('div');
-  sellList.className = 'list';
-  if (state.inventory.length === 0) {
-    sellList.innerHTML = '<div class="muted">Сундук пуст.</div>';
-  }
-  state.inventory.forEach((id, index) => {
-    const item = ITEM_BY_ID[id];
-    if (!item) return;
-    const price = Math.max(1, Math.floor(item.price / 2));
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.innerHTML = `
-      <span class="icon">${itemEmoji(item)}</span>
-      <span class="grow"><div class="name">${item.name}</div></span>
-      <span class="price">🪙 ${price}</span>`;
-    const btn = document.createElement('button');
-    btn.className = 'small';
-    btn.textContent = 'Продать';
-    btn.addEventListener('click', () => {
-      const r = sellItem(state, index);
-      if (r.ok) {
-        ctx.toast(`Продано: ${item.name} за ${r.price} монет`);
-        ctx.save();
-        rerenderCurrent();
-      }
-    });
-    row.appendChild(btn);
-    sellList.appendChild(row);
-  });
-  sellPanel.appendChild(sellList);
-  container.appendChild(sellPanel);
 
   // --- Косметика и сезонные наборы (не влияет на силу) ---
   const cosPanel = document.createElement('div');

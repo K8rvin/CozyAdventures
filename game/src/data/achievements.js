@@ -12,7 +12,7 @@ export const ACHIEVEMENTS = [
   },
   {
     id: 'meadow_master', icon: '🌿', name: 'Хозяин опушки',
-    desc: 'Решить все загадки Тихой опушки (md_01–md_12).',
+    desc: 'Решить все загадки Тихой опушки.',
     check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, '0')}`).every((id) => s.puzzlesDone[id]),
   },
   {
@@ -89,6 +89,16 @@ export const ACHIEVEMENTS = [
     id: 'cat_friend', icon: '🐈', name: 'Мурлыкало',
     desc: 'Погладить кота-хранителя 25 раз.',
     check: (s) => (s.stats.catPets || 0) >= 25,
+  },
+  {
+    id: 'first_trophy', icon: '🏆', name: 'Первая полка',
+    desc: 'Поставить первый трофей в кабинете.',
+    check: (s) => (s.trophies || []).length >= 1,
+  },
+  {
+    id: 'cabinet_full', icon: '🦌', name: 'Полный кабинет',
+    desc: 'Собрать все 12 трофеев с боссов миров.',
+    check: (s) => (s.trophies || []).filter((id) => !id.startsWith('mini_')).length >= 12,
   },
 ];
 

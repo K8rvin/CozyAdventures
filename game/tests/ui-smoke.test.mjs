@@ -144,6 +144,11 @@ test('все экраны рендерятся без ошибок', () => {
 
   const screens = [
     () => renderHub(new El('main'), ctx),
+    () => renderHub(new El('main'), ctx, { scene: 'cabinet' }), // кабинет трофеев (пустой)
+    () => { // кабинет с трофеями: открытые и закрытые места
+      state.trophies = ['willow_branch', 'mini_bee'];
+      return renderHub(new El('main'), ctx, { scene: 'cabinet' });
+    },
     () => renderPuzzleList(new El('main'), ctx),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_01' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_12' }),

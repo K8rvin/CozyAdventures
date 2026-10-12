@@ -1,5 +1,5 @@
 // Режим «сбор»: расстановка отряда на поле боя + анимированный бой.
-import { BATTLE_BY_ID } from '../data/battles.js';
+import { BATTLE_BY_ID, OBSTACLE_KINDS } from '../data/battles.js';
 import { ENEMY_BY_ID } from '../data/enemies.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { MERC_BY_ID } from '../data/crew.js';
@@ -35,6 +35,21 @@ function addFieldBg(fieldEl, world) {
   fieldEl.prepend(bg);
 }
 
+// Препятствия боя — непролазные клетки на нейтральной полосе
+function addObstacles(fieldEl, obstacles) {
+  for (const o of obstacles || []) {
+    const kind = OBSTACLE_KINDS[o.kind] || OBSTACLE_KINDS.rock;
+    const el = document.createElement('div');
+    el.className = 'form-obstacle';
+    const [x, y] = cellPos(o.cell[0], o.cell[1]);
+    el.style.left = `${x}%`;
+    el.style.top = `${y}%`;
+    el.textContent = kind.icon;
+    el.title = `${kind.name} — непролазная клетка, стрелки бьют поверх`;
+    fieldEl.appendChild(el);
+  }
+}
+
 export function renderFormation(container, ctx, params) {
   const battle = BATTLE_BY_ID[params.id];
   if (!battle || !battleAvailable(ctx.state, battle.id)) { ctx.go('battles'); return; }
@@ -52,6 +67,7 @@ export function renderFormation(container, ctx, params) {
   const field = document.createElement('div');
   field.className = 'form-field';
   addFieldBg(field, battle.world);
+  addObstacles(field, battle.obstacles);
   prepPanel.appendChild(field);
 
   const units = [
@@ -281,6 +297,7 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
     const field2 = document.createElement('div');
     field2.className = 'form-field battle';
     addFieldBg(field2, world);
+    addObstacles(field2, result.formation?.obstacles);
     container.appendChild(field2);
 
     const controls = document.createElement('div');
@@ -378,18 +395,20 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
       const atk = figOf(e.fromUid);
       const def = figOf(e.toUid);
       if (!atk || !def) return;
-      if (e.ranged) {
-        // Стрела летит от атакующего к цели
-        const arrow = document.createElement('div');
-        arrow.className = 'projectile';
-        arrow.textContent = e.elem === 'fire' ? '🔥' : '➹';
-        arrow.style.left = `${atk.x}%`;
-        arrow.style.top = `${atk.y}%`;
-        field2.appendChild(arrow);
+      if (e.ranged || e.magic) {
+        // Снаряд летит от атакующего к цели: магический болт, стихия или стрела
+        const proj = document.createElement('div');
+        proj.className = 'projectile' + (e.magic ? ' magic' : '');
+        proj.textContent = e.magic
+          ? (e.elem === 'fire' ? '🔥' : e.elem === 'storm' ? '⚡' : '✨')
+          : (e.elem === 'fire' ? '🔥' : e.elem === 'storm' ? '⚡' : '➹');
+        proj.style.left = `${atk.x}%`;
+        proj.style.top = `${atk.y}%`;
+        field2.appendChild(proj);
         requestAnimationFrame(() => {
-          arrow.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
+          proj.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
         });
-        setTimeout(() => arrow.remove(), 340);
+        setTimeout(() => proj.remove(), 340);
         setTimeout(() => hitLand(def, e), 320);
       } else {
         // Выпад: фигурка несётся к цели и возвращается

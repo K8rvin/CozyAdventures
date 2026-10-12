@@ -85,6 +85,7 @@ export const WORLD = {
     },
     {
       id: 'nm_03', name: 'Тени под прилавком', world: 'nm',
+      obstacles: [{ cell: [3, 1], kind: 'lantern' }],
       enemies: [{ id: 'nm_shadow', scale: 1.53 }, { id: 'nm_moth', scale: 1.53 }],
       unlockAfter: 'nm_02',
       tip: 'Яд и сон в паре. Сначала выбей мотылька.',
@@ -115,6 +116,7 @@ export const WORLD = {
     },
     {
       id: 'nm_08', name: 'Ядовитый туман ароматов', world: 'nm',
+      obstacles: [{ cell: [2, 0], kind: 'crate' }, { cell: [5, 2], kind: 'crate' }],
       enemies: [{ id: 'nm_shadow', scale: 1.6 }, { id: 'nm_lantern', scale: 1.59 }, { id: 'nm_garland', scale: 1.59 }],
       unlockAfter: 'nm_07',
       tip: 'Яд, огонь и лечащий змей. Сначала выбей змея.',
@@ -145,6 +147,7 @@ export const WORLD = {
     },
     {
       id: 'nm_13', name: 'Масляный пожар', world: 'nm',
+      obstacles: [{ cell: [4, 1], kind: 'lantern' }],
       enemies: [{ id: 'nm_lantern', scale: 1.67 }, { id: 'nm_lantern', scale: 1.66 }, { id: 'nm_garland', scale: 1.66 }],
       unlockAfter: 'nm_12',
       tip: 'Огонь и лечащий змей. Сначала змей, потом фонари.',
@@ -169,6 +172,7 @@ export const WORLD = {
     },
     {
       id: 'nm_17', name: 'Сказки после полуночи', world: 'nm',
+      obstacles: [{ cell: [3, 2], kind: 'crate' }],
       enemies: [{ id: 'nm_teller', scale: 1.7 }, { id: 'nm_teller', scale: 1.7 }, { id: 'nm_moth', scale: 1.7 }],
       unlockAfter: 'nm_16',
       tip: 'Два сказителя лечат друг друга. Бей одного до конца.',

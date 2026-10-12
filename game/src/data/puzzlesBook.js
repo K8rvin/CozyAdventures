@@ -1,79 +1,82 @@
-// Уровни мира 3 «Книжный чердак», механика «Восстановление фразы».
-// Буквы светящейся фразы рассыпались по странице-змейке; кляксы съели часть клеток.
-// Ход — поменять местами две буквы. ✦ — неподвижный разделитель.
-// Каждый уровень проверен в tests/book.test.mjs (валидность + подсказки решают).
+// Уровни мира 3 «Книжный чердак»: две механики.
+// «Загадка Хранителя» (riddle, bk_01–bk_05): народная загадка, ответ — ОДНО
+// короткое слово (≤6 букв); попытки с расцветкой (на месте / есть / нет).
+// «Строка» (hang, bk_06–bk_10): стих классика (общественное достояние) без
+// последней строки; тап по букве алфавита открывает её во всей строке,
+// промахи топят свечу (6 ступеней); погасшая страница — минус 10% монет.
+// Каждый уровень проверен в tests/riddle.test.mjs и tests/hangman.test.mjs.
 
 export const BOOK_PUZZLES = [
   {
-    id: 'bk_01', world: 'attic', mechanic: 'book', name: 'Первое слово', difficulty: 1,
-    grid: [3, 1], blots: [],
-    phrase: 'МИР', scrambled: 'РИМ',
+    id: 'bk_01', world: 'attic', mechanic: 'riddle', name: 'Первое слово', difficulty: 1,
+    riddle: ['Молчу годами, пыльной сплю в сторонке —', 'открой меня, и заговорю тихонько.'],
+    answer: 'КНИГА',
     rewards: [{ type: 'coins', amount: 90 }],
-    intro: 'Буквы вежливо ждут, когда их вернут на место. Тапни две — они поменяются.',
+    intro: 'Хранитель загадал народную загадку. Тапай буквы алфавита — они лягут в окошки ответа.',
   },
   {
-    id: 'bk_02', world: 'attic', mechanic: 'book', name: 'Полка сказок', difficulty: 1,
-    grid: [5, 1], blots: [],
-    phrase: 'КНИГА', scrambled: 'АГИНК',
+    id: 'bk_02', world: 'attic', mechanic: 'riddle', name: 'Огонёк', difficulty: 1,
+    riddle: ['Плачу огнём и от слёз своих таю,', 'а тьму из лавки прогоняю.'],
+    answer: 'СВЕЧА',
     rewards: [{ type: 'coins', amount: 95 }],
-    intro: 'Пять букв, одно уютное слово.',
+    intro: 'Пять букв, одна тёплая отгадка.',
   },
   {
-    id: 'bk_03', world: 'attic', mechanic: 'book', name: 'Огарок', difficulty: 2,
-    grid: [3, 2], blots: [[2, 1]],
-    phrase: 'СВЕЧА', scrambled: 'АЧЕВС',
+    id: 'bk_03', world: 'attic', mechanic: 'riddle', name: 'Лесной клад', difficulty: 2,
+    riddle: ['Мал, удал — сквозь землю прошёл,', 'красну шапочку нашёл.'],
+    answer: 'ГРИБ',
     rewards: [{ type: 'coins', amount: 100 }],
-    intro: 'Клякса съела угол страницы. Буквы читаются змейкой.',
+    intro: 'Короткая отгадка с опушки.',
   },
   {
-    id: 'bk_04', world: 'attic', mechanic: 'book', name: 'Вечерний ритуал', difficulty: 2,
-    grid: [4, 2], blots: [[3, 1]],
-    phrase: 'ЧАЙ✦ДОМ', scrambled: 'ДОМ✦ЙАЧ',
+    id: 'bk_04', world: 'attic', mechanic: 'riddle', name: 'Тёплая горница', difficulty: 2,
+    riddle: ['Без окон, без дверей —', 'полна горница людей.'],
+    answer: 'ОГУРЕЦ',
     rewards: [{ type: 'coins', amount: 110 }],
-    intro: 'Две строчки через звёздный разделитель. ✦ всегда остаётся на месте.',
+    intro: 'Загадка с грядки. В лавке её знают все.',
   },
   {
-    id: 'bk_05', world: 'attic', mechanic: 'book', name: 'Ночной зов', difficulty: 2,
-    grid: [5, 2], blots: [],
-    phrase: 'ЛУНА✦ЗОВЁТ', scrambled: 'АНУЛ✦ТЁВОЗ',
+    id: 'bk_05', world: 'attic', mechanic: 'riddle', name: 'Ходики', difficulty: 2,
+    riddle: ['Без ног — бегут,', 'без рук — зовут.'],
+    answer: 'ЧАСЫ',
     rewards: [{ type: 'coins', amount: 115 }],
-    intro: 'Луна зовёт. Даже буквы это чувствуют.',
+    intro: 'Тикают на стене мастерской.',
   },
   {
-    id: 'bk_06', world: 'attic', mechanic: 'book', name: 'Шёпот страниц', difficulty: 3,
-    grid: [5, 3], blots: [],
-    phrase: 'СТРАНИЦЫ✦ШЕПЧУТ', scrambled: 'ЫЦИНАРТС✦ТУЧПЕШ',
+    id: 'bk_06', world: 'attic', mechanic: 'hang', name: 'За окном', difficulty: 3,
+    riddle: ['Белая берёза', 'под моим окном', 'принакрылась снегом…'],
+    answer: 'ТОЧНО✦СЕРЕБРОМ', author: 'С. А. Есенин',
     rewards: [{ type: 'coins', amount: 130 }, { type: 'item', id: 'rng_ink' }],
     rewards_extra_note: true,
-    intro: 'Длинная фраза. Собирай её слово за словом.',
+    intro: 'Стихотворение без последней строки. Тапай буквы алфавита — верная откроется везде, промах топит свечу.',
   },
   {
-    id: 'bk_07', world: 'attic', mechanic: 'book', name: 'Чернила и сон', difficulty: 3,
-    grid: [4, 4], blots: [[0, 3], [1, 3], [2, 3]],
-    phrase: 'ЧЕРНИЛА✦И✦СОН', scrambled: 'АЛИНРЕЧ✦И✦НОС',
+    id: 'bk_07', world: 'attic', mechanic: 'hang', name: 'Ночные звуки', difficulty: 3,
+    riddle: ['Шёпот, робкое дыханье,', 'трели соловья,', 'серебро и колыханье…'],
+    answer: 'СОННОГО✦РУЧЬЯ', author: 'А. А. Фет',
     rewards: [{ type: 'coins', amount: 135 }],
-    intro: 'Три кляксы внизу. Два разделителя держат фразу.',
+    intro: 'Ночная музыка без последнего аккорда. Свеча горит — не спеши с редкими буквами.',
   },
   {
-    id: 'bk_08', world: 'attic', mechanic: 'book', name: 'Закладка мечты', difficulty: 3,
-    grid: [4, 4], blots: [[0, 3], [3, 3]],
-    phrase: 'ЗАКЛАДКА✦МЕЧТЫ', scrambled: 'АДКАЛАКЗ✦ЫТЧЕМ',
+    id: 'bk_08', world: 'attic', mechanic: 'hang', name: 'Буря', difficulty: 4,
+    riddle: ['Буря мглою небо кроет,', 'вихри снежные крутя;', 'то, как зверь, она завоет…'],
+    answer: 'ТО✦ЗАПЛАЧЕТ✦КАК✦ДИТЯ', author: 'А. С. Пушкин',
     rewards: [{ type: 'coins', amount: 145 }],
-    intro: 'Закладка выпала. Верни мечту на страницу.',
+    intro: 'Четыре слова последней строки. Ритм подскажет, алфавит откроет.',
   },
   {
-    id: 'bk_09', world: 'attic', mechanic: 'book', name: 'Пыль веков', difficulty: 4,
-    grid: [4, 4], blots: [[0, 3]],
-    phrase: 'ПЫЛЬ✦ВЕКОВ✦ЖДЁТ', scrambled: 'ЬЛЫП✦ВОКЕВ✦ТЁДЖ',
+    id: 'bk_09', world: 'attic', mechanic: 'hang', name: 'Лукоморье', difficulty: 4,
+    riddle: ['У Лукоморья дуб зелёный;', 'златая цепь на дубе том;', 'и днём и ночью кот учёный…'],
+    answer: 'ВСЁ✦ХОДИТ✦ПО✦ЦЕПИ✦КРУГОМ', author: 'А. С. Пушкин',
     rewards: [{ type: 'coins', amount: 160 }],
-    intro: 'Три слова, три передышки. Пыль ждать умеет.',
+    intro: 'Кот-хранитель одобряет эту страницу.',
   },
   {
-    id: 'bk_10', world: 'attic', mechanic: 'book', name: 'Хранитель тишины', difficulty: 5,
-    grid: [5, 4], blots: [[0, 3], [1, 3], [3, 3], [4, 3]],
-    phrase: 'ХРАНИТЕЛЬ✦ТИШИНЫ', scrambled: 'ЬЛЕТИНАРХ✦ЫНИШИТ',
+    id: 'bk_10', world: 'attic', mechanic: 'hang', name: 'Начало мая', difficulty: 5,
+    riddle: ['Люблю грозу в начале мая,', 'когда весенний, первый гром,', 'как бы резвяся и играя…'],
+    answer: 'ГРОХОЧЕТ✦В✦НЕБЕ✦ГОЛУБОМ', author: 'Ф. И. Тютчев',
     rewards: [{ type: 'coins', amount: 220 }, { type: 'seals', amount: 1 }],
-    intro: 'Главная фраза чердака. Шестнадцать букв тишины.',
+    intro: 'Главная страница чердака. Девятнадцать букв грома и одна свеча.',
   },
 ];
 

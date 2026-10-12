@@ -77,6 +77,7 @@ export const WORLD = {
     },
     {
       id: 'sw_04', name: 'Ягодная поляна', world: 'sw',
+      obstacles: [{ cell: [4, 1], kind: 'log' }],
       enemies: [{ id: 'sw_glow_bush', scale: 1.64 }, { id: 'sw_witch_cat', scale: 1.64 }],
       unlockAfter: 'sw_03',
       tip: 'Светоягодник лечит своих — сруби его первым.',
@@ -110,6 +111,7 @@ export const WORLD = {
     },
     {
       id: 'sw_09', name: 'Болотный патруль', world: 'sw',
+      obstacles: [{ cell: [3, 0], kind: 'mushroom' }, { cell: [3, 2], kind: 'mushroom' }],
       enemies: [{ id: 'sw_frog_guardian', scale: 1.71 }, { id: 'sw_bog_spirit', scale: 1.71 }],
       unlockAfter: 'sw_08',
       tip: 'Толстая шкура спереди, страх из тумана. Амулет отваги пригодится.',
@@ -149,6 +151,7 @@ export const WORLD = {
     },
     {
       id: 'sw_14', name: 'Скрипучий гость', world: 'sw',
+      obstacles: [{ cell: [4, 1], kind: 'log' }],
       enemies: [{ id: 'sw_hut_walker', scale: 1.78 }, { id: 'sw_doll_trickster', scale: 1.78 }],
       unlockAfter: 'sw_13',
       tip: 'Избушка топает, кукла напевает. Сон и огонь в одном бою.',
@@ -182,6 +185,7 @@ export const WORLD = {
     },
     {
       id: 'sw_18', name: 'Ведьмин сбор', world: 'sw',
+      obstacles: [{ cell: [2, 1], kind: 'mushroom' }, { cell: [5, 1], kind: 'log' }],
       enemies: [
         { id: 'sw_witch_cat', scale: 1.84 }, { id: 'sw_doll_trickster', scale: 1.84 },
         { id: 'sw_glow_bush', scale: 1.84 },

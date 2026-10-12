@@ -1,5 +1,28 @@
 // Боевые столкновения мира «Тихая опушка»: 5 обычных + босс.
 // unlock: индекс предыдущего боя, который надо пройти.
+
+// Препятствия на поле боя: непролазные клетки (бойцы обходят, стрелки и
+// кастеры бьют поверх). У боя 1–2 штуки, клетки — только в нейтральной
+// полосе (колонки 2–5), чтобы не мешать расстановке.
+export const OBSTACLE_KINDS = {
+  rock: { icon: '🪨', name: 'Валун' },
+  log: { icon: '🪵', name: 'Поваленное бревно' },
+  mushroom: { icon: '🍄', name: 'Гриб-великан' },
+  crate: { icon: '📦', name: 'Ящик' },
+  barrel: { icon: '🛢️', name: 'Бочка' },
+  books: { icon: '📚', name: 'Стопка книг' },
+  lantern: { icon: '🏮', name: 'Фонарь на столбе' },
+  signpost: { icon: '🪧', name: 'Старый указатель' },
+  star: { icon: '⭐', name: 'Упавшая звезда' },
+  bones: { icon: '🦴', name: 'Кости гиганта' },
+  crystal: { icon: '🔷', name: 'Кристалл' },
+  bamboo: { icon: '🎋', name: 'Бамбуковая рощица' },
+  coral: { icon: '🪸', name: 'Коралл' },
+  shell: { icon: '🐚', name: 'Гигантская раковина' },
+  gear: { icon: '⚙️', name: 'Шестерня' },
+  hourglass: { icon: '⏳', name: 'Песочные часы' },
+};
+
 export const BATTLES = [
   {
     id: 'bt_slimes', name: 'Лужа у тропинки', world: 'meadow',
@@ -16,6 +39,7 @@ export const BATTLES = [
   {
     id: 'bt_moths', name: 'Поляна мотыльков', world: 'meadow',
     enemies: ['moth_night', 'moth_night', 'slime_meadow'],
+    obstacles: [{ cell: [3, 1], kind: 'log' }],
     unlockAfter: 'bt_bees',
     tip: 'Пыльца мотыльков усыпляет. Шлем сонного барсука или зелье бодрости.',
   },
@@ -34,12 +58,14 @@ export const BATTLES = [
   {
     id: 'bt_fireflies', name: 'Россыпь светлячков', world: 'meadow',
     enemies: ['moth_night', 'bee_wild', 'moth_night', 'bee_wild'],
+    obstacles: [{ cell: [4, 1], kind: 'rock' }],
     unlockAfter: 'bt_golem',
     tip: 'Рой мотыльков и пчёл: сон и яд вместе. Шлем барсука и перчатки травницы.',
   },
   {
     id: 'bt_overgrowth', name: 'Грибная завалинка', world: 'meadow',
     enemies: ['golem_moss', 'spirit_forest', 'spirit_forest'],
+    obstacles: [{ cell: [4, 0], kind: 'mushroom' }, { cell: [4, 2], kind: 'mushroom' }],
     unlockAfter: 'bt_fireflies',
     tip: 'Голем и два духа. Замедление опасно — берите скорость.',
   },
@@ -68,6 +94,7 @@ BATTLES.push(
   {
     id: 'bt_bandits', name: 'Застава у склада', world: 'town',
     enemies: ['bandit', 'rat_thief', 'bandit'],
+    obstacles: [{ cell: [3, 1], kind: 'crate' }],
     unlockAfter: 'bt_rats',
     tip: 'Разбойники бьют сильно. Хорошая броня и щит — как никогда кстати.',
   },
@@ -86,6 +113,7 @@ BATTLES.push(
   {
     id: 'bt_town_mix', name: 'Суматоха на рынке', world: 'town',
     enemies: ['bandit', 'ghost_guard', 'rat_thief'],
+    obstacles: [{ cell: [2, 0], kind: 'barrel' }, { cell: [5, 2], kind: 'crate' }],
     unlockAfter: 'bt_ghost_watch',
     tip: 'Смешанная стая: яд, страх и тяжёлые удары. Готовься как следует.',
   },
@@ -104,6 +132,7 @@ BATTLES.push(
   {
     id: 'bt_tourney', name: 'Турнирная площадь', world: 'town',
     enemies: ['golem_wander', 'bandit', 'bandit'],
+    obstacles: [{ cell: [4, 1], kind: 'barrel' }],
     unlockAfter: 'bt_cellar',
     tip: 'Каменная стена и два клинка за ней. Пробивай тяжёлым.',
   },
@@ -126,6 +155,7 @@ BATTLES.push(
   {
     id: 'bk_moths', name: 'Моль в фолианте', world: 'attic',
     enemies: ['book_moth', 'book_moth', 'ink_blot'],
+    obstacles: [{ cell: [3, 0], kind: 'books' }],
     unlockAfter: 'bk_blots',
     tip: 'Книжная моль усыпляет, как и её лесные сёстры. Шлем барсука всё ещё в цене.',
   },
@@ -156,12 +186,14 @@ BATTLES.push(
   {
     id: 'bt_archive', name: 'Пыльный архив', world: 'attic',
     enemies: ['illustration', 'ink_blot', 'ink_blot'],
+    obstacles: [{ cell: [4, 1], kind: 'books' }, { cell: [3, 2], kind: 'books' }],
     unlockAfter: 'bt_reading',
     tip: 'Гравюра и чернила. Яд замедляет — держи отвар наготове.',
   },
   {
     id: 'bt_inkwell', name: 'Чернильный колодец', world: 'attic',
     enemies: ['ink_blot', 'paper_spirit', 'ink_blot', 'paper_spirit'],
+    obstacles: [{ cell: [2, 1], kind: 'books' }, { cell: [5, 1], kind: 'books' }],
     unlockAfter: 'bt_archive',
     tip: 'Четверо обитателей чердака разом. Последняя проверка перед Хранителем.',
   },
@@ -189,6 +221,7 @@ BATTLES.push(
     enemies: [
       { id: 'rat_thief', scale: 1.15 }, { id: 'rat_thief', scale: 1.15 }, { id: 'book_moth', scale: 1.15 },
     ],
+    obstacles: [{ cell: [3, 1], kind: 'signpost' }],
     unlockAfter: 'ex_01',
     tip: 'Быстрые и ядовитые, а моль усыпляет. Держи зелья наготове.',
   },
@@ -213,6 +246,7 @@ BATTLES.push(
     enemies: [
       { id: 'ink_blot', scale: 1.3 }, { id: 'bee_wild', scale: 1.3 }, { id: 'rat_thief', scale: 1.3 },
     ],
+    obstacles: [{ cell: [4, 0], kind: 'lantern' }, { cell: [4, 2], kind: 'lantern' }],
     unlockAfter: 'ex_04',
     tip: 'Яд со всех сторон. Амулет противоядия — обязательно.',
   },
@@ -237,6 +271,7 @@ BATTLES.push(
     enemies: [
       { id: 'golem_wander', scale: 1.4 }, { id: 'ink_blot', scale: 1.4 }, { id: 'book_moth', scale: 1.4 },
     ],
+    obstacles: [{ cell: [3, 2], kind: 'signpost' }],
     unlockAfter: 'ex_07',
     tip: 'Всё и сразу: стена, яд и сон. Последняя проверка перед Стражем.',
   },

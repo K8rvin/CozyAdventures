@@ -77,6 +77,7 @@ export const WORLD = {
     },
     {
       id: 'mist_04', name: 'Клык и песок', world: 'mist',
+      obstacles: [{ cell: [3, 1], kind: 'gear' }],
       enemies: [{ id: 'mist_cog_hound', scale: 2.25 }, { id: 'mist_sand_wisp', scale: 2.25 }],
       unlockAfter: 'mist_03',
       tip: 'Гончая бьёт прицельно, огонёк тянет время. Убей гончую первой.',
@@ -113,6 +114,7 @@ export const WORLD = {
     },
     {
       id: 'mist_09', name: 'Клешни и клыки', world: 'mist',
+      obstacles: [{ cell: [4, 0], kind: 'gear' }, { cell: [4, 2], kind: 'hourglass' }],
       enemies: [{ id: 'mist_rust_automaton', scale: 2.34 }, { id: 'mist_cog_hound', scale: 2.34 }],
       unlockAfter: 'mist_08',
       tip: 'Танк прикрывает меткую гончую. Сфокусируйся на гончей.',
@@ -146,6 +148,7 @@ export const WORLD = {
     },
     {
       id: 'mist_14', name: 'Двойной гон', world: 'mist',
+      obstacles: [{ cell: [4, 1], kind: 'hourglass' }],
       enemies: [{ id: 'mist_cog_hound', scale: 2.3 }, { id: 'mist_cog_hound', scale: 2.3 }],
       unlockAfter: 'mist_13',
       tip: 'Две гончие бьют без промаха. Броня и уклонение — твои друзья.',
@@ -170,6 +173,7 @@ export const WORLD = {
     },
     {
       id: 'mist_18', name: 'Дежурство эха', world: 'mist',
+      obstacles: [{ cell: [3, 0], kind: 'hourglass' }, { cell: [3, 2], kind: 'gear' }],
       enemies: [
         { id: 'mist_echo_keeper', scale: 2.35 }, { id: 'mist_echo_keeper', scale: 2.35 },
         { id: 'mist_time_warden', scale: 2.35 },

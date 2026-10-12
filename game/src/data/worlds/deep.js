@@ -76,6 +76,7 @@ export const WORLD = {
     },
     {
       id: 'deep_04', name: 'Тень в расщелине', world: 'deep',
+      obstacles: [{ cell: [3, 1], kind: 'coral' }],
       enemies: [{ id: 'deep_shadow', scale: 2.14 }, { id: 'deep_shadow', scale: 2.14 }],
       unlockAfter: 'deep_03',
       tip: 'Тени наводят ужас. Амулет отваги вернёт рыцарю твёрдость руки.',
@@ -108,6 +109,7 @@ export const WORLD = {
     },
     {
       id: 'deep_09', name: 'Сады кораллов', world: 'deep',
+      obstacles: [{ cell: [4, 0], kind: 'coral' }, { cell: [4, 2], kind: 'shell' }],
       enemies: [{ id: 'deep_coral_golem', scale: 2.2 }, { id: 'deep_current_spirit', scale: 2.2 }],
       unlockAfter: 'deep_08',
       tip: 'Яд коралла и стягующее течение. Противоядие и скорость.',
@@ -141,6 +143,7 @@ export const WORLD = {
     },
     {
       id: 'deep_14', name: 'Коралловый хор', world: 'deep',
+      obstacles: [{ cell: [4, 1], kind: 'shell' }],
       enemies: [{ id: 'deep_coral_golem', scale: 2.26 }, { id: 'deep_siren', scale: 2.26 }],
       unlockAfter: 'deep_13',
       tip: 'Голем держит удар, пока русалка поёт. Буди рыцаря побыстрее.',
@@ -167,6 +170,7 @@ export const WORLD = {
     },
     {
       id: 'deep_18', name: 'Крепость коралла', world: 'deep',
+      obstacles: [{ cell: [2, 2], kind: 'coral' }, { cell: [5, 0], kind: 'shell' }],
       enemies: [{ id: 'deep_coral_golem', scale: 2.31 }, { id: 'deep_coral_golem', scale: 2.31 }],
       unlockAfter: 'deep_17',
       tip: 'Два коралловых голема: яд и толстые панцири. Тяжёлое оружие в руки.',

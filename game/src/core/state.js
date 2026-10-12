@@ -12,6 +12,7 @@ import { CANDLE_PUZZLES } from '../data/puzzlesCandle.js';
 import { FLOW_PUZZLES } from '../data/puzzlesFlow.js';
 import { BREW_PUZZLES } from '../data/puzzlesBrew.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
+import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
 import { COSMETIC_BY_ID } from '../data/cosmetics.js';
 import { RECIPES, RECIPE_BY_ID } from '../data/recipes.js';
@@ -47,6 +48,8 @@ export function newGame() {
     seekOverrides: {},      // правки хотспотов искалок из редактора: levelId -> groups
     shopSeenStock: [],      // id товаров прилавка, которые игрок уже видел
     achievements: {},       // id -> timestamp разблокировки
+    trophies: [],           // id трофеев кабинета (за боссов и розыск)
+    trophiesSeen: [],       // id трофеев, которые игрок уже посмотрел в кабинете
     journal: [],            // дневник кота: последние события [{icon, text, at}]
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
@@ -72,6 +75,8 @@ function migrate(state) {
   state.lastCatGift ??= null;
   state.stats.catPets ||= 0;
   state.achievements ||= {};
+  state.trophies ||= [];
+  state.trophiesSeen ||= [];
   state.journal ||= [];
   state.tutorial ||= {};
   state.tutorialSkipped ??= false;
@@ -385,6 +390,8 @@ const CAMPAIGN_ORDER = [
   'pp_01', 'tea_01', 'pp_02', 'tea_02', 'pp_03', 'tea_03',
   'pp_04', 'tea_04', 'pp_05', 'tea_05', 'pp_06', 'tea_06',
   'pp_07', 'tea_07', 'pp_08', 'tea_08',
+  // Вторая чайная половина: новые ингредиенты и жар как условие заказа
+  'tea_09', 'tea_10', 'tea_11', 'tea_12', 'tea_13', 'tea_14', 'tea_15', 'tea_16',
   // Искалки новых миров
   'sk_nm_01', 'sk_sw_01', 'sk_sf_01', 'sk_ash_01',
   'sk_cr_01', 'sk_jade_01', 'sk_deep_01', 'sk_mist_01',
@@ -467,6 +474,8 @@ export function completePuzzle(state, puzzleId, info = {}) {
   const puzzle = findPuzzle(state, puzzleId);
   if (!puzzle) return null;
   const firstTime = !state.puzzlesDone[puzzleId];
+  // Штраф за перебор (загадки): уменьшает монетную часть награды
+  const coinFactor = info.coinFactor ?? 1;
   // Заказ дня определяем ДО отметки о решении: после неё загадка выпадает
   // из списка открытых, dailyPuzzle укажет на другую и бонус никогда не дойдёт.
   const isDaily = firstTime && state.lastDailyBonus !== todayKey() && isDailyPuzzle(state, puzzleId);
@@ -490,12 +499,14 @@ export function completePuzzle(state, puzzleId, info = {}) {
   }
   if (!firstTime) {
     const coins = rewards.find((r) => r.type === 'coins');
-    const amount = coins ? Math.round(coins.amount / 3) : 10;
+    const amount = coins ? Math.round(coins.amount / 3 * coinFactor) : 10;
     addCoins(state, amount);
     return [{ type: 'coins', amount }];
   }
   const granted = grantRewards(state, rewards.map((r) => (
-    dailyBonus && r.type === 'coins' ? { ...r, amount: r.amount * 2 } : r
+    r.type === 'coins'
+      ? { ...r, amount: Math.round(r.amount * (dailyBonus ? 2 : 1) * coinFactor) }
+      : r
   )));
   return granted;
 }
@@ -767,12 +778,14 @@ function runFormationBattle(state, battle, seed) {
   const foes = entries.map((e, i) => makeFormationEnemy(e.id, e.scale, slots[i], i));
 
   // Начальные клетки для расстановки фигурок — ДО прогона боя
+  const obstacles = battle.obstacles || [];
   const initialFormation = {
     allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
     foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] })),
+    obstacles,
   };
 
-  const result = simulateFormationBattle(allies, foes, seed, state.settings.tactic || 'balance');
+  const result = simulateFormationBattle(allies, foes, seed, state.settings.tactic || 'balance', obstacles);
 
   const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
   for (const used of usedIds) {
@@ -799,6 +812,13 @@ function runFormationBattle(state, battle, seed) {
       }
     }
     grantRewards(state, rewards, {});
+    // Трофей кабинета за первую победу над боем (боссы и розыскные листы)
+    const trophy = TROPHY_BY_BATTLE[battle.id];
+    if (trophy && !state.trophies.includes(trophy.id)) {
+      state.trophies.push(trophy.id);
+      rewards.push({ type: 'note', text: `Трофей «${trophy.name}» займёт своё место в кабинете.` });
+      journalPush(state, '🏆', `Новый трофей в кабинете: «${trophy.name}» (${battle.name}).`);
+    }
     if (traits.includes('heal_after_battle')) {
       rewards.push({ type: 'note', text: 'Амулет очага согрел рыцаря после боя.' });
     }

@@ -1,12 +1,13 @@
 // Движок головоломки «Чай для путника». Чистая логика, без DOM.
 // Путник просит отвар точного цвета и нужной теплоты. Ингредиенты меняют
-// цвет (R,G,B 0..100) и жар (0..100). Превысил жар — отвар перегрет.
-// Цель: попасть в цвет с допуском и не выйти за максимум жара.
+// цвет (R,G,B 0..100) и жар (0..100). Цель: попасть в цвет с допуском
+// и держать жар в диапазоне заказа (перегрел — горько, остыл — холодно).
 //
 // Уровень:
 //   target: { r, g, b }     — целевой цвет
 //   tolerance: число        — допуск по каждому каналу
-//   maxHeat: число          — порог перегрева
+//   maxHeat: число          — верх диапазона жара (перегрев выше)
+//   minHeat: число          — низ диапазона (0 = путнику всё равно, лишь бы не горячо)
 //   ingredients: [{ id, name, icon, dr, dg, db, heat, uses }]
 // Ход: добавить ингредиент (пока есть uses).
 
@@ -73,11 +74,14 @@ export function teaStatus(state) {
     b: Math.abs(state.color.b - t.b),
   };
   const colorOk = diffs.r <= tol && diffs.g <= tol && diffs.b <= tol;
+  const minHeat = level.minHeat || 0;
   const overheated = state.heat > level.maxHeat;
+  const tooCold = state.heat < minHeat;
   return {
-    colorOk, overheated, diffs,
-    solved: colorOk && !overheated,
-    heat: state.heat, maxHeat: level.maxHeat,
+    colorOk, overheated, tooCold, diffs,
+    heatOk: !overheated && !tooCold,
+    solved: colorOk && !overheated && !tooCold,
+    heat: state.heat, maxHeat: level.maxHeat, minHeat,
   };
 }
 
@@ -105,7 +109,7 @@ export function solveTea(level) {
     const ok = Math.abs(color.r - t.r) <= level.tolerance &&
       Math.abs(color.g - t.g) <= level.tolerance &&
       Math.abs(color.b - t.b) <= level.tolerance &&
-      heat <= level.maxHeat;
+      heat <= level.maxHeat && heat >= (level.minHeat || 0);
     if (ok) solutions.push({ counts: [...assign], heat });
   }
 
@@ -151,6 +155,8 @@ export function validateTeaLevel(level) {
   if (!level.target) problems.push('нет целевого цвета');
   if (!(level.tolerance >= 0)) problems.push('нет допуска');
   if (!(level.maxHeat > 0)) problems.push('нет порога жара');
+  if ((level.minHeat || 0) > level.maxHeat) problems.push('minHeat больше maxHeat');
+  if ((level.minHeat || 0) < 0) problems.push('minHeat отрицательный');
   if (!level.ingredients || level.ingredients.length < 2) problems.push('мало ингредиентов');
   const { count } = solveTea(level);
   if (count === 0) problems.push('нет решения');

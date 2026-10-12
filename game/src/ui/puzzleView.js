@@ -9,7 +9,8 @@ import {
 } from '../core/state.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { renderShelfPuzzle } from './shelfView.js';
-import { renderBookPuzzle } from './bookView.js';
+import { renderRiddlePuzzle } from './riddleView.js';
+import { renderHangmanPuzzle } from './hangmanView.js';
 import { renderSeekPuzzle } from './seekView.js';
 import { renderPathPuzzle } from './pathView.js';
 import { renderTeaPuzzle } from './teaView.js';
@@ -107,8 +108,11 @@ export function renderPuzzle(container, ctx, params) {
   if (level.mechanic === 'shelf') {
     return renderShelfPuzzle(container, ctx, level);
   }
-  if (level.mechanic === 'book') {
-    return renderBookPuzzle(container, ctx, level);
+  if (level.mechanic === 'riddle') {
+    return renderRiddlePuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'hang') {
+    return renderHangmanPuzzle(container, ctx, level);
   }
   if (level.mechanic === 'seek') {
     return renderSeekPuzzle(container, ctx, level);

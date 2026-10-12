@@ -120,8 +120,7 @@ button.ghost { background: transparent; }
 .badge.epic { color: #d3a8ff; }
 
 /* Экран головоломки */
-.puzzle-wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
-.puzzle-canvas-box {
+.puzzle-wrap { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }.puzzle-canvas-box {
   background: #241b12;
   border-radius: 14px;
   padding: 10px;
@@ -130,6 +129,288 @@ button.ghost { background: transparent; }
 canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .puzzle-side { flex: 1; min-width: 220px; }
 .puzzle-status { font-size: 16px; margin-bottom: 10px; }
+
+/* --- Шифр чернил (криптограмма) --- */
+.cipher-page {
+  background: #4d4231;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 22px;
+  align-content: flex-start;
+  max-width: 100%;
+}
+.cipher-word { display: flex; gap: 6px; flex-wrap: nowrap; }
+.cipher-cell {
+  width: 52px;
+  padding: 6px 0 4px;
+  border-radius: 10px;
+  background: #6b5a3d;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.cipher-cell:hover { transform: translateY(-2px); }
+.cipher-cell.selected { border-color: #ffca7a; }
+.cipher-cell.locked {
+  background: #5d4a22;
+  border-color: #ffca7a66;
+  cursor: default;
+}
+.cipher-rune {
+  font-size: 28px;
+  line-height: 1.1;
+  color: #f3e6cf;
+  text-shadow: 0 0 8px rgba(255, 202, 122, 0.35);
+}
+.cipher-cell.locked .cipher-rune { color: #ffca7a; }
+.cipher-letter-slot {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffca7a;
+  min-height: 18px;
+}
+.cipher-cell.locked .cipher-letter-slot { color: #ffe9c0; }
+.cipher-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.cipher-letter {
+  position: relative;
+  min-width: 34px;
+  padding: 6px 4px 8px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+.cipher-letter.used { opacity: 0.85; }
+.cipher-badge {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: #ffca7a;
+  margin-top: 2px;
+}
+
+/* --- Загадка Хранителя --- */
+.riddle-page {
+  background: #4d4231;
+  border-radius: 14px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  max-width: 100%;
+}
+.riddle-page.shake { animation: riddle-shake 0.45s ease; }
+@keyframes riddle-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+.riddle-text {
+  text-align: center;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #f3e6cf;
+}
+.riddle-slots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.riddle-slot {
+  width: 40px;
+  height: 48px;
+  border-radius: 10px;
+  background: #6b5a3d;
+  border: 2px dashed rgba(243, 230, 207, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffca7a;
+  cursor: pointer;
+  user-select: none;
+}
+.riddle-slot.filled {
+  border-style: solid;
+  border-color: #ffca7a;
+  background: #5d4a22;
+}
+.riddle-sep {
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffca7a;
+  font-size: 18px;
+}
+.riddle-pool { justify-content: center; }
+.cipher-letter.gone {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Расцветка попыток и клавиш (на месте / есть в ответе / нет) */
+.riddle-author {
+  margin-top: 4px;
+  font-size: 13px;
+  font-style: normal;
+  color: #c9b48a;
+}
+.riddle-slot.mark-exact {
+  background: #5d6b3f;
+  border: 2px solid #8ba35f;
+  color: #eaf3d0;
+}
+.riddle-slot.mark-present {
+  background: #8a6d2f;
+  border: 2px solid #ffca7a;
+  color: #ffe9c0;
+}
+.riddle-slot.mark-absent {
+  background: #332b1f;
+  border: 2px solid #4d4231;
+  color: #8a7d63;
+}
+.cipher-letter.mark-exact { background: #5d6b3f; }
+.cipher-letter.mark-present { background: #8a6d2f; }
+.cipher-letter.mark-absent { background: #332b1f; opacity: 0.55; }
+.lg-exact { color: #a8c47e; font-weight: 700; }
+.lg-present { color: #ffca7a; font-weight: 700; }
+.lg-absent { color: #8a7d63; font-weight: 700; }
+.riddle-keyboard { gap: 3px; }
+.riddle-keyboard .cipher-letter { min-width: 30px; font-size: 14px; padding: 5px 3px 7px; }
+
+/* --- «Строка»: свеча вместо виселицы --- */
+.hang-candle-box {
+  text-align: center;
+  margin: 8px 0 10px;
+}
+.hang-candle-art {
+  height: 120px;
+  width: auto;
+  transition: opacity 0.3s ease;
+}
+.hang-candle-art.hang-fading { opacity: 0.75; }
+.hang-candle-css {
+  font-size: 26px;
+  letter-spacing: 2px;
+}
+.hang-slot { cursor: default; }
+
+/* --- Чай для путника: образы вместо чисел --- */
+.tea-ing { display: inline-flex; align-items: center; gap: 5px; }
+.tea-tint {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50% 50% 50% 4px;
+  border: 1px solid rgba(0,0,0,0.35);
+  transform: rotate(-45deg);
+  flex: none;
+}
+.tea-heat { font-size: 11px; letter-spacing: -1px; }
+.tea-uses { font-size: 10px; color: #ffca7a; letter-spacing: 1px; }
+.tea-swirl { animation: tea-swirl 0.4s ease; }
+@keyframes tea-swirl {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.06) rotate(2deg); }
+  70% { transform: scale(0.98) rotate(-1deg); }
+  100% { transform: scale(1); }
+}
+
+/* --- Чайная сцена со столом травницы --- */
+.tea-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #4d4231 0%, #3a3226 100%);
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.35);
+}
+.tea-scene-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tea-spot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.tea-spot img { display: block; width: 100%; height: auto; }
+.tea-pot-color {
+  position: absolute;
+  left: 22%;
+  top: 22%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  background: #2c2419;
+  transition: background 0.3s ease;
+}
+.tea-pot-art { position: relative; z-index: 1; pointer-events: none; }
+.tea-spot.tea-ready .tea-pot-color {
+  box-shadow: 0 0 0 4px #ffca7a, 0 0 22px rgba(255, 202, 122, 0.8);
+}
+.tea-spot.tea-hot .tea-pot-color {
+  box-shadow: 0 0 0 4px #d9432f;
+}
+.tea-cup-color {
+  position: absolute;
+  left: 19.3%;
+  top: 12.7%;
+  width: 51.9%;
+  height: 17.2%;
+  border-radius: 50%;
+}
+.tea-cup-art { position: relative; z-index: 1; pointer-events: none; }
+.tea-cup-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #c9b48a;
+  white-space: nowrap;
+}
+.tea-emoji { font-size: 44px; text-align: center; line-height: 1; }
+.tea-emoji.ing { font-size: 26px; }
+.tea-emoji.fire { font-size: 20px; }
+.tea-serve {
+  position: absolute;
+  left: 76%;
+  top: 60%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.tea-serve.pulse { animation: newbadge-pulse 1.2s ease-in-out infinite; }
+.tea-ing-spot { cursor: pointer; transition: transform 0.15s ease; }
+.tea-ing-spot:hover { transform: translate(-50%, -50%) scale(1.08); }
+.tea-ing-spot.empty { opacity: 0.35; pointer-events: none; }
+.tea-ing-spot.hint-ring img, .tea-ing-spot.hint-ring .tea-emoji.ing {
+  filter: drop-shadow(0 0 6px rgba(255, 202, 122, 0.95));
+}
+.tea-ing-meta {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #f3e6cf;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+}
+.tea-bars { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
 .puzzle-controls { display: flex; flex-wrap: wrap; gap: 8px; }
 .puzzle-controls button { flex: 1; min-width: 90px; }
 .intro-text { color: var(--muted); font-style: italic; margin-bottom: 10px; }
@@ -604,6 +885,14 @@ body::-webkit-scrollbar { display: none; }
   opacity: 0.6;
   pointer-events: none;
 }
+.form-obstacle {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 34px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.55));
+  z-index: 1;
+}
 .form-slot {
   position: absolute;
   width: 76px;
@@ -673,6 +962,16 @@ body::-webkit-scrollbar { display: none; }
   transition: transform 0.32s linear;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
+/* Магический болт: фиолетовое свечение и пульсация */
+.projectile.magic {
+  font-size: 27px;
+  filter: drop-shadow(0 0 7px rgba(186, 132, 255, 0.95)) drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  animation: magic-pulse 0.32s ease-in-out infinite alternate;
+}
+@keyframes magic-pulse {
+  from { scale: 1; }
+  to { scale: 1.25; }
+}
 
 /* Новинки в прилавке */
 .new-badge {
@@ -711,6 +1010,23 @@ body::-webkit-scrollbar { display: none; }
 .hub-pet img { display: block; height: auto; }
 .hub-pet.active {
   filter: drop-shadow(0 0 8px rgba(255, 202, 122, 0.95)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+}
+
+/* --- Кабинет трофеев --- */
+.hub-trophy {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  z-index: 5;
+  cursor: pointer;
+  line-height: 1;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.hub-trophy:hover { transform: translate(-50%, -100%) scale(1.08); }
+.hub-trophy img { display: block; height: auto; }
+.hub-trophy.locked {
+  opacity: 0.35;
+  filter: grayscale(0.8) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
 }
 
 /* Сердечки от глажения кота */

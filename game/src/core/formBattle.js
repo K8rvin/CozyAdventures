@@ -160,6 +160,8 @@ function computeDamage(attacker, defender, rng, log, opts = {}) {
     t: 'hit', from: attacker.name, to: defender.name,
     fromUid: attacker.uid, toUid: defender.uid,
     dmg: remaining, crit, elem, ranged: isRanged(attacker),
+    // Магический снаряд (посох, кастеры) — для отрисовки реплея
+    magic: !!(attacker.caster || attacker.traits?.includes('magic')),
     skillName: opts.skillName || null,
   });
   return remaining;
@@ -193,36 +195,61 @@ function nearestEnemy(unit, foes) {
     cellDist(unit.cell, a.cell) < cellDist(unit.cell, b.cell) ? a : b));
 }
 
-// Шаг на одну клетку к цели: лучший свободный сосед, приближающий к цели.
-// Возвращает true, если шаг совершён.
-function stepToward(unit, goal, allUnits, log) {
-  const [cx, cy] = unit.cell;
+// Шаг на одну клетку к цели: BFS по свободным клеткам (препятствия и занятые
+// клетки обходим), шаг — на первую клетку пути к ближайшей к цели достижимой
+// клетке. Возвращает true, если шаг совершён. Тупик (все пути закрыты) —
+// стоим на месте; такой бой решит лимит ходов.
+function stepToward(unit, goal, allUnits, log, obstacles = []) {
+  const startKey = unit.cell.join(',');
+  const blocked = new Set(obstacles.map((o) => o.cell.join(',')));
   const occupied = new Set(
     allUnits.filter((u) => u !== unit && u.hp > 0).map((u) => u.cell.join(',')),
   );
+  const free = (x, y) => x >= 0 && x < COLS && y >= 0 && y < ROWS
+    && !blocked.has(`${x},${y}`) && !occupied.has(`${x},${y}`);
+
+  const prev = new Map([[startKey, null]]);
+  const depth = new Map([[startKey, 0]]);
+  const queue = [unit.cell];
   const curDist = cellDist(unit.cell, goal.cell);
-  let best = null;
-  let bestDist = curDist;
-  for (let dx = -1; dx <= 1; dx++) {
-    for (let dy = -1; dy <= 1; dy++) {
-      if (dx === 0 && dy === 0) continue;
-      const nx = cx + dx;
-      const ny = cy + dy;
-      if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) continue;
-      if (occupied.has(`${nx},${ny}`)) continue;
-      const d = cellDist([nx, ny], goal.cell);
-      // При равенстве предпочитаем движение вперёд (к колонке врага)
-      const dc = Math.sign(goal.cell[0] - cx);
-      const score = d * 10 + (dx === dc && dc !== 0 ? 0 : 1);
-      if (d < bestDist || (d === bestDist && best && score < best.score)) {
-        best = { cell: [nx, ny], d, score };
-        bestDist = d;
+  let best = null; // {cell, d, steps} — лучшая достижимая клетка
+  for (let qi = 0; qi < queue.length; qi++) {
+    const [cx, cy] = queue[qi];
+    const steps = depth.get(`${cx},${cy}`);
+    const d = cellDist([cx, cy], goal.cell);
+    if (steps > 0 && d < curDist
+      && (!best || d < best.d || (d === best.d && steps < best.steps))) {
+      best = { cell: [cx, cy], d, steps };
+    }
+    // Соседей перебираем от ближних к цели — детерминизм и движение вперёд
+    const dirs = [];
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        if (dx || dy) dirs.push([dx, dy]);
       }
     }
+    dirs.sort((a, b) => cellDist([cx + a[0], cy + a[1]], goal.cell)
+      - cellDist([cx + b[0], cy + b[1]], goal.cell));
+    for (const [dx, dy] of dirs) {
+      const nx = cx + dx;
+      const ny = cy + dy;
+      const key = `${nx},${ny}`;
+      if (!free(nx, ny) || prev.has(key)) continue;
+      prev.set(key, [cx, cy]);
+      depth.set(key, steps + 1);
+      queue.push([nx, ny]);
+    }
   }
-  if (!best || best.d >= curDist) return false; // дальше не подойти — стоим
+  if (!best) return false; // дальше не подойти — стоим
+  // От лучшей клетки назад по prev — до первого шага пути
+  let step = best.cell;
+  for (;;) {
+    const p = prev.get(step.join(','));
+    if (!p || p.join(',') === startKey) break;
+    step = p;
+  }
   const from = unit.cell;
-  unit.cell = best.cell;
+  unit.cell = step;
   log.push({ t: 'move', uid: unit.uid, from, to: unit.cell });
   return true;
 }
@@ -297,7 +324,7 @@ function useScrolls(unit, allies, foes, rng, log) {
   }
 }
 
-function act(unit, allies, foes, rng, log, tactic, allUnits) {
+function act(unit, allies, foes, rng, log, tactic, allUnits, obstacles) {
   const sleep = unit.statuses.find((s) => s.kind === 'sleep');
   if (sleep) {
     sleep.ticks -= 1;
@@ -334,7 +361,7 @@ function act(unit, allies, foes, rng, log, tactic, allUnits) {
     const holds = tactic === 'defense' && unit.side === 'ally' && !isRanged(unit) && meleeFoeAlive;
     if (!holds) {
       const goal = nearestEnemy(unit, foes);
-      if (goal) stepToward(unit, goal, allUnits, log);
+      if (goal) stepToward(unit, goal, allUnits, log, obstacles);
     }
     return GAUGE_FULL / 2;
   }
@@ -416,7 +443,9 @@ const SKILL_NAMES = {
 // События лога: start, hit, dodge, status (наложен), status_end (снят/истёк),
 // sleeps, potion, scroll, move (шаг по полю), dot (тик яда/регенерации).
 // tactic: 'defense' | 'balance' | 'offense' — модификаторы союзников на бой.
-export function simulateFormationBattle(allies, foes, seed = 1, tactic = 'balance') {
+// obstacles: [{cell:[col,row], kind}] — непролазные клетки (манёвр в обход,
+// стрелки и кастеры бьют поверх).
+export function simulateFormationBattle(allies, foes, seed = 1, tactic = 'balance', obstacles = []) {
   const rng = makeRng(seed);
   // Тактика команды: снимок модификаторов на этот бой
   if (tactic === 'defense') {
@@ -502,7 +531,7 @@ export function simulateFormationBattle(allies, foes, seed = 1, tactic = 'balanc
       if (u.gauge < GAUGE_FULL || u.hp <= 0) continue;
       const myAllies = u.side === 'ally' ? allies : foes;
       const myFoes = u.side === 'ally' ? foes : allies;
-      const cost = act(u, myAllies, myFoes, rng, log, tactic, [...allies, ...foes]);
+      const cost = act(u, myAllies, myFoes, rng, log, tactic, [...allies, ...foes], obstacles);
       u.gauge -= cost ?? GAUGE_FULL; // манёвр стоит вдвое дешевле атаки
       if (u.side === 'ally' && hasStatus(u, 'sleep')) u.stats.sleptTicks++;
     }

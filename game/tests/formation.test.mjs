@@ -168,6 +168,29 @@ test('рыцарь с луком — стрелок (trait оружия)', () =>
     'лучник не идёт вперёд');
 });
 
+test('посох и кастеры помечают удары как магические (для реплея)', () => {
+  // Рыцарь с посохом свечного мага: снаряд — магический болт, не стрела
+  const s = newGame();
+  s.equipped.weapon = 'wpn_candle_staff'; // traits: ['pierce', 'ranged', 'magic']
+  const r = runBattle(s, 'bt_slimes', 1);
+  const staffHits = r.log.filter((e) => e.t === 'hit' && e.fromUid === 'a0');
+  assert.ok(staffHits.length > 0, 'посох должен наносить удары');
+  assert.ok(staffHits.every((e) => e.magic), 'удары посохом помечены magic');
+  // Лук — физический выстрел без магии
+  const s2 = newGame();
+  s2.equipped.weapon = 'wpn_hunter_bow';
+  const r2 = runBattle(s2, 'bt_slimes', 1);
+  const bowHits = r2.log.filter((e) => e.t === 'hit' && e.fromUid === 'a0');
+  assert.ok(bowHits.length > 0 && bowHits.every((e) => !e.magic), 'стрелы — без magic');
+  // Ведьминка-кастер: болт вместо выпада фигуркой
+  const r3 = simulateFormationBattle(
+    [makeFormationKnight({ ...KSTATS }, [], [], 1), makeFormationMerc(MERC_BY_ID.merc_witch, 5, 1)],
+    [makeFormationEnemy('slime_meadow', 1, 1, 0)], 3,
+  );
+  const witchHits = r3.log.filter((e) => e.t === 'hit' && e.fromUid === 'a1');
+  assert.ok(witchHits.length > 0 && witchHits.every((e) => e.magic), 'касты ведьминки — magic');
+});
+
 test('тактика Защита: союзник держит строй против идущего ближнебойца', () => {
   const knight = makeFormationKnight(
     { hp: 160, attack: 14, armor: 8, speed: 10, crit: 0, dodge: 0, block: 0, resist: {} },

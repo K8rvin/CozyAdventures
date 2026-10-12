@@ -569,103 +569,324 @@ no watermark
 
 ---
 
-## 11. Фоны поля боя — assets/battle_bg_<world>_web.jpg (12 миров)
+## 11. Фоны поля боя — assets/battle_bg_<world>_web.jpg (12 миров, ВЕРСИЯ 2)
 
-Фон под фигурки в бою «сбор» (поле 8×3 клетки). ВАЖНО для всех: широкий
-формат ~16:10, вид сверху под углом (как настольная игра), ЦЕНТР КАДРА
-ПУСТОЙ — ровная земля/полянка под юнитов, детали и персонажи по краям.
-БЕЗ текста, водяных знаков, людей и животных крупным планом.
-Файлы: `assets/battle_bg_<world>.jfif` (я сожму в `_web.jpg`).
+Фон под фигурки в бою «сбор» (поле 8×3 клетки). Поле в игре ОЧЕНЬ широкое
+и низкое (~320px высотой на всю ширину экрана, ~4:1 на десктопе), фон
+встаёт с `object-fit: cover` — поэтому:
+
+- Аспект: максимально широкая панорама, **--ar 7:2** (или самый широкий,
+  что умеет модель). Размер ≥2100×600.
+- Композиция: **пустая горизонтальная ПОЛОСА по всей середине кадра**
+  (ровная земля/полянка под юнитов — это «арена»). Декорации — в первую
+  очередь по ЛЕВОМУ и ПРАВОМУ краям и в углах; верх и низ кадра на
+  части экранов обрежутся, поэтому важных объектов вплотную к верхней
+  и нижней кромке быть не должно.
+- Вид сверху под углом (как настольная игра). БЕЗ текста, водяных знаков,
+  людей и животных крупным планом.
+
+Файлы: `assets/battle_bg_<world>.png` (я сожму в `_web.jpg`).
 
 Общий хвост стиля для всех промтов:
 
 ```
 storybook watercolor illustration with gentle ink outlines, warm palette,
-top-down angled view like a tabletop game board, EMPTY center area of flat
-ground for game pieces, details only around the edges, no people, no text,
-no watermark --ar 16:10
+top-down angled view like a tabletop game board, very wide panorama, EMPTY
+horizontal band across the whole middle of the frame — flat bare ground for
+game pieces, decorations only on the far left and right edges and corners,
+nothing important touching the top or bottom edge, no people, no text,
+no watermark --ar 7:2
 ```
 
 ### 11.1 battle_bg_meadow — Тихая опушка
 ```
-A sunny forest glade battlefield: soft green grass, clover and tiny
-wildflowers in the empty center, mossy roots, ferns and spotted mushrooms
-crowding the edges, fireflies in the air, dappled warm light, + хвост стиля
+A sunny forest glade battlefield: a wide empty band of soft green grass,
+clover and tiny wildflowers across the middle, mossy roots, ferns and
+spotted mushrooms crowding the far left and right edges, fireflies in the
+air, dappled warm light, + хвост стиля
 ```
 
 ### 11.2 battle_bg_town — Средневековый дворик
 ```
-A medieval market courtyard battlefield: cobblestone pavement with an
-empty center, wooden crates, barrels, a market cart and striped awnings
-pushed to the edges, warm afternoon light, pigeons at the borders, + хвост
+A medieval market courtyard battlefield: a wide empty band of cobblestone
+pavement across the middle, wooden crates, barrels, a market cart and
+striped awnings pushed to the far left and right edges, warm afternoon
+light, pigeons near the borders, + хвост
 ```
 
 ### 11.3 battle_bg_attic — Книжный чердак
 ```
-An old library attic battlefield: wooden plank floor with a clear empty
-center, towering book stacks, scrolls, candles and a globe along the edges,
-dust motes in warm light beams from a round window, + хвост стиля
+An old library attic battlefield: a wide empty band of wooden plank floor
+across the middle, towering book stacks, scrolls, candles and a globe
+along the far left and right edges, dust motes in warm light beams from
+round windows at the sides, + хвост стиля
 ```
 
 ### 11.4 battle_bg_crossroads — Перекрёсток миров
 ```
-A magical crossroads battlefield at dusk: a clearing where glowing paths
-of four worlds meet, soft luminescent grass in the empty center, floating
-lanterns, portal arches and signposts at the edges, fireflies rising, + хвост
+A magical crossroads battlefield at dusk: a wide empty band of soft
+luminescent grass where faint glowing paths cross, floating lanterns,
+portal arches and signposts at the far left and right edges, fireflies
+rising, + хвост
 ```
 
 ### 11.5 battle_bg_nm — Ночной рынок
 ```
-A cozy night market battlefield: paper lanterns strung overhead, an empty
-lantern-lit plaza center, food stalls and fabric awnings around the edges,
-warm bokeh lights, steam rising, deep blue night, + хвост стиля
+A cozy night market battlefield: a wide empty lantern-lit plaza band
+across the middle, food stalls, fabric awnings and paper lantern strings
+at the far left and right edges, warm bokeh lights, steam rising, deep
+blue night, + хвост стиля
 ```
 
 ### 11.6 battle_bg_sw — Сказочные топи
 ```
-A fairytale swamp battlefield at twilight: a mossy hummock clearing with
-an empty center, glowing mushrooms and fireflies at the edges, crooked
-willow roots, soft teal-green mist, lily pads on dark water around, + хвост
+A fairytale swamp battlefield at twilight: a wide empty mossy hummock
+band across the middle, glowing mushrooms, crooked willow roots and
+fireflies at the far left and right edges, soft teal-green mist, lily
+pads on dark water at the corners, + хвост
 ```
 
 ### 11.7 battle_bg_sf — Звёздная ярмарка
 ```
-A starlight fairground battlefield at night: an empty circus-ring clearing
-with soft grass, garlands of lights, striped tents and floating star
-lanterns at the edges, gentle purple-teal glow, + хвост стиля
+A starlight fairground battlefield at night: a wide empty circus-ring
+band of soft grass across the middle, garlands of lights, striped tents
+and floating star lanterns at the far left and right edges, gentle
+purple-teal glow, + хвост стиля
 ```
 
-### 11.8 battle_bg_ash — Пепельные степи / Кузница
+### 11.8 battle_bg_ash — Пепельные степи
 ```
-A forge battlefield inside a smithy: a clear stone floor center, anvils,
-tool racks and a glowing furnace with embers along the edges, warm orange
-light and drifting sparks, dark iron tones, + хвост стиля
+An ashen steppe battlefield under a burnt sky: a wide empty band of
+cracked grey earth with ash drifts across the middle, scorched banners,
+obsidian shards and ember-glowing braziers at the far left and right
+edges, drifting sparks, warm orange glow on dark tones, + хвост стиля
 ```
 
 ### 11.9 battle_bg_cr — Хрустальные горы
 ```
-A crystal mountain battlefield: a smooth stone plateau with an empty
-center, glowing quartz clusters and crystalline formations around the
-edges, cool blue-violet light with warm sun accents, + хвост стиля
+A crystal mountain battlefield: a wide empty band of smooth stone plateau
+across the middle, glowing quartz clusters and crystalline formations at
+the far left and right edges, cool blue-violet light with warm sun
+accents, drifting snow, + хвост стиля
 ```
 
 ### 11.10 battle_bg_jade — Нефритовый сад
 ```
-A jade garden battlefield: a raked-sand and moss clearing with an empty
-center, bamboo, stone lanterns and a small arched bridge at the edges,
-soft morning mist, calm green-teal palette, cherry petals drifting, + хвост
+A jade garden battlefield: a wide empty band of raked sand and moss
+across the middle, bamboo, stone lanterns and a small arched bridge at
+the far left and right edges, soft morning mist, calm green-teal palette,
+cherry petals drifting, + хвост
 ```
 
 ### 11.11 battle_bg_deep — Подводный грот
 ```
-An underwater grotto battlefield: a sandy cavern floor with an empty
-center, corals, shells and glowing anemones around the edges, soft blue
-light rays from a crack above, drifting bubbles, + хвост стиля
+An underwater grotto battlefield: a wide empty band of sandy cavern floor
+across the middle, corals, shells and glowing anemones at the far left
+and right edges, soft blue light rays from cracks above, drifting
+bubbles, + хвост стиля
 ```
 
 ### 11.12 battle_bg_mist — Туманные часы
 ```
-A misty clockwork battlefield: a floating stone platform with an empty
-center, giant blurred clock faces, gears and hourglasses in the fog around
-the edges, silver-blue mist with warm brass accents, + хвост стиля
+A misty clockwork battlefield: a wide empty band of a floating stone
+platform across the middle, giant blurred clock faces, gears and
+hourglasses in the fog at the far left and right edges, silver-blue mist
+with warm brass accents, + хвост стиля
 ```
+
+---
+
+## 12. Кабинет трофеев — assets/trophy_room_web.jpg + assets/trophies/*.png
+
+Новая сцена-хаб: кабинет хозяина лавки с трофеями за боссов. Комната
+нарочно с МИНИМУМОМ вещей — трофеи расставляются кодом поверх пустых
+пьедесталов и полок.
+
+### 12.1 trophy_room.png — сцена кабинета (САМЫЙ ВАЖНЫЙ)
+
+ВАЖНО: стена с пьедесталами должна быть ПУСТОЙ — никаких предметов на
+полках, в рамах и на крюках. Только камин, стол и пустые места под трофеи.
+
+```
+A cozy trophy cabinet room of a magical shopkeeper, wide establishing
+shot, storybook watercolor illustration with gentle ink outlines, warm
+candlelit palette of amber, honey and deep brown. A long dark wooden
+wall with TWO ROWS of SIX EMPTY display pedestals and shelves — all
+bare, nothing on them, faint dust outlines where trophies will stand;
+below a small shelf with four tiny empty stands. On the left: a stone
+fireplace with a warm fire and a rug in front of it. On the right: an
+oak writing desk with an open ledger book, a quill and a candle, and a
+framed blank map of worlds above it. A couple of wall hooks and empty
+picture frames, wooden beams, soft evening light, lived-in but tidy,
+EMPTY pedestals and shelves, no trophies, no clutter on the wall,
+no people, no text, no watermark --ar 3:1
+```
+
+Размер: ≥1500×500 (как hub_banner). Сохранить как `assets/trophy_room.png`
+(я сожму в `trophy_room_web.jpg`). Координаты пьедесталов потом подгоню
+под арт — важно только, чтобы пустых мест было 12 (2 ряда × 6) + одна
+полка на 4 мелких жетона.
+
+### 12.2 Трофеи — assets/trophies/tro_*.png (белый фон, вырежу скриптом)
+
+12 предметов-трофеев, по одному за босса каждого мира. Изолированные
+объекты, крупно, вид спереди или три четверти, без подставок — добавлю
+сам при расстановке. Общий хвост стиля (как у спутников, раздел 9):
+
+```
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette of amber, honey and deep brown, single object, centered, isolated
+on a plain solid white background, no ground, no shadow, no text,
+cozy fantasy game trophy
+```
+
+- **tro_willow_branch.png** — `A gnarled willow branch with soft glowing buds and two tiny fireflies circling it, warm green shimmer, + хвост`
+- **tro_captain_medal.png** — `An old garrison medal on a faded blue ribbon, brass star with a tiny shield emblem, slightly tarnished, + хвост`
+- **tro_keeper_quill.png** — `A large raven-black quill pen with ink that faintly glows violet at the tip, a thin ribbon tied around it, + хвост`
+- **tro_star_shard.png** — `A fist-sized shard of solidified starfire, warm golden ember core inside faceted translucent stone, gentle glow, + хвост`
+- **tro_nm_mask.png** — `An ornate night-market mask of a smiling merchant, deep blue and gold with lantern motifs and thin ribbon ties, + хвост`
+- **tro_sw_basket.png** — `A small woven swamp basket with glowing berries, a bundle of marsh herbs and a tiny mushroom tucked in, + хвост`
+- **tro_sf_cup.png** — `A slightly dented champion's golden cup with a star emblem and a faded ribbon, festive but ancient, + хвост`
+- **tro_ash_helm.png** — `A heavy soot-stained warlord's helmet with a storm motif, small embers glowing in the crest, dark iron and ember orange, + хвост`
+- **tro_cr_scale.png** — `A large translucent quartz dragon scale, cool blue-violet facets catching warm light, faint inner shimmer, + хвост`
+- **tro_jade_fan.png** — `An elegant folding fan of pale jade with painted plum blossoms and a silk tassel, half-open, + хвост`
+- **tro_deep_pearl.png** — `A large black pearl on a small drift of coral sand, a tiny moon glimmering inside it, teal glow, + хвост`
+- **tro_mist_gear.png** — `A perfect golden clockwork gear with delicate engravings, faint blue mist curling around its teeth, + хвост`
+
+Сохранять как `assets/trophies/tro_<id>.png` — вырежу белый фон скриптом,
+положу прозрачные PNG, игра подхватит автоматически (без файла — эмодзи).
+
+### 12.3 Жетоны розыска — assets/trophies/tro_mini_*.png (белый фон)
+
+4 миниатюрных жетона за розыскные листы — на малой полке у стола.
+Тот же хвост стиля, что у трофеев (12.2), объекты поменьше по духу —
+сувениры, а не гордость стены:
+
+- **tro_mini_bee.png** — `A small piece of wild honeycomb dripping with golden honey, one tiny bee wing resting on it, + хвост`
+- **tro_mini_rat.png** — `A tiny crooked crown made of bent wire and a bottle-cap, slightly rusty, comically small, + хвост`
+- **tro_mini_ink.png** — `A small antique inkwell with pitch-black ink that seems to swirl inside, a blot dripping over the rim, + хвост`
+- **tro_mini_lantern.png** — `A small cracked paper lantern, gently patched with tape, glowing faintly warm from inside, + хвост`
+
+Игра подхватит их автоматически тем же кодом, что и большие трофеи.
+
+---
+
+## 13. Чай для путника — сцена травницы (tea_*)
+
+Механика смешивания отвара: котёл с живым цветом, стакан заказа, чашечки
+ингредиентов, огонь под котлом. ВСЕ объекты — с ПУСТЫМИ местами: цвет
+отвара/заказа и ингредиенты рисуются кодом поверх/внутри арта.
+
+### 13.1 tea_table.png — фон: стол травницы (САМЫЙ ВАЖНЫЙ)
+
+ВАЖНО: пустые места — жаровня с треногой слева (под котёл), дощечка справа
+(под стакан заказа), ряд из 8 маленьких пустых чашечек вдоль нижнего края
+(под ингредиенты). На них НИЧЕГО не стоит.
+
+```
+A cozy herbalist tea table seen strictly from above, storybook watercolor
+illustration with gentle ink outlines, warm candlelit palette of amber,
+honey and deep brown. On the LEFT: an empty iron tripod over a cold fire
+pit — bare, nothing on it. On the RIGHT: a small empty wooden board for
+a serving cup. Along the BOTTOM edge: a row of EIGHT small empty ceramic
+bowls, evenly spaced, all bare. Free wooden table surface everywhere else,
+a few scattered herb crumbs and a linen napkin in the corners, no kettle,
+no cup, nothing in the bowls, no text, no watermark --ar 16:10
+```
+
+Размер ≥1600×1000. Сохранить как `assets/tea_table.png` (сожму в `_web.jpg`).
+
+### 13.2 tea_pot.png — котёл строго сверху (белый фон, вырежу)
+
+ВАЖНО: чаша котла ПУСТАЯ и тёмная в центре — туда код заливает цвет отвара.
+Котёл круглый, по центру кадра, крупно.
+
+```
+A round cast-iron cauldron seen strictly from above, storybook watercolor
+illustration with gentle ink outlines: dark EMPTY hollow center (the brew
+color is drawn there by the game), thick iron rim with a warm highlight,
+three short legs hinted at the bottom edge, centered composition, isolated
+on a plain solid white background, no fire, no liquid, no shadow, no text,
+cozy fantasy game prop
+```
+
+### 13.3 tea_cup.png — стакан заказа (белый фон, вырежу)
+
+Высокая кружка с ПУСТОЙ серединой (код заливает цвет заказа).
+
+```
+A tall rustic clay mug seen from a slightly elevated side view, storybook
+watercolor illustration with gentle ink outlines: EMPTY inside, open dark
+hollow top where the game draws the drink color, warm amber clay with a
+cream glaze rim, centered, isolated on a plain solid white background,
+no drink, no steam, no shadow, no text, cozy fantasy game prop
+```
+
+### 13.4 tea_fire_0..3.png — 4 степени огня для жаровни (белый фон)
+
+Одинаковая жаровня, разный огонь. Вид сверху под лёгким углом.
+
+```
+A small round iron fire pit for a cauldron tripod, storybook watercolor
+illustration with gentle ink outlines, isolated on a plain solid white
+background, no shadow, no text, cozy fantasy game prop:
+```
+- **tea_fire_0.png** — `cold ashes, no fire, grey embers`
+- **tea_fire_1.png** — `two tiny shy flame tongues over glowing embers`
+- **tea_fire_2.png** — `a friendly medium fire with warm orange flames`
+- **tea_fire_3.png** — `a roaring merry blaze, tall bright flames, sparks`
+
+### 13.5 tea_ing_<id>.png — чашечки ингредиентов (белый фон, вырежу)
+
+Маленькая керамическая чашечка с ингредиентом, вид сверху под углом.
+Общий хвост стиля:
+
+```
+small ceramic bowl seen from above at a slight angle, storybook watercolor
+illustration with gentle ink outlines, warm palette, isolated on a plain
+solid white background, no shadow, no text, cozy fantasy game prop
+```
+
+- **tea_ing_mint.png** — `fresh mint leaves in the bowl`
+- **tea_ing_water.png** — `clear spring water in the bowl`
+- **tea_ing_fire.png** — `a small dry firewood log in the bowl`
+- **tea_ing_honey.png** — `golden honey with a wooden dipper in the bowl`
+- **tea_ing_berries.png** — `dark wild berries in the bowl`
+- **tea_ing_bark.png** — `curled oak bark chips in the bowl`
+- **tea_ing_lemon.png** — `bright lemon slices in the bowl`
+- **tea_ing_ginger.png** — `a gnarled ginger root with slices in the bowl`
+- **tea_ing_apple.png** — `red apple wedges in the bowl`
+- **tea_ing_rosehip.png** — `rose hips in the bowl`
+- **tea_ing_chamomile.png** — `chamomile flowers in the bowl`
+- **tea_ing_cinnamon.png** — `cinnamon sticks in the bowl`
+- **tea_ing_currant.png** — `black currant berries in the bowl`
+
+Координаты мест на фоне (котёл, стакан, чашечки) подгоню сам после генерации —
+скажи, если арт расставил места иначе, чем задумано.
+
+---
+
+## 14. Свеча для «Строки» — assets/hang_candle_*.png (белый фон, вырежу)
+
+В механике «Строка» (аналог виселицы) промахи топят свечу. Нужны 4 стадии
+ОДНОЙ свечи в канделябре — вертикальные, изолированные, один и тот же
+ракурс и канделябр во всех четырёх (рядом в одном запросе модель сделает
+серию последовательнее).
+
+Общий хвост стиля:
+
+```
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette of amber, honey and deep brown, isolated on a plain solid white
+background, no shadow, no text, cozy fantasy game prop, vertical
+composition, centered
+```
+
+- **hang_candle_full.png** — `A tall cream wax candle in a small brass candlestick, bright merry flame, thin wisp of smoke, + хвост`
+- **hang_candle_half.png** — `the SAME candle half-melted, wax drips running down its side, medium flame, brass candlestick, + хвост`
+- **hang_candle_stub.png** — `the SAME candle as a short wax stub in the brass candlestick, tiny flickering flame, pool of melted wax at the base, + хвост`
+- **hang_candle_out.png** — `the SAME candlestick with a burnt-out wax stub, NO flame, a thin curl of grey smoke rising, melted wax around, + хвост`
+
+Если модель держит консистентность плохо — сгенерируй серию одним запросом
+четырёх стадий и разрежь, или проси `the same candlestick` + один seed.
+Сохранять как `assets/hang_candle_<stage>.png` — вырежу фон сам.

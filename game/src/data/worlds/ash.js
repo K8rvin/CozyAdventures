@@ -76,6 +76,7 @@ export const WORLD = {
     },
     {
       id: 'ash_04', name: 'Жала в пепле', world: 'ash',
+      obstacles: [{ cell: [3, 1], kind: 'rock' }],
       enemies: [{ id: 'ash_scorpion', scale: 1.939 }, { id: 'ash_scorpion', scale: 1.939 }],
       unlockAfter: 'ash_03',
       tip: 'Скорпионы ядовиты и толстокожи. Антидот и тяжёлое оружие против их панцирей.',
@@ -108,6 +109,7 @@ export const WORLD = {
     },
     {
       id: 'ash_09', name: 'Крылья над пеплом', world: 'ash',
+      obstacles: [{ cell: [4, 0], kind: 'bones' }, { cell: [4, 2], kind: 'rock' }],
       enemies: [
         { id: 'ash_vulture', scale: 2.005 }, { id: 'ash_ghoul', scale: 2.005 }, { id: 'ash_scorpion', scale: 2.005 },
       ],
@@ -145,6 +147,7 @@ export const WORLD = {
     },
     {
       id: 'ash_14', name: 'Степная засада', world: 'ash',
+      obstacles: [{ cell: [4, 1], kind: 'bones' }],
       enemies: [
         { id: 'ash_vulture', scale: 2.071 }, { id: 'ash_storm_spirit', scale: 2.071 }, { id: 'ash_ghoul', scale: 2.071 },
       ],
@@ -179,6 +182,7 @@ export const WORLD = {
     },
     {
       id: 'ash_18', name: 'Последний обоз', world: 'ash',
+      obstacles: [{ cell: [2, 0], kind: 'rock' }, { cell: [5, 2], kind: 'bones' }],
       enemies: [
         { id: 'ash_ghoul', scale: 2.124 }, { id: 'ash_wolf', scale: 2.124 }, { id: 'ash_storm_spirit', scale: 2.124 },
       ],

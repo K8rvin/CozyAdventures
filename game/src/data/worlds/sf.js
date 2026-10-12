@@ -83,6 +83,7 @@ export const WORLD = {
     },
     {
       id: 'sf_05', name: 'Сонные качели', world: 'sf',
+      obstacles: [{ cell: [3, 1], kind: 'star' }],
       enemies: [
         { id: 'sf_doll', scale: 1.75 }, { id: 'sf_doll', scale: 1.75 }, { id: 'sf_doll', scale: 1.75 },
       ],
@@ -119,6 +120,7 @@ export const WORLD = {
     },
     {
       id: 'sf_10', name: 'Ночной парад', world: 'sf',
+      obstacles: [{ cell: [4, 0], kind: 'lantern' }, { cell: [4, 2], kind: 'lantern' }],
       enemies: [
         { id: 'sf_spirit', scale: 1.81 }, { id: 'sf_firefly', scale: 1.81 }, { id: 'sf_doll', scale: 1.81 },
       ],
@@ -157,6 +159,7 @@ export const WORLD = {
     },
     {
       id: 'sf_15', name: 'Фейерверк', world: 'sf',
+      obstacles: [{ cell: [4, 1], kind: 'star' }],
       enemies: [
         { id: 'sf_firefly', scale: 1.88 }, { id: 'sf_firefly', scale: 1.88 }, { id: 'sf_firefly', scale: 1.88 },
       ],
@@ -189,6 +192,7 @@ export const WORLD = {
     },
     {
       id: 'sf_19', name: 'Гранд-шоу', world: 'sf',
+      obstacles: [{ cell: [3, 0], kind: 'star' }, { cell: [3, 2], kind: 'lantern' }],
       enemies: [
         { id: 'sf_wheel', scale: 1.93 }, { id: 'sf_firefly', scale: 1.93 },
       ],

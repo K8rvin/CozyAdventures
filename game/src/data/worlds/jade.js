@@ -70,6 +70,7 @@ export const WORLD = {
     },
     {
       id: 'jade_04', name: 'Лисья тропа', world: 'jade',
+      obstacles: [{ cell: [3, 1], kind: 'bamboo' }],
       enemies: [{ id: 'jade_kitsune', scale: 2.04 }, { id: 'jade_kitsune', scale: 2.04 }],
       unlockAfter: 'jade_03',
       tip: 'Кицунэ усыпляют и наводят страх. Шлем от сна и амулет отваги.',
@@ -100,6 +101,7 @@ export const WORLD = {
     },
     {
       id: 'jade_09', name: 'Лисий гарнизон', world: 'jade',
+      obstacles: [{ cell: [4, 0], kind: 'bamboo' }, { cell: [4, 2], kind: 'bamboo' }],
       enemies: [{ id: 'jade_warrior', scale: 2.11 }, { id: 'jade_kitsune', scale: 2.11 }],
       unlockAfter: 'jade_08',
       tip: 'Воин под прикрытием кицунэ. Шлем от сна и тяжёлая броня.',
@@ -130,6 +132,7 @@ export const WORLD = {
     },
     {
       id: 'jade_14', name: 'Стражи фонарей', world: 'jade',
+      obstacles: [{ cell: [4, 1], kind: 'rock' }],
       enemies: [{ id: 'jade_warrior', scale: 2.17 }, { id: 'jade_lantern', scale: 2.17 }],
       unlockAfter: 'jade_13',
       tip: 'Воин и фонарь. Без брони и сопротивления огню не выстоять.',
@@ -154,6 +157,7 @@ export const WORLD = {
     },
     {
       id: 'jade_18', name: 'Тихая церемония', world: 'jade',
+      obstacles: [{ cell: [3, 2], kind: 'bamboo' }, { cell: [5, 0], kind: 'rock' }],
       enemies: [{ id: 'jade_teamaster', scale: 2.22 }, { id: 'jade_crane', scale: 2.22 }],
       unlockAfter: 'jade_17',
       tip: 'Мастер лечит журавля, а тот бьёт без промаха. Долгий бой — держи зелья наготове.',

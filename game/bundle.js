@@ -476,7 +476,7 @@
       rarity: "epic",
       price: 420,
       stats: { attack: 34, speed: -2 },
-      traits: ["pierce", "ranged"],
+      traits: ["pierce", "ranged", "magic"],
       description: "\u041F\u043B\u0430\u043C\u044F \u043D\u0430 \u043A\u043E\u043D\u0446\u0435 \u043F\u0440\u043E\u0448\u0438\u0432\u0430\u0435\u0442 \u0434\u0430\u0436\u0435 \u043A\u0430\u043C\u0435\u043D\u044C. \u041E\u0431\u0435 \u0440\u0443\u043A\u0438 \u0437\u0430\u043D\u044F\u0442\u044B."
     },
     {
@@ -1338,133 +1338,118 @@
     {
       id: "bk_01",
       world: "attic",
-      mechanic: "book",
+      mechanic: "riddle",
       name: "\u041F\u0435\u0440\u0432\u043E\u0435 \u0441\u043B\u043E\u0432\u043E",
       difficulty: 1,
-      grid: [3, 1],
-      blots: [],
-      phrase: "\u041C\u0418\u0420",
-      scrambled: "\u0420\u0418\u041C",
+      riddle: ["\u041C\u043E\u043B\u0447\u0443 \u0433\u043E\u0434\u0430\u043C\u0438, \u043F\u044B\u043B\u044C\u043D\u043E\u0439 \u0441\u043F\u043B\u044E \u0432 \u0441\u0442\u043E\u0440\u043E\u043D\u043A\u0435 \u2014", "\u043E\u0442\u043A\u0440\u043E\u0439 \u043C\u0435\u043D\u044F, \u0438 \u0437\u0430\u0433\u043E\u0432\u043E\u0440\u044E \u0442\u0438\u0445\u043E\u043D\u044C\u043A\u043E."],
+      answer: "\u041A\u041D\u0418\u0413\u0410",
       rewards: [{ type: "coins", amount: 90 }],
-      intro: "\u0411\u0443\u043A\u0432\u044B \u0432\u0435\u0436\u043B\u0438\u0432\u043E \u0436\u0434\u0443\u0442, \u043A\u043E\u0433\u0434\u0430 \u0438\u0445 \u0432\u0435\u0440\u043D\u0443\u0442 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E. \u0422\u0430\u043F\u043D\u0438 \u0434\u0432\u0435 \u2014 \u043E\u043D\u0438 \u043F\u043E\u043C\u0435\u043D\u044F\u044E\u0442\u0441\u044F."
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0437\u0430\u0433\u0430\u0434\u0430\u043B \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443. \u0422\u0430\u043F\u0430\u0439 \u0431\u0443\u043A\u0432\u044B \u0430\u043B\u0444\u0430\u0432\u0438\u0442\u0430 \u2014 \u043E\u043D\u0438 \u043B\u044F\u0433\u0443\u0442 \u0432 \u043E\u043A\u043E\u0448\u043A\u0438 \u043E\u0442\u0432\u0435\u0442\u0430."
     },
     {
       id: "bk_02",
       world: "attic",
-      mechanic: "book",
-      name: "\u041F\u043E\u043B\u043A\u0430 \u0441\u043A\u0430\u0437\u043E\u043A",
+      mechanic: "riddle",
+      name: "\u041E\u0433\u043E\u043D\u0451\u043A",
       difficulty: 1,
-      grid: [5, 1],
-      blots: [],
-      phrase: "\u041A\u041D\u0418\u0413\u0410",
-      scrambled: "\u0410\u0413\u0418\u041D\u041A",
+      riddle: ["\u041F\u043B\u0430\u0447\u0443 \u043E\u0433\u043D\u0451\u043C \u0438 \u043E\u0442 \u0441\u043B\u0451\u0437 \u0441\u0432\u043E\u0438\u0445 \u0442\u0430\u044E,", "\u0430 \u0442\u044C\u043C\u0443 \u0438\u0437 \u043B\u0430\u0432\u043A\u0438 \u043F\u0440\u043E\u0433\u043E\u043D\u044F\u044E."],
+      answer: "\u0421\u0412\u0415\u0427\u0410",
       rewards: [{ type: "coins", amount: 95 }],
-      intro: "\u041F\u044F\u0442\u044C \u0431\u0443\u043A\u0432, \u043E\u0434\u043D\u043E \u0443\u044E\u0442\u043D\u043E\u0435 \u0441\u043B\u043E\u0432\u043E."
+      intro: "\u041F\u044F\u0442\u044C \u0431\u0443\u043A\u0432, \u043E\u0434\u043D\u0430 \u0442\u0451\u043F\u043B\u0430\u044F \u043E\u0442\u0433\u0430\u0434\u043A\u0430."
     },
     {
       id: "bk_03",
       world: "attic",
-      mechanic: "book",
-      name: "\u041E\u0433\u0430\u0440\u043E\u043A",
+      mechanic: "riddle",
+      name: "\u041B\u0435\u0441\u043D\u043E\u0439 \u043A\u043B\u0430\u0434",
       difficulty: 2,
-      grid: [3, 2],
-      blots: [[2, 1]],
-      phrase: "\u0421\u0412\u0415\u0427\u0410",
-      scrambled: "\u0410\u0427\u0415\u0412\u0421",
+      riddle: ["\u041C\u0430\u043B, \u0443\u0434\u0430\u043B \u2014 \u0441\u043A\u0432\u043E\u0437\u044C \u0437\u0435\u043C\u043B\u044E \u043F\u0440\u043E\u0448\u0451\u043B,", "\u043A\u0440\u0430\u0441\u043D\u0443 \u0448\u0430\u043F\u043E\u0447\u043A\u0443 \u043D\u0430\u0448\u0451\u043B."],
+      answer: "\u0413\u0420\u0418\u0411",
       rewards: [{ type: "coins", amount: 100 }],
-      intro: "\u041A\u043B\u044F\u043A\u0441\u0430 \u0441\u044A\u0435\u043B\u0430 \u0443\u0433\u043E\u043B \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B. \u0411\u0443\u043A\u0432\u044B \u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u0437\u043C\u0435\u0439\u043A\u043E\u0439."
+      intro: "\u041A\u043E\u0440\u043E\u0442\u043A\u0430\u044F \u043E\u0442\u0433\u0430\u0434\u043A\u0430 \u0441 \u043E\u043F\u0443\u0448\u043A\u0438."
     },
     {
       id: "bk_04",
       world: "attic",
-      mechanic: "book",
-      name: "\u0412\u0435\u0447\u0435\u0440\u043D\u0438\u0439 \u0440\u0438\u0442\u0443\u0430\u043B",
+      mechanic: "riddle",
+      name: "\u0422\u0451\u043F\u043B\u0430\u044F \u0433\u043E\u0440\u043D\u0438\u0446\u0430",
       difficulty: 2,
-      grid: [4, 2],
-      blots: [[3, 1]],
-      phrase: "\u0427\u0410\u0419\u2726\u0414\u041E\u041C",
-      scrambled: "\u0414\u041E\u041C\u2726\u0419\u0410\u0427",
+      riddle: ["\u0411\u0435\u0437 \u043E\u043A\u043E\u043D, \u0431\u0435\u0437 \u0434\u0432\u0435\u0440\u0435\u0439 \u2014", "\u043F\u043E\u043B\u043D\u0430 \u0433\u043E\u0440\u043D\u0438\u0446\u0430 \u043B\u044E\u0434\u0435\u0439."],
+      answer: "\u041E\u0413\u0423\u0420\u0415\u0426",
       rewards: [{ type: "coins", amount: 110 }],
-      intro: "\u0414\u0432\u0435 \u0441\u0442\u0440\u043E\u0447\u043A\u0438 \u0447\u0435\u0440\u0435\u0437 \u0437\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C. \u2726 \u0432\u0441\u0435\u0433\u0434\u0430 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F \u043D\u0430 \u043C\u0435\u0441\u0442\u0435."
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441 \u0433\u0440\u044F\u0434\u043A\u0438. \u0412 \u043B\u0430\u0432\u043A\u0435 \u0435\u0451 \u0437\u043D\u0430\u044E\u0442 \u0432\u0441\u0435."
     },
     {
       id: "bk_05",
       world: "attic",
-      mechanic: "book",
-      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0437\u043E\u0432",
+      mechanic: "riddle",
+      name: "\u0425\u043E\u0434\u0438\u043A\u0438",
       difficulty: 2,
-      grid: [5, 2],
-      blots: [],
-      phrase: "\u041B\u0423\u041D\u0410\u2726\u0417\u041E\u0412\u0401\u0422",
-      scrambled: "\u0410\u041D\u0423\u041B\u2726\u0422\u0401\u0412\u041E\u0417",
+      riddle: ["\u0411\u0435\u0437 \u043D\u043E\u0433 \u2014 \u0431\u0435\u0433\u0443\u0442,", "\u0431\u0435\u0437 \u0440\u0443\u043A \u2014 \u0437\u043E\u0432\u0443\u0442."],
+      answer: "\u0427\u0410\u0421\u042B",
       rewards: [{ type: "coins", amount: 115 }],
-      intro: "\u041B\u0443\u043D\u0430 \u0437\u043E\u0432\u0451\u0442. \u0414\u0430\u0436\u0435 \u0431\u0443\u043A\u0432\u044B \u044D\u0442\u043E \u0447\u0443\u0432\u0441\u0442\u0432\u0443\u044E\u0442."
+      intro: "\u0422\u0438\u043A\u0430\u044E\u0442 \u043D\u0430 \u0441\u0442\u0435\u043D\u0435 \u043C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u043E\u0439."
     },
     {
       id: "bk_06",
       world: "attic",
-      mechanic: "book",
-      name: "\u0428\u0451\u043F\u043E\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446",
+      mechanic: "hang",
+      name: "\u0417\u0430 \u043E\u043A\u043D\u043E\u043C",
       difficulty: 3,
-      grid: [5, 3],
-      blots: [],
-      phrase: "\u0421\u0422\u0420\u0410\u041D\u0418\u0426\u042B\u2726\u0428\u0415\u041F\u0427\u0423\u0422",
-      scrambled: "\u042B\u0426\u0418\u041D\u0410\u0420\u0422\u0421\u2726\u0422\u0423\u0427\u041F\u0415\u0428",
+      riddle: ["\u0411\u0435\u043B\u0430\u044F \u0431\u0435\u0440\u0451\u0437\u0430", "\u043F\u043E\u0434 \u043C\u043E\u0438\u043C \u043E\u043A\u043D\u043E\u043C", "\u043F\u0440\u0438\u043D\u0430\u043A\u0440\u044B\u043B\u0430\u0441\u044C \u0441\u043D\u0435\u0433\u043E\u043C\u2026"],
+      answer: "\u0422\u041E\u0427\u041D\u041E\u2726\u0421\u0415\u0420\u0415\u0411\u0420\u041E\u041C",
+      author: "\u0421. \u0410. \u0415\u0441\u0435\u043D\u0438\u043D",
       rewards: [{ type: "coins", amount: 130 }, { type: "item", id: "rng_ink" }],
       rewards_extra_note: true,
-      intro: "\u0414\u043B\u0438\u043D\u043D\u0430\u044F \u0444\u0440\u0430\u0437\u0430. \u0421\u043E\u0431\u0438\u0440\u0430\u0439 \u0435\u0451 \u0441\u043B\u043E\u0432\u043E \u0437\u0430 \u0441\u043B\u043E\u0432\u043E\u043C."
+      intro: "\u0421\u0442\u0438\u0445\u043E\u0442\u0432\u043E\u0440\u0435\u043D\u0438\u0435 \u0431\u0435\u0437 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0441\u0442\u0440\u043E\u043A\u0438. \u0422\u0430\u043F\u0430\u0439 \u0431\u0443\u043A\u0432\u044B \u0430\u043B\u0444\u0430\u0432\u0438\u0442\u0430 \u2014 \u0432\u0435\u0440\u043D\u0430\u044F \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0432\u0435\u0437\u0434\u0435, \u043F\u0440\u043E\u043C\u0430\u0445 \u0442\u043E\u043F\u0438\u0442 \u0441\u0432\u0435\u0447\u0443."
     },
     {
       id: "bk_07",
       world: "attic",
-      mechanic: "book",
-      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0438 \u0441\u043E\u043D",
+      mechanic: "hang",
+      name: "\u041D\u043E\u0447\u043D\u044B\u0435 \u0437\u0432\u0443\u043A\u0438",
       difficulty: 3,
-      grid: [4, 4],
-      blots: [[0, 3], [1, 3], [2, 3]],
-      phrase: "\u0427\u0415\u0420\u041D\u0418\u041B\u0410\u2726\u0418\u2726\u0421\u041E\u041D",
-      scrambled: "\u0410\u041B\u0418\u041D\u0420\u0415\u0427\u2726\u0418\u2726\u041D\u041E\u0421",
+      riddle: ["\u0428\u0451\u043F\u043E\u0442, \u0440\u043E\u0431\u043A\u043E\u0435 \u0434\u044B\u0445\u0430\u043D\u044C\u0435,", "\u0442\u0440\u0435\u043B\u0438 \u0441\u043E\u043B\u043E\u0432\u044C\u044F,", "\u0441\u0435\u0440\u0435\u0431\u0440\u043E \u0438 \u043A\u043E\u043B\u044B\u0445\u0430\u043D\u044C\u0435\u2026"],
+      answer: "\u0421\u041E\u041D\u041D\u041E\u0413\u041E\u2726\u0420\u0423\u0427\u042C\u042F",
+      author: "\u0410. \u0410. \u0424\u0435\u0442",
       rewards: [{ type: "coins", amount: 135 }],
-      intro: "\u0422\u0440\u0438 \u043A\u043B\u044F\u043A\u0441\u044B \u0432\u043D\u0438\u0437\u0443. \u0414\u0432\u0430 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044F \u0434\u0435\u0440\u0436\u0430\u0442 \u0444\u0440\u0430\u0437\u0443."
+      intro: "\u041D\u043E\u0447\u043D\u0430\u044F \u043C\u0443\u0437\u044B\u043A\u0430 \u0431\u0435\u0437 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0433\u043E \u0430\u043A\u043A\u043E\u0440\u0434\u0430. \u0421\u0432\u0435\u0447\u0430 \u0433\u043E\u0440\u0438\u0442 \u2014 \u043D\u0435 \u0441\u043F\u0435\u0448\u0438 \u0441 \u0440\u0435\u0434\u043A\u0438\u043C\u0438 \u0431\u0443\u043A\u0432\u0430\u043C\u0438."
     },
     {
       id: "bk_08",
       world: "attic",
-      mechanic: "book",
-      name: "\u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0430 \u043C\u0435\u0447\u0442\u044B",
-      difficulty: 3,
-      grid: [4, 4],
-      blots: [[0, 3], [3, 3]],
-      phrase: "\u0417\u0410\u041A\u041B\u0410\u0414\u041A\u0410\u2726\u041C\u0415\u0427\u0422\u042B",
-      scrambled: "\u0410\u0414\u041A\u0410\u041B\u0410\u041A\u0417\u2726\u042B\u0422\u0427\u0415\u041C",
+      mechanic: "hang",
+      name: "\u0411\u0443\u0440\u044F",
+      difficulty: 4,
+      riddle: ["\u0411\u0443\u0440\u044F \u043C\u0433\u043B\u043E\u044E \u043D\u0435\u0431\u043E \u043A\u0440\u043E\u0435\u0442,", "\u0432\u0438\u0445\u0440\u0438 \u0441\u043D\u0435\u0436\u043D\u044B\u0435 \u043A\u0440\u0443\u0442\u044F;", "\u0442\u043E, \u043A\u0430\u043A \u0437\u0432\u0435\u0440\u044C, \u043E\u043D\u0430 \u0437\u0430\u0432\u043E\u0435\u0442\u2026"],
+      answer: "\u0422\u041E\u2726\u0417\u0410\u041F\u041B\u0410\u0427\u0415\u0422\u2726\u041A\u0410\u041A\u2726\u0414\u0418\u0422\u042F",
+      author: "\u0410. \u0421. \u041F\u0443\u0448\u043A\u0438\u043D",
       rewards: [{ type: "coins", amount: 145 }],
-      intro: "\u0417\u0430\u043A\u043B\u0430\u0434\u043A\u0430 \u0432\u044B\u043F\u0430\u043B\u0430. \u0412\u0435\u0440\u043D\u0438 \u043C\u0435\u0447\u0442\u0443 \u043D\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443."
+      intro: "\u0427\u0435\u0442\u044B\u0440\u0435 \u0441\u043B\u043E\u0432\u0430 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0441\u0442\u0440\u043E\u043A\u0438. \u0420\u0438\u0442\u043C \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u0442, \u0430\u043B\u0444\u0430\u0432\u0438\u0442 \u043E\u0442\u043A\u0440\u043E\u0435\u0442."
     },
     {
       id: "bk_09",
       world: "attic",
-      mechanic: "book",
-      name: "\u041F\u044B\u043B\u044C \u0432\u0435\u043A\u043E\u0432",
+      mechanic: "hang",
+      name: "\u041B\u0443\u043A\u043E\u043C\u043E\u0440\u044C\u0435",
       difficulty: 4,
-      grid: [4, 4],
-      blots: [[0, 3]],
-      phrase: "\u041F\u042B\u041B\u042C\u2726\u0412\u0415\u041A\u041E\u0412\u2726\u0416\u0414\u0401\u0422",
-      scrambled: "\u042C\u041B\u042B\u041F\u2726\u0412\u041E\u041A\u0415\u0412\u2726\u0422\u0401\u0414\u0416",
+      riddle: ["\u0423 \u041B\u0443\u043A\u043E\u043C\u043E\u0440\u044C\u044F \u0434\u0443\u0431 \u0437\u0435\u043B\u0451\u043D\u044B\u0439;", "\u0437\u043B\u0430\u0442\u0430\u044F \u0446\u0435\u043F\u044C \u043D\u0430 \u0434\u0443\u0431\u0435 \u0442\u043E\u043C;", "\u0438 \u0434\u043D\u0451\u043C \u0438 \u043D\u043E\u0447\u044C\u044E \u043A\u043E\u0442 \u0443\u0447\u0451\u043D\u044B\u0439\u2026"],
+      answer: "\u0412\u0421\u0401\u2726\u0425\u041E\u0414\u0418\u0422\u2726\u041F\u041E\u2726\u0426\u0415\u041F\u0418\u2726\u041A\u0420\u0423\u0413\u041E\u041C",
+      author: "\u0410. \u0421. \u041F\u0443\u0448\u043A\u0438\u043D",
       rewards: [{ type: "coins", amount: 160 }],
-      intro: "\u0422\u0440\u0438 \u0441\u043B\u043E\u0432\u0430, \u0442\u0440\u0438 \u043F\u0435\u0440\u0435\u0434\u044B\u0448\u043A\u0438. \u041F\u044B\u043B\u044C \u0436\u0434\u0430\u0442\u044C \u0443\u043C\u0435\u0435\u0442."
+      intro: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043E\u0434\u043E\u0431\u0440\u044F\u0435\u0442 \u044D\u0442\u0443 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443."
     },
     {
       id: "bk_10",
       world: "attic",
-      mechanic: "book",
-      name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0442\u0438\u0448\u0438\u043D\u044B",
+      mechanic: "hang",
+      name: "\u041D\u0430\u0447\u0430\u043B\u043E \u043C\u0430\u044F",
       difficulty: 5,
-      grid: [5, 4],
-      blots: [[0, 3], [1, 3], [3, 3], [4, 3]],
-      phrase: "\u0425\u0420\u0410\u041D\u0418\u0422\u0415\u041B\u042C\u2726\u0422\u0418\u0428\u0418\u041D\u042B",
-      scrambled: "\u042C\u041B\u0415\u0422\u0418\u041D\u0410\u0420\u0425\u2726\u042B\u041D\u0418\u0428\u0418\u0422",
+      riddle: ["\u041B\u044E\u0431\u043B\u044E \u0433\u0440\u043E\u0437\u0443 \u0432 \u043D\u0430\u0447\u0430\u043B\u0435 \u043C\u0430\u044F,", "\u043A\u043E\u0433\u0434\u0430 \u0432\u0435\u0441\u0435\u043D\u043D\u0438\u0439, \u043F\u0435\u0440\u0432\u044B\u0439 \u0433\u0440\u043E\u043C,", "\u043A\u0430\u043A \u0431\u044B \u0440\u0435\u0437\u0432\u044F\u0441\u044F \u0438 \u0438\u0433\u0440\u0430\u044F\u2026"],
+      answer: "\u0413\u0420\u041E\u0425\u041E\u0427\u0415\u0422\u2726\u0412\u2726\u041D\u0415\u0411\u0415\u2726\u0413\u041E\u041B\u0423\u0411\u041E\u041C",
+      author: "\u0424. \u0418. \u0422\u044E\u0442\u0447\u0435\u0432",
       rewards: [{ type: "coins", amount: 220 }, { type: "seals", amount: 1 }],
-      intro: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F \u0444\u0440\u0430\u0437\u0430 \u0447\u0435\u0440\u0434\u0430\u043A\u0430. \u0428\u0435\u0441\u0442\u043D\u0430\u0434\u0446\u0430\u0442\u044C \u0431\u0443\u043A\u0432 \u0442\u0438\u0448\u0438\u043D\u044B."
+      intro: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0447\u0435\u0440\u0434\u0430\u043A\u0430. \u0414\u0435\u0432\u044F\u0442\u043D\u0430\u0434\u0446\u0430\u0442\u044C \u0431\u0443\u043A\u0432 \u0433\u0440\u043E\u043C\u0430 \u0438 \u043E\u0434\u043D\u0430 \u0441\u0432\u0435\u0447\u0430."
     }
   ];
   var BOOK_PUZZLE_BY_ID = Object.fromEntries(BOOK_PUZZLES.map((p) => [p.id, p]));
@@ -2529,6 +2514,173 @@
       ],
       rewards: [{ type: "coins", amount: 220 }, { type: "seals", amount: 1 }],
       intro: "\u0424\u0438\u0440\u043C\u0435\u043D\u043D\u044B\u0439 \u044F\u043D\u0442\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438. \u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u043A\u043E\u0442\u0451\u043B, \u0436\u0451\u0441\u0442\u043A\u0438\u0439 \u0434\u043E\u043F\u0443\u0441\u043A \u2014 \u0432\u0435\u0440\u0448\u0438\u043D\u0430 \u0447\u0430\u0439\u043D\u043E\u0433\u043E \u0438\u0441\u043A\u0443\u0441\u0441\u0442\u0432\u0430."
+    },
+    // --- Вторая половина: новые ингредиенты и жар как условие заказа ---
+    {
+      id: "tea_09",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u0418\u043C\u0431\u0438\u0440\u043D\u044B\u0439 \u0434\u043B\u044F \u043E\u0437\u044F\u0431\u0448\u0435\u0433\u043E",
+      difficulty: 3,
+      target: { r: 40, g: 25, b: 5 },
+      tolerance: 10,
+      minHeat: 30,
+      maxHeat: 60,
+      ingredients: [
+        { id: "ginger", name: "\u0418\u043C\u0431\u0438\u0440\u044C", icon: "\u{1FADA}", dr: 25, dg: 15, db: 0, heat: 10, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 2 },
+        { id: "fire", name: "\u041F\u043E\u043B\u0435\u0448\u043A\u043E", icon: "\u{1F525}", dr: 0, dg: 0, db: 0, heat: 20, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 2 },
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 165 }],
+      intro: "\u0421\u0442\u0440\u0430\u043D\u043D\u0438\u043A \u043F\u0440\u043E\u0434\u0440\u043E\u0433 \u0434\u043E \u043A\u043E\u0441\u0442\u0435\u0439: \u043F\u0440\u043E\u0441\u0438\u0442 \u0441\u043E\u0433\u0440\u0435\u0432\u0430\u044E\u0449\u0438\u0439 \u0438 \u0413\u041E\u0420\u042F\u0427\u0418\u0419. \u0416\u0430\u0440 \u2014 \u0442\u0435\u043F\u0435\u0440\u044C \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0437\u0430\u043A\u0430\u0437\u0430."
+    },
+    {
+      id: "tea_10",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u041B\u0435\u0434\u044F\u043D\u043E\u0439 \u0433\u0440\u043E\u0442",
+      difficulty: 3,
+      target: { r: 30, g: 25, b: 35 },
+      tolerance: 8,
+      maxHeat: 15,
+      ingredients: [
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 1 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 2 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 2 },
+        { id: "currant", name: "\u0421\u043C\u043E\u0440\u043E\u0434\u0438\u043D\u0430", icon: "\u{1F347}", dr: 25, dg: 0, db: 25, heat: 5, uses: 1 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 2 }
+      ],
+      rewards: [{ type: "coins", amount: 175 }],
+      intro: "\u0420\u0443\u0441\u0430\u043B\u043A\u0430 \u043F\u0440\u043E\u0441\u0438\u0442 \u043E\u0442\u0432\u0430\u0440 \u0446\u0432\u0435\u0442\u0430 \u0433\u0440\u043E\u0442\u0430 \u0438 \u0445\u043E\u043B\u043E\u0434\u043D\u044B\u0439, \u043A\u0430\u043A \u0435\u0451 \u043F\u0435\u0441\u043D\u044F. \u0421\u043C\u043E\u0440\u043E\u0434\u0438\u043D\u0430 \u0441\u043E\u0431\u043B\u0430\u0437\u043D\u044F\u0435\u0442 \u043F\u0443\u0440\u043F\u0443\u0440\u043E\u043C."
+    },
+    {
+      id: "tea_11",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u0420\u043E\u043C\u0430\u0448\u043A\u043E\u0432\u0430\u044F \u0442\u0438\u0448\u0438\u043D\u0430",
+      difficulty: 3,
+      target: { r: 25, g: 40, b: 10 },
+      tolerance: 8,
+      maxHeat: 25,
+      ingredients: [
+        { id: "chamomile", name: "\u0420\u043E\u043C\u0430\u0448\u043A\u0430", icon: "\u{1F33C}", dr: 5, dg: 15, db: 5, heat: -5, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 1 },
+        { id: "apple", name: "\u042F\u0431\u043B\u043E\u043A\u043E", icon: "\u{1F34E}", dr: 20, dg: 10, db: 0, heat: 0, uses: 1 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 185 }],
+      intro: "\u0422\u0438\u0445\u0438\u0439 \u0441\u0432\u0435\u0442\u043B\u044B\u0439 \u043E\u0442\u0432\u0430\u0440 \u0434\u043B\u044F \u0431\u0435\u0441\u0441\u043E\u043D\u043D\u043E\u0433\u043E \u043F\u0438\u0441\u0430\u0440\u044F. \u0420\u043E\u043C\u0430\u0448\u043A\u0430 \u043D\u0435\u0436\u043D\u0430 \u2014 \u0438 \u043E\u0445\u043B\u0430\u0436\u0434\u0430\u0435\u0442."
+    },
+    {
+      id: "tea_12",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u0421\u043C\u043E\u0440\u043E\u0434\u0438\u043D\u043E\u0432\u044B\u0439 \u043F\u043E\u043B\u0434\u0435\u043D\u044C",
+      difficulty: 4,
+      target: { r: 50, g: 10, b: 35 },
+      tolerance: 8,
+      maxHeat: 40,
+      ingredients: [
+        { id: "currant", name: "\u0421\u043C\u043E\u0440\u043E\u0434\u0438\u043D\u0430", icon: "\u{1F347}", dr: 25, dg: 0, db: 25, heat: 5, uses: 2 },
+        { id: "rosehip", name: "\u0428\u0438\u043F\u043E\u0432\u043D\u0438\u043A", icon: "\u{1F339}", dr: 25, dg: 5, db: 10, heat: 5, uses: 1 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 2 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 195 }],
+      intro: "\u041F\u0443\u0440\u043F\u0443\u0440 \u0441 \u0430\u043B\u044B\u043C \u043E\u0442\u0431\u043B\u0435\u0441\u043A\u043E\u043C. \u042F\u0433\u043E\u0434\u044B \u0440\u044F\u0434\u043E\u043C \u043F\u043E \u0446\u0432\u0435\u0442\u0443, \u043D\u043E \u043D\u0435 \u0442\u0435."
+    },
+    {
+      id: "tea_13",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u041A\u043E\u0440\u0438\u0447\u043D\u044B\u0439 \u043E\u0447\u0430\u0433",
+      difficulty: 4,
+      target: { r: 45, g: 20, b: 10 },
+      tolerance: 8,
+      minHeat: 40,
+      maxHeat: 70,
+      ingredients: [
+        { id: "cinnamon", name: "\u041A\u043E\u0440\u0438\u0446\u0430", icon: "\u{1F330}", dr: 20, dg: 5, db: 5, heat: 10, uses: 2 },
+        { id: "apple", name: "\u042F\u0431\u043B\u043E\u043A\u043E", icon: "\u{1F34E}", dr: 20, dg: 10, db: 0, heat: 0, uses: 2 },
+        { id: "fire", name: "\u041F\u043E\u043B\u0435\u0448\u043A\u043E", icon: "\u{1F525}", dr: 0, dg: 0, db: 0, heat: 20, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 },
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 205 }],
+      intro: "\u0417\u0430\u043F\u0430\u0445 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0430: \u043A\u043E\u0440\u0438\u0446\u0430 \u0441 \u044F\u0431\u043B\u043E\u043A\u043E\u043C, \u0438 \u0447\u0442\u043E\u0431\u044B \u043A\u043E\u0442\u0451\u043B \u043F\u044B\u043B\u0430\u043B. \u041F\u043E\u043B\u0435\u0448\u043A\u043E \u2014 \u0432\u043F\u0435\u0440\u0432\u044B\u0435 \u043F\u043E \u0434\u0435\u043B\u0443."
+    },
+    {
+      id: "tea_14",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u0428\u0438\u043F\u043E\u0432\u043D\u0438\u043A \u043D\u0430 \u0440\u0430\u0441\u0441\u0432\u0435\u0442\u0435",
+      difficulty: 4,
+      target: { r: 55, g: 15, b: 20 },
+      tolerance: 5,
+      maxHeat: 45,
+      ingredients: [
+        { id: "rosehip", name: "\u0428\u0438\u043F\u043E\u0432\u043D\u0438\u043A", icon: "\u{1F339}", dr: 25, dg: 5, db: 10, heat: 5, uses: 2 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 1 },
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 1 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 215 }],
+      intro: "\u0420\u0430\u0441\u0441\u0432\u0435\u0442\u043D\u044B\u0439 \u0446\u0432\u0435\u0442, \u0443\u0437\u043A\u0438\u0439 \u0434\u043E\u043F\u0443\u0441\u043A. \u0414\u0432\u0435 \u0433\u043E\u0440\u0441\u0442\u0438 \u043E\u0434\u043D\u043E\u0433\u043E \u2014 \u0438 \u043D\u0438\u0447\u0435\u0433\u043E \u043B\u0438\u0448\u043D\u0435\u0433\u043E."
+    },
+    {
+      id: "tea_15",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u0421\u0435\u043C\u044C \u0442\u0440\u0430\u0432 \u043F\u043E\u043B\u0443\u043D\u043E\u0447\u0438",
+      difficulty: 5,
+      target: { r: 25, g: 50, b: 25 },
+      tolerance: 6,
+      maxHeat: 35,
+      ingredients: [
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 2 },
+        { id: "chamomile", name: "\u0420\u043E\u043C\u0430\u0448\u043A\u0430", icon: "\u{1F33C}", dr: 5, dg: 15, db: 5, heat: -5, uses: 2 },
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 1 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 1 },
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 1 },
+        { id: "ginger", name: "\u0418\u043C\u0431\u0438\u0440\u044C", icon: "\u{1FADA}", dr: 25, dg: 15, db: 0, heat: 10, uses: 1 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 230 }],
+      intro: "\u041F\u043E\u043B\u0443\u043D\u043E\u0447\u043D\u044B\u0439 \u0441\u0431\u043E\u0440: \u0447\u0435\u0442\u044B\u0440\u0435 \u0438\u0437 \u0441\u0435\u043C\u0438 \u0442\u0440\u0430\u0432 \u0432\u043E\u0439\u0434\u0443\u0442 \u0432 \u043E\u0442\u0432\u0430\u0440. \u041A\u0430\u043A\u0438\u0435 \u2014 \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u0442 \u0446\u0432\u0435\u0442."
+    },
+    {
+      id: "tea_16",
+      world: "crossroads",
+      mechanic: "tea",
+      name: "\u0421\u0430\u043C\u043E\u0432\u0430\u0440\u043D\u0430\u044F \u0440\u0430\u0434\u0443\u0433\u0430",
+      difficulty: 5,
+      target: { r: 40, g: 40, b: 20 },
+      tolerance: 5,
+      minHeat: 45,
+      maxHeat: 55,
+      ingredients: [
+        { id: "honey", name: "\u041C\u0451\u0434", icon: "\u{1F36F}", dr: 15, dg: 10, db: 0, heat: 5, uses: 2 },
+        { id: "lemon", name: "\u041B\u0438\u043C\u043E\u043D", icon: "\u{1F34B}", dr: 10, dg: 20, db: 0, heat: 5, uses: 1 },
+        { id: "berries", name: "\u042F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", dr: 30, dg: 0, db: 15, heat: 5, uses: 1 },
+        { id: "bark", name: "\u041A\u043E\u0440\u0430", icon: "\u{1FAB5}", dr: 0, dg: 0, db: 20, heat: 0, uses: 1 },
+        { id: "mint", name: "\u041C\u044F\u0442\u0430", icon: "\u{1F33F}", dr: 0, dg: 25, db: 0, heat: -5, uses: 1 },
+        { id: "ginger", name: "\u0418\u043C\u0431\u0438\u0440\u044C", icon: "\u{1FADA}", dr: 25, dg: 15, db: 0, heat: 10, uses: 1 },
+        { id: "cinnamon", name: "\u041A\u043E\u0440\u0438\u0446\u0430", icon: "\u{1F330}", dr: 20, dg: 5, db: 5, heat: 10, uses: 1 },
+        { id: "fire", name: "\u041F\u043E\u043B\u0435\u0448\u043A\u043E", icon: "\u{1F525}", dr: 0, dg: 0, db: 0, heat: 20, uses: 2 },
+        { id: "water", name: "\u0412\u043E\u0434\u0430", icon: "\u{1F4A7}", dr: 0, dg: 0, db: 0, heat: -25, uses: 1 }
+      ],
+      rewards: [{ type: "coins", amount: 260 }, { type: "seals", amount: 1 }],
+      intro: "\u0424\u0438\u0440\u043C\u0435\u043D\u043D\u044B\u0439 \u0437\u0430\u043A\u0430\u0437 \u0441\u0430\u043C\u043E\u0432\u0430\u0440\u0430-\u0441\u0442\u0430\u0440\u0435\u0439\u0448\u0438\u043D\u044B: \u044F\u043D\u0442\u0430\u0440\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0439, \u043A\u0438\u043F\u044F\u0442\u043E\u043A, \u043D\u043E \u043D\u0435 \u0431\u0443\u0440\u043B\u044F\u0449\u0438\u0439. \u0412\u0435\u0440\u0448\u0438\u043D\u0430 \u0447\u0430\u0439\u043D\u043E\u0433\u043E \u043F\u0443\u0442\u0438."
     }
   ];
   var TEA_PUZZLE_BY_ID = Object.fromEntries(TEA_PUZZLES.map((p) => [p.id, p]));
@@ -3417,6 +3569,7 @@
         id: "nm_03",
         name: "\u0422\u0435\u043D\u0438 \u043F\u043E\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C",
         world: "nm",
+        obstacles: [{ cell: [3, 1], kind: "lantern" }],
         enemies: [{ id: "nm_shadow", scale: 1.53 }, { id: "nm_moth", scale: 1.53 }],
         unlockAfter: "nm_02",
         tip: "\u042F\u0434 \u0438 \u0441\u043E\u043D \u0432 \u043F\u0430\u0440\u0435. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430."
@@ -3457,6 +3610,7 @@
         id: "nm_08",
         name: "\u042F\u0434\u043E\u0432\u0438\u0442\u044B\u0439 \u0442\u0443\u043C\u0430\u043D \u0430\u0440\u043E\u043C\u0430\u0442\u043E\u0432",
         world: "nm",
+        obstacles: [{ cell: [2, 0], kind: "crate" }, { cell: [5, 2], kind: "crate" }],
         enemies: [{ id: "nm_shadow", scale: 1.6 }, { id: "nm_lantern", scale: 1.59 }, { id: "nm_garland", scale: 1.59 }],
         unlockAfter: "nm_07",
         tip: "\u042F\u0434, \u043E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u0437\u043C\u0435\u044F."
@@ -3497,6 +3651,7 @@
         id: "nm_13",
         name: "\u041C\u0430\u0441\u043B\u044F\u043D\u044B\u0439 \u043F\u043E\u0436\u0430\u0440",
         world: "nm",
+        obstacles: [{ cell: [4, 1], kind: "lantern" }],
         enemies: [{ id: "nm_lantern", scale: 1.67 }, { id: "nm_lantern", scale: 1.66 }, { id: "nm_garland", scale: 1.66 }],
         unlockAfter: "nm_12",
         tip: "\u041E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0437\u043C\u0435\u0439, \u043F\u043E\u0442\u043E\u043C \u0444\u043E\u043D\u0430\u0440\u0438."
@@ -3529,6 +3684,7 @@
         id: "nm_17",
         name: "\u0421\u043A\u0430\u0437\u043A\u0438 \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043B\u0443\u043D\u043E\u0447\u0438",
         world: "nm",
+        obstacles: [{ cell: [3, 2], kind: "crate" }],
         enemies: [{ id: "nm_teller", scale: 1.7 }, { id: "nm_teller", scale: 1.7 }, { id: "nm_moth", scale: 1.7 }],
         unlockAfter: "nm_16",
         tip: "\u0414\u0432\u0430 \u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044F \u043B\u0435\u0447\u0430\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430. \u0411\u0435\u0439 \u043E\u0434\u043D\u043E\u0433\u043E \u0434\u043E \u043A\u043E\u043D\u0446\u0430."
@@ -3703,6 +3859,7 @@
         id: "sw_04",
         name: "\u042F\u0433\u043E\u0434\u043D\u0430\u044F \u043F\u043E\u043B\u044F\u043D\u0430",
         world: "sw",
+        obstacles: [{ cell: [4, 1], kind: "log" }],
         enemies: [{ id: "sw_glow_bush", scale: 1.64 }, { id: "sw_witch_cat", scale: 1.64 }],
         unlockAfter: "sw_03",
         tip: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u043D\u0438\u043A \u043B\u0435\u0447\u0438\u0442 \u0441\u0432\u043E\u0438\u0445 \u2014 \u0441\u0440\u0443\u0431\u0438 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
@@ -3747,6 +3904,7 @@
         id: "sw_09",
         name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
         world: "sw",
+        obstacles: [{ cell: [3, 0], kind: "mushroom" }, { cell: [3, 2], kind: "mushroom" }],
         enemies: [{ id: "sw_frog_guardian", scale: 1.71 }, { id: "sw_bog_spirit", scale: 1.71 }],
         unlockAfter: "sw_08",
         tip: "\u0422\u043E\u043B\u0441\u0442\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u0441\u043F\u0435\u0440\u0435\u0434\u0438, \u0441\u0442\u0440\u0430\u0445 \u0438\u0437 \u0442\u0443\u043C\u0430\u043D\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
@@ -3799,6 +3957,7 @@
         id: "sw_14",
         name: "\u0421\u043A\u0440\u0438\u043F\u0443\u0447\u0438\u0439 \u0433\u043E\u0441\u0442\u044C",
         world: "sw",
+        obstacles: [{ cell: [4, 1], kind: "log" }],
         enemies: [{ id: "sw_hut_walker", scale: 1.78 }, { id: "sw_doll_trickster", scale: 1.78 }],
         unlockAfter: "sw_13",
         tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u0442\u043E\u043F\u0430\u0435\u0442, \u043A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442. \u0421\u043E\u043D \u0438 \u043E\u0433\u043E\u043D\u044C \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E."
@@ -3843,6 +4002,7 @@
         id: "sw_18",
         name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u0441\u0431\u043E\u0440",
         world: "sw",
+        obstacles: [{ cell: [2, 1], kind: "mushroom" }, { cell: [5, 1], kind: "log" }],
         enemies: [
           { id: "sw_witch_cat", scale: 1.84 },
           { id: "sw_doll_trickster", scale: 1.84 },
@@ -4025,6 +4185,7 @@
         id: "sf_05",
         name: "\u0421\u043E\u043D\u043D\u044B\u0435 \u043A\u0430\u0447\u0435\u043B\u0438",
         world: "sf",
+        obstacles: [{ cell: [3, 1], kind: "star" }],
         enemies: [
           { id: "sf_doll", scale: 1.75 },
           { id: "sf_doll", scale: 1.75 },
@@ -4077,6 +4238,7 @@
         id: "sf_10",
         name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043F\u0430\u0440\u0430\u0434",
         world: "sf",
+        obstacles: [{ cell: [4, 0], kind: "lantern" }, { cell: [4, 2], kind: "lantern" }],
         enemies: [
           { id: "sf_spirit", scale: 1.81 },
           { id: "sf_firefly", scale: 1.81 },
@@ -4131,6 +4293,7 @@
         id: "sf_15",
         name: "\u0424\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A",
         world: "sf",
+        obstacles: [{ cell: [4, 1], kind: "star" }],
         enemies: [
           { id: "sf_firefly", scale: 1.88 },
           { id: "sf_firefly", scale: 1.88 },
@@ -4178,6 +4341,7 @@
         id: "sf_19",
         name: "\u0413\u0440\u0430\u043D\u0434-\u0448\u043E\u0443",
         world: "sf",
+        obstacles: [{ cell: [3, 0], kind: "star" }, { cell: [3, 2], kind: "lantern" }],
         enemies: [
           { id: "sf_wheel", scale: 1.93 },
           { id: "sf_firefly", scale: 1.93 }
@@ -4337,6 +4501,7 @@
         id: "cr_03",
         name: "\u0417\u0432\u043E\u043D \u043B\u0435\u0434\u044F\u043D\u044B\u0445 \u0438\u0441\u043A\u0440",
         world: "cr",
+        obstacles: [{ cell: [3, 1], kind: "crystal" }],
         enemies: [{ id: "cr_icewisp", scale: 1.83 }, { id: "cr_icewisp", scale: 1.83 }],
         unlockAfter: "cr_02",
         tip: "\u0418\u0441\u043A\u0440\u044B \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442 \u043C\u043E\u0440\u043E\u0437\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u044E. \u0411\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
@@ -4377,6 +4542,7 @@
         id: "cr_08",
         name: "\u0414\u0440\u0430\u043A\u043E\u043D\u044C\u0435 \u044D\u0445\u043E",
         world: "cr",
+        obstacles: [{ cell: [4, 0], kind: "crystal" }, { cell: [4, 2], kind: "crystal" }],
         enemies: [{ id: "cr_dragon_young", scale: 1.89 }],
         unlockAfter: "cr_07",
         tip: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E \u0438 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u043E\u043C\u043E\u0436\u0435\u0442."
@@ -4417,6 +4583,7 @@
         id: "cr_13",
         name: "\u041C\u043E\u043B\u043E\u0434\u044B\u0435 \u043A\u043E\u0433\u0442\u0438",
         world: "cr",
+        obstacles: [{ cell: [4, 1], kind: "rock" }],
         enemies: [{ id: "cr_dragon_young", scale: 1.96 }, { id: "cr_shardling", scale: 1.96 }],
         unlockAfter: "cr_12",
         tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441 \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u043C-\u043F\u0440\u0438\u0445\u0432\u043E\u0441\u0442\u043D\u0435\u043C. \u041F\u0435\u0440\u0435\u0431\u0435\u0439 \u043C\u0435\u043B\u043E\u0447\u044C \u0438 \u0441\u043E\u0441\u0440\u0435\u0434\u043E\u0442\u043E\u0447\u044C\u0441\u044F."
@@ -4449,6 +4616,7 @@
         id: "cr_17",
         name: "\u042D\u0445\u043E \u0434\u0440\u0435\u0432\u043D\u0438\u0445",
         world: "cr",
+        obstacles: [{ cell: [3, 0], kind: "crystal" }, { cell: [5, 1], kind: "rock" }],
         enemies: [{ id: "cr_dragon_young", scale: 2.01 }, { id: "cr_echo", scale: 2.01 }],
         unlockAfter: "cr_16",
         tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0432 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u0434\u0443\u0445\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0443\u0434\u0430\u0440 \u043F\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0443."
@@ -4628,6 +4796,7 @@
         id: "ash_04",
         name: "\u0416\u0430\u043B\u0430 \u0432 \u043F\u0435\u043F\u043B\u0435",
         world: "ash",
+        obstacles: [{ cell: [3, 1], kind: "rock" }],
         enemies: [{ id: "ash_scorpion", scale: 1.939 }, { id: "ash_scorpion", scale: 1.939 }],
         unlockAfter: "ash_03",
         tip: "\u0421\u043A\u043E\u0440\u043F\u0438\u043E\u043D\u044B \u044F\u0434\u043E\u0432\u0438\u0442\u044B \u0438 \u0442\u043E\u043B\u0441\u0442\u043E\u043A\u043E\u0436\u0438. \u0410\u043D\u0442\u0438\u0434\u043E\u0442 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0438\u0445 \u043F\u0430\u043D\u0446\u0438\u0440\u0435\u0439."
@@ -4672,6 +4841,7 @@
         id: "ash_09",
         name: "\u041A\u0440\u044B\u043B\u044C\u044F \u043D\u0430\u0434 \u043F\u0435\u043F\u043B\u043E\u043C",
         world: "ash",
+        obstacles: [{ cell: [4, 0], kind: "bones" }, { cell: [4, 2], kind: "rock" }],
         enemies: [
           { id: "ash_vulture", scale: 2.005 },
           { id: "ash_ghoul", scale: 2.005 },
@@ -4724,6 +4894,7 @@
         id: "ash_14",
         name: "\u0421\u0442\u0435\u043F\u043D\u0430\u044F \u0437\u0430\u0441\u0430\u0434\u0430",
         world: "ash",
+        obstacles: [{ cell: [4, 1], kind: "bones" }],
         enemies: [
           { id: "ash_vulture", scale: 2.071 },
           { id: "ash_storm_spirit", scale: 2.071 },
@@ -4772,6 +4943,7 @@
         id: "ash_18",
         name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043E\u0431\u043E\u0437",
         world: "ash",
+        obstacles: [{ cell: [2, 0], kind: "rock" }, { cell: [5, 2], kind: "bones" }],
         enemies: [
           { id: "ash_ghoul", scale: 2.124 },
           { id: "ash_wolf", scale: 2.124 },
@@ -4935,6 +5107,7 @@
         id: "jade_04",
         name: "\u041B\u0438\u0441\u044C\u044F \u0442\u0440\u043E\u043F\u0430",
         world: "jade",
+        obstacles: [{ cell: [3, 1], kind: "bamboo" }],
         enemies: [{ id: "jade_kitsune", scale: 2.04 }, { id: "jade_kitsune", scale: 2.04 }],
         unlockAfter: "jade_03",
         tip: "\u041A\u0438\u0446\u0443\u043D\u044D \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
@@ -4975,6 +5148,7 @@
         id: "jade_09",
         name: "\u041B\u0438\u0441\u0438\u0439 \u0433\u0430\u0440\u043D\u0438\u0437\u043E\u043D",
         world: "jade",
+        obstacles: [{ cell: [4, 0], kind: "bamboo" }, { cell: [4, 2], kind: "bamboo" }],
         enemies: [{ id: "jade_warrior", scale: 2.11 }, { id: "jade_kitsune", scale: 2.11 }],
         unlockAfter: "jade_08",
         tip: "\u0412\u043E\u0438\u043D \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u043A\u0438\u0446\u0443\u043D\u044D. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0442\u044F\u0436\u0451\u043B\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
@@ -5015,6 +5189,7 @@
         id: "jade_14",
         name: "\u0421\u0442\u0440\u0430\u0436\u0438 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
         world: "jade",
+        obstacles: [{ cell: [4, 1], kind: "rock" }],
         enemies: [{ id: "jade_warrior", scale: 2.17 }, { id: "jade_lantern", scale: 2.17 }],
         unlockAfter: "jade_13",
         tip: "\u0412\u043E\u0438\u043D \u0438 \u0444\u043E\u043D\u0430\u0440\u044C. \u0411\u0435\u0437 \u0431\u0440\u043E\u043D\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u043E\u0433\u043D\u044E \u043D\u0435 \u0432\u044B\u0441\u0442\u043E\u044F\u0442\u044C."
@@ -5047,6 +5222,7 @@
         id: "jade_18",
         name: "\u0422\u0438\u0445\u0430\u044F \u0446\u0435\u0440\u0435\u043C\u043E\u043D\u0438\u044F",
         world: "jade",
+        obstacles: [{ cell: [3, 2], kind: "bamboo" }, { cell: [5, 0], kind: "rock" }],
         enemies: [{ id: "jade_teamaster", scale: 2.22 }, { id: "jade_crane", scale: 2.22 }],
         unlockAfter: "jade_17",
         tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0436\u0443\u0440\u0430\u0432\u043B\u044F, \u0430 \u0442\u043E\u0442 \u0431\u044C\u0451\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0434\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
@@ -5214,6 +5390,7 @@
         id: "deep_04",
         name: "\u0422\u0435\u043D\u044C \u0432 \u0440\u0430\u0441\u0449\u0435\u043B\u0438\u043D\u0435",
         world: "deep",
+        obstacles: [{ cell: [3, 1], kind: "coral" }],
         enemies: [{ id: "deep_shadow", scale: 2.14 }, { id: "deep_shadow", scale: 2.14 }],
         unlockAfter: "deep_03",
         tip: "\u0422\u0435\u043D\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0443\u0436\u0430\u0441. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0432\u0435\u0440\u043D\u0451\u0442 \u0440\u044B\u0446\u0430\u0440\u044E \u0442\u0432\u0451\u0440\u0434\u043E\u0441\u0442\u044C \u0440\u0443\u043A\u0438."
@@ -5258,6 +5435,7 @@
         id: "deep_09",
         name: "\u0421\u0430\u0434\u044B \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432",
         world: "deep",
+        obstacles: [{ cell: [4, 0], kind: "coral" }, { cell: [4, 2], kind: "shell" }],
         enemies: [{ id: "deep_coral_golem", scale: 2.2 }, { id: "deep_current_spirit", scale: 2.2 }],
         unlockAfter: "deep_08",
         tip: "\u042F\u0434 \u043A\u043E\u0440\u0430\u043B\u043B\u0430 \u0438 \u0441\u0442\u044F\u0433\u0443\u044E\u0449\u0435\u0435 \u0442\u0435\u0447\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
@@ -5302,6 +5480,7 @@
         id: "deep_14",
         name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0445\u043E\u0440",
         world: "deep",
+        obstacles: [{ cell: [4, 1], kind: "shell" }],
         enemies: [{ id: "deep_coral_golem", scale: 2.26 }, { id: "deep_siren", scale: 2.26 }],
         unlockAfter: "deep_13",
         tip: "\u0413\u043E\u043B\u0435\u043C \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0440, \u043F\u043E\u043A\u0430 \u0440\u0443\u0441\u0430\u043B\u043A\u0430 \u043F\u043E\u0451\u0442. \u0411\u0443\u0434\u0438 \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0431\u044B\u0441\u0442\u0440\u0435\u0435."
@@ -5338,6 +5517,7 @@
         id: "deep_18",
         name: "\u041A\u0440\u0435\u043F\u043E\u0441\u0442\u044C \u043A\u043E\u0440\u0430\u043B\u043B\u0430",
         world: "deep",
+        obstacles: [{ cell: [2, 2], kind: "coral" }, { cell: [5, 0], kind: "shell" }],
         enemies: [{ id: "deep_coral_golem", scale: 2.31 }, { id: "deep_coral_golem", scale: 2.31 }],
         unlockAfter: "deep_17",
         tip: "\u0414\u0432\u0430 \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0445 \u0433\u043E\u043B\u0435\u043C\u0430: \u044F\u0434 \u0438 \u0442\u043E\u043B\u0441\u0442\u044B\u0435 \u043F\u0430\u043D\u0446\u0438\u0440\u0438. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0432 \u0440\u0443\u043A\u0438."
@@ -5510,6 +5690,7 @@
         id: "mist_04",
         name: "\u041A\u043B\u044B\u043A \u0438 \u043F\u0435\u0441\u043E\u043A",
         world: "mist",
+        obstacles: [{ cell: [3, 1], kind: "gear" }],
         enemies: [{ id: "mist_cog_hound", scale: 2.25 }, { id: "mist_sand_wisp", scale: 2.25 }],
         unlockAfter: "mist_03",
         tip: "\u0413\u043E\u043D\u0447\u0430\u044F \u0431\u044C\u0451\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E, \u043E\u0433\u043E\u043D\u0451\u043A \u0442\u044F\u043D\u0435\u0442 \u0432\u0440\u0435\u043C\u044F. \u0423\u0431\u0435\u0439 \u0433\u043E\u043D\u0447\u0443\u044E \u043F\u0435\u0440\u0432\u043E\u0439."
@@ -5558,6 +5739,7 @@
         id: "mist_09",
         name: "\u041A\u043B\u0435\u0448\u043D\u0438 \u0438 \u043A\u043B\u044B\u043A\u0438",
         world: "mist",
+        obstacles: [{ cell: [4, 0], kind: "gear" }, { cell: [4, 2], kind: "hourglass" }],
         enemies: [{ id: "mist_rust_automaton", scale: 2.34 }, { id: "mist_cog_hound", scale: 2.34 }],
         unlockAfter: "mist_08",
         tip: "\u0422\u0430\u043D\u043A \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043C\u0435\u0442\u043A\u0443\u044E \u0433\u043E\u043D\u0447\u0443\u044E. \u0421\u0444\u043E\u043A\u0443\u0441\u0438\u0440\u0443\u0439\u0441\u044F \u043D\u0430 \u0433\u043E\u043D\u0447\u0435\u0439."
@@ -5602,6 +5784,7 @@
         id: "mist_14",
         name: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0433\u043E\u043D",
         world: "mist",
+        obstacles: [{ cell: [4, 1], kind: "hourglass" }],
         enemies: [{ id: "mist_cog_hound", scale: 2.3 }, { id: "mist_cog_hound", scale: 2.3 }],
         unlockAfter: "mist_13",
         tip: "\u0414\u0432\u0435 \u0433\u043E\u043D\u0447\u0438\u0435 \u0431\u044C\u044E\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0411\u0440\u043E\u043D\u044F \u0438 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u2014 \u0442\u0432\u043E\u0438 \u0434\u0440\u0443\u0437\u044C\u044F."
@@ -5634,6 +5817,7 @@
         id: "mist_18",
         name: "\u0414\u0435\u0436\u0443\u0440\u0441\u0442\u0432\u043E \u044D\u0445\u0430",
         world: "mist",
+        obstacles: [{ cell: [3, 0], kind: "hourglass" }, { cell: [3, 2], kind: "gear" }],
         enemies: [
           { id: "mist_echo_keeper", scale: 2.35 },
           { id: "mist_echo_keeper", scale: 2.35 },
@@ -5738,6 +5922,24 @@
   ];
 
   // src/data/battles.js
+  var OBSTACLE_KINDS = {
+    rock: { icon: "\u{1FAA8}", name: "\u0412\u0430\u043B\u0443\u043D" },
+    log: { icon: "\u{1FAB5}", name: "\u041F\u043E\u0432\u0430\u043B\u0435\u043D\u043D\u043E\u0435 \u0431\u0440\u0435\u0432\u043D\u043E" },
+    mushroom: { icon: "\u{1F344}", name: "\u0413\u0440\u0438\u0431-\u0432\u0435\u043B\u0438\u043A\u0430\u043D" },
+    crate: { icon: "\u{1F4E6}", name: "\u042F\u0449\u0438\u043A" },
+    barrel: { icon: "\u{1F6E2}\uFE0F", name: "\u0411\u043E\u0447\u043A\u0430" },
+    books: { icon: "\u{1F4DA}", name: "\u0421\u0442\u043E\u043F\u043A\u0430 \u043A\u043D\u0438\u0433" },
+    lantern: { icon: "\u{1F3EE}", name: "\u0424\u043E\u043D\u0430\u0440\u044C \u043D\u0430 \u0441\u0442\u043E\u043B\u0431\u0435" },
+    signpost: { icon: "\u{1FAA7}", name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0443\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C" },
+    star: { icon: "\u2B50", name: "\u0423\u043F\u0430\u0432\u0448\u0430\u044F \u0437\u0432\u0435\u0437\u0434\u0430" },
+    bones: { icon: "\u{1F9B4}", name: "\u041A\u043E\u0441\u0442\u0438 \u0433\u0438\u0433\u0430\u043D\u0442\u0430" },
+    crystal: { icon: "\u{1F537}", name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B" },
+    bamboo: { icon: "\u{1F38B}", name: "\u0411\u0430\u043C\u0431\u0443\u043A\u043E\u0432\u0430\u044F \u0440\u043E\u0449\u0438\u0446\u0430" },
+    coral: { icon: "\u{1FAB8}", name: "\u041A\u043E\u0440\u0430\u043B\u043B" },
+    shell: { icon: "\u{1F41A}", name: "\u0413\u0438\u0433\u0430\u043D\u0442\u0441\u043A\u0430\u044F \u0440\u0430\u043A\u043E\u0432\u0438\u043D\u0430" },
+    gear: { icon: "\u2699\uFE0F", name: "\u0428\u0435\u0441\u0442\u0435\u0440\u043D\u044F" },
+    hourglass: { icon: "\u23F3", name: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B" }
+  };
   var BATTLES = [
     {
       id: "bt_slimes",
@@ -5760,6 +5962,7 @@
       name: "\u041F\u043E\u043B\u044F\u043D\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432",
       world: "meadow",
       enemies: ["moth_night", "moth_night", "slime_meadow"],
+      obstacles: [{ cell: [3, 1], kind: "log" }],
       unlockAfter: "bt_bees",
       tip: "\u041F\u044B\u043B\u044C\u0446\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0428\u043B\u0435\u043C \u0441\u043E\u043D\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
     },
@@ -5784,6 +5987,7 @@
       name: "\u0420\u043E\u0441\u0441\u044B\u043F\u044C \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u043E\u0432",
       world: "meadow",
       enemies: ["moth_night", "bee_wild", "moth_night", "bee_wild"],
+      obstacles: [{ cell: [4, 1], kind: "rock" }],
       unlockAfter: "bt_golem",
       tip: "\u0420\u043E\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432 \u0438 \u043F\u0447\u0451\u043B: \u0441\u043E\u043D \u0438 \u044F\u0434 \u0432\u043C\u0435\u0441\u0442\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B."
     },
@@ -5792,6 +5996,7 @@
       name: "\u0413\u0440\u0438\u0431\u043D\u0430\u044F \u0437\u0430\u0432\u0430\u043B\u0438\u043D\u043A\u0430",
       world: "meadow",
       enemies: ["golem_moss", "spirit_forest", "spirit_forest"],
+      obstacles: [{ cell: [4, 0], kind: "mushroom" }, { cell: [4, 2], kind: "mushroom" }],
       unlockAfter: "bt_fireflies",
       tip: "\u0413\u043E\u043B\u0435\u043C \u0438 \u0434\u0432\u0430 \u0434\u0443\u0445\u0430. \u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u043E\u043F\u0430\u0441\u043D\u043E \u2014 \u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
     },
@@ -5826,6 +6031,7 @@
       name: "\u0417\u0430\u0441\u0442\u0430\u0432\u0430 \u0443 \u0441\u043A\u043B\u0430\u0434\u0430",
       world: "town",
       enemies: ["bandit", "rat_thief", "bandit"],
+      obstacles: [{ cell: [3, 1], kind: "crate" }],
       unlockAfter: "bt_rats",
       tip: "\u0420\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A\u0438 \u0431\u044C\u044E\u0442 \u0441\u0438\u043B\u044C\u043D\u043E. \u0425\u043E\u0440\u043E\u0448\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u2014 \u043A\u0430\u043A \u043D\u0438\u043A\u043E\u0433\u0434\u0430 \u043A\u0441\u0442\u0430\u0442\u0438."
     },
@@ -5850,6 +6056,7 @@
       name: "\u0421\u0443\u043C\u0430\u0442\u043E\u0445\u0430 \u043D\u0430 \u0440\u044B\u043D\u043A\u0435",
       world: "town",
       enemies: ["bandit", "ghost_guard", "rat_thief"],
+      obstacles: [{ cell: [2, 0], kind: "barrel" }, { cell: [5, 2], kind: "crate" }],
       unlockAfter: "bt_ghost_watch",
       tip: "\u0421\u043C\u0435\u0448\u0430\u043D\u043D\u0430\u044F \u0441\u0442\u0430\u044F: \u044F\u0434, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B. \u0413\u043E\u0442\u043E\u0432\u044C\u0441\u044F \u043A\u0430\u043A \u0441\u043B\u0435\u0434\u0443\u0435\u0442."
     },
@@ -5874,6 +6081,7 @@
       name: "\u0422\u0443\u0440\u043D\u0438\u0440\u043D\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
       world: "town",
       enemies: ["golem_wander", "bandit", "bandit"],
+      obstacles: [{ cell: [4, 1], kind: "barrel" }],
       unlockAfter: "bt_cellar",
       tip: "\u041A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430 \u0438 \u0434\u0432\u0430 \u043A\u043B\u0438\u043D\u043A\u0430 \u0437\u0430 \u043D\u0435\u0439. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0442\u044F\u0436\u0451\u043B\u044B\u043C."
     },
@@ -5900,6 +6108,7 @@
       name: "\u041C\u043E\u043B\u044C \u0432 \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u0435",
       world: "attic",
       enemies: ["book_moth", "book_moth", "ink_blot"],
+      obstacles: [{ cell: [3, 0], kind: "books" }],
       unlockAfter: "bk_blots",
       tip: "\u041A\u043D\u0438\u0436\u043D\u0430\u044F \u043C\u043E\u043B\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043A\u0430\u043A \u0438 \u0435\u0451 \u043B\u0435\u0441\u043D\u044B\u0435 \u0441\u0451\u0441\u0442\u0440\u044B. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0432\u0441\u0451 \u0435\u0449\u0451 \u0432 \u0446\u0435\u043D\u0435."
     },
@@ -5940,6 +6149,7 @@
       name: "\u041F\u044B\u043B\u044C\u043D\u044B\u0439 \u0430\u0440\u0445\u0438\u0432",
       world: "attic",
       enemies: ["illustration", "ink_blot", "ink_blot"],
+      obstacles: [{ cell: [4, 1], kind: "books" }, { cell: [3, 2], kind: "books" }],
       unlockAfter: "bt_reading",
       tip: "\u0413\u0440\u0430\u0432\u044E\u0440\u0430 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430. \u042F\u0434 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u2014 \u0434\u0435\u0440\u0436\u0438 \u043E\u0442\u0432\u0430\u0440 \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
     },
@@ -5948,6 +6158,7 @@
       name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043A\u043E\u043B\u043E\u0434\u0435\u0446",
       world: "attic",
       enemies: ["ink_blot", "paper_spirit", "ink_blot", "paper_spirit"],
+      obstacles: [{ cell: [2, 1], kind: "books" }, { cell: [5, 1], kind: "books" }],
       unlockAfter: "bt_archive",
       tip: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E \u043E\u0431\u0438\u0442\u0430\u0442\u0435\u043B\u0435\u0439 \u0447\u0435\u0440\u0434\u0430\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C."
     },
@@ -5982,6 +6193,7 @@
         { id: "rat_thief", scale: 1.15 },
         { id: "book_moth", scale: 1.15 }
       ],
+      obstacles: [{ cell: [3, 1], kind: "signpost" }],
       unlockAfter: "ex_01",
       tip: "\u0411\u044B\u0441\u0442\u0440\u044B\u0435 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0435, \u0430 \u043C\u043E\u043B\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
     },
@@ -6016,6 +6228,7 @@
         { id: "bee_wild", scale: 1.3 },
         { id: "rat_thief", scale: 1.3 }
       ],
+      obstacles: [{ cell: [4, 0], kind: "lantern" }, { cell: [4, 2], kind: "lantern" }],
       unlockAfter: "ex_04",
       tip: "\u042F\u0434 \u0441\u043E \u0432\u0441\u0435\u0445 \u0441\u0442\u043E\u0440\u043E\u043D. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
     },
@@ -6052,6 +6265,7 @@
         { id: "ink_blot", scale: 1.4 },
         { id: "book_moth", scale: 1.4 }
       ],
+      obstacles: [{ cell: [3, 2], kind: "signpost" }],
       unlockAfter: "ex_07",
       tip: "\u0412\u0441\u0451 \u0438 \u0441\u0440\u0430\u0437\u0443: \u0441\u0442\u0435\u043D\u0430, \u044F\u0434 \u0438 \u0441\u043E\u043D. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0421\u0442\u0440\u0430\u0436\u0435\u043C."
     },
@@ -6069,6 +6283,127 @@
   }
   BATTLES.push(...WANTED_BATTLES);
   var BATTLE_BY_ID = Object.fromEntries(BATTLES.map((b) => [b.id, b]));
+
+  // src/data/trophies.js
+  var TROPHIES = [
+    {
+      id: "willow_branch",
+      battleId: "bt_boss_willow",
+      icon: "\u{1F33F}",
+      name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0430\u044F\u0441\u044F \u0432\u0435\u0442\u0432\u044C \u0438\u0432\u044B",
+      lore: "\u0412\u0435\u0442\u0432\u044C \u0421\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B \u0442\u0451\u043F\u043B\u0430\u044F \u043D\u0430 \u043E\u0449\u0443\u043F\u044C \u0438 \u0447\u0443\u0442\u044C \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u043F\u043E \u043D\u043E\u0447\u0430\u043C. \u041A\u043E\u0442 \u0447\u0430\u0441\u0442\u043E \u0434\u0440\u0435\u043C\u043B\u0435\u0442 \u043F\u043E\u0434 \u043D\u0435\u0439."
+    },
+    {
+      id: "captain_medal",
+      battleId: "bt_boss_captain",
+      icon: "\u{1F396}\uFE0F",
+      name: "\u041C\u0435\u0434\u0430\u043B\u044C \u0441\u0442\u0430\u0440\u043E\u0433\u043E \u043A\u0430\u043F\u0438\u0442\u0430\u043D\u0430",
+      lore: "\u0413\u0430\u0440\u043D\u0438\u0437\u043E\u043D\u043D\u0430\u044F \u043D\u0430\u0433\u0440\u0430\u0434\u0430, \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u043A\u0430\u043F\u0438\u0442\u0430\u043D \u043D\u0435 \u0441\u043D\u0438\u043C\u0430\u043B \u0438 \u043F\u043E\u0441\u043B\u0435 \u0441\u043C\u0435\u0440\u0442\u0438. \u0422\u0435\u043F\u0435\u0440\u044C \u0435\u043C\u0443 \u043C\u043E\u0436\u043D\u043E \u043E\u0442\u0434\u044B\u0445\u0430\u0442\u044C."
+    },
+    {
+      id: "keeper_quill",
+      battleId: "bk_boss_keeper",
+      icon: "\u{1FAB6}",
+      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u043E\u0435 \u043F\u0435\u0440\u043E \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+      lore: "\u041F\u0435\u0440\u043E, \u043F\u0438\u0441\u0430\u0432\u0448\u0435\u0435 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u044E\u044E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443. \u0415\u0441\u043B\u0438 \u043F\u0440\u0438\u0441\u043B\u0443\u0448\u0430\u0442\u044C\u0441\u044F, \u0448\u0443\u0440\u0448\u0438\u0442, \u0431\u0443\u0434\u0442\u043E \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u0441\u0435\u0431\u044F."
+    },
+    {
+      id: "star_shard",
+      battleId: "ex_boss",
+      icon: "\u{1F31F}",
+      name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0437\u0432\u0451\u0437\u0434\u043D\u043E\u0433\u043E \u043E\u0433\u043D\u044F",
+      lore: "\u0423\u0433\u043E\u043B\u0451\u043A, \u043E\u0441\u0442\u0430\u0432\u0448\u0438\u0439\u0441\u044F \u043E\u0442 \u0417\u0432\u0451\u0437\u0434\u043D\u043E\u0433\u043E \u0441\u0442\u0440\u0430\u0436\u0430. \u041D\u0435 \u043E\u0431\u0436\u0438\u0433\u0430\u0435\u0442 \u2014 \u0442\u043E\u043B\u044C\u043A\u043E \u0433\u0440\u0435\u0435\u0442 \u043B\u0430\u0434\u043E\u043D\u0438."
+    },
+    {
+      id: "nm_mask",
+      battleId: "nm_boss",
+      icon: "\u{1F3AD}",
+      name: "\u041C\u0430\u0441\u043A\u0430 \u0425\u043E\u0437\u044F\u0438\u043D\u0430 \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
+      lore: "\u0412 \u043D\u0435\u0439 \u0432\u0441\u0451 \u0435\u0449\u0451 \u0447\u0438\u0442\u0430\u0435\u0442\u0441\u044F \u0443\u043B\u044B\u0431\u043A\u0430 \u0442\u043E\u0440\u0433\u043E\u0432\u0446\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0437\u043D\u0430\u043B \u0446\u0435\u043D\u0443 \u043A\u0430\u0436\u0434\u043E\u043C\u0443 \u0444\u043E\u043D\u0430\u0440\u044E."
+    },
+    {
+      id: "sw_basket",
+      battleId: "sw_boss",
+      icon: "\u{1F9FA}",
+      name: "\u041B\u0443\u043A\u043E\u0448\u043A\u043E \u0425\u043E\u0437\u044F\u0439\u043A\u0438 \u0422\u043E\u043F\u0435\u0439",
+      lore: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0431\u043E\u043B\u043E\u0442\u043D\u044B\u043C\u0438 \u0442\u0440\u0430\u0432\u0430\u043C\u0438 \u0438 \u0447\u0443\u0442\u044C-\u0447\u0443\u0442\u044C \u2014 \u043C\u0430\u043B\u0438\u043D\u043E\u0439. \u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0432\u0430\u0440\u0438\u043B\u0430 \u0432 \u043D\u0451\u043C \u043A\u043E\u043C\u043F\u043E\u0442."
+    },
+    {
+      id: "sf_cup",
+      battleId: "sf_boss",
+      icon: "\u{1F3C6}",
+      name: "\u041A\u0443\u0431\u043E\u043A \u0427\u0435\u043C\u043F\u0438\u043E\u043D\u0430 \u043C\u0438\u0440\u043E\u0432",
+      lore: "\u0413\u0440\u0430\u0432\u0438\u0440\u043E\u0432\u043A\u0430 \u0441\u0442\u0451\u0440\u043B\u0430\u0441\u044C \u043E\u0442 \u0432\u0440\u0435\u043C\u0435\u043D\u0438, \u043D\u043E \u043D\u0430 \u0434\u043D\u0435 \u0432\u0438\u0434\u043D\u043E: \xAB\u041B\u0443\u0447\u0448\u0435\u043C\u0443 \u0438\u0437 \u043B\u0443\u0447\u0448\u0438\u0445\xBB."
+    },
+    {
+      id: "ash_helm",
+      battleId: "ash_boss",
+      icon: "\u26D1\uFE0F",
+      name: "\u0428\u043B\u0435\u043C \u0425\u0430\u043D\u0430 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0431\u0443\u0440\u044C",
+      lore: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u0432 \u0441\u0430\u0436\u0435 \u0438 \u043D\u0430\u0441\u0435\u0447\u043A\u0430\u0445. \u0412\u043D\u0443\u0442\u0440\u0438 \u2014 \u0432\u044B\u0448\u0438\u0442\u044B\u0439 \u043E\u0431\u0435\u0440\u0435\u0433 \u043E\u0442 \u0441\u043E\u0432\u0441\u0435\u043C \u0434\u0440\u0443\u0433\u043E\u0439, \u0442\u0438\u0445\u043E\u0439 \u0436\u0438\u0437\u043D\u0438."
+    },
+    {
+      id: "cr_scale",
+      battleId: "cr_boss",
+      icon: "\u{1F537}",
+      name: "\u041A\u0432\u0430\u0440\u0446\u0435\u0432\u0430\u044F \u0447\u0435\u0448\u0443\u044F \u0434\u0440\u0430\u043A\u043E\u043D\u0430",
+      lore: "\u041F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u0430\u044F \u0438 \u0437\u0432\u0435\u043D\u044F\u0449\u0430\u044F. \u0415\u0441\u043B\u0438 \u043F\u043E\u0434\u043D\u0435\u0441\u0442\u0438 \u043A \u0443\u0445\u0443 \u2014 \u0441\u043B\u044B\u0448\u043D\u043E \u044D\u0445\u043E \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0445 \u0433\u043E\u0440."
+    },
+    {
+      id: "jade_fan",
+      battleId: "jade_boss",
+      icon: "\u{1FAAD}",
+      name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0432\u0435\u0435\u0440",
+      lore: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441\u0430\u0434\u0430 \u0434\u0430\u0440\u0438\u043B \u0442\u0430\u043A\u0438\u0435 \u0441\u0432\u043E\u0438\u043C \u043F\u043E\u0447\u0451\u0442\u043D\u044B\u043C \u0433\u043E\u0441\u0442\u044F\u043C. \u041B\u0451\u0433\u043A\u0438\u0439, \u043F\u0440\u043E\u0445\u043B\u0430\u0434\u043D\u044B\u0439, \u0431\u0435\u0437\u0443\u043F\u0440\u0435\u0447\u043D\u044B\u0439."
+    },
+    {
+      id: "deep_pearl",
+      battleId: "deep_boss",
+      icon: "\u{1FAE7}",
+      name: "\u0427\u0451\u0440\u043D\u0430\u044F \u0436\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u044B",
+      lore: "\u0412 \u0433\u043B\u0443\u0431\u0438\u043D\u0435 \u0435\u0451 \u043F\u043B\u044B\u0432\u0451\u0442 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0430\u044F \u043B\u0443\u043D\u0430. \u0413\u043E\u0432\u043E\u0440\u044F\u0442, \u044D\u0442\u043E \u043E\u0442\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0433\u0440\u043E\u0442\u0430, \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435\u0442."
+    },
+    {
+      id: "mist_gear",
+      battleId: "mist_boss",
+      icon: "\u2699\uFE0F",
+      name: "\u0417\u043E\u043B\u043E\u0442\u0430\u044F \u0448\u0435\u0441\u0442\u0435\u0440\u043D\u044F \u0412\u0440\u0435\u043C\u0435\u043D\u0438",
+      lore: "\u0421\u0442\u043E\u0438\u0442 \u0435\u0439 \u043B\u0435\u0436\u0430\u0442\u044C \u043D\u0430 \u043F\u043E\u043B\u043A\u0435 \u2014 \u0438 \u0447\u0430\u0441\u044B \u0432 \u043B\u0430\u0432\u043A\u0435 \u043D\u0438\u043A\u043E\u0433\u0434\u0430 \u043D\u0435 \u0441\u043F\u0435\u0448\u0430\u0442. \u0421\u0442\u0440\u0430\u043D\u043D\u044B\u0439, \u043D\u043E \u043F\u0440\u0438\u044F\u0442\u043D\u044B\u0439 \u0441\u0443\u0432\u0435\u043D\u0438\u0440."
+    }
+  ];
+  var MINI_TROPHIES = [
+    {
+      id: "mini_bee",
+      battleId: "wnt_bee_queen",
+      icon: "\u{1F36F}",
+      name: "\u0421\u043E\u0442\u0430 \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u044B \u043F\u0447\u0451\u043B",
+      lore: "\u041A\u0443\u0441\u043E\u0447\u0435\u043A \u043C\u0451\u0434\u0430 \u0434\u0438\u043A\u043E\u0433\u043E \u0440\u043E\u044F. \u0421\u043B\u0430\u0434\u043A\u0438\u0439 \u0438 \u043E\u043F\u0430\u0441\u043D\u043E \u0437\u043E\u043B\u043E\u0442\u043E\u0439."
+    },
+    {
+      id: "mini_rat",
+      battleId: "wnt_rat_king",
+      icon: "\u{1F451}",
+      name: "\u041A\u043E\u0440\u043E\u043D\u0430 \u041A\u0440\u044B\u0441\u0438\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u043E\u043D\u0430",
+      lore: "\u041A\u0440\u043E\u0448\u0435\u0447\u043D\u0430\u044F, \u0438\u0437 \u0433\u043D\u0443\u0442\u043E\u0439 \u043F\u0440\u043E\u0432\u043E\u043B\u043E\u043A\u0438. \u0411\u0430\u0440\u043E\u043D \u043D\u043E\u0441\u0438\u043B \u0435\u0451 \u043E\u0447\u0435\u043D\u044C \u0433\u043E\u0440\u0434\u043E."
+    },
+    {
+      id: "mini_ink",
+      battleId: "wnt_ink_lord",
+      icon: "\u{1F58B}\uFE0F",
+      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u0438\u0446\u0430 \u041F\u043E\u0432\u0435\u043B\u0438\u0442\u0435\u043B\u044F \u043A\u043B\u044F\u043A\u0441",
+      lore: "\u0421\u0443\u0445\u0430\u044F, \u043D\u043E \u0435\u0441\u043B\u0438 \u0437\u0430\u0433\u043B\u044F\u043D\u0443\u0442\u044C \u0432\u043D\u0443\u0442\u0440\u044C \u2014 \u0442\u0430\u043C \u0432\u0435\u0447\u043D\u043E \u0433\u0443\u0441\u0442\u0435\u0435\u0442 \u0442\u044C\u043C\u0430."
+    },
+    {
+      id: "mini_lantern",
+      battleId: "wnt_lantern_thief",
+      icon: "\u{1F3EE}",
+      name: "\u0420\u0430\u0437\u0431\u0438\u0442\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C \u041F\u043E\u0445\u0438\u0442\u0438\u0442\u0435\u043B\u044F",
+      lore: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0444\u043E\u043D\u0430\u0440\u044C, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043E\u043D \u0443\u043A\u0440\u0430\u043B. \u0422\u0435\u043F\u0435\u0440\u044C \u0433\u043E\u0440\u0438\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u0443 \u0447\u0435\u0441\u0442\u043D\u044B\u0445."
+    }
+  ];
+  var TROPHY_BY_BATTLE = Object.fromEntries(
+    [...TROPHIES, ...MINI_TROPHIES].map((t) => [t.battleId, t])
+  );
 
   // src/data/crew.js
   var COMPANIONS = [
@@ -7119,6 +7454,8 @@
       crit,
       elem,
       ranged: isRanged(attacker),
+      // Магический снаряд (посох, кастеры) — для отрисовки реплея
+      magic: !!(attacker.caster || attacker.traits?.includes("magic")),
       skillName: opts.skillName || null
     });
     return remaining;
@@ -7143,33 +7480,51 @@
     if (alive.length === 0) return null;
     return alive.reduce((a, b) => cellDist(unit.cell, a.cell) < cellDist(unit.cell, b.cell) ? a : b);
   }
-  function stepToward(unit, goal, allUnits, log) {
-    const [cx, cy] = unit.cell;
+  function stepToward(unit, goal, allUnits, log, obstacles = []) {
+    const startKey = unit.cell.join(",");
+    const blocked = new Set(obstacles.map((o) => o.cell.join(",")));
     const occupied = new Set(
       allUnits.filter((u) => u !== unit && u.hp > 0).map((u) => u.cell.join(","))
     );
+    const free = (x, y) => x >= 0 && x < COLS && y >= 0 && y < ROWS && !blocked.has(`${x},${y}`) && !occupied.has(`${x},${y}`);
+    const prev = /* @__PURE__ */ new Map([[startKey, null]]);
+    const depth = /* @__PURE__ */ new Map([[startKey, 0]]);
+    const queue = [unit.cell];
     const curDist = cellDist(unit.cell, goal.cell);
     let best = null;
-    let bestDist = curDist;
-    for (let dx = -1; dx <= 1; dx++) {
-      for (let dy = -1; dy <= 1; dy++) {
-        if (dx === 0 && dy === 0) continue;
-        const nx = cx + dx;
-        const ny = cy + dy;
-        if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) continue;
-        if (occupied.has(`${nx},${ny}`)) continue;
-        const d = cellDist([nx, ny], goal.cell);
-        const dc = Math.sign(goal.cell[0] - cx);
-        const score = d * 10 + (dx === dc && dc !== 0 ? 0 : 1);
-        if (d < bestDist || d === bestDist && best && score < best.score) {
-          best = { cell: [nx, ny], d, score };
-          bestDist = d;
+    for (let qi = 0; qi < queue.length; qi++) {
+      const [cx, cy] = queue[qi];
+      const steps = depth.get(`${cx},${cy}`);
+      const d = cellDist([cx, cy], goal.cell);
+      if (steps > 0 && d < curDist && (!best || d < best.d || d === best.d && steps < best.steps)) {
+        best = { cell: [cx, cy], d, steps };
+      }
+      const dirs = [];
+      for (let dx = -1; dx <= 1; dx++) {
+        for (let dy = -1; dy <= 1; dy++) {
+          if (dx || dy) dirs.push([dx, dy]);
         }
       }
+      dirs.sort((a, b) => cellDist([cx + a[0], cy + a[1]], goal.cell) - cellDist([cx + b[0], cy + b[1]], goal.cell));
+      for (const [dx, dy] of dirs) {
+        const nx = cx + dx;
+        const ny = cy + dy;
+        const key = `${nx},${ny}`;
+        if (!free(nx, ny) || prev.has(key)) continue;
+        prev.set(key, [cx, cy]);
+        depth.set(key, steps + 1);
+        queue.push([nx, ny]);
+      }
     }
-    if (!best || best.d >= curDist) return false;
+    if (!best) return false;
+    let step = best.cell;
+    for (; ; ) {
+      const p = prev.get(step.join(","));
+      if (!p || p.join(",") === startKey) break;
+      step = p;
+    }
     const from = unit.cell;
-    unit.cell = best.cell;
+    unit.cell = step;
     log.push({ t: "move", uid: unit.uid, from, to: unit.cell });
     return true;
   }
@@ -7240,7 +7595,7 @@
       }
     }
   }
-  function act(unit, allies, foes, rng, log, tactic, allUnits) {
+  function act(unit, allies, foes, rng, log, tactic, allUnits, obstacles) {
     const sleep = unit.statuses.find((s) => s.kind === "sleep");
     if (sleep) {
       sleep.ticks -= 1;
@@ -7267,7 +7622,7 @@
       const holds = tactic === "defense" && unit.side === "ally" && !isRanged(unit) && meleeFoeAlive;
       if (!holds) {
         const goal = nearestEnemy(unit, foes);
-        if (goal) stepToward(unit, goal, allUnits, log);
+        if (goal) stepToward(unit, goal, allUnits, log, obstacles);
       }
       return GAUGE_FULL / 2;
     }
@@ -7341,7 +7696,7 @@
     }
     return GAUGE_FULL;
   }
-  function simulateFormationBattle(allies, foes, seed = 1, tactic = "balance") {
+  function simulateFormationBattle(allies, foes, seed = 1, tactic = "balance", obstacles = []) {
     const rng = makeRng(seed);
     if (tactic === "defense") {
       for (const u of allies) {
@@ -7421,7 +7776,7 @@
         if (u.gauge < GAUGE_FULL || u.hp <= 0) continue;
         const myAllies = u.side === "ally" ? allies : foes;
         const myFoes = u.side === "ally" ? foes : allies;
-        const cost = act(u, myAllies, myFoes, rng, log, tactic, [...allies, ...foes]);
+        const cost = act(u, myAllies, myFoes, rng, log, tactic, [...allies, ...foes], obstacles);
         u.gauge -= cost ?? GAUGE_FULL;
         if (u.side === "ally" && hasStatus(u, "sleep")) u.stats.sleptTicks++;
       }
@@ -7524,6 +7879,10 @@
       // id товаров прилавка, которые игрок уже видел
       achievements: {},
       // id -> timestamp разблокировки
+      trophies: [],
+      // id трофеев кабинета (за боссов и розыск)
+      trophiesSeen: [],
+      // id трофеев, которые игрок уже посмотрел в кабинете
       journal: [],
       // дневник кота: последние события [{icon, text, at}]
       tutorial: {},
@@ -7553,6 +7912,8 @@
     state2.lastCatGift ??= null;
     state2.stats.catPets ||= 0;
     state2.achievements ||= {};
+    state2.trophies ||= [];
+    state2.trophiesSeen ||= [];
     state2.journal ||= [];
     state2.tutorial ||= {};
     state2.tutorialSkipped ??= false;
@@ -7869,6 +8230,15 @@
     "tea_07",
     "pp_08",
     "tea_08",
+    // Вторая чайная половина: новые ингредиенты и жар как условие заказа
+    "tea_09",
+    "tea_10",
+    "tea_11",
+    "tea_12",
+    "tea_13",
+    "tea_14",
+    "tea_15",
+    "tea_16",
     // Искалки новых миров
     "sk_nm_01",
     "sk_sw_01",
@@ -7970,6 +8340,7 @@
     const puzzle = findPuzzle(state2, puzzleId);
     if (!puzzle) return null;
     const firstTime = !state2.puzzlesDone[puzzleId];
+    const coinFactor = info.coinFactor ?? 1;
     const isDaily = firstTime && state2.lastDailyBonus !== todayKey() && isDailyPuzzle(state2, puzzleId);
     state2.puzzlesDone[puzzleId] = {
       moves: info.moves ?? 0,
@@ -7987,11 +8358,11 @@
     }
     if (!firstTime) {
       const coins = rewards.find((r) => r.type === "coins");
-      const amount = coins ? Math.round(coins.amount / 3) : 10;
+      const amount = coins ? Math.round(coins.amount / 3 * coinFactor) : 10;
       addCoins(state2, amount);
       return [{ type: "coins", amount }];
     }
-    const granted = grantRewards(state2, rewards.map((r) => dailyBonus && r.type === "coins" ? { ...r, amount: r.amount * 2 } : r));
+    const granted = grantRewards(state2, rewards.map((r) => r.type === "coins" ? { ...r, amount: Math.round(r.amount * (dailyBonus ? 2 : 1) * coinFactor) } : r));
     return granted;
   }
   function skipPuzzlePrice(puzzle) {
@@ -8211,11 +8582,13 @@
     const entries = battle.enemies.map((e) => typeof e === "string" ? { id: e, scale: 1 } : e);
     const slots = enemyFormationSlots(battle.enemies);
     const foes = entries.map((e, i) => makeFormationEnemy(e.id, e.scale, slots[i], i));
+    const obstacles = battle.obstacles || [];
     const initialFormation = {
       allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
-      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] }))
+      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] })),
+      obstacles
     };
-    const result = simulateFormationBattle(allies, foes, seed, state2.settings.tactic || "balance");
+    const result = simulateFormationBattle(allies, foes, seed, state2.settings.tactic || "balance", obstacles);
     const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
     for (const used of usedIds) {
       const i = state2.consumableBelt.indexOf(used);
@@ -8240,6 +8613,12 @@
         }
       }
       grantRewards(state2, rewards, {});
+      const trophy = TROPHY_BY_BATTLE[battle.id];
+      if (trophy && !state2.trophies.includes(trophy.id)) {
+        state2.trophies.push(trophy.id);
+        rewards.push({ type: "note", text: `\u0422\u0440\u043E\u0444\u0435\u0439 \xAB${trophy.name}\xBB \u0437\u0430\u0439\u043C\u0451\u0442 \u0441\u0432\u043E\u0451 \u043C\u0435\u0441\u0442\u043E \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435.` });
+        journalPush(state2, "\u{1F3C6}", `\u041D\u043E\u0432\u044B\u0439 \u0442\u0440\u043E\u0444\u0435\u0439 \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435: \xAB${trophy.name}\xBB (${battle.name}).`);
+      }
       if (traits.includes("heal_after_battle")) {
         rewards.push({ type: "note", text: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0447\u0430\u0433\u0430 \u0441\u043E\u0433\u0440\u0435\u043B \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F." });
       }
@@ -8252,6 +8631,101 @@
       formation: initialFormation
       // начальные клетки (не конец боя!)
     };
+  }
+
+  // src/ui/common.js
+  function puzzleSkipButton(ctx2, level, onSkipped) {
+    const price = skipPuzzlePrice(level);
+    const b = document.createElement("button");
+    b.className = "ghost small";
+    b.innerHTML = `\u23ED\uFE0F \u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u0437\u0430 \u{1FA99}${price}`;
+    b.title = "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u0442 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u0441\u043E\u0441\u0435\u0434\u044F\u043C (\u043D\u0430\u0433\u0440\u0430\u0434\u044B \u0443\u0440\u043E\u0432\u043D\u044F \u043D\u0435 \u0431\u0443\u0434\u0435\u0442)";
+    b.addEventListener("click", () => {
+      if (!confirm(`\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \xAB${level.name}\xBB \u0437\u0430 ${price} \u043C\u043E\u043D\u0435\u0442? \u041D\u0430\u0433\u0440\u0430\u0434\u044B \u0443\u0440\u043E\u0432\u043D\u044F \u043D\u0435 \u0431\u0443\u0434\u0435\u0442.`)) return;
+      const r = skipPuzzle(ctx2.state, level.id);
+      if (r.ok) {
+        ctx2.sfx?.("coin");
+        ctx2.toast(`\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u043F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u0430. \u0423\u0442\u0435\u0448\u0435\u043D\u0438\u0435 \u043E\u0442 \u043A\u043E\u0442\u0430: \u{1FA99}${r.consolation}`);
+        ctx2.save();
+        onSkipped?.();
+      } else {
+        ctx2.toast(r.error);
+      }
+    });
+    return b;
+  }
+  function header(ctx2, title, subtitle, backTo = "hub") {
+    const box = document.createElement("div");
+    box.className = "panel";
+    const top = document.createElement("div");
+    top.style.display = "flex";
+    top.style.justifyContent = "space-between";
+    top.style.alignItems = "center";
+    const h = document.createElement("h2");
+    h.textContent = title;
+    h.style.margin = "0";
+    const back = document.createElement("button");
+    back.className = "ghost small";
+    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
+    back.addEventListener("click", () => ctx2.go(backTo));
+    top.append(h, back);
+    box.appendChild(top);
+    if (subtitle) {
+      const s = document.createElement("div");
+      s.className = "muted";
+      s.textContent = subtitle;
+      box.appendChild(s);
+    }
+    return box;
+  }
+  function quickNav(ctx2, items) {
+    const nav = document.createElement("div");
+    nav.className = "quick-nav";
+    for (const it of items) {
+      const b = document.createElement("button");
+      b.innerHTML = `${it.icon}<span class="qn-label">${it.label}</span>`;
+      b.setAttribute("aria-label", it.label);
+      if (it.primary) b.className = "primary";
+      b.addEventListener("click", () => {
+        ctx2.sfx?.("tap");
+        ctx2.go(it.screen, it.params || {});
+      });
+      nav.appendChild(b);
+    }
+    return nav;
+  }
+  function rewardText(r) {
+    if (r.type === "coins") return `\u{1FA99} ${r.amount} \u043C\u043E\u043D\u0435\u0442`;
+    if (r.type === "seals") return `\u{1F530} ${r.amount} \u043F\u0435\u0447\u0430\u0442\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430`;
+    if (r.type === "item") return `\u{1F381} ${ITEM_BY_ID[r.id]?.name || r.id}`;
+    if (r.type === "material") return `\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B: ${materialLabel(r.id)}${r.amount > 1 ? ` \xD7${r.amount}` : ""}`;
+    return "";
+  }
+  function showOverlay(ctx2, { title, subtitle, rewards, advice, buttons }) {
+    const overlay = document.createElement("div");
+    overlay.className = "overlay";
+    const rewardHtml = (rewards || []).map(rewardText).filter(Boolean).join("<br>");
+    overlay.innerHTML = `
+    <div class="card">
+      <h2>${title}</h2>
+      ${subtitle ? `<div class="muted">${subtitle}</div>` : ""}
+      ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ""}
+      ${advice ? `<div class="advice">\u{1F4A1} ${advice}</div>` : ""}
+      <div class="actions"></div>
+    </div>`;
+    const actions = overlay.querySelector(".actions");
+    for (const b of buttons) {
+      const btn = document.createElement("button");
+      btn.textContent = b.label;
+      if (b.primary) btn.className = "primary";
+      btn.addEventListener("click", () => {
+        overlay.remove();
+        b.onClick();
+      });
+      actions.appendChild(btn);
+    }
+    document.body.appendChild(overlay);
+    return overlay;
   }
 
   // src/ui/tutorial.js
@@ -8418,7 +8892,8 @@
           ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, () => false],
           ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 68, 50, () => false],
           ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 77, 52, () => false],
-          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0]
+          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0],
+          ["\u{1F98C}", "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432", "@cabinet", 72, 90, () => (state2.trophies || []).some((id) => !(state2.trophiesSeen || []).includes(id))]
         ]
       },
       square: {
@@ -8442,6 +8917,15 @@
           ["\u{1F52E}", "\u041C\u0430\u0433", "shopMagic", 63, 62, () => hasUnseenIn(state2, "magic")],
           ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 80, 60, () => hasUnseenIn(state2, "alchemy")],
           ["\u{1F307}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 52, 60, () => false]
+        ]
+      },
+      cabinet: {
+        candidates: ["assets/trophy_room_web.jpg", "assets/trophy_room.png"],
+        alt: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432",
+        hotspots: [
+          ["\u{1F4D6}", "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u043A\u043E\u0440\u0434\u043E\u0432", "achievements", 87.5, 64, () => false],
+          ["\u{1F5FA}\uFE0F", "\u041A\u0430\u0440\u0442\u0430 \u043C\u0438\u0440\u043E\u0432", "battles", 87, 33, () => false],
+          ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 50, 92, () => false]
         ]
       }
     };
@@ -8478,6 +8962,7 @@
           if (screen === "@square") rerender("square");
           else if (screen === "@lavka") rerender("lavka");
           else if (screen === "@market") rerender("market");
+          else if (screen === "@cabinet") rerender("cabinet");
           else ctx2.go(screen);
         }, 150);
       });
@@ -8581,6 +9066,64 @@
         ctx2.toast(lines[Math.floor(Math.random() * lines.length)]);
       });
       scenePanel.appendChild(el);
+    }
+    if (sceneId === "cabinet") {
+      const unseen = (state2.trophies || []).filter((id) => !(state2.trophiesSeen || []).includes(id));
+      if (unseen.length > 0) {
+        state2.trophiesSeen = [...state2.trophiesSeen || [], ...unseen];
+        ctx2.save();
+      }
+      const TROPHY_SPOTS = TROPHIES.map((t, i) => ({
+        t,
+        x: 29.7 + i % 6 * 8.4,
+        y: i < 6 ? 35 : 61.5,
+        size: 52
+      }));
+      const MINI_SPOTS = MINI_TROPHIES.map((t, i) => ({
+        t,
+        x: 42 + i * 5.5,
+        y: 76.5,
+        size: 30
+      }));
+      for (const spot of [...TROPHY_SPOTS, ...MINI_SPOTS]) {
+        const owned = (state2.trophies || []).includes(spot.t.id);
+        const el = document.createElement("div");
+        el.className = `hub-trophy${owned ? "" : " locked"}`;
+        el.style.left = `${spot.x}%`;
+        el.style.top = `${spot.y}%`;
+        el.title = owned ? spot.t.name : "???";
+        if (owned) {
+          const img = document.createElement("img");
+          img.src = `assets/trophies/tro_${spot.t.id}.png`;
+          img.alt = spot.t.name;
+          img.style.width = `${spot.size}px`;
+          img.addEventListener("error", () => {
+            img.remove();
+            el.textContent = spot.t.icon;
+            el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+          });
+          el.appendChild(img);
+        } else {
+          el.textContent = "\u2754";
+          el.style.fontSize = `${Math.round(spot.size * 0.6)}px`;
+        }
+        el.addEventListener("click", () => {
+          ctx2.sfx?.("tap");
+          if (!owned) {
+            const battle = BATTLE_BY_ID[spot.t.battleId];
+            ctx2.toast(`\u041F\u0443\u0441\u0442\u043E\u0435 \u043C\u0435\u0441\u0442\u043E. \u0421\u044E\u0434\u0430 \u0432\u0441\u0442\u0430\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0439 \u0437\u0430 \u043F\u043E\u0431\u0435\u0434\u0443: \xAB${battle?.name || "?"}\xBB.`);
+            return;
+          }
+          const wins = state2.battlesDone[spot.t.battleId]?.victories || 1;
+          showOverlay(ctx2, {
+            title: `${spot.t.icon} ${spot.t.name}`,
+            subtitle: `${spot.t.lore}<br><br>\u041F\u043E\u0431\u0435\u0434 \u0432 \u0431\u043E\u044E \xAB${BATTLE_BY_ID[spot.t.battleId]?.name || ""}\xBB: ${wins}`,
+            buttons: [{ label: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C", primary: true, onClick: () => {
+            } }]
+          });
+        });
+        scenePanel.appendChild(el);
+      }
     }
     const fx = (cls, style, content) => {
       const e = document.createElement("div");
@@ -9096,104 +9639,9 @@
     return { type: "already" };
   }
 
-  // src/ui/common.js
-  function puzzleSkipButton(ctx2, level, onSkipped) {
-    const price = skipPuzzlePrice(level);
-    const b = document.createElement("button");
-    b.className = "ghost small";
-    b.innerHTML = `\u23ED\uFE0F \u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u0437\u0430 \u{1FA99}${price}`;
-    b.title = "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u0442 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u0441\u043E\u0441\u0435\u0434\u044F\u043C (\u043D\u0430\u0433\u0440\u0430\u0434\u044B \u0443\u0440\u043E\u0432\u043D\u044F \u043D\u0435 \u0431\u0443\u0434\u0435\u0442)";
-    b.addEventListener("click", () => {
-      if (!confirm(`\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \xAB${level.name}\xBB \u0437\u0430 ${price} \u043C\u043E\u043D\u0435\u0442? \u041D\u0430\u0433\u0440\u0430\u0434\u044B \u0443\u0440\u043E\u0432\u043D\u044F \u043D\u0435 \u0431\u0443\u0434\u0435\u0442.`)) return;
-      const r = skipPuzzle(ctx2.state, level.id);
-      if (r.ok) {
-        ctx2.sfx?.("coin");
-        ctx2.toast(`\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u043F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u0430. \u0423\u0442\u0435\u0448\u0435\u043D\u0438\u0435 \u043E\u0442 \u043A\u043E\u0442\u0430: \u{1FA99}${r.consolation}`);
-        ctx2.save();
-        onSkipped?.();
-      } else {
-        ctx2.toast(r.error);
-      }
-    });
-    return b;
-  }
-  function header(ctx2, title, subtitle, backTo = "hub") {
-    const box = document.createElement("div");
-    box.className = "panel";
-    const top = document.createElement("div");
-    top.style.display = "flex";
-    top.style.justifyContent = "space-between";
-    top.style.alignItems = "center";
-    const h = document.createElement("h2");
-    h.textContent = title;
-    h.style.margin = "0";
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go(backTo));
-    top.append(h, back);
-    box.appendChild(top);
-    if (subtitle) {
-      const s = document.createElement("div");
-      s.className = "muted";
-      s.textContent = subtitle;
-      box.appendChild(s);
-    }
-    return box;
-  }
-  function quickNav(ctx2, items) {
-    const nav = document.createElement("div");
-    nav.className = "quick-nav";
-    for (const it of items) {
-      const b = document.createElement("button");
-      b.innerHTML = `${it.icon}<span class="qn-label">${it.label}</span>`;
-      b.setAttribute("aria-label", it.label);
-      if (it.primary) b.className = "primary";
-      b.addEventListener("click", () => {
-        ctx2.sfx?.("tap");
-        ctx2.go(it.screen, it.params || {});
-      });
-      nav.appendChild(b);
-    }
-    return nav;
-  }
-  function rewardText(r) {
-    if (r.type === "coins") return `\u{1FA99} ${r.amount} \u043C\u043E\u043D\u0435\u0442`;
-    if (r.type === "seals") return `\u{1F530} ${r.amount} \u043F\u0435\u0447\u0430\u0442\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430`;
-    if (r.type === "item") return `\u{1F381} ${ITEM_BY_ID[r.id]?.name || r.id}`;
-    if (r.type === "material") return `\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B: ${materialLabel(r.id)}${r.amount > 1 ? ` \xD7${r.amount}` : ""}`;
-    return "";
-  }
-  function showOverlay(ctx2, { title, subtitle, rewards, advice, buttons }) {
-    const overlay = document.createElement("div");
-    overlay.className = "overlay";
-    const rewardHtml = (rewards || []).map(rewardText).filter(Boolean).join("<br>");
-    overlay.innerHTML = `
-    <div class="card">
-      <h2>${title}</h2>
-      ${subtitle ? `<div class="muted">${subtitle}</div>` : ""}
-      ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ""}
-      ${advice ? `<div class="advice">\u{1F4A1} ${advice}</div>` : ""}
-      <div class="actions"></div>
-    </div>`;
-    const actions = overlay.querySelector(".actions");
-    for (const b of buttons) {
-      const btn = document.createElement("button");
-      btn.textContent = b.label;
-      if (b.primary) btn.className = "primary";
-      btn.addEventListener("click", () => {
-        overlay.remove();
-        b.onClick();
-      });
-      actions.appendChild(btn);
-    }
-    document.body.appendChild(overlay);
-    return overlay;
-  }
-
   // src/ui/shelfView.js
   function renderShelfPuzzle(container, ctx2, level) {
-    const CELL8 = Math.max(80, Math.min(120, Math.floor(500 / level.grid[0])));
+    const CELL7 = Math.max(80, Math.min(120, Math.floor(500 / level.grid[0])));
     const puzzle = createShelfPuzzle(level);
     let selectedItem = null;
     let hintsUsed = 0;
@@ -9208,10 +9656,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL8 * dpr;
-    canvas.height = gh * CELL8 * dpr;
-    canvas.style.width = `${gw * CELL8}px`;
-    canvas.style.height = `${gh * CELL8}px`;
+    canvas.width = gw * CELL7 * dpr;
+    canvas.height = gh * CELL7 * dpr;
+    canvas.style.width = `${gw * CELL7}px`;
+    canvas.style.height = `${gh * CELL7}px`;
     canvas.style.maxWidth = "100%";
     canvas.style.touchAction = "none";
     canvasBox.appendChild(canvas);
@@ -9307,8 +9755,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL8);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL8);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL7);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL7);
       const occupantId = Object.entries(puzzle.placement).find(([, pos]) => pos && pos[0] === x && pos[1] === y)?.[0];
       if (occupantId) {
         removeItem(puzzle, occupantId);
@@ -9336,8 +9784,8 @@
     function cellFromEvent(ev) {
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL8);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL8);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL7);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL7);
       return x >= 0 && y >= 0 && x < level.grid[0] && y < level.grid[1] ? [x, y] : null;
     }
     function startPotentialDrag(ev, itemId) {
@@ -9449,50 +9897,50 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL8, gh * CELL8);
+      g.clearRect(0, 0, gw * CELL7, gh * CELL7);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#4a4038" : "#524840";
-          g.fillRect(x * CELL8, y * CELL8, CELL8, CELL8);
+          g.fillRect(x * CELL7, y * CELL7, CELL7, CELL7);
         }
       }
       for (const c of level.cells) {
-        const px = c.pos[0] * CELL8;
-        const py = c.pos[1] * CELL8;
+        const px = c.pos[0] * CELL7;
+        const py = c.pos[1] * CELL7;
         if (c.kind === "shelf") {
           g.fillStyle = "#6b5335";
-          g.fillRect(px + 3, py + 3, CELL8 - 6, CELL8 - 6);
+          g.fillRect(px + 3, py + 3, CELL7 - 6, CELL7 - 6);
           g.fillStyle = "#7d6444";
-          g.fillRect(px + 3, py + 3, CELL8 - 6, 8);
+          g.fillRect(px + 3, py + 3, CELL7 - 6, 8);
         } else if (c.kind === "light") {
           g.fillStyle = "#6b5335";
-          g.fillRect(px + 3, py + 3, CELL8 - 6, CELL8 - 6);
+          g.fillRect(px + 3, py + 3, CELL7 - 6, CELL7 - 6);
           const grad = g.createRadialGradient(
-            px + CELL8 / 2,
-            py + CELL8 / 2,
+            px + CELL7 / 2,
+            py + CELL7 / 2,
             4,
-            px + CELL8 / 2,
-            py + CELL8 / 2,
-            CELL8 / 2
+            px + CELL7 / 2,
+            py + CELL7 / 2,
+            CELL7 / 2
           );
           grad.addColorStop(0, "rgba(255, 226, 138, 0.5)");
           grad.addColorStop(1, "rgba(255, 226, 138, 0.05)");
           g.fillStyle = grad;
-          g.fillRect(px, py, CELL8, CELL8);
-          g.font = `${CELL8 * 0.22}px sans-serif`;
+          g.fillRect(px, py, CELL7, CELL7);
+          g.font = `${CELL7 * 0.22}px sans-serif`;
           g.textAlign = "right";
           g.textBaseline = "top";
-          g.fillText("\u2600\uFE0F", px + CELL8 - 4, py + 4);
+          g.fillText("\u2600\uFE0F", px + CELL7 - 4, py + 4);
         } else {
           g.fillStyle = "#33291f";
-          g.fillRect(px + 3, py + 3, CELL8 - 6, CELL8 - 6);
+          g.fillRect(px + 3, py + 3, CELL7 - 6, CELL7 - 6);
         }
       }
       if (drag?.active && drag.hover) {
         g.strokeStyle = "rgba(255, 202, 122, 0.95)";
         g.lineWidth = 3;
         g.setLineDash([7, 5]);
-        g.strokeRect(drag.hover[0] * CELL8 + 4, drag.hover[1] * CELL8 + 4, CELL8 - 8, CELL8 - 8);
+        g.strokeRect(drag.hover[0] * CELL7 + 4, drag.hover[1] * CELL7 + 4, CELL7 - 8, CELL7 - 8);
         g.setLineDash([]);
       }
       const v = violations(puzzle);
@@ -9500,19 +9948,19 @@
       for (const [itemId, pos] of Object.entries(puzzle.placement)) {
         if (!pos) continue;
         const it = level.items.find((i) => i.id === itemId);
-        const cx = pos[0] * CELL8 + CELL8 / 2;
-        const cy = pos[1] * CELL8 + CELL8 / 2;
+        const cx = pos[0] * CELL7 + CELL7 / 2;
+        const cy = pos[1] * CELL7 + CELL7 / 2;
         if (badItems.has(itemId)) {
           g.fillStyle = "rgba(232, 138, 122, 0.3)";
-          g.fillRect(pos[0] * CELL8 + 3, pos[1] * CELL8 + 3, CELL8 - 6, CELL8 - 6);
+          g.fillRect(pos[0] * CELL7 + 3, pos[1] * CELL7 + 3, CELL7 - 6, CELL7 - 6);
         }
         if (hintMark && hintMark.itemId === itemId) {
           g.fillStyle = "rgba(255, 202, 122, 0.35)";
           g.beginPath();
-          g.arc(cx, cy, CELL8 * 0.46, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL7 * 0.46, 0, Math.PI * 2);
           g.fill();
         }
-        g.font = `${CELL8 * 0.55}px "Segoe UI Emoji", sans-serif`;
+        g.font = `${CELL7 * 0.55}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
         if (drag?.active && drag.itemId === itemId) g.globalAlpha = 0.3;
@@ -9526,7 +9974,7 @@
           g.strokeStyle = "rgba(255, 202, 122, 0.8)";
           g.lineWidth = 3;
           g.setLineDash([6, 4]);
-          g.strokeRect(hx * CELL8 + 5, hy * CELL8 + 5, CELL8 - 10, CELL8 - 10);
+          g.strokeRect(hx * CELL7 + 5, hy * CELL7 + 5, CELL7 - 10, CELL7 - 10);
           g.setLineDash([]);
         }
       }
@@ -9575,93 +10023,130 @@
     return lines.join("<br>");
   }
 
-  // src/core/bookPuzzle.js
-  function pathCells(level) {
-    const [w, h] = level.grid;
-    const blots = new Set((level.blots || []).map((b) => b.join(",")));
-    const path = [];
-    for (let y = 0; y < h; y++) {
-      const xs = [];
-      for (let x = 0; x < w; x++) if (!blots.has(`${x},${y}`)) xs.push(x);
-      if (y % 2 === 1) xs.reverse();
-      for (const x of xs) path.push([x, y]);
-    }
-    return path;
+  // src/core/riddlePuzzle.js
+  var FREE_MISTAKES = 5;
+  var MISTAKE_STEP = 0.1;
+  var MIN_FACTOR = 0.5;
+  var ALPHABET = "\u0410\u0411\u0412\u0413\u0414\u0415\u0401\u0416\u0417\u0418\u0419\u041A\u041B\u041C\u041D\u041E\u041F\u0420\u0421\u0422\u0423\u0424\u0425\u0426\u0427\u0428\u0429\u042A\u042B\u042C\u042D\u042E\u042F".split("");
+  function answerLetters(level) {
+    return level.answer.replaceAll("\u2726", "").split("");
   }
-  function createBookPuzzle(level) {
+  function createRiddlePuzzle(level) {
     return {
       level,
-      letters: level.scrambled.split(""),
+      slots: Array(answerLetters(level).length).fill(null),
+      // буквы (строки)
+      attempts: [],
+      // [{ letters: [...], marks: [...] }]
+      mistakes: 0,
       history: [],
       moves: 0
     };
   }
-  function swapLetters(state2, i, j) {
-    const n = state2.letters.length;
-    if (i === j || i < 0 || j < 0 || i >= n || j >= n) return false;
-    if (state2.letters[i] === "\u2726" || state2.letters[j] === "\u2726") return false;
-    state2.history.push({ i, j });
-    [state2.letters[i], state2.letters[j]] = [state2.letters[j], state2.letters[i]];
+  function placeLetter(state2, letter) {
+    if (!ALPHABET.includes(letter)) return false;
+    const slot = state2.slots.indexOf(null);
+    if (slot < 0) return false;
+    state2.slots[slot] = letter;
+    state2.history.push({ kind: "place", slot });
     state2.moves += 1;
     return true;
   }
-  function undoBook(state2) {
+  function removeSlot(state2, slot) {
+    if (slot < 0 || slot >= state2.slots.length || !state2.slots[slot]) return false;
+    state2.history.push({ kind: "remove", slot, letter: state2.slots[slot] });
+    state2.slots[slot] = null;
+    state2.moves += 1;
+    return true;
+  }
+  function undoRiddle(state2) {
     const last = state2.history.pop();
     if (!last) return false;
-    [state2.letters[last.i], state2.letters[last.j]] = [state2.letters[last.j], state2.letters[last.i]];
+    if (last.kind === "place") state2.slots[last.slot] = null;
+    else if (last.kind === "remove") state2.slots[last.slot] = last.letter;
     state2.moves += 1;
     return true;
   }
-  function resetBook(state2) {
-    state2.letters = state2.level.scrambled.split("");
+  function resetRiddle(state2) {
+    state2.slots = state2.slots.map(() => null);
     state2.history = [];
     state2.moves += 1;
   }
-  function isBookSolved(state2) {
-    return state2.letters.join("") === state2.level.phrase;
+  function isFull(state2) {
+    return state2.slots.every(Boolean);
   }
-  function bookProgress(state2) {
-    const target = state2.level.phrase;
-    let ok = 0;
-    for (let i = 0; i < target.length; i++) if (state2.letters[i] === target[i]) ok++;
-    return { ok, total: target.length };
+  function isRiddleSolved(state2) {
+    return isFull(state2) && state2.slots.join("") === answerLetters(state2.level).join("");
   }
-  function bookHint(state2) {
-    const target = state2.level.phrase;
-    for (let i = 0; i < target.length; i++) {
-      if (state2.letters[i] === target[i]) continue;
-      let j = state2.letters.findIndex((c, k) => k > i && c === target[i] && state2.letters[k] !== target[k]);
-      if (j < 0) j = state2.letters.indexOf(target[i], i + 1);
-      return { type: "swap", i, j };
+  function markAttempt(level, letters) {
+    const target = answerLetters(level);
+    const marks = Array(letters.length).fill("absent");
+    const rest = {};
+    for (let i = 0; i < letters.length; i++) {
+      if (letters[i] === target[i]) marks[i] = "exact";
+      else rest[target[i]] = (rest[target[i]] || 0) + 1;
     }
-    return { type: "already" };
+    for (let i = 0; i < letters.length; i++) {
+      if (marks[i] === "exact") continue;
+      if (rest[letters[i]] > 0) {
+        marks[i] = "present";
+        rest[letters[i]] -= 1;
+      }
+    }
+    return marks;
+  }
+  function submitRiddle(state2) {
+    if (!isFull(state2)) return null;
+    if (isRiddleSolved(state2)) return { solved: true };
+    const letters = [...state2.slots];
+    const marks = markAttempt(state2.level, letters);
+    state2.attempts.push({ letters, marks });
+    state2.mistakes += 1;
+    state2.slots = state2.slots.map(() => null);
+    state2.history = [];
+    return { solved: false, marks };
+  }
+  function letterMarks(state2) {
+    const rank = { absent: 0, present: 1, exact: 2 };
+    const best = {};
+    for (const att of state2.attempts) {
+      att.letters.forEach((letter, i) => {
+        const m = att.marks[i];
+        if (!best[letter] || rank[m] > rank[best[letter]]) best[letter] = m;
+      });
+    }
+    return best;
+  }
+  function rewardFactor(state2) {
+    const over = Math.max(0, state2.mistakes - FREE_MISTAKES);
+    return Math.max(MIN_FACTOR, 1 - over * MISTAKE_STEP);
+  }
+  function riddleHint(state2) {
+    const slot = state2.slots.indexOf(null);
+    if (slot < 0) return null;
+    return { slot, letter: answerLetters(state2.level)[slot] };
+  }
+  function applyRiddleHint(state2) {
+    const h = riddleHint(state2);
+    if (!h) return null;
+    placeLetter(state2, h.letter);
+    return h;
   }
 
-  // src/ui/bookView.js
-  var CELL = 60;
-  function renderBookPuzzle(container, ctx2, level) {
-    const puzzle = createBookPuzzle(level);
-    const path = pathCells(level);
-    let selected = null;
+  // src/ui/riddleView.js
+  function renderRiddlePuzzle(container, ctx2, level) {
+    const puzzle = createRiddlePuzzle(level);
     let hintsUsed = 0;
-    let hintPair = null;
     let finished = false;
     container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
-    const canvasBox = document.createElement("div");
-    canvasBox.className = "puzzle-canvas-box";
-    const canvas = document.createElement("canvas");
-    canvas.className = "game";
-    const [gw, gh] = level.grid;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL * dpr;
-    canvas.height = gh * CELL * dpr;
-    canvas.style.width = `${gw * CELL}px`;
-    canvas.style.height = `${gh * CELL}px`;
-    canvas.style.maxWidth = "100%";
-    canvasBox.appendChild(canvas);
-    wrap.appendChild(canvasBox);
+    const pageBox = document.createElement("div");
+    pageBox.className = "puzzle-canvas-box";
+    const page = document.createElement("div");
+    page.className = "riddle-page";
+    pageBox.appendChild(page);
+    wrap.appendChild(pageBox);
     const side = document.createElement("div");
     side.className = "puzzle-side";
     const intro = document.createElement("div");
@@ -9671,14 +10156,15 @@
     const statusEl = document.createElement("div");
     statusEl.className = "puzzle-status";
     side.appendChild(statusEl);
-    const hintText = document.createElement("div");
-    hintText.className = "panel";
-    hintText.style.padding = "10px 14px";
-    hintText.innerHTML = `<div class="desc" style="line-height:1.8">
-    \u0422\u0430\u043F\u043D\u0438 \u0431\u0443\u043A\u0432\u0443, \u0437\u0430\u0442\u0435\u043C \u0434\u0440\u0443\u0433\u0443\u044E \u2014 \u043E\u043D\u0438 \u043F\u043E\u043C\u0435\u043D\u044F\u044E\u0442\u0441\u044F \u043C\u0435\u0441\u0442\u0430\u043C\u0438.<br>
-    \u2726 \u2014 \u043D\u0435\u043F\u043E\u0434\u0432\u0438\u0436\u043D\u044B\u0439 \u0440\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C.<br>
-    \u0421\u043E\u0431\u0435\u0440\u0438 \u0444\u0440\u0430\u0437\u0443, \u0447\u0438\u0442\u0430\u0435\u043C\u0443\u044E \u0437\u043C\u0435\u0439\u043A\u043E\u0439 \u0441\u0432\u0435\u0440\u0445\u0443 \u0432\u043D\u0438\u0437.</div>`;
-    side.appendChild(hintText);
+    const legend = document.createElement("div");
+    legend.className = "panel";
+    legend.style.padding = "10px 14px";
+    legend.innerHTML = `<div class="desc" style="line-height:1.8">
+    \u0422\u0430\u043F\u0430\u0439 \u0431\u0443\u043A\u0432\u044B \u0430\u043B\u0444\u0430\u0432\u0438\u0442\u0430 \u2014 \u043E\u043D\u0438 \u0432\u0441\u0442\u0430\u043D\u0443\u0442 \u0432 \u043E\u043A\u043E\u0448\u043A\u0438 \u043E\u0442\u0432\u0435\u0442\u0430. \u0422\u0430\u043F \u043F\u043E \u043E\u043A\u043E\u0448\u043A\u0443 \u0443\u0431\u0438\u0440\u0430\u0435\u0442 \u0431\u0443\u043A\u0432\u0443.<br>
+    \u0417\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0440\u043E\u043A\u0430 \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u0442\u0441\u044F: <span class="lg-exact">\u0431\u0443\u043A\u0432\u0430 \u043D\u0430 \u043C\u0435\u0441\u0442\u0435</span>,
+    <span class="lg-present">\u0435\u0441\u0442\u044C \u0432 \u043E\u0442\u0432\u0435\u0442\u0435</span>, <span class="lg-absent">\u043D\u0435\u0442 \u0432 \u043E\u0442\u0432\u0435\u0442\u0435</span>.<br>
+    ${FREE_MISTAKES} \u043E\u0448\u0438\u0431\u043E\u043A \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E, \u0434\u0430\u043B\u044C\u0448\u0435 \u2212${Math.round(MISTAKE_STEP * 100)}% \u043C\u043E\u043D\u0435\u0442 \u0437\u0430 \u043A\u0430\u0436\u0434\u0443\u044E.</div>`;
+    side.appendChild(legend);
     const controls = document.createElement("div");
     controls.className = "puzzle-controls";
     controls.style.marginTop = "10px";
@@ -9698,66 +10184,59 @@
     }
     function doUndo() {
       if (finished) return;
-      if (undoBook(puzzle)) {
-        selected = null;
-        hintPair = null;
+      if (undoRiddle(puzzle)) {
         ctx2.sfx?.("tap");
-        draw();
+        renderAll();
       }
     }
     function doReset() {
       if (finished) return;
-      resetBook(puzzle);
-      selected = null;
-      hintPair = null;
+      resetRiddle(puzzle);
       ctx2.sfx?.("tap");
-      draw();
+      renderAll();
     }
     function doHint() {
       if (finished) return;
-      const h = bookHint(puzzle);
+      const h = applyRiddleHint(puzzle);
       ctx2.sfx?.("hint");
-      if (h.type === "swap") {
+      if (h) {
         hintsUsed += 1;
-        hintPair = { i: h.i, j: h.j };
-        ctx2.toast(`\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0432\u043E\u0434\u0438\u0442 \u043B\u0430\u043F\u043E\u0439: \xAB${puzzle.letters[h.i]}\xBB \u21C4 \xAB${puzzle.letters[h.j]}\xBB`);
-        draw();
+        ctx2.toast(`\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442: \u043D\u0430 \u043C\u0435\u0441\u0442\u043E ${h.slot + 1} \u043B\u043E\u0436\u0438\u0442\u0441\u044F \xAB${h.letter}\xBB`);
+        renderAll();
+        afterMove();
       } else {
-        ctx2.toast("\u0424\u0440\u0430\u0437\u0430 \u0443\u0436\u0435 \u0446\u0435\u043B\u0430!");
+        ctx2.toast("\u0421\u0442\u0440\u043E\u043A\u0430 \u043F\u043E\u043B\u043D\u0430 \u2014 \u0440\u0435\u0448\u0438 \u0435\u0451 \u0438\u043B\u0438 \u0443\u0431\u0435\u0440\u0438 \u0431\u0443\u043A\u0432\u0443.");
       }
     }
-    function onTap(ev) {
+    function tapKey(letter) {
       if (finished) return;
-      const rect = canvas.getBoundingClientRect();
-      const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL);
-      const idx = path.findIndex(([px, py]) => px === x && py === y);
-      if (idx < 0) return;
-      if (puzzle.letters[idx] === "\u2726") {
-        ctx2.toast("\u0420\u0430\u0437\u0434\u0435\u043B\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u0434\u0432\u0438\u0433\u0430\u0435\u0442\u0441\u044F.");
+      if (placeLetter(puzzle, letter)) {
+        ctx2.sfx?.("tap");
+        renderAll();
+        afterMove();
+      }
+    }
+    function tapSlot(slot) {
+      if (finished) return;
+      if (removeSlot(puzzle, slot)) {
+        ctx2.sfx?.("tap");
+        renderAll();
+      }
+    }
+    function afterMove() {
+      const res = submitRiddle(puzzle);
+      if (!res) return;
+      if (res.solved) {
+        finish();
         return;
       }
-      if (selected === null) {
-        selected = idx;
-        ctx2.sfx?.("tap");
-      } else if (selected === idx) {
-        selected = null;
-        ctx2.sfx?.("tap");
-      } else {
-        if (swapLetters(puzzle, selected, idx)) {
-          selected = null;
-          hintPair = null;
-          ctx2.sfx?.("rotate");
-          draw();
-          if (isBookSolved(puzzle)) finish();
-          return;
-        }
-        selected = idx;
-      }
-      draw();
+      ctx2.sfx?.("fail");
+      const over = puzzle.mistakes - FREE_MISTAKES;
+      ctx2.toast(over <= 0 ? `\u041D\u0435 \u0442\u043E \u0441\u043B\u043E\u0432\u043E \u2014 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0432 \u043A\u043B\u044F\u043A\u0441\u0435. \u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes} \u0438\u0437 ${FREE_MISTAKES} \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445.` : `\u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes}: \u043A\u043B\u044F\u043A\u0441\u044B \u0441\u044A\u0435\u0434\u0430\u044E\u0442 \u043D\u0430\u0433\u0440\u0430\u0434\u0443 (\u2212${Math.round((1 - rewardFactor(puzzle)) * 100)}% \u043C\u043E\u043D\u0435\u0442).`);
+      page.classList.add("shake");
+      setTimeout(() => page.classList.remove("shake"), 500);
+      renderAll();
     }
-    canvas.addEventListener("pointerdown", onTap);
     function onKey(ev) {
       if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
         ev.preventDefault();
@@ -9770,15 +10249,327 @@
     window.addEventListener("keydown", onKey);
     function finish() {
       finished = true;
-      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      const factor = rewardFactor(puzzle);
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        coinFactor: factor
+      });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      renderAll();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        showOverlay(ctx2, {
+          title: "\u{1F4DC} \u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u043E\u0442\u0433\u0430\u0434\u0430\u043D\u0430!",
+          subtitle: `\xAB${level.name}\xBB \u2014 ${level.answer.replaceAll("\u2726", " \xB7 ")}` + (level.author ? ` <span class="muted">(${level.author})</span>` : "") + (factor < 1 ? `<br>\u041A\u043B\u044F\u043A\u0441\u044B \u0441\u044A\u0435\u043B\u0438 \u0447\u0430\u0441\u0442\u044C \u043D\u0430\u0433\u0440\u0430\u0434\u044B (\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442).` : ""),
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function slotsRow(letters, marks) {
+      const row = document.createElement("div");
+      row.className = "riddle-slots";
+      let li = 0;
+      for (const ch of level.answer) {
+        if (ch === "\u2726") {
+          const sep = document.createElement("div");
+          sep.className = "riddle-sep";
+          sep.textContent = "\u2726";
+          row.appendChild(sep);
+          continue;
+        }
+        const cell = document.createElement("div");
+        const letter = letters[li];
+        if (marks) {
+          cell.className = `riddle-slot mark-${marks[li]}`;
+          cell.textContent = letter;
+        } else {
+          cell.className = "riddle-slot" + (letter ? " filled" : "");
+          cell.textContent = letter || "";
+          const idx = li;
+          cell.addEventListener("click", () => tapSlot(idx));
+        }
+        row.appendChild(cell);
+        li += 1;
+      }
+      return row;
+    }
+    function renderAll() {
+      page.innerHTML = "";
+      const verse = document.createElement("div");
+      verse.className = "riddle-text";
+      for (const line of level.riddle) {
+        const p = document.createElement("div");
+        p.textContent = line;
+        verse.appendChild(p);
+      }
+      if (level.author) {
+        const a = document.createElement("div");
+        a.className = "riddle-author";
+        a.textContent = `\u2014 ${level.author}`;
+        verse.appendChild(a);
+      }
+      page.appendChild(verse);
+      for (const att of puzzle.attempts) {
+        page.appendChild(slotsRow(att.letters, att.marks));
+      }
+      page.appendChild(slotsRow(puzzle.slots, null));
+      const marks = letterMarks(puzzle);
+      const kb = document.createElement("div");
+      kb.className = "cipher-palette riddle-keyboard";
+      for (const letter of ALPHABET) {
+        const b = document.createElement("button");
+        b.className = "cipher-letter" + (marks[letter] ? ` mark-${marks[letter]}` : "");
+        b.textContent = letter;
+        b.addEventListener("click", () => tapKey(letter));
+        kb.appendChild(b);
+      }
+      page.appendChild(kb);
+      const factor = rewardFactor(puzzle);
+      const left = Math.max(0, FREE_MISTAKES - puzzle.mistakes);
+      statusEl.innerHTML = `\u{1F58B} \u041E\u0448\u0438\u0431\u043E\u043A: <b>${puzzle.mistakes}</b>` + (factor >= 1 ? ` \xB7 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445 \u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C: <b>${left}</b>` : ` \xB7 \u043D\u0430\u0433\u0440\u0430\u0434\u0430: <b>\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442</b>`) + `<div class="muted" style="font-size:13px">\u041F\u043E\u043F\u044B\u0442\u043E\u043A \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u0438: ${puzzle.attempts.length} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    renderAll();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+    };
+  }
+
+  // src/core/hangmanPuzzle.js
+  var CANDLE_STEPS = 6;
+  var SPOIL_STEP = 0.1;
+  var MIN_FACTOR2 = 0.5;
+  var ALPHABET2 = "\u0410\u0411\u0412\u0413\u0414\u0415\u0401\u0416\u0417\u0418\u0419\u041A\u041B\u041C\u041D\u041E\u041F\u0420\u0421\u0422\u0423\u0424\u0425\u0426\u0427\u0428\u0429\u042A\u042B\u042C\u042D\u042E\u042F".split("");
+  function answerLetters2(level) {
+    return level.answer.replaceAll("\u2726", "").split("");
+  }
+  function createHangmanPuzzle(level) {
+    return {
+      level,
+      revealed: /* @__PURE__ */ new Set(),
+      // открытые буквы
+      wrong: /* @__PURE__ */ new Set(),
+      // промахи (заблокированные буквы)
+      candleLeft: CANDLE_STEPS,
+      spoiled: 0,
+      // сколько страниц погасло
+      history: [],
+      // для отмены
+      moves: 0
+    };
+  }
+  function guessLetter(state2, letter) {
+    if (!ALPHABET2.includes(letter)) return { ok: false };
+    if (state2.revealed.has(letter) || state2.wrong.has(letter)) return { ok: false };
+    if (isHangmanSolved(state2)) return { ok: false };
+    state2.moves += 1;
+    const hit = answerLetters2(state2.level).includes(letter);
+    const entry = { letter, hit, prevCandle: state2.candleLeft, prevSpoiled: state2.spoiled };
+    state2.history.push(entry);
+    if (hit) {
+      state2.revealed.add(letter);
+      return { ok: true, hit: true, burned: false };
+    }
+    state2.wrong.add(letter);
+    state2.candleLeft -= 1;
+    if (state2.candleLeft <= 0) {
+      state2.spoiled += 1;
+      state2.candleLeft = CANDLE_STEPS;
+      return { ok: true, hit: false, burned: true };
+    }
+    return { ok: true, hit: false, burned: false };
+  }
+  function undoHangman(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    if (last.hit) state2.revealed.delete(last.letter);
+    else state2.wrong.delete(last.letter);
+    state2.candleLeft = last.prevCandle;
+    state2.spoiled = last.prevSpoiled;
+    state2.moves += 1;
+    return true;
+  }
+  function resetHangman(state2) {
+    state2.revealed.clear();
+    state2.wrong.clear();
+    state2.candleLeft = CANDLE_STEPS;
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function isHangmanSolved(state2) {
+    return answerLetters2(state2.level).every((ch) => state2.revealed.has(ch));
+  }
+  function rewardFactor2(state2) {
+    return Math.max(MIN_FACTOR2, 1 - state2.spoiled * SPOIL_STEP);
+  }
+  function hangmanHint(state2) {
+    const counts = {};
+    for (const ch of answerLetters2(state2.level)) {
+      if (!state2.revealed.has(ch)) counts[ch] = (counts[ch] || 0) + 1;
+    }
+    const best = Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "ru"))[0];
+    if (!best) return null;
+    return { letter: best[0], count: best[1] };
+  }
+  function applyHangmanHint(state2) {
+    const h = hangmanHint(state2);
+    if (!h) return null;
+    const r = guessLetter(state2, h.letter);
+    return r.ok ? h : null;
+  }
+
+  // src/ui/hangmanView.js
+  function candleStage(candleLeft) {
+    const misses = CANDLE_STEPS - candleLeft;
+    if (misses <= 1) return "full";
+    if (misses <= 3) return "half";
+    if (misses <= 5) return "stub";
+    return "out";
+  }
+  function renderHangmanPuzzle(container, ctx2, level) {
+    const puzzle = createHangmanPuzzle(level);
+    let hintsUsed = 0;
+    let finished = false;
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const pageBox = document.createElement("div");
+    pageBox.className = "puzzle-canvas-box";
+    const page = document.createElement("div");
+    page.className = "riddle-page";
+    pageBox.appendChild(page);
+    wrap.appendChild(pageBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const candleBox = document.createElement("div");
+    candleBox.className = "hang-candle-box";
+    const candleImg = document.createElement("img");
+    candleImg.className = "hang-candle-art";
+    candleImg.alt = "\u0421\u0432\u0435\u0447\u0430";
+    let candleFallback = null;
+    candleImg.addEventListener("error", () => {
+      candleImg.remove();
+      candleFallback = document.createElement("div");
+      candleFallback.className = "hang-candle-css";
+      candleBox.appendChild(candleFallback);
+      draw();
+    });
+    candleImg.src = "assets/hang_candle_full.png";
+    candleBox.appendChild(candleImg);
+    const candleLabel = document.createElement("div");
+    candleLabel.className = "muted";
+    candleLabel.style.fontSize = "12px";
+    candleBox.appendChild(candleLabel);
+    side.appendChild(candleBox);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const legend = document.createElement("div");
+    legend.className = "panel";
+    legend.style.padding = "10px 14px";
+    legend.innerHTML = `<div class="desc" style="line-height:1.8">
+    \u0422\u0430\u043F\u0430\u0439 \u0431\u0443\u043A\u0432\u044B \u0430\u043B\u0444\u0430\u0432\u0438\u0442\u0430. \u0412\u0435\u0440\u043D\u0430\u044F \u0431\u0443\u043A\u0432\u0430 \u043E\u0442\u043A\u0440\u043E\u0435\u0442\u0441\u044F <b>\u0432\u043E \u0432\u0441\u0435\u0445</b> \u043C\u0435\u0441\u0442\u0430\u0445 \u0441\u0442\u0440\u043E\u043A\u0438.<br>
+    \u041F\u0440\u043E\u043C\u0430\u0445 \u0431\u043B\u043E\u043A\u0438\u0440\u0443\u0435\u0442 \u0431\u0443\u043A\u0432\u0443 \u0438 \u0442\u043E\u043F\u0438\u0442 \u0441\u0432\u0435\u0447\u0443. \u0421\u0432\u0435\u0447\u0430 \u0434\u043E\u0433\u043E\u0440\u0435\u043B\u0430 \u2014 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u043E\u0433\u0430\u0441\u043B\u0430:
+    \u221210% \u043C\u043E\u043D\u0435\u0442 \u043D\u0430\u0433\u0440\u0430\u0434\u044B, \u043D\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u044B\u0435 \u0431\u0443\u043A\u0432\u044B \u043E\u0441\u0442\u0430\u044E\u0442\u0441\u044F.</div>`;
+    side.appendChild(legend);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    controls.style.marginTop = "10px";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoHangman(puzzle)) {
+        ctx2.sfx?.("tap");
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetHangman(puzzle);
+      ctx2.sfx?.("tap");
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = applyHangmanHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h) {
+        hintsUsed += 1;
+        ctx2.toast(`\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0434\u044B\u0448\u0438\u0442 \u043D\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443: \u0431\u0443\u043A\u0432\u0430 \xAB${h.letter}\xBB \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F`);
+        draw();
+        if (isHangmanSolved(puzzle)) finish();
+      } else {
+        ctx2.toast("\u0421\u0442\u0440\u043E\u043A\u0430 \u0443\u0436\u0435 \u043E\u0442\u043A\u0440\u044B\u0442\u0430!");
+      }
+    }
+    function tapKey(letter) {
+      if (finished) return;
+      const r = guessLetter(puzzle, letter);
+      if (!r.ok) return;
+      if (r.hit) {
+        ctx2.sfx?.("rotate");
+      } else if (r.burned) {
+        ctx2.sfx?.("fail");
+        ctx2.toast(`\u{1F56F}\uFE0F \u0421\u0432\u0435\u0447\u0430 \u0434\u043E\u0433\u043E\u0440\u0435\u043B\u0430 \u2014 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u043E\u0433\u0430\u0441\u043B\u0430! \u041D\u043E\u0432\u0430\u044F \u0441\u0432\u0435\u0447\u0430, \u043D\u043E \u043D\u0430\u0433\u0440\u0430\u0434\u0430 \u0442\u0430\u0435\u0442 (\u2212${Math.round((1 - rewardFactor2(puzzle)) * 100)}% \u043C\u043E\u043D\u0435\u0442).`);
+        page.classList.add("shake");
+        setTimeout(() => page.classList.remove("shake"), 500);
+      } else {
+        ctx2.sfx?.("fail");
+        ctx2.toast(`\u0411\u0443\u043A\u0432\u044B \xAB${letter}\xBB \u043D\u0435\u0442 \u0432 \u0441\u0442\u0440\u043E\u043A\u0435. \u0421\u0432\u0435\u0447\u0430 \u043A\u043E\u0440\u043E\u0447\u0435\u2026`);
+      }
+      draw();
+      if (r.hit && isHangmanSolved(puzzle)) finish();
+    }
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") ctx2.go("puzzles");
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      finished = true;
+      const factor = rewardFactor2(puzzle);
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        coinFactor: factor
+      });
       ctx2.save();
       ctx2.sfx?.("success");
       draw();
       setTimeout(() => {
         const next = nextPuzzle(level.id);
         showOverlay(ctx2, {
-          title: "\u{1F4D6} \u0424\u0440\u0430\u0437\u0430 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430!",
-          subtitle: `\xAB${level.name}\xBB \u2014 ${level.phrase.replaceAll("\u2726", " \xB7 ")}`,
+          title: "\u{1F4D6} \u0421\u0442\u0440\u043E\u043A\u0430 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0430!",
+          subtitle: `\xAB${level.name}\xBB \u2014 ${level.answer.replaceAll("\u2726", " \xB7 ")}` + (level.author ? ` <span class="muted">(${level.author})</span>` : "") + (factor < 1 ? `<br>\u041F\u043E\u0433\u0430\u0441\u0448\u0438\u0435 \u0441\u0432\u0435\u0447\u0438 \u0441\u044A\u0435\u043B\u0438 \u0447\u0430\u0441\u0442\u044C \u043D\u0430\u0433\u0440\u0430\u0434\u044B (\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442).` : ""),
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
@@ -9790,46 +10581,65 @@
       }, 450);
     }
     function draw() {
-      const g = canvas.getContext("2d");
-      g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL, gh * CELL);
-      g.fillStyle = "#4d4231";
-      g.fillRect(0, 0, gw * CELL, gh * CELL);
-      const correct = /* @__PURE__ */ new Set();
-      for (let i = 0; i < level.phrase.length; i++) {
-        if (puzzle.letters[i] === level.phrase[i]) correct.add(i);
+      page.innerHTML = "";
+      const verse = document.createElement("div");
+      verse.className = "riddle-text";
+      for (const line of level.riddle) {
+        const p = document.createElement("div");
+        p.textContent = line;
+        verse.appendChild(p);
       }
-      for (const [bx, by] of level.blots || []) {
-        g.font = `${CELL * 0.6}px "Segoe UI Emoji", sans-serif`;
-        g.textAlign = "center";
-        g.textBaseline = "middle";
-        g.fillText("\u{1FADF}", bx * CELL + CELL / 2, by * CELL + CELL / 2);
+      if (level.author) {
+        const a = document.createElement("div");
+        a.className = "riddle-author";
+        a.textContent = `\u2014 ${level.author}`;
+        verse.appendChild(a);
       }
-      path.forEach(([x, y], i) => {
-        const px = x * CELL;
-        const py = y * CELL;
-        const letter = puzzle.letters[i];
-        const isFixed = letter === "\u2726";
-        g.fillStyle = isFixed ? "#3a3226" : correct.has(i) ? "#5d6b3f" : "#6b5a3d";
-        g.fillRect(px + 3, py + 3, CELL - 6, CELL - 6);
-        if (selected === i || hintPair && (hintPair.i === i || hintPair.j === i)) {
-          g.strokeStyle = "#ffca7a";
-          g.lineWidth = 3;
-          g.strokeRect(px + 3, py + 3, CELL - 6, CELL - 6);
+      page.appendChild(verse);
+      const row = document.createElement("div");
+      row.className = "riddle-slots";
+      for (const ch of level.answer) {
+        if (ch === "\u2726") {
+          const sep = document.createElement("div");
+          sep.className = "riddle-sep";
+          sep.textContent = "\xB7";
+          row.appendChild(sep);
+          continue;
         }
-        g.font = `${isFixed ? CELL * 0.4 : CELL * 0.55}px "Segoe UI Emoji", serif`;
-        g.textAlign = "center";
-        g.textBaseline = "middle";
-        g.fillStyle = isFixed ? "#ffca7a" : "#f3e6cf";
-        g.fillText(letter, px + CELL / 2, py + CELL / 2 + 2);
-      });
-      const pr = bookProgress(puzzle);
-      statusEl.innerHTML = `\u{1F4DC} \u0411\u0443\u043A\u0432\u044B \u043D\u0430 \u043C\u0435\u0441\u0442\u0430\u0445: <b>${pr.ok}/${pr.total}</b><div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+        const cell = document.createElement("div");
+        const open = puzzle.revealed.has(ch);
+        cell.className = "riddle-slot hang-slot" + (open ? " filled" : "");
+        cell.textContent = open ? ch : "";
+        row.appendChild(cell);
+      }
+      page.appendChild(row);
+      const kb = document.createElement("div");
+      kb.className = "cipher-palette riddle-keyboard";
+      for (const letter of ALPHABET2) {
+        const b = document.createElement("button");
+        const isOpen = puzzle.revealed.has(letter);
+        const isWrong = puzzle.wrong.has(letter);
+        b.className = "cipher-letter" + (isOpen ? " mark-exact" : "") + (isWrong ? " mark-absent" : "");
+        b.textContent = letter;
+        if (!isOpen && !isWrong) b.addEventListener("click", () => tapKey(letter));
+        else b.disabled = true;
+        kb.appendChild(b);
+      }
+      page.appendChild(kb);
+      if (candleImg.parentNode) {
+        candleImg.src = `assets/hang_candle_${candleStage(puzzle.candleLeft)}.png`;
+        candleImg.classList.toggle("hang-fading", puzzle.candleLeft <= 2);
+      }
+      if (candleFallback) {
+        candleFallback.textContent = `\u{1F56F}\uFE0F ${"\u25CF".repeat(puzzle.candleLeft)}${"\u25CB".repeat(CANDLE_STEPS - puzzle.candleLeft)}`;
+      }
+      candleLabel.textContent = puzzle.candleLeft >= 4 ? "\u0421\u0432\u0435\u0447\u0430 \u0432\u044B\u0441\u043E\u043A\u0430\u044F" : puzzle.candleLeft >= 2 ? "\u0421\u0432\u0435\u0447\u0430 \u0442\u0430\u0435\u0442\u2026" : "\u041E\u0433\u043E\u043D\u0451\u043A \u043D\u0430 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u043C \u0432\u043E\u0441\u043A\u0435!";
+      const factor = rewardFactor2(puzzle);
+      statusEl.innerHTML = `\u{1F56F}\uFE0F \u0412\u043E\u0441\u043A\u0430: <b>${puzzle.candleLeft}/${CANDLE_STEPS}</b>` + (puzzle.spoiled > 0 ? ` \xB7 \u043F\u043E\u0433\u0430\u0441\u043B\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446: <b>${puzzle.spoiled}</b> (\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442)` : "") + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
     draw();
     return () => {
       window.removeEventListener("keydown", onKey);
-      canvas.removeEventListener("pointerdown", onTap);
     };
   }
 
@@ -10298,7 +11108,7 @@
   }
 
   // src/ui/pathView.js
-  var CELL2 = 72;
+  var CELL = 72;
   function renderPathPuzzle(container, ctx2, level) {
     const puzzle = createPathPuzzle(level);
     let hintsUsed = 0;
@@ -10313,10 +11123,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL2 * dpr;
-    canvas.height = gh * CELL2 * dpr;
-    canvas.style.width = `${gw * CELL2}px`;
-    canvas.style.height = `${gh * CELL2}px`;
+    canvas.width = gw * CELL * dpr;
+    canvas.height = gh * CELL * dpr;
+    canvas.style.width = `${gw * CELL}px`;
+    canvas.style.height = `${gh * CELL}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -10387,8 +11197,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL2);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL2);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL);
       const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
       if (idx >= 0 && rotateTile(puzzle, idx)) {
         hintTile = null;
@@ -10432,27 +11242,27 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL2, gh * CELL2);
+      g.clearRect(0, 0, gw * CELL, gh * CELL);
       const { reached } = tracePath(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#45523a" : "#4d5c40";
-          g.fillRect(x * CELL2, y * CELL2, CELL2, CELL2);
+          g.fillRect(x * CELL, y * CELL, CELL, CELL);
         }
       }
       level.tiles.forEach((t, i) => {
-        const cx = t.pos[0] * CELL2 + CELL2 / 2;
-        const cy = t.pos[1] * CELL2 + CELL2 / 2;
+        const cx = t.pos[0] * CELL + CELL / 2;
+        const cy = t.pos[1] * CELL + CELL / 2;
         const onPath = reached.has(i);
         if (t.type !== "beast") {
           g.fillStyle = onPath ? "#8a6f45" : "#6b5a40";
-          roundRect(g, t.pos[0] * CELL2 + 4, t.pos[1] * CELL2 + 4, CELL2 - 8, CELL2 - 8, 10);
+          roundRect(g, t.pos[0] * CELL + 4, t.pos[1] * CELL + 4, CELL - 8, CELL - 8, 10);
           g.fill();
         }
         if (hintTile === i) {
           g.fillStyle = "rgba(255, 202, 122, 0.35)";
           g.beginPath();
-          g.arc(cx, cy, CELL2 * 0.46, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL * 0.46, 0, Math.PI * 2);
           g.fill();
         }
         const rot = puzzle.rot[i] ?? t.rot ?? 0;
@@ -10465,7 +11275,7 @@
             const [dx, dy] = SIDES[side2];
             g.beginPath();
             g.moveTo(cx, cy);
-            g.lineTo(cx + dx * (CELL2 / 2 - 4), cy + dy * (CELL2 / 2 - 4));
+            g.lineTo(cx + dx * (CELL / 2 - 4), cy + dy * (CELL / 2 - 4));
             g.stroke();
           }
           g.fillStyle = onPath ? "#ffd98a" : "#4a3b28";
@@ -10473,7 +11283,7 @@
           g.arc(cx, cy, 7, 0, Math.PI * 2);
           g.fill();
         }
-        const emoji = (e, size = CELL2 * 0.5) => {
+        const emoji = (e, size = CELL * 0.5) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -10481,7 +11291,7 @@
         };
         if (t.type === "start") emoji("\u{1F3E0}");
         else if (t.type === "end") emoji("\u{1F333}");
-        else if (t.type === "beast") emoji("\u{1F417}", CELL2 * 0.45);
+        else if (t.type === "beast") emoji("\u{1F417}", CELL * 0.45);
       });
       const solvedNow = isPathSolved(puzzle);
       statusEl.innerHTML = (solvedNow ? "\u2705 <b>\u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u0433\u043E\u0442\u043E\u0432\u0430!</b>" : `\u{1F97E} \u0421\u043B\u0435\u0434 \u043E\u0442 \u0434\u043E\u043C\u0438\u043A\u0430: <b>${reached.size}</b> \u043F\u043B\u0438\u0442\u043E\u043A`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
@@ -10562,14 +11372,19 @@
       b: Math.abs(state2.color.b - t.b)
     };
     const colorOk = diffs.r <= tol && diffs.g <= tol && diffs.b <= tol;
+    const minHeat = level.minHeat || 0;
     const overheated = state2.heat > level.maxHeat;
+    const tooCold = state2.heat < minHeat;
     return {
       colorOk,
       overheated,
+      tooCold,
       diffs,
-      solved: colorOk && !overheated,
+      heatOk: !overheated && !tooCold,
+      solved: colorOk && !overheated && !tooCold,
       heat: state2.heat,
-      maxHeat: level.maxHeat
+      maxHeat: level.maxHeat,
+      minHeat
     };
   }
   function isTeaSolved(state2) {
@@ -10590,7 +11405,7 @@
         heat = clamp100(heat + ing.heat * n);
       });
       const t = level.target;
-      const ok = Math.abs(color.r - t.r) <= level.tolerance && Math.abs(color.g - t.g) <= level.tolerance && Math.abs(color.b - t.b) <= level.tolerance && heat <= level.maxHeat;
+      const ok = Math.abs(color.r - t.r) <= level.tolerance && Math.abs(color.g - t.g) <= level.tolerance && Math.abs(color.b - t.b) <= level.tolerance && heat <= level.maxHeat && heat >= (level.minHeat || 0);
       if (ok) solutions.push({ counts: [...assign], heat });
     }
     function bt(k) {
@@ -10634,76 +11449,156 @@
   }
 
   // src/ui/teaView.js
+  var TEA_SPOTS = {
+    pot: { x: 23.5, y: 25, size: 26 },
+    // котёл висит в треноге
+    fire: { x: 23.5, y: 61, size: 14 },
+    // огонь под котлом (фолбэк)
+    cup: { x: 76, y: 40, size: 15 },
+    // стакан заказа
+    ingsY: 84,
+    // ряд чашечек ингредиентов
+    ingsSize: 10
+  };
   function renderTeaPuzzle(container, ctx2, level) {
     const puzzle = createTeaPuzzle(level);
     let hintsUsed = 0;
     let hintIngredient = null;
+    let readyAnnounced = false;
     let finished = false;
     container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
-    const wrap = document.createElement("div");
-    wrap.className = "puzzle-wrap";
-    const brewPanel = document.createElement("div");
-    brewPanel.className = "panel";
-    brewPanel.style.cssText = "display:flex;gap:20px;align-items:center;flex-wrap:wrap";
-    brewPanel.innerHTML = '<div style="text-align:center"><div class="muted" style="font-size:12px">\u041A\u043E\u0442\u0451\u043B</div></div>';
-    const potBox = document.createElement("div");
-    potBox.style.cssText = "text-align:center";
-    const pot = document.createElement("div");
-    pot.style.cssText = `width:110px;height:110px;border-radius:50% 50% 46% 46%;
-    border:6px solid #4a3a29;box-shadow:inset 0 -14px 24px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.4);
-    transition:background .3s ease;position:relative;overflow:hidden`;
-    potBox.appendChild(pot);
-    const potLabel = document.createElement("div");
-    potLabel.className = "muted";
-    potLabel.style.fontSize = "12px";
-    potLabel.textContent = "\u0446\u0432\u0435\u0442 \u043E\u0442\u0432\u0430\u0440\u0430";
-    potBox.appendChild(potLabel);
-    brewPanel.appendChild(potBox);
-    const targetBox = document.createElement("div");
-    targetBox.style.cssText = "text-align:center";
-    const flask = document.createElement("div");
-    flask.style.cssText = `width:64px;height:88px;border-radius:12px 12px 20px 20px;
-    border:4px solid #4a3a29;box-shadow:inset 0 -10px 18px rgba(0,0,0,.35)`;
-    flask.style.background = rgbCss(level.target);
-    targetBox.appendChild(flask);
-    const flaskLabel = document.createElement("div");
-    flaskLabel.className = "muted";
-    flaskLabel.style.fontSize = "12px";
-    flaskLabel.textContent = "\u0437\u0430\u043A\u0430\u0437 \u043F\u0443\u0442\u043D\u0438\u043A\u0430";
-    targetBox.appendChild(flaskLabel);
-    brewPanel.appendChild(targetBox);
+    const scene = document.createElement("div");
+    scene.className = "tea-scene";
+    let tableArt = true;
+    let bgStage = -1;
+    const bg = document.createElement("img");
+    bg.className = "tea-scene-bg";
+    bg.alt = "";
+    bg.addEventListener("error", () => {
+      if (bgStage > 0) {
+        bgStage = 0;
+        bg.src = "assets/tea_table_fire_0_web.jpg";
+        return;
+      }
+      tableArt = false;
+      bg.remove();
+    });
+    bgStage = 0;
+    bg.src = "assets/tea_table_fire_0_web.jpg";
+    scene.appendChild(bg);
+    function spotEl(spot) {
+      const el = document.createElement("div");
+      el.className = "tea-spot";
+      el.style.cssText = `left:${spot.x}%;top:${spot.y}%;width:${spot.size}%`;
+      return el;
+    }
+    function artImg(src, cls, fallback) {
+      const img = document.createElement("img");
+      img.className = cls;
+      img.alt = "";
+      img.src = src;
+      if (fallback) {
+        img.addEventListener("error", () => {
+          img.remove();
+          fallback();
+        });
+      }
+      return img;
+    }
+    const potSpot = spotEl(TEA_SPOTS.pot);
+    const potColor = document.createElement("div");
+    potColor.className = "tea-pot-color";
+    potSpot.appendChild(potColor);
+    potSpot.appendChild(artImg("assets/tea_pot.png", "tea-pot-art", () => {
+      potSpot.classList.add("tea-noart");
+      potSpot.appendChild(Object.assign(document.createElement("div"), { className: "tea-emoji", textContent: "\u{1FAD6}" }));
+    }));
+    scene.appendChild(potSpot);
+    const fireSpot = spotEl(TEA_SPOTS.fire);
+    scene.appendChild(fireSpot);
+    const cupSpot = spotEl(TEA_SPOTS.cup);
+    const cupColor = document.createElement("div");
+    cupColor.className = "tea-cup-color";
+    cupColor.style.background = rgbCss(level.target);
+    cupSpot.appendChild(cupColor);
+    cupSpot.appendChild(artImg("assets/tea_cup.png", "tea-cup-art", () => {
+      cupSpot.appendChild(Object.assign(document.createElement("div"), { className: "tea-emoji", textContent: "\u{1F377}" }));
+    }));
+    const cupLabel = document.createElement("div");
+    cupLabel.className = "tea-cup-label";
+    cupLabel.textContent = "\u0437\u0430\u043A\u0430\u0437 \u043F\u0443\u0442\u043D\u0438\u043A\u0430";
+    cupSpot.appendChild(cupLabel);
+    scene.appendChild(cupSpot);
+    const serveBtn = document.createElement("button");
+    serveBtn.className = "tea-serve";
+    serveBtn.textContent = "\u{1FAD6} \u041F\u043E\u0434\u0430\u0442\u044C \u043F\u0443\u0442\u043D\u0438\u043A\u0443";
+    serveBtn.disabled = true;
+    serveBtn.addEventListener("click", () => {
+      if (isTeaSolved(puzzle)) finish();
+    });
+    scene.appendChild(serveBtn);
+    const ingEls = /* @__PURE__ */ new Map();
+    level.ingredients.forEach((ing, i) => {
+      const n = level.ingredients.length;
+      const x = 50 + (i - (n - 1) / 2) * Math.min(11, 88 / n);
+      const spot = { x, y: TEA_SPOTS.ingsY, size: TEA_SPOTS.ingsSize };
+      const el = spotEl(spot);
+      el.classList.add("tea-ing-spot");
+      el.title = ing.name;
+      el.appendChild(artImg(`assets/tea_ing_${ing.id}.png`, "tea-ing-art", () => {
+        el.appendChild(Object.assign(document.createElement("div"), { className: "tea-emoji ing", textContent: ing.icon }));
+      }));
+      const meta = document.createElement("div");
+      meta.className = "tea-ing-meta";
+      el.appendChild(meta);
+      el.addEventListener("click", () => onAdd(ing.id));
+      scene.appendChild(el);
+      ingEls.set(ing.id, { el, meta });
+    });
+    container.appendChild(scene);
+    const bars = document.createElement("div");
+    bars.className = "panel tea-bars";
+    const simBox = document.createElement("div");
+    simBox.style.cssText = "flex:1;min-width:180px";
+    simBox.innerHTML = '<div class="muted" style="font-size:12px;margin-bottom:4px">\u0421\u0445\u043E\u0434\u0441\u0442\u0432\u043E \u0441 \u0437\u0430\u043A\u0430\u0437\u043E\u043C</div>';
+    const simBar = document.createElement("div");
+    simBar.className = "hpbar";
+    simBar.style.height = "14px";
+    const simFill = document.createElement("div");
+    simFill.style.cssText = "background:#8ba35f;transition:width .3s ease";
+    simBar.appendChild(simFill);
+    const simLabel = document.createElement("div");
+    simLabel.style.cssText = "font-size:14px;margin-top:4px;font-weight:700;color:#c9b48a";
+    simBox.append(simBar, simLabel);
+    bars.appendChild(simBox);
     const heatBox = document.createElement("div");
     heatBox.style.cssText = "flex:1;min-width:180px";
     heatBox.innerHTML = '<div class="muted" style="font-size:12px;margin-bottom:4px">\u0416\u0430\u0440 \u043A\u043E\u0442\u043B\u0430</div>';
     const heatBar = document.createElement("div");
     heatBar.className = "hpbar";
-    heatBar.style.height = "14px";
+    heatBar.style.cssText = "height:14px;position:relative";
     const heatFill = document.createElement("div");
     heatFill.style.background = "#e88a7a";
     heatBar.appendChild(heatFill);
+    if (level.minHeat > 0) {
+      const coldZone = document.createElement("div");
+      coldZone.style.cssText = `position:absolute;top:0;bottom:0;left:0;width:${level.minHeat}%;
+      background:rgba(122,178,230,0.3);border-right:2px solid #7ab2e6;pointer-events:none`;
+      heatBar.appendChild(coldZone);
+    }
+    const heatZone = document.createElement("div");
+    heatZone.style.cssText = `position:absolute;top:0;bottom:0;right:0;width:${100 - level.maxHeat}%;
+    background:rgba(217,67,47,0.35);border-left:2px solid #d9432f;pointer-events:none`;
+    heatBar.appendChild(heatZone);
     const heatMark = document.createElement("div");
     heatMark.className = "muted";
     heatMark.style.fontSize = "12px";
     heatBox.append(heatBar, heatMark);
-    brewPanel.appendChild(heatBox);
-    wrap.appendChild(brewPanel);
-    const side = document.createElement("div");
-    side.className = "puzzle-side";
-    const intro = document.createElement("div");
-    intro.className = "intro-text";
-    intro.textContent = level.intro;
-    side.appendChild(intro);
-    const ingLabel = document.createElement("div");
-    ingLabel.className = "muted";
-    ingLabel.style.cssText = "font-size:13px;margin-bottom:6px";
-    ingLabel.textContent = "\u0418\u043D\u0433\u0440\u0435\u0434\u0438\u0435\u043D\u0442\u044B (\u0442\u0430\u043F \u2014 \u0432 \u043A\u043E\u0442\u0451\u043B):";
-    side.appendChild(ingLabel);
-    const ingGrid = document.createElement("div");
-    ingGrid.style.cssText = "display:flex;flex-wrap:wrap;gap:8px";
-    side.appendChild(ingGrid);
+    bars.appendChild(heatBox);
+    container.appendChild(bars);
     const statusEl = document.createElement("div");
     statusEl.className = "puzzle-status";
-    side.appendChild(statusEl);
+    container.appendChild(statusEl);
     const controls = document.createElement("div");
     controls.className = "puzzle-controls";
     controls.style.marginTop = "10px";
@@ -10712,9 +11607,7 @@
     const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
     controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
-    side.appendChild(controls);
-    wrap.appendChild(side);
-    container.appendChild(wrap);
+    container.appendChild(controls);
     function mkBtn(label, fn) {
       const b = document.createElement("button");
       b.innerHTML = label;
@@ -10723,6 +11616,33 @@
     }
     function rgbCss(c) {
       return `rgb(${Math.round(c.r * 2.55)}, ${Math.round(c.g * 2.55)}, ${Math.round(c.b * 2.55)})`;
+    }
+    function similarity(st) {
+      const worst = Math.max(st.diffs.r, st.diffs.g, st.diffs.b);
+      if (worst <= level.tolerance) return 100;
+      return Math.max(0, Math.round(100 * (1 - (worst - level.tolerance) / 40)));
+    }
+    function simStage(sim, st) {
+      if (st.overheated) return "\u{1F975} \u041F\u0435\u0440\u0435\u0433\u0440\u0435\u0442! \u041D\u0430\u043B\u0438\u0432\u0430\u0442\u044C \u043D\u0435\u043B\u044C\u0437\u044F";
+      if (st.tooCold) return "\u{1F976} \u041E\u0441\u0442\u044B\u043B \u043D\u0438\u0436\u0435 \u0437\u0430\u043A\u0430\u0437\u0430 \u2014 \u043F\u043E\u0434\u043E\u0433\u0440\u0435\u0439";
+      if (sim >= 100) return "\u2728 \u0412 \u0441\u0430\u043C\u044B\u0439 \u0440\u0430\u0437 \u2014 \u043F\u043E\u0434\u0430\u0432\u0430\u0439!";
+      if (sim >= 85) return "\u041F\u043E\u0447\u0442\u0438 \u0442\u043E \u0441\u0430\u043C\u043E\u0435!";
+      if (sim >= 60) return "\u041F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u0445\u043E\u0436\u0435";
+      if (sim >= 30) return "\u041E\u0442\u0434\u0430\u043B\u0451\u043D\u043D\u043E \u043F\u043E\u0445\u043E\u0436\u0435";
+      return "\u0414\u0430\u043B\u0435\u043A\u043E \u043E\u0442 \u0437\u0430\u043A\u0430\u0437\u0430";
+    }
+    function heatWord(st) {
+      if (st.overheated) return "\u041F\u0435\u0440\u0435\u0433\u0440\u0435\u0442! \u0422\u0430\u043A\u043E\u0439 \u043E\u0442\u0432\u0430\u0440 \u043F\u0443\u0442\u043D\u0438\u043A \u043D\u0435 \u0432\u043E\u0437\u044C\u043C\u0451\u0442.";
+      if (st.tooCold) return "\u041F\u0440\u043E\u0445\u043B\u0430\u0434\u043D\u043E \u2014 \u043F\u0443\u0442\u043D\u0438\u043A \u043F\u0440\u043E\u0441\u0438\u0442 \u0433\u043E\u0440\u044F\u0447\u0435\u0433\u043E.";
+      if (st.heat >= st.maxHeat * 0.75) return "\u0413\u043E\u0440\u044F\u0447\u043E \u2014 \u043E\u0441\u0442\u043E\u0440\u043E\u0436\u043D\u0435\u0435 \u0441 \u043E\u0433\u043D\u0435\u043D\u043D\u044B\u043C.";
+      if (st.heat >= st.maxHeat * 0.4) return "\u0422\u0435\u043F\u043B\u043E, \u0432 \u0441\u0430\u043C\u044B\u0439 \u0440\u0430\u0437.";
+      return st.minHeat > 0 ? "\u041F\u043E\u043A\u0430 \u0445\u043E\u043B\u043E\u0434\u043D\u043E\u0432\u0430\u0442\u043E \u0434\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u0437\u0430\u043A\u0430\u0437\u0430." : "\u041F\u0440\u043E\u0445\u043B\u0430\u0434\u043D\u043E.";
+    }
+    function fireStage(heat) {
+      if (heat <= 5) return 0;
+      if (heat <= 35) return 1;
+      if (heat <= 70) return 2;
+      return 3;
     }
     function doUndo() {
       if (finished) return;
@@ -10736,6 +11656,7 @@
       if (finished) return;
       resetTea(puzzle);
       hintIngredient = null;
+      readyAnnounced = false;
       ctx2.sfx?.("tap");
       draw();
     }
@@ -10751,7 +11672,7 @@
       } else if (h.type === "reset") {
         ctx2.toast(h.text);
       } else if (h.type === "already") {
-        ctx2.toast("\u041E\u0442\u0432\u0430\u0440 \u0443\u0436\u0435 \u0438\u0434\u0435\u0430\u043B\u0435\u043D!");
+        ctx2.toast("\u041E\u0442\u0432\u0430\u0440 \u0443\u0436\u0435 \u0438\u0434\u0435\u0430\u043B\u0435\u043D \u2014 \u043F\u043E\u0434\u0430\u0432\u0430\u0439!");
       } else {
         ctx2.toast("\u0425\u043C, \u0440\u0435\u0446\u0435\u043F\u0442 \u043D\u0435 \u0441\u0445\u043E\u0434\u0438\u0442\u0441\u044F. \u0421\u043A\u0430\u0436\u0438 \u0445\u043E\u0437\u044F\u0438\u043D\u0443 \u043B\u0430\u0432\u043A\u0438!");
       }
@@ -10763,7 +11684,14 @@
         hintIngredient = null;
         ctx2.sfx?.("potion");
         draw();
-        if (isTeaSolved(puzzle)) finish();
+        potSpot.classList.add("tea-swirl");
+        setTimeout(() => potSpot.classList.remove("tea-swirl"), 400);
+        if (isTeaSolved(puzzle) && !readyAnnounced) {
+          readyAnnounced = true;
+          ctx2.toast("\u2728 \u041E\u0442\u0432\u0430\u0440 \u0432 \u0441\u0430\u043C\u044B\u0439 \u0440\u0430\u0437 \u2014 \u043C\u043E\u0436\u043D\u043E \u043F\u043E\u0434\u0430\u0432\u0430\u0442\u044C!");
+          ctx2.sfx?.("success");
+        }
+        if (!isTeaSolved(puzzle)) readyAnnounced = false;
       } else {
         ctx2.toast(r.error);
       }
@@ -10787,7 +11715,7 @@
       setTimeout(() => {
         const next = nextPuzzle(level.id);
         showOverlay(ctx2, {
-          title: "\u{1FAD6} \u041E\u0442\u0432\u0430\u0440 \u0433\u043E\u0442\u043E\u0432!",
+          title: "\u{1FAD6} \u041E\u0442\u0432\u0430\u0440 \u043F\u043E\u0434\u0430\u043D!",
           subtitle: `\xAB${level.name}\xBB \u2014 \u043F\u0443\u0442\u043D\u0438\u043A \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442`,
           rewards,
           buttons: [
@@ -10800,30 +11728,44 @@
       }, 450);
     }
     function draw() {
-      pot.style.background = rgbCss(puzzle.color);
       const st = teaStatus(puzzle);
+      potColor.style.background = rgbCss(puzzle.color);
+      potSpot.classList.toggle("tea-ready", st.solved);
+      potSpot.classList.toggle("tea-hot", st.overheated);
+      const stage = fireStage(st.heat);
+      if (tableArt) {
+        if (stage !== bgStage) {
+          bgStage = stage;
+          bg.src = `assets/tea_table_fire_${stage}_web.jpg`;
+        }
+      } else {
+        let fe = fireSpot.querySelector(".tea-emoji.fire");
+        if (!fe) {
+          fe = document.createElement("div");
+          fe.className = "tea-emoji fire";
+          fireSpot.appendChild(fe);
+        }
+        fe.textContent = "\u{1F525}".repeat(stage);
+        fireSpot.style.opacity = stage === 0 ? "0.25" : "1";
+      }
+      const sim = similarity(st);
+      simFill.style.width = `${sim}%`;
+      simFill.style.background = sim >= 100 ? "#ffca7a" : "#8ba35f";
+      simLabel.textContent = simStage(sim, st);
       heatFill.style.width = `${st.heat}%`;
       heatFill.style.background = st.overheated ? "#d9432f" : "#e88a7a";
-      heatMark.innerHTML = st.overheated ? '<span class="warn">\u041F\u0435\u0440\u0435\u0433\u0440\u0435\u0442! \u0422\u0430\u043A\u043E\u0439 \u043E\u0442\u0432\u0430\u0440 \u043F\u0443\u0442\u043D\u0438\u043A \u043D\u0435 \u0432\u043E\u0437\u044C\u043C\u0451\u0442.</span>' : `${st.heat}/${st.maxHeat}`;
-      ingGrid.innerHTML = "";
+      heatMark.textContent = heatWord(st);
+      serveBtn.disabled = !st.solved;
+      serveBtn.classList.toggle("pulse", st.solved);
       for (const ing of level.ingredients) {
+        const { el, meta } = ingEls.get(ing.id);
         const left = ing.uses - (puzzle.used[ing.id] || 0);
-        const b = document.createElement("button");
-        b.className = "small" + (hintIngredient === ing.id ? " primary" : "");
-        b.disabled = left <= 0;
-        const effect = [
-          ing.dr ? `R${ing.dr > 0 ? "+" : ""}${ing.dr}` : "",
-          ing.dg ? `G${ing.dg > 0 ? "+" : ""}${ing.dg}` : "",
-          ing.db ? `B${ing.db > 0 ? "+" : ""}${ing.db}` : "",
-          ing.heat ? `\u0436\u0430\u0440${ing.heat > 0 ? "+" : ""}${ing.heat}` : ""
-        ].filter(Boolean).join(" ");
-        b.innerHTML = `${ing.icon} ${ing.name} <span class="badge">\xD7${left}</span>`;
-        b.title = effect;
-        b.addEventListener("click", () => onAdd(ing.id));
-        ingGrid.appendChild(b);
+        el.classList.toggle("empty", left <= 0);
+        el.classList.toggle("hint-ring", hintIngredient === ing.id);
+        const heat = ing.heat ? ing.heat > 0 ? "\u{1F525}".repeat(Math.max(1, Math.round(ing.heat / 5))) : "\u2744\uFE0F".repeat(Math.max(1, Math.round(-ing.heat / 5))) : "";
+        meta.innerHTML = `${ing.name} <span class="tea-uses">${"\u25CF".repeat(left)}${"\u25CB".repeat(ing.uses - left)}</span>` + (heat ? ` <span class="tea-heat">${heat}</span>` : "");
       }
-      const d = st.diffs;
-      statusEl.innerHTML = (st.solved ? "\u2705 <b>\u0418\u0434\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440!</b>" : `\u{1F3AF} \u0414\u043E \u0446\u0435\u043B\u0438: <b>\xB1${Math.max(d.r, d.g, d.b)}</b> <span class="muted">(\u0434\u043E\u043F\u0443\u0441\u043A ${level.tolerance})</span>`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+      statusEl.innerHTML = (st.solved ? "\u2705 <b>\u0418\u0434\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440!</b>" : `\u{1F3AF} \u0421\u0445\u043E\u0434\u0441\u0442\u0432\u043E: <b>${sim}%</b>`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
     draw();
     return () => {
@@ -11010,7 +11952,7 @@
   }
 
   // src/ui/mechView.js
-  var CELL3 = 72;
+  var CELL2 = 72;
   function renderMechPuzzle(container, ctx2, level) {
     const puzzle = createMechPuzzle(level);
     let hintsUsed = 0;
@@ -11025,10 +11967,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL3 * dpr;
-    canvas.height = gh * CELL3 * dpr;
-    canvas.style.width = `${gw * CELL3}px`;
-    canvas.style.height = `${gh * CELL3}px`;
+    canvas.width = gw * CELL2 * dpr;
+    canvas.height = gh * CELL2 * dpr;
+    canvas.style.width = `${gw * CELL2}px`;
+    canvas.style.height = `${gh * CELL2}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -11100,8 +12042,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL3);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL3);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL2);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL2);
       const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
       if (idx >= 0 && rotateGear(puzzle, idx)) {
         hintTile = null;
@@ -11145,14 +12087,14 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL3, gh * CELL3);
+      g.clearRect(0, 0, gw * CELL2, gh * CELL2);
       const { reached } = traceMech(puzzle);
       const at = /* @__PURE__ */ new Map();
       level.tiles.forEach((t, i) => at.set(t.pos.join(","), i));
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3d4149" : "#353945";
-          g.fillRect(x * CELL3, y * CELL3, CELL3, CELL3);
+          g.fillRect(x * CELL2, y * CELL2, CELL2, CELL2);
         }
       }
       level.tiles.forEach((t, i) => {
@@ -11173,23 +12115,23 @@
           g.lineCap = "round";
           g.lineWidth = onPath ? 9 : 7;
           g.beginPath();
-          g.moveTo(t.pos[0] * CELL3 + CELL3 / 2 + dx * CELL3 * 0.28, t.pos[1] * CELL3 + CELL3 / 2 + dy * CELL3 * 0.28);
-          g.lineTo(t.pos[0] * CELL3 + CELL3 / 2 + dx * CELL3 * 0.72, t.pos[1] * CELL3 + CELL3 / 2 + dy * CELL3 * 0.72);
+          g.moveTo(t.pos[0] * CELL2 + CELL2 / 2 + dx * CELL2 * 0.28, t.pos[1] * CELL2 + CELL2 / 2 + dy * CELL2 * 0.28);
+          g.lineTo(t.pos[0] * CELL2 + CELL2 / 2 + dx * CELL2 * 0.72, t.pos[1] * CELL2 + CELL2 / 2 + dy * CELL2 * 0.72);
           g.stroke();
         }
       });
       level.tiles.forEach((t, i) => {
-        const cx = t.pos[0] * CELL3 + CELL3 / 2;
-        const cy = t.pos[1] * CELL3 + CELL3 / 2;
+        const cx = t.pos[0] * CELL2 + CELL2 / 2;
+        const cy = t.pos[1] * CELL2 + CELL2 / 2;
         const onPath = reached.has(i);
         const rot = puzzle.rot[i] ?? t.rot ?? 0;
         g.fillStyle = t.type === "blocker" ? "#2c2a33" : onPath ? "#7d6338" : "#52493c";
-        roundRect(g, t.pos[0] * CELL3 + 4, t.pos[1] * CELL3 + 4, CELL3 - 8, CELL3 - 8, 10);
+        roundRect(g, t.pos[0] * CELL2 + 4, t.pos[1] * CELL2 + 4, CELL2 - 8, CELL2 - 8, 10);
         g.fill();
         if (hintTile === i) {
           g.fillStyle = "rgba(255, 202, 122, 0.35)";
           g.beginPath();
-          g.arc(cx, cy, CELL3 * 0.46, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL2 * 0.46, 0, Math.PI * 2);
           g.fill();
         }
         if (t.type === "gear") {
@@ -11197,14 +12139,14 @@
         } else if (t.type === "start" || t.type === "end") {
           g.fillStyle = onPath ? "#d9a441" : "#8d8578";
           g.beginPath();
-          g.arc(cx, cy, CELL3 * 0.2, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL2 * 0.2, 0, Math.PI * 2);
           g.fill();
           g.strokeStyle = "#4a3b28";
           g.lineWidth = 3;
           g.stroke();
           drawFaces(g, t, rot, cx, cy);
         }
-        const emoji = (e, size = CELL3 * 0.42) => {
+        const emoji = (e, size = CELL2 * 0.42) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -11212,13 +12154,13 @@
         };
         if (t.type === "start") emoji("\u{1F3A1}");
         else if (t.type === "end") emoji("\u{1F514}");
-        else if (t.type === "blocker") emoji("\u{1F529}", CELL3 * 0.4);
+        else if (t.type === "blocker") emoji("\u{1F529}", CELL2 * 0.4);
       });
       const solvedNow = isMechSolved(puzzle);
       statusEl.innerHTML = (solvedNow ? "\u2705 <b>\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C \u0437\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u043B!</b>" : `\u2699\uFE0F \u041F\u0435\u0440\u0435\u0434\u0430\u0447\u0430 \u043E\u0442 \u0440\u0443\u043A\u043E\u044F\u0442\u0438: <b>${reached.size}</b> \u0434\u0435\u0442\u0430\u043B\u0435\u0439`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
     function drawGear(g, t, rot, cx, cy, onPath) {
-      const r = CELL3 * 0.3;
+      const r = CELL2 * 0.3;
       const body = onPath ? "#d9a441" : "#9a938a";
       const dark = onPath ? "#8a6420" : "#5e584f";
       g.fillStyle = dark;
@@ -11245,7 +12187,7 @@
       drawFaces(g, t, rot, cx, cy);
     }
     function drawFaces(g, t, rot, cx, cy) {
-      const r = CELL3 * 0.3;
+      const r = CELL2 * 0.3;
       for (let s = 0; s < 4; s++) {
         const f = faceAt(t, rot, s);
         if (!f) continue;
@@ -11480,7 +12422,7 @@
   }
 
   // src/ui/candleView.js
-  var CELL4 = 64;
+  var CELL3 = 64;
   function renderCandlePuzzle(container, ctx2, level) {
     const puzzle = createCandlePuzzle(level);
     let hintsUsed = 0;
@@ -11495,10 +12437,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL4 * dpr;
-    canvas.height = gh * CELL4 * dpr;
-    canvas.style.width = `${gw * CELL4}px`;
-    canvas.style.height = `${gh * CELL4}px`;
+    canvas.width = gw * CELL3 * dpr;
+    canvas.height = gh * CELL3 * dpr;
+    canvas.style.width = `${gw * CELL3}px`;
+    canvas.style.height = `${gh * CELL3}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -11574,8 +12516,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL4);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL4);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL3);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL3);
       const r = placeCandle(puzzle, x, y);
       if (r.ok) {
         hintCell = null;
@@ -11621,70 +12563,70 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL4, gh * CELL4);
+      g.clearRect(0, 0, gw * CELL3, gh * CELL3);
       const st = candleStatus(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#232a3c" : "#1d2333";
-          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
+          g.fillRect(x * CELL3, y * CELL3, CELL3, CELL3);
         }
       }
       for (const k of st.lit) {
         const [x, y] = k.split(",").map(Number);
         g.fillStyle = "rgba(255, 196, 96, 0.22)";
-        g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
+        g.fillRect(x * CELL3, y * CELL3, CELL3, CELL3);
       }
       for (const [x, y] of level.walls) {
         g.fillStyle = "#0d1017";
-        g.fillRect(x * CELL4 + 2, y * CELL4 + 2, CELL4 - 4, CELL4 - 4);
+        g.fillRect(x * CELL3 + 2, y * CELL3 + 2, CELL3 - 4, CELL3 - 4);
         g.fillStyle = "#2c3140";
-        g.fillRect(x * CELL4 + 2, y * CELL4 + 2, CELL4 - 4, 6);
+        g.fillRect(x * CELL3 + 2, y * CELL3 + 2, CELL3 - 4, 6);
       }
       for (const k of puzzle.candles) {
         const [x, y] = k.split(",").map(Number);
-        const cx = x * CELL4 + CELL4 / 2;
-        const cy = y * CELL4 + CELL4 / 2;
-        const glow = g.createRadialGradient(cx, cy, 4, cx, cy, CELL4 * (level.radius * 0.55));
+        const cx = x * CELL3 + CELL3 / 2;
+        const cy = y * CELL3 + CELL3 / 2;
+        const glow = g.createRadialGradient(cx, cy, 4, cx, cy, CELL3 * (level.radius * 0.55));
         glow.addColorStop(0, "rgba(255, 214, 130, 0.5)");
         glow.addColorStop(1, "rgba(255, 214, 130, 0)");
         g.fillStyle = glow;
         g.beginPath();
-        g.arc(cx, cy, CELL4 * (level.radius * 0.55), 0, Math.PI * 2);
+        g.arc(cx, cy, CELL3 * (level.radius * 0.55), 0, Math.PI * 2);
         g.fill();
       }
-      const emoji = (e, x, y, size = CELL4 * 0.5, alpha = 1) => {
+      const emoji = (e, x, y, size = CELL3 * 0.5, alpha = 1) => {
         g.globalAlpha = alpha;
         g.font = `${size}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
-        g.fillText(e, x * CELL4 + CELL4 / 2, y * CELL4 + CELL4 / 2);
+        g.fillText(e, x * CELL3 + CELL3 / 2, y * CELL3 + CELL3 / 2);
         g.globalAlpha = 1;
       };
       for (const [x, y] of level.lanterns) {
         const lit = st.lit.has(`${x},${y}`);
         if (lit) {
-          const cx = x * CELL4 + CELL4 / 2;
-          const cy = y * CELL4 + CELL4 / 2;
-          const halo = g.createRadialGradient(cx, cy, 4, cx, cy, CELL4 * 0.7);
+          const cx = x * CELL3 + CELL3 / 2;
+          const cy = y * CELL3 + CELL3 / 2;
+          const halo = g.createRadialGradient(cx, cy, 4, cx, cy, CELL3 * 0.7);
           halo.addColorStop(0, "rgba(255, 230, 150, 0.55)");
           halo.addColorStop(1, "rgba(255, 230, 150, 0)");
           g.fillStyle = halo;
           g.beginPath();
-          g.arc(cx, cy, CELL4 * 0.7, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL3 * 0.7, 0, Math.PI * 2);
           g.fill();
         }
-        emoji("\u{1F3EE}", x, y, CELL4 * 0.5, lit ? 1 : 0.45);
+        emoji("\u{1F3EE}", x, y, CELL3 * 0.5, lit ? 1 : 0.45);
       }
       for (const [x, y] of level.spirits) {
         const lit = st.lit.has(`${x},${y}`);
         if (lit) {
           g.fillStyle = "rgba(160, 165, 175, 0.45)";
           g.beginPath();
-          g.arc(x * CELL4 + CELL4 / 2, y * CELL4 + CELL4 / 2, CELL4 * 0.32, 0, Math.PI * 2);
+          g.arc(x * CELL3 + CELL3 / 2, y * CELL3 + CELL3 / 2, CELL3 * 0.32, 0, Math.PI * 2);
           g.fill();
-          emoji("\u{1F47B}", x, y, CELL4 * 0.5, 0.5);
+          emoji("\u{1F47B}", x, y, CELL3 * 0.5, 0.5);
         } else {
-          emoji("\u{1F47B}", x, y, CELL4 * 0.5, 1);
+          emoji("\u{1F47B}", x, y, CELL3 * 0.5, 1);
         }
       }
       for (const k of puzzle.candles) {
@@ -11695,7 +12637,7 @@
         g.strokeStyle = hintCell.type === "place" ? "#8fd98a" : "#e88a7a";
         g.lineWidth = 4;
         g.beginPath();
-        g.arc(hintCell.x * CELL4 + CELL4 / 2, hintCell.y * CELL4 + CELL4 / 2, CELL4 * 0.44, 0, Math.PI * 2);
+        g.arc(hintCell.x * CELL3 + CELL3 / 2, hintCell.y * CELL3 + CELL3 / 2, CELL3 * 0.44, 0, Math.PI * 2);
         g.stroke();
       }
       const warn = st.spiritsLit > 0 ? `<div class="warn">\u{1F47B} \u0414\u0443\u0445 \u0432 \u0441\u0432\u0435\u0442\u0435: ${st.spiritsLit}! \u0422\u0430\u043A \u043D\u0435\u043B\u044C\u0437\u044F.</div>` : "";
@@ -11872,7 +12814,7 @@
   }
 
   // src/ui/flowView.js
-  var CELL5 = 72;
+  var CELL4 = 72;
   function renderFlowPuzzle(container, ctx2, level) {
     const puzzle = createFlowPuzzle(level);
     let hintsUsed = 0;
@@ -11887,10 +12829,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL5 * dpr;
-    canvas.height = gh * CELL5 * dpr;
-    canvas.style.width = `${gw * CELL5}px`;
-    canvas.style.height = `${gh * CELL5}px`;
+    canvas.width = gw * CELL4 * dpr;
+    canvas.height = gh * CELL4 * dpr;
+    canvas.style.width = `${gw * CELL4}px`;
+    canvas.style.height = `${gh * CELL4}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -11962,8 +12904,8 @@
       if (finished) return;
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / dpr / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL5);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL5);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL4);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL4);
       const idx = level.tiles.findIndex((t) => t.pos[0] === x && t.pos[1] === y);
       if (idx >= 0 && rotateFlowTile(puzzle, idx)) {
         hintTile = null;
@@ -12007,7 +12949,7 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL5, gh * CELL5);
+      g.clearRect(0, 0, gw * CELL4, gh * CELL4);
       const sim = simulateFlows(puzzle);
       const cellOwner = /* @__PURE__ */ new Map();
       sim.buyers.forEach((b, bi) => b.path.forEach(([x, y]) => {
@@ -12017,19 +12959,19 @@
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#2b2e4a" : "#323654";
-          g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
+          g.fillRect(x * CELL4, y * CELL4, CELL4, CELL4);
         }
       }
       level.tiles.forEach((t) => {
-        const px = t.pos[0] * CELL5;
-        const py = t.pos[1] * CELL5;
+        const px = t.pos[0] * CELL4;
+        const py = t.pos[1] * CELL4;
         if (t.type === "wall") {
           g.fillStyle = "#1e2033";
-          roundRect(g, px + 4, py + 4, CELL5 - 8, CELL5 - 8, 10);
+          roundRect(g, px + 4, py + 4, CELL4 - 8, CELL4 - 8, 10);
           g.fill();
         } else if (t.type === "arrow") {
           g.fillStyle = "#4a4370";
-          roundRect(g, px + 4, py + 4, CELL5 - 8, CELL5 - 8, 10);
+          roundRect(g, px + 4, py + 4, CELL4 - 8, CELL4 - 8, 10);
           g.fill();
         }
       });
@@ -12042,8 +12984,8 @@
         g.lineWidth = 9;
         g.beginPath();
         b.path.forEach(([x, y], i) => {
-          const cx = x * CELL5 + CELL5 / 2;
-          const cy = y * CELL5 + CELL5 / 2;
+          const cx = x * CELL4 + CELL4 / 2;
+          const cy = y * CELL4 + CELL4 / 2;
           if (i === 0) g.moveTo(cx, cy);
           else g.lineTo(cx, cy);
         });
@@ -12051,14 +12993,14 @@
         const [hx, hy] = b.path[b.path.length - 1];
         g.fillStyle = col.css;
         g.beginPath();
-        g.arc(hx * CELL5 + CELL5 / 2, hy * CELL5 + CELL5 / 2, 6, 0, Math.PI * 2);
+        g.arc(hx * CELL4 + CELL4 / 2, hy * CELL4 + CELL4 / 2, 6, 0, Math.PI * 2);
         g.fill();
         g.globalAlpha = 1;
       });
       level.tiles.forEach((t, i) => {
         if (t.type !== "arrow") return;
-        const cx = t.pos[0] * CELL5 + CELL5 / 2;
-        const cy = t.pos[1] * CELL5 + CELL5 / 2;
+        const cx = t.pos[0] * CELL4 + CELL4 / 2;
+        const cy = t.pos[1] * CELL4 + CELL4 / 2;
         const owner = cellOwner.get(t.pos.join(","));
         g.fillStyle = owner !== void 0 ? BUYER_COLORS[sim.buyers[owner].color].css : "#aab0e8";
         const rot = puzzle.rot[i] ?? t.rot ?? 0;
@@ -12079,14 +13021,14 @@
       });
       if (hintTile !== null) {
         const t = level.tiles[hintTile];
-        const cx = t.pos[0] * CELL5 + CELL5 / 2;
-        const cy = t.pos[1] * CELL5 + CELL5 / 2;
+        const cx = t.pos[0] * CELL4 + CELL4 / 2;
+        const cy = t.pos[1] * CELL4 + CELL4 / 2;
         g.fillStyle = "rgba(255, 202, 122, 0.35)";
         g.beginPath();
-        g.arc(cx, cy, CELL5 * 0.46, 0, Math.PI * 2);
+        g.arc(cx, cy, CELL4 * 0.46, 0, Math.PI * 2);
         g.fill();
       }
-      const emoji = (e, cx, cy, size = CELL5 * 0.5) => {
+      const emoji = (e, cx, cy, size = CELL4 * 0.5) => {
         g.font = `${size}px "Segoe UI Emoji", sans-serif`;
         g.textAlign = "center";
         g.textBaseline = "middle";
@@ -12096,14 +13038,14 @@
         sim.buyers.filter((b) => b.arrived).map((b) => b.path[b.path.length - 1].join(","))
       );
       level.tiles.forEach((t) => {
-        const cx = t.pos[0] * CELL5 + CELL5 / 2;
-        const cy = t.pos[1] * CELL5 + CELL5 / 2;
+        const cx = t.pos[0] * CELL4 + CELL4 / 2;
+        const cy = t.pos[1] * CELL4 + CELL4 / 2;
         if (t.type === "start") {
           const col = BUYER_COLORS[t.color ?? 0];
           g.fillStyle = col.css;
           g.globalAlpha = 0.35;
           g.beginPath();
-          g.arc(cx, cy, CELL5 * 0.42, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL4 * 0.42, 0, Math.PI * 2);
           g.fill();
           g.globalAlpha = 1;
           emoji(col.buyer, cx, cy);
@@ -12113,26 +13055,26 @@
             g.fillStyle = col.css;
             g.globalAlpha = 0.45;
             g.beginPath();
-            g.arc(cx, cy, CELL5 * 0.42, 0, Math.PI * 2);
+            g.arc(cx, cy, CELL4 * 0.42, 0, Math.PI * 2);
             g.fill();
             g.globalAlpha = 1;
           }
           g.strokeStyle = col.css;
           g.lineWidth = 4;
           g.beginPath();
-          g.arc(cx, cy, CELL5 * 0.4, 0, Math.PI * 2);
+          g.arc(cx, cy, CELL4 * 0.4, 0, Math.PI * 2);
           g.stroke();
           emoji("\u{1F3EE}", cx, cy);
         } else if (t.type === "wall") {
-          emoji("\u{1F4E6}", cx, cy, CELL5 * 0.45);
+          emoji("\u{1F4E6}", cx, cy, CELL4 * 0.45);
         }
       });
       for (const key of sim.collisions) {
         const [x, y] = key.split(",").map(Number);
         g.fillStyle = "rgba(255, 80, 80, 0.45)";
-        roundRect(g, x * CELL5 + 6, y * CELL5 + 6, CELL5 - 12, CELL5 - 12, 10);
+        roundRect(g, x * CELL4 + 6, y * CELL4 + 6, CELL4 - 12, CELL4 - 12, 10);
         g.fill();
-        emoji("\u{1F4A5}", x * CELL5 + CELL5 / 2, y * CELL5 + CELL5 / 2, CELL5 * 0.4);
+        emoji("\u{1F4A5}", x * CELL4 + CELL4 / 2, y * CELL4 + CELL4 / 2, CELL4 * 0.4);
       }
       const n = sim.buyers.length;
       statusEl.innerHTML = (sim.solved ? "\u2705 <b>\u0412\u0441\u0435 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0438 \u0443 \u0441\u0432\u043E\u0438\u0445 \u043B\u043E\u0442\u043A\u043E\u0432!</b>" : `\u{1F6CD}\uFE0F \u0423 \u043B\u043E\u0442\u043A\u043E\u0432: <b>${sim.arrivedCount} \u0438\u0437 ${n}</b>` + (sim.collisions.size > 0 ? `<br>\u{1F4A5} <b>\u0422\u043E\u043B\u043A\u043E\u0442\u043D\u044F!</b> \u041F\u0443\u0442\u0438 \u043F\u0435\u0440\u0435\u0441\u0435\u043A\u0430\u044E\u0442\u0441\u044F: ${sim.collisions.size}` : "")) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
@@ -12626,7 +13568,7 @@
       setTimeout(() => targetRow.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
   }
-  var CELL6 = 64;
+  var CELL5 = 64;
   function renderPuzzle(container, ctx2, params) {
     const level = findPuzzle(ctx2.state, params.id);
     if (!level) {
@@ -12636,8 +13578,11 @@
     if (level.mechanic === "shelf") {
       return renderShelfPuzzle(container, ctx2, level);
     }
-    if (level.mechanic === "book") {
-      return renderBookPuzzle(container, ctx2, level);
+    if (level.mechanic === "riddle") {
+      return renderRiddlePuzzle(container, ctx2, level);
+    }
+    if (level.mechanic === "hang") {
+      return renderHangmanPuzzle(container, ctx2, level);
     }
     if (level.mechanic === "seek") {
       return renderSeekPuzzle(container, ctx2, level);
@@ -12673,10 +13618,10 @@
     canvas.className = "game";
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = gw * CELL6 * dpr;
-    canvas.height = gh * CELL6 * dpr;
-    canvas.style.width = `${gw * CELL6}px`;
-    canvas.style.height = `${gh * CELL6}px`;
+    canvas.width = gw * CELL5 * dpr;
+    canvas.height = gh * CELL5 * dpr;
+    canvas.style.width = `${gw * CELL5}px`;
+    canvas.style.height = `${gh * CELL5}px`;
     canvas.style.maxWidth = "100%";
     canvasBox.appendChild(canvas);
     wrap.appendChild(canvasBox);
@@ -12747,8 +13692,8 @@
       const scaleX = canvas.width / dpr / rect.width;
       const cx = (ev.clientX - rect.left) * scaleX;
       const cy = (ev.clientY - rect.top) * scaleX;
-      const x = Math.floor(cx / CELL6);
-      const y = Math.floor(cy / CELL6);
+      const x = Math.floor(cx / CELL5);
+      const y = Math.floor(cy / CELL5);
       const idx = level.objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (idx >= 0 && level.objects[idx].type === "mirror") {
         rotateMirror(puzzle, idx);
@@ -12780,12 +13725,12 @@
     function draw() {
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
-      g.clearRect(0, 0, gw * CELL6, gh * CELL6);
+      g.clearRect(0, 0, gw * CELL5, gh * CELL5);
       const { lanternsLit, mothsAwake, beams } = traceLight(puzzle);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL6, y * CELL6, CELL6, CELL6);
+          g.fillRect(x * CELL5, y * CELL5, CELL5, CELL5);
         }
       }
       g.save();
@@ -12795,16 +13740,16 @@
         g.lineWidth = pass.w;
         for (const b of beams) {
           g.beginPath();
-          g.moveTo(b.from[0] * CELL6 + CELL6 / 2, b.from[1] * CELL6 + CELL6 / 2);
-          g.lineTo(b.to[0] * CELL6 + CELL6 / 2, b.to[1] * CELL6 + CELL6 / 2);
+          g.moveTo(b.from[0] * CELL5 + CELL5 / 2, b.from[1] * CELL5 + CELL5 / 2);
+          g.lineTo(b.to[0] * CELL5 + CELL5 / 2, b.to[1] * CELL5 + CELL5 / 2);
           g.stroke();
         }
       }
       g.restore();
       level.objects.forEach((o, i) => {
-        const cx = o.pos[0] * CELL6 + CELL6 / 2;
-        const cy = o.pos[1] * CELL6 + CELL6 / 2;
-        const emoji = (e, size = CELL6 * 0.62) => {
+        const cx = o.pos[0] * CELL5 + CELL5 / 2;
+        const cy = o.pos[1] * CELL5 + CELL5 / 2;
+        const emoji = (e, size = CELL5 * 0.62) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -12815,8 +13760,8 @@
             emoji("\u2728");
             const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
             g.fillStyle = "rgba(255, 240, 190, 0.9)";
-            g.font = `bold ${CELL6 * 0.3}px sans-serif`;
-            g.fillText(dirs[o.dir], cx + CELL6 * 0.28, cy - CELL6 * 0.28);
+            g.font = `bold ${CELL5 * 0.3}px sans-serif`;
+            g.fillText(dirs[o.dir], cx + CELL5 * 0.28, cy - CELL5 * 0.28);
             break;
           }
           case "mirror": {
@@ -12824,25 +13769,25 @@
             if (hintCell && hintCell[0] === o.pos[0] && hintCell[1] === o.pos[1]) {
               g.fillStyle = "rgba(255, 202, 122, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL6 * 0.46, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL5 * 0.46, 0, Math.PI * 2);
               g.fill();
             }
             g.save();
             g.translate(cx, cy);
             g.rotate(orient === 0 ? Math.PI / 4 : -Math.PI / 4);
             g.fillStyle = "#8a6f4d";
-            g.fillRect(-CELL6 * 0.3, -3, CELL6 * 0.6, 6);
+            g.fillRect(-CELL5 * 0.3, -3, CELL5 * 0.6, 6);
             g.fillStyle = "#cfe8ff";
-            g.fillRect(-CELL6 * 0.3, -5, CELL6 * 0.6, 4);
+            g.fillRect(-CELL5 * 0.3, -5, CELL5 * 0.6, 4);
             g.restore();
-            emoji("\u{1FA9E}", CELL6 * 0.3);
+            emoji("\u{1FA9E}", CELL5 * 0.3);
             break;
           }
           case "lantern": {
             if (lanternsLit.has(i)) {
               g.fillStyle = "rgba(255, 214, 120, 0.35)";
               g.beginPath();
-              g.arc(cx, cy, CELL6 * 0.48, 0, Math.PI * 2);
+              g.arc(cx, cy, CELL5 * 0.48, 0, Math.PI * 2);
               g.fill();
               emoji("\u{1F3EE}");
             } else {
@@ -12856,7 +13801,7 @@
             emoji(mothsAwake.has(i) ? "\u{1F621}" : "\u{1F98B}");
             if (mothsAwake.has(i)) {
               g.fillStyle = "rgba(232, 138, 122, 0.25)";
-              g.fillRect(o.pos[0] * CELL6, o.pos[1] * CELL6, CELL6, CELL6);
+              g.fillRect(o.pos[0] * CELL5, o.pos[1] * CELL5, CELL5, CELL5);
             }
             break;
           case "wall":
@@ -13743,40 +14688,6 @@ ${item2.description}
       { icon: "\u{1F9EA}", label: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", screen: "shopAlchemy" },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
-    const sellPanel = document.createElement("div");
-    sellPanel.className = "panel";
-    sellPanel.innerHTML = `<h3>\u041F\u0440\u043E\u0434\u0430\u0442\u044C \u0438\u0437 \u0441\u0443\u043D\u0434\u0443\u043A\u0430 (\u0437\u0430 \u043F\u043E\u043B\u0446\u0435\u043D\u044B)</h3>`;
-    const sellList = document.createElement("div");
-    sellList.className = "list";
-    if (state2.inventory.length === 0) {
-      sellList.innerHTML = '<div class="muted">\u0421\u0443\u043D\u0434\u0443\u043A \u043F\u0443\u0441\u0442.</div>';
-    }
-    state2.inventory.forEach((id, index) => {
-      const item2 = ITEM_BY_ID[id];
-      if (!item2) return;
-      const price = Math.max(1, Math.floor(item2.price / 2));
-      const row = document.createElement("div");
-      row.className = "row";
-      row.innerHTML = `
-      <span class="icon">${itemEmoji(item2)}</span>
-      <span class="grow"><div class="name">${item2.name}</div></span>
-      <span class="price">\u{1FA99} ${price}</span>`;
-      const btn = document.createElement("button");
-      btn.className = "small";
-      btn.textContent = "\u041F\u0440\u043E\u0434\u0430\u0442\u044C";
-      btn.addEventListener("click", () => {
-        const r = sellItem(state2, index);
-        if (r.ok) {
-          ctx2.toast(`\u041F\u0440\u043E\u0434\u0430\u043D\u043E: ${item2.name} \u0437\u0430 ${r.price} \u043C\u043E\u043D\u0435\u0442`);
-          ctx2.save();
-          rerenderCurrent();
-        }
-      });
-      row.appendChild(btn);
-      sellList.appendChild(row);
-    });
-    sellPanel.appendChild(sellList);
-    container.appendChild(sellPanel);
     const cosPanel = document.createElement("div");
     cosPanel.className = "panel";
     cosPanel.innerHTML = '<h3>\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F \u043B\u0430\u0432\u043A\u0438</h3><div class="muted" style="font-size:13px;margin-bottom:8px">\u0422\u043E\u043B\u044C\u043A\u043E \u043A\u0440\u0430\u0441\u043E\u0442\u0430 \u2014 \u043D\u0438\u043A\u0430\u043A\u043E\u0433\u043E \u0432\u043B\u0438\u044F\u043D\u0438\u044F \u043D\u0430 \u0441\u0438\u043B\u0443.</div>';
@@ -14070,7 +14981,7 @@ ${item2.description}
   }
 
   // src/ui/editorView.js
-  var CELL7 = 56;
+  var CELL6 = 56;
   var PALETTE = [
     { type: "source", icon: "\u2728", label: "\u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A (\u043F\u043E\u0432\u0442\u043E\u0440\u043D\u044B\u0439 \u0442\u0430\u043F \u2014 \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C)" },
     { type: "mirror", icon: "\u{1FA9E}", label: "\u0417\u0435\u0440\u043A\u0430\u043B\u043E (\u0442\u0430\u043F \u2014 \u0441\u043C\u0435\u043D\u0438\u0442\u044C \u043E\u0440\u0438\u0435\u043D\u0442\u0430\u0446\u0438\u044E)" },
@@ -14346,8 +15257,8 @@ ${item2.description}
     function onTap(ev) {
       const rect = canvas.getBoundingClientRect();
       const scale = canvas.width / 1 / rect.width;
-      const x = Math.floor((ev.clientX - rect.left) * scale / CELL7);
-      const y = Math.floor((ev.clientY - rect.top) * scale / CELL7);
+      const x = Math.floor((ev.clientX - rect.left) * scale / CELL6);
+      const y = Math.floor((ev.clientY - rect.top) * scale / CELL6);
       if (x < 0 || y < 0 || x >= gw || y >= gh) return;
       const idx = objects.findIndex((o) => o.pos[0] === x && o.pos[1] === y);
       if (tool === "erase") {
@@ -14369,16 +15280,16 @@ ${item2.description}
     canvas.addEventListener("pointerdown", onTap);
     function draw() {
       const dpr = 1;
-      canvas.width = gw * CELL7;
-      canvas.height = gh * CELL7;
-      canvas.style.width = `${gw * CELL7}px`;
-      canvas.style.height = `${gh * CELL7}px`;
+      canvas.width = gw * CELL6;
+      canvas.height = gh * CELL6;
+      canvas.style.width = `${gw * CELL6}px`;
+      canvas.style.height = `${gh * CELL6}px`;
       const g = canvas.getContext("2d");
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       for (let y = 0; y < gh; y++) {
         for (let x = 0; x < gw; x++) {
           g.fillStyle = (x + y) % 2 === 0 ? "#3a5232" : "#425c38";
-          g.fillRect(x * CELL7, y * CELL7, CELL7, CELL7);
+          g.fillRect(x * CELL6, y * CELL6, CELL6, CELL6);
         }
       }
       const preview = createPuzzle(currentLevel());
@@ -14388,14 +15299,14 @@ ${item2.description}
       g.lineWidth = 4;
       for (const b of beams) {
         g.beginPath();
-        g.moveTo(b.from[0] * CELL7 + CELL7 / 2, b.from[1] * CELL7 + CELL7 / 2);
-        g.lineTo(b.to[0] * CELL7 + CELL7 / 2, b.to[1] * CELL7 + CELL7 / 2);
+        g.moveTo(b.from[0] * CELL6 + CELL6 / 2, b.from[1] * CELL6 + CELL6 / 2);
+        g.lineTo(b.to[0] * CELL6 + CELL6 / 2, b.to[1] * CELL6 + CELL6 / 2);
         g.stroke();
       }
       for (const o of objects) {
-        const cx = o.pos[0] * CELL7 + CELL7 / 2;
-        const cy = o.pos[1] * CELL7 + CELL7 / 2;
-        const emoji = (e, size = CELL7 * 0.6) => {
+        const cx = o.pos[0] * CELL6 + CELL6 / 2;
+        const cy = o.pos[1] * CELL6 + CELL6 / 2;
+        const emoji = (e, size = CELL6 * 0.6) => {
           g.font = `${size}px "Segoe UI Emoji", sans-serif`;
           g.textAlign = "center";
           g.textBaseline = "middle";
@@ -14405,16 +15316,16 @@ ${item2.description}
           emoji("\u2728");
           const dirs = ["\u2191", "\u2192", "\u2193", "\u2190"];
           g.fillStyle = "#fff2be";
-          g.font = `bold ${CELL7 * 0.3}px sans-serif`;
-          g.fillText(dirs[o.dir ?? 1], cx + CELL7 * 0.28, cy - CELL7 * 0.28);
+          g.font = `bold ${CELL6 * 0.3}px sans-serif`;
+          g.fillText(dirs[o.dir ?? 1], cx + CELL6 * 0.28, cy - CELL6 * 0.28);
         } else if (o.type === "mirror") {
           g.save();
           g.translate(cx, cy);
           g.rotate(o.orient === 0 ? Math.PI / 4 : -Math.PI / 4);
           g.fillStyle = "#cfe8ff";
-          g.fillRect(-CELL7 * 0.3, -3, CELL7 * 0.6, 5);
+          g.fillRect(-CELL6 * 0.3, -3, CELL6 * 0.6, 5);
           g.restore();
-          emoji("\u{1FA9E}", CELL7 * 0.3);
+          emoji("\u{1FA9E}", CELL6 * 0.3);
         } else if (o.type === "lantern") emoji("\u{1F3EE}");
         else if (o.type === "moth") emoji("\u{1F98B}");
         else if (o.type === "wall") emoji("\u{1F311}");
@@ -14900,6 +15811,19 @@ ${item2.description}
     bg.src = cands[0];
     fieldEl.prepend(bg);
   }
+  function addObstacles(fieldEl, obstacles) {
+    for (const o of obstacles || []) {
+      const kind = OBSTACLE_KINDS[o.kind] || OBSTACLE_KINDS.rock;
+      const el = document.createElement("div");
+      el.className = "form-obstacle";
+      const [x, y] = cellPos(o.cell[0], o.cell[1]);
+      el.style.left = `${x}%`;
+      el.style.top = `${y}%`;
+      el.textContent = kind.icon;
+      el.title = `${kind.name} \u2014 \u043D\u0435\u043F\u0440\u043E\u043B\u0430\u0437\u043D\u0430\u044F \u043A\u043B\u0435\u0442\u043A\u0430, \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0431\u044C\u044E\u0442 \u043F\u043E\u0432\u0435\u0440\u0445`;
+      fieldEl.appendChild(el);
+    }
+  }
   function renderFormation(container, ctx2, params) {
     const battle = BATTLE_BY_ID[params.id];
     if (!battle || !battleAvailable(ctx2.state, battle.id)) {
@@ -14916,6 +15840,7 @@ ${item2.description}
     const field = document.createElement("div");
     field.className = "form-field";
     addFieldBg(field, battle.world);
+    addObstacles(field, battle.obstacles);
     prepPanel.appendChild(field);
     const units = [
       { key: "knight", icon: "\u{1F6E1}\uFE0F", name: "\u0420\u044B\u0446\u0430\u0440\u044C" },
@@ -15129,6 +16054,7 @@ ${item2.description}
     const field2 = document.createElement("div");
     field2.className = "form-field battle";
     addFieldBg(field2, world);
+    addObstacles(field2, result.formation?.obstacles);
     container.appendChild(field2);
     const controls = document.createElement("div");
     controls.className = "panel";
@@ -15220,17 +16146,17 @@ ${item2.description}
       const atk = figOf(e.fromUid);
       const def = figOf(e.toUid);
       if (!atk || !def) return;
-      if (e.ranged) {
-        const arrow = document.createElement("div");
-        arrow.className = "projectile";
-        arrow.textContent = e.elem === "fire" ? "\u{1F525}" : "\u27B9";
-        arrow.style.left = `${atk.x}%`;
-        arrow.style.top = `${atk.y}%`;
-        field2.appendChild(arrow);
+      if (e.ranged || e.magic) {
+        const proj = document.createElement("div");
+        proj.className = "projectile" + (e.magic ? " magic" : "");
+        proj.textContent = e.magic ? e.elem === "fire" ? "\u{1F525}" : e.elem === "storm" ? "\u26A1" : "\u2728" : e.elem === "fire" ? "\u{1F525}" : e.elem === "storm" ? "\u26A1" : "\u27B9";
+        proj.style.left = `${atk.x}%`;
+        proj.style.top = `${atk.y}%`;
+        field2.appendChild(proj);
         requestAnimationFrame(() => {
-          arrow.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
+          proj.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
         });
-        setTimeout(() => arrow.remove(), 340);
+        setTimeout(() => proj.remove(), 340);
         setTimeout(() => hitLand(def, e), 320);
       } else {
         const dx = (def.x - atk.x) * 0.5;
@@ -15770,7 +16696,7 @@ ${item2.description}
       id: "meadow_master",
       icon: "\u{1F33F}",
       name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043E\u043F\u0443\u0448\u043A\u0438",
-      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u0422\u0438\u0445\u043E\u0439 \u043E\u043F\u0443\u0448\u043A\u0438 (md_01\u2013md_12).",
+      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u0422\u0438\u0445\u043E\u0439 \u043E\u043F\u0443\u0448\u043A\u0438.",
       check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, "0")}`).every((id) => s.puzzlesDone[id])
     },
     {
@@ -15877,6 +16803,20 @@ ${item2.description}
       name: "\u041C\u0443\u0440\u043B\u044B\u043A\u0430\u043B\u043E",
       desc: "\u041F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C \u043A\u043E\u0442\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F 25 \u0440\u0430\u0437.",
       check: (s) => (s.stats.catPets || 0) >= 25
+    },
+    {
+      id: "first_trophy",
+      icon: "\u{1F3C6}",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u043B\u043A\u0430",
+      desc: "\u041F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u044B\u0439 \u0442\u0440\u043E\u0444\u0435\u0439 \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435.",
+      check: (s) => (s.trophies || []).length >= 1
+    },
+    {
+      id: "cabinet_full",
+      icon: "\u{1F98C}",
+      name: "\u041F\u043E\u043B\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442",
+      desc: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435 12 \u0442\u0440\u043E\u0444\u0435\u0435\u0432 \u0441 \u0431\u043E\u0441\u0441\u043E\u0432 \u043C\u0438\u0440\u043E\u0432.",
+      check: (s) => (s.trophies || []).filter((id) => !id.startsWith("mini_")).length >= 12
     }
   ];
   function checkAchievements(state2, ctx2) {

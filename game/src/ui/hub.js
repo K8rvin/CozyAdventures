@@ -8,7 +8,9 @@ function hasUnseenIn(state, shopKey) {
   return itemsForShop(state, shopKey, shopStock(state)).some((i) => unseen.has(i.id));
 }
 import { COMPANION_BY_ID, PET_BY_ID } from '../data/crew.js';
-import { BATTLES } from '../data/battles.js';
+import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
+import { TROPHIES, MINI_TROPHIES } from '../data/trophies.js';
+import { showOverlay } from './common.js';
 import { startTutorial } from './tutorial.js';
 
 // Реплики спутников и питомцев для дневника (случайная при визите)
@@ -58,6 +60,7 @@ export function renderHub(container, ctx, params = {}) {
         ['🛡️', 'Комната рыцаря', 'equip', 68, 50, () => false],
         ['🌆', 'На площадь', '@square', 77, 52, () => false],
         ['🪟', 'В поход', 'battles', 93, 45, () => firstPurchaseDone && won === 0],
+        ['🦌', 'Кабинет трофеев', '@cabinet', 72, 90, () => (state.trophies || []).some((id) => !(state.trophiesSeen || []).includes(id))],
       ],
     },
     square: {
@@ -81,6 +84,15 @@ export function renderHub(container, ctx, params = {}) {
         ['🔮', 'Маг', 'shopMagic', 63, 62, () => hasUnseenIn(state, 'magic')],
         ['🧪', 'Алхимик', 'shopAlchemy', 80, 60, () => hasUnseenIn(state, 'alchemy')],
         ['🌇', 'На площадь', '@square', 52, 60, () => false],
+      ],
+    },
+    cabinet: {
+      candidates: ['assets/trophy_room_web.jpg', 'assets/trophy_room.png'],
+      alt: 'Кабинет трофеев',
+      hotspots: [
+        ['📖', 'Книга рекордов', 'achievements', 87.5, 64, () => false],
+        ['🗺️', 'Карта миров', 'battles', 87, 33, () => false],
+        ['🏮', 'В лавку', '@lavka', 50, 92, () => false],
       ],
     },
   };
@@ -120,6 +132,7 @@ export function renderHub(container, ctx, params = {}) {
         if (screen === '@square') rerender('square');
         else if (screen === '@lavka') rerender('lavka');
         else if (screen === '@market') rerender('market');
+        else if (screen === '@cabinet') rerender('cabinet');
         else ctx.go(screen);
       }, 150);
     });
@@ -235,6 +248,63 @@ export function renderHub(container, ctx, params = {}) {
       ctx.toast(lines[Math.floor(Math.random() * lines.length)]);
     });
     scenePanel.appendChild(el);
+  }
+
+  // --- Кабинет трофеев: места на стене (12 боссов) и полка жетонов (розыск).
+  // Закрытый трофей — полупрозрачный силуэт; клик по открытому — карточка с лором.
+  if (sceneId === 'cabinet') {
+    // Визит в кабинет гасит точку-индикатор на двери
+    const unseen = (state.trophies || []).filter((id) => !(state.trophiesSeen || []).includes(id));
+    if (unseen.length > 0) {
+      state.trophiesSeen = [...(state.trophiesSeen || []), ...unseen];
+      ctx.save();
+    }
+    // Координаты подогнаны под арт: 2 ряда ниш по 6 (пьедесталы внизу ниш)
+    // + центральная низкая полка с 4 подставками под жетоны розыска
+    const TROPHY_SPOTS = TROPHIES.map((t, i) => ({
+      t, x: 29.7 + (i % 6) * 8.4, y: i < 6 ? 35 : 61.5, size: 52,
+    }));
+    const MINI_SPOTS = MINI_TROPHIES.map((t, i) => ({
+      t, x: 42 + i * 5.5, y: 76.5, size: 30,
+    }));
+    for (const spot of [...TROPHY_SPOTS, ...MINI_SPOTS]) {
+      const owned = (state.trophies || []).includes(spot.t.id);
+      const el = document.createElement('div');
+      el.className = `hub-trophy${owned ? '' : ' locked'}`;
+      el.style.left = `${spot.x}%`;
+      el.style.top = `${spot.y}%`;
+      el.title = owned ? spot.t.name : '???';
+      if (owned) {
+        const img = document.createElement('img');
+        img.src = `assets/trophies/tro_${spot.t.id}.png`;
+        img.alt = spot.t.name;
+        img.style.width = `${spot.size}px`;
+        img.addEventListener('error', () => {
+          img.remove();
+          el.textContent = spot.t.icon;
+          el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+        });
+        el.appendChild(img);
+      } else {
+        el.textContent = '❔';
+        el.style.fontSize = `${Math.round(spot.size * 0.6)}px`;
+      }
+      el.addEventListener('click', () => {
+        ctx.sfx?.('tap');
+        if (!owned) {
+          const battle = BATTLE_BY_ID[spot.t.battleId];
+          ctx.toast(`Пустое место. Сюда встанет трофей за победу: «${battle?.name || '?'}».`);
+          return;
+        }
+        const wins = state.battlesDone[spot.t.battleId]?.victories || 1;
+        showOverlay(ctx, {
+          title: `${spot.t.icon} ${spot.t.name}`,
+          subtitle: `${spot.t.lore}<br><br>Побед в бою «${BATTLE_BY_ID[spot.t.battleId]?.name || ''}»: ${wins}`,
+          buttons: [{ label: 'Закрыть', primary: true, onClick: () => {} }],
+        });
+      });
+      scenePanel.appendChild(el);
+    }
   }
 
   // --- Украшения лавки и живая атмосфера на сценах ---

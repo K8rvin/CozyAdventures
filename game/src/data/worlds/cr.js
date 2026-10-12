@@ -70,6 +70,7 @@ export const WORLD = {
     },
     {
       id: 'cr_03', name: 'Звон ледяных искр', world: 'cr',
+      obstacles: [{ cell: [3, 1], kind: 'crystal' }],
       enemies: [{ id: 'cr_icewisp', scale: 1.83 }, { id: 'cr_icewisp', scale: 1.83 }],
       unlockAfter: 'cr_02',
       tip: 'Искры замедляют морозной пылью. Берите скорость.',
@@ -100,6 +101,7 @@ export const WORLD = {
     },
     {
       id: 'cr_08', name: 'Драконье эхо', world: 'cr',
+      obstacles: [{ cell: [4, 0], kind: 'crystal' }, { cell: [4, 2], kind: 'crystal' }],
       enemies: [{ id: 'cr_dragon_young', scale: 1.89 }],
       unlockAfter: 'cr_07',
       tip: 'Молодой дракон бьёт тяжело и наводит страх. Амулет отваги поможет.',
@@ -130,6 +132,7 @@ export const WORLD = {
     },
     {
       id: 'cr_13', name: 'Молодые когти', world: 'cr',
+      obstacles: [{ cell: [4, 1], kind: 'rock' }],
       enemies: [{ id: 'cr_dragon_young', scale: 1.96 }, { id: 'cr_shardling', scale: 1.96 }],
       unlockAfter: 'cr_12',
       tip: 'Дракон с осколком-прихвостнем. Перебей мелочь и сосредоточься.',
@@ -154,6 +157,7 @@ export const WORLD = {
     },
     {
       id: 'cr_17', name: 'Эхо древних', world: 'cr',
+      obstacles: [{ cell: [3, 0], kind: 'crystal' }, { cell: [5, 1], kind: 'rock' }],
       enemies: [{ id: 'cr_dragon_young', scale: 2.01 }, { id: 'cr_echo', scale: 2.01 }],
       unlockAfter: 'cr_16',
       tip: 'Дракон в компании духа. Амулет отваги и удар по дракону.',
