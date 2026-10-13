@@ -15,9 +15,10 @@ import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './commo
 const TEA_SPOTS = {
   pot: { x: 23.5, y: 25, size: 26 }, // котёл висит в треноге
   fire: { x: 23.5, y: 61, size: 14 }, // огонь под котлом (фолбэк)
-  cup: { x: 76, y: 40, size: 15 },   // стакан заказа
+  cup: { x: 76, y: 34, size: 15 },   // стакан заказа
   ingsY: 84,                         // ряд чашечек ингредиентов
-  ingsSize: 10,
+  ingsSize: 14,
+  ingBig: { honey: 1.2 },            // миска мёда — чуть крупнее остальных
 };
 
 export function renderTeaPuzzle(container, ctx, level) {
@@ -92,25 +93,27 @@ export function renderTeaPuzzle(container, ctx, level) {
   cupSpot.appendChild(artImg('assets/tea_cup.png', 'tea-cup-art', () => {
     cupSpot.appendChild(Object.assign(document.createElement('div'), { className: 'tea-emoji', textContent: '🍷' }));
   }));
-  const cupLabel = document.createElement('div');
-  cupLabel.className = 'tea-cup-label';
-  cupLabel.textContent = 'заказ путника';
-  cupSpot.appendChild(cupLabel);
   scene.appendChild(cupSpot);
 
-  // Кнопка подачи под стаканом
+  // Кнопка подачи под стаканом. Кликабельна всегда: не готово — ответит
+  // подсказкой (disabled-кнопка молча глотала бы первый клик).
   const serveBtn = document.createElement('button');
-  serveBtn.className = 'tea-serve';
+  serveBtn.className = 'tea-serve not-ready';
   serveBtn.textContent = '🫖 Подать путнику';
-  serveBtn.disabled = true;
-  serveBtn.addEventListener('click', () => { if (isTeaSolved(puzzle)) finish(); });
+  serveBtn.addEventListener('click', () => {
+    if (finished) return;
+    if (isTeaSolved(puzzle)) { finish(); return; }
+    ctx.sfx?.('tap');
+    ctx.toast('Отвар ещё не готов — сверь цвет с заказом и жар котла.');
+  });
   scene.appendChild(serveBtn);
   // Чашечки ингредиентов: компактной группой по центру ряда мисок
   const ingEls = new Map();
   level.ingredients.forEach((ing, i) => {
     const n = level.ingredients.length;
     const x = 50 + (i - (n - 1) / 2) * Math.min(11, 88 / n);
-    const spot = { x, y: TEA_SPOTS.ingsY, size: TEA_SPOTS.ingsSize };
+    const size = TEA_SPOTS.ingsSize * (TEA_SPOTS.ingBig[ing.id] || 1);
+    const spot = { x, y: TEA_SPOTS.ingsY, size };
     const el = spotEl(spot);
     el.classList.add('tea-ing-spot');
     el.title = ing.name;
@@ -306,6 +309,7 @@ export function renderTeaPuzzle(container, ctx, level) {
   window.addEventListener('keydown', onKey);
 
   function finish() {
+    if (finished) return; // защита от двойной подачи (клик + повторный)
     finished = true;
     const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
     ctx.save();
@@ -364,8 +368,8 @@ export function renderTeaPuzzle(container, ctx, level) {
     heatFill.style.background = st.overheated ? '#d9432f' : '#e88a7a';
     heatMark.textContent = heatWord(st);
 
-    // Кнопка подачи
-    serveBtn.disabled = !st.solved;
+    // Кнопка подачи: светится при готовности, кликабельна всегда
+    serveBtn.classList.toggle('not-ready', !st.solved);
     serveBtn.classList.toggle('pulse', st.solved);
 
     // Чашечки: влияние над миской, имя и порции под ней

@@ -17,9 +17,14 @@ export const MIN_FACTOR = 0.5;
 
 export const ALPHABET = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('');
 
-// Буквы строки без разделителей
+// Ё и Е — одна клавиша: ход «Е» открывает обе, «Ё» на клавиатуре нет
+export function canonLetter(ch) {
+  return ch === 'Ё' ? 'Е' : ch;
+}
+
+// Буквы строки без разделителей (канонизированные: Ё → Е)
 export function answerLetters(level) {
-  return level.answer.replaceAll('✦', '').split('');
+  return level.answer.replaceAll('✦', '').split('').map(canonLetter);
 }
 
 export function createHangmanPuzzle(level) {
@@ -36,18 +41,19 @@ export function createHangmanPuzzle(level) {
 
 // Тап по букве. Возвращает { ok, hit, burned } | { ok:false }
 export function guessLetter(state, letter) {
-  if (!ALPHABET.includes(letter)) return { ok: false };
-  if (state.revealed.has(letter) || state.wrong.has(letter)) return { ok: false };
+  const canon = canonLetter(letter);
+  if (!ALPHABET.includes(canon)) return { ok: false };
+  if (state.revealed.has(canon) || state.wrong.has(canon)) return { ok: false };
   if (isHangmanSolved(state)) return { ok: false };
   state.moves += 1;
-  const hit = answerLetters(state.level).includes(letter);
-  const entry = { letter, hit, prevCandle: state.candleLeft, prevSpoiled: state.spoiled };
+  const hit = answerLetters(state.level).includes(canon);
+  const entry = { letter: canon, hit, prevCandle: state.candleLeft, prevSpoiled: state.spoiled };
   state.history.push(entry);
   if (hit) {
-    state.revealed.add(letter);
+    state.revealed.add(canon);
     return { ok: true, hit: true, burned: false };
   }
-  state.wrong.add(letter);
+  state.wrong.add(canon);
   state.candleLeft -= 1;
   if (state.candleLeft <= 0) {
     // Свеча догорела: страница погасла. Открытые буквы остаются, новая свеча.

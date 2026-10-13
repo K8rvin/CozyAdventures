@@ -11,7 +11,7 @@ const HANG = BOOK_PUZZLES.filter((l) => l.mechanic === 'hang');
 const byId = (id) => HANG.find((l) => l.id === id);
 
 test('все уровни «Строки» валидны: длинная строка, стих, автор', () => {
-  assert.equal(HANG.length, 5, 'bk_06–bk_10 — уровни «Строки»');
+  assert.equal(HANG.length, 100, 'bk_06–bk_105 — уровни «Строки»');
   for (const level of HANG) {
     const v = validateHangmanLevel(level);
     assert.ok(v.ok, `${level.id} (${level.name}): ${v.problems.join('; ')}`);
@@ -104,9 +104,36 @@ test('прогресс считает открытые различные бук
   assert.equal(after.ok, before.ok + 1, 'различные буквы, не вхождения');
 });
 
+test('Е и Ё — одна клавиша: ход «Е» открывает и Ё', () => {
+  const lvl = { id: 't_e', answer: 'ВСЁ✦МЕДВЕДЬ', riddle: ['тест'] };
+  const s = createHangmanPuzzle(lvl);
+  const r = guessLetter(s, 'Е');
+  assert.ok(r.ok && r.hit, 'Е есть в строке');
+  assert.ok(s.revealed.has('Е') && !s.revealed.has('Ё'), 'хранится каноническая Е');
+  for (const ch of ['В', 'С', 'М', 'Д', 'Ь']) guessLetter(s, ch);
+  assert.ok(isHangmanSolved(s), 'Ё считается открытой благодаря Е');
+  // Физическая «ё» тоже валидный ход
+  const s2 = createHangmanPuzzle(lvl);
+  assert.ok(guessLetter(s2, 'Ё').hit, 'ход буквой Ё работает как Е');
+});
+
 test('тексты уровней «Строки» — по-русски, без латинских ключей', () => {
   for (const level of HANG) {
     assert.ok(!/[a-z]/i.test(level.name), `${level.id}: имя латиницей`);
     assert.ok(!/[a-z]/i.test(level.intro), `${level.id}: интро латиницей`);
+  }
+});
+
+test('все 100 уровней строк (bk_06–bk_105) включены в кампанию по порядку', async () => {
+  const { ALL_PUZZLES } = await import('../src/core/state.js');
+  const order = ALL_PUZZLES.map((p) => p.id);
+  for (let i = 6; i <= 105; i++) {
+    const id = `bk_${String(i).padStart(2, '0')}`;
+    const pos = order.indexOf(id);
+    assert.ok(pos >= 0, `${id} есть в кампании`);
+    if (i > 6) {
+      const prev = order.indexOf(`bk_${String(i - 1).padStart(2, '0')}`);
+      assert.ok(pos > prev, `${id} в кампании после bk_${i - 1}`);
+    }
   }
 });

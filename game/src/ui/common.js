@@ -103,6 +103,8 @@ export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons }) 
     btn.addEventListener('click', () => { overlay.remove(); b.onClick(); });
     actions.appendChild(btn);
   }
+  // Клик по фону закрывает оверлей (чтобы зависший не держал экран заложником)
+  overlay.addEventListener('click', (ev) => { if (ev.target === overlay) overlay.remove(); });
   document.body.appendChild(overlay);
   return overlay;
 }

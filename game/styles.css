@@ -67,10 +67,12 @@ button {
   padding: 10px 16px;
   cursor: pointer;
   min-height: 48px;
-  transition: transform 0.06s ease, background 0.15s ease;
+  transition: transform 0.06s ease, scale 0.06s ease, background 0.15s ease;
 }
 button:hover { background: #5a4732; }
-button:active { transform: scale(0.97); }
+/* scale — независимое свойство: transform:scale на :active затирал
+   статический translate(-50%) у позиционированных кнопок и срывал клик */
+button:active { scale: 0.97; }
 button:disabled { opacity: 0.45; cursor: default; }
 button.primary { background: #7a5c33; border-color: var(--accent); }
 button.primary:hover { background: #8d6d3e; }
@@ -301,7 +303,7 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   margin: 8px 0 10px;
 }
 .hang-candle-art {
-  height: 120px;
+  height: 180px;
   width: auto;
   transition: opacity 0.3s ease;
 }
@@ -311,6 +313,78 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   letter-spacing: 2px;
 }
 .hang-slot { cursor: default; }
+/* Клавиатура ЙЦУКЕН */
+.hang-kb {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+.hang-kb-row { display: flex; gap: 4px; }
+.hang-key {
+  min-width: 34px;
+  min-height: 38px;
+  font-size: 16px;
+  padding: 6px 4px;
+}
+/* Клавиатура с артом: ряды точно поверх нарисованных клавиш
+   (замерено скриптом по полной сцене hang_keyboard_scene) */
+.hang-kb.has-art {
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  padding: 0;
+  gap: 0;
+}
+.hang-kb-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 12px;
+}
+.hang-kb.has-art .hang-kb-row {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  gap: 1.5%;
+}
+.hang-kb.has-art .kb-row1 { left: 10.7%; top: 30.2%; width: 78%; height: 11%; }
+.hang-kb.has-art .kb-row2 { left: 13.4%; top: 43.9%; width: 72.8%; height: 11.4%; }
+.hang-kb.has-art .kb-row3 { left: 16.9%; top: 57.9%; width: 59.4%; height: 11.6%; }
+.hang-kb.has-art .hang-key {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: #f3e6cf;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  font-size: 20px;
+}
+.hang-kb.has-art .hang-key:hover { background: rgba(255, 202, 122, 0.18); }
+.hang-kb.has-art .hang-key.mark-exact {
+  color: #d5f0a8;
+  background: rgba(93, 107, 63, 0.5);
+}
+.hang-kb.has-art .hang-key.mark-absent {
+  color: #7a6a52;
+  opacity: 0.5;
+  background: rgba(30, 22, 14, 0.5);
+}
+/* «Строки»: единая раскладка — страница слева, панель справа, без переноса */
+.hang-wrap { flex-wrap: nowrap; align-items: flex-start; }
+.hang-wrap .puzzle-canvas-box { flex: 1; min-width: 0; }
+.hang-wrap .puzzle-side { flex: none; width: 300px; min-width: 0; }
+.hang-wrap .riddle-slots { flex-wrap: wrap; }
+@media (max-width: 860px) {
+  .hang-wrap { flex-wrap: wrap; }
+  .hang-wrap .puzzle-side { width: 100%; }
+}
+
 
 /* --- Чай для путника: образы вместо чисел --- */
 .tea-ing { display: inline-flex; align-items: center; gap: 5px; }
@@ -357,10 +431,10 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .tea-spot img { display: block; width: 100%; height: auto; }
 .tea-pot-color {
   position: absolute;
-  left: 22%;
-  top: 22%;
-  width: 56%;
-  height: 56%;
+  left: 17.6%;
+  top: 10.7%;
+  width: 64.9%;
+  height: 25.8%;
   border-radius: 50%;
   background: #2c2419;
   transition: background 0.3s ease;
@@ -396,10 +470,11 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .tea-serve {
   position: absolute;
   left: 76%;
-  top: 60%;
+  top: 54%;
   transform: translateX(-50%);
   z-index: 2;
 }
+.tea-serve.not-ready { opacity: 0.55; filter: grayscale(0.4); }
 .tea-serve.pulse { animation: newbadge-pulse 1.2s ease-in-out infinite; }
 .tea-ing-spot { cursor: pointer; transition: transform 0.15s ease; }
 .tea-ing-spot:hover { transform: translate(-50%, -50%) scale(1.08); }
@@ -492,7 +567,14 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 }
 
 .puzzle-controls { display: flex; flex-wrap: wrap; gap: 8px; }
-.puzzle-controls button { flex: 1; min-width: 90px; }
+.puzzle-controls button {
+  flex: 1;
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .intro-text { color: var(--muted); font-style: italic; margin-bottom: 10px; }
 .warn { color: var(--danger); font-weight: 600; }
 

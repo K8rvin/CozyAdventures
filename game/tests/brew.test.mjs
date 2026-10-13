@@ -86,10 +86,10 @@ test('тексты шагов — по-русски, без латинских �
   }
 });
 
-test('все 10 уровней валидны и решаются своим рецептом', () => {
-  assert.equal(BREW_PUZZLES.length, 10);
+test('все 30 уровней валидны и решаются своим рецептом', () => {
+  assert.equal(BREW_PUZZLES.length, 30);
   const ids = new Set(BREW_PUZZLES.map((l) => l.id));
-  assert.equal(ids.size, 10, 'id уровней дублируются');
+  assert.equal(ids.size, 30, 'id уровней дублируются');
   for (const level of BREW_PUZZLES) {
     const v = validateBrewLevel(level);
     assert.ok(v.ok, `${level.id}: ${v.problems.join('; ')}`);

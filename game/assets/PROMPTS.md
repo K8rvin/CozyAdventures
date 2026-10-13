@@ -796,19 +796,23 @@ no cup, nothing in the bowls, no text, no watermark --ar 16:10
 
 Размер ≥1600×1000. Сохранить как `assets/tea_table.png` (сожму в `_web.jpg`).
 
-### 13.2 tea_pot.png — котёл строго сверху (белый фон, вырежу)
+### 13.2 tea_pot.png — котёл с наклоном (белый фон, вырежу)
 
-ВАЖНО: чаша котла ПУСТАЯ и тёмная в центре — туда код заливает цвет отвара.
-Котёл круглый, по центру кадра, крупно.
+ВАЖНО: чаша котла ПУСТАЯ и тёмная внутри — туда код заливает цвет отвара.
+Вид НЕ строго сверху, а под наклоном ~35° (открытие котла — эллипс),
+котёл крупно по центру.
 
 ```
-A round cast-iron cauldron seen strictly from above, storybook watercolor
-illustration with gentle ink outlines: dark EMPTY hollow center (the brew
-color is drawn there by the game), thick iron rim with a warm highlight,
-three short legs hinted at the bottom edge, centered composition, isolated
-on a plain solid white background, no fire, no liquid, no shadow, no text,
-cozy fantasy game prop
+A round cast-iron cauldron tilted toward the viewer at about 35 degrees,
+storybook watercolor illustration with gentle ink outlines: the opening
+shows as an ellipse with a dark EMPTY interior (the brew color is drawn
+there by the game), thick iron rim with a warm highlight, short legs at
+the bottom, centered composition, isolated on a plain solid white
+background, no fire, no liquid, no shadow, no text, cozy fantasy game prop
 ```
+
+Замечание по пайплайну: у наклонного котла окно — эллипс; после генерации
+пришли файл — пробью и подгоню заливку под форму отверстия.
 
 ### 13.3 tea_cup.png — стакан заказа (белый фон, вырежу)
 
@@ -890,6 +894,26 @@ composition, centered
 Если модель держит консистентность плохо — сгенерируй серию одним запросом
 четырёх стадий и разрежь, или проси `the same candlestick` + один seed.
 Сохранять как `assets/hang_candle_<stage>.png` — вырежу фон сам.
+
+### 14b. hang_keyboard.png — клавиатура лавки для «Строки» (без букв!)
+
+Фон-подложка под клавиши: деревянная клавиатура с ПУСТЫМИ клавишами
+(буквы рисуем кодом поверх). Ключевое: ровная сетка 3 ряда — 12 / 11 / 10
+клавиш, ровные gaps, чтобы поверх легли наши кнопки.
+
+```
+A cozy wooden keyboard for a fantasy shop game, seen strictly from above,
+storybook watercolor illustration with gentle ink outlines: three rows of
+EMPTY blank round-cornered wooden key caps (12 keys, then 11, then 10,
+rows slightly staggered like a real typewriter), each key a warm honey
+wood tile with a darker rim and a tiny brass nail in the corner, NO letters
+or symbols on the keys, a dark brown felt base under the keys, a thin
+brass frame around the whole keyboard, warm candlelit palette of amber,
+honey and deep brown, no text, no letters, no watermark --ar 16:9
+```
+
+Сохранить как `assets/hang_keyboard.png` — подложу под кнопки и подгоню
+отступы рядов под арт.
 
 ---
 

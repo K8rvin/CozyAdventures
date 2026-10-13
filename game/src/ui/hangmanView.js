@@ -3,7 +3,7 @@
 import {
   createHangmanPuzzle, guessLetter, undoHangman, resetHangman,
   isHangmanSolved, applyHangmanHint, rewardFactor,
-  ALPHABET, CANDLE_STEPS,
+  CANDLE_STEPS,
 } from '../core/hangmanPuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
@@ -21,11 +21,12 @@ export function renderHangmanPuzzle(container, ctx, level) {
   const puzzle = createHangmanPuzzle(level);
   let hintsUsed = 0;
   let finished = false;
+  let burningOut = false; // пауза на догоревшей свече: показываем огарок, ввод заперт
 
-  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: level.mechanic || 'mirror' }]));
+  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: 'hang' }]));
 
   const wrap = document.createElement('div');
-  wrap.className = 'puzzle-wrap';
+  wrap.className = 'puzzle-wrap hang-wrap';
 
   const pageBox = document.createElement('div');
   pageBox.className = 'puzzle-canvas-box';
@@ -36,12 +37,8 @@ export function renderHangmanPuzzle(container, ctx, level) {
 
   const side = document.createElement('div');
   side.className = 'puzzle-side';
-  const intro = document.createElement('div');
-  intro.className = 'intro-text';
-  intro.textContent = level.intro;
-  side.appendChild(intro);
 
-  // Свеча: арт по стадиям, фолбэк — воск-точки
+  // Свеча крупно и первой в боковой панели: арт по стадиям, фолбэк — воск-точки
   const candleBox = document.createElement('div');
   candleBox.className = 'hang-candle-box';
   const candleImg = document.createElement('img');
@@ -63,6 +60,11 @@ export function renderHangmanPuzzle(container, ctx, level) {
   candleBox.appendChild(candleLabel);
   side.appendChild(candleBox);
 
+  const intro = document.createElement('div');
+  intro.className = 'intro-text';
+  intro.textContent = level.intro;
+  side.appendChild(intro);
+
   const statusEl = document.createElement('div');
   statusEl.className = 'puzzle-status';
   side.appendChild(statusEl);
@@ -71,7 +73,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
   legend.className = 'panel';
   legend.style.padding = '10px 14px';
   legend.innerHTML = `<div class="desc" style="line-height:1.8">
-    Тапай буквы алфавита. Верная буква откроется <b>во всех</b> местах строки.<br>
+    Тапай буквы (можно и с клавиатуры). Верная откроется <b>во всех</b> местах строки.<br>
     Промах блокирует букву и топит свечу. Свеча догорела — страница погасла:
     −10% монет награды, но открытые буквы остаются.</div>`;
   side.appendChild(legend);
@@ -79,9 +81,9 @@ export function renderHangmanPuzzle(container, ctx, level) {
   const controls = document.createElement('div');
   controls.className = 'puzzle-controls';
   controls.style.marginTop = '10px';
-  const btnUndo = mkBtn('↩️ Отмена (Z)', doUndo);
-  const btnHint = mkBtn('💡 Подсказка (H)', doHint);
-  const btnReset = mkBtn('🔄 Сброс (R)', doReset);
+  const btnUndo = mkBtn('↩️ Отмена (Ctrl+Z)', doUndo);
+  const btnHint = mkBtn('💡 Подсказка', doHint);
+  const btnReset = mkBtn('🔄 Сброс', doReset);
   controls.append(btnUndo, btnHint, btnReset);
   controls.appendChild(puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level)));
   side.appendChild(controls);
@@ -121,16 +123,24 @@ export function renderHangmanPuzzle(container, ctx, level) {
   }
 
   function tapKey(letter) {
-    if (finished) return;
+    if (finished || burningOut) return;
     const r = guessLetter(puzzle, letter);
     if (!r.ok) return;
     if (r.hit) {
       ctx.sfx?.('rotate');
     } else if (r.burned) {
       ctx.sfx?.('fail');
+      // Пауза на огарке: видим догоревшую свечу, ввод заперт, затем новая свеча
+      burningOut = true;
       ctx.toast(`🕯️ Свеча догорела — страница погасла! Новая свеча, но награда тает (−${Math.round((1 - rewardFactor(puzzle)) * 100)}% монет).`);
       page.classList.add('shake');
-      setTimeout(() => page.classList.remove('shake'), 500);
+      draw();
+      setTimeout(() => {
+        page.classList.remove('shake');
+        burningOut = false;
+        draw();
+      }, 1400);
+      return;
     } else {
       ctx.sfx?.('fail');
       ctx.toast(`Буквы «${letter}» нет в строке. Свеча короче…`);
@@ -139,11 +149,17 @@ export function renderHangmanPuzzle(container, ctx, level) {
     if (r.hit && isHangmanSolved(puzzle)) finish();
   }
 
+  // Физическая клавиатура: кириллические буквы — ходы; Ctrl+Z — отмена, Esc — назад
   function onKey(ev) {
-    if (ev.key === 'z' || ev.key === 'Z' || (ev.ctrlKey && ev.key === 'z')) { ev.preventDefault(); doUndo(); }
-    if (ev.key === 'h' || ev.key === 'H' || ev.key === 'р' || ev.key === 'Р') doHint();
-    if (ev.key === 'r' || ev.key === 'R' || ev.key === 'к' || ev.key === 'К') doReset();
-    if (ev.key === 'Escape') backToPuzzleType(ctx, level);
+    if (ev.key === 'Escape') { backToPuzzleType(ctx, level); return; }
+    if ((ev.ctrlKey || ev.metaKey) && ['z', 'Z', 'я', 'Я'].includes(ev.key)) {
+      ev.preventDefault();
+      doUndo();
+      return;
+    }
+    if (ev.ctrlKey || ev.altKey || ev.metaKey) return;
+    const ch = (ev.key || '').toUpperCase();
+    if (/^[А-ЯЁ]$/.test(ch)) tapKey(ch);
   }
   window.addEventListener('keydown', onKey);
 
@@ -205,41 +221,58 @@ export function renderHangmanPuzzle(container, ctx, level) {
         continue;
       }
       const cell = document.createElement('div');
-      const open = puzzle.revealed.has(ch);
+      const open = puzzle.revealed.has(ch === 'Ё' ? 'Е' : ch); // Ё открывается клавишей Е
       cell.className = 'riddle-slot hang-slot' + (open ? ' filled' : '');
       cell.textContent = open ? ch : '';
       row.appendChild(cell);
     }
     page.appendChild(row);
 
-    // Алфавит: открытые — зелёные, промахи — заблокированы
+    // Клавиатура ЙЦУКЕН (без Ё — она открывается клавишей Е):
+    // арт клавиатуры подложен под кнопки; состояния — тонировкой буквы.
     const kb = document.createElement('div');
-    kb.className = 'cipher-palette riddle-keyboard';
-    for (const letter of ALPHABET) {
-      const b = document.createElement('button');
-      const isOpen = puzzle.revealed.has(letter);
-      const isWrong = puzzle.wrong.has(letter);
-      b.className = 'cipher-letter'
-        + (isOpen ? ' mark-exact' : '')
-        + (isWrong ? ' mark-absent' : '');
-      b.textContent = letter;
-      if (!isOpen && !isWrong) b.addEventListener('click', () => tapKey(letter));
-      else b.disabled = true;
-      kb.appendChild(b);
-    }
+    kb.className = 'hang-kb has-art';
+    const kbArt = document.createElement('img');
+    kbArt.className = 'hang-kb-art';
+    kbArt.alt = '';
+    kbArt.addEventListener('error', () => { kbArt.remove(); kb.classList.remove('has-art'); });
+    kbArt.src = 'assets/hang_keyboard_scene.png';
+    kb.appendChild(kbArt);
+    const KB_ROWS = ['ЙЦУКЕНГШЩЗХЪ', 'ФЫВАПРОЛДЖЭ', 'ЯЧСМИТЬБЮ'];
+    KB_ROWS.forEach((rowLetters, ri) => {
+      const rowEl = document.createElement('div');
+      rowEl.className = `hang-kb-row kb-row${ri + 1}`;
+      for (const letter of rowLetters) {
+        const b = document.createElement('button');
+        const isOpen = puzzle.revealed.has(letter);
+        const isWrong = puzzle.wrong.has(letter);
+        b.className = 'cipher-letter hang-key'
+          + (isOpen ? ' mark-exact' : '')
+          + (isWrong ? ' mark-absent' : '');
+        b.textContent = letter;
+        if (!isOpen && !isWrong) b.addEventListener('click', () => tapKey(letter));
+        else b.disabled = true;
+        rowEl.appendChild(b);
+      }
+      kb.appendChild(rowEl);
+    });
     page.appendChild(kb);
 
-    // --- Свеча ---
+    // --- Свеча (огарок виден на паузе догорания) ---
+    const stage = burningOut ? 'out' : candleStage(puzzle.candleLeft);
     if (candleImg.parentNode) {
-      candleImg.src = `assets/hang_candle_${candleStage(puzzle.candleLeft)}.png`;
-      candleImg.classList.toggle('hang-fading', puzzle.candleLeft <= 2);
+      candleImg.src = `assets/hang_candle_${stage}.png`;
+      candleImg.classList.toggle('hang-fading', !burningOut && puzzle.candleLeft <= 2);
     }
     if (candleFallback) {
-      candleFallback.textContent = `🕯️ ${'●'.repeat(puzzle.candleLeft)}${'○'.repeat(CANDLE_STEPS - puzzle.candleLeft)}`;
+      candleFallback.textContent = burningOut
+        ? '🕯️ догорела…'
+        : `🕯️ ${'●'.repeat(puzzle.candleLeft)}${'○'.repeat(CANDLE_STEPS - puzzle.candleLeft)}`;
     }
-    candleLabel.textContent = puzzle.candleLeft >= 4 ? 'Свеча высокая'
-      : puzzle.candleLeft >= 2 ? 'Свеча тает…'
-        : 'Огонёк на последнем воске!';
+    candleLabel.textContent = burningOut ? 'Страница погасла…'
+      : puzzle.candleLeft >= 4 ? 'Свеча высокая'
+        : puzzle.candleLeft >= 2 ? 'Свеча тает…'
+          : 'Огонёк на последнем воске!';
 
     // --- Статус ---
     const factor = rewardFactor(puzzle);

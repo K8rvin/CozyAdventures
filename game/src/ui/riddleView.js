@@ -3,7 +3,7 @@
 import {
   createRiddlePuzzle, placeLetter, removeSlot, undoRiddle, resetRiddle,
   submitRiddle, isRiddleSolved, applyRiddleHint, rewardFactor, letterMarks,
-  ALPHABET, FREE_MISTAKES, MISTAKE_STEP,
+  FREE_MISTAKES, MISTAKE_STEP,
 } from '../core/riddlePuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
@@ -16,7 +16,9 @@ export function renderRiddlePuzzle(container, ctx, level) {
   container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: level.mechanic || 'mirror' }]));
 
   const wrap = document.createElement('div');
-  wrap.className = 'puzzle-wrap';
+  // Раскладка как в «Строках при свече»: страница с клавиатурой — во всю ширину,
+  // боковая панель — фиксированные 300px (класс hang-wrap)
+  wrap.className = 'puzzle-wrap hang-wrap';
 
   const pageBox = document.createElement('div');
   pageBox.className = 'puzzle-canvas-box';
@@ -40,7 +42,7 @@ export function renderRiddlePuzzle(container, ctx, level) {
   legend.className = 'panel';
   legend.style.padding = '10px 14px';
   legend.innerHTML = `<div class="desc" style="line-height:1.8">
-    Тапай буквы алфавита — они встанут в окошки ответа. Тап по окошку убирает букву.<br>
+    Тапай буквы (можно и с клавиатуры) — они встанут в окошки ответа. Тап по окошку убирает букву.<br>
     Заполненная строка проверяется: <span class="lg-exact">буква на месте</span>,
     <span class="lg-present">есть в ответе</span>, <span class="lg-absent">нет в ответе</span>.<br>
     ${FREE_MISTAKES} ошибок бесплатно, дальше −${Math.round(MISTAKE_STEP * 100)}% монет за каждую.</div>`;
@@ -122,11 +124,21 @@ export function renderRiddlePuzzle(container, ctx, level) {
     renderAll();
   }
 
+  // Физическая клавиатура: кириллические буквы — ходы (как в «Строках при свече»);
+  // Z/H/R латиницей — отмена/подсказка/сброс (русские З/Р/К — это буквы ответа)
   function onKey(ev) {
-    if (ev.key === 'z' || ev.key === 'Z' || (ev.ctrlKey && ev.key === 'z')) { ev.preventDefault(); doUndo(); }
-    if (ev.key === 'h' || ev.key === 'H' || ev.key === 'р' || ev.key === 'Р') doHint();
-    if (ev.key === 'r' || ev.key === 'R' || ev.key === 'к' || ev.key === 'К') doReset();
-    if (ev.key === 'Escape') backToPuzzleType(ctx, level);
+    if (ev.key === 'Escape') { backToPuzzleType(ctx, level); return; }
+    if ((ev.ctrlKey || ev.metaKey) && ['z', 'Z', 'я', 'Я'].includes(ev.key)) {
+      ev.preventDefault();
+      doUndo();
+      return;
+    }
+    if (ev.ctrlKey || ev.altKey || ev.metaKey) return;
+    const ch = (ev.key || '').toUpperCase();
+    if (/^[А-ЯЁ]$/.test(ch)) { tapKey(ch); return; }
+    if (ev.key === 'z' || ev.key === 'Z') { ev.preventDefault(); doUndo(); }
+    if (ev.key === 'h' || ev.key === 'H') doHint();
+    if (ev.key === 'r' || ev.key === 'R') doReset();
   }
   window.addEventListener('keydown', onKey);
 
@@ -213,17 +225,30 @@ export function renderRiddlePuzzle(container, ctx, level) {
     // Текущая строка
     page.appendChild(slotsRow(puzzle.slots, null));
 
-    // Алфавит с окраской клавиш по прошлым попыткам
+    // Клавиатура ЙЦУКЕН (как в «Строках при свече») с окраской клавиш
+    // по прошлым попыткам: на месте / есть в ответе / нет в ответе.
     const marks = letterMarks(puzzle);
     const kb = document.createElement('div');
-    kb.className = 'cipher-palette riddle-keyboard';
-    for (const letter of ALPHABET) {
-      const b = document.createElement('button');
-      b.className = 'cipher-letter' + (marks[letter] ? ` mark-${marks[letter]}` : '');
-      b.textContent = letter;
-      b.addEventListener('click', () => tapKey(letter));
-      kb.appendChild(b);
-    }
+    kb.className = 'hang-kb has-art';
+    const kbArt = document.createElement('img');
+    kbArt.className = 'hang-kb-art';
+    kbArt.alt = '';
+    kbArt.addEventListener('error', () => { kbArt.remove(); kb.classList.remove('has-art'); });
+    kbArt.src = 'assets/hang_keyboard_scene.png';
+    kb.appendChild(kbArt);
+    const KB_ROWS = ['ЙЦУКЕНГШЩЗХЪ', 'ФЫВАПРОЛДЖЭ', 'ЯЧСМИТЬБЮ'];
+    KB_ROWS.forEach((rowLetters, ri) => {
+      const rowEl = document.createElement('div');
+      rowEl.className = `hang-kb-row kb-row${ri + 1}`;
+      for (const letter of rowLetters) {
+        const b = document.createElement('button');
+        b.className = 'cipher-letter hang-key' + (marks[letter] ? ` mark-${marks[letter]}` : '');
+        b.textContent = letter;
+        b.addEventListener('click', () => tapKey(letter));
+        rowEl.appendChild(b);
+      }
+      kb.appendChild(rowEl);
+    });
     page.appendChild(kb);
 
     // --- Статус ---
