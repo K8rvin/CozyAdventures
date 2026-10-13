@@ -109,7 +109,7 @@ globalThis.localStorage = {
 
 const { newGame, saveGame } = await import('../src/core/state.js');
 const { renderHub } = await import('../src/ui/hub.js');
-const { renderPuzzleList, renderPuzzle } = await import('../src/ui/puzzleView.js');
+const { renderPuzzleList, renderPuzzle, renderPuzzleTypeList } = await import('../src/ui/puzzleView.js');
 const { renderEquip } = await import('../src/ui/equipView.js');
 const { renderShop } = await import('../src/ui/shopView.js');
 const { renderBattleList } = await import('../src/ui/battleView.js');
@@ -150,6 +150,9 @@ test('все экраны рендерятся без ошибок', () => {
       return renderHub(new El('main'), ctx, { scene: 'cabinet' });
     },
     () => renderPuzzleList(new El('main'), ctx),
+    // Списки по типам головоломок (11 карточек → свой список)
+    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew']
+      .map((mech) => () => renderPuzzleTypeList(new El('main'), ctx, mech)),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_01' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_12' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'tw_01' }),   // полки

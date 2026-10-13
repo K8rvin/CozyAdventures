@@ -890,3 +890,31 @@ composition, centered
 Если модель держит консистентность плохо — сгенерируй серию одним запросом
 четырёх стадий и разрежь, или проси `the same candlestick` + один seed.
 Сохранять как `assets/hang_candle_<stage>.png` — вырежу фон сам.
+
+---
+
+## 15. Карточки типов головоломок — assets/puzzle_cards/pc_<mech>.png (11 шт)
+
+Обложки для экрана выбора типа головоломки. Яркая тематическая виньетка
+на каждую: крупно, читаемо в маленьком размере, без текста. Имя файла =
+ключ механики. Сохраняй в `assets/puzzle_cards/` (сожму в `_web.jpg`).
+
+Общий хвост стиля:
+
+```
+storybook watercolor illustration with gentle ink outlines, warm candlelit
+palette of amber, honey and deep brown, bright readable vignette, cozy
+fantasy game card art, no text, no letters, no watermark --ar 3:2
+```
+
+- **pc_mirror.png** — `a round brass mirror on a wooden stand catching a beam of warm light, dust motes sparkling in the ray, attic shelves blurred behind, + хвост`
+- **pc_shelf.png** — `cozy wooden shop shelves neatly arranged with jars, bottles and small boxes, one jar glowing softly, + хвост`
+- **pc_riddle.png** — `an open old book with a riddle verse in decorative scribbles (NOT readable letters), a cat paw pointing at the page, candle light, + хвост`
+- **pc_hang.png** — `a melting candle beside a page of beautiful calligraphy scribbles fading into ink blots, dramatic warm glow, + хвост`
+- **pc_seek.png** — `a cluttered cozy tabletop full of tiny objects — keys, buttons, acorns, coins, a magnifying glass on top, hidden object game mood, + хвост`
+- **pc_path.png** — `a winding forest path of stepping stones leading to a tiny glowing home between mossy trees, fireflies, top-down angle, + хвост`
+- **pc_tea.png** — `a steaming cauldron of colorful glowing tea seen from above, bowls of herbs and berries around, swirling colors, + хвост`
+- **pc_mech.png** — `brass gears and a wooden music box mechanism mid-motion, tiny bell ringing, warm workshop light, + хвост`
+- **pc_candle.png** — `many small candles arranged in a glowing circle on a dark wooden floor, friendly wisps of light between them, + хвост`
+- **pc_flow.png** — `a cozy shop counter seen from above with glowing arrows on the floor guiding the way to the counter, footprints of light, + хвост`
+- **pc_brew.png** — `an alchemist workbench with a bubbling glowing cauldron, open recipe book, hanging herbs and potion bottles, + хвост`

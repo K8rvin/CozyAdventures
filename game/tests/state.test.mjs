@@ -142,10 +142,30 @@ test('головоломки открываются по цепочке и да�
   assert.ok(puzzleAvailable(s, 1));
   assert.ok(s.coins > coinsBefore);
   assert.ok(rewards.some((r) => r.type === 'coins'));
-  // Повторное прохождение даёт меньше
   const coinsAfterFirst = s.coins;
   completePuzzle(s, PUZZLES[0].id, { moves: 0 });
   assert.ok(s.coins - coinsAfterFirst < coinsAfterFirst - coinsBefore);
+});
+
+test('блокировки по типам: первый уровень каждого раздела доступен сразу', () => {
+  const s = newGame();
+  // Первый уровень каждого типа — без предусловий
+  const firsts = ['md_01', 'tw_01', 'bk_01', 'bk_06', 'sk_md_01', 'pp_01', 'tea_01', 'mech_01', 'cd_01', 'flow_01', 'brew_01'];
+  for (const id of firsts) {
+    const i = ALL_PUZZLES.findIndex((p) => p.id === id);
+    assert.ok(i >= 0, `${id} существует`);
+    assert.ok(puzzleAvailable(s, i), `${id} доступен с самого начала`);
+  }
+  // Второй уровень типа заперт до первого уровня того же типа
+  const iTea2 = ALL_PUZZLES.findIndex((p) => p.id === 'tea_02');
+  assert.ok(!puzzleAvailable(s, iTea2), 'tea_02 заперт на старте');
+  completePuzzle(s, 'tea_01', {});
+  assert.ok(puzzleAvailable(s, iTea2), 'tea_02 открылся после tea_01');
+  const iBk2 = ALL_PUZZLES.findIndex((p) => p.id === 'bk_02');
+  assert.ok(!puzzleAvailable(s, iBk2), 'решение чая не открывает загадки');
+  // «Следующая» — внутри типа
+  assert.equal(nextPuzzle('tea_01').id, 'tea_02');
+  assert.equal(nextPuzzle('bk_05'), null, 'у последней загадки нет следующей (строки — другой тип)');
 });
 
 test('полный цикл: головоломка -> монеты -> предмет -> бой', () => {
@@ -317,9 +337,11 @@ test('заказ дня: детерминирован и даёт двойные
   s.coins = 0;
   s.puzzlesDone = {}; // гарантируем, что daily доступна (цепочка)
   const daily = dailyPuzzle(s);
-  // Решаем по цепочке до daily, если она не первая — просто отметим доступной
-  const idx = ALL_PUZZLES.findIndex((p) => p.id === daily.id);
-  for (let i = 0; i < idx; i++) s.puzzlesDone[ALL_PUZZLES[i].id] = {};
+  // Открываем daily по её типу: решаем предшественников в её разделе
+  const mech = daily.mechanic || 'mirror';
+  const sameType = ALL_PUZZLES.filter((p) => (p.mechanic || 'mirror') === mech);
+  const pos = sameType.findIndex((p) => p.id === daily.id);
+  for (let i = 0; i < pos; i++) s.puzzlesDone[sameType[i].id] = {};
   const rewards = completePuzzle(s, daily.id, {});
   const coins = rewards.find((r) => r.type === 'coins');
   const base = (daily.rewards || []).find((r) => r.type === 'coins');

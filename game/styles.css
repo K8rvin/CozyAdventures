@@ -410,7 +410,80 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0,0,0,0.7);
 }
+.tea-ing-top {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.tea-ing-top .tea-tint { width: 12px; height: 12px; }
 .tea-bars { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+
+/* --- Карточки типов головоломок --- */
+.pc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.pc-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(160deg, #4d4231 0%, #332b1f 100%);
+  border: 1px solid #6b5a3d;
+  min-height: 120px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pc-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45), 0 0 0 1px #ffca7a55;
+}
+.pc-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  opacity: 0.85;
+}
+.pc-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pc-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, transparent, rgba(26, 20, 12, 0.92) 45%);
+}
+.pc-name { font-weight: 700; font-size: 15px; color: #f3e6cf; }
+.pc-progress { font-size: 12px; color: #c9b48a; }
+.pc-progress b { color: #ffca7a; }
+.pc-complete .pc-progress b { color: #a8c47e; }
+.pc-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+@media (max-width: 640px) {
+  .pc-grid { grid-template-columns: 1fr; }
+  .pc-card { min-height: 100px; }
+}
+
 .puzzle-controls { display: flex; flex-wrap: wrap; gap: 8px; }
 .puzzle-controls button { flex: 1; min-width: 90px; }
 .intro-text { color: var(--muted); font-style: italic; margin-bottom: 10px; }

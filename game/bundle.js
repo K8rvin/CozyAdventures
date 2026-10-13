@@ -8332,9 +8332,16 @@
     if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
     state2.seekOverrides = {};
   }
+  function puzzleTypeOf(p) {
+    return p.mechanic || "mirror";
+  }
   function puzzleAvailable(state2, index) {
-    if (index === 0) return true;
-    return !!state2.puzzlesDone[ALL_PUZZLES[index - 1].id];
+    const p = ALL_PUZZLES[index];
+    if (!p) return false;
+    const sameType = ALL_PUZZLES.filter((q) => puzzleTypeOf(q) === puzzleTypeOf(p));
+    const pos = sameType.indexOf(p);
+    if (pos <= 0) return true;
+    return !!state2.puzzlesDone[sameType[pos - 1].id];
   }
   function completePuzzle(state2, puzzleId, info = {}) {
     const puzzle = findPuzzle(state2, puzzleId);
@@ -8435,10 +8442,9 @@
   };
   function nextPuzzle(currentId) {
     const idx = ALL_PUZZLES.findIndex((p) => p.id === currentId);
-    return idx >= 0 && idx + 1 < ALL_PUZZLES.length ? ALL_PUZZLES[idx + 1] : null;
-  }
-  function firstUnsolvedPuzzle(state2) {
-    return ALL_PUZZLES.find((p, i) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, i)) || null;
+    if (idx < 0) return null;
+    const mech = puzzleTypeOf(ALL_PUZZLES[idx]);
+    return ALL_PUZZLES.slice(idx + 1).find((p) => puzzleTypeOf(p) === mech) || null;
   }
   function nextBattle(currentId) {
     const idx = BATTLES.findIndex((b) => b.id === currentId);
@@ -11545,6 +11551,9 @@
       const el = spotEl(spot);
       el.classList.add("tea-ing-spot");
       el.title = ing.name;
+      const top = document.createElement("div");
+      top.className = "tea-ing-top";
+      el.appendChild(top);
       el.appendChild(artImg(`assets/tea_ing_${ing.id}.png`, "tea-ing-art", () => {
         el.appendChild(Object.assign(document.createElement("div"), { className: "tea-emoji ing", textContent: ing.icon }));
       }));
@@ -11553,7 +11562,7 @@
       el.appendChild(meta);
       el.addEventListener("click", () => onAdd(ing.id));
       scene.appendChild(el);
-      ingEls.set(ing.id, { el, meta });
+      ingEls.set(ing.id, { el, meta, top, tint: tintCss(ing), heat: heatIcons(ing.heat) });
     });
     container.appendChild(scene);
     const bars = document.createElement("div");
@@ -11616,6 +11625,17 @@
     }
     function rgbCss(c) {
       return `rgb(${Math.round(c.r * 2.55)}, ${Math.round(c.g * 2.55)}, ${Math.round(c.b * 2.55)})`;
+    }
+    function tintCss(ing) {
+      const max = Math.max(Math.abs(ing.dr), Math.abs(ing.dg), Math.abs(ing.db));
+      if (max === 0) return null;
+      const k = 200 / max;
+      return `rgb(${Math.round(Math.max(0, ing.dr) * k * 1.27)}, ${Math.round(Math.max(0, ing.dg) * k * 1.27)}, ${Math.round(Math.max(0, ing.db) * k * 1.27)})`;
+    }
+    function heatIcons(heat) {
+      if (!heat) return "";
+      const n = Math.max(1, Math.round(Math.abs(heat) / 5));
+      return (heat > 0 ? "\u{1F525}" : "\u2744\uFE0F").repeat(n);
     }
     function similarity(st) {
       const worst = Math.max(st.diffs.r, st.diffs.g, st.diffs.b);
@@ -11758,12 +11778,12 @@
       serveBtn.disabled = !st.solved;
       serveBtn.classList.toggle("pulse", st.solved);
       for (const ing of level.ingredients) {
-        const { el, meta } = ingEls.get(ing.id);
+        const { el, meta, top, tint, heat } = ingEls.get(ing.id);
         const left = ing.uses - (puzzle.used[ing.id] || 0);
         el.classList.toggle("empty", left <= 0);
         el.classList.toggle("hint-ring", hintIngredient === ing.id);
-        const heat = ing.heat ? ing.heat > 0 ? "\u{1F525}".repeat(Math.max(1, Math.round(ing.heat / 5))) : "\u2744\uFE0F".repeat(Math.max(1, Math.round(-ing.heat / 5))) : "";
-        meta.innerHTML = `${ing.name} <span class="tea-uses">${"\u25CF".repeat(left)}${"\u25CB".repeat(ing.uses - left)}</span>` + (heat ? ` <span class="tea-heat">${heat}</span>` : "");
+        top.innerHTML = (tint ? `<span class="tea-tint" style="background:${tint}"></span>` : "") + (heat ? `<span class="tea-heat">${heat}</span>` : "");
+        meta.innerHTML = `${ing.name} <span class="tea-uses">${"\u25CF".repeat(left)}${"\u25CB".repeat(ing.uses - left)}</span>`;
       }
       statusEl.innerHTML = (st.solved ? "\u2705 <b>\u0418\u0434\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440!</b>" : `\u{1F3AF} \u0421\u0445\u043E\u0434\u0441\u0442\u0432\u043E: <b>${sim}%</b>`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
@@ -13499,36 +13519,76 @@
   }
 
   // src/ui/puzzleView.js
-  var WORLD_LABEL = {
-    meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430 \u2014 \u0441\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438 \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    town: "\u{1F3F0} \u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A \u2014 \u043F\u043E\u043B\u043A\u0438 \u0438 \u0442\u043E\u0432\u0430\u0440\u044B \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    attic: "\u{1F4D6} \u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A \u2014 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u0444\u0440\u0430\u0437 \xB7 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    crossroads: "\u{1F31F} \u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A \u043C\u0438\u0440\u043E\u0432 \u2014 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0438 \u0438 \u0447\u0430\u0439",
-    nm: "\u{1F303} \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    sw: "\u{1F438} \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    sf: "\u{1F3AA} \u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    ash: "\u{1F525} \u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    cr: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    jade: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    deep: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442 \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    mist: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B \u2014 \u043F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
-    brew: "\u2697\uFE0F \u0410\u043B\u0445\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0441\u0442\u043E\u043B \u2014 \u0432\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439 \u043F\u043E \u0440\u0435\u0446\u0435\u043F\u0442\u0443"
-  };
+  var PUZZLE_TYPES = [
+    { mech: "mirror", name: "\u0421\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438", icon: "\u{1FA9E}", desc: "\u0417\u0435\u0440\u043A\u0430\u043B\u0430 \u0438 \u043B\u0443\u0447\u0438 \u0441\u0432\u0435\u0442\u0430" },
+    { mech: "shelf", name: "\u041F\u043E\u043B\u043A\u0438 \u0438 \u0442\u043E\u0432\u0430\u0440\u044B", icon: "\u{1F9FA}", desc: "\u041F\u043E\u0440\u044F\u0434\u043E\u043A \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445 \u043B\u0430\u0432\u043A\u0438" },
+    { mech: "riddle", name: "\u0417\u0430\u0433\u0430\u0434\u043A\u0438 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F", icon: "\u{1F4DC}", desc: "\u041D\u0430\u0440\u043E\u0434\u043D\u044B\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u0447\u0435\u0440\u0434\u0430\u043A\u0430" },
+    { mech: "hang", name: "\u0421\u0442\u0440\u043E\u043A\u0438 \u043F\u0440\u0438 \u0441\u0432\u0435\u0447\u0435", icon: "\u2712\uFE0F", desc: "\u0421\u0442\u0438\u0445\u0438 \u0431\u0435\u0437 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0441\u0442\u0440\u043E\u043A\u0438" },
+    { mech: "seek", name: "\u041F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432", icon: "\u{1F50D}", desc: "\u041D\u0430\u0439\u0434\u0438 \u0432\u0441\u0451 \u043D\u0430 \u043A\u0430\u0440\u0442\u0438\u043D\u043A\u0435" },
+    { mech: "path", name: "\u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0438", icon: "\u{1F97E}", desc: "\u041F\u0440\u043E\u0432\u0435\u0434\u0438 \u0437\u0432\u0435\u0440\u044F \u0434\u043E\u043C\u043E\u0439" },
+    { mech: "tea", name: "\u0427\u0430\u0439 \u0434\u043B\u044F \u043F\u0443\u0442\u043D\u0438\u043A\u0430", icon: "\u{1FAD6}", desc: "\u0421\u043C\u0435\u0448\u0430\u0439 \u043E\u0442\u0432\u0430\u0440 \u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0446\u0432\u0435\u0442\u0430" },
+    { mech: "mech", name: "\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u044B", icon: "\u2699\uFE0F", desc: "\u0417\u0430\u0432\u0435\u0434\u0438 \u0432\u0441\u0435 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0438" },
+    { mech: "candle", name: "\u0421\u0432\u0435\u0447\u0438 \u0438 \u0434\u0443\u0445\u0438", icon: "\u{1F56F}\uFE0F", desc: "\u0421\u0432\u0435\u0442 \u0440\u0430\u0441\u0441\u0442\u0430\u0432\u0438\u0442 \u0432\u0441\u0451 \u043F\u043E \u043C\u0435\u0441\u0442\u0430\u043C" },
+    { mech: "flow", name: "\u041F\u043E\u0442\u043E\u043A\u0438 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0435\u0439", icon: "\u{1F30A}", desc: "\u041D\u0430\u043F\u0440\u0430\u0432\u044C \u0433\u043E\u0441\u0442\u0435\u0439 \u043A \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0443" },
+    { mech: "brew", name: "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439", icon: "\u2697\uFE0F", desc: "\u041F\u043E\u0432\u0442\u043E\u0440\u0438 \u0440\u0435\u0446\u0435\u043F\u0442 \u0431\u0435\u0437 \u043E\u0448\u0438\u0431\u043E\u043A" }
+  ];
+  function typeOf(p) {
+    return p.mechanic || "mirror";
+  }
   function renderPuzzleList(container, ctx2) {
     const { state: state2 } = ctx2;
-    container.appendChild(header2(ctx2, "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u043B\u0430\u0432\u043A\u0438", "\u0425\u043E\u0437\u044F\u0439\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u043F\u043E \u043C\u0438\u0440\u0430\u043C"));
-    let lastWorld = null;
-    const firstUnsolved = firstUnsolvedPuzzle(state2);
+    container.appendChild(header2(ctx2, "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u043B\u0430\u0432\u043A\u0438", "\u0412\u044B\u0431\u0435\u0440\u0438 \u043F\u043E\u043B\u043A\u0443 \u0441 \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C\u0438"));
+    const grid = document.createElement("div");
+    grid.className = "pc-grid";
+    for (const t of PUZZLE_TYPES) {
+      const items = ALL_PUZZLES.filter((p) => typeOf(p) === t.mech);
+      const done = items.filter((p) => state2.puzzlesDone[p.id]).length;
+      const hasFresh = items.some((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
+      const card = document.createElement("div");
+      card.className = "pc-card" + (done === items.length ? " pc-complete" : "");
+      const fallback = document.createElement("div");
+      fallback.className = "pc-fallback";
+      fallback.textContent = t.icon;
+      card.appendChild(fallback);
+      const img = document.createElement("img");
+      img.className = "pc-art";
+      img.alt = t.name;
+      img.addEventListener("error", () => img.remove());
+      img.src = `assets/puzzle_cards/pc_${t.mech}_web.jpg`;
+      card.appendChild(img);
+      const body = document.createElement("div");
+      body.className = "pc-body";
+      body.innerHTML = `<div class="pc-name">${t.icon} ${t.name}</div>
+      <div class="pc-progress">\u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E <b>${done}</b> \u0438\u0437 ${items.length}</div>`;
+      card.appendChild(body);
+      if (hasFresh) {
+        const dot = document.createElement("span");
+        dot.className = "hs-dot pc-dot";
+        card.appendChild(dot);
+      }
+      card.addEventListener("click", () => {
+        ctx2.sfx?.("tap");
+        container.innerHTML = "";
+        renderPuzzleTypeList(container, ctx2, t.mech);
+      });
+      grid.appendChild(card);
+    }
+    container.appendChild(grid);
+    container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F4D6}", label: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", screen: "brewbook" },
+      { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
+    ]));
+  }
+  function renderPuzzleTypeList(container, ctx2, mech) {
+    const { state: state2 } = ctx2;
+    const t = PUZZLE_TYPES.find((x) => x.mech === mech);
+    const items = ALL_PUZZLES.filter((p) => typeOf(p) === mech);
+    container.appendChild(header2(ctx2, `${t.icon} ${t.name}`, t.desc, "puzzles"));
+    const firstUnsolved = items.find((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
     const list = document.createElement("div");
     list.className = "list";
-    ALL_PUZZLES.forEach((p, i) => {
-      if (p.world !== lastWorld) {
-        lastWorld = p.world;
-        const wh = document.createElement("h3");
-        wh.textContent = WORLD_LABEL[p.world] || p.world;
-        list.appendChild(wh);
-      }
-      const available = puzzleAvailable(state2, i);
+    items.forEach((p, i) => {
+      const available = puzzleAvailable(state2, ALL_PUZZLES.indexOf(p));
       const done = !!state2.puzzlesDone[p.id];
       const row = document.createElement("div");
       row.className = "row" + (available ? "" : " locked") + (done ? " done" : "");
@@ -13550,7 +13610,7 @@
         if (!done) {
           const skipBtn = puzzleSkipButton(ctx2, p, () => {
             container.innerHTML = "";
-            renderPuzzleList(container, ctx2);
+            renderPuzzleTypeList(container, ctx2, mech);
           });
           skipBtn.className = "small ghost";
           row.appendChild(skipBtn);
@@ -13560,6 +13620,7 @@
     });
     container.appendChild(list);
     container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F4DA}", label: "\u0412\u0441\u0435 \u0442\u0438\u043F\u044B", screen: "puzzles" },
       { icon: "\u{1F4D6}", label: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", screen: "brewbook" },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
@@ -14807,7 +14868,7 @@ ${item2.description}
     list.className = "list";
     const won = Object.keys(state2.battlesDone).length;
     const firstUnbeaten = firstUnbeatenBattle(state2);
-    const WORLD_LABEL2 = {
+    const WORLD_LABEL = {
       meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430",
       town: "\u{1F3F0} \u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A",
       attic: "\u{1F4D6} \u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A",
@@ -14827,7 +14888,7 @@ ${item2.description}
       if (b.world !== lastWorld) {
         lastWorld = b.world;
         const wh = document.createElement("h3");
-        wh.textContent = WORLD_LABEL2[b.world] || b.world;
+        wh.textContent = WORLD_LABEL[b.world] || b.world;
         list.appendChild(wh);
       }
       const available = battleAvailable(state2, b.id);

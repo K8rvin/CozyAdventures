@@ -465,9 +465,20 @@ function migrateSeekOverrides(state, storage) {
   state.seekOverrides = {};
 }
 
+// Тип головоломки: цепочка блокировок своя внутри типа
+export function puzzleTypeOf(p) {
+  return p.mechanic || 'mirror';
+}
+
 export function puzzleAvailable(state, index) {
-  if (index === 0) return true;
-  return !!state.puzzlesDone[ALL_PUZZLES[index - 1].id];
+  const p = ALL_PUZZLES[index];
+  if (!p) return false;
+  // Первый уровень каждого типа доступен сразу; остальные — после
+  // предыдущего уровня того же типа (порядок — кампейнский).
+  const sameType = ALL_PUZZLES.filter((q) => puzzleTypeOf(q) === puzzleTypeOf(p));
+  const pos = sameType.indexOf(p);
+  if (pos <= 0) return true;
+  return !!state.puzzlesDone[sameType[pos - 1].id];
 }
 
 export function completePuzzle(state, puzzleId, info = {}) {
@@ -596,8 +607,11 @@ export const SEASON_LABEL = {
 
 // Следующая кампейн-головоломка после текущей (для кнопки «Следующая →»).
 export function nextPuzzle(currentId) {
+  // Следующая загадка того же типа (прогрессия — внутри раздела)
   const idx = ALL_PUZZLES.findIndex((p) => p.id === currentId);
-  return idx >= 0 && idx + 1 < ALL_PUZZLES.length ? ALL_PUZZLES[idx + 1] : null;
+  if (idx < 0) return null;
+  const mech = puzzleTypeOf(ALL_PUZZLES[idx]);
+  return ALL_PUZZLES.slice(idx + 1).find((p) => puzzleTypeOf(p) === mech) || null;
 }
 
 // Первая нерешённая кампейн-головоломка (для автоскролла списка).

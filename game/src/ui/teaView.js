@@ -114,6 +114,10 @@ export function renderTeaPuzzle(container, ctx, level) {
     const el = spotEl(spot);
     el.classList.add('tea-ing-spot');
     el.title = ing.name;
+    // Влияние на цвет/жар — НАД миской (не мешает соседям)
+    const top = document.createElement('div');
+    top.className = 'tea-ing-top';
+    el.appendChild(top);
     el.appendChild(artImg(`assets/tea_ing_${ing.id}.png`, 'tea-ing-art', () => {
       el.appendChild(Object.assign(document.createElement('div'), { className: 'tea-emoji ing', textContent: ing.icon }));
     }));
@@ -122,7 +126,7 @@ export function renderTeaPuzzle(container, ctx, level) {
     el.appendChild(meta);
     el.addEventListener('click', () => onAdd(ing.id));
     scene.appendChild(el);
-    ingEls.set(ing.id, { el, meta });
+    ingEls.set(ing.id, { el, meta, top, tint: tintCss(ing), heat: heatIcons(ing.heat) });
   });
   container.appendChild(scene);
 
@@ -194,6 +198,21 @@ export function renderTeaPuzzle(container, ctx, level) {
 
   function rgbCss(c) {
     return `rgb(${Math.round(c.r * 2.55)}, ${Math.round(c.g * 2.55)}, ${Math.round(c.b * 2.55)})`;
+  }
+
+  // Капля-оттенок ингредиента: к какому цвету он тянет отвар (без чисел)
+  function tintCss(ing) {
+    const max = Math.max(Math.abs(ing.dr), Math.abs(ing.dg), Math.abs(ing.db));
+    if (max === 0) return null; // нейтральные (вода) — без капли
+    const k = 200 / max;
+    return `rgb(${Math.round(Math.max(0, ing.dr) * k * 1.27)}, ${Math.round(Math.max(0, ing.dg) * k * 1.27)}, ${Math.round(Math.max(0, ing.db) * k * 1.27)})`;
+  }
+
+  // Жар иконками: одна на каждые ~5 единиц
+  function heatIcons(heat) {
+    if (!heat) return '';
+    const n = Math.max(1, Math.round(Math.abs(heat) / 5));
+    return (heat > 0 ? '🔥' : '❄️').repeat(n);
   }
 
   function similarity(st) {
@@ -349,17 +368,15 @@ export function renderTeaPuzzle(container, ctx, level) {
     serveBtn.disabled = !st.solved;
     serveBtn.classList.toggle('pulse', st.solved);
 
-    // Чашечки ингредиентов: порции точками, жар иконками, подсказка кольцом
+    // Чашечки: влияние над миской, имя и порции под ней
     for (const ing of level.ingredients) {
-      const { el, meta } = ingEls.get(ing.id);
+      const { el, meta, top, tint, heat } = ingEls.get(ing.id);
       const left = ing.uses - (puzzle.used[ing.id] || 0);
       el.classList.toggle('empty', left <= 0);
       el.classList.toggle('hint-ring', hintIngredient === ing.id);
-      const heat = ing.heat
-        ? (ing.heat > 0 ? '🔥'.repeat(Math.max(1, Math.round(ing.heat / 5))) : '❄️'.repeat(Math.max(1, Math.round(-ing.heat / 5))))
-        : '';
-      meta.innerHTML = `${ing.name} <span class="tea-uses">${'●'.repeat(left)}${'○'.repeat(ing.uses - left)}</span>`
-        + (heat ? ` <span class="tea-heat">${heat}</span>` : '');
+      top.innerHTML = (tint ? `<span class="tea-tint" style="background:${tint}"></span>` : '')
+        + (heat ? `<span class="tea-heat">${heat}</span>` : '');
+      meta.innerHTML = `${ing.name} <span class="tea-uses">${'●'.repeat(left)}${'○'.repeat(ing.uses - left)}</span>`;
     }
 
     // Статус

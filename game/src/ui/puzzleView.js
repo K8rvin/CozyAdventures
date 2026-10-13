@@ -5,7 +5,7 @@ import {
 import { hint as solverHint } from '../core/solver.js';
 import {
   puzzleAvailable, completePuzzle, findPuzzle, ALL_PUZZLES,
-  nextPuzzle, firstUnsolvedPuzzle, isDailyPuzzle, dailyPuzzle, todayKey,
+  nextPuzzle, isDailyPuzzle, todayKey,
 } from '../core/state.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { renderShelfPuzzle } from './shelfView.js';
@@ -21,40 +21,85 @@ import { renderBrewPuzzle } from './brewView.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav, puzzleSkipButton } from './common.js';
 
-const WORLD_LABEL = {
-  meadow: '🌿 Тихая опушка — свет и фонарики · поиск предметов',
-  town: '🏰 Средневековый дворик — полки и товары · поиск предметов',
-  attic: '📖 Книжный чердак — восстановление фраз · поиск предметов',
-  crossroads: '🌟 Перекрёсток миров — тропинки и чай',
-  nm: '🌃 Ночной рынок — поиск предметов',
-  sw: '🐸 Сказочные топи — поиск предметов',
-  sf: '🎪 Звёздная ярмарка — поиск предметов',
-  ash: '🔥 Кузница — поиск предметов',
-  cr: '💎 Хрустальные горы — поиск предметов',
-  jade: '🎋 Нефритовый сад — поиск предметов',
-  deep: '🐚 Подводный грот — поиск предметов',
-  mist: '⏳ Туманные часы — поиск предметов',
-  brew: '⚗️ Алхимический стол — варка зелий по рецепту',
-};
+// --- Типы головоломок: промежуточный экран-карточки ---
 
-// --- Список уровней ---
+const PUZZLE_TYPES = [
+  { mech: 'mirror', name: 'Свет и фонарики', icon: '🪞', desc: 'Зеркала и лучи света' },
+  { mech: 'shelf', name: 'Полки и товары', icon: '🧺', desc: 'Порядок на полках лавки' },
+  { mech: 'riddle', name: 'Загадки Хранителя', icon: '📜', desc: 'Народные загадки чердака' },
+  { mech: 'hang', name: 'Строки при свече', icon: '✒️', desc: 'Стихи без последней строки' },
+  { mech: 'seek', name: 'Поиск предметов', icon: '🔍', desc: 'Найди всё на картинке' },
+  { mech: 'path', name: 'Тропинки', icon: '🥾', desc: 'Проведи зверя домой' },
+  { mech: 'tea', name: 'Чай для путника', icon: '🫖', desc: 'Смешай отвар точного цвета' },
+  { mech: 'mech', name: 'Механизмы', icon: '⚙️', desc: 'Заведи все шестерёнки' },
+  { mech: 'candle', name: 'Свечи и духи', icon: '🕯️', desc: 'Свет расставит всё по местам' },
+  { mech: 'flow', name: 'Потоки покупателей', icon: '🌊', desc: 'Направь гостей к прилавку' },
+  { mech: 'brew', name: 'Варка зелий', icon: '⚗️', desc: 'Повтори рецепт без ошибок' },
+];
+
+function typeOf(p) { return p.mechanic || 'mirror'; }
 
 export function renderPuzzleList(container, ctx) {
   const { state } = ctx;
-  container.appendChild(header(ctx, 'Головоломки лавки', 'Хозяйственные загадки по мирам'));
+  container.appendChild(header(ctx, 'Головоломки лавки', 'Выбери полку с загадками'));
 
-  let lastWorld = null;
-  const firstUnsolved = firstUnsolvedPuzzle(state);
+  const grid = document.createElement('div');
+  grid.className = 'pc-grid';
+  for (const t of PUZZLE_TYPES) {
+    const items = ALL_PUZZLES.filter((p) => typeOf(p) === t.mech);
+    const done = items.filter((p) => state.puzzlesDone[p.id]).length;
+    const hasFresh = items.some((p) => !state.puzzlesDone[p.id]
+      && puzzleAvailable(state, ALL_PUZZLES.indexOf(p)));
+    const card = document.createElement('div');
+    card.className = 'pc-card' + (done === items.length ? ' pc-complete' : '');
+    // Фолбэк-эмодзи под артом
+    const fallback = document.createElement('div');
+    fallback.className = 'pc-fallback';
+    fallback.textContent = t.icon;
+    card.appendChild(fallback);
+    const img = document.createElement('img');
+    img.className = 'pc-art';
+    img.alt = t.name;
+    img.addEventListener('error', () => img.remove());
+    img.src = `assets/puzzle_cards/pc_${t.mech}_web.jpg`;
+    card.appendChild(img);
+    const body = document.createElement('div');
+    body.className = 'pc-body';
+    body.innerHTML = `<div class="pc-name">${t.icon} ${t.name}</div>
+      <div class="pc-progress">Пройдено <b>${done}</b> из ${items.length}</div>`;
+    card.appendChild(body);
+    if (hasFresh) {
+      const dot = document.createElement('span');
+      dot.className = 'hs-dot pc-dot';
+      card.appendChild(dot);
+    }
+    card.addEventListener('click', () => {
+      ctx.sfx?.('tap');
+      container.innerHTML = '';
+      renderPuzzleTypeList(container, ctx, t.mech);
+    });
+    grid.appendChild(card);
+  }
+  container.appendChild(grid);
+  container.appendChild(quickNav(ctx, [
+    { icon: '📖', label: 'Книга рецептов', screen: 'brewbook' },
+    { icon: '🏠', label: 'В лавку', screen: 'hub' },
+  ]));
+}
+
+// Список уровней одного типа: своя нумерация и порядок (по кампании)
+export function renderPuzzleTypeList(container, ctx, mech) {
+  const { state } = ctx;
+  const t = PUZZLE_TYPES.find((x) => x.mech === mech);
+  const items = ALL_PUZZLES.filter((p) => typeOf(p) === mech);
+  container.appendChild(header(ctx, `${t.icon} ${t.name}`, t.desc, 'puzzles'));
+
+  const firstUnsolved = items.find((p) => !state.puzzlesDone[p.id]
+    && puzzleAvailable(state, ALL_PUZZLES.indexOf(p)));
   const list = document.createElement('div');
   list.className = 'list';
-  ALL_PUZZLES.forEach((p, i) => {
-    if (p.world !== lastWorld) {
-      lastWorld = p.world;
-      const wh = document.createElement('h3');
-      wh.textContent = WORLD_LABEL[p.world] || p.world;
-      list.appendChild(wh);
-    }
-    const available = puzzleAvailable(state, i);
+  items.forEach((p, i) => {
+    const available = puzzleAvailable(state, ALL_PUZZLES.indexOf(p));
     const done = !!state.puzzlesDone[p.id];
     const row = document.createElement('div');
     row.className = 'row' + (available ? '' : ' locked') + (done ? ' done' : '');
@@ -77,7 +122,7 @@ export function renderPuzzleList(container, ctx) {
       if (!done) {
         const skipBtn = puzzleSkipButton(ctx, p, () => {
           container.innerHTML = '';
-          renderPuzzleList(container, ctx);
+          renderPuzzleTypeList(container, ctx, mech);
         });
         skipBtn.className = 'small ghost';
         row.appendChild(skipBtn);
@@ -87,11 +132,12 @@ export function renderPuzzleList(container, ctx) {
   });
   container.appendChild(list);
   container.appendChild(quickNav(ctx, [
+    { icon: '📚', label: 'Все типы', screen: 'puzzles' },
     { icon: '📖', label: 'Книга рецептов', screen: 'brewbook' },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },
   ]));
 
-  // Автоскролл к первой нерешённой загадке
+  // Автоскролл к первой нерешённой загадке типа
   const targetRow = list.querySelector?.('[data-scroll-target="1"]');
   if (targetRow && targetRow.scrollIntoView) {
     setTimeout(() => targetRow.scrollIntoView({ block: 'center', behavior: 'smooth' }), 60);
