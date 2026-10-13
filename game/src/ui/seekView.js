@@ -4,7 +4,7 @@ import {
   createSeekPuzzle, seekTap, isSeekSolved, seekProgress, seekHint, groupProgress,
 } from '../core/seekPuzzle.js';
 import { completePuzzle, nextPuzzle, applySeekOverrides } from '../core/state.js';
-import { header, showOverlay , puzzleSkipButton } from './common.js';
+import { header, showOverlay , puzzleSkipButton, backToPuzzleType } from './common.js';
 
 export function renderSeekPuzzle(container, ctx, rawLevel) {
   const level = applySeekOverrides(ctx.state, rawLevel); // правки из редактора
@@ -16,7 +16,7 @@ export function renderSeekPuzzle(container, ctx, rawLevel) {
 
   const [W, H] = level.sceneSize || [1000, 650];
 
-  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, 'puzzles'));
+  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: level.mechanic || 'mirror' }]));
 
   const wrap = document.createElement('div');
   wrap.className = 'puzzle-wrap';
@@ -63,7 +63,7 @@ export function renderSeekPuzzle(container, ctx, rawLevel) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Заново (R)', doReset);
   controls.append(btnHint, btnReset);
-  controls.appendChild(puzzleSkipButton(ctx, level, () => ctx.go('puzzles')));
+  controls.appendChild(puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level)));
   const btnEdit = mkBtn('✏️', () => ctx.go('seekeditor', { id: rawLevel.id }));
   btnEdit.classList.add('ghost');
   btnEdit.title = 'Править области поиска';
@@ -154,7 +154,7 @@ export function renderSeekPuzzle(container, ctx, rawLevel) {
   function onKey(ev) {
     if (ev.key === 'h' || ev.key === 'H' || ev.key === 'р' || ev.key === 'Р') doHint();
     if (ev.key === 'r' || ev.key === 'R' || ev.key === 'к' || ev.key === 'К') doReset();
-    if (ev.key === 'Escape') ctx.go('puzzles');
+    if (ev.key === 'Escape') backToPuzzleType(ctx, level);
   }
   window.addEventListener('keydown', onKey);
 
@@ -172,7 +172,7 @@ export function renderSeekPuzzle(container, ctx, rawLevel) {
         rewards,
         buttons: [
           ...(next ? [{ label: `Следующая → ${next.name}`, primary: true, onClick: () => ctx.go('puzzle', { id: next.id }) }] : []),
-          { label: 'К загадкам', primary: !next, onClick: () => ctx.go('puzzles') },
+          { label: 'К загадкам', primary: !next, onClick: () => backToPuzzleType(ctx, level) },
           { label: 'Ещё раз', onClick: () => ctx.go('puzzle', { id: level.id }) },
           { label: 'В лавку', onClick: () => ctx.go('hub') },
         ],

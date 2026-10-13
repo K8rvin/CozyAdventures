@@ -9,7 +9,7 @@ import {
   isTeaSolved, teaStatus, teaHint,
 } from '../core/teaPuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
-import { header, showOverlay, puzzleSkipButton } from './common.js';
+import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
 
 // Раскладка сцены (% от ширины/высоты фона) — подгоняется под арт стола
 const TEA_SPOTS = {
@@ -27,7 +27,7 @@ export function renderTeaPuzzle(container, ctx, level) {
   let readyAnnounced = false;
   let finished = false;
 
-  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, 'puzzles'));
+  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: level.mechanic || 'mirror' }]));
 
   // --- Сцена со столом ---
   const scene = document.createElement('div');
@@ -186,7 +186,7 @@ export function renderTeaPuzzle(container, ctx, level) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Заново (R)', doReset);
   controls.append(btnUndo, btnHint, btnReset);
-  controls.appendChild(puzzleSkipButton(ctx, level, () => ctx.go('puzzles')));
+  controls.appendChild(puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level)));
   container.appendChild(controls);
 
   function mkBtn(label, fn) {
@@ -301,7 +301,7 @@ export function renderTeaPuzzle(container, ctx, level) {
     if (ev.key === 'z' || ev.key === 'Z' || (ev.ctrlKey && ev.key === 'z')) { ev.preventDefault(); doUndo(); }
     if (ev.key === 'h' || ev.key === 'H' || ev.key === 'р' || ev.key === 'Р') doHint();
     if (ev.key === 'r' || ev.key === 'R' || ev.key === 'к' || ev.key === 'К') doReset();
-    if (ev.key === 'Escape') ctx.go('puzzles');
+    if (ev.key === 'Escape') backToPuzzleType(ctx, level);
   }
   window.addEventListener('keydown', onKey);
 
@@ -319,7 +319,7 @@ export function renderTeaPuzzle(container, ctx, level) {
         rewards,
         buttons: [
           ...(next ? [{ label: `Следующая → ${next.name}`, primary: true, onClick: () => ctx.go('puzzle', { id: next.id }) }] : []),
-          { label: 'К загадкам', primary: !next, onClick: () => ctx.go('puzzles') },
+          { label: 'К загадкам', primary: !next, onClick: () => backToPuzzleType(ctx, level) },
           { label: 'Ещё раз', onClick: () => ctx.go('puzzle', { id: level.id }) },
           { label: 'В лавку', onClick: () => ctx.go('hub') },
         ],

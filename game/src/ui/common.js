@@ -25,9 +25,14 @@ export function puzzleSkipButton(ctx, level, onSkipped) {
   return b;
 }
 
+// Назад к списку головоломок того же типа (по экрану типов)
+export function backToPuzzleType(ctx, level) {
+  ctx.go('puzzles', { mech: level?.mechanic || 'mirror' });
+}
+
 export function header(ctx, title, subtitle, backTo = 'hub') {
   const box = document.createElement('div');
-  box.className = 'panel';
+  box.className = 'panel app-header';
   const top = document.createElement('div');
   top.style.display = 'flex';
   top.style.justifyContent = 'space-between';
@@ -38,7 +43,10 @@ export function header(ctx, title, subtitle, backTo = 'hub') {
   const back = document.createElement('button');
   back.className = 'ghost small';
   back.textContent = '← Назад';
-  back.addEventListener('click', () => ctx.go(backTo));
+  back.addEventListener('click', () => {
+    if (Array.isArray(backTo)) ctx.go(backTo[0], backTo[1]);
+    else ctx.go(backTo);
+  });
   top.append(h, back);
   box.appendChild(top);
   if (subtitle) {

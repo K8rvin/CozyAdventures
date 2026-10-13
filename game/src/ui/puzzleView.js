@@ -19,7 +19,7 @@ import { renderCandlePuzzle } from './candleView.js';
 import { renderFlowPuzzle } from './flowView.js';
 import { renderBrewPuzzle } from './brewView.js';
 import { startTutorial } from './tutorial.js';
-import { quickNav, puzzleSkipButton } from './common.js';
+import { quickNav, puzzleSkipButton, header, backToPuzzleType } from './common.js';
 
 // --- Типы головоломок: промежуточный экран-карточки ---
 
@@ -39,7 +39,11 @@ const PUZZLE_TYPES = [
 
 function typeOf(p) { return p.mechanic || 'mirror'; }
 
-export function renderPuzzleList(container, ctx) {
+export function renderPuzzleList(container, ctx, params) {
+  // С params.mech — сразу список типа (возврат из головоломки)
+  if (params?.mech && PUZZLE_TYPES.some((t) => t.mech === params.mech)) {
+    return renderPuzzleTypeList(container, ctx, params.mech);
+  }
   const { state } = ctx;
   container.appendChild(header(ctx, 'Головоломки лавки', 'Выбери полку с загадками'));
 
@@ -186,7 +190,7 @@ export function renderPuzzle(container, ctx, params) {
   let hintCell = null; // подсветка подсказки
   let finished = false;
 
-  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, 'puzzles'));
+  container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: typeOf(level) }]));
 
   const wrap = document.createElement('div');
   wrap.className = 'puzzle-wrap';
@@ -224,7 +228,7 @@ export function renderPuzzle(container, ctx, params) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Сброс (R)', doReset);
   controls.append(btnUndo, btnHint, btnReset);
-  controls.appendChild(puzzleSkipButton(ctx, level, () => ctx.go('puzzles')));
+  controls.appendChild(puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level)));
   side.appendChild(controls);
 
   const legend = document.createElement('div');
@@ -298,7 +302,7 @@ export function renderPuzzle(container, ctx, params) {
     if (ev.key === 'z' || ev.key === 'Z' || (ev.ctrlKey && ev.key === 'z')) { ev.preventDefault(); doUndo(); }
     if (ev.key === 'h' || ev.key === 'H' || ev.key === 'р' || ev.key === 'Р') doHint();
     if (ev.key === 'r' || ev.key === 'R' || ev.key === 'к' || ev.key === 'К') doReset();
-    if (ev.key === 'Escape') ctx.go('puzzles');
+    if (ev.key === 'Escape') backToPuzzleType(ctx, level);
   }
   window.addEventListener('keydown', onKey);
 
@@ -487,35 +491,10 @@ function showVictory(ctx, level, rewards) {
   const toList = document.createElement('button');
   if (!next) toList.className = 'primary';
   toList.textContent = 'К загадкам';
-  toList.addEventListener('click', () => { overlay.remove(); ctx.go('puzzles'); });
+  toList.addEventListener('click', () => { overlay.remove(); backToPuzzleType(ctx, level); });
   const toShop = document.createElement('button');
   toShop.textContent = 'В лавку';
   toShop.addEventListener('click', () => { overlay.remove(); ctx.go('hub'); });
   actions.append(again, toList, toShop);
   document.body.appendChild(overlay);
-}
-
-function header(ctx, title, subtitle, backTo = 'hub') {
-  const box = document.createElement('div');
-  box.className = 'panel';
-  const top = document.createElement('div');
-  top.style.display = 'flex';
-  top.style.justifyContent = 'space-between';
-  top.style.alignItems = 'center';
-  const h = document.createElement('h2');
-  h.textContent = title;
-  h.style.margin = '0';
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← Назад';
-  back.addEventListener('click', () => ctx.go(backTo));
-  top.append(h, back);
-  box.appendChild(top);
-  if (subtitle) {
-    const s = document.createElement('div');
-    s.className = 'muted';
-    s.textContent = subtitle;
-    box.appendChild(s);
-  }
-  return box;
 }

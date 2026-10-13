@@ -8660,9 +8660,12 @@
     });
     return b;
   }
+  function backToPuzzleType(ctx2, level) {
+    ctx2.go("puzzles", { mech: level?.mechanic || "mirror" });
+  }
   function header(ctx2, title, subtitle, backTo = "hub") {
     const box = document.createElement("div");
-    box.className = "panel";
+    box.className = "panel app-header";
     const top = document.createElement("div");
     top.style.display = "flex";
     top.style.justifyContent = "space-between";
@@ -8673,7 +8676,10 @@
     const back = document.createElement("button");
     back.className = "ghost small";
     back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go(backTo));
+    back.addEventListener("click", () => {
+      if (Array.isArray(backTo)) ctx2.go(backTo[0], backTo[1]);
+      else ctx2.go(backTo);
+    });
     top.append(h, back);
     box.appendChild(top);
     if (subtitle) {
@@ -9653,7 +9659,7 @@
     let hintsUsed = 0;
     let hintMark = null;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -9709,7 +9715,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -9876,7 +9882,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -9893,7 +9899,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -10144,7 +10150,7 @@
     const puzzle = createRiddlePuzzle(level);
     let hintsUsed = 0;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const pageBox = document.createElement("div");
@@ -10178,7 +10184,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -10250,7 +10256,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -10272,7 +10278,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -10443,7 +10449,7 @@
     const puzzle = createHangmanPuzzle(level);
     let hintsUsed = 0;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const pageBox = document.createElement("div");
@@ -10496,7 +10502,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -10557,7 +10563,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -10579,7 +10585,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -10749,7 +10755,7 @@
     let finished = false;
     let missFlash = null;
     const [W, H] = level.sceneSize || [1e3, 650];
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -10790,7 +10796,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
     controls.append(btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     const btnEdit = mkBtn("\u270F\uFE0F", () => ctx2.go("seekeditor", { id: rawLevel.id }));
     btnEdit.classList.add("ghost");
     btnEdit.title = "\u041F\u0440\u0430\u0432\u0438\u0442\u044C \u043E\u0431\u043B\u0430\u0441\u0442\u0438 \u043F\u043E\u0438\u0441\u043A\u0430";
@@ -10880,7 +10886,7 @@
     function onKey(ev) {
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -10897,7 +10903,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -11120,7 +11126,7 @@
     let hintsUsed = 0;
     let hintTile = null;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -11159,7 +11165,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -11221,7 +11227,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -11238,7 +11244,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -11472,7 +11478,7 @@
     let hintIngredient = null;
     let readyAnnounced = false;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const scene = document.createElement("div");
     scene.className = "tea-scene";
     let tableArt = true;
@@ -11615,7 +11621,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     container.appendChild(controls);
     function mkBtn(label, fn) {
       const b = document.createElement("button");
@@ -11723,7 +11729,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -11740,7 +11746,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -11978,7 +11984,7 @@
     let hintsUsed = 0;
     let hintTile = null;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -12018,7 +12024,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -12080,7 +12086,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -12097,7 +12103,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -12448,7 +12454,7 @@
     let hintsUsed = 0;
     let hintCell = null;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -12487,7 +12493,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -12556,7 +12562,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -12573,7 +12579,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -12840,7 +12846,7 @@
     let hintsUsed = 0;
     let hintTile = null;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -12880,7 +12886,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -12942,7 +12948,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -12959,7 +12965,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -13233,7 +13239,7 @@
     let finished = false;
     let recipeHidden = false;
     const timers = [];
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const scene = document.createElement("div");
@@ -13320,7 +13326,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -13451,7 +13457,7 @@
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
-            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => ctx2.go("puzzles") },
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
             { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
@@ -13508,7 +13514,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     draw();
@@ -13535,9 +13541,12 @@
   function typeOf(p) {
     return p.mechanic || "mirror";
   }
-  function renderPuzzleList(container, ctx2) {
+  function renderPuzzleList(container, ctx2, params) {
+    if (params?.mech && PUZZLE_TYPES.some((t) => t.mech === params.mech)) {
+      return renderPuzzleTypeList(container, ctx2, params.mech);
+    }
     const { state: state2 } = ctx2;
-    container.appendChild(header2(ctx2, "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u043B\u0430\u0432\u043A\u0438", "\u0412\u044B\u0431\u0435\u0440\u0438 \u043F\u043E\u043B\u043A\u0443 \u0441 \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C\u0438"));
+    container.appendChild(header(ctx2, "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u043B\u0430\u0432\u043A\u0438", "\u0412\u044B\u0431\u0435\u0440\u0438 \u043F\u043E\u043B\u043A\u0443 \u0441 \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C\u0438"));
     const grid = document.createElement("div");
     grid.className = "pc-grid";
     for (const t of PUZZLE_TYPES) {
@@ -13583,7 +13592,7 @@
     const { state: state2 } = ctx2;
     const t = PUZZLE_TYPES.find((x) => x.mech === mech);
     const items = ALL_PUZZLES.filter((p) => typeOf(p) === mech);
-    container.appendChild(header2(ctx2, `${t.icon} ${t.name}`, t.desc, "puzzles"));
+    container.appendChild(header(ctx2, `${t.icon} ${t.name}`, t.desc, "puzzles"));
     const firstUnsolved = items.find((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
     const list = document.createElement("div");
     list.className = "list";
@@ -13670,7 +13679,7 @@
     let hintsUsed = 0;
     let hintCell = null;
     let finished = false;
-    container.appendChild(header2(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, "puzzles"));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: typeOf(level) }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -13701,7 +13710,7 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => ctx2.go("puzzles")));
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     const legend = document.createElement("div");
     legend.className = "panel mt";
@@ -13772,7 +13781,7 @@
       }
       if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
       if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
-      if (ev.key === "Escape") ctx2.go("puzzles");
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
     }
     window.addEventListener("keydown", onKey);
     function finish() {
@@ -13943,7 +13952,7 @@
     toList.textContent = "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C";
     toList.addEventListener("click", () => {
       overlay.remove();
-      ctx2.go("puzzles");
+      backToPuzzleType(ctx2, level);
     });
     const toShop = document.createElement("button");
     toShop.textContent = "\u0412 \u043B\u0430\u0432\u043A\u0443";
@@ -13953,30 +13962,6 @@
     });
     actions.append(again, toList, toShop);
     document.body.appendChild(overlay);
-  }
-  function header2(ctx2, title, subtitle, backTo = "hub") {
-    const box = document.createElement("div");
-    box.className = "panel";
-    const top = document.createElement("div");
-    top.style.display = "flex";
-    top.style.justifyContent = "space-between";
-    top.style.alignItems = "center";
-    const h = document.createElement("h2");
-    h.textContent = title;
-    h.style.margin = "0";
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go(backTo));
-    top.append(h, back);
-    box.appendChild(top);
-    if (subtitle) {
-      const s = document.createElement("div");
-      s.className = "muted";
-      s.textContent = subtitle;
-      box.appendChild(s);
-    }
-    return box;
   }
 
   // src/ui/equipView.js
