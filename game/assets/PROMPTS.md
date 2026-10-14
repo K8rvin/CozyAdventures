@@ -917,7 +917,7 @@ honey and deep brown, no text, no letters, no watermark --ar 16:9
 
 ---
 
-## 15. Карточки типов головоломок — assets/puzzle_cards/pc_<mech>.png (11 шт)
+## 15. Карточки типов головоломок — assets/puzzle_cards/pc_<mech>.png (12 шт)
 
 Обложки для экрана выбора типа головоломки. Яркая тематическая виньетка
 на каждую: крупно, читаемо в маленьком размере, без текста. Имя файла =
@@ -942,3 +942,97 @@ fantasy game card art, no text, no letters, no watermark --ar 3:2
 - **pc_candle.png** — `many small candles arranged in a glowing circle on a dark wooden floor, friendly wisps of light between them, + хвост`
 - **pc_flow.png** — `a cozy shop counter seen from above with glowing arrows on the floor guiding the way to the counter, footprints of light, + хвост`
 - **pc_brew.png** — `an alchemist workbench with a bubbling glowing cauldron, open recipe book, hanging herbs and potion bottles, + хвост`
+- **pc_fate.png** — `a fan of hand-painted fortune-teller cards on dark velvet, one card face-up glowing softly, a candle flame reflected in a crystal ball nearby, + хвост`
+
+---
+
+## 16. «Карты судьбы» — assets/fate/ (стол, колода 23 шт, 12 гостей, обложка)
+
+Сцена вечернего гадания в лавке: гость рассказывает историю, хозяин
+раскладывает карты. Стиль единый для всего набора — рукодельные карты
+гадалки, книжная акварель, свет свечи.
+
+### 16.1 fate_table.png — стол гадания (фон сцены, САМЫЙ ВАЖНЫЙ)
+
+Прямо под контентом (истории и карты лягут поверх), поэтому центр стола
+спокойный, без крупных объектов: скатерть, свечи по краям, мягкая виньетка.
+
+```
+Cozy fortune-teller table seen from a slight top-down angle, dark green
+velvet cloth covering a wooden table, EMPTY calm center (cards will be
+placed here by the player), two burning candles in brass holders at the
+top corners, a small bowl of dried herbs and a crystal ball at the top
+edge, warm candlelight with deep brown shadows, soft vignette, storybook
+watercolor illustration with gentle ink outlines, no cards laid out,
+no text, no watermark --ar 4:5
+```
+
+### 16.2 card_<id>.png — колода (23 шт, единый дизайн)
+
+Вертикальные карты с ОДНИМ мотивом по центру, без текста и букв (имена
+дорисует игра). Держи одинаковую рамку и заливку во всех — колода должна
+выглядеть колодой.
+
+Шаблон:
+
+```
+hand-painted fortune-teller card, cozy storybook watercolor with gentle
+ink outlines, <МОТИВ>, centered single motif on aged cream card stock,
+thin dark-wood ornamental frame border, warm candlelit palette of amber
+and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
+```
+
+Мотивы по картам (имя файла = id карты):
+- **card_home.png** — `a tiny glowing cottage with a lit window and smoke curling from the chimney`
+- **card_path.png** — `a winding dirt road leading into misty golden hills, a single pair of footprints`
+- **card_well.png** — `an old stone well with a wooden bucket, deep dark water reflecting one star`
+- **card_star.png** — `one bright eight-pointed star shining over a sleeping village at night`
+- **card_web.png** — `a delicate spider web with morning dew drops between two branches`
+- **card_bread.png** — `a round crusty loaf of bread on a linen cloth with a few wheat ears`
+- **card_mirror.png** — `an ornate oval hand mirror reflecting a warm candle flame`
+- **card_candle.png** — `a single warm candle with dripping wax in a brass holder, gentle glow`
+- **card_key.png** — `an old brass skeleton key tied with a red ribbon`
+- **card_book.png** — `a thick old book with a worn leather cover and a ribbon bookmark`
+- **card_bell.png** — `a small brass bell swinging with tiny motion lines`
+- **card_letter.png** — `a sealed envelope with a red wax seal and a quill beside it`
+- **card_moon.png** — `a serene crescent moon with a sleepy face among small stars`
+- **card_sun.png** — `a cheerful warm sun with soft rays over a golden field`
+- **card_rain.png** — `gentle rain falling from one small cloud onto a sprouting seedling`
+- **card_tree.png** — `a mighty old oak with deep visible roots and a few falling leaves`
+- **card_bird.png** — `a small songbird in flight carrying a ribbon in its beak`
+- **card_ship.png** — `a tiny paper sailboat on wavy ink-drawn water`
+- **card_fire.png** — `a lively dancing flame in a small hearth, sparks rising`
+- **card_cup.png** — `a steaming tea cup on a saucer with a sprig of mint`
+- **card_thread.png** — `a spool of red thread with a long loose end curling into a heart`
+- **card_coin.png** — `an old copper coin with a worn emblem, a few stacked coins behind`
+- **card_gate.png** — `a wooden garden gate slightly ajar with light spilling through the gap`
+
+### 16.3 guest_<id>.png — портреты гостей (12 шт)
+
+Бюсты по центру, смотрят на игрока, круглая обрезка в игре. Стиль — тот же.
+
+Шаблон:
+
+```
+cozy storybook watercolor bust portrait of <ПЕРСОНАЖ>, gentle ink
+outlines, warm candlelight, amber and deep brown palette, character
+facing viewer, plain warm dark background, no text, no watermark --ar 1:1
+```
+
+Персонажи (имя файла = id гостя):
+- **guest_watchman.png** — `a kindly elderly night watchman with a grey beard, worn coat and a lantern pole over his shoulder`
+- **guest_owl.png** — `a wise sleepy owl librarian with tiny round spectacles and a book under one wing`
+- **guest_ranger.png** — `a rugged young ranger in a green hooded cloak with a compass in hand`
+- **guest_alchemist.png** — `a singed middle-aged alchemist with soot on his apron and a cracked potion flask`
+- **guest_spider.png** — `a cute tiny cartoon spider hanging on a single thread, big friendly eyes`
+- **guest_knight.png** — `a gentle honest knight in slightly worn armor, helmet under his arm, thoughtful eyes`
+- **guest_merchant.png** — `a nervous plump market merchant with a counting frame (abacus) and a striped vest`
+- **guest_wanderer.png** — `a young traveler girl with a patched cloak, a backpack and a songbird on her shoulder`
+- **guest_gardener.png** — `a bent old gardener with soil-stained hands holding a small oak sapling`
+- **guest_sailor.png** — `a weathered old sailor with a striped shirt, a beard and a tiny paper ship in his palm`
+- **guest_scribe.png** — `a thin pale scribe with ink-stained fingers, an empty scroll and a quill behind his ear`
+- **guest_cat.png** — `a dignified ginger shop cat with a small brass key on a ribbon collar, wise amber eyes`
+
+### 16.4 Обложка типа головоломки
+
+**pc_fate.png** вписан в раздел 15 вместе с остальными карточками типов.

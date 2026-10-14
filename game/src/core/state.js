@@ -11,6 +11,7 @@ import { MECH_PUZZLES } from '../data/puzzlesMech.js';
 import { CANDLE_PUZZLES } from '../data/puzzlesCandle.js';
 import { FLOW_PUZZLES } from '../data/puzzlesFlow.js';
 import { BREW_PUZZLES } from '../data/puzzlesBrew.js';
+import { FATE_PUZZLES } from '../data/puzzlesFate.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
@@ -376,7 +377,7 @@ export function toggleCosmetic(state, id) {
 // сложность растёт по своей цепочке.
 const PUZZLE_POOL = new Map(
   [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES,
-    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES]
+    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES, ...FATE_PUZZLES]
     .map((p) => [p.id, p]),
 );
 const CAMPAIGN_ORDER = [
@@ -418,6 +419,15 @@ const CAMPAIGN_ORDER = [
   'bk_81', 'bk_82', 'bk_83', 'bk_84', 'bk_85', 'bk_86', 'bk_87', 'bk_88', 'bk_89', 'bk_90',
   'bk_91', 'bk_92', 'bk_93', 'bk_94', 'bk_95', 'bk_96', 'bk_97', 'bk_98', 'bk_99', 'bk_100',
   'bk_101', 'bk_102', 'bk_103', 'bk_104', 'bk_105',
+  // Загадки Хранителя: 95 народных загадок (раздел «Загадки Хранителя»)
+  'bk_106', 'bk_107', 'bk_108', 'bk_109', 'bk_110', 'bk_111', 'bk_112', 'bk_113', 'bk_114', 'bk_115', 'bk_116', 'bk_117', 'bk_118', 'bk_119', 'bk_120', 'bk_121', 'bk_122', 'bk_123', 'bk_124',
+  'bk_125', 'bk_126', 'bk_127', 'bk_128', 'bk_129', 'bk_130', 'bk_131', 'bk_132', 'bk_133', 'bk_134', 'bk_135', 'bk_136', 'bk_137', 'bk_138', 'bk_139', 'bk_140', 'bk_141', 'bk_142', 'bk_143',
+  'bk_144', 'bk_145', 'bk_146', 'bk_147', 'bk_148', 'bk_149', 'bk_150', 'bk_151', 'bk_152', 'bk_153', 'bk_154', 'bk_155', 'bk_156', 'bk_157', 'bk_158', 'bk_159', 'bk_160', 'bk_161', 'bk_162',
+  'bk_163', 'bk_164', 'bk_165', 'bk_166', 'bk_167', 'bk_168', 'bk_169', 'bk_170', 'bk_171', 'bk_172', 'bk_173', 'bk_174', 'bk_175', 'bk_176', 'bk_177', 'bk_178', 'bk_179', 'bk_180', 'bk_181',
+  'bk_182', 'bk_183', 'bk_184', 'bk_185', 'bk_186', 'bk_187', 'bk_188', 'bk_189', 'bk_190', 'bk_191', 'bk_192', 'bk_193', 'bk_194', 'bk_195', 'bk_196', 'bk_197', 'bk_198', 'bk_199', 'bk_200',
+  // Карты судьбы: вечерние гости лавки и расклады
+  'fate_01', 'fate_02', 'fate_03', 'fate_04', 'fate_05', 'fate_06',
+  'fate_07', 'fate_08', 'fate_09', 'fate_10', 'fate_11', 'fate_12',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 

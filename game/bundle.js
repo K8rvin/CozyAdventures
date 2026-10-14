@@ -2592,6 +2592,1053 @@
       author: "\u0410. \u0421. \u041F\u0443\u0448\u043A\u0438\u043D",
       rewards: [{ type: "coins", amount: 502 }, { type: "seals", amount: 2 }],
       intro: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043A\u043D\u0438\u0433\u0438 \u2014 \xAB\u041F\u0440\u043E\u0440\u043E\u043A\xBB. \u0421\u0442\u043E \u0443\u0440\u043E\u0432\u043D\u0435\u0439 \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u043D\u043E."
+    },
+    // --- Загадки Хранителя: 95 народных загадок (bk_106–bk_200), ---
+    // --- одно слово ≤6 букв; каждая десятая — с печатью мастера ---
+    {
+      id: "bk_106",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0423\u043F\u0440\u0443\u0433\u0438\u0439 \u0433\u043E\u0441\u0442\u044C",
+      difficulty: 1,
+      riddle: ["\u041A\u0440\u0443\u0433\u043B\u044B\u0439, \u043B\u0451\u0433\u043A\u0438\u0439: \u0431\u0440\u043E\u0441\u044C \u043C\u0435\u043D\u044F \u2014", "\u0432\u0435\u0440\u043D\u0443\u0441\u044C \u043F\u043E\u0438\u0433\u0440\u0430\u0442\u044C."],
+      answer: "\u041C\u042F\u0427",
+      rewards: [{ type: "coins", amount: 107 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_107",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0422\u0438\u0445\u0438\u0439 \u0432\u043E\u0440",
+      difficulty: 1,
+      riddle: ["\u041F\u0440\u0438\u0445\u043E\u0434\u0438\u0442 \u043D\u0435\u0441\u043B\u044B\u0448\u043D\u043E,", "\u0443\u043D\u043E\u0441\u0438\u0442 \u0432\u0441\u0435\u0445 \u043F\u043E \u043E\u0434\u043D\u043E\u043C\u0443."],
+      answer: "\u0421\u041E\u041D",
+      rewards: [{ type: "coins", amount: 109 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_108",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u0442\u0443\u043A \u0432 \u043E\u043A\u043D\u043E",
+      difficulty: 1,
+      riddle: ["\u0411\u0435\u0437 \u0440\u0443\u043A, \u0431\u0435\u0437 \u043D\u043E\u0433,", "\u0430 \u0432 \u043E\u043A\u043D\u043E \u0441\u0442\u0443\u0447\u0438\u0442\u0441\u044F."],
+      answer: "\u0414\u041E\u0416\u0414\u042C",
+      rewards: [{ type: "coins", amount: 111 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_109",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0411\u0435\u043B\u044B\u0439 \u043F\u0443\u0445",
+      difficulty: 1,
+      riddle: ["\u0411\u0435\u043B\u044B\u0439 \u043F\u0443\u0445 \u0441 \u043D\u0435\u0431\u0430 \u2014", "\u043B\u043E\u0432\u0438, \u043D\u0435 \u043F\u043E\u0439\u043C\u0430\u0435\u0448\u044C."],
+      answer: "\u0421\u041D\u0415\u0413",
+      rewards: [{ type: "coins", amount: 113 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_110",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0435 \u0431\u043B\u044E\u0434\u043E",
+      difficulty: 1,
+      riddle: ["\u0421\u0435\u0440\u0435\u0431\u0440\u044F\u043D\u043E\u0435 \u0431\u043B\u044E\u0434\u043E", "\u043D\u0430 \u0447\u0451\u0440\u043D\u043E\u0439 \u0441\u043A\u0430\u0442\u0435\u0440\u0442\u0438."],
+      answer: "\u041B\u0423\u041D\u0410",
+      rewards: [{ type: "coins", amount: 115 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_111",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0435\u0431\u0435\u0441\u043D\u044B\u0439 \u0431\u0430\u0440\u0430\u0431\u0430\u043D",
+      difficulty: 2,
+      riddle: ["\u041D\u0435 \u0432\u0438\u0434\u0430\u0442\u044C, \u0430 \u0441\u043B\u044B\u0448\u0430\u0442\u044C:", "\u0431\u044C\u0451\u0442 \u043F\u043E \u043D\u0435\u0431\u0443 \u2014 \u043D\u0435 \u0431\u043E\u043B\u044C\u043D\u043E."],
+      answer: "\u0413\u0420\u041E\u041C",
+      rewards: [{ type: "coins", amount: 117 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_112",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041C\u043E\u0441\u0442 \u043F\u043E\u0441\u043B\u0435 \u0434\u043E\u0436\u0434\u044F",
+      difficulty: 2,
+      riddle: ["\u0426\u0432\u0435\u0442\u043D\u043E\u0439 \u043C\u043E\u0441\u0442 \u043F\u043E\u0441\u043B\u0435 \u0434\u043E\u0436\u0434\u044F,", "\u0430 \u043F\u0440\u043E\u0439\u0442\u0438 \u043D\u0435\u043B\u044C\u0437\u044F."],
+      answer: "\u0420\u0410\u0414\u0423\u0413\u0410",
+      rewards: [{ type: "coins", amount: 119 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_113",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u0435\u0440\u044B\u0439 \u0433\u043E\u0441\u0442\u044C",
+      difficulty: 2,
+      riddle: ["\u041F\u0440\u0438\u0445\u043E\u0434\u0438\u0442 \u0431\u0435\u0437 \u0448\u0430\u0433\u043E\u0432,", "\u043F\u0440\u044F\u0447\u0435\u0442 \u0434\u043E\u043C\u0430 \u0438 \u0441\u0430\u0434\u044B."],
+      answer: "\u0422\u0423\u041C\u0410\u041D",
+      rewards: [{ type: "coins", amount: 121 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_114",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043B\u0451\u0437\u044B \u0442\u0440\u0430\u0432\u044B",
+      difficulty: 2,
+      riddle: ["\u041D\u043E\u0447\u044C\u044E \u043F\u043B\u0430\u0447\u0435\u0442 \u0442\u0440\u0430\u0432\u0430,", "\u0445\u043E\u0442\u044C \u043D\u0438\u043A\u0442\u043E \u0435\u0451 \u043D\u0435 \u0440\u0430\u043D\u0438\u043B."],
+      answer: "\u0420\u041E\u0421\u0410",
+      rewards: [{ type: "coins", amount: 123 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_115",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0432\u044B\u0432\u043E\u0434\u043E\u043A",
+      difficulty: 2,
+      riddle: ["\u041D\u043E\u0447\u044C\u044E \u0440\u043E\u0434\u044F\u0442\u0441\u044F \u0442\u044B\u0441\u044F\u0447\u0438,", "\u0434\u043D\u0451\u043C \u043D\u0438 \u043E\u0434\u043D\u043E\u0439."],
+      answer: "\u0417\u0412\u0415\u0417\u0414\u0410",
+      rewards: [{ type: "coins", amount: 125 }, { type: "seals", amount: 1 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_116",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0412\u0435\u0440\u043D\u0430\u044F \u0441\u043F\u0443\u0442\u043D\u0438\u0446\u0430",
+      difficulty: 1,
+      riddle: ["\u0425\u043E\u0434\u0438\u0442 \u0437\u0430 \u0442\u043E\u0431\u043E\u0439 \u043F\u043E \u043F\u044F\u0442\u0430\u043C,", "\u0430 \u043F\u043E\u0439\u043C\u0430\u0442\u044C \u043D\u0435\u043B\u044C\u0437\u044F."],
+      answer: "\u0422\u0415\u041D\u042C",
+      rewards: [{ type: "coins", amount: 127 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_117",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0435\u0437\u0432\u0430\u043D\u044B\u0439 \u043F\u043E\u043C\u043E\u0449\u043D\u0438\u043A",
+      difficulty: 2,
+      riddle: ["\u0411\u0435\u0437 \u0440\u0443\u043A, \u0431\u0435\u0437 \u043D\u043E\u0433,", "\u0430 \u0434\u0432\u0435\u0440\u044C \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442."],
+      answer: "\u0412\u0415\u0422\u0415\u0420",
+      rewards: [{ type: "coins", amount: 129 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_118",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0435\u043D\u0430\u0441\u044B\u0442\u043D\u044B\u0439",
+      difficulty: 3,
+      riddle: ["\u0415\u0441\u0442 \u0432\u0441\u0451 \u043F\u043E\u0434\u0440\u044F\u0434", "\u0438 \u043D\u0438\u043A\u043E\u0433\u0434\u0430 \u043D\u0435 \u043D\u0430\u0435\u0434\u0430\u0435\u0442\u0441\u044F."],
+      answer: "\u041E\u0413\u041E\u041D\u042C",
+      rewards: [{ type: "coins", amount: 131 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_119",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0412\u0435\u0447\u043D\u0430\u044F \u0431\u0435\u0433\u0443\u043D\u044C\u044F",
+      difficulty: 1,
+      riddle: ["\u0411\u0435\u0437 \u043D\u043E\u0433 \u0431\u0435\u0436\u0438\u0442,", "\u0431\u0435\u0437 \u0440\u0443\u043A \u043C\u043E\u0435\u0442."],
+      answer: "\u0412\u041E\u0414\u0410",
+      rewards: [{ type: "coins", amount: 133 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_120",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0417\u0438\u043C\u043D\u0435\u0435 \u0441\u0442\u0435\u043A\u043B\u043E",
+      difficulty: 1,
+      riddle: ["\u0417\u0438\u043C\u043E\u0439 \u2014 \u0441\u0442\u0435\u043A\u043B\u043E,", "\u043B\u0435\u0442\u043E\u043C \u2014 \u043D\u0438\u043A\u0442\u043E."],
+      answer: "\u041B\u0401\u0414",
+      rewards: [{ type: "coins", amount: 135 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_121",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0414\u0443\u0445 \u043A\u043E\u0442\u043B\u0430",
+      difficulty: 2,
+      riddle: ["\u0418\u0437 \u043A\u043E\u0442\u043B\u0430 \u0443\u0445\u043E\u0434\u0438\u0442 \u0432\u0432\u0435\u0440\u0445,", "\u0430 \u043D\u0435 \u0432\u043E\u0434\u0430."],
+      answer: "\u041F\u0410\u0420",
+      rewards: [{ type: "coins", amount: 137 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_122",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0414\u0438\u0442\u044F \u043F\u043E\u0436\u0430\u0440\u0430",
+      difficulty: 1,
+      riddle: ["\u0420\u043E\u0434\u0438\u0442\u0441\u044F \u0438\u0437 \u043E\u0433\u043D\u044F,", "\u0430 \u043A \u043D\u0435\u0431\u0443 \u0443\u0445\u043E\u0434\u0438\u0442."],
+      answer: "\u0414\u042B\u041C",
+      rewards: [{ type: "coins", amount: 139 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_123",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041F\u043E\u0441\u043B\u0435 \u043F\u043E\u0436\u0430\u0440\u0430",
+      difficulty: 3,
+      riddle: ["\u0411\u044B\u043B \u043E\u0433\u043D\u0451\u043C \u2014", "\u0441\u0442\u0430\u043B \u0442\u0438\u0445\u043E\u0439 \u043F\u044B\u043B\u044C\u044E."],
+      answer: "\u041F\u0415\u041F\u0415\u041B",
+      rewards: [{ type: "coins", amount: 141 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_124",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043E\u043B\u044C \u043D\u0430 \u0441\u0442\u0435\u043A\u043B\u0435",
+      difficulty: 2,
+      riddle: ["\u0411\u0435\u043B\u0430\u044F \u0441\u043E\u043B\u044C", "\u043D\u0430 \u043E\u043A\u043E\u043D\u043D\u043E\u043C \u0441\u0442\u0435\u043A\u043B\u0435."],
+      answer: "\u0418\u041D\u0415\u0419",
+      rewards: [{ type: "coins", amount: 143 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_125",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0414\u043D\u0435\u0432\u043D\u043E\u0439 \u043C\u0430\u044F\u043A",
+      difficulty: 2,
+      riddle: ["\u0417\u043E\u043B\u043E\u0442\u043E\u0439 \u043C\u0430\u044F\u043A", "\u0431\u0435\u0437 \u0431\u0430\u0448\u043D\u0438 \u0438 \u0432\u0435\u0440\u0451\u0432\u043E\u043A."],
+      answer: "\u0421\u041E\u041B\u041D\u0426\u0415",
+      rewards: [{ type: "coins", amount: 145 }, { type: "seals", amount: 1 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_126",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043A\u0440\u044B\u0442\u0430\u044F \u043E\u043F\u043E\u0440\u0430",
+      difficulty: 3,
+      riddle: ["\u0414\u0435\u0440\u0435\u0432\u043E \u0434\u0435\u0440\u0436\u0438\u0442,", "\u0430 \u0441\u0430\u043C \u0441\u0438\u0434\u0438\u0442 \u043F\u043E\u0434 \u0437\u0435\u043C\u043B\u0451\u0439."],
+      answer: "\u041A\u041E\u0420\u0415\u041D\u042C",
+      rewards: [{ type: "coins", amount: 147 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_127",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0417\u0435\u043B\u0451\u043D\u0430\u044F \u043B\u0430\u0434\u043E\u043D\u044C",
+      difficulty: 1,
+      riddle: ["\u0417\u0435\u043B\u0451\u043D\u0430\u044F \u043B\u0430\u0434\u043E\u043D\u044C \u0434\u0435\u0440\u0435\u0432\u0430", "\u0448\u0443\u0440\u0448\u0438\u0442 \u043D\u0430 \u0432\u0435\u0442\u0440\u0443."],
+      answer: "\u041B\u0418\u0421\u0422",
+      rewards: [{ type: "coins", amount: 149 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_128",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0423\u043B\u044B\u0431\u043A\u0430 \u0441\u0430\u0434\u0430",
+      difficulty: 2,
+      riddle: ["\u0417\u0434\u043E\u0440\u043E\u0432\u0430\u0435\u0442\u0441\u044F \u0441 \u0441\u043E\u043B\u043D\u0446\u0435\u043C,", "\u0445\u043E\u0442\u044C \u0433\u043B\u0430\u0437 \u043D\u0435\u0442."],
+      answer: "\u0426\u0412\u0415\u0422\u041E\u041A",
+      rewards: [{ type: "coins", amount: 151 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_129",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0416\u0438\u0432\u043E\u0439 \u043A\u043E\u0432\u0451\u0440",
+      difficulty: 1,
+      riddle: ["\u0417\u0435\u043B\u0451\u043D\u044B\u0439 \u043A\u043E\u0432\u0451\u0440,", "\u0447\u0442\u043E \u0440\u0430\u0441\u0442\u0451\u0442 \u0441\u0430\u043C."],
+      answer: "\u0422\u0420\u0410\u0412\u0410",
+      rewards: [{ type: "coins", amount: 153 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_130",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0428\u0435\u0441\u0442\u0438\u043D\u043E\u0433\u0438\u0439",
+      difficulty: 2,
+      riddle: ["\u0428\u0435\u0441\u0442\u044C \u043D\u043E\u0433, \u0430 \u043D\u0435 \u043F\u0430\u0443\u043A;", "\u0436\u0443\u0436\u0436\u0438\u0442, \u0430 \u043D\u0435 \u043F\u0447\u0435\u043B\u0430."],
+      answer: "\u0416\u0423\u041A",
+      rewards: [{ type: "coins", amount: 155 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_131",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0413\u0443\u0434\u044F\u0449\u0438\u0439 \u0441\u0431\u043E\u0440\u0449\u0438\u043A",
+      difficulty: 2,
+      riddle: ["\u041B\u0435\u0442\u0438\u0442, \u0433\u0443\u0434\u0438\u0442", "\u0438 \u043C\u0451\u0434 \u043A\u043E\u043F\u0438\u0442."],
+      answer: "\u041F\u0427\u0415\u041B\u0410",
+      rewards: [{ type: "coins", amount: 157 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_132",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0430\u0434 \u0441\u0443\u043F\u043E\u043C",
+      difficulty: 2,
+      riddle: ["\u0416\u0443\u0436\u0436\u0438\u0442 \u043D\u0430\u0434 \u0441\u0443\u043F\u043E\u043C,", "\u0430 \u0441\u0443\u043F\u0430 \u043D\u0435 \u0435\u0441\u0442."],
+      answer: "\u041C\u0423\u0425\u0410",
+      rewards: [{ type: "coins", amount: 159 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_133",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0422\u0438\u0445\u0438\u0439 \u0442\u043A\u0430\u0447",
+      difficulty: 2,
+      riddle: ["\u0422\u043A\u0451\u0442, \u0430 \u043D\u0435 \u0442\u043A\u0430\u0447\u0438\u0445\u0430;", "\u043B\u043E\u0432\u0438\u0442, \u0430 \u043D\u0435 \u0440\u044B\u0431\u0430\u043A."],
+      answer: "\u041F\u0410\u0423\u041A",
+      rewards: [{ type: "coins", amount: 161 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_134",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0441\u0442\u043E\u0440\u043E\u0436",
+      difficulty: 1,
+      riddle: ["\u0414\u043D\u0451\u043C \u0441\u043F\u0438\u0442,", "\u043D\u043E\u0447\u044C\u044E \u0441\u0442\u043E\u0440\u043E\u0436\u0438\u0442 \u043C\u044B\u0448\u0435\u0439."],
+      answer: "\u0421\u041E\u0412\u0410",
+      rewards: [{ type: "coins", amount: 163 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_135",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0422\u0438\u0445\u0430\u044F \u043F\u0435\u0441\u043D\u044F",
+      difficulty: 1,
+      riddle: ["\u0425\u043E\u0434\u0438\u0442 \u043C\u044F\u0433\u043A\u043E,", "\u043C\u0443\u0440\u043B\u044B\u0447\u0435\u0442 \u0433\u0440\u043E\u043C\u043A\u043E."],
+      answer: "\u041A\u041E\u0428\u041A\u0410",
+      rewards: [{ type: "coins", amount: 165 }, { type: "seals", amount: 1 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_136",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0413\u0440\u0438\u0432\u0430 \u043D\u0430 \u0432\u0435\u0442\u0440\u0443",
+      difficulty: 2,
+      riddle: ["\u0413\u0440\u0438\u0432\u0430 \u043D\u0430 \u0432\u0435\u0442\u0440\u0443,", "\u043A\u043E\u043F\u044B\u0442\u0430 \u2014 \u0433\u0440\u043E\u043C."],
+      answer: "\u041A\u041E\u041D\u042C",
+      rewards: [{ type: "coins", amount: 167 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_137",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0411\u043E\u0440\u043E\u0434\u0430 \u0431\u0435\u0437 \u043F\u043E\u0434\u0431\u043E\u0440\u043E\u0434\u043A\u0430",
+      difficulty: 2,
+      riddle: ["\u0411\u043E\u0440\u043E\u0434\u0430 \u0431\u0435\u0437 \u043F\u043E\u0434\u0431\u043E\u0440\u043E\u0434\u043A\u0430,", "\u0440\u043E\u0433\u0430 \u0431\u0435\u0437 \u043B\u0435\u0441\u0430."],
+      answer: "\u041A\u041E\u0417\u0410",
+      rewards: [{ type: "coins", amount: 169 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_138",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0416\u0438\u0432\u043E\u0439 \u043A\u0443\u0432\u0448\u0438\u043D",
+      difficulty: 2,
+      riddle: ["\u041C\u043E\u043B\u043E\u043A\u043E \u0434\u0430\u0451\u0442,", "\u0430 \u043B\u0430\u0432\u043A\u0438 \u043D\u0435 \u0434\u0435\u0440\u0436\u0438\u0442."],
+      answer: "\u041A\u041E\u0420\u041E\u0412\u0410",
+      rewards: [{ type: "coins", amount: 171 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_139",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0415\u0436\u0435\u0434\u043D\u0435\u0432\u043D\u044B\u0439 \u0434\u0430\u0440",
+      difficulty: 2,
+      riddle: ["\u041D\u0435\u0441\u0451\u0442 \u0431\u0435\u043B\u044B\u0439 \u0434\u0430\u0440", "\u043A\u0430\u0436\u0434\u044B\u0439 \u0434\u0435\u043D\u044C."],
+      answer: "\u041A\u0423\u0420\u0418\u0426\u0410",
+      rewards: [{ type: "coins", amount: 173 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_140",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0411\u0435\u0441\u0441\u043E\u043D\u043D\u0430\u044F",
+      difficulty: 2,
+      riddle: ["\u0421\u043F\u0438\u0442 \u0441 \u043E\u0442\u043A\u0440\u044B\u0442\u044B\u043C\u0438 \u0433\u043B\u0430\u0437\u0430\u043C\u0438", "\u043F\u043E\u0434 \u0432\u043E\u0434\u043E\u0439."],
+      answer: "\u0420\u042B\u0411\u0410",
+      rewards: [{ type: "coins", amount: 175 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_141",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u043F\u0435\u0432\u0435\u0446",
+      difficulty: 2,
+      riddle: ["\u041F\u0440\u044B\u0433\u0430\u0435\u0442 \u0431\u0435\u0437 \u043F\u0440\u0443\u0436\u0438\u043D,", "\u043F\u043E\u0451\u0442 \u0431\u0435\u0437 \u043D\u043E\u0442."],
+      answer: "\u0416\u0410\u0411\u0410",
+      rewards: [{ type: "coins", amount: 177 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_142",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0420\u0435\u0447\u043D\u0430\u044F \u0437\u043C\u0435\u044F",
+      difficulty: 4,
+      riddle: ["\u0420\u0435\u0447\u043D\u0430\u044F \u0437\u043C\u0435\u044F,", "\u0430 \u043D\u0435 \u044F\u0434\u043E\u0432\u0438\u0442\u0430."],
+      answer: "\u0423\u0413\u041E\u0420\u042C",
+      rewards: [{ type: "coins", amount: 179 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_143",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0417\u0430\u0434\u043D\u0438\u0439 \u0445\u043E\u0434",
+      difficulty: 2,
+      riddle: ["\u0425\u043E\u0434\u0438\u0442 \u043D\u0430\u0437\u0430\u0434,", "\u043A\u043B\u0435\u0448\u043D\u0438 \u0434\u0435\u0440\u0436\u0438\u0442 \u0432\u043F\u0435\u0440\u0451\u0434."],
+      answer: "\u0420\u0410\u041A",
+      rewards: [{ type: "coins", amount: 181 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_144",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0414\u043E\u043C \u043D\u0430 \u0441\u043F\u0438\u043D\u0435",
+      difficulty: 2,
+      riddle: ["\u041D\u043E\u0441\u0438\u0442 \u0434\u043E\u043C\u0438\u043A \u043D\u0430 \u0441\u043F\u0438\u043D\u0435", "\u0432\u0441\u044E \u0436\u0438\u0437\u043D\u044C."],
+      answer: "\u0423\u041B\u0418\u0422\u041A\u0410",
+      rewards: [{ type: "coins", amount: 183 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_145",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u043E\u0447\u043D\u0430\u044F \u0431\u0430\u0431\u043E\u0447\u043A\u0430",
+      difficulty: 3,
+      riddle: ["\u041D\u043E\u0447\u043D\u0430\u044F \u0431\u0430\u0431\u043E\u0447\u043A\u0430", "\u0431\u0435\u0437 \u043D\u0430\u0440\u044F\u0434\u043E\u0432."],
+      answer: "\u041C\u041E\u0422\u042B\u041B\u042C",
+      rewards: [{ type: "coins", amount: 185 }, { type: "seals", amount: 1 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_146",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0413\u043E\u0441\u0442\u044C \u0448\u0443\u0431\u044B",
+      difficulty: 3,
+      riddle: ["\u0415\u0441\u0442 \u0448\u0435\u0440\u0441\u0442\u044C,", "\u0430 \u043D\u0435 \u043A\u043E\u0437\u0430."],
+      answer: "\u041C\u041E\u041B\u042C",
+      rewards: [{ type: "coins", amount: 187 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_147",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0417\u0443\u0431\u0430\u0441\u0442\u0430\u044F \u0431\u0435\u0437 \u0430\u043F\u043F\u0435\u0442\u0438\u0442\u0430",
+      difficulty: 2,
+      riddle: ["\u0417\u0443\u0431\u043E\u0432 \u043C\u043D\u043E\u0433\u043E,", "\u0430 \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u0435\u0441\u0442."],
+      answer: "\u041F\u0418\u041B\u0410",
+      rewards: [{ type: "coins", amount: 189 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_148",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043D\u043E\u0441",
+      difficulty: 2,
+      riddle: ["\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043D\u043E\u0441, \u0434\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u044B\u0439 \u0445\u0432\u043E\u0441\u0442 \u2014", "\u043A\u043E\u043B\u0435\u0442 \u0434\u0440\u043E\u0432\u0430."],
+      answer: "\u0422\u041E\u041F\u041E\u0420",
+      rewards: [{ type: "coins", amount: 191 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_149",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041A\u0440\u0435\u043F\u0447\u0435 \u043E\u0442 \u0443\u0434\u0430\u0440\u043E\u0432",
+      difficulty: 3,
+      riddle: ["\u0413\u043E\u043B\u043E\u0432\u0443 \u0431\u044C\u044E\u0442 \u2014", "\u0430 \u043E\u043D \u043A\u0440\u0435\u043F\u0447\u0435 \u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0441\u044F."],
+      answer: "\u0413\u0412\u041E\u0417\u0414\u042C",
+      rewards: [{ type: "coins", amount: 193 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_150",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0412\u043E\u0434\u0438\u043C\u0430\u044F \u0438\u0433\u043B\u043E\u0439",
+      difficulty: 3,
+      riddle: ["\u0418\u0433\u043B\u0430 \u0432\u043E\u0434\u0438\u0442 \u0435\u0451", "\u043F\u043E \u043F\u043E\u043B\u044E \u0442\u043A\u0430\u043D\u0438."],
+      answer: "\u041D\u0418\u0422\u042C",
+      rewards: [{ type: "coins", amount: 195 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_151",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043B\u0435\u043F\u043E\u0439 \u043F\u0440\u043E\u0432\u043E\u0434\u043D\u0438\u043A",
+      difficulty: 3,
+      riddle: ["\u0413\u043B\u0430\u0437 \u0435\u0441\u0442\u044C, \u0430 \u043D\u0435 \u0432\u0438\u0434\u0438\u0442;", "\u0432\u043E\u0434\u0438\u0442 \u043D\u0438\u0442\u044C \u0437\u0430 \u0441\u043E\u0431\u043E\u0439."],
+      answer: "\u0418\u0413\u041B\u0410",
+      rewards: [{ type: "coins", amount: 197 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_152",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0413\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u0440\u0435\u0437\u0447\u0438\u043A",
+      difficulty: 1,
+      riddle: ["\u0420\u0435\u0436\u0435\u0442 \u0445\u043B\u0435\u0431,", "\u0430 \u0441\u0430\u043C \u043D\u0435 \u0435\u0441\u0442."],
+      answer: "\u041D\u041E\u0416",
+      rewards: [{ type: "coins", amount: 199 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_153",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041A\u0443\u043F\u0430\u043B\u044C\u0449\u0438\u0446\u0430 \u0432 \u0441\u0443\u043F\u0435",
+      difficulty: 2,
+      riddle: ["\u041A\u0443\u043F\u0430\u0435\u0442\u0441\u044F \u0432 \u0441\u0443\u043F\u0435", "\u043A\u0430\u0436\u0434\u044B\u0439 \u0434\u0435\u043D\u044C."],
+      answer: "\u041B\u041E\u0416\u041A\u0410",
+      rewards: [{ type: "coins", amount: 201 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_154",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0427\u0435\u0442\u044B\u0440\u0451\u0437\u0443\u0431\u0430\u044F",
+      difficulty: 2,
+      riddle: ["\u0427\u0435\u0442\u044B\u0440\u0435 \u0437\u0443\u0431\u0446\u0430,", "\u0430 \u043D\u0435 \u043F\u0438\u043B\u0430."],
+      answer: "\u0412\u0418\u041B\u041A\u0410",
+      rewards: [{ type: "coins", amount: 203 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_155",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0422\u0435\u0440\u043F\u0435\u043B\u0438\u0432\u043E\u0435 \u0431\u0440\u044E\u0445\u043E",
+      difficulty: 2,
+      riddle: ["\u0411\u0440\u044E\u0445\u043E \u043D\u0430\u0434 \u043E\u0433\u043D\u0451\u043C \u2014", "\u0438 \u043D\u0435 \u0431\u043E\u043B\u0438\u0442."],
+      answer: "\u041A\u041E\u0422\u041B\u041E\u041A",
+      rewards: [{ type: "coins", amount: 205 }, { type: "seals", amount: 1 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_156",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041A\u0440\u0443\u0433\u043B\u044B\u0439 \u043A\u0430\u0440\u0430\u0443\u043B",
+      difficulty: 1,
+      riddle: ["\u0414\u0435\u0440\u0436\u0438\u0442 \u0447\u0430\u0439,", "\u0430 \u043D\u0435 \u043F\u044C\u0451\u0442."],
+      answer: "\u0427\u0410\u0428\u041A\u0410",
+      rewards: [{ type: "coins", amount: 207 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_157",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0413\u043B\u0443\u0431\u043E\u043A\u0430\u044F",
+      difficulty: 1,
+      riddle: ["\u0413\u043B\u0443\u0431\u043E\u043A\u0430\u044F \u0442\u0430\u0440\u0435\u043B\u043A\u0430", "\u0434\u043B\u044F \u0449\u0435\u043D\u043A\u0430 \u0438 \u0449\u0435\u0439."],
+      answer: "\u041C\u0418\u0421\u041A\u0410",
+      rewards: [{ type: "coins", amount: 209 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_158",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0420\u0443\u0447\u043A\u0430 \u0431\u0435\u0437 \u0434\u0432\u0435\u0440\u0438",
+      difficulty: 2,
+      riddle: ["\u0421 \u0440\u0443\u0447\u043A\u043E\u0439, \u043D\u043E \u043D\u0435 \u0434\u0432\u0435\u0440\u044C;", "\u0441 \u0447\u0430\u0435\u043C, \u043D\u043E \u043D\u0435 \u043A\u043E\u0442\u0451\u043B."],
+      answer: "\u041A\u0420\u0423\u0416\u041A\u0410",
+      rewards: [{ type: "coins", amount: 211 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_159",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0412\u0438\u0434\u0438\u0442 \u0432\u043E\u0434\u0443",
+      difficulty: 2,
+      riddle: ["\u0421\u0442\u0435\u043A\u043B\u044F\u043D\u043D\u044B\u0439,", "\u0430 \u0432\u043E\u0434\u0430 \u0432\u0438\u0434\u043D\u0430 \u043D\u0430\u0441\u043A\u0432\u043E\u0437\u044C."],
+      answer: "\u0421\u0422\u0410\u041A\u0410\u041D",
+      rewards: [{ type: "coins", amount: 213 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_160",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0423\u0437\u043A\u043E\u0435 \u0433\u043E\u0440\u043B\u044B\u0448\u043A\u043E",
+      difficulty: 2,
+      riddle: ["\u0413\u043E\u0440\u043B\u044B\u0448\u043A\u043E \u0443\u0437\u043A\u043E, \u0431\u0440\u044E\u0445\u043E \u0448\u0438\u0440\u043E\u043A\u043E \u2014", "\u0432\u043E\u0434\u0443 \u043D\u043E\u0441\u0438\u0442."],
+      answer: "\u041A\u0423\u0412\u0428\u0418\u041D",
+      rewards: [{ type: "coins", amount: 215 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_161",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0414\u043B\u0438\u043D\u043D\u0430\u044F \u0440\u0443\u043A\u0430",
+      difficulty: 3,
+      riddle: ["\u0414\u043B\u0438\u043D\u043D\u0430\u044F \u0440\u0443\u043A\u0430", "\u043D\u0430\u0434 \u043A\u0438\u043F\u044F\u0442\u043A\u043E\u043C."],
+      answer: "\u041A\u041E\u0412\u0428\u0418\u041A",
+      rewards: [{ type: "coins", amount: 217 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_162",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u0442\u0435\u043A\u043B\u044F\u043D\u043D\u043E\u0435 \u0441\u0435\u0440\u0434\u0446\u0435",
+      difficulty: 2,
+      riddle: ["\u0421\u0442\u0435\u043A\u043B\u044F\u043D\u043D\u0430\u044F \u0433\u0440\u0443\u0434\u044C,", "\u043E\u0433\u043D\u0435\u043D\u043D\u043E\u0435 \u0441\u0435\u0440\u0434\u0446\u0435."],
+      answer: "\u041B\u0410\u041C\u041F\u0410",
+      rewards: [{ type: "coins", amount: 219 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_163",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041F\u043B\u043E\u0434 \u043D\u0430 \u0441\u0442\u043E\u043B\u0431\u0435",
+      difficulty: 2,
+      riddle: ["\u0414\u0435\u0440\u0436\u0438\u0442 \u0441\u0432\u0435\u0442 \u043D\u0430 \u0441\u0442\u043E\u043B\u0431\u0435,", "\u043A\u0430\u043A \u043F\u043B\u043E\u0434 \u043D\u0430 \u0432\u0435\u0442\u043A\u0435."],
+      answer: "\u0424\u041E\u041D\u0410\u0420\u042C",
+      rewards: [{ type: "coins", amount: 221 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_164",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u0441\u0442\u043E\u0440\u043E\u0436",
+      difficulty: 2,
+      riddle: ["\u041A\u0443\u0441\u043E\u0447\u0435\u043A \u0436\u0435\u043B\u0435\u0437\u0430,", "\u0430 \u0434\u0432\u0435\u0440\u044C \u0441\u0442\u043E\u0440\u043E\u0436\u0438\u0442."],
+      answer: "\u0417\u0410\u041C\u041E\u041A",
+      rewards: [{ type: "coins", amount: 223 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_165",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041E\u0442\u043F\u0438\u0440\u0430\u0439\u043B\u043E",
+      difficulty: 1,
+      riddle: ["\u041D\u0435 \u043F\u0442\u0438\u0446\u0430,", "\u0430 \u043E\u0442\u043F\u0438\u0440\u0430\u0435\u0442."],
+      answer: "\u041A\u041B\u042E\u0427",
+      rewards: [{ type: "coins", amount: 225 }, { type: "seals", amount: 1 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_166",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0413\u043B\u0430\u0437 \u0434\u043E\u043C\u0430",
+      difficulty: 1,
+      riddle: ["\u0413\u043B\u0430\u0437 \u0434\u043E\u043C\u0430 \u2014", "\u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u0432 \u043E\u0431\u0435 \u0441\u0442\u043E\u0440\u043E\u043D\u044B."],
+      answer: "\u041E\u041A\u041D\u041E",
+      rewards: [{ type: "coins", amount: 227 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_167",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041F\u0440\u0438\u0432\u0440\u0430\u0442\u043D\u0438\u0446\u0430",
+      difficulty: 1,
+      riddle: ["\u0412\u043F\u0443\u0441\u043A\u0430\u0435\u0442 \u0438 \u0432\u044B\u043F\u0443\u0441\u043A\u0430\u0435\u0442", "\u0431\u0435\u0437 \u0441\u043B\u043E\u0432."],
+      answer: "\u0414\u0412\u0415\u0420\u042C",
+      rewards: [{ type: "coins", amount: 229 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_168",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E\u043D\u043E\u0433\u0438\u0439 \u0431\u0435\u0437 \u0431\u0435\u0433\u0430",
+      difficulty: 1,
+      riddle: ["\u0427\u0435\u0442\u044B\u0440\u0435 \u043D\u043E\u0433\u0438,", "\u0430 \u043D\u0435 \u0431\u0435\u0433\u0430\u0435\u0442."],
+      answer: "\u0421\u0422\u041E\u041B",
+      rewards: [{ type: "coins", amount: 231 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_169",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0427\u0435\u0442\u044B\u0440\u0435 \u043D\u043E\u0433\u0438 \u043F\u043E\u0434 \u0441\u0438\u0434\u0435\u043D\u044C\u0435\u043C",
+      difficulty: 2,
+      riddle: ["\u0421\u043F\u0438\u043D\u0430 \u0435\u0441\u0442\u044C,", "\u043F\u043E\u0437\u0432\u043E\u043D\u043E\u0447\u043D\u0438\u043A\u0430 \u043D\u0435\u0442."],
+      answer: "\u0421\u0422\u0423\u041B",
+      rewards: [{ type: "coins", amount: 233 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_170",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0435\u043C\u043E\u0439 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0440\u044C",
+      difficulty: 1,
+      riddle: ["\u0414\u0435\u0440\u0436\u0438\u0442 \u043A\u043D\u0438\u0433\u0438,", "\u0430 \u043D\u0435 \u0447\u0438\u0442\u0430\u0435\u0442."],
+      answer: "\u041F\u041E\u041B\u041A\u0410",
+      rewards: [{ type: "coins", amount: 235 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_171",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0422\u0451\u043F\u043B\u044B\u0439 \u0442\u043A\u0430\u0447 \u043F\u043E\u043B\u0430",
+      difficulty: 1,
+      riddle: ["\u041B\u0435\u0436\u0438\u0442 \u043D\u0430 \u043F\u043E\u043B\u0443", "\u0438 \u0433\u0440\u0435\u0435\u0442 \u043D\u043E\u0433\u0438."],
+      answer: "\u041A\u041E\u0412\u0401\u0420",
+      rewards: [{ type: "coins", amount: 237 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_172",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041E\u0431\u043B\u0430\u043A\u043E \u0434\u043B\u044F \u0441\u043D\u0430",
+      difficulty: 2,
+      riddle: ["\u041E\u0431\u043B\u0430\u043A\u043E \u0434\u043B\u044F \u0441\u043D\u0430 \u2014", "\u043C\u044F\u0433\u043A\u043E\u0435 \u0438 \u0431\u0435\u043B\u043E\u0435."],
+      answer: "\u041F\u0415\u0420\u0418\u041D\u0410",
+      rewards: [{ type: "coins", amount: 239 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_173",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0411\u043E\u0435\u0446 \u0441 \u043F\u044B\u043B\u044C\u044E",
+      difficulty: 2,
+      riddle: ["\u0425\u0432\u043E\u0441\u0442 \u0438\u0437 \u043F\u0440\u0443\u0442\u044C\u0435\u0432,", "\u0434\u0435\u0440\u0451\u0442\u0441\u044F \u0441 \u043F\u044B\u043B\u044C\u044E."],
+      answer: "\u041C\u0415\u0422\u041B\u0410",
+      rewards: [{ type: "coins", amount: 241 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_174",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0412\u043E\u0434\u044F\u043D\u043E\u0439 \u043D\u043E\u0441\u0438\u043B\u044C\u0449\u0438\u043A",
+      difficulty: 1,
+      riddle: ["\u041D\u043E\u0441\u0438\u0442 \u0432\u043E\u0434\u0443,", "\u0430 \u043D\u0435 \u043F\u044C\u0451\u0442."],
+      answer: "\u0412\u0415\u0414\u0420\u041E",
+      rewards: [{ type: "coins", amount: 243 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_175",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043D\u043E\u0441 \u0432\u043E\u0434\u044B",
+      difficulty: 2,
+      riddle: ["\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043D\u043E\u0441,", "\u0438\u0437 \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E \u0442\u0435\u0447\u0451\u0442 \u0432\u043E\u0434\u0430."],
+      answer: "\u041A\u0420\u0410\u041D",
+      rewards: [{ type: "coins", amount: 245 }, { type: "seals", amount: 1 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_176",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0427\u0451\u0440\u043D\u0430\u044F \u043F\u0430\u0441\u0442\u044C",
+      difficulty: 2,
+      riddle: ["\u0427\u0451\u0440\u043D\u0430\u044F \u043F\u0430\u0441\u0442\u044C,", "\u0442\u0451\u043F\u043B\u0430\u044F \u0441\u043F\u0438\u043D\u0430."],
+      answer: "\u041F\u0415\u0427\u042C",
+      rewards: [{ type: "coins", amount: 247 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_177",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0414\u044B\u043C\u043E\u0432\u0430\u044F \u043B\u0435\u0441\u0442\u043D\u0438\u0446\u0430",
+      difficulty: 3,
+      riddle: ["\u0414\u044B\u043C \u043B\u0435\u0442\u0438\u0442 \u0432\u0432\u0435\u0440\u0445", "\u043F\u043E \u0435\u0451 \u0441\u043F\u0438\u043D\u0435."],
+      answer: "\u0422\u0420\u0423\u0411\u0410",
+      rewards: [{ type: "coins", amount: 249 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_178",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0411\u0435\u0437\u0437\u0443\u0431\u044B\u0439 \u0433\u043B\u043E\u0442\u0443\u043D",
+      difficulty: 2,
+      riddle: ["\u0413\u043B\u043E\u0442\u0430\u0435\u0442 \u043C\u0443\u043A\u0443,", "\u0430 \u043D\u0435 \u0436\u0443\u0451\u0442."],
+      answer: "\u041C\u0415\u0428\u041E\u041A",
+      rewards: [{ type: "coins", amount: 251 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_179",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041A\u043E\u043B\u044C\u0446\u0430 \u043D\u0430 \u0431\u0440\u044E\u0445\u0435",
+      difficulty: 3,
+      riddle: ["\u0422\u043E\u043B\u0441\u0442\u0430\u044F, \u0434\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u0430\u044F,", "\u043A\u043E\u043B\u044C\u0446\u0430 \u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0435 \u043D\u043E\u0441\u0438\u0442."],
+      answer: "\u0411\u041E\u0427\u041A\u0410",
+      rewards: [{ type: "coins", amount: 253 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_180",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0414\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u044B\u0439 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C",
+      difficulty: 2,
+      riddle: ["\u0416\u0435\u043B\u0435\u0437\u043D\u044B\u0435 \u0437\u0443\u0431\u044B, \u0434\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u043E\u0435 \u0431\u0440\u044E\u0445\u043E,", "\u0441\u0435\u043A\u0440\u0435\u0442\u044B \u0434\u0435\u0440\u0436\u0438\u0442."],
+      answer: "\u0421\u0423\u041D\u0414\u0423\u041A",
+      rewards: [{ type: "coins", amount: 255 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_181",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041F\u044C\u044E\u0449\u0435\u0435 \u043F\u0438\u0441\u044C\u043C\u043E",
+      difficulty: 2,
+      riddle: ["\u041F\u0438\u0448\u0435\u0442 \u0431\u0435\u0437 \u043F\u0430\u043B\u044C\u0446\u0435\u0432,", "\u043F\u044C\u0451\u0442 \u0447\u0435\u0440\u043D\u0438\u043B\u0430."],
+      answer: "\u041F\u0415\u0420\u041E",
+      rewards: [{ type: "coins", amount: 257 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_182",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043A\u0440\u0443\u0447\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430",
+      difficulty: 2,
+      riddle: ["\u0421\u043A\u0440\u0443\u0447\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430", "\u0434\u043B\u0438\u043D\u043E\u044E \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u044E."],
+      answer: "\u0421\u0412\u0418\u0422\u041E\u041A",
+      rewards: [{ type: "coins", amount: 259 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_183",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041C\u0438\u0440 \u0431\u0435\u0437 \u043A\u0440\u0430\u0441\u043E\u043A",
+      difficulty: 2,
+      riddle: ["\u0420\u0438\u0441\u0443\u0435\u0442 \u043C\u0438\u0440", "\u0431\u0435\u0437 \u043A\u0440\u0430\u0441\u043E\u043A."],
+      answer: "\u041A\u0410\u0420\u0422\u0410",
+      rewards: [{ type: "coins", amount: 261 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_184",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0435\u043C\u043E\u0439 \u0433\u043E\u043D\u0435\u0446",
+      difficulty: 3,
+      riddle: ["\u0413\u043E\u0432\u043E\u0440\u0438\u0442 \u0431\u0435\u0437 \u0433\u043E\u043B\u043E\u0441\u0430", "\u043D\u0430 \u0440\u0430\u0441\u0441\u0442\u043E\u044F\u043D\u0438\u0438."],
+      answer: "\u041F\u0418\u0421\u042C\u041C\u041E",
+      rewards: [{ type: "coins", amount: 263 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_185",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0412\u043E\u0441\u043A\u043E\u0432\u043E\u0439 \u0437\u043D\u0430\u043A",
+      difficulty: 3,
+      riddle: ["\u0421\u0442\u0443\u0447\u0438\u0442 \u043F\u043E \u0432\u043E\u0441\u043A\u0443 \u2014", "\u0438 \u0441\u043B\u043E\u0432\u043E \u043A\u0440\u0435\u043F\u043A\u043E."],
+      answer: "\u041F\u0415\u0427\u0410\u0422\u042C",
+      rewards: [{ type: "coins", amount: 265 }, { type: "seals", amount: 1 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_186",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041A\u0440\u044B\u0448\u0430 \u0432 \u0440\u0443\u043A\u0435",
+      difficulty: 1,
+      riddle: ["\u041A\u0440\u044B\u0448\u0430 \u0432 \u0440\u0443\u043A\u0435", "\u043D\u0430 \u0441\u043B\u0443\u0447\u0430\u0439 \u0434\u043E\u0436\u0434\u044F."],
+      answer: "\u0417\u041E\u041D\u0422",
+      rewards: [{ type: "coins", amount: 267 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_187",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0430\u043A\u0438\u0434\u043A\u0430 \u043E\u0442 \u0434\u043E\u0436\u0434\u044F",
+      difficulty: 1,
+      riddle: ["\u041F\u043B\u0435\u0447\u0438 \u0431\u0435\u0437 \u0440\u0443\u043A\u0430\u0432\u043E\u0432,", "\u0437\u0430\u0449\u0438\u0442\u0430 \u0431\u0435\u0437 \u0441\u0442\u0435\u043D."],
+      answer: "\u041F\u041B\u0410\u0429",
+      rewards: [{ type: "coins", amount: 269 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_188",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041F\u043E \u043B\u0443\u0436\u0430\u043C \u0432\u0434\u0432\u043E\u0451\u043C",
+      difficulty: 2,
+      riddle: ["\u041E\u0434\u0438\u043D \u0438\u0437 \u043F\u0430\u0440\u044B \u2014", "\u0445\u043E\u0434\u0438\u0442 \u043F\u043E \u043B\u0443\u0436\u0430\u043C."],
+      answer: "\u0421\u0410\u041F\u041E\u0413",
+      rewards: [{ type: "coins", amount: 271 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_189",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041A\u0440\u044B\u0448\u0430 \u0441 \u043F\u043E\u043B\u044F\u043C\u0438",
+      difficulty: 1,
+      riddle: ["\u041A\u0440\u044B\u0448\u0430 \u0434\u043B\u044F \u0433\u043E\u043B\u043E\u0432\u044B", "\u0441 \u043F\u043E\u043B\u044F\u043C\u0438."],
+      answer: "\u0428\u041B\u042F\u041F\u0410",
+      rewards: [{ type: "coins", amount: 273 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_190",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0428\u0435\u0441\u0442\u0438\u043B\u0438\u043A\u0438\u0439 \u043C\u043E\u043B\u0447\u0443\u043D",
+      difficulty: 3,
+      riddle: ["\u0428\u0435\u0441\u0442\u044C \u043B\u0438\u0446,", "\u0430 \u043D\u0435 \u0433\u043E\u0432\u043E\u0440\u0438\u0442."],
+      answer: "\u041A\u0423\u0411\u0418\u041A",
+      rewards: [{ type: "coins", amount: 275 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_191",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041D\u0435\u043C\u0430\u044F \u0434\u043E\u0447\u044C",
+      difficulty: 2,
+      riddle: ["\u041D\u0435 \u0434\u044B\u0448\u0438\u0442,", "\u0430 \u0434\u043E\u0447\u044C \u0443 \u0434\u0435\u0432\u043E\u0447\u043A\u0438."],
+      answer: "\u041A\u0423\u041A\u041B\u0410",
+      rewards: [{ type: "coins", amount: 277 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_192",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041E\u0434\u043D\u043E\u043D\u043E\u0433\u0438\u0439 \u0442\u0430\u043D\u0446\u043E\u0440",
+      difficulty: 3,
+      riddle: ["\u041A\u0440\u0443\u0436\u0438\u0442\u0441\u044F \u043D\u0430 \u043E\u0434\u043D\u043E\u0439 \u043D\u043E\u0433\u0435", "\u0438 \u0433\u0443\u0434\u0438\u0442."],
+      answer: "\u0412\u041E\u041B\u0427\u041E\u041A",
+      rewards: [{ type: "coins", amount: 279 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_193",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041A\u0440\u0443\u0433\u043B\u044B\u0439 \u043B\u0435\u0442\u0443\u043D",
+      difficulty: 1,
+      riddle: ["\u041A\u0440\u0443\u0433\u043B\u044B\u0439 \u0438 \u043B\u0451\u0433\u043A\u0438\u0439,", "\u043B\u0435\u0442\u0438\u0442 \u043E\u0442 \u0449\u0435\u043B\u0447\u043A\u0430."],
+      answer: "\u0428\u0410\u0420",
+      rewards: [{ type: "coins", amount: 281 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u043F\u043E\u0434\u0430\u0435\u0442: \xAB\u0417\u043D\u0430\u044E-\u0437\u043D\u0430\u044E!\xBB \u2014 \u043D\u043E \u043D\u0435 \u0441\u043A\u0430\u0436\u0435\u0442."
+    },
+    {
+      id: "bk_194",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043E\u043B\u043D\u0435\u0447\u043D\u044B\u0439 \u0432\u0438\u043D\u043E\u0433\u0440\u0430\u0434",
+      difficulty: 4,
+      riddle: ["\u0412\u0438\u043D\u043E\u0433\u0440\u0430\u0434,", "\u043F\u0440\u043E\u0448\u0435\u0434\u0448\u0438\u0439 \u0441\u043E\u043B\u043D\u0446\u0435\u043C."],
+      answer: "\u0418\u0417\u042E\u041C",
+      rewards: [{ type: "coins", amount: 283 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442 \u043D\u0430\u0440\u043E\u0434\u043D\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443."
+    },
+    {
+      id: "bk_195",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0417\u043E\u043B\u043E\u0442\u043E \u0446\u0432\u0435\u0442\u043E\u0432",
+      difficulty: 1,
+      riddle: ["\u0417\u043E\u043B\u043E\u0442\u043E \u0446\u0432\u0435\u0442\u043E\u0432", "\u0432 \u0431\u0430\u043D\u043A\u0435."],
+      answer: "\u041C\u0401\u0414",
+      rewards: [{ type: "coins", amount: 285 }, { type: "seals", amount: 1 }],
+      intro: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u0442\u0430\u0440\u0430, \u043A\u0430\u043A \u0441\u0430\u043C \u0447\u0435\u0440\u0434\u0430\u043A."
+    },
+    {
+      id: "bk_196",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043F\u044F\u0449\u0435\u0435 \u043C\u043E\u043B\u043E\u043A\u043E",
+      difficulty: 3,
+      riddle: ["\u041C\u043E\u043B\u043E\u043A\u043E,", "\u043F\u043E\u0448\u0435\u0434\u0448\u0435\u0435 \u0432 \u0441\u043F\u044F\u0447\u043A\u0443."],
+      answer: "\u0421\u042B\u0420",
+      rewards: [{ type: "coins", amount: 287 }],
+      intro: "\u0421\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u043E\u043B\u0435\u043C \u0438 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "bk_197",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0417\u043E\u043B\u043E\u0442\u043E \u043F\u043E\u043B\u0435\u0439",
+      difficulty: 1,
+      riddle: ["\u0417\u043E\u043B\u043E\u0442\u043E \u043F\u043E\u043B\u0435\u0439", "\u043D\u0430 \u0441\u0442\u043E\u043B\u0435."],
+      answer: "\u0425\u041B\u0415\u0411",
+      rewards: [{ type: "coins", amount: 289 }],
+      intro: "\u0411\u0430\u0431\u0443\u0448\u043A\u0438\u043D\u0430 \u0437\u0430\u0433\u0430\u0434\u043A\u0430, \u043F\u043E\u043C\u043D\u044F\u0449\u0430\u044F \u043F\u0435\u0447\u044C."
+    },
+    {
+      id: "bk_198",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0411\u0435\u043B\u0430\u044F \u043D\u0435-\u0441\u043D\u0435\u0433",
+      difficulty: 1,
+      riddle: ["\u0411\u0435\u043B\u0430\u044F, \u0430 \u043D\u0435 \u0441\u043D\u0435\u0433;", "\u0432 \u0441\u0443\u043F\u0435 \u0442\u0430\u0435\u0442."],
+      answer: "\u0421\u041E\u041B\u042C",
+      rewards: [{ type: "coins", amount: 291 }],
+      intro: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0438\u0441\u0442\u0430\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0438 \u0443\u043B\u044B\u0431\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_199",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u0421\u043B\u0430\u0434\u043A\u0438\u0439 \u043F\u0435\u0441\u043E\u043A",
+      difficulty: 1,
+      riddle: ["\u0421\u043B\u0430\u0434\u043A\u0438\u0439 \u043F\u0435\u0441\u043E\u043A", "\u0438\u0437 \u0442\u0440\u043E\u0441\u0442\u043D\u0438\u043A\u0430."],
+      answer: "\u0421\u0410\u0425\u0410\u0420",
+      rewards: [{ type: "coins", amount: 293 }],
+      intro: "\u0418\u0437 \u043A\u043D\u0438\u0433\u0438 \u043F\u0430\u0434\u0430\u0435\u0442 \u0437\u0430\u0441\u043E\u0445\u0448\u0438\u0439 \u043B\u0438\u0441\u0442 \u2014 \u0438 \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
+    },
+    {
+      id: "bk_200",
+      world: "attic",
+      mechanic: "riddle",
+      name: "\u041F\u044B\u043B\u044C \u0437\u0451\u0440\u0435\u043D",
+      difficulty: 2,
+      riddle: ["\u0411\u0435\u043B\u0430\u044F \u043F\u044B\u043B\u044C", "\u0437\u043E\u043B\u043E\u0442\u044B\u0445 \u0437\u0451\u0440\u0435\u043D."],
+      answer: "\u041C\u0423\u041A\u0410",
+      rewards: [{ type: "coins", amount: 295 }, { type: "seals", amount: 2 }],
+      intro: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0448\u0435\u0432\u0435\u043B\u044F\u0442\u0441\u044F: \u043D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430."
     }
   ];
   var BOOK_PUZZLE_BY_ID = Object.fromEntries(BOOK_PUZZLES.map((p) => [p.id, p]));
@@ -4952,6 +5999,232 @@
       intro: "\u042D\u043B\u0438\u043A\u0441\u0438\u0440 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430 \u043C\u0438\u0440\u043E\u0432. \u041E\u0434\u0438\u043D\u043D\u0430\u0434\u0446\u0430\u0442\u044C \u0448\u0430\u0433\u043E\u0432, \u0434\u0432\u0430 \xAB\u0418\u041B\u0418\xBB, \u0442\u0440\u0438 \u043F\u0435\u0447\u0430\u0442\u0438. \u0424\u0438\u043D\u0430\u043B \u043A\u043D\u0438\u0433\u0438 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432."
     }
   ];
+
+  // src/data/puzzlesFate.js
+  var FATE_CARDS = {
+    home: { id: "home", name: "\u0414\u043E\u043C", icon: "\u{1F3E0}", meanings: ["\u043E\u0447\u0430\u0433", "\u0440\u043E\u0434\u043D\u044F"] },
+    path: { id: "path", name: "\u0414\u043E\u0440\u043E\u0433\u0430", icon: "\u{1F97E}", meanings: ["\u043F\u0443\u0442\u044C", "\u043F\u0435\u0440\u0435\u043C\u0435\u043D\u044B"] },
+    well: { id: "well", name: "\u041A\u043E\u043B\u043E\u0434\u0435\u0446", icon: "\u{1F573}\uFE0F", meanings: ["\u0442\u0430\u0439\u043D\u0430", "\u0433\u043B\u0443\u0431\u0438\u043D\u0430"] },
+    star: { id: "star", name: "\u0417\u0432\u0435\u0437\u0434\u0430", icon: "\u2B50", meanings: ["\u043D\u0430\u0434\u0435\u0436\u0434\u0430", "\u043C\u0435\u0447\u0442\u0430"] },
+    web: { id: "web", name: "\u041F\u0430\u0443\u0442\u0438\u043D\u0430", icon: "\u{1F578}\uFE0F", meanings: ["\u0437\u0430\u043F\u0443\u0442\u0430\u043D\u043D\u043E\u0441\u0442\u044C", "\u0434\u043E\u043B\u0433"] },
+    bread: { id: "bread", name: "\u0425\u043B\u0435\u0431", icon: "\u{1F35E}", meanings: ["\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u043A", "\u0442\u0440\u0443\u0434"] },
+    mirror: { id: "mirror", name: "\u0417\u0435\u0440\u043A\u0430\u043B\u043E", icon: "\u{1FA9E}", meanings: ["\u043F\u0440\u0430\u0432\u0434\u0430", "\u0434\u0432\u043E\u0439\u043D\u0438\u043A"] },
+    candle: { id: "candle", name: "\u0421\u0432\u0435\u0447\u0430", icon: "\u{1F56F}\uFE0F", meanings: ["\u043F\u0430\u043C\u044F\u0442\u044C", "\u0442\u0435\u043F\u043B\u043E"] },
+    key: { id: "key", name: "\u041A\u043B\u044E\u0447", icon: "\u{1F5DD}\uFE0F", meanings: ["\u043E\u0442\u0432\u0435\u0442", "\u043D\u0430\u0447\u0430\u043B\u043E"] },
+    book: { id: "book", name: "\u041A\u043D\u0438\u0433\u0430", icon: "\u{1F4D6}", meanings: ["\u0437\u043D\u0430\u043D\u0438\u0435", "\u0437\u0430\u043F\u0438\u0441\u044C"] },
+    bell: { id: "bell", name: "\u041A\u043E\u043B\u043E\u043A\u043E\u043B", icon: "\u{1F514}", meanings: ["\u0432\u0435\u0441\u0442\u044C", "\u0437\u043E\u0432"] },
+    letter: { id: "letter", name: "\u041F\u0438\u0441\u044C\u043C\u043E", icon: "\u2709\uFE0F", meanings: ["\u0441\u0432\u044F\u0437\u044C", "\u043E\u0436\u0438\u0434\u0430\u043D\u0438\u0435"] },
+    moon: { id: "moon", name: "\u041B\u0443\u043D\u0430", icon: "\u{1F319}", meanings: ["\u0441\u043D\u044B", "\u0442\u0438\u0448\u0438\u043D\u0430"] },
+    sun: { id: "sun", name: "\u0421\u043E\u043B\u043D\u0446\u0435", icon: "\u2600\uFE0F", meanings: ["\u0440\u0430\u0434\u043E\u0441\u0442\u044C", "\u0443\u0434\u0430\u0447\u0430"] },
+    rain: { id: "rain", name: "\u0414\u043E\u0436\u0434\u044C", icon: "\u{1F327}\uFE0F", meanings: ["\u0433\u0440\u0443\u0441\u0442\u044C", "\u043E\u0447\u0438\u0449\u0435\u043D\u0438\u0435"] },
+    tree: { id: "tree", name: "\u0414\u0443\u0431", icon: "\u{1F333}", meanings: ["\u043A\u043E\u0440\u043D\u0438", "\u0441\u0438\u043B\u0430"] },
+    bird: { id: "bird", name: "\u041F\u0442\u0438\u0446\u0430", icon: "\u{1F426}", meanings: ["\u0432\u043E\u043B\u044C\u043D\u043E\u0441\u0442\u044C", "\u0432\u0435\u0441\u0442\u043E\u0447\u043A\u0430"] },
+    ship: { id: "ship", name: "\u041A\u043E\u0440\u0430\u0431\u043B\u0438\u043A", icon: "\u26F5", meanings: ["\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u0438\u0435", "\u0432\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435"] },
+    fire: { id: "fire", name: "\u041E\u0433\u043E\u043D\u044C", icon: "\u{1F525}", meanings: ["\u043F\u044B\u043B", "\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u044C"] },
+    cup: { id: "cup", name: "\u0427\u0430\u0448\u0430", icon: "\u{1F375}", meanings: ["\u0432\u0441\u0442\u0440\u0435\u0447\u0430", "\u0443\u0433\u043E\u0449\u0435\u043D\u0438\u0435"] },
+    thread: { id: "thread", name: "\u041D\u0438\u0442\u044C", icon: "\u{1F9F5}", meanings: ["\u0441\u0432\u044F\u0437\u044C", "\u0442\u044F\u043D\u0443\u0447\u0435\u0441\u0442\u044C"] },
+    coin: { id: "coin", name: "\u041C\u043E\u043D\u0435\u0442\u0430", icon: "\u{1FA99}", meanings: ["\u0446\u0435\u043D\u0430", "\u0440\u0430\u0441\u0447\u0451\u0442"] },
+    gate: { id: "gate", name: "\u0412\u043E\u0440\u043E\u0442\u0430", icon: "\u{1F6AA}", meanings: ["\u043F\u043E\u0440\u043E\u0433", "\u0432\u044B\u0431\u043E\u0440"] }
+  };
+  var FATE_PUZZLES = [
+    {
+      id: "fate_01",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u0421\u0442\u043E\u0440\u043E\u0436 \u0443 \u0434\u0432\u0435\u0440\u0438",
+      difficulty: 1,
+      guest: { name: "\u0421\u0442\u043E\u0440\u043E\u0436", icon: "\u{1F9D4}", art: "assets/fate/guest_watchman_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0412\u0441\u044E \u0436\u0438\u0437\u043D\u044C \u0448\u0430\u0433\u0430\u043B \u043F\u043E \u0434\u0432\u043E\u0440\u0430\u043C \u0434\u0430 \u0443\u043B\u0438\u0446\u0430\u043C \u2014 \u043D\u043E\u0433\u0438 \u0441\u0430\u043C\u0438 \u043F\u043E\u043C\u043D\u044F\u0442 \u043A\u0430\u0436\u0434\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C \u0443 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430.", accept: ["path"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u0432\u043E\u0442 \u0441\u0442\u043E\u044E \u043F\u043E\u0434 \u0432\u0430\u0448\u0435\u0439 \u043A\u0440\u044B\u0448\u0435\u0439, \u0441\u0442\u0435\u0440\u0435\u0433\u0443 \u043F\u043E\u043A\u043E\u0439 \u0445\u043E\u0437\u044F\u0439\u0441\u043A\u0438\u0439 \u2014 \u0438 \u0432\u0440\u043E\u0434\u0435 \u043A\u0430\u043A \u0434\u043E\u043C\u0430.", accept: ["home"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0422\u043E\u043B\u044C\u043A\u043E \u0432\u0435\u0441\u0442\u043E\u0447\u043A\u0438 \u043E\u0442 \u0431\u0440\u0430\u0442\u0430 \u0442\u0440\u0435\u0442\u0438\u0439 \u043C\u0435\u0441\u044F\u0446 \u043D\u0435\u0442. \u0416\u0434\u0443 \u043A\u0430\u0436\u0434\u044B\u0439 \u0432\u0435\u0447\u0435\u0440 \u2014 \u0438 \u0432\u0441\u0451 \u043C\u0438\u043C\u043E.", accept: ["letter"] }
+      ],
+      hand: ["path", "home", "letter", "star", "bread", "mirror"],
+      rewards: [{ type: "coins", amount: 320 }],
+      intro: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0433\u043E\u0441\u0442\u044C \u043D\u0430 \u0440\u0430\u0441\u043A\u043B\u0430\u0434. \u0427\u0438\u0442\u0430\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u044E \u043F\u043E \u0447\u0430\u0441\u0442\u044F\u043C \u0438 \u043A\u043B\u0430\u0434\u0438 \u043A\u0430\u0440\u0442\u0443, \u0447\u044C\u0451 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435 \u043E\u0442\u0432\u0435\u0447\u0430\u0435\u0442 \u0441\u0442\u0440\u043E\u043A\u0430\u043C."
+    },
+    {
+      id: "fate_02",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u0421\u043E\u0432\u0430 \u0438 \u043A\u0430\u0442\u0430\u043B\u043E\u0433",
+      difficulty: 1,
+      guest: { name: "\u0421\u043E\u0432\u0430-\u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0440\u044C", icon: "\u{1F989}", art: "assets/fate/guest_owl_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u041F\u043E\u043B\u0436\u0438\u0437\u043D\u0438 \u043F\u0440\u043E\u0432\u0435\u043B\u0430 \u0441\u0440\u0435\u0434\u0438 \u0441\u0442\u0440\u0430\u043D\u0438\u0446 \u2014 \u043A\u0430\u0436\u0434\u044B\u0439 \u0444\u043E\u043B\u0438\u0430\u043D\u0442 \u043C\u043D\u0435 \u043A\u0430\u043A \u0440\u043E\u0434\u043D\u043E\u0439.", accept: ["book"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u0437\u0430\u0441\u044B\u043F\u0430\u044E \u043F\u0440\u044F\u043C\u043E \u043D\u0430 \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0435: \u043D\u043E\u0447\u0438 \u0442\u0438\u0445\u0438\u0435, \u0433\u043B\u0430\u0437\u0430 \u0441\u043B\u0438\u043F\u0430\u044E\u0442\u0441\u044F.", accept: ["moon"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0411\u043E\u044E\u0441\u044C, \u043A\u0430\u0442\u0430\u043B\u043E\u0433 \u043C\u043E\u0439 \u043E\u043A\u043E\u043D\u0447\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u0437\u0430\u043F\u0443\u0442\u0430\u0435\u0442\u0441\u044F \u2014 \u0432\u0441\u0435 \u043D\u0438\u0442\u043E\u0447\u043A\u0438 \u0432 \u043E\u0434\u0438\u043D \u043A\u043B\u0443\u0431\u043E\u043A.", accept: ["web"] }
+      ],
+      hand: ["book", "moon", "web", "bell", "ship", "coin"],
+      rewards: [{ type: "coins", amount: 330 }],
+      intro: "\u0421\u043E\u0432\u0430 \u0434\u0438\u043A\u0442\u043E\u0432\u0430\u043B\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u044B \u043D\u0430 \u043F\u0430\u043C\u044F\u0442\u044C \u2014 \u0442\u0435\u043F\u0435\u0440\u044C \u0441\u0430\u043C\u0430 \u043F\u0440\u043E\u0441\u0438\u0442 \u0441\u043E\u0432\u0435\u0442\u0430 \u0443 \u043A\u0430\u0440\u0442."
+    },
+    {
+      id: "fate_03",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u0420\u0430\u0437\u0432\u0438\u043B\u043A\u0430 \u0441\u043B\u0435\u0434\u043E\u043F\u044B\u0442\u0430",
+      difficulty: 2,
+      guest: { name: "\u0421\u043B\u0435\u0434\u043E\u043F\u044B\u0442", icon: "\u{1F9ED}", art: "assets/fate/guest_ranger_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u041F\u043E \u0442\u043E\u043F\u044F\u043C \u0434\u0430 \u0447\u0430\u0449\u0430\u043C \u0445\u043E\u0434\u0438\u043B, \u0442\u0440\u043E\u043F\u044B \u0437\u043D\u0430\u043B \u043A\u0430\u043A \u0441\u0432\u043E\u0438 \u043F\u044F\u0442\u044C \u043F\u0430\u043B\u044C\u0446\u0435\u0432.", accept: ["path"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0410 \u043D\u044B\u043D\u0447\u0435 \u0441\u0442\u043E\u044E \u0443 \u0432\u0430\u0448\u0435\u0433\u043E \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430 \u043C\u0435\u0436\u0434\u0443 \u0434\u0432\u0443\u043C\u044F \u0442\u043E\u0432\u0430\u0440\u0430\u043C\u0438 \u2014 \u0438 \u043D\u0438 \u0442\u0443\u0434\u0430, \u043D\u0438 \u0441\u044E\u0434\u0430.", accept: ["gate"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0418 \u0434\u043E\u043B\u0433 \u0441\u0442\u0430\u0440\u044B\u0439 \u0437\u0430 \u043C\u043D\u043E\u0439 \u0442\u044F\u043D\u0435\u0442\u0441\u044F, \u043A\u0430\u043A \u0442\u043E\u043D\u043A\u0430\u044F \u043D\u0438\u0442\u043E\u0447\u043A\u0430, \u043D\u0435 \u043E\u0442\u043E\u0440\u0432\u0430\u0442\u044C.", accept: ["thread"] }
+      ],
+      hand: ["path", "gate", "thread", "candle", "well", "rain", "bird"],
+      rewards: [{ type: "coins", amount: 345 }],
+      intro: "\u0421\u043B\u0435\u0434\u043E\u043F\u044B\u0442 \u043F\u043B\u0430\u0442\u0438\u043B \u043F\u0435\u0447\u0430\u0442\u044C\u044E \u0437\u0430 \u043F\u0430\u0443\u0442\u0438\u043D\u043D\u043E\u0435 \u0437\u0435\u043B\u044C\u0435. \u0421\u0435\u0433\u043E\u0434\u043D\u044F \u0440\u0430\u0441\u043F\u0443\u0442\u044B\u0432\u0430\u0435\u043C \u0435\u0433\u043E \u0441\u0430\u043C\u043E\u0433\u043E."
+    },
+    {
+      id: "fate_04",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u041F\u0435\u043F\u0435\u043B \u0430\u043B\u0445\u0438\u043C\u0438\u043A\u0430",
+      difficulty: 2,
+      guest: { name: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", icon: "\u2697\uFE0F", art: "assets/fate/guest_alchemist_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0411\u044B\u043B\u0430 \u0443 \u043C\u0435\u043D\u044F \u043B\u0430\u0432\u043A\u0430 \u0434\u0430 \u043F\u043E\u043B\u043D\u044B\u0439 \u0434\u043E\u043C \u2014 \u043D\u0438 \u0432 \u0447\u0451\u043C \u043D\u0443\u0436\u0434\u044B \u043D\u0435 \u0437\u043D\u0430\u043B.", accept: ["bread"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u041F\u043E\u0436\u0430\u0440 \u0432\u0441\u0451 \u0438 \u0437\u0430\u0431\u0440\u0430\u043B: \u043A\u043E\u0440\u043C\u0438\u043B \u043C\u0435\u043D\u044F \u043E\u0433\u043E\u043D\u044C \u2014 \u043E\u043D \u0436\u0435 \u0438 \u043F\u043E\u0433\u0443\u0431\u0438\u043B.", accept: ["fire"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0422\u0435\u043F\u0435\u0440\u044C \u043C\u0430\u044E\u0441\u044C: \u0433\u0434\u0435 \u043D\u0430\u0439\u0442\u0438 \u043E\u0442\u0432\u0435\u0442, \u0441 \u0447\u0435\u0433\u043E \u043D\u0430\u0447\u0430\u0442\u044C \u0437\u0430\u043D\u043E\u0432\u043E?", accept: ["key"] }
+      ],
+      hand: ["bread", "fire", "key", "star", "web", "bell"],
+      rewards: [{ type: "coins", amount: 360 }],
+      intro: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A \u0438\u0437 \u043B\u0430\u0432\u043A\u0438 \xAB\u041A\u043E\u0442\u0451\u043B \u0438 \u0440\u043E\u0441\u0430\xBB. \u0415\u0433\u043E \u0438\u0441\u0442\u043E\u0440\u0438\u044F \u2014 \u043F\u0440\u043E \u0446\u0435\u043D\u0443 \u043E\u0433\u043D\u044F."
+    },
+    {
+      id: "fate_05",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u041A\u0430\u0447\u0435\u043B\u0438 \u043F\u0430\u0443\u0447\u043A\u0430",
+      difficulty: 2,
+      guest: { name: "\u041F\u0430\u0443\u0447\u043E\u043A", icon: "\u{1F577}\uFE0F", art: "assets/fate/guest_spider_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0421\u043F\u0443\u0441\u0442\u0438\u043B\u0441\u044F \u044F \u043E\u0434\u043D\u0430\u0436\u0434\u044B \u0441 \u0441\u0430\u043C\u043E\u0433\u043E \u0432\u0435\u0440\u0445\u0430 \u043B\u0430\u0432\u043A\u0438 \u2014 \u043D\u0430 \u0442\u043E\u043D\u043A\u043E\u0439-\u043F\u0440\u0435\u0442\u043E\u043D\u043A\u043E\u0439 \u043D\u0438\u0442\u043E\u0447\u043A\u0435.", accept: ["thread"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0422\u0435\u043F\u0435\u0440\u044C \u0432\u0441\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0438 \u0432\u0441\u044F \u0432\u0438\u0442\u0440\u0438\u043D\u0430 \u2014 \u043C\u043E\u0439 \u0434\u043E\u043C, \u043C\u043E\u0451 \u043A\u0440\u0435\u0441\u043B\u043E-\u043A\u0430\u0447\u0435\u043B\u0438.", accept: ["home"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0410 \u0432\u0447\u0435\u0440\u0430 \u0433\u043B\u044F\u043D\u0443\u043B \u0432 \u0431\u043B\u044E\u0434\u0446\u0435 \u2014 \u0438 \u043F\u0435\u0440\u0435\u043F\u0443\u0433\u0430\u043B\u0441\u044F: \u043A\u0442\u043E \u044D\u0442\u043E \u043D\u0430 \u043C\u0435\u043D\u044F \u0441\u043C\u043E\u0442\u0440\u0438\u0442?!", accept: ["mirror"] }
+      ],
+      hand: ["thread", "home", "mirror", "fire", "letter", "tree"],
+      rewards: [{ type: "coins", amount: 375 }],
+      intro: "\u041F\u0430\u0443\u0447\u043E\u043A \u0441\u043F\u0443\u0441\u043A\u0430\u0435\u0442\u0441\u044F \u043F\u043E \u043F\u0430\u0443\u0442\u0438\u043D\u0435 \u043F\u0440\u0438 \u043F\u0440\u043E\u043A\u0440\u0443\u0442\u043A\u0435 \u2014 \u043D\u043E \u0438 \u0443 \u043D\u0435\u0433\u043E \u0435\u0441\u0442\u044C \u0441\u0432\u043E\u0438 \u0441\u0442\u0440\u0430\u0445\u0438."
+    },
+    {
+      id: "fate_06",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u0422\u0440\u0438 \u0434\u043E\u0440\u043E\u0433\u0438 \u0440\u044B\u0446\u0430\u0440\u044F",
+      difficulty: 3,
+      guest: { name: "\u0420\u044B\u0446\u0430\u0440\u044C", icon: "\u{1F6E1}\uFE0F", art: "assets/fate/guest_knight_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0421\u043B\u0443\u0436\u0438\u043B \u0447\u0435\u0441\u0442\u043D\u043E: \u0449\u0438\u0442 \u0438 \u043C\u0435\u0447 \u0431\u044B\u043B\u0438 \u043C\u043D\u0435 \u0438 \u043A\u0440\u043E\u0432\u043E\u043C, \u0438 \u0441\u0435\u043C\u044C\u0451\u0439.", accept: ["home"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u043F\u0435\u0440\u0435\u0434\u043E \u043C\u043D\u043E\u0439 \u0442\u0440\u0438 \u0434\u043E\u0440\u043E\u0433\u0438 \u2014 \u0438 \u043A\u0430\u0436\u0434\u0430\u044F \u0437\u043E\u0432\u0451\u0442 \u043F\u0435\u0440\u0432\u044B\u043C \u0448\u0430\u0433\u043E\u043C.", accept: ["gate"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0413\u043B\u044F\u0436\u0443 \u0437\u0430 \u043F\u043E\u0432\u043E\u0440\u043E\u0442 \u2014 \u0438 \u0441\u0442\u0440\u0430\u0448\u043D\u043E: \u0432\u0434\u0440\u0443\u0433 \u0442\u0430\u043C \u043D\u0435 \u0441\u043B\u0430\u0432\u0430, \u0430 \u0442\u0451\u043C\u043D\u0430\u044F \u0431\u0435\u0437\u0434\u043D\u0430 \u0431\u0435\u0437 \u0434\u043D\u0430?", accept: ["well"] }
+      ],
+      hand: ["home", "gate", "well", "star", "bread", "candle", "rain"],
+      rewards: [{ type: "coins", amount: 390 }],
+      intro: "\u0422\u044B \u0441\u043D\u0430\u0440\u044F\u0436\u0430\u0435\u0448\u044C \u0435\u0433\u043E \u0432 \u043F\u043E\u0445\u043E\u0434\u044B \u2014 \u0430 \u043E\u043D \u0432\u043E\u043B\u043D\u0443\u0435\u0442\u0441\u044F. \u0420\u0430\u0437\u043B\u043E\u0436\u0438 \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u0434\u043B\u044F \u0441\u0432\u043E\u0435\u0433\u043E \u0440\u044B\u0446\u0430\u0440\u044F."
+    },
+    {
+      id: "fate_07",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u0417\u0432\u043E\u043D \u0442\u043E\u0440\u0433\u043E\u0432\u0446\u0430",
+      difficulty: 3,
+      guest: { name: "\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446", icon: "\u{1F9EE}", art: "assets/fate/guest_merchant_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0422\u043E\u0440\u0433\u043E\u0432\u0430\u043B \u0431\u043E\u0439\u043A\u043E, \u043C\u043E\u043D\u0435\u0442\u0430 \u043A \u043C\u043E\u043D\u0435\u0442\u0435 \u0442\u0430\u043A \u0438 \u043B\u0438\u043F\u043B\u0430.", accept: ["coin"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u0432\u0435\u0437\u0434\u0435 \u0441\u043B\u044B\u0448\u0443 \u0437\u0432\u043E\u043D \u2014 \u0438 \u043D\u0435 \u043F\u043E\u0439\u043C\u0443: \u0442\u043E \u043B\u044C \u0432\u0435\u0441\u0442\u044C \u0434\u043E\u0431\u0440\u0430\u044F, \u0442\u043E \u043B\u044C \u0441\u0435\u0440\u0434\u0446\u0435 \u043C\u043E\u0451 \u0441\u0442\u0443\u0447\u0438\u0442.", accept: ["bell"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0414\u0443\u0448\u0430 \u043F\u0440\u043E\u0441\u0438\u0442 \u0442\u0438\u0445\u043E\u0433\u043E \u043E\u0433\u043E\u043D\u044C\u043A\u0430 \u0434\u0430 \u0442\u0451\u043F\u043B\u043E\u0433\u043E \u0441\u043B\u043E\u0432\u0430 \u0443 \u0432\u0438\u0442\u0440\u0438\u043D\u044B.", accept: ["candle"] }
+      ],
+      hand: ["coin", "bell", "candle", "book", "ship", "mirror"],
+      rewards: [{ type: "coins", amount: 405 }],
+      intro: "\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446 \u0441 \u043F\u043B\u043E\u0449\u0430\u0434\u0438, \u0447\u0442\u043E \u0434\u0435\u0440\u0433\u0430\u043B\u0441\u044F \u043E\u0442 \u043D\u0435\u0440\u0432\u043E\u0432, \u043F\u0440\u0438\u0448\u0451\u043B \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442\u044C \u2014 \u0438 \u0437\u0430\u043E\u0434\u043D\u043E \u043F\u043E\u0433\u0430\u0434\u0430\u0442\u044C."
+    },
+    {
+      id: "fate_08",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u041F\u0435\u0441\u043D\u044F \u043F\u0443\u0442\u043D\u0438\u0446\u044B",
+      difficulty: 3,
+      guest: { name: "\u042E\u043D\u0430\u044F \u043F\u0443\u0442\u043D\u0438\u0446\u0430", icon: "\u{1F9D5}", art: "assets/fate/guest_wanderer_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0412\u044B\u0448\u043B\u0430 \u0438\u0437 \u0434\u043E\u043C\u0443 \u043D\u0430\u043B\u0435\u0433\u043A\u0435 \u2014 \u043E\u0434\u043D\u0430 \u043F\u0435\u0441\u043D\u044F \u0437\u0430 \u043F\u043B\u0435\u0447\u0430\u043C\u0438, \u0438 \u0432\u0435\u0441\u044C \u043C\u0438\u0440 \u0432\u043F\u0435\u0440\u0435\u0434\u0438.", accept: ["bird"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u041A\u0430\u0436\u0434\u044B\u0439 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A \u0448\u0435\u043F\u0447\u0435\u0442: \u043D\u0430\u043F\u0440\u0430\u0432\u043E \u2014 \u043A\u0430\u0440\u0430\u0432\u0430\u0439, \u043D\u0430\u043B\u0435\u0432\u043E \u2014 \u0437\u0432\u0435\u0437\u0434\u0430. \u041A\u0443\u0434\u0430 \u0441\u0442\u0443\u043F\u0438\u0442\u044C?", accept: ["gate"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0421\u0442\u0440\u0430\u0448\u043D\u043E, \u0447\u0442\u043E \u0434\u043E\u0440\u043E\u0433\u0430 \u0432\u044B\u0432\u0435\u0434\u0435\u0442 \u043D\u0435 \u043A \u0442\u0451\u043F\u043B\u043E\u043C\u0443 \u0434\u043E\u043C\u0443, \u0430 \u0432 \u0445\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u043B\u0438\u0432\u0435\u043D\u044C.", accept: ["rain"] }
+      ],
+      hand: ["bird", "gate", "rain", "well", "bread", "bell"],
+      rewards: [{ type: "coins", amount: 420 }],
+      intro: "\u041F\u0443\u0442\u043D\u0438\u0446\u0430 \u0437\u0430\u043C\u0451\u0440\u0437\u043B\u0430 \u0443 \u0434\u0432\u0435\u0440\u0438. \u041E\u0442\u0433\u0440\u0435\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u044E \u2014 \u0438 \u043A\u0430\u0440\u0442\u044B \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0443\u0442 \u0435\u0439 \u0434\u043E\u0440\u043E\u0433\u0443."
+    },
+    {
+      id: "fate_09",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u0421\u0430\u0434 \u0441\u0430\u0434\u043E\u0432\u043D\u0438\u043A\u0430",
+      difficulty: 3,
+      guest: { name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0441\u0430\u0434\u043E\u0432\u043D\u0438\u043A", icon: "\u{1F331}", art: "assets/fate/guest_gardener_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u041F\u043E\u0441\u0430\u0434\u0438\u043B \u0441\u0430\u0434. \u0414\u0443\u0431\u044B \u043C\u043E\u0438 \u0443\u0436\u0435 \u0432\u043D\u0443\u043A\u043E\u0432 \u0442\u0435\u043D\u044C\u044E \u043A\u0440\u043E\u044E\u0442 \u2014 \u043A\u043E\u0440\u043D\u0438 \u043C\u043E\u0438, \u0441\u0438\u043B\u0430 \u043C\u043E\u044F.", accept: ["tree"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0421\u0430\u043C \u0441\u043E\u0441\u0442\u0430\u0440\u0438\u043B\u0441\u044F, \u0440\u0443\u043A\u0438 \u043D\u0435 \u0442\u0435. \u0421\u0430\u0434 \u043F\u0440\u043E\u0441\u0438\u0442 \u043D\u043E\u0432\u044B\u0445 \u0440\u0443\u043A \u2014 \u043A\u043E\u043C\u0443 \u043F\u0435\u0440\u0435\u0434\u0430\u0442\u044C?", accept: ["key"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0410 \u0432\u0434\u0440\u0443\u0433 \u0441\u0430\u0434 \u0437\u0430\u0431\u0443\u0434\u0435\u0442 \u043C\u0435\u043D\u044F, \u043A\u0430\u043A \u0443\u0442\u0440\u043E \u0437\u0430\u0431\u044B\u0432\u0430\u0435\u0442 \u0441\u0432\u0435\u0447\u0443?", accept: ["candle"] },
+        { label: "\u0421\u043E\u0432\u0435\u0442", text: "\u0421\u043A\u0430\u0436\u0438, \u0445\u043E\u0437\u044F\u0438\u043D, \u0447\u0435\u043C \u043C\u043D\u0435 \u0441\u0435\u0440\u0434\u0446\u0435 \u0441\u043E\u0433\u0440\u0435\u0442\u044C \u043D\u0430 \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0438?", accept: ["sun"] }
+      ],
+      hand: ["tree", "key", "candle", "sun", "star", "thread", "ship", "rain"],
+      rewards: [{ type: "coins", amount: 440 }],
+      intro: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u043D\u0430 \u0447\u0435\u0442\u044B\u0440\u0435 \u043F\u043E\u0437\u0438\u0446\u0438\u0438: \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \xAB\u0421\u043E\u0432\u0435\u0442\xBB \u2014 \u043A\u0430\u0440\u0442\u0430-\u043E\u0442\u0432\u0435\u0442 \u0433\u043E\u0441\u0442\u044E."
+    },
+    {
+      id: "fate_10",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u041C\u043E\u0440\u044F\u043A \u043D\u0430 \u0441\u0443\u0448\u0435",
+      difficulty: 4,
+      guest: { name: "\u041C\u043E\u0440\u044F\u043A", icon: "\u2693", art: "assets/fate/guest_sailor_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0422\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u043B\u0435\u0442 \u043C\u043E\u0440\u0435\u0439 \u0432\u0438\u0434\u0435\u043B \u2014 \u043F\u0430\u043B\u0443\u0431\u0430 \u0431\u044B\u043B\u0430 \u043C\u043D\u0435 \u043E\u0442\u0447\u0438\u043C \u0434\u043E\u043C\u043E\u043C.", accept: ["ship"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0410 \u0442\u0435\u043F\u0435\u0440\u044C \u043D\u043E\u0433\u0430 \u0434\u0440\u043E\u0436\u0438\u0442 \u043E \u0441\u0443\u0445\u0443\u044E \u0437\u0435\u043C\u043B\u044E: \u0441\u0442\u043E\u044E \u0443 \u0433\u043E\u0440\u043E\u0434\u0441\u043A\u043E\u0433\u043E \u043F\u043E\u0440\u043E\u0433\u0430 \u2014 \u0438 \u043D\u0435 \u0438\u0434\u0451\u0442\u0441\u044F.", accept: ["gate"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u041A\u043E\u0440\u0430\u0431\u043B\u044C \u043C\u043E\u0439 \u0436\u0434\u0451\u0442 \u0432 \u0433\u0430\u0432\u0430\u043D\u0438 \u0438 \u0442\u044F\u043D\u0435\u0442 \u0437\u0430 \u0441\u0435\u0440\u0434\u0446\u0435, \u043A\u0430\u043A \u0442\u043E\u043D\u043A\u0430\u044F \u043D\u0438\u0442\u044C.", accept: ["thread"] },
+        { label: "\u0421\u043E\u0432\u0435\u0442", text: "\u041A\u0443\u0434\u0430 \u0441\u0442\u0443\u043F\u0438\u0442\u044C, \u0447\u0442\u043E\u0431 \u0441\u0435\u0440\u0434\u0446\u0435 \u0441\u043D\u043E\u0432\u0430 \u0437\u0430\u043F\u0435\u043B\u043E?", accept: ["home"] }
+      ],
+      hand: ["ship", "gate", "thread", "home", "star", "well", "fire", "letter"],
+      rewards: [{ type: "coins", amount: 460 }],
+      intro: "\u041C\u043E\u0440\u044F\u043A \u0441\u043E\u0448\u0451\u043B \u043D\u0430 \u0431\u0435\u0440\u0435\u0433 \u2014 \u0438 \u043F\u043E\u0442\u0435\u0440\u044F\u043B \u043F\u043E\u0447\u0432\u0443. \u0412\u043E\u0441\u0435\u043C\u044C \u043A\u0430\u0440\u0442, \u0447\u0435\u0442\u044B\u0440\u0435 \u043F\u043E\u0437\u0438\u0446\u0438\u0438."
+    },
+    {
+      id: "fate_11",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u041F\u0443\u0441\u0442\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430",
+      difficulty: 4,
+      guest: { name: "\u041B\u0435\u0442\u043E\u043F\u0438\u0441\u0435\u0446", icon: "\u{1FAB6}", art: "assets/fate/guest_scribe_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u0412\u0441\u044E \u0436\u0438\u0437\u043D\u044C \u0437\u0430\u043F\u0438\u0441\u044B\u0432\u0430\u043B \u0447\u0443\u0436\u0438\u0435 \u0441\u0432\u0430\u0434\u044C\u0431\u044B \u0438 \u043F\u043E\u0436\u0430\u0440\u044B. \u0421\u0432\u043E\u044F \u0436\u0438\u0437\u043D\u044C \u2014 \u043D\u0430 \u043F\u043E\u043B\u044F\u0445 \u0441\u0442\u0440\u0430\u043D\u0438\u0446.", accept: ["book"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u041A\u043E\u043D\u0447\u0438\u043B\u0438\u0441\u044C \u0447\u0435\u0440\u043D\u0438\u043B\u0430 \u2014 \u0438 \u044F \u0443\u0432\u0438\u0434\u0435\u043B \u0441\u0435\u0431\u044F \u0441\u043E \u0441\u0442\u043E\u0440\u043E\u043D\u044B: \u043F\u0443\u0441\u0442\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430.", accept: ["mirror"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0411\u043E\u044E\u0441\u044C, \u043C\u043E\u044F \u0438\u0441\u0442\u043E\u0440\u0438\u044F \u043E\u0441\u0442\u0430\u043D\u0435\u0442\u0441\u044F \u0442\u0430\u0439\u043D\u043E\u0439 \u0431\u0435\u0437 \u043E\u0442\u0432\u0435\u0442\u0430, \u0431\u0435\u0437\u0434\u043E\u043D\u043D\u043E\u0439 \u0438 \u0442\u0451\u043C\u043D\u043E\u0439.", accept: ["well"] },
+        { label: "\u0421\u043E\u0432\u0435\u0442", text: "\u0421 \u0447\u0435\u0433\u043E \u043D\u0430\u0447\u0430\u0442\u044C \u0441\u0432\u043E\u044E \u043F\u0435\u0440\u0432\u0443\u044E \u0441\u0442\u0440\u043E\u043A\u0443?", accept: ["key"] }
+      ],
+      hand: ["book", "mirror", "well", "key", "candle", "bread", "web", "moon"],
+      rewards: [{ type: "coins", amount: 480 }],
+      intro: "\u041B\u0435\u0442\u043E\u043F\u0438\u0441\u0435\u0446 \u0438\u0437 \u0433\u043E\u0440\u043E\u0434\u0430 \u043F\u0440\u0438\u0448\u0451\u043B \u0437\u0430 \u0447\u0435\u0440\u043D\u0438\u043B\u0430\u043C\u0438 \u2014 \u0430 \u0443\u0448\u0451\u043B \u0441 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u043E\u043C \u043E \u0441\u0435\u0431\u0435."
+    },
+    {
+      id: "fate_12",
+      world: "fate",
+      mechanic: "fate",
+      name: "\u0420\u0430\u0441\u043A\u043B\u0430\u0434 \u0434\u043B\u044F \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+      difficulty: 5,
+      guest: { name: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C", icon: "\u{1F408}", art: "assets/fate/guest_cat_web.jpg" },
+      story: [
+        { label: "\u0427\u0442\u043E \u0431\u044B\u043B\u043E", text: "\u041A\u043E\u0433\u0434\u0430-\u0442\u043E \u044F \u0431\u044B\u043B \u043F\u0440\u043E\u0441\u0442\u043E \u043A\u043E\u0442\u043E\u043C \u043D\u0430 \u043F\u0435\u0447\u0438. \u0410 \u043F\u043E\u0442\u043E\u043C \u043B\u0430\u0432\u043A\u0430 \u043F\u043E\u0437\u0432\u0430\u043B\u0430 \u2014 \u0438 \u044F \u043F\u0440\u0438\u0448\u0451\u043B.", accept: ["bell"] },
+        { label: "\u0427\u0442\u043E \u0435\u0441\u0442\u044C", text: "\u0422\u0435\u043F\u0435\u0440\u044C \u044F \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C: \u0432\u0441\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u0438 \u0433\u043E\u0441\u0442\u0438 \u2014 \u043C\u043E\u0451 \u0441\u0442\u0430\u0434\u043E, \u043C\u043E\u0439 \u043E\u0447\u0430\u0433.", accept: ["home"] },
+        { label: "\u0427\u0442\u043E \u0433\u043D\u0435\u0442\u0451\u0442", text: "\u0418\u043D\u043E\u0433\u0434\u0430 \u043D\u043E\u0447\u044C\u044E \u043C\u0443\u0440\u043B\u044B\u0447\u0443 \u0438 \u0431\u043E\u044E\u0441\u044C: \u0430 \u0432\u0434\u0440\u0443\u0433 \u0432\u0441\u0451 \u044D\u0442\u043E \u043C\u043D\u0435 \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u043D\u0438\u0442\u0441\u044F?", accept: ["moon"] },
+        { label: "\u0421\u043E\u0432\u0435\u0442", text: "\u041A\u0435\u043C \u0431\u044B\u0442\u044C \u0437\u0430\u0432\u0442\u0440\u0430 \u2014 \u0441\u0442\u043E\u0440\u043E\u0436\u0435\u043C \u0441\u0443\u0440\u043E\u0432\u044B\u043C \u0438\u043B\u044C \u043A\u043E\u0442\u043E\u043C \u043C\u0435\u0447\u0442\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u043C?", accept: ["star"] }
+      ],
+      hand: ["bell", "home", "moon", "star", "mirror", "web", "coin", "fire", "rain"],
+      rewards: [{ type: "coins", amount: 510 }, { type: "seals", amount: 2 }],
+      intro: "\u0424\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0439 \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u2014 \u0434\u043B\u044F \u0441\u0430\u043C\u043E\u0433\u043E \u043A\u043E\u0442\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F. \u0414\u0435\u0432\u044F\u0442\u044C \u043A\u0430\u0440\u0442 \u043D\u0430 \u0441\u0442\u043E\u043B\u0435."
+    }
+  ];
+  var FATE_PUZZLE_BY_ID = Object.fromEntries(FATE_PUZZLES.map((p) => [p.id, p]));
 
   // src/data/worlds/nm.js
   var WORLD = {
@@ -9719,7 +10992,8 @@
       ...MECH_PUZZLES,
       ...CANDLE_PUZZLES,
       ...FLOW_PUZZLES,
-      ...BREW_PUZZLES
+      ...BREW_PUZZLES,
+      ...FATE_PUZZLES
     ].map((p) => [p.id, p])
   );
   var CAMPAIGN_ORDER = [
@@ -9949,7 +11223,116 @@
     "bk_102",
     "bk_103",
     "bk_104",
-    "bk_105"
+    "bk_105",
+    // Загадки Хранителя: 95 народных загадок (раздел «Загадки Хранителя»)
+    "bk_106",
+    "bk_107",
+    "bk_108",
+    "bk_109",
+    "bk_110",
+    "bk_111",
+    "bk_112",
+    "bk_113",
+    "bk_114",
+    "bk_115",
+    "bk_116",
+    "bk_117",
+    "bk_118",
+    "bk_119",
+    "bk_120",
+    "bk_121",
+    "bk_122",
+    "bk_123",
+    "bk_124",
+    "bk_125",
+    "bk_126",
+    "bk_127",
+    "bk_128",
+    "bk_129",
+    "bk_130",
+    "bk_131",
+    "bk_132",
+    "bk_133",
+    "bk_134",
+    "bk_135",
+    "bk_136",
+    "bk_137",
+    "bk_138",
+    "bk_139",
+    "bk_140",
+    "bk_141",
+    "bk_142",
+    "bk_143",
+    "bk_144",
+    "bk_145",
+    "bk_146",
+    "bk_147",
+    "bk_148",
+    "bk_149",
+    "bk_150",
+    "bk_151",
+    "bk_152",
+    "bk_153",
+    "bk_154",
+    "bk_155",
+    "bk_156",
+    "bk_157",
+    "bk_158",
+    "bk_159",
+    "bk_160",
+    "bk_161",
+    "bk_162",
+    "bk_163",
+    "bk_164",
+    "bk_165",
+    "bk_166",
+    "bk_167",
+    "bk_168",
+    "bk_169",
+    "bk_170",
+    "bk_171",
+    "bk_172",
+    "bk_173",
+    "bk_174",
+    "bk_175",
+    "bk_176",
+    "bk_177",
+    "bk_178",
+    "bk_179",
+    "bk_180",
+    "bk_181",
+    "bk_182",
+    "bk_183",
+    "bk_184",
+    "bk_185",
+    "bk_186",
+    "bk_187",
+    "bk_188",
+    "bk_189",
+    "bk_190",
+    "bk_191",
+    "bk_192",
+    "bk_193",
+    "bk_194",
+    "bk_195",
+    "bk_196",
+    "bk_197",
+    "bk_198",
+    "bk_199",
+    "bk_200",
+    // Карты судьбы: вечерние гости лавки и расклады
+    "fate_01",
+    "fate_02",
+    "fate_03",
+    "fate_04",
+    "fate_05",
+    "fate_06",
+    "fate_07",
+    "fate_08",
+    "fate_09",
+    "fate_10",
+    "fate_11",
+    "fate_12"
   ];
   var ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
   function allPuzzles(state2) {
@@ -15260,6 +16643,381 @@
     };
   }
 
+  // src/core/fatePuzzle.js
+  var FATE_FREE_MISTAKES = 3;
+  var FATE_MISTAKE_STEP = 0.1;
+  var FATE_MIN_FACTOR = 0.5;
+  function createFatePuzzle(level, cards) {
+    return {
+      level,
+      cards: cards || {},
+      slots: Array(level.story.length).fill(null),
+      // id карт по позициям
+      attempts: [],
+      // [{ cards: [...], marks: [...] }]
+      mistakes: 0,
+      history: [],
+      moves: 0
+    };
+  }
+  function cardInfo(state2, cardId) {
+    return state2.cards[cardId] || null;
+  }
+  function placeCard(state2, cardId) {
+    if (!state2.level.hand.includes(cardId)) return false;
+    if (state2.slots.includes(cardId)) return false;
+    const slot = state2.slots.indexOf(null);
+    if (slot < 0) return false;
+    state2.slots[slot] = cardId;
+    state2.history.push({ kind: "place", slot, card: cardId });
+    state2.moves += 1;
+    return true;
+  }
+  function removeSlot2(state2, slot) {
+    if (slot < 0 || slot >= state2.slots.length || !state2.slots[slot]) return false;
+    state2.history.push({ kind: "remove", slot, card: state2.slots[slot] });
+    state2.slots[slot] = null;
+    state2.moves += 1;
+    return true;
+  }
+  function undoFate(state2) {
+    const last = state2.history.pop();
+    if (!last) return false;
+    if (last.kind === "place") state2.slots[last.slot] = null;
+    else if (last.kind === "remove") state2.slots[last.slot] = last.card;
+    state2.moves += 1;
+    return true;
+  }
+  function resetFate(state2) {
+    state2.slots = state2.slots.map(() => null);
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function isFull2(state2) {
+    return state2.slots.every(Boolean);
+  }
+  function isExact(level, slot, cardId) {
+    return level.story[slot].accept.includes(cardId);
+  }
+  function isFateSolved(state2) {
+    return isFull2(state2) && state2.slots.every((c, i) => isExact(state2.level, i, c));
+  }
+  function isNear(state2, slot, cardId) {
+    const mine = new Set(cardInfo(state2, cardId)?.meanings || []);
+    if (!mine.size) return false;
+    return state2.level.story[slot].accept.some((wantId) => (cardInfo(state2, wantId)?.meanings || []).some((m) => mine.has(m)));
+  }
+  function markSpread(state2, cards) {
+    return cards.map((cardId, i) => {
+      if (isExact(state2.level, i, cardId)) return "exact";
+      if (isNear(state2, i, cardId)) return "present";
+      return "absent";
+    });
+  }
+  function submitFate(state2) {
+    if (!isFull2(state2)) return null;
+    if (isFateSolved(state2)) return { solved: true };
+    const cards = [...state2.slots];
+    const marks = markSpread(state2, cards);
+    state2.attempts.push({ cards, marks });
+    state2.mistakes += 1;
+    state2.slots = state2.slots.map(() => null);
+    state2.history = [];
+    return { solved: false, marks };
+  }
+  function rewardFactor3(state2) {
+    const over = Math.max(0, state2.mistakes - FATE_FREE_MISTAKES);
+    return Math.max(FATE_MIN_FACTOR, 1 - over * FATE_MISTAKE_STEP);
+  }
+  function fateProgress(state2) {
+    return { ok: state2.slots.filter(Boolean).length, total: state2.slots.length };
+  }
+  function fateHint(state2) {
+    const slot = state2.slots.indexOf(null);
+    if (slot < 0) return null;
+    const card = state2.level.story[slot].accept.find((c) => !state2.slots.includes(c));
+    return card ? { slot, card } : null;
+  }
+  function applyFateHint(state2) {
+    const h = fateHint(state2);
+    if (!h) return null;
+    placeCard(state2, h.card);
+    return h;
+  }
+
+  // src/ui/fateView.js
+  function renderFatePuzzle(container, ctx2, level) {
+    const puzzle = createFatePuzzle(level, FATE_CARDS);
+    let hintsUsed = 0;
+    let finished = false;
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap hang-wrap";
+    const pageBox = document.createElement("div");
+    pageBox.className = "puzzle-canvas-box";
+    const scene = document.createElement("div");
+    scene.className = "fate-scene";
+    pageBox.appendChild(scene);
+    wrap.appendChild(pageBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const legend = document.createElement("div");
+    legend.className = "panel";
+    legend.style.padding = "10px 14px";
+    legend.innerHTML = `<div class="desc" style="line-height:1.8">
+    \u0422\u0430\u043F\u0430\u0439 \u043A\u0430\u0440\u0442\u0443 \u2014 \u043E\u043D\u0430 \u043B\u044F\u0436\u0435\u0442 \u0432 \u043F\u0435\u0440\u0432\u0443\u044E \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u0443\u044E \u043F\u043E\u0437\u0438\u0446\u0438\u044E \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u0430. \u0422\u0430\u043F \u043F\u043E \u043A\u0430\u0440\u0442\u0435 \u0432 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u0435 \u2014 \u0432\u0435\u0440\u043D\u0451\u0442 \u0435\u0451 \u0432 \u0440\u0443\u043A\u0443.<br>
+    \u041F\u043E\u0434 \u0438\u043C\u0435\u043D\u0435\u043C \u043A\u0430\u0440\u0442\u044B \u0432\u0438\u0434\u043D\u044B \u0435\u0451 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F: \u0447\u0438\u0442\u0430\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u044E \u0433\u043E\u0441\u0442\u044F \u0438 \u043F\u043E\u0434\u0431\u0438\u0440\u0430\u0439 \u043F\u043E \u0441\u043C\u044B\u0441\u043B\u0443.<br>
+    \u041F\u043E\u043B\u043D\u044B\u0439 \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u0442\u0441\u044F: <span class="lg-exact">\u043A\u0430\u0440\u0442\u0430 \u043D\u0430 \u043C\u0435\u0441\u0442\u0435</span>,
+    <span class="lg-present">\u0431\u043B\u0438\u0437\u043A\u043E \u043F\u043E \u0441\u043C\u044B\u0441\u043B\u0443</span>, <span class="lg-absent">\u043D\u0435 \u0442\u0430 \u043A\u0430\u0440\u0442\u0430</span>.<br>
+    ${FATE_FREE_MISTAKES} \u043E\u0448\u0438\u0431\u043A\u0438 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E, \u0434\u0430\u043B\u044C\u0448\u0435 \u2212${Math.round(FATE_MISTAKE_STEP * 100)}% \u043C\u043E\u043D\u0435\u0442 \u0437\u0430 \u043A\u0430\u0436\u0434\u0443\u044E.</div>`;
+    side.appendChild(legend);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    controls.style.marginTop = "10px";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    function doUndo() {
+      if (finished) return;
+      if (undoFate(puzzle)) {
+        ctx2.sfx?.("tap");
+        renderAll();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetFate(puzzle);
+      ctx2.sfx?.("tap");
+      renderAll();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = applyFateHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h) {
+        hintsUsed += 1;
+        const part = level.story[h.slot];
+        const card = FATE_CARDS[h.card];
+        ctx2.toast(`\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043C\u0443\u0440\u043B\u044B\u0447\u0435\u0442: \u043D\u0430 \xAB${part.label}\xBB \u043B\u043E\u0436\u0438\u0442\u0441\u044F \u043A\u0430\u0440\u0442\u0430 \xAB${card.name}\xBB`);
+        renderAll();
+        afterMove();
+      } else {
+        ctx2.toast("\u0420\u0430\u0441\u043A\u043B\u0430\u0434 \u043F\u043E\u043B\u043E\u043D \u2014 \u043F\u0440\u043E\u0432\u0435\u0440\u044C \u0435\u0433\u043E \u0438\u043B\u0438 \u0432\u0435\u0440\u043D\u0438 \u043A\u0430\u0440\u0442\u0443.");
+      }
+    }
+    function tapCard(cardId) {
+      if (finished) return;
+      if (placeCard(puzzle, cardId)) {
+        ctx2.sfx?.("rotate");
+        renderAll();
+        afterMove();
+      }
+    }
+    function tapSlot(slot) {
+      if (finished) return;
+      if (removeSlot2(puzzle, slot)) {
+        ctx2.sfx?.("tap");
+        renderAll();
+      }
+    }
+    function afterMove() {
+      const res = submitFate(puzzle);
+      if (!res) return;
+      if (res.solved) {
+        finish();
+        return;
+      }
+      ctx2.sfx?.("fail");
+      const over = puzzle.mistakes - FATE_FREE_MISTAKES;
+      ctx2.toast(over <= 0 ? `\u0421\u0443\u0434\u044C\u0431\u0430 \u043D\u0435 \u0441\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u2014 \u043A\u0430\u0440\u0442\u044B \u0432\u0435\u0440\u043D\u0443\u043B\u0438\u0441\u044C. \u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes} \u0438\u0437 ${FATE_FREE_MISTAKES} \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445.` : `\u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes}: \u0441\u043E\u043C\u043D\u0435\u043D\u0438\u044F \u0433\u043E\u0441\u0442\u044F \u0441\u044A\u0435\u0434\u0430\u044E\u0442 \u043D\u0430\u0433\u0440\u0430\u0434\u0443 (\u2212${Math.round((1 - rewardFactor3(puzzle)) * 100)}% \u043C\u043E\u043D\u0435\u0442).`);
+      scene.classList.add("shake");
+      setTimeout(() => scene.classList.remove("shake"), 500);
+      renderAll();
+    }
+    function onKey(ev) {
+      if (ev.key === "Escape") {
+        backToPuzzleType(ctx2, level);
+        return;
+      }
+      if ((ev.ctrlKey || ev.metaKey) && ["z", "Z", "\u044F", "\u042F"].includes(ev.key)) {
+        ev.preventDefault();
+        doUndo();
+        return;
+      }
+      if (ev.ctrlKey || ev.altKey || ev.metaKey) return;
+      if (ev.key === "z" || ev.key === "Z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H") doHint();
+      if (ev.key === "r" || ev.key === "R") doReset();
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      finished = true;
+      const factor = rewardFactor3(puzzle);
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        coinFactor: factor
+      });
+      ctx2.save();
+      ctx2.sfx?.("success");
+      renderAll();
+      setTimeout(() => {
+        const next = nextPuzzle(level.id);
+        const spread = puzzle.slots.map((c) => FATE_CARDS[c].name).join(" \xB7 ");
+        showOverlay(ctx2, {
+          title: "\u{1F52E} \u0421\u0443\u0434\u044C\u0431\u0430 \u0440\u0430\u0437\u043B\u043E\u0436\u0435\u043D\u0430!",
+          subtitle: `\xAB${level.name}\xBB: ${spread}<br><span class="muted">${level.guest.icon} ${level.guest.name} \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442 \u0438 \u0443\u0445\u043E\u0434\u0438\u0442 \u0432 \u043D\u043E\u0447\u044C.</span>` + (factor < 1 ? `<br>\u0421\u043E\u043C\u043D\u0435\u043D\u0438\u044F \u0433\u043E\u0441\u0442\u044F \u0441\u044A\u0435\u043B\u0438 \u0447\u0430\u0441\u0442\u044C \u043D\u0430\u0433\u0440\u0430\u0434\u044B (\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442).` : ""),
+          rewards,
+          buttons: [
+            ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0433\u043E\u0441\u0442\u044C \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+            { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
+            { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+            { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
+          ]
+        });
+      }, 450);
+    }
+    function cardEl(cardId, i, mark) {
+      const card = FATE_CARDS[cardId];
+      const b = document.createElement("button");
+      b.className = "fate-card" + (mark ? ` mark-${mark}` : "");
+      if (i % 2 === 0) b.classList.add("tilt-l");
+      else b.classList.add("tilt-r");
+      const icon = document.createElement("span");
+      icon.className = "fate-card-icon";
+      icon.textContent = card.icon;
+      b.appendChild(icon);
+      const img = document.createElement("img");
+      img.className = "fate-card-art";
+      img.alt = card.name;
+      img.addEventListener("error", () => img.remove());
+      img.src = `assets/fate/card_${cardId}_web.jpg`;
+      b.appendChild(img);
+      const name = document.createElement("span");
+      name.className = "fate-card-name";
+      name.textContent = card.name;
+      b.appendChild(name);
+      const meanings = document.createElement("span");
+      meanings.className = "fate-card-meanings";
+      meanings.textContent = card.meanings.join(" \xB7 ");
+      b.appendChild(meanings);
+      return b;
+    }
+    function renderAll() {
+      scene.innerHTML = "";
+      const tableImg = document.createElement("img");
+      tableImg.className = "fate-table-art";
+      tableImg.alt = "";
+      tableImg.addEventListener("error", () => tableImg.remove());
+      tableImg.src = "assets/fate/fate_table_web.jpg";
+      scene.appendChild(tableImg);
+      const guestBar = document.createElement("div");
+      guestBar.className = "fate-guest";
+      const portrait = document.createElement("div");
+      portrait.className = "fate-portrait";
+      const pIcon = document.createElement("span");
+      pIcon.className = "fate-portrait-icon";
+      pIcon.textContent = level.guest.icon;
+      portrait.appendChild(pIcon);
+      if (level.guest.art) {
+        const pImg = document.createElement("img");
+        pImg.className = "fate-portrait-art";
+        pImg.alt = level.guest.name;
+        pImg.addEventListener("error", () => pImg.remove());
+        pImg.src = level.guest.art;
+        portrait.appendChild(pImg);
+      }
+      guestBar.appendChild(portrait);
+      const gName = document.createElement("div");
+      gName.className = "fate-guest-name";
+      gName.innerHTML = `<b>${level.guest.name}</b><div class="muted">\u043F\u0440\u043E\u0441\u0438\u0442 \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u0441\u0443\u0434\u044C\u0431\u044B</div>`;
+      guestBar.appendChild(gName);
+      scene.appendChild(guestBar);
+      const story = document.createElement("div");
+      story.className = "fate-story";
+      level.story.forEach((part, si) => {
+        const strip = document.createElement("div");
+        strip.className = "fate-strip";
+        const body = document.createElement("div");
+        body.className = "fate-strip-body";
+        const label = document.createElement("div");
+        label.className = "fate-strip-label";
+        label.textContent = part.label;
+        body.appendChild(label);
+        const text = document.createElement("div");
+        text.className = "fate-strip-text";
+        text.textContent = part.text;
+        body.appendChild(text);
+        strip.appendChild(body);
+        const slotCard = puzzle.slots[si];
+        if (slotCard) {
+          const placed = cardEl(slotCard, si, null);
+          placed.classList.add("fate-placed");
+          placed.addEventListener("click", () => tapSlot(si));
+          strip.appendChild(placed);
+        } else {
+          const empty = document.createElement("div");
+          empty.className = "fate-slot";
+          empty.textContent = "?";
+          empty.addEventListener("click", () => tapSlot(si));
+          strip.appendChild(empty);
+        }
+        story.appendChild(strip);
+      });
+      scene.appendChild(story);
+      for (const att of puzzle.attempts) {
+        const row = document.createElement("div");
+        row.className = "fate-attempt";
+        att.cards.forEach((cardId, ci) => {
+          const mini = document.createElement("div");
+          mini.className = `fate-mini mark-${att.marks[ci]}`;
+          mini.textContent = FATE_CARDS[cardId].icon;
+          mini.title = FATE_CARDS[cardId].name;
+          row.appendChild(mini);
+        });
+        scene.appendChild(row);
+      }
+      const hand = document.createElement("div");
+      hand.className = "fate-hand";
+      level.hand.forEach((cardId, ci) => {
+        if (puzzle.slots.includes(cardId)) return;
+        const b = cardEl(cardId, ci, null);
+        b.addEventListener("click", () => tapCard(cardId));
+        hand.appendChild(b);
+      });
+      scene.appendChild(hand);
+      const factor = rewardFactor3(puzzle);
+      const left = Math.max(0, FATE_FREE_MISTAKES - puzzle.mistakes);
+      const prog = fateProgress(puzzle);
+      statusEl.innerHTML = `\u{1F52E} \u041E\u0448\u0438\u0431\u043E\u043A: <b>${puzzle.mistakes}</b>` + (factor >= 1 ? ` \xB7 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445 \u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C: <b>${left}</b>` : ` \xB7 \u043D\u0430\u0433\u0440\u0430\u0434\u0430: <b>\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442</b>`) + `<div class="muted" style="font-size:13px">\u041F\u043E\u0437\u0438\u0446\u0438\u0439 \u0437\u0430\u043A\u0440\u044B\u0442\u043E: ${prog.ok}/${prog.total} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+    }
+    renderAll();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+    };
+  }
+
   // src/ui/puzzleView.js
   var PUZZLE_TYPES = [
     { mech: "mirror", name: "\u0421\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438", icon: "\u{1FA9E}", desc: "\u0417\u0435\u0440\u043A\u0430\u043B\u0430 \u0438 \u043B\u0443\u0447\u0438 \u0441\u0432\u0435\u0442\u0430" },
@@ -15272,7 +17030,8 @@
     { mech: "mech", name: "\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u044B", icon: "\u2699\uFE0F", desc: "\u0417\u0430\u0432\u0435\u0434\u0438 \u0432\u0441\u0435 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0438" },
     { mech: "candle", name: "\u0421\u0432\u0435\u0447\u0438 \u0438 \u0434\u0443\u0445\u0438", icon: "\u{1F56F}\uFE0F", desc: "\u0421\u0432\u0435\u0442 \u0440\u0430\u0441\u0441\u0442\u0430\u0432\u0438\u0442 \u0432\u0441\u0451 \u043F\u043E \u043C\u0435\u0441\u0442\u0430\u043C" },
     { mech: "flow", name: "\u041F\u043E\u0442\u043E\u043A\u0438 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0435\u0439", icon: "\u{1F30A}", desc: "\u041D\u0430\u043F\u0440\u0430\u0432\u044C \u0433\u043E\u0441\u0442\u0435\u0439 \u043A \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0443" },
-    { mech: "brew", name: "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439", icon: "\u2697\uFE0F", desc: "\u041F\u043E\u0432\u0442\u043E\u0440\u0438 \u0440\u0435\u0446\u0435\u043F\u0442 \u0431\u0435\u0437 \u043E\u0448\u0438\u0431\u043E\u043A" }
+    { mech: "brew", name: "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439", icon: "\u2697\uFE0F", desc: "\u041F\u043E\u0432\u0442\u043E\u0440\u0438 \u0440\u0435\u0446\u0435\u043F\u0442 \u0431\u0435\u0437 \u043E\u0448\u0438\u0431\u043E\u043A" },
+    { mech: "fate", name: "\u041A\u0430\u0440\u0442\u044B \u0441\u0443\u0434\u044C\u0431\u044B", icon: "\u{1F52E}", desc: "\u0420\u0430\u0441\u043A\u043B\u0430\u0434 \u0434\u043B\u044F \u0433\u043E\u0441\u0442\u0435\u0439 \u043B\u0430\u0432\u043A\u0438" }
   ];
   function typeOf(p) {
     return p.mechanic || "mirror";
@@ -15410,6 +17169,9 @@
     }
     if (level.mechanic === "brew") {
       return renderBrewPuzzle(container, ctx2, level);
+    }
+    if (level.mechanic === "fate") {
+      return renderFatePuzzle(container, ctx2, level);
     }
     const puzzle = createPuzzle(level);
     let hintsUsed = 0;

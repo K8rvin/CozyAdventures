@@ -18,6 +18,7 @@ import { renderMechPuzzle } from './mechView.js';
 import { renderCandlePuzzle } from './candleView.js';
 import { renderFlowPuzzle } from './flowView.js';
 import { renderBrewPuzzle } from './brewView.js';
+import { renderFatePuzzle } from './fateView.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav, puzzleSkipButton, header, backToPuzzleType } from './common.js';
 
@@ -35,6 +36,7 @@ const PUZZLE_TYPES = [
   { mech: 'candle', name: 'Свечи и духи', icon: '🕯️', desc: 'Свет расставит всё по местам' },
   { mech: 'flow', name: 'Потоки покупателей', icon: '🌊', desc: 'Направь гостей к прилавку' },
   { mech: 'brew', name: 'Варка зелий', icon: '⚗️', desc: 'Повтори рецепт без ошибок' },
+  { mech: 'fate', name: 'Карты судьбы', icon: '🔮', desc: 'Расклад для гостей лавки' },
 ];
 
 function typeOf(p) { return p.mechanic || 'mirror'; }
@@ -184,6 +186,9 @@ export function renderPuzzle(container, ctx, params) {
   }
   if (level.mechanic === 'brew') {
     return renderBrewPuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'fate') {
+    return renderFatePuzzle(container, ctx, level);
   }
   const puzzle = createPuzzle(level);
   let hintsUsed = 0;

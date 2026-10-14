@@ -150,8 +150,8 @@ test('все экраны рендерятся без ошибок', () => {
       return renderHub(new El('main'), ctx, { scene: 'cabinet' });
     },
     () => renderPuzzleList(new El('main'), ctx),
-    // Списки по типам головоломок (11 карточек → свой список)
-    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew']
+    // Списки по типам головоломок (12 карточек → свой список)
+    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate']
       .map((mech) => () => renderPuzzleTypeList(new El('main'), ctx, mech)),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_01' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_12' }),
@@ -168,6 +168,8 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'brew_01' }), // варка зелий
     () => renderPuzzle(new El('main'), ctx, { id: 'brew_06' }), // варка на память
     () => renderPuzzle(new El('main'), ctx, { id: 'brew_09' }), // варка с вариантами
+    () => renderPuzzle(new El('main'), ctx, { id: 'fate_01' }), // карты судьбы
+    () => renderPuzzle(new El('main'), ctx, { id: 'fate_09' }), // расклад на 4 позиции
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
     () => renderSandbox(new El('main'), ctx), // конструктор боя
     () => renderEquip(new El('main'), ctx),

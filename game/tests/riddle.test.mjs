@@ -6,13 +6,13 @@ import {
   submitRiddle, isRiddleSolved, applyRiddleHint, rewardFactor, letterMarks,
   markAttempt, answerLetters, validateRiddleLevel, FREE_MISTAKES, ALPHABET,
 } from '../src/core/riddlePuzzle.js';
-import { newGame, completePuzzle } from '../src/core/state.js';
+import { newGame, completePuzzle, todayKey } from '../src/core/state.js';
 
 const RIDDLE = BOOK_PUZZLES.filter((l) => l.mechanic === 'riddle');
 const byId = (id) => RIDDLE.find((l) => l.id === id);
 
 test('все уровни «Загадки» валидны: короткое слово, загадка', () => {
-  assert.equal(RIDDLE.length, 5, 'bk_01–bk_05 — уровни «Загадки»');
+  assert.equal(RIDDLE.length, 100, '100 уровней «Загадки Хранителя»');
   for (const level of RIDDLE) {
     const v = validateRiddleLevel(level);
     assert.ok(v.ok, `${level.id} (${level.name}): ${v.problems.join('; ')}`);
@@ -110,10 +110,14 @@ test('подсказки решают каждый уровень «Загадк
 });
 
 test('штраф доезжает до награды: coinFactor уменьшает монеты', () => {
+  // Заказ дня ×2 зависит от даты и состава кампании: гасим его,
+  // чтобы тест был детерминированным
   const st = newGame();
+  st.lastDailyBonus = todayKey();
   const full = completePuzzle(st, 'bk_01', {});
   assert.equal(full.find((r) => r.type === 'coins').amount, 90);
   const st2 = newGame();
+  st2.lastDailyBonus = todayKey();
   const cut = completePuzzle(st2, 'bk_01', { coinFactor: 0.8 });
   assert.equal(cut.find((r) => r.type === 'coins').amount, 72);
 });
