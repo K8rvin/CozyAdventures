@@ -396,6 +396,8 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   flex-direction: column;
   gap: 12px;
   align-items: center;
+  /* Стабильная высота: история попыток внутри прокручивается, стол не тянется */
+  min-height: 660px;
 }
 .fate-table-art {
   position: absolute;
@@ -412,7 +414,7 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   display: flex;
   align-items: center;
   gap: 12px;
-  align-self: flex-start;
+  align-self: stretch;
   background: rgba(30, 22, 14, 0.72);
   border-radius: 12px;
   padding: 8px 14px 8px 8px;
@@ -438,99 +440,191 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   height: 100%;
   object-fit: cover;
 }
-.fate-guest-name { color: #f3e6cf; font-size: 16px; }
-.fate-story {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-.fate-strip {
+.fate-guest-name { color: #f3e6cf; font-size: 16px; flex: none; }
+
+/* Речевой пузырь гостя: история рассказывается порциями-репликами */
+.fate-bubble {
+  flex: 1;
+  min-width: 0;
+  background: rgba(77, 66, 49, 0.9);
+  border-radius: 12px;
+  padding: 9px 14px;
+  line-height: 1.5;
+  /* Фикс под три строки: соседние блоки не скачут при смене реплики */
+  min-height: 86px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(77, 66, 49, 0.88);
-  border-radius: 12px;
-  padding: 10px 12px;
 }
-.fate-strip-body { flex: 1; min-width: 0; }
-.fate-strip-label {
+@media (max-width: 860px) {
+  .fate-guest { flex-wrap: wrap; }
+  .fate-bubble { flex-basis: 100%; }
+}
+.fate-bubble-chip {
+  display: inline-block;
   color: #ffca7a;
   font-weight: 700;
-  font-size: 13px;
-  text-transform: uppercase;
+  font-size: 12px;
   letter-spacing: 0.06em;
-  margin-bottom: 2px;
+  text-transform: uppercase;
+  margin-right: 8px;
 }
-.fate-strip-text { color: #f3e6cf; font-style: italic; line-height: 1.5; font-size: 15px; }
+.fate-bubble-text { color: #f3e6cf; font-style: italic; font-size: 15px; }
+
+/* Расклад на столе: позиции с подписями */
+.fate-spread {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 4px 0;
+}
+.fate-spread-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.fate-slot-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 202, 122, 0.85);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
 .fate-slot {
-  width: 76px;
-  min-width: 76px;
-  height: 108px;
-  border-radius: 10px;
+  width: 96px;
+  height: 144px;
+  border-radius: 12px;
   border: 2px dashed rgba(243, 230, 207, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgba(243, 230, 207, 0.45);
-  font-size: 28px;
-  cursor: default;
+  font-size: 30px;
+  background: rgba(30, 22, 14, 0.35);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
+.fate-slot.active { border-color: rgba(255, 202, 122, 0.8); }
+.fate-slot.drop-ok {
+  border-color: #ffca7a;
+  border-style: solid;
+  box-shadow: 0 0 16px rgba(255, 202, 122, 0.55);
+}
+
+/* Карта: чистый арт 2:3 без текста (значения — в превью боковой панели) */
 .fate-card {
   position: relative;
-  width: 86px;
-  min-width: 86px;
-  padding: 5px 5px 7px;
-  border-radius: 10px;
+  width: 108px;
+  height: 162px;
+  border-radius: 12px;
   background: #4d4231;
   border: 2px solid rgba(255, 202, 122, 0.35);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  cursor: grab;
   transition: transform 0.15s ease, border-color 0.15s ease;
-  color: #f3e6cf;
-  font-family: inherit;
+  touch-action: none;
+  user-select: none;
+  overflow: hidden;
 }
-.fate-card:hover { transform: translateY(-5px); border-color: #ffca7a; }
-.fate-card.tilt-l { transform: rotate(-2.5deg); }
-.fate-card.tilt-r { transform: rotate(2.5deg); }
-.fate-card.tilt-l:hover { transform: rotate(-2.5deg) translateY(-5px); }
-.fate-card.tilt-r:hover { transform: rotate(2.5deg) translateY(-5px); }
-.fate-card-icon { font-size: 30px; line-height: 1; }
+.fate-card.on-table { width: 96px; height: 144px; }
+.fate-card:hover { transform: translateY(-7px) scale(1.06); border-color: #ffca7a; z-index: 2; }
+.fate-card-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+}
 .fate-card-art {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
 }
-.fate-card-art ~ .fate-card-icon,
-.fate-card-art ~ .fate-card-name,
-.fate-card-art ~ .fate-card-meanings {
-  position: relative;
-  z-index: 1;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+.fate-ghost {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0.92;
+  transform: scale(1.07);
+  margin: 0;
 }
-.fate-card-art ~ .fate-card-icon { margin-top: 34px; }
-.fate-card-name { font-weight: 700; font-size: 14px; }
-.fate-card-meanings {
-  font-size: 10px;
-  color: #d8c9a8;
-  line-height: 1.25;
-  text-align: center;
-}
-.fate-placed { cursor: pointer; }
+.fate-drag-src { opacity: 0.3; }
 .fate-hand {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
   padding-top: 4px;
 }
+/* Рука статична: гнездо сыгранной карты остаётся, соседи не сдвигаются */
+.fate-hand-hole {
+  width: 108px;
+  height: 162px;
+  border-radius: 12px;
+  border: 2px dashed rgba(243, 230, 207, 0.14);
+  background: rgba(30, 22, 14, 0.25);
+}
+
+/* Речевой пузырь без стрелок: реплики листаются тапом по позициям на столе */
+.fate-bubble-body { line-height: 1.5; }
+
+/* История неверных раскладов — панель справа под превью, фоном кусок стола */
+.fate-log {
+  margin-top: 10px;
+  background:
+    linear-gradient(rgba(24, 18, 12, 0.87), rgba(24, 18, 12, 0.87)),
+    url('assets/fate/fate_table_web.jpg') center top / cover;
+}
+.fate-log-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffca7a;
+  margin-bottom: 6px;
+}
+.fate-attempts-wrap { position: relative; }
+.fate-attempts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  max-height: 190px;
+  overflow-y: auto;
+  padding-right: 24px; /* место под паучий трек */
+  scrollbar-width: none; /* паучок вместо нативного скролла */
+}
+.fate-attempts::-webkit-scrollbar { display: none; }
+/* Мини-паучок на нити (как #spidertrack в хабе, но внутри панели) */
+.fate-spidertrack {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  pointer-events: none;
+}
+.fate-spidertrack .thread {
+  position: absolute;
+  top: 0;
+  left: 9px;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to bottom, rgba(243, 230, 207, 0.65), rgba(243, 230, 207, 0.25));
+}
+.fate-spidertrack .mover { position: absolute; left: 0; top: 0; will-change: transform; }
+.fate-spidertrack .bug {
+  display: block;
+  font-size: 16px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
+  animation: spider-sway 3.2s ease-in-out infinite;
+  transform-origin: top center;
+  user-select: none;
+}
+
+/* История неверных раскладов — мини-ряды под рукой карт */
 .fate-attempt {
   display: flex;
   gap: 6px;
@@ -552,9 +646,42 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .fate-mini.mark-exact { background: #5d6b3f; border-color: #a8c47e; }
 .fate-mini.mark-present { background: #8a6d2f; border-color: #ffca7a; }
 .fate-mini.mark-absent { background: #332b1f; border-color: #4d4231; opacity: 0.7; }
-.fate-card.mark-exact { background: #5d6b3f; border-color: #a8c47e; }
-.fate-card.mark-present { background: #8a6d2f; border-color: #ffca7a; }
-.fate-card.mark-absent { background: #332b1f; border-color: #4d4231; opacity: 0.65; }
+
+/* Превью карты в боковой панели (по наведению/нажатию) */
+.fate-panel { min-height: 120px; }
+.fate-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+}
+.fate-preview-frame {
+  position: relative;
+  width: 250px;
+  height: 375px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #4d4231;
+  border: 2px solid rgba(255, 202, 122, 0.5);
+}
+.fate-preview-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+}
+.fate-preview-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fate-preview-name { font-weight: 700; font-size: 16px; color: #ffe9c0; }
+.fate-preview-meanings { font-size: 13px; color: #d8c9a8; }
 
 
 /* --- Чай для путника: образы вместо чисел --- */

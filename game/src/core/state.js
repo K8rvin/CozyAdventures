@@ -12,6 +12,7 @@ import { CANDLE_PUZZLES } from '../data/puzzlesCandle.js';
 import { FLOW_PUZZLES } from '../data/puzzlesFlow.js';
 import { BREW_PUZZLES } from '../data/puzzlesBrew.js';
 import { FATE_PUZZLES } from '../data/puzzlesFate.js';
+import { GLASS_PUZZLES } from '../data/puzzlesGlass.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
@@ -377,7 +378,7 @@ export function toggleCosmetic(state, id) {
 // сложность растёт по своей цепочке.
 const PUZZLE_POOL = new Map(
   [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES,
-    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES, ...FATE_PUZZLES]
+    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES, ...FATE_PUZZLES, ...GLASS_PUZZLES]
     .map((p) => [p.id, p]),
 );
 const CAMPAIGN_ORDER = [
@@ -428,6 +429,33 @@ const CAMPAIGN_ORDER = [
   // Карты судьбы: вечерние гости лавки и расклады
   'fate_01', 'fate_02', 'fate_03', 'fate_04', 'fate_05', 'fate_06',
   'fate_07', 'fate_08', 'fate_09', 'fate_10', 'fate_11', 'fate_12',
+  // Витраж миров: собери разбитые окна-картины из осколков
+  'gl_01', 'gl_02', 'gl_03', 'gl_04', 'gl_05', 'gl_06',
+  'gl_07', 'gl_08', 'gl_09', 'gl_10', 'gl_11', 'gl_12',
+  // Вторая дюжина витражей: галерея дальних миров и сердце лавки
+  'gl_13', 'gl_14', 'gl_15', 'gl_16', 'gl_17', 'gl_18',
+  'gl_19', 'gl_20', 'gl_21', 'gl_22', 'gl_23', 'gl_24',
+  // Третья серия витражей: вертикальный формат, панорамы, максимум осколков
+  'gl_25', 'gl_26', 'gl_27', 'gl_28', 'gl_29',
+  'gl_30', 'gl_31', 'gl_32', 'gl_33', 'gl_34',
+  // Четвёртая серия витражей: посвящённые арты assets/glass/ (процедурный фолбэк до генерации)
+  'gl_35', 'gl_36', 'gl_37', 'gl_38', 'gl_39', 'gl_40',
+  'gl_41', 'gl_42', 'gl_43', 'gl_44', 'gl_45', 'gl_46',
+  // Пятая серия витражей: посвящённые арты assets/glass/
+  'gl_47', 'gl_48', 'gl_49', 'gl_50', 'gl_51', 'gl_52',
+  'gl_53', 'gl_54', 'gl_55', 'gl_56', 'gl_57', 'gl_58',
+  // Карты судьбы: вторая дюжина гостей (мельник, швея, пчеловод… хозяин лавки)
+  'fate_13', 'fate_14', 'fate_15', 'fate_16', 'fate_17', 'fate_18',
+  'fate_19', 'fate_20', 'fate_21', 'fate_22', 'fate_23', 'fate_24',
+  // Третья дюжина: в игру входит вторая колода (фонарь, котёл, ножницы…)
+  'fate_25', 'fate_26', 'fate_27', 'fate_28', 'fate_29', 'fate_30',
+  'fate_31', 'fate_32', 'fate_33', 'fate_34', 'fate_35', 'fate_36',
+  // Четвёртая дюжина: старые знакомые с новыми историями (гости повторяются)
+  'fate_37', 'fate_38', 'fate_39', 'fate_40', 'fate_41', 'fate_42',
+  'fate_43', 'fate_44', 'fate_45', 'fate_46', 'fate_47', 'fate_48',
+  // Пятая дюжина: третья колода (улей, перо, кольцо, окно, волна…)
+  'fate_49', 'fate_50', 'fate_51', 'fate_52', 'fate_53', 'fate_54',
+  'fate_55', 'fate_56', 'fate_57', 'fate_58', 'fate_59', 'fate_60',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 

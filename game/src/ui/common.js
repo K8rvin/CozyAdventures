@@ -106,5 +106,14 @@ export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons }) 
   // Клик по фону закрывает оверлей (чтобы зависший не держал экран заложником)
   overlay.addEventListener('click', (ev) => { if (ev.target === overlay) overlay.remove(); });
   document.body.appendChild(overlay);
+  // Enter/пробел — основная кнопка («Следующая →» и т.п.); слушатель самоочищается
+  const onKey = (ev) => {
+    if (!overlay.isConnected) { window.removeEventListener('keydown', onKey); return; }
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    ev.preventDefault();
+    const btn = overlay.querySelector('.actions button.primary') || overlay.querySelector('.actions button');
+    btn?.click();
+  };
+  window.addEventListener('keydown', onKey);
   return overlay;
 }

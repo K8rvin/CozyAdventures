@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { FATE_PUZZLES, FATE_CARDS } from '../src/data/puzzlesFate.js';
 import {
-  createFatePuzzle, placeCard, removeSlot, undoFate, resetFate,
+  createFatePuzzle, placeCard, placeCardAt, removeSlot, undoFate, resetFate,
   submitFate, isFateSolved, applyFateHint, rewardFactor, markSpread,
   fateProgress, validateFateLevel, FATE_FREE_MISTAKES,
 } from '../src/core/fatePuzzle.js';
@@ -13,7 +13,7 @@ const byId = (id) => FATE_PUZZLES.find((l) => l.id === id);
 const mk = (level) => createFatePuzzle(level, FATE_CARDS);
 
 test('все уровни «Карт судьбы» валидны: история, расклад, гость', () => {
-  assert.equal(FATE_PUZZLES.length, 12, 'fate_01–fate_12');
+  assert.equal(FATE_PUZZLES.length, 60, 'fate_01–fate_60');
   for (const level of FATE_PUZZLES) {
     const v = validateFateLevel(level, FATE_CARDS);
     assert.ok(v.ok, `${level.id} (${level.name}): ${v.problems.join('; ')}`);
@@ -32,6 +32,47 @@ test('карта ложится в первую свободную позици�
   // Вернувшаяся карта снова доступна, но идёт в ПЕРВУЮ свободную позицию
   assert.ok(placeCard(s, 'star'));
   assert.deepEqual(s.slots, ['path', 'star', null]);
+});
+
+test('карту можно положить в конкретную позицию (перетаскивание)', () => {
+  const s = mk(byId('fate_01'));
+  assert.ok(placeCardAt(s, 'letter', 2), 'карта легла в третью позицию');
+  assert.deepEqual(s.slots, [null, null, 'letter']);
+  assert.equal(placeCardAt(s, 'home', 2), false, 'позиция занята');
+  assert.equal(placeCardAt(s, 'star', 5), false, 'позиции не существует');
+  assert.equal(placeCardAt(s, 'letter', 0), false, 'карта уже на столе');
+  // Отмена возвращает именно эту позицию
+  assert.ok(undoFate(s));
+  assert.deepEqual(s.slots, [null, null, null]);
+});
+
+test('сброс очищает историю раскладов, но помнит штрафы', () => {
+  const s = mk(byId('fate_01'));
+  placeCard(s, 'star'); placeCard(s, 'home'); placeCard(s, 'letter');
+  submitFate(s); // неверный расклад → попытка в истории, ошибка засчитана
+  assert.equal(s.attempts.length, 1);
+  assert.equal(s.mistakes, 1);
+  resetFate(s);
+  assert.equal(s.attempts.length, 0, 'история раскладов очищена');
+  assert.equal(s.mistakes, 1, 'штрафы-ошибки остаются (экономика)');
+});
+
+test('рука перемешивается при создании (содержимое не меняется)', () => {
+  const level = byId('fate_12');
+  // Детерминированный ГСЧ: всегда 0 → каждый шаг меняет местами с первым
+  const s = createFatePuzzle(level, FATE_CARDS, () => 0);
+  assert.deepEqual([...s.hand].sort(), [...level.hand].sort(), 'те же карты');
+  assert.notDeepEqual(s.hand, level.hand, 'порядок перемешан');
+  // По умолчанию — Math.random, валидность хода проверяется по перемешанной руке
+  const s2 = mk(level);
+  assert.ok(placeCard(s2, s2.hand[0]), 'карта из перемешанной руки ложится');
+});
+
+test('в данных рука не начинается с ответов подряд (антиспойлер)', () => {
+  for (const level of FATE_PUZZLES) {
+    const trivial = level.story.every((part, i) => part.accept.includes(level.hand[i]));
+    assert.ok(!trivial, `${level.id}: первые карты руки повторяют расклад — перемешай hand`);
+  }
 });
 
 test('отмена и сброс работают', () => {

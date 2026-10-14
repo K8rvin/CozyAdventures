@@ -19,6 +19,7 @@ import { renderCandlePuzzle } from './candleView.js';
 import { renderFlowPuzzle } from './flowView.js';
 import { renderBrewPuzzle } from './brewView.js';
 import { renderFatePuzzle } from './fateView.js';
+import { renderGlassPuzzle } from './glassView.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav, puzzleSkipButton, header, backToPuzzleType } from './common.js';
 
@@ -37,6 +38,7 @@ const PUZZLE_TYPES = [
   { mech: 'flow', name: 'Потоки покупателей', icon: '🌊', desc: 'Направь гостей к прилавку' },
   { mech: 'brew', name: 'Варка зелий', icon: '⚗️', desc: 'Повтори рецепт без ошибок' },
   { mech: 'fate', name: 'Карты судьбы', icon: '🔮', desc: 'Расклад для гостей лавки' },
+  { mech: 'glass', name: 'Витраж миров', icon: '🪟', desc: 'Собери разбитую картину мира' },
 ];
 
 function typeOf(p) { return p.mechanic || 'mirror'; }
@@ -189,6 +191,9 @@ export function renderPuzzle(container, ctx, params) {
   }
   if (level.mechanic === 'fate') {
     return renderFatePuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'glass') {
+    return renderGlassPuzzle(container, ctx, level);
   }
   const puzzle = createPuzzle(level);
   let hintsUsed = 0;
@@ -502,4 +507,13 @@ function showVictory(ctx, level, rewards) {
   toShop.addEventListener('click', () => { overlay.remove(); ctx.go('hub'); });
   actions.append(again, toList, toShop);
   document.body.appendChild(overlay);
+  // Enter/пробел — основная кнопка («Следующая →»); слушатель самоочищается
+  const onVictoryKey = (ev) => {
+    if (!overlay.isConnected) { window.removeEventListener('keydown', onVictoryKey); return; }
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    ev.preventDefault();
+    const btn = overlay.querySelector('.actions button.primary') || overlay.querySelector('.actions button');
+    btn?.click();
+  };
+  window.addEventListener('keydown', onVictoryKey);
 }

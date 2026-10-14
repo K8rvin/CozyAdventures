@@ -150,8 +150,8 @@ test('все экраны рендерятся без ошибок', () => {
       return renderHub(new El('main'), ctx, { scene: 'cabinet' });
     },
     () => renderPuzzleList(new El('main'), ctx),
-    // Списки по типам головоломок (12 карточек → свой список)
-    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate']
+    // Списки по типам головоломок (13 карточек → свой список)
+    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate', 'glass']
       .map((mech) => () => renderPuzzleTypeList(new El('main'), ctx, mech)),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_01' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_12' }),
@@ -170,6 +170,13 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'brew_09' }), // варка с вариантами
     () => renderPuzzle(new El('main'), ctx, { id: 'fate_01' }), // карты судьбы
     () => renderPuzzle(new El('main'), ctx, { id: 'fate_09' }), // расклад на 4 позиции
+    () => renderPuzzle(new El('main'), ctx, { id: 'gl_01' }),  // витраж миров
+    () => renderPuzzle(new El('main'), ctx, { id: 'gl_12' }),  // витраж 6×4
+    () => renderPuzzle(new El('main'), ctx, { id: 'gl_24' }),  // витраж-панорама 9×3
+    () => renderPuzzle(new El('main'), ctx, { id: 'gl_26' }),  // вертикальный витраж 4×5
+    () => renderPuzzle(new El('main'), ctx, { id: 'gl_34' }),  // витраж 8×5, 40 осколков
+    () => renderPuzzle(new El('main'), ctx, { id: 'gl_46' }),  // витраж с посвящённым артом (фолбэк)
+    () => renderPuzzle(new El('main'), ctx, { id: 'gl_58' }),  // финал пятой серии 8×5
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
     () => renderSandbox(new El('main'), ctx), // конструктор боя
     () => renderEquip(new El('main'), ctx),

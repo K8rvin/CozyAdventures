@@ -1036,3 +1036,185 @@ facing viewer, plain warm dark background, no text, no watermark --ar 1:1
 ### 16.4 Обложка типа головоломки
 
 **pc_fate.png** вписан в раздел 15 вместе с остальными карточками типов.
+
+## 17. Витраж миров (glass) — картины для пазла-перестановки
+
+Головоломка режет картинку на сетку (от 3×2 до 6×4) — важны **крупные
+различимые детали по всей площади** (иначе однотонные куски не собрать).
+Формат 16:10 (`--ar 16:10`), минимум 1600×1000. Сейчас уровни используют
+готовые сцены (seek_*_web.jpg, battle_bg_crossroads_web.jpg); посвящённые
+арты — в `assets/glass/glass_<id>_web.jpg`, путь меняется в data/puzzlesGlass.js.
+
+Общий стиль: `cozy fantasy scene, warm lantern light, hand-painted storybook
+style, rich varied details across the whole frame (no large empty areas),
+distinct landmarks in every corner, no text, no watermark, no border, no frame`
+
+Варианты сюжетов (по одному на уровень):
+- **glass_meadow.png** — `fireflies over a moonlit meadow with a tiny shop porch`
+- **glass_town.png** — `a small crossroads town square at dusk, crooked houses`
+- **glass_attic.png** — `a cluttered magical attic full of books, boxes and a cat`
+- **glass_market.png** — `a night market with glowing stalls and string lights`
+- **glass_swamp.png** — `a misty swamp with will-o-wisps and lantern posts`
+- **glass_fair.png** — `a lantern festival fair with garlands and paper lanterns`
+- **glass_forge.png** — `a cozy dwarven forge with sparks and glowing embers`
+- **glass_crystal.png** — `a crystal grotto with glowing crystals of many colors`
+- **glass_jade.png** — `a serene jade garden with a stone bridge and pond`
+- **glass_grotto.png** — `a singing grotto with glowing mushrooms and water`
+- **glass_clockwork.png** — `a clockwork tower interior with brass gears`
+- **glass_crossroads.png** — `a magical crossroads of worlds with many glowing roads`
+
+Вторая дюжина (gl_13–gl_24, пока используют battle_bg_*/town_square/hub_banner):
+- **glass_market_sq.png** — `wide panorama of a small town square at dusk --ar 3:1`
+- **glass_alchemist.png** — `an alchemist's cluttered worktable with a cauldron and herbs`
+- **glass_night.png** — `a night market alley glowing with paper lanterns`
+- **glass_bog.png** — `a fairy-tale swamp with will-o-wisps and a hut on legs`
+- **glass_starfair.png** — `a starlight fair with carousels and fireworks`
+- **glass_mountains.png** — `crystal mountains sparkling under two moons`
+- **glass_ashes.png** — `ash steppes at a warm ember sunset`
+- **glass_reef.png** — `an underwater grotto with light shafts and shells`
+- **glass_jade2.png** — `a jade palace garden with pagoda roofs`
+- **glass_mistclock.png** — `misty clock towers and floating gears`
+- **glass_teatable.png** — `a cozy tea table by the fire with a sleeping cat`
+- **glass_shop.png** — `wide panorama of a cozy magical shop interior --ar 3:1`
+
+Третья серия (gl_25–gl_34, пока используют recipe_book/fate_table/tea_table/intro/town_market/trophy_room/battle_bg_*):
+- **glass_recipes.png** — `an open recipe book with herbs and ink sketches`
+- **glass_fatetable.png** — `a fortune-teller's table with cards and candles, vertical composition --ar 4:5`
+- **glass_dawn.png** — `a meadow at dawn with dew and waking fireflies`
+- **glass_tea_dawn.png** — `a tea table at dawn, fireplace not yet lit`
+- **glass_tea_noon.png** — `a tea table at noon with a small fireplace flame`
+- **glass_tea_night.png** — `a midnight tea table by bright fire, cat asleep nearby`
+- **glass_firstday.png** — `a traveler arriving at a small shop at the crossroads --ar 2:1`
+- **glass_row.png** — `wide panorama of a market row with stalls --ar 3:1`
+- **glass_trophies.png** — `wide panorama of a cozy trophy room with a fireplace --ar 3:1`
+- **glass_attic2.png** — `a huge cluttered attic full of treasures and light beams`
+
+Четвёртая серия (gl_35–gl_46, файлы `assets/glass/glass_<имя>_web.jpg`):
+- **glass_winter.png** — `a cozy shop porch in first snow, cat pawprints on steps`
+- **glass_harbor.png** — `a night harbor with boats and a lighthouse beam`
+- **glass_mill.png** — `a wheat field with an old windmill at golden hour`
+- **glass_observatory.png** — `a star observatory with a telescope and open dome`
+- **glass_library.png** — `an underground library among tree roots, lit by candles`
+- **glass_maple.png** — `an autumn maple forest in fiery reds and golds`
+- **glass_springs.png** — `steaming hot springs in the mountains at dusk`
+- **glass_icepalace.png** — `an ice palace glowing blue and violet from inside`
+- **glass_moongrove.png** — `a moonlit grove with the moon caught between branches`
+- **glass_apiary.png** — `a meadow apiary with bees and honeycomb frames`
+- **glass_lighthouse.png** — `wide panorama: a lighthouse where sea roads of worlds meet --ar 3:1`
+- **glass_hearth.png** — `a warm fireplace with an armchair and a cat curled up`
+
+Пятая серия (gl_47–gl_58, файлы `assets/glass/glass_<имя>_web.jpg`):
+- **glass_bakery.png** — `a small bakery at dawn, rows of bread, flour in sunbeams`
+- **glass_mushrooms.png** — `a mushroom clearing after rain, many species, dew`
+- **glass_greenhouse.png** — `a lush greenhouse full of plants and warm light`
+- **glass_waterfall.png** — `a waterfall holding a rainbow, mist and moss`
+- **glass_pumpkins.png** — `an autumn pumpkin fair with glowing carved lanterns`
+- **glass_snowdrops.png** — `first snowdrops through melting snow, early spring`
+- **glass_skyship.png** — `a sailing skyship moored to a cloud, ropes and lanterns`
+- **glass_station.png** — `a cozy train station between worlds, a steam train, a cat conductor`
+- **glass_spices.png** — `wide panorama: a spice market row with sacks and jars --ar 3:1`
+- **glass_owlnest.png** — `an owl librarian's nest between bookshelves`
+- **glass_coral.png** — `a coral garden underwater with weaving fish`
+- **glass_harvest.png** — `a shop interior filled with harvest gifts, pumpkins and apples`
+
+### 17.1 Обложка типа
+
+**pc_glass.png** — `a stained-glass window of a cozy shop glowing at dusk,
+broken into a few loose glass pieces floating around it, warm colors,
+square composition --ar 1:1`
+
+### 16.5 Гости второй дюжины (fate_13–fate_24) — 12 портретов
+
+Тот же шаблон, что в 16.3, имя файла = id гостя:
+
+```
+cozy storybook watercolor bust portrait of <ПЕРСОНАЖ>, gentle ink
+outlines, warm candlelight, amber and deep brown palette, character
+facing viewer, plain warm dark background, no text, no watermark --ar 1:1
+```
+
+- **guest_miller.png** — `a sturdy miller with flour dust on his rolled sleeves and a wheat stalk behind his ear`
+- **guest_seamstress.png** — `a nimble seamstress with a pincushion on her wrist and a red thread over her shoulder`
+- **guest_beekeeper.png** — `a calm beekeeper with a wide straw hat with a veil pushed up, a friendly bee on his sleeve`
+- **guest_smith.png** — `a broad old blacksmith with sooty forearms, a leather apron and a small hammer on his belt`
+- **guest_forester.png** — `a lean forester in a moss-green cloak with a twig of pine needles tucked in the hood`
+- **guest_fisherman.png** — `a quiet fisherman with a folded net over his shoulder and a distant thoughtful gaze`
+- **guest_baker.png** — `a rosy-cheeked baker woman with a kerchief, flour on her cheek and a tiny loaf in her hands`
+- **guest_apprentice.png** — `a young mage apprentice with an oversized starry hat and ink on his nose, clutching a primer`
+- **guest_elder.png** — `a dignified village elder with a grey beard, a carved wooden staff and a furrowed brow`
+- **guest_clockmaker.png** — `a meticulous clockmaker with a loupe on a cord, brass gears peeking from his waistcoat pocket`
+- **guest_mushroomer.png** — `a cheerful mushroom picker with a woven basket and a spotted red mushroom cap pinned to his hat`
+- **guest_keeper.png** — `a warm-hearted shopkeeper (the player) with a cozy apron and a candle lantern, seen from the back three-quarter view, faceless-friendly`
+
+### 16.6 Вторая колода — card_<id>.png (12 шт, для fate_25+)
+
+Тот же шаблон карт, что в 16.2, имя файла = id карты:
+
+```
+hand-painted fortune-teller card, cozy storybook watercolor with gentle
+ink outlines, <МОТИВ>, centered single motif on aged cream card stock,
+thin dark-wood ornamental frame border, warm candlelit palette of amber
+and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
+```
+
+Мотивы:
+- **card_lantern.png** — `a glowing paper lantern hanging from a shepherd's crook pole, lighting a dark path`
+- **card_cauldron.png** — `a small cast-iron cauldron bubbling with golden stew over a gentle fire`
+- **card_scissors.png** — `old tailor scissors resting on folded dark fabric, one ribbon cut`
+- **card_nest.png** — `a woven bird nest with two tiny speckled eggs in a flowering apple branch`
+- **card_ladder.png** — `a wooden ladder leaning against a starry night sky, fireflies around the rungs`
+- **card_anchor.png** — `an old small iron anchor wrapped with rope on a wooden dock at dusk`
+- **card_flute.png** — `a carved wooden flute on a mossy log, tiny musical notes as fireflies`
+- **card_seed.png** — `a cupped hand holding a single sprouting seed with two green leaves`
+- **card_lock.png** — `a heavy old padlock on a wooden chest corner, keyhole glowing faintly`
+- **card_mask.png** — `a beautiful half carnival mask with painted swirls, casting a soft shadow`
+- **card_basket.png** — `a wicker gathering basket with herbs, mushrooms and berries inside`
+- **card_bridge.png** — `a small arched wooden bridge over a misty brook joining two mossy banks`
+
+### 16.7 Гости третьей дюжины (fate_25–fate_36) — 12 портретов
+
+Тот же шаблон бюстов, что в 16.3:
+
+```
+cozy storybook watercolor bust portrait of <ПЕРСОНАЖ>, gentle ink
+outlines, warm candlelight, amber and deep brown palette, character
+facing viewer, plain warm dark background, no text, no watermark --ar 1:1
+```
+
+- **guest_lamplighter.png** — `a spry old lamplighter with a long lighting pole over his shoulder and a warm grin`
+- **guest_cook.png** — `a plump young cook boy with a soup ladle and a slightly sooty chef's kerchief`
+- **guest_glassblower.png** — `a focused glassblower with singed gloves holding a glowing glass bubble on a blowpipe`
+- **guest_shipwright.png** — `a grizzled shipwright with wood shavings in his beard and a small adze in hand`
+- **guest_piper.png** — `a merry wandering piper with a wooden flute and a feathered cap, cheeks puffed`
+- **guest_bridgewarden.png** — `a patient bridge keeper with a carpenter's square and a lantern hooked on his belt`
+- **guest_daughter.png** — `a young gardener's daughter with a watering can and an oak leaf in her braid`
+- **guest_postman.png** — `a lean postman with a worn leather satchel across his chest and a lost, kindly look`
+- **guest_dancer.png** — `a fairground dancer with a ribbon around her wrist, bright eyes and a wistful smile`
+- **guest_potter.png** — `a clay-smudged potter with rolled sleeves holding a small wet clay pot`
+- **guest_cartographer.png** — `a dreamy cartographer with a rolled parchment map and an ink-stained compass`
+- **guest_spirit.png** — `a gentle translucent crossroads spirit made of swirling mist and fireflies, vaguely human shape`
+
+### 16.8 Третья колода — card_<id>.png (12 шт, для fate_49+)
+
+Тот же шаблон карт, что в 16.2:
+
+```
+hand-painted fortune-teller card, cozy storybook watercolor with gentle
+ink outlines, <МОТИВ>, centered single motif on aged cream card stock,
+thin dark-wood ornamental frame border, warm candlelit palette of amber
+and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
+```
+
+Мотивы:
+- **card_hive.png** — `a straw beehive skep with a few friendly bees circling it, clover flowers nearby`
+- **card_feather.png** — `a single soft owl feather floating above an open book, gentle motion`
+- **card_ring.png** — `a simple old brass ring on a ribbon, warm glint of candlelight on its circle`
+- **card_window.png** — `a round attic window glowing warm from inside, frost at the corners`
+- **card_wave.png** — `a single curling friendly wave with foam swirls, night sea sparkle`
+- **card_shell.png** — `a spiral seashell on wet sand, a tiny pearl glinting inside`
+- **card_mushroom.png** — `a plump porcini mushroom under an oak leaf, dew drops`
+- **card_snowflake.png** — `one large ornate snowflake landing on a warm mitten`
+- **card_rainbow.png** — `a soft rainbow arc over a wet meadow after rain, puddle reflections`
+- **card_samovar.png** — `a gleaming brass samovar steaming gently, two small tea glasses beside`
+- **card_scale.png** — `old brass balance scales in perfect balance, a feather on one pan, a coin on the other`
+- **card_hammer.png** — `a small wooden-handled mallet resting on a fresh-joined wooden beam`

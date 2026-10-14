@@ -87,6 +87,12 @@ export function sfx(name) {
     case 'success':
       [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
       break;
+    case 'fanfare': {
+      // Победная мелодия: восходящее арпеджио + высокие колокольчики
+      [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, 0.22, { delay: i * 0.11, gain: 0.055 }));
+      [2093, 2637, 3136].forEach((f, i) => tone(f, 0.35, { delay: 0.62 + i * 0.13, type: 'sine', gain: 0.028 }));
+      break;
+    }
     case 'coin': tone(990, 0.07, { type: 'square', gain: 0.03 }); tone(1320, 0.1, { delay: 0.06, type: 'square', gain: 0.025 }); break;
     case 'hit': tone(180, 0.08, { type: 'sawtooth', gain: 0.04, slide: -60 }); break;
     case 'crit': tone(240, 0.12, { type: 'sawtooth', gain: 0.06, slide: -120 }); break;

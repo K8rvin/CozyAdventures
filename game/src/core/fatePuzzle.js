@@ -15,15 +15,25 @@
 //   guest: { name, icon }           — гость (иконка-фолбэк под портрет)
 //   story: [{ label, text, accept: ['cardId', ...] }] — 3–4 позиции расклада
 //   hand: ['cardId', ...]           — карты на столе (с обманками)
+//
+// Рука ПЕРЕМЕШИВАЕТСЯ при создании (иначе порядок в данных прожаривает ответ).
+// Третий аргумент createFatePuzzle — ГСЧ для детерминированных тестов.
 
 export const FATE_FREE_MISTAKES = 3;
 export const FATE_MISTAKE_STEP = 0.1; // −10% монет за ошибку сверх бесплатных
 export const FATE_MIN_FACTOR = 0.5;
 
-export function createFatePuzzle(level, cards) {
+export function createFatePuzzle(level, cards, rng = Math.random) {
+  // Рука перемешивается при создании (Фишер–Йетс); rng инжектируется в тестах
+  const hand = [...level.hand];
+  for (let i = hand.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [hand[i], hand[j]] = [hand[j], hand[i]];
+  }
   return {
     level,
     cards: cards || {},
+    hand,
     slots: Array(level.story.length).fill(null), // id карт по позициям
     attempts: [], // [{ cards: [...], marks: [...] }]
     mistakes: 0,
@@ -38,10 +48,18 @@ export function cardInfo(state, cardId) {
 
 // Положить карту в первую свободную позицию. Карта разыгрывается один раз.
 export function placeCard(state, cardId) {
-  if (!state.level.hand.includes(cardId)) return false;
+  if (!state.hand.includes(cardId)) return false;
   if (state.slots.includes(cardId)) return false;
   const slot = state.slots.indexOf(null);
   if (slot < 0) return false;
+  return placeCardAt(state, cardId, slot);
+}
+
+// Положить карту в конкретную позицию (перетаскивание на столе)
+export function placeCardAt(state, cardId, slot) {
+  if (!state.hand.includes(cardId)) return false;
+  if (slot < 0 || slot >= state.slots.length || state.slots[slot]) return false;
+  if (state.slots.includes(cardId)) return false;
   state.slots[slot] = cardId;
   state.history.push({ kind: 'place', slot, card: cardId });
   state.moves += 1;
@@ -69,6 +87,7 @@ export function undoFate(state) {
 export function resetFate(state) {
   state.slots = state.slots.map(() => null);
   state.history = [];
+  state.attempts = []; // история неверных раскладов тоже сгорает (ошибки-штрафы остаются)
   state.moves += 1;
 }
 
