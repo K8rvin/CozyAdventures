@@ -1761,6 +1761,21 @@ body::-webkit-scrollbar { display: none; }
   color: #7c5230;
   text-align: center;
 }
+/* Отсчёт запоминания — прямо в панели книги */
+.brew-peek-count {
+  text-align: center;
+  font-weight: 700;
+  color: #7c5230;
+  background: rgba(255, 202, 122, 0.55);
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin-bottom: 6px;
+  animation: brew-peek-pulse 1s ease-in-out infinite;
+}
+@keyframes brew-peek-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
+}
 .brew-peek-list {
   text-align: left;
   margin: 12px 0 4px;

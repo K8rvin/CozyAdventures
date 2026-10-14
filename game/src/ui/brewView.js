@@ -3,7 +3,7 @@
 // Поздние уровни — на память: книга видна несколько секунд, потом закрывается.
 import {
   createBrewPuzzle, doBrewAction, undoBrew, resetBrew,
-  isBrewSolved, brewHint, brewStepText, BREW_MAX_MISTAKES,
+  isBrewSolved, brewHint, brewStepText, brewHiddenCount, BREW_MAX_MISTAKES,
 } from '../core/brewPuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
@@ -11,11 +11,18 @@ import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './commo
 // Цвет зелья по мере готовности: от родниковой воды к глубокому фиолетовому
 const POTION_COLORS = ['#6fb7d9', '#7fc98f', '#d9c26f', '#d9915f', '#b565a8', '#6f4fa8'];
 
+// Инструменты подготовки: сначала жмём инструмент, потом ингредиент (как ступка)
+const PREP_TOOLS = [
+  { do: 'crush', icon: '🥣', label: 'Ступка', active: 'Что толчём?', verb: 'Растолочь', hint: 'Жми ступку, потом — что растолочь' },
+  { do: 'cut', icon: '🔪', label: 'Нож', active: 'Что режем?', verb: 'Нарезать', hint: 'Жми нож, потом — что нарезать' },
+  { do: 'drop', icon: '🧪', label: 'Пипетка', active: 'Что капаем?', verb: 'Накапать', hint: 'Жми пипетку, потом — что накапать' },
+];
+
 export function renderBrewPuzzle(container, ctx, level) {
   const puzzle = createBrewPuzzle(level);
   let hintsUsed = 0;
   let hintAction = null;   // подсвеченное действие { do, ingredient }
-  let crushMode = false;   // ступка активна: следующий ингредиент — растолочь
+  let prepMode = null;     // активный инструмент (crush/cut/drop): следующий ингредиент — обработать им
   let finished = false;
   let recipeHidden = false;
   const timers = [];
@@ -73,16 +80,27 @@ export function renderBrewPuzzle(container, ctx, level) {
     tools.appendChild(b);
     toolBtns[t.do] = b;
   }
-  const mortar = document.createElement('button');
-  mortar.className = 'small';
-  mortar.innerHTML = '🥣 Ступка';
-  mortar.title = 'Жми ступку, потом — что растолочь';
-  mortar.addEventListener('click', () => {
-    crushMode = !crushMode;
-    ctx.sfx?.('tap');
-    draw();
-  });
-  tools.appendChild(mortar);
+  const prepBtns = {};
+  for (const t of PREP_TOOLS) {
+    const b = document.createElement('button');
+    b.className = 'small';
+    b.innerHTML = `${t.icon} ${t.label}`;
+    b.title = t.hint;
+    b.addEventListener('click', () => {
+      prepMode = prepMode === t.do ? null : t.do;
+      ctx.sfx?.('tap');
+      draw();
+    });
+    tools.appendChild(b);
+    prepBtns[t.do] = b;
+  }
+  // Крышка котла: накрыть/снять (состояние — из истории действий, как огонь)
+  const lid = document.createElement('button');
+  lid.className = 'small';
+  lid.innerHTML = '🍲 Крышка';
+  lid.title = 'Накрыть котёл крышкой или снять её';
+  lid.addEventListener('click', () => onAction({ do: lidOn() ? 'uncover' : 'cover' }));
+  tools.appendChild(lid);
   scene.appendChild(tools);
 
   // Ингредиенты на столе
@@ -132,34 +150,31 @@ export function renderBrewPuzzle(container, ctx, level) {
     return b;
   }
 
-  // --- Память: показать рецепт на peekSeconds и спрятать ---
-  if (level.hideRecipe) {
+  // --- Память: рецепт виден в панели книги peekSeconds (с отсчётом),
+  // затем прячется ХВОСТ рецепта (brewHiddenCount). «Заново» открывает снова ---
+  let peekTimer = null;
+  let peekLeft = 0;
+  function startPeek() {
+    if (!level.hideRecipe) return;
     recipeHidden = false;
-    const peek = document.createElement('div');
-    peek.className = 'overlay';
-    peek.innerHTML = `
-      <div class="card">
-        <h2>📖 Запоминай!</h2>
-        <div class="muted">Книга закроется через <b>${level.peekSeconds}</b> сек…</div>
-        <div class="brew-peek-list">${
-          level.recipe.map((s, i) => `<div>${i + 1}. ${brewStepText(level, s)}</div>`).join('')
-        }</div>
-      </div>`;
-    document.body.appendChild(peek);
+    peekLeft = level.peekSeconds;
+    if (peekTimer) clearInterval(peekTimer);
+    peekTimer = setInterval(() => {
+      peekLeft -= 1;
+      if (peekLeft <= 0) {
+        clearInterval(peekTimer);
+        peekTimer = null;
+        recipeHidden = true;
+        ctx.toast(`📕 Книга прикрылась: последние ${brewHiddenCount(level)} шага — по памяти!`);
+      }
+      draw();
+    }, 1000);
+    timers.push(peekTimer);
     ctx.sfx?.('page');
-    timers.push(setTimeout(() => {
-      peek.remove();
-      recipeHidden = true;
-      ctx.toast('📕 Книга закрылась. Дальше — по памяти! Подсказка напомнит шаг.');
-      draw();
-    }, level.peekSeconds * 1000));
-    // Клик по карточке — закрыть досрочно
-    peek.addEventListener('click', () => {
-      peek.remove();
-      recipeHidden = true;
-      draw();
-    });
+    draw();
   }
+
+  if (level.hideRecipe) startPeek();
 
   function heatLevel() {
     // Сколько раз грели после последнего остывания (0..3)
@@ -171,6 +186,16 @@ export function renderBrewPuzzle(container, ctx, level) {
     return n;
   }
 
+  function lidOn() {
+    // Крышка на котле? Последнее из cover/uncover в истории
+    let on = false;
+    for (const h of puzzle.history) {
+      if (h.do === 'cover') on = true;
+      if (h.do === 'uncover') on = false;
+    }
+    return on;
+  }
+
   function doUndo() {
     if (finished) return;
     if (undoBrew(puzzle)) { hintAction = null; ctx.sfx?.('tap'); draw(); }
@@ -179,7 +204,12 @@ export function renderBrewPuzzle(container, ctx, level) {
     if (finished) return;
     resetBrew(puzzle);
     hintAction = null;
-    crushMode = false;
+    prepMode = null;
+    // Режим памяти: «Заново» открывает книгу ещё раз на те же секунды
+    if (level.hideRecipe && recipeHidden) {
+      ctx.toast('📖 Книга открылась ещё раз — запоминай!');
+      startPeek();
+    }
     ctx.sfx?.('tap');
     draw();
   }
@@ -199,15 +229,17 @@ export function renderBrewPuzzle(container, ctx, level) {
 
   function onAction(action) {
     if (finished) return;
-    // Режим ступки: ингредиент превращается в crush-действие
-    if (action.do === 'add' && crushMode) {
-      action = { do: 'crush', ingredient: action.ingredient };
-      crushMode = false;
+    // Активный инструмент (ступка/нож/пипетка): ингредиент превращается в его действие
+    if (action.do === 'add' && prepMode) {
+      action = { do: prepMode, ingredient: action.ingredient };
+      prepMode = null;
     }
     const r = doBrewAction(puzzle, action);
     if (r.ok) {
       hintAction = null;
-      ctx.sfx?.(action.do === 'add' || action.do === 'crush' ? 'potion' : 'bubble');
+      const sfx = ['add', 'crush', 'cut', 'drop'].includes(action.do) ? 'potion'
+        : (action.do === 'cover' || action.do === 'uncover' ? 'tap' : 'bubble');
+      ctx.sfx?.(sfx);
       pulsePot();
       draw();
       if (r.solved) finish();
@@ -277,47 +309,66 @@ export function renderBrewPuzzle(container, ctx, level) {
     const hl = heatLevel();
     fire.textContent = hl > 0 ? '🔥'.repeat(hl) : '';
 
-    // Ступка
-    mortar.className = 'small' + (crushMode ? ' primary' : '');
-    mortar.innerHTML = crushMode ? '🥣 Что толчём?' : '🥣 Ступка';
-
     // Ингредиенты
     const hintOpts = hintAction ? (Array.isArray(hintAction.anyOf) ? hintAction.anyOf : [hintAction]) : [];
+    const prepTool = PREP_TOOLS.find((t) => t.do === prepMode) || null;
     ingRow.innerHTML = '';
     for (const ing of level.ingredients) {
       const b = document.createElement('button');
       b.className = 'small brew-ing';
-      const isHint = hintOpts.some((o) => (o.do === 'add' || o.do === 'crush') && o.ingredient === ing.id);
+      // При подсказке «растолочь/нарезать/накапать» ингредиент светится, только
+      // когда инструмент уже выбран: иначе порядок (инструмент → ингредиент) неочевиден
+      const isHint = hintOpts.some((o) => (o.do === 'add' || o.do === prepMode) && o.ingredient === ing.id);
       if (isHint) b.className += ' primary';
       b.innerHTML = `${ing.icon} ${ing.name}`;
-      b.title = crushMode ? `Растолочь: ${ing.name}` : ing.name;
+      b.title = prepTool ? `${prepTool.verb}: ${ing.name}` : ing.name;
       b.addEventListener('click', () => onAction({ do: 'add', ingredient: ing.id }));
       ingRow.appendChild(b);
     }
-    // Подсветка инструмента из подсказки
+    // Подсветка инструмента из подсказки; инструмент подготовки светится при своём
+    // шаге, пока не выбран (сначала инструмент, потом ингредиент)
     for (const [d, btn] of Object.entries(toolBtns)) {
       btn.className = 'small' + (hintOpts.some((o) => o.do === d) ? ' primary' : '');
     }
+    for (const t of PREP_TOOLS) {
+      const btn = prepBtns[t.do];
+      const need = hintOpts.some((o) => o.do === t.do);
+      btn.className = 'small' + ((prepMode === t.do || need) ? ' primary' : '');
+      btn.innerHTML = prepMode === t.do ? `${t.icon} ${t.active}` : `${t.icon} ${t.label}`;
+    }
+    const lidNeed = hintOpts.some((o) => o.do === 'cover' || o.do === 'uncover');
+    lid.className = 'small' + (lidNeed ? ' primary' : '');
+    lid.innerHTML = lidOn() ? '🍲 Снять крышку' : '🍲 Крышка';
 
-    // Книга рецептов
+    // Книга рецептов: хвост прячется частично (последние hideCount шагов),
+    // во время запоминания — отсчёт прямо в панели книги
+    const hideCount = brewHiddenCount(level);
     book.innerHTML = '<div class="brew-book-title">📖 Рецепт</div>';
+    if (level.hideRecipe && !recipeHidden) {
+      const peek = document.createElement('div');
+      peek.className = 'brew-peek-count';
+      peek.textContent = `👁 Запоминай! Хвост скроется через ${peekLeft} сек…`;
+      book.appendChild(peek);
+    }
     level.recipe.forEach((s, i) => {
       const row = document.createElement('div');
       const done = i < puzzle.progress;
       const current = i === puzzle.progress && !finished;
       row.className = 'brew-step' + (done ? ' done' : '') + (current ? ' current' : '');
-      const hidden = recipeHidden && !done;
+      const hidden = recipeHidden && !done && i >= total - hideCount;
+      // Шаг с повторами (times): у текущего показываем, сколько уже сделано
+      const repNote = current && !hidden && (s.times ?? 1) > 1 ? ` (${puzzle.reps}/${s.times})` : '';
       row.textContent = done
         ? `${i + 1}. ${brewStepText(level, s)} ✓`
         : hidden
           ? `${i + 1}. · · ·`
-          : `${i + 1}. ${brewStepText(level, s)}`;
+          : `${i + 1}. ${brewStepText(level, s)}${repNote}`;
       book.appendChild(row);
     });
     if (recipeHidden) {
       const note = document.createElement('div');
       note.className = 'brew-book-note';
-      note.textContent = '📕 Книга закрыта — по памяти!';
+      note.textContent = `📕 Последние ${hideCount} шага скрыты — по памяти! «Заново» откроет книгу ещё раз.`;
       book.appendChild(note);
     }
 

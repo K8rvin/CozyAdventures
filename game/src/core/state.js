@@ -408,6 +408,14 @@ const CAMPAIGN_ORDER = [
   // Вторая половина книги рецептов: имбирь, лимон, клевер, лунный камень
   'brew_11', 'brew_12', 'brew_13', 'brew_14', 'brew_15', 'brew_16', 'brew_17', 'brew_18', 'brew_19', 'brew_20',
   'brew_21', 'brew_22', 'brew_23', 'brew_24', 'brew_25', 'brew_26', 'brew_27', 'brew_28', 'brew_29', 'brew_30',
+  // Нож, пипетка, крышка, повторы ×N: книга рецептов растёт до ста страниц
+  'brew_31', 'brew_32', 'brew_33', 'brew_34', 'brew_35', 'brew_36', 'brew_37', 'brew_38', 'brew_39', 'brew_40',
+  'brew_41', 'brew_42', 'brew_43', 'brew_44', 'brew_45', 'brew_46', 'brew_47', 'brew_48', 'brew_49', 'brew_50',
+  'brew_51', 'brew_52', 'brew_53', 'brew_54', 'brew_55', 'brew_56', 'brew_57', 'brew_58', 'brew_59', 'brew_60',
+  'brew_61', 'brew_62', 'brew_63', 'brew_64', 'brew_65', 'brew_66', 'brew_67', 'brew_68', 'brew_69', 'brew_70',
+  'brew_71', 'brew_72', 'brew_73', 'brew_74', 'brew_75', 'brew_76', 'brew_77', 'brew_78', 'brew_79', 'brew_80',
+  'brew_81', 'brew_82', 'brew_83', 'brew_84', 'brew_85', 'brew_86', 'brew_87', 'brew_88', 'brew_89', 'brew_90',
+  'brew_91', 'brew_92', 'brew_93', 'brew_94', 'brew_95', 'brew_96', 'brew_97', 'brew_98', 'brew_99', 'brew_100',
   // Вторая книга «Строк при свече»: стихи и цитаты классиков
   'bk_11', 'bk_12', 'bk_13', 'bk_14', 'bk_15', 'bk_16', 'bk_17', 'bk_18', 'bk_19', 'bk_20',
   'bk_21', 'bk_22', 'bk_23', 'bk_24', 'bk_25', 'bk_26', 'bk_27', 'bk_28', 'bk_29', 'bk_30',
@@ -456,6 +464,15 @@ const CAMPAIGN_ORDER = [
   // Пятая дюжина: третья колода (улей, перо, кольцо, окно, волна…)
   'fate_49', 'fate_50', 'fate_51', 'fate_52', 'fate_53', 'fate_54',
   'fate_55', 'fate_56', 'fate_57', 'fate_58', 'fate_59', 'fate_60',
+  // Шестая дюжина: по одной новой карте на уровень (печать, колесо, зонт…)
+  'fate_61', 'fate_62', 'fate_63', 'fate_64', 'fate_65', 'fate_66',
+  'fate_67', 'fate_68', 'fate_69', 'fate_70', 'fate_71', 'fate_72',
+  // Седьмая дюжина и финал для хозяина лавки
+  'fate_73', 'fate_74', 'fate_75', 'fate_76', 'fate_77', 'fate_78',
+  'fate_79', 'fate_80', 'fate_81', 'fate_82', 'fate_83', 'fate_84',
+  // Филлеры и остаток вечера гаданий
+  'fate_85', 'fate_86', 'fate_87', 'fate_88', 'fate_89', 'fate_90',
+  'fate_91', 'fate_92', 'fate_93', 'fate_94', 'fate_95', 'fate_96',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 

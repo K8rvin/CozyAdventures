@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createBrewPuzzle, doBrewAction, undoBrew, resetBrew,
-  isBrewSolved, brewHint, brewStepText, validateBrewLevel, BREW_MAX_MISTAKES,
+  isBrewSolved, brewHint, brewStepText, brewHiddenCount, validateBrewLevel, BREW_MAX_MISTAKES,
 } from '../src/core/brewPuzzle.js';
 import { BREW_PUZZLES } from '../src/data/puzzlesBrew.js';
 import { newGame, completePuzzle, findPuzzle, ALL_PUZZLES } from '../src/core/state.js';
@@ -86,14 +86,24 @@ test('тексты шагов — по-русски, без латинских �
   }
 });
 
-test('все 30 уровней валидны и решаются своим рецептом', () => {
-  assert.equal(BREW_PUZZLES.length, 30);
+test('все 100 уровней валидны и решаются своим рецептом', () => {
+  assert.equal(BREW_PUZZLES.length, 100);
   const ids = new Set(BREW_PUZZLES.map((l) => l.id));
-  assert.equal(ids.size, 30, 'id уровней дублируются');
+  assert.equal(ids.size, 100, 'id уровней дублируются');
   for (const level of BREW_PUZZLES) {
     const v = validateBrewLevel(level);
     assert.ok(v.ok, `${level.id}: ${v.problems.join('; ')}`);
   }
+});
+
+test('подсказка при шаге «растолочь» возвращает crush-шаг (view подсвечивает сначала ступку)', () => {
+  const L3 = BREW_PUZZLES.find((l) => l.id === 'brew_03'); // шаг 2 — растолочь мяту
+  const p = createBrewPuzzle(L3);
+  doBrewAction(p, { do: 'add', ingredient: 'water' });
+  const h = brewHint(p);
+  assert.equal(h.type, 'step');
+  assert.equal(h.step.do, 'crush', 'шаг — растолчение, не добавление');
+  assert.equal(h.step.ingredient, 'mint');
 });
 
 test('вариативный шаг anyOf: засчитывается любой вариант, текст с «ИЛИ»', () => {
@@ -114,8 +124,23 @@ test('вариативный шаг anyOf: засчитывается любой
   assert.ok(!/[a-zA-Z]/.test(stepText), 'английское в тексте anyOf');
 });
 
-test('уровни на память — только поздние и с временем показа рецепта', () => {
-  for (const level of BREW_PUZZLES) {
+test('режим памяти скрывает хвост по сложности: ранние — 1–2 шага, поздние — почти весь рецепт', () => {
+  const byIdBrew = (id) => BREW_PUZZLES.find((l) => l.id === id);
+  assert.equal(brewHiddenCount(byIdBrew('brew_06')), 2, 'd3, 6 шагов → 2 последних скрыты');
+  assert.equal(brewHiddenCount(byIdBrew('brew_07')), 4, 'd4, 8 шагов → 4 последних скрыты');
+  assert.equal(brewHiddenCount(byIdBrew('brew_08')), 8, 'd5, 10 шагов → видны лишь первые 2');
+  for (const l of BREW_PUZZLES.filter((x) => x.hideRecipe)) {
+    const n = brewHiddenCount(l);
+    assert.ok(n >= 1 && n < l.recipe.length, `${l.id}: скрыто ${n} из ${l.recipe.length} — в допуске`);
+    if (l.difficulty >= 5) assert.ok(n >= l.recipe.length - 2, `${l.id}: поздний уровень — почти весь рецепт скрыт`);
+    if (l.difficulty <= 3) assert.ok(n <= 3, `${l.id}: ранний уровень — скрыто немного`);
+  }
+  // Явный hideTail в данных побеждает правило по сложности
+  const custom = { recipe: [1, 2, 3, 4, 5].map(() => ({ do: 'stir' })), hideRecipe: true, hideTail: 1, difficulty: 5 };
+  assert.equal(brewHiddenCount(custom), 1);
+});
+
+test('уровни на память — только поздние и с временем показа рецепта', () => {  for (const level of BREW_PUZZLES) {
     if (level.hideRecipe) {
       assert.ok(level.difficulty >= 3, `${level.id}: память слишком рано`);
       assert.ok(level.peekSeconds >= 5, `${level.id}: слишком мало времени на запоминание`);
@@ -143,4 +168,97 @@ test('полный цикл: варка через движок засчитыв
   assert.ok(s.puzzlesDone.brew_01, 'уровень засчитан');
   assert.ok(s.coins > coinsBefore, 'монеты начислены');
   assert.ok(rewards.length > 0);
+});
+
+test('нож и пипетка: свои действия, ингредиент проверяется на столе', () => {
+  const L32 = BREW_PUZZLES.find((l) => l.id === 'brew_32'); // дебют ножа
+  const p = createBrewPuzzle(L32);
+  doBrewAction(p, { do: 'add', ingredient: 'water' });
+  doBrewAction(p, { do: 'heat' });
+  assert.equal(doBrewAction(p, { do: 'cut', ingredient: 'lemon' }).ok, true);
+  assert.equal(p.progress, 3);
+  assert.equal(brewStepText(L32, L32.recipe[2]), 'Нарежь ножом: 🍋 Ломтик лимона');
+
+  const L41 = BREW_PUZZLES.find((l) => l.id === 'brew_41'); // дебют пипетки
+  const q = createBrewPuzzle(L41);
+  doBrewAction(q, { do: 'add', ingredient: 'water' });
+  assert.equal(doBrewAction(q, { do: 'add', ingredient: 'ink' }).mistake, true, 'лить вместо капель — ошибка');
+  assert.equal(doBrewAction(q, { do: 'drop', ingredient: 'ink' }).ok, true);
+  const bad = doBrewAction(q, { do: 'drop', ingredient: 'pepper' });
+  assert.equal(bad.error, 'На столе такого нет');
+  assert.equal(q.mistakes, 1, 'невозможное действие не считается ошибкой рецепта');
+});
+
+test('крышка: накрыть и снять — отдельные шаги', () => {
+  const L51 = BREW_PUZZLES.find((l) => l.id === 'brew_51');
+  const p = createBrewPuzzle(L51);
+  doBrewAction(p, { do: 'add', ingredient: 'water' });
+  doBrewAction(p, { do: 'heat' });
+  doBrewAction(p, { do: 'add', ingredient: 'chamomile' });
+  assert.equal(doBrewAction(p, { do: 'wait' }).mistake, true, 'без крышки настаивать нельзя');
+  assert.equal(doBrewAction(p, { do: 'cover' }).ok, true);
+  assert.equal(doBrewAction(p, { do: 'wait' }).ok, true);
+  assert.equal(doBrewAction(p, { do: 'uncover' }).ok, true);
+  assert.equal(doBrewAction(p, { do: 'stir' }).solved, true);
+  assert.equal(brewStepText(L51, L51.recipe[3]), 'Накрой котёл крышкой');
+  assert.equal(brewStepText(L51, L51.recipe[5]), 'Сними крышку');
+});
+
+test('повторы ×N: шаг засчитывается после N действий, отмена и сброс учитывают повторы', () => {
+  const L61 = BREW_PUZZLES.find((l) => l.id === 'brew_61'); // шаг 4 — «Размешай ×2»
+  const p = createBrewPuzzle(L61);
+  doBrewAction(p, { do: 'add', ingredient: 'water' });
+  doBrewAction(p, { do: 'heat' });
+  doBrewAction(p, { do: 'add', ingredient: 'berries' });
+  assert.equal(doBrewAction(p, { do: 'stir' }).ok, true);
+  assert.equal(p.progress, 3, 'после первого мешания шаг не закрыт');
+  assert.equal(p.reps, 1);
+  assert.equal(doBrewAction(p, { do: 'stir' }).ok, true);
+  assert.equal(p.progress, 4, 'после второго мешания шаг засчитан');
+  assert.equal(p.reps, 0);
+  assert.equal(brewStepText(L61, L61.recipe[3]), 'Размешай ложкой ×2');
+
+  const q = createBrewPuzzle(L61);
+  for (const a of [{ do: 'add', ingredient: 'water' }, { do: 'heat' }, { do: 'add', ingredient: 'berries' }, { do: 'stir' }, { do: 'stir' }]) {
+    doBrewAction(q, a);
+  }
+  assert.equal(undoBrew(q), true);
+  assert.equal(q.progress, 3, 'отмена вернулась на шаг с повторами');
+  assert.equal(q.reps, 1, 'один повтор из двух остался сделанным');
+  resetBrew(q);
+  assert.equal(q.progress, 0);
+  assert.equal(q.reps, 0);
+});
+
+test('валидатор: times проверяется и на шаге, и внутри anyOf', () => {
+  const base = BREW_PUZZLES.find((l) => l.id === 'brew_61');
+  assert.ok(validateBrewLevel(base).ok, 'рецепт с повторами проигрывается до конца');
+  const badTimes = { ...base, recipe: [{ do: 'add', ingredient: 'water' }, { do: 'stir', times: 9 }] };
+  assert.equal(validateBrewLevel(badTimes).ok, false, 'times вне 1–5 отклоняется');
+  const inAnyOf = { ...base, recipe: [{ do: 'add', ingredient: 'water' }, { anyOf: [{ do: 'stir', times: 2 }, { do: 'heat' }] }] };
+  assert.equal(validateBrewLevel(inAnyOf).ok, false, 'times внутри anyOf отклоняется');
+});
+
+test('100 уровней не повторяются: уникальные имена и рецепты', () => {
+  const names = new Set(BREW_PUZZLES.map((l) => l.name));
+  assert.equal(names.size, 100, 'имена зелий дублируются');
+  const recipes = new Set(BREW_PUZZLES.map((l) => JSON.stringify(l.recipe)));
+  assert.equal(recipes.size, 100, 'рецепты дублируются');
+});
+
+test('новые механики вводятся по главам: дебют без памяти, дальше используются регулярно', () => {
+  const stepsOf = (l) => l.recipe.flatMap((s) => (Array.isArray(s.anyOf) ? [s, ...s.anyOf] : [s]));
+  const withDo = (d) => BREW_PUZZLES.filter((l) => stepsOf(l).some((s) => s.do === d));
+  for (const d of ['cut', 'drop', 'cover', 'uncover']) {
+    const levels = withDo(d);
+    assert.ok(levels.length >= 5, `${d}: механика используется слишком редко (${levels.length})`);
+    assert.ok(!levels[0].hideRecipe, `${d}: дебют (${levels[0].id}) должен быть без режима памяти`);
+  }
+  const withTimes = BREW_PUZZLES.filter((l) => l.recipe.some((s) => (s.times ?? 1) > 1));
+  assert.ok(withTimes.length >= 5, 'повторы ×N используются слишком редко');
+  assert.ok(!withTimes[0].hideRecipe, 'дебют повторов — без режима памяти');
+  assert.equal(withDo('cut')[0].id, 'brew_32', 'нож дебютирует в своей главе');
+  assert.equal(withDo('drop')[0].id, 'brew_41', 'пипетка дебютирует в своей главе');
+  assert.equal(withDo('cover')[0].id, 'brew_51', 'крышка дебютирует в своей главе');
+  assert.equal(withTimes[0].id, 'brew_61', 'повторы дебютируют в своей главе');
 });

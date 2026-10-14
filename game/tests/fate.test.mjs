@@ -13,7 +13,7 @@ const byId = (id) => FATE_PUZZLES.find((l) => l.id === id);
 const mk = (level) => createFatePuzzle(level, FATE_CARDS);
 
 test('все уровни «Карт судьбы» валидны: история, расклад, гость', () => {
-  assert.equal(FATE_PUZZLES.length, 60, 'fate_01–fate_60');
+  assert.equal(FATE_PUZZLES.length, 96, 'fate_01–fate_96');
   for (const level of FATE_PUZZLES) {
     const v = validateFateLevel(level, FATE_CARDS);
     assert.ok(v.ok, `${level.id} (${level.name}): ${v.problems.join('; ')}`);
@@ -111,7 +111,9 @@ test('неверный расклад: ошибка, расцветка в ис�
 });
 
 test('карта с общим значением подсвечивается «близко», а не «не та»', () => {
-  const s = mk(byId('fate_05')); // «Что было» ждёт Нить (связь, тянучесть)
+  // Ищем по содержанию, а не по id: порядок уровней пересобирается генератором
+  const level = FATE_PUZZLES.find((l) => l.name === 'Качели паучка'); // Что было → Нить (связь)
+  const s = mk(level);
   // Письмо делит со Нитью значение «связь» → present
   assert.deepEqual(markSpread(s, ['letter', 'home', 'mirror']), ['present', 'exact', 'exact']);
   // Совсем чужая карта → absent
@@ -146,10 +148,23 @@ test('подсказки решают каждый уровень «Карт с�
 });
 
 test('прогресс считает закрытые позиции', () => {
-  const s = mk(byId('fate_09')); // 4 позиции
+  const level = FATE_PUZZLES.find((l) => l.story.length === 4); // расклад на 4 позиции
+  const s = mk(level);
   assert.deepEqual(fateProgress(s), { ok: 0, total: 4 });
-  placeCard(s, 'tree');
+  placeCard(s, level.story[0].accept[0]);
   assert.deepEqual(fateProgress(s), { ok: 1, total: 4 });
+});
+
+test('колода растёт по одной карте за уровень (первая — база из 6)', () => {
+  const seen = new Set();
+  FATE_PUZZLES.forEach((level, i) => {
+    const fresh = level.hand.filter((c) => !seen.has(c));
+    const limit = i === 0 ? 6 : 1;
+    assert.ok(fresh.length <= limit,
+      `${level.id}: новых карт ${fresh.length} > ${limit} (${fresh.join(', ')})`);
+    fresh.forEach((c) => seen.add(c));
+  });
+  assert.equal(seen.size, Object.keys(FATE_CARDS).length, 'вся колода вошла в игру');
 });
 
 test('тексты уровней и карт — по-русски, без латиницы', () => {

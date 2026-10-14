@@ -1218,3 +1218,66 @@ and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
 - **card_samovar.png** — `a gleaming brass samovar steaming gently, two small tea glasses beside`
 - **card_scale.png** — `old brass balance scales in perfect balance, a feather on one pan, a coin on the other`
 - **card_hammer.png** — `a small wooden-handled mallet resting on a fresh-joined wooden beam`
+
+### 16.9 Четвёртая колода — card_<id>.png (11 шт, для fate_61+, по одной на уровень; card_shell уже в 16.8)
+
+Тот же шаблон карт, что в 16.2:
+
+```
+hand-painted fortune-teller card, cozy storybook watercolor with gentle
+ink outlines, <МОТИВ>, centered single motif on aged cream card stock,
+thin dark-wood ornamental frame border, warm candlelit palette of amber
+and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
+```
+
+Мотивы:
+- **card_seal.png** — `a red wax seal stamp pressed on an envelope flap, brass seal handle beside`
+- **card_wheel.png** — `a wooden cart wheel leaning against a fence, morning light through the spokes`
+- **card_umbrella.png** — `a small patched umbrella sheltering a mushroom from gentle rain`
+- **card_accordion.png** — `a cheerful old accordion half-open, tiny dance notes as fireflies`
+- **card_smoke.png** — `a soft curl of smoke rising from a chimney into a starry evening sky`
+- **card_hourglass.png** — `a wooden hourglass with golden sand mid-flow, warm glow`
+- **card_gear.png** — `a single brass gear with a ladybug sitting on a tooth`
+- **card_vial.png** — `a small glass vial with shimmering turquoise potion and a cork`
+- **card_spikelet.png** — `a ripe wheat spikelet bending in warm wind, a few loose grains`
+- **card_globe.png** — `a small antique globe on a wooden stand, tiny painted mountains and seas`
+- **card_comet.png** — `a bright friendly comet with a long soft tail over a sleeping town`
+
+### 16.10 Пятая колода — card_<id>.png (26 шт; входят по одной на уровень, fate_73+ и как обманки раньше)
+
+Тот же шаблон карт, что в 16.2:
+
+```
+hand-painted fortune-teller card, cozy storybook watercolor with gentle
+ink outlines, <МОТИВ>, centered single motif on aged cream card stock,
+thin dark-wood ornamental frame border, warm candlelit palette of amber
+and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
+```
+
+Мотивы:
+- **card_needle.png** — `a tailor's needle with red thread looped through its eye, on dark cloth`
+- **card_lamp.png** — `a small brass oil lamp with a gentle flame, behind a glowing stained-glass corner`
+- **card_pie.png** — `a rustic golden pie with a crimped crust, steam curling from a slit`
+- **card_map.png** — `a hand-drawn parchment map with a dotted path and a tiny compass rose`
+- **card_boat.png** — `a small wooden rowboat on still mirror water at dawn`
+- **card_dice.png** — `two bone dice mid-tumble on a velvet table, friendly pips`
+- **card_hen.png** — `a plump mother hen on a nest with three chicks peeking out`
+- **card_stone.png** — `a sturdy grey field stone with moss, stubbornly rooted in earth`
+- **card_crown.png** — `a simple old brass circlet crown on a velvet cushion`
+- **card_cloak.png** — `a warm travel cloak on a wooden peg, road dust on its hem`
+- **card_drum.png** — `a small festival drum with wooden sticks crossed on top`
+- **card_firefly.png** — `a swarm of glowing fireflies forming a gentle spiral in night air`
+- **card_rope.png** — `a coiled hemp rope with a neat sailor's knot`
+- **card_inkwell.png** — `a glass inkwell with black ink and a white quill resting across`
+- **card_saddle.png** — `a worn leather saddle on a stable rail, warm lantern light`
+- **card_broom.png** — `a birch-twig broom leaning by a swept wooden doorstep`
+- **card_sunset.png** — `a crimson sunset over a quiet lake, reeds in silhouette`
+- **card_sunrise.png** — `a soft pink sunrise over misty fields, dew sparkling`
+- **card_owl.png** — `a round-eyed tawny owl on a book stack under moonlight`
+- **card_fox.png** — `a sly ginger fox peeking from tall grass, tail curled`
+- **card_goat.png** — `a cheerful white goat kid with a bell on its collar`
+- **card_piglet.png** — `a pink piglet with a curled tail in clean straw`
+- **card_cheese.png** — `a wheel of cheese with a wedge cut out, on a linen cloth`
+- **card_grape.png** — `a hanging bunch of dark grapes with a curling vine tendril`
+- **card_suitcase.png** — `a small old leather suitcase with travel stickers, buckled straps`
+- **card_scarf.png** — `a hand-knitted wool scarf rolled into a cozy coil`
