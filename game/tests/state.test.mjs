@@ -302,6 +302,18 @@ test('миграция правок искалок из старого сохр�
   assert.ok(ov.sk_md_01, 'правки переехали в отдельное хранилище');
 });
 
+test('миграция старого сейва: настройка keepBookOpen появляется выключенной', () => {
+  const old = newGame();
+  delete old.settings.keepBookOpen; // сейв до появления настройки уютной варки
+  const mem = { cozy_adventures_save_v2: JSON.stringify(old) };
+  const storage = {
+    getItem: (k) => mem[k] ?? null,
+    setItem: (k, v) => { mem[k] = v; },
+  };
+  const loaded = loadGame(storage);
+  assert.equal(loaded.settings.keepBookOpen, false, 'прежнее поведение: рецепт по памяти');
+});
+
 test('новинки прилавка: появились, видны, гаснут после визита', () => {
   const s = newGame();
   // Изначально весь стартовый ассортимент — новинка

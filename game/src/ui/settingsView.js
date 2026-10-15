@@ -31,6 +31,29 @@ export function renderSettings(container, ctx) {
   });
   panel.append(soundBtn, musicBtn);
 
+  // --- Головоломки: уютная варка без тренировки памяти ---
+  const puzzleTitle = document.createElement('h3');
+  puzzleTitle.textContent = 'Головоломки';
+  puzzleTitle.style.marginTop = '16px';
+  panel.appendChild(puzzleTitle);
+  const brewBtn = document.createElement('button');
+  const brewBtnText = () => (state.settings.keepBookOpen
+    ? 'Варка зелий: рецепт всегда открыт'
+    : 'Варка зелий: рецепт по памяти');
+  brewBtn.textContent = brewBtnText();
+  brewBtn.addEventListener('click', () => {
+    state.settings.keepBookOpen = !state.settings.keepBookOpen;
+    ctx.save();
+    brewBtn.textContent = brewBtnText();
+    ctx.sfx?.('tap');
+  });
+  panel.appendChild(brewBtn);
+  const brewNote = document.createElement('div');
+  brewNote.className = 'muted';
+  brewNote.style.fontSize = '13px';
+  brewNote.textContent = 'Без тренировки памяти: в варке зелий книга рецептов не закрывается. Награды прежние.';
+  panel.appendChild(brewNote);
+
   // --- Обучение ---
   const tutTitle = document.createElement('h3');
   tutTitle.textContent = 'Обучение';

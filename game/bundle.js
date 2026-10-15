@@ -14395,8 +14395,8 @@
       // пройденные этапы обучения
       tutorialSkipped: false,
       // игрок пропустил обучение целиком
-      settings: { useBeltItems: true, tactic: "balance" },
-      // настройки боя
+      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false },
+      // настройки (бой, головоломки)
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
       cheats: { used: [], spiderHat: false },
@@ -14427,6 +14427,7 @@
     delete state2.settings.battleMode;
     state2.settings.useBeltItems ??= true;
     state2.settings.tactic ??= "balance";
+    state2.settings.keepBookOpen ??= false;
     state2.formation ||= { knight: 1, merc0: 0, merc1: 5 };
     state2.cheats ||= { used: [], spiderHat: false };
     state2.materials ||= {};
@@ -20325,6 +20326,7 @@
     let finished = false;
     let recipeHidden = false;
     const timers = [];
+    const cozy = () => !!ctx2.state.settings?.keepBookOpen;
     container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
@@ -20422,6 +20424,27 @@
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0417\u0430\u043D\u043E\u0432\u043E (R)", doReset);
     controls.append(btnUndo, btnHint, btnReset);
+    let btnCozy = null;
+    if (level.hideRecipe) {
+      btnCozy = mkBtn("", () => {
+        const s = ctx2.state.settings;
+        s.keepBookOpen = !s.keepBookOpen;
+        ctx2.save();
+        if (s.keepBookOpen) {
+          if (peekTimer) {
+            clearInterval(peekTimer);
+            peekTimer = null;
+          }
+          recipeHidden = false;
+          ctx2.toast("\u{1F4D6} \u041A\u043D\u0438\u0433\u0430 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0437\u0430\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u2014 \u0432\u0430\u0440\u0438 \u0432 \u0443\u0434\u043E\u0432\u043E\u043B\u044C\u0441\u0442\u0432\u0438\u0435!");
+        } else {
+          startPeek();
+        }
+        ctx2.sfx?.("tap");
+        draw();
+      });
+      controls.appendChild(btnCozy);
+    }
     controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
     side.appendChild(controls);
     wrap.appendChild(side);
@@ -20435,7 +20458,7 @@
     let peekTimer = null;
     let peekLeft = 0;
     function startPeek() {
-      if (!level.hideRecipe) return;
+      if (!level.hideRecipe || cozy()) return;
       recipeHidden = false;
       peekLeft = level.peekSeconds;
       if (peekTimer) clearInterval(peekTimer);
@@ -20605,7 +20628,7 @@
       lid.innerHTML = lidOn() ? "\u{1F372} \u0421\u043D\u044F\u0442\u044C \u043A\u0440\u044B\u0448\u043A\u0443" : "\u{1F372} \u041A\u0440\u044B\u0448\u043A\u0430";
       const hideCount = brewHiddenCount(level);
       book.innerHTML = '<div class="brew-book-title">\u{1F4D6} \u0420\u0435\u0446\u0435\u043F\u0442</div>';
-      if (level.hideRecipe && !recipeHidden) {
+      if (level.hideRecipe && !recipeHidden && peekTimer) {
         const peek = document.createElement("div");
         peek.className = "brew-peek-count";
         peek.textContent = `\u{1F441} \u0417\u0430\u043F\u043E\u043C\u0438\u043D\u0430\u0439! \u0425\u0432\u043E\u0441\u0442 \u0441\u043A\u0440\u043E\u0435\u0442\u0441\u044F \u0447\u0435\u0440\u0435\u0437 ${peekLeft} \u0441\u0435\u043A\u2026`;
@@ -20627,6 +20650,13 @@
         note.textContent = `\u{1F4D5} \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 ${hideCount} \u0448\u0430\u0433\u0430 \u0441\u043A\u0440\u044B\u0442\u044B \u2014 \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438! \xAB\u0417\u0430\u043D\u043E\u0432\u043E\xBB \u043E\u0442\u043A\u0440\u043E\u0435\u0442 \u043A\u043D\u0438\u0433\u0443 \u0435\u0449\u0451 \u0440\u0430\u0437.`;
         book.appendChild(note);
       }
+      if (cozy() && level.hideRecipe) {
+        const note = document.createElement("div");
+        note.className = "brew-book-note";
+        note.textContent = "\u{1F4D6} \u0423\u044E\u0442\u043D\u044B\u0439 \u0440\u0435\u0436\u0438\u043C: \u0440\u0435\u0446\u0435\u043F\u0442 \u043D\u0435 \u0441\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u2014 \u0432\u0430\u0440\u0438 \u0432 \u0443\u0434\u043E\u0432\u043E\u043B\u044C\u0441\u0442\u0432\u0438\u0435.";
+        book.appendChild(note);
+      }
+      if (btnCozy) btnCozy.innerHTML = cozy() ? "\u{1F4D6} \u041A\u043D\u0438\u0433\u0430 \u043E\u0442\u043A\u0440\u044B\u0442\u0430" : "\u{1F4D5} \u0414\u0435\u0440\u0436\u0430\u0442\u044C \u043A\u043D\u0438\u0433\u0443 \u043E\u0442\u043A\u0440\u044B\u0442\u043E\u0439";
       const hearts = "\u2716".repeat(puzzle.mistakes) + "\u2796".repeat(Math.max(0, BREW_MAX_MISTAKES - puzzle.mistakes));
       statusEl.innerHTML = `\u2697\uFE0F \u0428\u0430\u0433 <b>${Math.min(puzzle.progress + (finished ? 0 : 1), total)} \u0438\u0437 ${total}</b> \xB7 \u041E\u0448\u0438\u0431\u043A\u0438: ${hearts}` + (puzzle.spoiled ? ` \xB7 <span class="warn">\u0438\u0441\u043F\u043E\u0440\u0447\u0435\u043D\u043E \u043A\u043E\u0442\u043B\u043E\u0432: ${puzzle.spoiled}</span>` : "") + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
@@ -23980,6 +24010,25 @@ ${item2.description}
       musicBtn.textContent = on ? "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0430" : "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u0430";
     });
     panel.append(soundBtn, musicBtn);
+    const puzzleTitle = document.createElement("h3");
+    puzzleTitle.textContent = "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438";
+    puzzleTitle.style.marginTop = "16px";
+    panel.appendChild(puzzleTitle);
+    const brewBtn = document.createElement("button");
+    const brewBtnText = () => state2.settings.keepBookOpen ? "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439: \u0440\u0435\u0446\u0435\u043F\u0442 \u0432\u0441\u0435\u0433\u0434\u0430 \u043E\u0442\u043A\u0440\u044B\u0442" : "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439: \u0440\u0435\u0446\u0435\u043F\u0442 \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438";
+    brewBtn.textContent = brewBtnText();
+    brewBtn.addEventListener("click", () => {
+      state2.settings.keepBookOpen = !state2.settings.keepBookOpen;
+      ctx2.save();
+      brewBtn.textContent = brewBtnText();
+      ctx2.sfx?.("tap");
+    });
+    panel.appendChild(brewBtn);
+    const brewNote = document.createElement("div");
+    brewNote.className = "muted";
+    brewNote.style.fontSize = "13px";
+    brewNote.textContent = "\u0411\u0435\u0437 \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u0430\u043C\u044F\u0442\u0438: \u0432 \u0432\u0430\u0440\u043A\u0435 \u0437\u0435\u043B\u0438\u0439 \u043A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432 \u043D\u0435 \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F. \u041D\u0430\u0433\u0440\u0430\u0434\u044B \u043F\u0440\u0435\u0436\u043D\u0438\u0435.";
+    panel.appendChild(brewNote);
     const tutTitle = document.createElement("h3");
     tutTitle.textContent = "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435";
     tutTitle.style.marginTop = "16px";

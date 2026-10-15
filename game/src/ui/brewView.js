@@ -26,6 +26,8 @@ export function renderBrewPuzzle(container, ctx, level) {
   let finished = false;
   let recipeHidden = false;
   const timers = [];
+  // Уютный режим (настройка keepBookOpen): книга рецептов не закрывается
+  const cozy = () => !!ctx.state.settings?.keepBookOpen;
 
   container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: level.mechanic || 'mirror' }]));
 
@@ -138,6 +140,26 @@ export function renderBrewPuzzle(container, ctx, level) {
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Заново (R)', doReset);
   controls.append(btnUndo, btnHint, btnReset);
+  // Уютный режим прямо на экране варки (только уровни с памятью).
+  // Подпись обновляется в draw(); тот же флаг, что и в Настройках.
+  let btnCozy = null;
+  if (level.hideRecipe) {
+    btnCozy = mkBtn('', () => {
+      const s = ctx.state.settings;
+      s.keepBookOpen = !s.keepBookOpen;
+      ctx.save();
+      if (s.keepBookOpen) {
+        if (peekTimer) { clearInterval(peekTimer); peekTimer = null; }
+        recipeHidden = false;
+        ctx.toast('📖 Книга больше не закроется — вари в удовольствие!');
+      } else {
+        startPeek(); // память включена обратно: отсчёт начинается заново
+      }
+      ctx.sfx?.('tap');
+      draw();
+    });
+    controls.appendChild(btnCozy);
+  }
   controls.appendChild(puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level)));
   side.appendChild(controls);
   wrap.appendChild(side);
@@ -155,7 +177,7 @@ export function renderBrewPuzzle(container, ctx, level) {
   let peekTimer = null;
   let peekLeft = 0;
   function startPeek() {
-    if (!level.hideRecipe) return;
+    if (!level.hideRecipe || cozy()) return; // уютный режим: память не включаем
     recipeHidden = false;
     peekLeft = level.peekSeconds;
     if (peekTimer) clearInterval(peekTimer);
@@ -344,7 +366,8 @@ export function renderBrewPuzzle(container, ctx, level) {
     // во время запоминания — отсчёт прямо в панели книги
     const hideCount = brewHiddenCount(level);
     book.innerHTML = '<div class="brew-book-title">📖 Рецепт</div>';
-    if (level.hideRecipe && !recipeHidden) {
+    // Отсчёт — только при живом таймере (в уютном режиме его нет совсем)
+    if (level.hideRecipe && !recipeHidden && peekTimer) {
       const peek = document.createElement('div');
       peek.className = 'brew-peek-count';
       peek.textContent = `👁 Запоминай! Хвост скроется через ${peekLeft} сек…`;
@@ -371,6 +394,13 @@ export function renderBrewPuzzle(container, ctx, level) {
       note.textContent = `📕 Последние ${hideCount} шага скрыты — по памяти! «Заново» откроет книгу ещё раз.`;
       book.appendChild(note);
     }
+    if (cozy() && level.hideRecipe) {
+      const note = document.createElement('div');
+      note.className = 'brew-book-note';
+      note.textContent = '📖 Уютный режим: рецепт не скрывается — вари в удовольствие.';
+      book.appendChild(note);
+    }
+    if (btnCozy) btnCozy.innerHTML = cozy() ? '📖 Книга открыта' : '📕 Держать книгу открытой';
 
     // Статус
     const hearts = '✖'.repeat(puzzle.mistakes) + '➖'.repeat(Math.max(0, BREW_MAX_MISTAKES - puzzle.mistakes));

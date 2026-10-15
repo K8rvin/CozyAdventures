@@ -233,6 +233,31 @@ test('все экраны рендерятся без ошибок', () => {
   assert.ok(true);
 });
 
+test('уютная варка (keepBookOpen): рецепт всегда открыт, без отсчёта и скрытых шагов', () => {
+  const state = newGame();
+  state.settings.keepBookOpen = true;
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, makeUiCtx(state), { id: 'brew_06' }); // уровень на память
+  const all = flatElements(root);
+  const steps = all.filter((el) => (el.className || '').startsWith('brew-step'));
+  assert.equal(steps.length, 6, 'все шаги рецепта на месте');
+  for (const row of steps) assert.ok(!(row.textContent || '').includes('· · ·'), 'шаги не скрываются');
+  assert.ok((steps[5].textContent || '').includes('Остуди котёл'), 'последний шаг виден полностью');
+  assert.ok(!all.some((el) => el.className === 'brew-peek-count'), 'отсчёта запоминания нет');
+  assert.ok(
+    all.some((el) => el.className === 'brew-book-note' && (el.textContent || '').includes('рецепт не скрывается')),
+    'есть пометка уютного режима',
+  );
+  assert.ok(all.some((el) => (el.innerHTML || '').includes('📖 Книга открыта')), 'кнопка показывает открытую книгу');
+  if (typeof cleanup === 'function') cleanup();
+
+  // По умолчанию (флаг выключен) режим памяти прежний: отсчёт на месте
+  const root2 = new El('main');
+  const cleanup2 = renderPuzzle(root2, makeUiCtx(newGame()), { id: 'brew_06' });
+  assert.ok(flatElements(root2).some((el) => el.className === 'brew-peek-count'), 'по умолчанию отсчёт памяти остаётся');
+  if (typeof cleanup2 === 'function') cleanup2();
+});
+
 test('подсказка «Сейчас надето» показывает текущий слот и пустые слоты', () => {
   const state = newGame();
   const anchor = new El('button');
