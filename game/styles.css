@@ -522,13 +522,35 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   border: 2px solid rgba(255, 202, 122, 0.35);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   cursor: grab;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.35s ease, border-color 0.3s ease, box-shadow 0.35s ease;
   touch-action: none;
   user-select: none;
   overflow: hidden;
 }
 .fate-card.on-table { width: 96px; height: 144px; }
 .fate-card:hover { transform: translateY(-7px) scale(1.06); border-color: #ffca7a; z-index: 2; }
+.fate-scene.checking .fate-card { pointer-events: none; cursor: default; }
+/* Вердикт остаётся видимым у показанных карт; у текущей аура ярче и шире */
+.fate-card.fate-verdict-exact {
+  border-color: #b5d691;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 16px 3px rgba(156, 220, 130, 0.48), 0 0 32px 6px rgba(156, 220, 130, 0.2);
+}
+.fate-card.fate-verdict-miss {
+  border-color: #df9486;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 16px 3px rgba(225, 120, 103, 0.46), 0 0 32px 6px rgba(225, 120, 103, 0.19);
+}
+.fate-card.fate-verdict-current { transform: translateY(-4px); z-index: 1; }
+.fate-card.fate-verdict-current.fate-verdict-exact {
+  border-color: #d2edaf;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), 0 0 24px 6px rgba(156, 220, 130, 0.78), 0 0 48px 12px rgba(156, 220, 130, 0.32);
+}
+.fate-card.fate-verdict-current.fate-verdict-miss {
+  border-color: #f0ab9b;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), 0 0 24px 6px rgba(225, 120, 103, 0.76), 0 0 48px 12px rgba(225, 120, 103, 0.3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fate-card.fate-verdict-current { transform: none; }
+}
 .fate-card-icon {
   position: absolute;
   inset: 0;

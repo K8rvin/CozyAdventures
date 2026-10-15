@@ -20767,6 +20767,9 @@
     const puzzle = createFatePuzzle(level, FATE_CARDS);
     let hintsUsed = 0;
     let finished = false;
+    let checking = false;
+    let disposed = false;
+    const timers = [];
     let viewSlot = null;
     container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
@@ -20806,8 +20809,9 @@
     const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    const btnSkip = puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level));
     controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
+    controls.appendChild(btnSkip);
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -20817,6 +20821,18 @@
       b.innerHTML = label;
       b.addEventListener("click", fn);
       return b;
+    }
+    function later(fn, ms) {
+      const timer = setTimeout(() => {
+        if (!disposed) fn();
+      }, ms);
+      timers.push(timer);
+      return timer;
+    }
+    function setChecking(value) {
+      checking = value;
+      scene.classList.toggle("checking", value);
+      for (const b of [btnUndo, btnHint, btnReset, btnSkip]) b.disabled = value;
     }
     function shownSlot() {
       if (viewSlot != null) return viewSlot;
@@ -20828,7 +20844,7 @@
       return puzzle.slots.indexOf(null);
     }
     function doUndo() {
-      if (finished) return;
+      if (finished || checking) return;
       if (undoFate(puzzle)) {
         viewSlot = null;
         ctx2.sfx?.("tap");
@@ -20836,14 +20852,14 @@
       }
     }
     function doReset() {
-      if (finished) return;
+      if (finished || checking) return;
       resetFate(puzzle);
       viewSlot = null;
       ctx2.sfx?.("tap");
       renderAll();
     }
     function doHint() {
-      if (finished) return;
+      if (finished || checking) return;
       const h = applyFateHint(puzzle);
       ctx2.sfx?.("hint");
       if (h) {
@@ -20914,7 +20930,7 @@
     }
     function makeDraggable(el, cardId, fromSlot) {
       el.addEventListener("pointerdown", (ev) => {
-        if (finished) return;
+        if (finished || checking) return;
         ev.preventDefault();
         const startX = ev.clientX;
         const startY = ev.clientY;
@@ -21002,18 +21018,40 @@
       slotEls.forEach((el) => el.classList.remove("drop-ok"));
     }
     function afterMove() {
-      const res = submitFate(puzzle);
-      if (!res) return;
-      if (res.solved) {
-        finish();
-        return;
-      }
-      ctx2.sfx?.("fail");
-      const over = puzzle.mistakes - FATE_FREE_MISTAKES;
-      ctx2.toast(over <= 0 ? `\u0421\u0443\u0434\u044C\u0431\u0430 \u043D\u0435 \u0441\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u2014 \u043A\u0430\u0440\u0442\u044B \u0432\u0435\u0440\u043D\u0443\u043B\u0438\u0441\u044C. \u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes} \u0438\u0437 ${FATE_FREE_MISTAKES} \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445.` : `\u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes}: \u0441\u043E\u043C\u043D\u0435\u043D\u0438\u044F \u0433\u043E\u0441\u0442\u044F \u0441\u044A\u0435\u0434\u0430\u044E\u0442 \u043D\u0430\u0433\u0440\u0430\u0434\u0443 (\u2212${Math.round((1 - rewardFactor3(puzzle)) * 100)}% \u043C\u043E\u043D\u0435\u0442).`);
-      scene.classList.add("shake");
-      setTimeout(() => scene.classList.remove("shake"), 500);
-      renderAll();
+      if (checking || finished || !isFull2(puzzle)) return;
+      const marks = markSpread(puzzle, [...puzzle.slots]);
+      const verdictEls = [...slotEls];
+      const STEP_MS = 650;
+      setChecking(true);
+      marks.forEach((mark, i) => {
+        later(() => {
+          verdictEls.forEach((el) => el.classList.remove("fate-verdict-current"));
+          const exact = mark === "exact";
+          verdictEls[i].classList.add(
+            exact ? "fate-verdict-exact" : "fate-verdict-miss",
+            "fate-verdict-current"
+          );
+          ctx2.sfx?.(exact ? "fateExact" : "fateMiss", i);
+        }, 250 + i * STEP_MS);
+      });
+      later(() => {
+        const res = submitFate(puzzle);
+        if (res?.solved) {
+          finish();
+          return;
+        }
+        setChecking(false);
+        if (!res) {
+          renderAll();
+          return;
+        }
+        ctx2.sfx?.("fail");
+        const over = puzzle.mistakes - FATE_FREE_MISTAKES;
+        ctx2.toast(over <= 0 ? `\u0421\u0443\u0434\u044C\u0431\u0430 \u043D\u0435 \u0441\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u2014 \u043A\u0430\u0440\u0442\u044B \u0432\u0435\u0440\u043D\u0443\u043B\u0438\u0441\u044C. \u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes} \u0438\u0437 ${FATE_FREE_MISTAKES} \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445.` : `\u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes}: \u0441\u043E\u043C\u043D\u0435\u043D\u0438\u044F \u0433\u043E\u0441\u0442\u044F \u0441\u044A\u0435\u0434\u0430\u044E\u0442 \u043D\u0430\u0433\u0440\u0430\u0434\u0443 (\u2212${Math.round((1 - rewardFactor3(puzzle)) * 100)}% \u043C\u043E\u043D\u0435\u0442).`);
+        scene.classList.add("shake");
+        later(() => scene.classList.remove("shake"), 500);
+        renderAll();
+      }, 250 + marks.length * STEP_MS + 400);
     }
     function onKey(ev) {
       if (ev.key === "Escape") {
@@ -21045,7 +21083,7 @@
       ctx2.save();
       ctx2.sfx?.("success");
       renderAll();
-      setTimeout(() => {
+      later(() => {
         const next = nextPuzzle(level.id);
         const spread = puzzle.slots.map((c) => FATE_CARDS[c].name).join(" \xB7 ");
         showOverlay(ctx2, {
@@ -21203,7 +21241,9 @@
     }
     renderAll();
     return () => {
+      disposed = true;
       window.removeEventListener("keydown", onKey);
+      for (const t of timers) clearTimeout(t);
     };
   }
 
@@ -23722,7 +23762,7 @@ ${item2.description}
     src.connect(f).connect(g).connect(a.destination);
     src.start(a.currentTime + delay);
   }
-  function sfx(name) {
+  function sfx(name, step = 0) {
     if (!enabled) return;
     switch (name) {
       case "tap":
@@ -23735,6 +23775,20 @@ ${item2.description}
         tone(660, 0.15, { type: "sine", gain: 0.05 });
         tone(880, 0.2, { delay: 0.1, gain: 0.04 });
         break;
+      case "fateExact": {
+        const notes = [523.25, 587.33, 659.25, 783.99];
+        const f = notes[step % notes.length];
+        tone(f, 0.22, { gain: 0.032 });
+        tone(f * 1.25, 0.3, { delay: 0.09, gain: 0.025 });
+        break;
+      }
+      case "fateMiss": {
+        const notes = [392, 349.23, 329.63, 293.66];
+        const f = notes[step % notes.length];
+        tone(f, 0.24, { gain: 0.026 });
+        tone(f * 0.84, 0.3, { delay: 0.1, gain: 0.019 });
+        break;
+      }
       case "success":
         [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
         break;

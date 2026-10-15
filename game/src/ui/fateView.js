@@ -6,10 +6,11 @@
 // оставляет пустое гнездо, остальные не сдвигаются. Наведение/нажатие на карту —
 // увеличенное превью со значениями в боковой панели (на картах текста нет).
 // История неверных раскладов — в отдельной панели справа под превью (на столе
-// её нет, стол не тянется); «Сброс» очищает и историю раскладов.
+// её нет, стол не тянется); «Сброс» очищает и историю раскладов. Полный расклад
+// сначала получает последовательный световой и звуковой вердикт по каждой карте.
 import {
   createFatePuzzle, placeCardAt, removeSlot, undoFate, resetFate,
-  submitFate, applyFateHint, rewardFactor, fateProgress,
+  submitFate, applyFateHint, rewardFactor, fateProgress, isFull, markSpread,
   FATE_FREE_MISTAKES, FATE_MISTAKE_STEP,
 } from '../core/fatePuzzle.js';
 import { FATE_CARDS } from '../data/puzzlesFate.js';
@@ -20,6 +21,9 @@ export function renderFatePuzzle(container, ctx, level) {
   const puzzle = createFatePuzzle(level, FATE_CARDS);
   let hintsUsed = 0;
   let finished = false;
+  let checking = false;
+  let disposed = false;
+  const timers = [];
   let viewSlot = null; // какая реплика показана в пузыре (null — первая пустая)
 
   container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: level.mechanic || 'mirror' }]));
@@ -70,8 +74,9 @@ export function renderFatePuzzle(container, ctx, level) {
   const btnUndo = mkBtn('↩️ Отмена (Z)', doUndo);
   const btnHint = mkBtn('💡 Подсказка (H)', doHint);
   const btnReset = mkBtn('🔄 Сброс (R)', doReset);
+  const btnSkip = puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level));
   controls.append(btnUndo, btnHint, btnReset);
-  controls.appendChild(puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level)));
+  controls.appendChild(btnSkip);
   side.appendChild(controls);
 
   wrap.appendChild(side);
@@ -84,6 +89,18 @@ export function renderFatePuzzle(container, ctx, level) {
     b.innerHTML = label;
     b.addEventListener('click', fn);
     return b;
+  }
+
+  function later(fn, ms) {
+    const timer = setTimeout(() => { if (!disposed) fn(); }, ms);
+    timers.push(timer);
+    return timer;
+  }
+
+  function setChecking(value) {
+    checking = value;
+    scene.classList.toggle('checking', value);
+    for (const b of [btnUndo, btnHint, btnReset, btnSkip]) b.disabled = value;
   }
 
   // Текущая реплика: явно выбранная, иначе первая пустая позиция
@@ -100,18 +117,18 @@ export function renderFatePuzzle(container, ctx, level) {
   }
 
   function doUndo() {
-    if (finished) return;
+    if (finished || checking) return;
     if (undoFate(puzzle)) { viewSlot = null; ctx.sfx?.('tap'); renderAll(); }
   }
   function doReset() {
-    if (finished) return;
+    if (finished || checking) return;
     resetFate(puzzle);
     viewSlot = null;
     ctx.sfx?.('tap');
     renderAll();
   }
   function doHint() {
-    if (finished) return;
+    if (finished || checking) return;
     const h = applyFateHint(puzzle);
     ctx.sfx?.('hint');
     if (h) {
@@ -188,7 +205,7 @@ export function renderFatePuzzle(container, ctx, level) {
 
   function makeDraggable(el, cardId, fromSlot) {
     el.addEventListener('pointerdown', (ev) => {
-      if (finished) return;
+      if (finished || checking) return;
       ev.preventDefault();
       const startX = ev.clientX;
       const startY = ev.clientY;
@@ -281,19 +298,40 @@ export function renderFatePuzzle(container, ctx, level) {
     slotEls.forEach((el) => el.classList.remove('drop-ok'));
   }
 
-  // После хода: расклад полон — проверяем
+  // Полный расклад сначала раскрывается слева направо, и только потом применяется исход.
   function afterMove() {
-    const res = submitFate(puzzle);
-    if (!res) return;
-    if (res.solved) { finish(); return; }
-    ctx.sfx?.('fail');
-    const over = puzzle.mistakes - FATE_FREE_MISTAKES;
-    ctx.toast(over <= 0
-      ? `Судьба не сходится — карты вернулись. Ошибка ${puzzle.mistakes} из ${FATE_FREE_MISTAKES} бесплатных.`
-      : `Ошибка ${puzzle.mistakes}: сомнения гостя съедают награду (−${Math.round((1 - rewardFactor(puzzle)) * 100)}% монет).`);
-    scene.classList.add('shake');
-    setTimeout(() => scene.classList.remove('shake'), 500);
-    renderAll();
+    if (checking || finished || !isFull(puzzle)) return;
+    const marks = markSpread(puzzle, [...puzzle.slots]);
+    const verdictEls = [...slotEls];
+    const STEP_MS = 650;
+    setChecking(true);
+
+    marks.forEach((mark, i) => {
+      later(() => {
+        verdictEls.forEach((el) => el.classList.remove('fate-verdict-current'));
+        const exact = mark === 'exact';
+        verdictEls[i].classList.add(
+          exact ? 'fate-verdict-exact' : 'fate-verdict-miss',
+          'fate-verdict-current',
+        );
+        ctx.sfx?.(exact ? 'fateExact' : 'fateMiss', i);
+      }, 250 + i * STEP_MS);
+    });
+
+    later(() => {
+      const res = submitFate(puzzle);
+      if (res?.solved) { finish(); return; }
+      setChecking(false);
+      if (!res) { renderAll(); return; }
+      ctx.sfx?.('fail');
+      const over = puzzle.mistakes - FATE_FREE_MISTAKES;
+      ctx.toast(over <= 0
+        ? `Судьба не сходится — карты вернулись. Ошибка ${puzzle.mistakes} из ${FATE_FREE_MISTAKES} бесплатных.`
+        : `Ошибка ${puzzle.mistakes}: сомнения гостя съедают награду (−${Math.round((1 - rewardFactor(puzzle)) * 100)}% монет).`);
+      scene.classList.add('shake');
+      later(() => scene.classList.remove('shake'), 500);
+      renderAll();
+    }, 250 + marks.length * STEP_MS + 400);
   }
 
   function onKey(ev) {
@@ -319,7 +357,7 @@ export function renderFatePuzzle(container, ctx, level) {
     ctx.save();
     ctx.sfx?.('success');
     renderAll();
-    setTimeout(() => {
+    later(() => {
       const next = nextPuzzle(level.id);
       const spread = puzzle.slots.map((c) => FATE_CARDS[c].name).join(' · ');
       showOverlay(ctx, {
@@ -502,6 +540,8 @@ export function renderFatePuzzle(container, ctx, level) {
   renderAll();
 
   return () => {
+    disposed = true;
     window.removeEventListener('keydown', onKey);
+    for (const t of timers) clearTimeout(t);
   };
 }

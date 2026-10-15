@@ -74,6 +74,7 @@ class El {
     return el;
   }
   get firstElementChild() { return this.children[0] || new El('div'); }
+  get lastElementChild() { return this.children[this.children.length - 1] || new El('div'); }
   setAttribute() {}
 }
 
@@ -136,6 +137,29 @@ function makeUiCtx(state) {
     newGameConfirm: () => {},
     sfx: () => {},
   };
+}
+
+function flatElements(el, out = []) {
+  out.push(el);
+  for (const c of el.children) flatElements(c, out);
+  return out;
+}
+
+function fateCardsOnTable(root) {
+  return flatElements(root).filter((el) => el.className === 'fate-card on-table');
+}
+
+function tapFateCard(root, cardId) {
+  const src = `assets/fate/card_${cardId}_web.jpg`;
+  const card = flatElements(root).find((el) => el.className === 'fate-card in-hand'
+    && el.children.some((c) => c.src === src));
+  assert.ok(card, `карта ${cardId} должна быть в руке`);
+  const upsBefore = listeners.pointerup?.length || 0;
+  for (const fn of card._listeners.pointerdown || []) {
+    fn({ clientX: 0, clientY: 0, preventDefault: () => {} });
+  }
+  assert.ok((listeners.pointerup?.length || 0) > upsBefore, 'тап должен установить pointerup');
+  listeners.pointerup.at(-1)({ clientX: 0, clientY: 0 });
 }
 
 test('все экраны рендерятся без ошибок', () => {
@@ -246,4 +270,79 @@ test('тап по зеркалу на md_02 решает уровень и да�
   canvas._listeners.pointerdown.forEach((f) => f({ clientX: 2 * CELL + 5, clientY: 2 * CELL + 5 }));
   assert.ok(state.puzzlesDone.md_02, 'уровень должен быть решён после правильного поворота');
   if (typeof cleanup === 'function') cleanup();
+});
+
+test('«Карты судьбы»: неверный расклад раскрывается по картам до применения ошибки', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const sounds = [];
+  const notices = [];
+  ctx.sfx = (...args) => sounds.push(args);
+  ctx.toast = (text) => notices.push(text);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'fate_01' });
+  const verdictSounds = () => sounds.filter(([name]) => name.startsWith('fate'));
+
+  tapFateCard(root, 'star');
+  tapFateCard(root, 'home');
+  tapFateCard(root, 'letter');
+  assert.equal(notices.length, 0, 'ошибка не показывается сразу');
+  assert.equal(fateCardsOnTable(root).length, 3, 'карты остаются на столе во время вердиктов');
+
+  t.mock.timers.tick(250);
+  let cards = fateCardsOnTable(root);
+  assert.ok(cards[0].classList.contains('fate-verdict-miss'));
+  assert.ok(cards[0].classList.contains('fate-verdict-current'));
+  assert.deepEqual(verdictSounds(), [['fateMiss', 0]]);
+
+  t.mock.timers.tick(650);
+  cards = fateCardsOnTable(root);
+  assert.ok(!cards[0].classList.contains('fate-verdict-current'));
+  assert.ok(cards[0].classList.contains('fate-verdict-miss'), 'первый вердикт остаётся мягко видимым');
+  assert.ok(cards[1].classList.contains('fate-verdict-exact'));
+  assert.ok(cards[1].classList.contains('fate-verdict-current'));
+  assert.deepEqual(verdictSounds(), [['fateMiss', 0], ['fateExact', 1]]);
+
+  t.mock.timers.tick(650);
+  cards = fateCardsOnTable(root);
+  assert.ok(cards[2].classList.contains('fate-verdict-exact'));
+  assert.ok(cards[2].classList.contains('fate-verdict-current'));
+  assert.equal(notices.length, 0, 'после третьей карты ещё есть завершающая пауза');
+
+  t.mock.timers.tick(1049);
+  assert.equal(notices.length, 0);
+  assert.equal(fateCardsOnTable(root).length, 3);
+  t.mock.timers.tick(1);
+  assert.equal(notices.length, 1, 'после анимации появляется прежнее сообщение об ошибке');
+  assert.equal(fateCardsOnTable(root).length, 0, 'после анимации карты возвращаются в руку');
+  assert.equal(flatElements(root).filter((el) => el.className === 'fate-attempt').length, 1);
+  assert.deepEqual(verdictSounds(), [['fateMiss', 0], ['fateExact', 1], ['fateExact', 2]]);
+  assert.ok(sounds.some(([name]) => name === 'fail'), 'финальный звук ошибки сохранён');
+  cleanup();
+});
+
+test('«Карты судьбы»: победа засчитывается только после всех вердиктов', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const sounds = [];
+  ctx.sfx = (...args) => sounds.push(args);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'fate_01' });
+
+  tapFateCard(root, 'path');
+  tapFateCard(root, 'home');
+  tapFateCard(root, 'letter');
+  assert.ok(!state.puzzlesDone.fate_01, 'заполнение расклада ещё не завершает уровень');
+  t.mock.timers.tick(2599);
+  assert.ok(!state.puzzlesDone.fate_01, 'уровень ждёт завершающую паузу');
+  assert.deepEqual(
+    sounds.filter(([name]) => name.startsWith('fate')),
+    [['fateExact', 0], ['fateExact', 1], ['fateExact', 2]],
+  );
+  t.mock.timers.tick(1);
+  assert.ok(state.puzzlesDone.fate_01, 'после последнего вердикта применяется прежняя победа');
+  assert.ok(sounds.some(([name]) => name === 'success'));
+  cleanup();
 });

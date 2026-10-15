@@ -78,12 +78,28 @@ function noiseBurst(dur, { freq = 2000, q = 1, gain = 0.05, delay = 0, type = 'b
   src.start(a.currentTime + delay);
 }
 
-export function sfx(name) {
+export function sfx(name, step = 0) {
   if (!enabled) return;
   switch (name) {
     case 'tap': tone(520, 0.08, { type: 'triangle', gain: 0.05 }); break;
     case 'rotate': tone(440, 0.07, { type: 'triangle', gain: 0.06, slide: 160 }); break;
     case 'hint': tone(660, 0.15, { type: 'sine', gain: 0.05 }); tone(880, 0.2, { delay: 0.1, gain: 0.04 }); break;
+    case 'fateExact': {
+      // Тёплая восходящая терция; высота мягко растёт от позиции к позиции
+      const notes = [523.25, 587.33, 659.25, 783.99];
+      const f = notes[step % notes.length];
+      tone(f, 0.22, { gain: 0.032 });
+      tone(f * 1.25, 0.3, { delay: 0.09, gain: 0.025 });
+      break;
+    }
+    case 'fateMiss': {
+      // Негромкая нисходящая терция — сомнение без резкого сигнала ошибки
+      const notes = [392, 349.23, 329.63, 293.66];
+      const f = notes[step % notes.length];
+      tone(f, 0.24, { gain: 0.026 });
+      tone(f * 0.84, 0.3, { delay: 0.1, gain: 0.019 });
+      break;
+    }
     case 'success':
       [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
       break;
