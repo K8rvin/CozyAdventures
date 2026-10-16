@@ -827,26 +827,28 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .tea-ing-top .tea-tint { width: 12px; height: 12px; }
 .tea-bars { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
 
-/* --- Карточки типов головоломок --- */
-.pc-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  margin-bottom: 14px;
+/* --- Каталог типов головоломок: четыре варианта отображения --- */
+.pc-layout-panel {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding: 12px 14px;
 }
-.pc-card {
+.pc-layout-label { color: var(--muted); font-size: 13px; font-weight: 700; }
+.pc-mode-picker { display: flex; flex: 1; flex-wrap: wrap; gap: 8px; }
+.pc-mode-option { min-height: 38px; }
+.pc-settings-catalog { margin-bottom: 16px; }
+.pc-settings-catalog .pc-layout-label { margin-bottom: 8px; }
+.pc-catalog-host { margin-bottom: 16px; }
+
+.pc-media {
   position: relative;
-  border-radius: 14px;
+  width: 100%;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
-  cursor: pointer;
+  flex: none;
   background: linear-gradient(160deg, #4d4231 0%, #332b1f 100%);
-  border: 1px solid #6b5a3d;
-  min-height: 120px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.pc-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.45), 0 0 0 1px #ffca7a55;
 }
 .pc-fallback {
   position: absolute;
@@ -864,26 +866,296 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   height: 100%;
   object-fit: cover;
 }
-.pc-body {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 8px 12px;
-  background: linear-gradient(180deg, transparent, rgba(26, 20, 12, 0.92) 45%);
+.pc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  border: 1px solid #6b5a3d;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #4d4231 0%, #332b1f 100%);
+  box-shadow: 0 5px 16px rgba(0,0,0,0.28);
+  transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.pc-name { font-weight: 700; font-size: 15px; color: #f3e6cf; }
-.pc-progress { font-size: 12px; color: #c9b48a; }
-.pc-progress b { color: #ffca7a; }
-.pc-complete .pc-progress b { color: #a8c47e; }
-.pc-dot {
-  position: absolute;
-  top: 8px;
-  right: 8px;
+.pc-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
 }
+.pc-name { font-weight: 700; font-size: 16px; color: #f3e6cf; }
+.pc-desc { color: var(--muted); font-size: 13px; line-height: 1.45; }
+.pc-progress { color: #c9b48a; font-size: 12px; }
+.pc-complete .pc-progress { color: #a8c47e; }
+.pc-progress-box { display: grid; gap: 6px; margin-top: auto; }
+.pc-meter {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #241b12;
+}
+.pc-meter-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #a8763d, var(--accent));
+}
+.pc-complete .pc-meter-fill { background: var(--accent-2); }
+.pc-card.pc-complete,
+.pc-preview-card.pc-complete,
+.pc-accordion-item.pc-complete { border-color: #6d8a55; }
+.pc-fresh-badge {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  padding: 3px 9px;
+  border: 1px solid #ffca7a77;
+  border-radius: 999px;
+  background: rgba(39,27,16,0.9);
+  box-shadow: 0 0 14px #ffca7a33;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+}
+.pc-mode-option:focus-visible,
+.pc-shelf-track:focus-visible,
+.pc-preview-item:focus-visible,
+.pc-accordion-header:focus-visible,
+.pc-bento-filter:focus-visible,
+.pc-card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .pc-card:hover {
+    transform: translateY(-4px);
+    border-color: #a9824d;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.42), 0 0 0 1px #ffca7a33;
+  }
+}
+
+/* Полка: нативная горизонтальная прокрутка с фиксацией карточек. */
+.pc-shelf-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.pc-shelf-toolbar .muted { margin-right: auto; font-size: 13px; }
+.pc-shelf-counter { min-width: 48px; color: var(--accent); font-size: 13px; text-align: center; }
+.pc-shelf-prev,
+.pc-shelf-next { width: 40px; padding-right: 8px; padding-left: 8px; }
+.pc-shelf-track {
+  --shelf-card-w: clamp(280px, 56vw, 520px);
+  position: relative;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px max(12px, calc((100% - var(--shelf-card-w)) / 2)) 18px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: #8a6a3e #2b2118;
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+.pc-shelf-card {
+  flex: 0 0 var(--shelf-card-w);
+  scroll-snap-align: center;
+  opacity: 0.62;
+  transform: scale(0.96);
+}
+.pc-shelf-card.is-active { opacity: 1; transform: scale(1); }
+@media (hover: hover) {
+  .pc-shelf-card:hover { opacity: 0.9; transform: scale(0.98); }
+  .pc-shelf-card.is-active:hover { opacity: 1; transform: translateY(-3px) scale(1); }
+}
+
+/* Живое превью: компактный мастер-список и крупная карточка. */
+.pc-preview-layout {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.5fr);
+  gap: 16px;
+  align-items: start;
+}
+.pc-preview-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 680px;
+  overflow-y: auto;
+  padding: 3px;
+  scrollbar-color: #8a6a3e #2b2118;
+  scrollbar-width: thin;
+}
+.pc-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  padding: 9px 11px;
+  text-align: left;
+  border: 1px solid #5f4d36;
+  border-radius: 12px;
+  background: #35291e;
+}
+.pc-preview-item.is-active {
+  border-color: var(--accent);
+  background: #57432d;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.pc-preview-item-icon { flex: none; font-size: 24px; }
+.pc-preview-item-text { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.pc-preview-item-name { font-size: 14px; font-weight: 700; }
+.pc-preview-item .pc-progress { font-size: 11px; }
+.pc-item-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px #ffca7a99;
+}
+.pc-preview-detail { position: sticky; top: 154px; }
+.pc-preview-card {
+  overflow: hidden;
+  border: 1px solid #6b5a3d;
+  border-radius: 16px;
+  background: linear-gradient(160deg, #4d4231 0%, #332b1f 100%);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.36);
+  animation: pc-preview-in 0.22s ease;
+}
+.pc-preview-body { display: grid; gap: 10px; padding: 18px; }
+.pc-preview-body .pc-name { font-size: 20px; }
+.pc-preview-fresh { color: var(--accent); font-size: 13px; }
+.pc-preview-open { justify-self: start; margin-top: 4px; }
+@keyframes pc-preview-in {
+  from { opacity: 0.35; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Раскрывающийся список. */
+.pc-accordion { display: flex; flex-direction: column; gap: 10px; }
+.pc-accordion-item {
+  overflow: hidden;
+  border: 1px solid #6b5a3d;
+  border-radius: 14px;
+  background: #3d2f22;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  transition: border-color 0.2s ease;
+}
+.pc-accordion-item.is-open { border-color: #a9824d; }
+.pc-accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 86px;
+  padding: 10px 14px;
+  text-align: left;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.pc-accordion-thumb { width: 108px; border-radius: 9px; }
+.pc-accordion-thumb .pc-fallback { font-size: 30px; }
+.pc-accordion-text { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 0; }
+.pc-accordion-text .pc-fresh-badge {
+  position: static;
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 1px 7px;
+}
+.pc-accordion-chevron { color: var(--accent); font-size: 26px; transition: transform 0.22s ease; }
+.pc-accordion-item.is-open .pc-accordion-chevron { transform: rotate(180deg); }
+.pc-accordion-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.25s ease, visibility 0s linear 0.25s;
+}
+.pc-accordion-item.is-open .pc-accordion-reveal {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 0.25s ease, visibility 0s;
+}
+.pc-accordion-inner { min-height: 0; overflow: hidden; }
+.pc-accordion-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 4px 18px 18px;
+}
+.pc-accordion-content .pc-media { border-radius: 12px; }
+.pc-accordion-body { display: flex; flex-direction: column; gap: 12px; }
+.pc-accordion-open { align-self: flex-start; margin-top: 6px; }
+
+/* Мозаика с фильтрами и рекомендованной карточкой. */
+.pc-bento-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.pc-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: 14px;
+  align-items: start;
+}
+.pc-bento-card { width: 100%; }
+.pc-bento-card .pc-desc { display: none; }
+.pc-bento-card.is-featured { grid-column: span 2; grid-row: span 2; }
+.pc-bento-card.is-featured .pc-desc { display: block; }
+.pc-bento-card.is-featured .pc-name { font-size: 20px; }
+.pc-bento-card.is-featured .pc-card-body { padding: 18px; }
+.pc-bento-card[hidden],
+.pc-bento-empty[hidden] { display: none; }
+.pc-bento-empty { padding: 30px; text-align: center; }
+
+@media (max-width: 900px) {
+  .pc-preview-layout { grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr); }
+  .pc-bento-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pc-bento-card.is-featured { grid-column: span 2; grid-row: auto; }
+  .pc-accordion-content { grid-template-columns: minmax(0, 1fr) 220px; }
+}
+
+@media (max-width: 760px) {
+  .pc-preview-layout { grid-template-columns: 1fr; }
+  .pc-preview-detail { position: static; order: -1; }
+  .pc-preview-menu {
+    flex-direction: row;
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 9px;
+    scroll-snap-type: x proximity;
+  }
+  .pc-preview-item { flex: 0 0 210px; scroll-snap-align: start; }
+}
+
 @media (max-width: 640px) {
-  .pc-grid { grid-template-columns: 1fr; }
-  .pc-card { min-height: 100px; }
+  .pc-layout-panel { align-items: flex-start; }
+  .pc-mode-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+  .pc-mode-option { width: 100%; padding: 7px 9px; white-space: normal; }
+  .pc-shelf-track { --shelf-card-w: 82vw; gap: 12px; }
+  .pc-shelf-toolbar .muted { display: none; }
+  .pc-shelf-counter { margin-left: auto; }
+  .pc-preview-body { padding: 14px; }
+  .pc-preview-open { width: 100%; }
+  .pc-accordion-header { gap: 10px; padding: 10px; }
+  .pc-accordion-header .pc-name { font-size: 14px; }
+  .pc-accordion-thumb { width: 88px; }
+  .pc-accordion-content { grid-template-columns: 1fr; padding: 4px 12px 14px; }
+  .pc-accordion-open { width: 100%; }
+  .pc-bento-grid { grid-template-columns: 1fr; }
+  .pc-bento-card.is-featured { grid-column: auto; }
+  .pc-bento-card .pc-desc { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-card,
+  .pc-shelf-card,
+  .pc-accordion-item,
+  .pc-accordion-chevron,
+  .pc-accordion-reveal { transition: none; }
+  .pc-shelf-track { scroll-behavior: auto; }
+  .pc-preview-card { animation: none; }
 }
 
 .puzzle-controls { display: flex; flex-wrap: wrap; gap: 8px; }

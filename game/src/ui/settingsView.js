@@ -2,6 +2,7 @@
 import { header } from './common.js';
 import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js';
 import { applyCheat } from '../core/state.js';
+import { createPuzzleCatalogModePicker } from './puzzleCatalogView.js';
 
 export function renderSettings(container, ctx) {
   const { state } = ctx;
@@ -31,11 +32,18 @@ export function renderSettings(container, ctx) {
   });
   panel.append(soundBtn, musicBtn);
 
-  // --- Головоломки: уютная варка без тренировки памяти ---
+  // --- Головоломки: вид каталога и уютная варка без тренировки памяти ---
   const puzzleTitle = document.createElement('h3');
   puzzleTitle.textContent = 'Головоломки';
   puzzleTitle.style.marginTop = '16px';
   panel.appendChild(puzzleTitle);
+  const catalogBox = document.createElement('div');
+  catalogBox.className = 'pc-settings-catalog';
+  const catalogLabel = document.createElement('div');
+  catalogLabel.className = 'pc-layout-label';
+  catalogLabel.textContent = 'Вид каталога головоломок';
+  catalogBox.append(catalogLabel, createPuzzleCatalogModePicker(ctx));
+  panel.appendChild(catalogBox);
   const brewBtn = document.createElement('button');
   const brewBtnText = () => (state.settings.keepBookOpen
     ? 'Варка зелий: рецепт всегда открыт'

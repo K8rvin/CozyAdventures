@@ -55,7 +55,7 @@ export function newGame() {
     journal: [],            // дневник кота: последние события [{icon, text, at}]
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
-    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false }, // настройки (бой, головоломки)
+    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf' }, // настройки (бой, головоломки)
     formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
     cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
@@ -87,6 +87,7 @@ function migrate(state) {
   state.settings.useBeltItems ??= true;
   state.settings.tactic ??= 'balance';
   state.settings.keepBookOpen ??= false; // уютная варка: рецепт всегда открыт (без памяти)
+  state.settings.puzzleCatalogMode ??= 'shelf'; // вид каталога: полка, превью, список или мозаика
   state.formation ||= { knight: 1, merc0: 0, merc1: 5 };
   state.cheats ||= { used: [], spiderHat: false };
   state.materials ||= {};

@@ -22,6 +22,7 @@ import { renderFatePuzzle } from './fateView.js';
 import { renderGlassPuzzle } from './glassView.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav, puzzleSkipButton, header, backToPuzzleType } from './common.js';
+import { createPuzzleCatalogModePicker, renderPuzzleCatalog } from './puzzleCatalogView.js';
 
 // --- Типы головоломок: промежуточный экран-карточки ---
 
@@ -48,47 +49,26 @@ export function renderPuzzleList(container, ctx, params) {
   if (params?.mech && PUZZLE_TYPES.some((t) => t.mech === params.mech)) {
     return renderPuzzleTypeList(container, ctx, params.mech);
   }
-  const { state } = ctx;
   container.appendChild(header(ctx, 'Головоломки лавки', 'Выбери полку с загадками'));
 
-  const grid = document.createElement('div');
-  grid.className = 'pc-grid';
-  for (const t of PUZZLE_TYPES) {
-    const items = ALL_PUZZLES.filter((p) => typeOf(p) === t.mech);
-    const done = items.filter((p) => state.puzzlesDone[p.id]).length;
-    const hasFresh = items.some((p) => !state.puzzlesDone[p.id]
-      && puzzleAvailable(state, ALL_PUZZLES.indexOf(p)));
-    const card = document.createElement('div');
-    card.className = 'pc-card' + (done === items.length ? ' pc-complete' : '');
-    // Фолбэк-эмодзи под артом
-    const fallback = document.createElement('div');
-    fallback.className = 'pc-fallback';
-    fallback.textContent = t.icon;
-    card.appendChild(fallback);
-    const img = document.createElement('img');
-    img.className = 'pc-art';
-    img.alt = t.name;
-    img.addEventListener('error', () => img.remove());
-    img.src = `assets/puzzle_cards/pc_${t.mech}_web.jpg`;
-    card.appendChild(img);
-    const body = document.createElement('div');
-    body.className = 'pc-body';
-    body.innerHTML = `<div class="pc-name">${t.icon} ${t.name}</div>
-      <div class="pc-progress">Пройдено <b>${done}</b> из ${items.length}</div>`;
-    card.appendChild(body);
-    if (hasFresh) {
-      const dot = document.createElement('span');
-      dot.className = 'hs-dot pc-dot';
-      card.appendChild(dot);
-    }
-    card.addEventListener('click', () => {
-      ctx.sfx?.('tap');
-      container.innerHTML = '';
-      renderPuzzleTypeList(container, ctx, t.mech);
-    });
-    grid.appendChild(card);
-  }
-  container.appendChild(grid);
+  const layoutPanel = document.createElement('div');
+  layoutPanel.className = 'panel pc-layout-panel';
+  const layoutLabel = document.createElement('div');
+  layoutLabel.className = 'pc-layout-label';
+  layoutLabel.textContent = 'Вид каталога';
+  const catalogHost = document.createElement('div');
+  catalogHost.className = 'pc-catalog-host';
+  const openType = (mech) => {
+    container.innerHTML = '';
+    renderPuzzleTypeList(container, ctx, mech);
+  };
+  const renderCatalog = () => {
+    catalogHost.innerHTML = '';
+    renderPuzzleCatalog(catalogHost, ctx, PUZZLE_TYPES, openType);
+  };
+  layoutPanel.append(layoutLabel, createPuzzleCatalogModePicker(ctx, renderCatalog));
+  container.append(layoutPanel, catalogHost);
+  renderCatalog();
   container.appendChild(quickNav(ctx, [
     { icon: '📖', label: 'Книга рецептов', screen: 'brewbook' },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },

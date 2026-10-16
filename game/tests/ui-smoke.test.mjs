@@ -233,6 +233,90 @@ test('все экраны рендерятся без ошибок', () => {
   assert.ok(true);
 });
 
+test('каталог головоломок: четыре режима и общий переключатель в настройках', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const layouts = {
+    shelf: 'pc-shelf-track',
+    preview: 'pc-preview-layout',
+    accordion: 'pc-accordion',
+    bento: 'pc-bento-grid',
+  };
+  for (const [mode, marker] of Object.entries(layouts)) {
+    state.settings.puzzleCatalogMode = mode;
+    const root = new El('main');
+    renderPuzzleList(root, ctx);
+    assert.ok(
+      flatElements(root).some((el) => (el.className || '').split(' ').includes(marker)),
+      `режим ${mode} должен рендерить ${marker}`,
+    );
+  }
+
+  state.settings.puzzleCatalogMode = 'shelf';
+  const root = new El('main');
+  renderPuzzleList(root, ctx);
+  const options = flatElements(root).filter((el) => (el.className || '').includes('pc-mode-option'));
+  assert.equal(options.length, 4, 'на экране каталога доступны все варианты');
+  options.find((el) => el.dataset.mode === 'bento').click();
+  assert.equal(state.settings.puzzleCatalogMode, 'bento');
+  assert.ok(flatElements(root).some((el) => el.className === 'pc-bento-grid'), 'каталог обновляется сразу');
+
+  const settingsRoot = new El('main');
+  renderSettings(settingsRoot, ctx);
+  const settingsOptions = flatElements(settingsRoot)
+    .filter((el) => (el.className || '').includes('pc-mode-option'));
+  assert.equal(settingsOptions.length, 4, 'в настройках доступны все варианты');
+  settingsOptions.find((el) => el.dataset.mode === 'preview').click();
+  assert.equal(state.settings.puzzleCatalogMode, 'preview');
+  const saved = JSON.parse(localStorage.getItem('cozy_adventures_save_v2'));
+  assert.equal(saved.settings.puzzleCatalogMode, 'preview', 'выбор сохраняется');
+});
+
+test('каталог головоломок: превью, аккордеон и фильтры мозаики реагируют на выбор', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+
+  state.settings.puzzleCatalogMode = 'preview';
+  const previewRoot = new El('main');
+  renderPuzzleList(previewRoot, ctx);
+  const previewItems = flatElements(previewRoot).filter((el) => el.className === 'pc-preview-item');
+  assert.equal(previewItems.length, 13);
+  previewItems[1].click();
+  assert.ok(previewItems[1].classList.contains('is-active'), 'пункт обновляет живое превью');
+
+  state.settings.puzzleCatalogMode = 'accordion';
+  const accordionRoot = new El('main');
+  renderPuzzleList(accordionRoot, ctx);
+  const accordionAll = flatElements(accordionRoot);
+  const rows = accordionAll.filter((el) => (el.className || '').startsWith('pc-accordion-item'));
+  const headers = accordionAll.filter((el) => el.className === 'pc-accordion-header');
+  const openButtons = accordionAll.filter((el) => el.className === 'primary pc-accordion-open');
+  const firstOpen = rows.findIndex((row) => row.classList.contains('is-open'));
+  const nextOpen = (firstOpen + 1) % rows.length;
+  headers[nextOpen].click();
+  assert.ok(rows[nextOpen].classList.contains('is-open'), 'выбранная строка раскрывается');
+  assert.ok(!rows[firstOpen].classList.contains('is-open'), 'прежняя строка закрывается');
+  assert.equal(openButtons[nextOpen].tabIndex, 0, 'кнопка раскрытой панели доступна с клавиатуры');
+  assert.equal(openButtons[firstOpen].tabIndex, -1, 'кнопка скрытой панели не попадает в Tab');
+
+  for (let i = 1; i <= 12; i += 1) {
+    state.puzzlesDone[`md_${String(i).padStart(2, '0')}`] = { moves: 1, hintsUsed: 0 };
+  }
+  state.settings.puzzleCatalogMode = 'bento';
+  const bentoRoot = new El('main');
+  renderPuzzleList(bentoRoot, ctx);
+  const bentoAll = flatElements(bentoRoot);
+  const cards = bentoAll.filter((el) => (el.className || '').includes('pc-bento-card'));
+  const filters = bentoAll.filter((el) => (el.className || '').includes('pc-bento-filter'));
+  filters.find((el) => el.dataset.filter === 'complete').click();
+  assert.equal(cards.filter((card) => !card.hidden).length, 1, 'фильтр оставляет только пройденную категорию');
+  filters.find((el) => el.dataset.filter === 'progress').click();
+  assert.equal(cards.filter((card) => !card.hidden).length, 0, 'пустая выборка поддерживается');
+  assert.equal(bentoAll.find((el) => el.className === 'muted pc-bento-empty').hidden, false);
+  filters.find((el) => el.dataset.filter === 'all').click();
+  assert.equal(cards.filter((card) => !card.hidden).length, 13, 'фильтр «Все» возвращает карточки');
+});
+
 test('уютная варка (keepBookOpen): рецепт всегда открыт, без отсчёта и скрытых шагов', () => {
   const state = newGame();
   state.settings.keepBookOpen = true;

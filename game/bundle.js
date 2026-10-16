@@ -14395,7 +14395,7 @@
       // пройденные этапы обучения
       tutorialSkipped: false,
       // игрок пропустил обучение целиком
-      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false },
+      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf" },
       // настройки (бой, головоломки)
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
@@ -14428,6 +14428,7 @@
     state2.settings.useBeltItems ??= true;
     state2.settings.tactic ??= "balance";
     state2.settings.keepBookOpen ??= false;
+    state2.settings.puzzleCatalogMode ??= "shelf";
     state2.formation ||= { knight: 1, merc0: 0, merc1: 5 };
     state2.cheats ||= { used: [], spiderHat: false };
     state2.materials ||= {};
@@ -22039,6 +22040,431 @@
     };
   }
 
+  // src/ui/puzzleCatalogView.js
+  var PUZZLE_CATALOG_MODES = [
+    { id: "shelf", name: "\u041F\u043E\u043B\u043A\u0430", icon: "\u{1F4DA}", hint: "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u043B\u0435\u043D\u0442\u0430 \u0441 \u043A\u0440\u0443\u043F\u043D\u044B\u043C\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430\u043C\u0438" },
+    { id: "preview", name: "\u0416\u0438\u0432\u043E\u0435 \u043F\u0440\u0435\u0432\u044C\u044E", icon: "\u{1F5BC}\uFE0F", hint: "\u0421\u043F\u0438\u0441\u043E\u043A \u0438 \u0438\u043B\u043B\u044E\u0441\u0442\u0440\u0430\u0446\u0438\u044F \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0439 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438" },
+    { id: "accordion", name: "\u0420\u0430\u0441\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0439\u0441\u044F \u0441\u043F\u0438\u0441\u043E\u043A", icon: "\u{1F4DC}", hint: "\u041A\u043E\u043C\u043F\u0430\u043A\u0442\u043D\u044B\u0435 \u0441\u0442\u0440\u043E\u043A\u0438 \u0441 \u0440\u0430\u0441\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u043C\u0438\u0441\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430\u043C\u0438" },
+    { id: "bento", name: "\u041C\u043E\u0437\u0430\u0438\u043A\u0430", icon: "\u{1F9E9}", hint: "\u0410\u0441\u0438\u043C\u043C\u0435\u0442\u0440\u0438\u0447\u043D\u0430\u044F \u0441\u0435\u0442\u043A\u0430 \u0441 \u0444\u0438\u043B\u044C\u0442\u0440\u0430\u043C\u0438" }
+  ];
+  var MODE_IDS = PUZZLE_CATALOG_MODES.map((m) => m.id);
+  function currentPuzzleCatalogMode(state2) {
+    const mode = state2.settings?.puzzleCatalogMode;
+    return MODE_IDS.includes(mode) ? mode : "shelf";
+  }
+  function createPuzzleCatalogModePicker(ctx2, onChange) {
+    const picker = document.createElement("div");
+    picker.className = "pc-mode-picker";
+    picker.setAttribute("role", "group");
+    picker.setAttribute("aria-label", "\u0412\u0430\u0440\u0438\u0430\u043D\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
+    const buttons = [];
+    const sync = () => {
+      const current = currentPuzzleCatalogMode(ctx2.state);
+      for (const b of buttons) {
+        const active = b.dataset.mode === current;
+        b.className = `small pc-mode-option${active ? " primary is-active" : " ghost"}`;
+        b.setAttribute("aria-pressed", String(active));
+      }
+    };
+    for (const mode of PUZZLE_CATALOG_MODES) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.mode = mode.id;
+      b.textContent = `${mode.icon} ${mode.name}`;
+      b.title = mode.hint;
+      b.addEventListener("click", () => {
+        if (currentPuzzleCatalogMode(ctx2.state) === mode.id) return;
+        ctx2.state.settings.puzzleCatalogMode = mode.id;
+        ctx2.save();
+        ctx2.sfx?.("tap");
+        sync();
+        onChange?.(mode.id);
+      });
+      buttons.push(b);
+      picker.appendChild(b);
+    }
+    sync();
+    return picker;
+  }
+  function typeOf(p) {
+    return p.mechanic || "mirror";
+  }
+  function catalogEntries(types, state2) {
+    return types.map((t) => {
+      const items = ALL_PUZZLES.filter((p) => typeOf(p) === t.mech);
+      const done = items.filter((p) => state2.puzzlesDone[p.id]).length;
+      const hasFresh = items.some((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
+      return {
+        ...t,
+        done,
+        total: items.length,
+        hasFresh,
+        complete: items.length > 0 && done === items.length
+      };
+    });
+  }
+  function recommendedIndex(entries) {
+    const fresh = entries.findIndex((e) => e.hasFresh);
+    if (fresh >= 0) return fresh;
+    const unfinished = entries.findIndex((e) => !e.complete);
+    return Math.max(0, unfinished);
+  }
+  function makeArt(entry, extraClass = "") {
+    const media = document.createElement("div");
+    media.className = `pc-media${extraClass ? ` ${extraClass}` : ""}`;
+    const fallback = document.createElement("div");
+    fallback.className = "pc-fallback";
+    fallback.textContent = entry.icon;
+    const img = document.createElement("img");
+    img.className = "pc-art";
+    img.alt = "";
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.draggable = false;
+    img.src = `assets/puzzle_cards/pc_${entry.mech}_web.jpg`;
+    img.addEventListener("error", () => img.remove());
+    media.append(fallback, img);
+    return media;
+  }
+  function makeProgressText(entry) {
+    const progress = document.createElement("div");
+    progress.className = "pc-progress";
+    progress.textContent = `\u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E ${entry.done} \u0438\u0437 ${entry.total}`;
+    return progress;
+  }
+  function makeProgress(entry) {
+    const box = document.createElement("div");
+    box.className = "pc-progress-box";
+    box.appendChild(makeProgressText(entry));
+    const meter = document.createElement("div");
+    meter.className = "pc-meter";
+    meter.setAttribute("role", "progressbar");
+    meter.setAttribute("aria-label", `\u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441: ${entry.name}`);
+    meter.setAttribute("aria-valuemin", "0");
+    meter.setAttribute("aria-valuemax", String(entry.total));
+    meter.setAttribute("aria-valuenow", String(entry.done));
+    const fill = document.createElement("div");
+    fill.className = "pc-meter-fill";
+    fill.style.width = `${entry.total ? entry.done / entry.total * 100 : 0}%`;
+    meter.appendChild(fill);
+    box.appendChild(meter);
+    return box;
+  }
+  function makeName(entry, extraClass = "") {
+    const name = document.createElement("div");
+    name.className = `pc-name${extraClass ? ` ${extraClass}` : ""}`;
+    name.textContent = `${entry.icon} ${entry.name}`;
+    return name;
+  }
+  function makeFreshBadge() {
+    const badge = document.createElement("span");
+    badge.className = "pc-fresh-badge";
+    badge.textContent = "\u041D\u043E\u0432\u043E\u0435";
+    return badge;
+  }
+  function makeCard(entry, className, onOpen, withDescription = false) {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = `pc-card ${className}${entry.complete ? " pc-complete" : ""}`;
+    card.setAttribute("aria-label", `${entry.name}. \u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E ${entry.done} \u0438\u0437 ${entry.total}`);
+    card.appendChild(makeArt(entry));
+    const body = document.createElement("div");
+    body.className = "pc-card-body";
+    body.appendChild(makeName(entry));
+    if (withDescription) {
+      const desc = document.createElement("div");
+      desc.className = "pc-desc";
+      desc.textContent = entry.desc;
+      body.appendChild(desc);
+    }
+    body.appendChild(makeProgress(entry));
+    card.appendChild(body);
+    if (entry.hasFresh) card.appendChild(makeFreshBadge());
+    card.addEventListener("click", () => onOpen(entry));
+    return card;
+  }
+  function renderShelf(container, entries, onOpen) {
+    const section = document.createElement("section");
+    section.className = "pc-shelf";
+    const toolbar = document.createElement("div");
+    toolbar.className = "pc-shelf-toolbar";
+    const hint2 = document.createElement("span");
+    hint2.className = "muted";
+    hint2.textContent = "\u041B\u0438\u0441\u0442\u0430\u0439 \u043F\u043E\u043B\u043A\u0443";
+    const counter = document.createElement("span");
+    counter.className = "pc-shelf-counter";
+    const prev = document.createElement("button");
+    prev.type = "button";
+    prev.className = "small ghost pc-shelf-prev";
+    prev.textContent = "\u2190";
+    prev.setAttribute("aria-label", "\u041F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0430");
+    const next = document.createElement("button");
+    next.type = "button";
+    next.className = "small ghost pc-shelf-next";
+    next.textContent = "\u2192";
+    next.setAttribute("aria-label", "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0430");
+    toolbar.append(hint2, counter, prev, next);
+    const track = document.createElement("div");
+    track.className = "pc-shelf-track";
+    track.tabIndex = 0;
+    track.setAttribute("role", "region");
+    track.setAttribute("aria-label", "\u041F\u043E\u043B\u043A\u0430 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
+    const cards = entries.map((entry, i) => {
+      const card = makeCard(entry, "pc-shelf-card", onOpen, true);
+      card.addEventListener("focus", () => setActive(i));
+      track.appendChild(card);
+      return card;
+    });
+    section.append(toolbar, track);
+    container.appendChild(section);
+    let active = 0;
+    function setActive(index) {
+      active = Math.max(0, Math.min(cards.length - 1, index));
+      cards.forEach((card, i) => card.classList.toggle("is-active", i === active));
+      counter.textContent = `${active + 1} / ${cards.length}`;
+      prev.disabled = active === 0;
+      next.disabled = active === cards.length - 1;
+    }
+    function scrollTo(index, smooth = true) {
+      setActive(index);
+      const card = cards[active];
+      const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+      if (!Number.isFinite(left)) return;
+      if (smooth && track.scrollTo) track.scrollTo({ left, behavior: "smooth" });
+      else track.scrollLeft = left;
+    }
+    prev.addEventListener("click", () => scrollTo(active - 1));
+    next.addEventListener("click", () => scrollTo(active + 1));
+    track.addEventListener("keydown", (ev) => {
+      if (ev.key !== "ArrowLeft" && ev.key !== "ArrowRight") return;
+      ev.preventDefault();
+      scrollTo(active + (ev.key === "ArrowRight" ? 1 : -1));
+    });
+    track.addEventListener("scroll", () => {
+      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0) return;
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let nearest = active;
+      let distance = Infinity;
+      cards.forEach((card, i) => {
+        if (!Number.isFinite(card.offsetLeft) || !Number.isFinite(card.offsetWidth)) return;
+        const d = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
+        if (d < distance) {
+          distance = d;
+          nearest = i;
+        }
+      });
+      setActive(nearest);
+    });
+    scrollTo(recommendedIndex(entries), false);
+  }
+  function renderPreview(container, entries, onOpen) {
+    const section = document.createElement("section");
+    section.className = "pc-preview-layout";
+    const menu = document.createElement("div");
+    menu.className = "pc-preview-menu";
+    menu.setAttribute("aria-label", "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
+    const detail = document.createElement("div");
+    detail.className = "pc-preview-detail";
+    section.append(menu, detail);
+    container.appendChild(section);
+    const items = [];
+    let selected = -1;
+    function show(index) {
+      if (selected === index) return;
+      selected = index;
+      items.forEach((item2, i) => {
+        item2.classList.toggle("is-active", i === selected);
+        item2.setAttribute("aria-pressed", String(i === selected));
+      });
+      const entry = entries[selected];
+      detail.innerHTML = "";
+      const card = document.createElement("div");
+      card.className = `pc-preview-card${entry.complete ? " pc-complete" : ""}`;
+      card.appendChild(makeArt(entry));
+      const body = document.createElement("div");
+      body.className = "pc-preview-body";
+      body.appendChild(makeName(entry));
+      const desc = document.createElement("div");
+      desc.className = "pc-desc";
+      desc.textContent = entry.desc;
+      body.appendChild(desc);
+      body.appendChild(makeProgress(entry));
+      if (entry.hasFresh) {
+        const fresh = document.createElement("div");
+        fresh.className = "pc-preview-fresh";
+        fresh.textContent = "\u2726 \u0415\u0441\u0442\u044C \u043D\u043E\u0432\u044B\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438";
+        body.appendChild(fresh);
+      }
+      const open = document.createElement("button");
+      open.type = "button";
+      open.className = "primary pc-preview-open";
+      open.textContent = "\u041A \u0443\u0440\u043E\u0432\u043D\u044F\u043C \u2192";
+      open.addEventListener("click", () => onOpen(entry));
+      body.appendChild(open);
+      card.appendChild(body);
+      detail.appendChild(card);
+    }
+    entries.forEach((entry, i) => {
+      const item2 = document.createElement("button");
+      item2.type = "button";
+      item2.className = "pc-preview-item";
+      item2.setAttribute("aria-label", `${entry.name}. \u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E ${entry.done} \u0438\u0437 ${entry.total}`);
+      const icon = document.createElement("span");
+      icon.className = "pc-preview-item-icon";
+      icon.textContent = entry.icon;
+      const text = document.createElement("span");
+      text.className = "pc-preview-item-text";
+      const name = document.createElement("span");
+      name.className = "pc-preview-item-name";
+      name.textContent = entry.name;
+      text.append(name, makeProgressText(entry));
+      item2.append(icon, text);
+      if (entry.hasFresh) {
+        const dot = document.createElement("span");
+        dot.className = "pc-item-dot";
+        dot.setAttribute("aria-label", "\u0415\u0441\u0442\u044C \u043D\u043E\u0432\u044B\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438");
+        item2.appendChild(dot);
+      }
+      item2.addEventListener("pointerenter", () => show(i));
+      item2.addEventListener("focus", () => show(i));
+      item2.addEventListener("click", () => show(i));
+      items.push(item2);
+      menu.appendChild(item2);
+    });
+    show(recommendedIndex(entries));
+  }
+  function renderAccordion(container, entries, onOpen) {
+    const list = document.createElement("section");
+    list.className = "pc-accordion";
+    const rows = [];
+    let opened = recommendedIndex(entries);
+    function sync() {
+      rows.forEach((row, i) => {
+        const isOpen = i === opened;
+        row.item.classList.toggle("is-open", isOpen);
+        row.header.setAttribute("aria-expanded", String(isOpen));
+        row.reveal.setAttribute("aria-hidden", String(!isOpen));
+        row.open.tabIndex = isOpen ? 0 : -1;
+      });
+    }
+    entries.forEach((entry, i) => {
+      const item2 = document.createElement("article");
+      item2.className = `pc-accordion-item${entry.complete ? " pc-complete" : ""}`;
+      const header2 = document.createElement("button");
+      header2.type = "button";
+      header2.className = "pc-accordion-header";
+      header2.setAttribute("aria-controls", `pc-accordion-${entry.mech}`);
+      header2.appendChild(makeArt(entry, "pc-accordion-thumb"));
+      const text = document.createElement("span");
+      text.className = "pc-accordion-text";
+      text.append(makeName(entry), makeProgressText(entry));
+      if (entry.hasFresh) text.appendChild(makeFreshBadge());
+      const chevron = document.createElement("span");
+      chevron.className = "pc-accordion-chevron";
+      chevron.textContent = "\u2304";
+      header2.append(text, chevron);
+      header2.addEventListener("click", () => {
+        opened = opened === i ? -1 : i;
+        sync();
+      });
+      const reveal = document.createElement("div");
+      reveal.className = "pc-accordion-reveal";
+      reveal.id = `pc-accordion-${entry.mech}`;
+      const inner = document.createElement("div");
+      inner.className = "pc-accordion-inner";
+      const content = document.createElement("div");
+      content.className = "pc-accordion-content";
+      content.appendChild(makeArt(entry));
+      const body = document.createElement("div");
+      body.className = "pc-accordion-body";
+      const desc = document.createElement("div");
+      desc.className = "pc-desc";
+      desc.textContent = entry.desc;
+      body.appendChild(desc);
+      body.appendChild(makeProgress(entry));
+      const open = document.createElement("button");
+      open.type = "button";
+      open.className = "primary pc-accordion-open";
+      open.textContent = "\u041A \u0443\u0440\u043E\u0432\u043D\u044F\u043C \u2192";
+      open.addEventListener("click", () => onOpen(entry));
+      body.appendChild(open);
+      content.appendChild(body);
+      inner.appendChild(content);
+      reveal.appendChild(inner);
+      item2.append(header2, reveal);
+      list.appendChild(item2);
+      rows.push({ item: item2, header: header2, reveal, open });
+    });
+    container.appendChild(list);
+    sync();
+  }
+  var BENTO_FILTERS = [
+    { id: "all", name: "\u0412\u0441\u0435", match: () => true },
+    { id: "fresh", name: "\u041D\u043E\u0432\u044B\u0435", match: (e) => e.hasFresh },
+    { id: "progress", name: "\u0412 \u043F\u0440\u043E\u0446\u0435\u0441\u0441\u0435", match: (e) => e.done > 0 && !e.complete },
+    { id: "complete", name: "\u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043D\u044B\u0435", match: (e) => e.complete }
+  ];
+  function renderBento(container, entries, onOpen) {
+    const section = document.createElement("section");
+    section.className = "pc-bento";
+    const filters = document.createElement("div");
+    filters.className = "pc-bento-filters";
+    filters.setAttribute("role", "group");
+    filters.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
+    const grid = document.createElement("div");
+    grid.className = "pc-bento-grid";
+    const empty = document.createElement("div");
+    empty.className = "muted pc-bento-empty";
+    empty.textContent = "\u0417\u0434\u0435\u0441\u044C \u043F\u043E\u043A\u0430 \u043F\u0443\u0441\u0442\u043E. \u0412\u044B\u0431\u0435\u0440\u0438 \u0434\u0440\u0443\u0433\u043E\u0439 \u0444\u0438\u043B\u044C\u0442\u0440.";
+    empty.hidden = true;
+    const featured = recommendedIndex(entries);
+    const cards = entries.map((entry) => makeCard(entry, "pc-bento-card", onOpen, true));
+    cards.forEach((card) => grid.appendChild(card));
+    section.append(filters, grid, empty);
+    container.appendChild(section);
+    let current = "all";
+    const filterButtons = [];
+    function applyFilter(id) {
+      current = id;
+      const filter = BENTO_FILTERS.find((f) => f.id === current);
+      let visible = 0;
+      cards.forEach((card, i) => {
+        const show = filter.match(entries[i]);
+        card.hidden = !show;
+        card.classList.toggle("is-featured", current === "all" && i === featured);
+        if (show) visible += 1;
+      });
+      empty.hidden = visible > 0;
+      for (const b of filterButtons) {
+        const active = b.dataset.filter === current;
+        b.className = `small pc-bento-filter${active ? " primary is-active" : " ghost"}`;
+        b.setAttribute("aria-pressed", String(active));
+      }
+    }
+    for (const filter of BENTO_FILTERS) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.filter = filter.id;
+      b.textContent = filter.name;
+      b.addEventListener("click", () => applyFilter(filter.id));
+      filterButtons.push(b);
+      filters.appendChild(b);
+    }
+    applyFilter("all");
+  }
+  function renderPuzzleCatalog(container, ctx2, types, onSelect) {
+    const entries = catalogEntries(types, ctx2.state);
+    const onOpen = (entry) => {
+      ctx2.sfx?.("tap");
+      onSelect(entry.mech);
+    };
+    const mode = currentPuzzleCatalogMode(ctx2.state);
+    if (mode === "preview") renderPreview(container, entries, onOpen);
+    else if (mode === "accordion") renderAccordion(container, entries, onOpen);
+    else if (mode === "bento") renderBento(container, entries, onOpen);
+    else renderShelf(container, entries, onOpen);
+  }
+
   // src/ui/puzzleView.js
   var PUZZLE_TYPES = [
     { mech: "mirror", name: "\u0421\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438", icon: "\u{1FA9E}", desc: "\u0417\u0435\u0440\u043A\u0430\u043B\u0430 \u0438 \u043B\u0443\u0447\u0438 \u0441\u0432\u0435\u0442\u0430" },
@@ -22055,51 +22481,32 @@
     { mech: "fate", name: "\u041A\u0430\u0440\u0442\u044B \u0441\u0443\u0434\u044C\u0431\u044B", icon: "\u{1F52E}", desc: "\u0420\u0430\u0441\u043A\u043B\u0430\u0434 \u0434\u043B\u044F \u0433\u043E\u0441\u0442\u0435\u0439 \u043B\u0430\u0432\u043A\u0438" },
     { mech: "glass", name: "\u0412\u0438\u0442\u0440\u0430\u0436 \u043C\u0438\u0440\u043E\u0432", icon: "\u{1FA9F}", desc: "\u0421\u043E\u0431\u0435\u0440\u0438 \u0440\u0430\u0437\u0431\u0438\u0442\u0443\u044E \u043A\u0430\u0440\u0442\u0438\u043D\u0443 \u043C\u0438\u0440\u0430" }
   ];
-  function typeOf(p) {
+  function typeOf2(p) {
     return p.mechanic || "mirror";
   }
   function renderPuzzleList(container, ctx2, params) {
     if (params?.mech && PUZZLE_TYPES.some((t) => t.mech === params.mech)) {
       return renderPuzzleTypeList(container, ctx2, params.mech);
     }
-    const { state: state2 } = ctx2;
     container.appendChild(header(ctx2, "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u043B\u0430\u0432\u043A\u0438", "\u0412\u044B\u0431\u0435\u0440\u0438 \u043F\u043E\u043B\u043A\u0443 \u0441 \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C\u0438"));
-    const grid = document.createElement("div");
-    grid.className = "pc-grid";
-    for (const t of PUZZLE_TYPES) {
-      const items = ALL_PUZZLES.filter((p) => typeOf(p) === t.mech);
-      const done = items.filter((p) => state2.puzzlesDone[p.id]).length;
-      const hasFresh = items.some((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
-      const card = document.createElement("div");
-      card.className = "pc-card" + (done === items.length ? " pc-complete" : "");
-      const fallback = document.createElement("div");
-      fallback.className = "pc-fallback";
-      fallback.textContent = t.icon;
-      card.appendChild(fallback);
-      const img = document.createElement("img");
-      img.className = "pc-art";
-      img.alt = t.name;
-      img.addEventListener("error", () => img.remove());
-      img.src = `assets/puzzle_cards/pc_${t.mech}_web.jpg`;
-      card.appendChild(img);
-      const body = document.createElement("div");
-      body.className = "pc-body";
-      body.innerHTML = `<div class="pc-name">${t.icon} ${t.name}</div>
-      <div class="pc-progress">\u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E <b>${done}</b> \u0438\u0437 ${items.length}</div>`;
-      card.appendChild(body);
-      if (hasFresh) {
-        const dot = document.createElement("span");
-        dot.className = "hs-dot pc-dot";
-        card.appendChild(dot);
-      }
-      card.addEventListener("click", () => {
-        ctx2.sfx?.("tap");
-        container.innerHTML = "";
-        renderPuzzleTypeList(container, ctx2, t.mech);
-      });
-      grid.appendChild(card);
-    }
-    container.appendChild(grid);
+    const layoutPanel = document.createElement("div");
+    layoutPanel.className = "panel pc-layout-panel";
+    const layoutLabel = document.createElement("div");
+    layoutLabel.className = "pc-layout-label";
+    layoutLabel.textContent = "\u0412\u0438\u0434 \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0430";
+    const catalogHost = document.createElement("div");
+    catalogHost.className = "pc-catalog-host";
+    const openType = (mech) => {
+      container.innerHTML = "";
+      renderPuzzleTypeList(container, ctx2, mech);
+    };
+    const renderCatalog = () => {
+      catalogHost.innerHTML = "";
+      renderPuzzleCatalog(catalogHost, ctx2, PUZZLE_TYPES, openType);
+    };
+    layoutPanel.append(layoutLabel, createPuzzleCatalogModePicker(ctx2, renderCatalog));
+    container.append(layoutPanel, catalogHost);
+    renderCatalog();
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F4D6}", label: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", screen: "brewbook" },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
@@ -22108,7 +22515,7 @@
   function renderPuzzleTypeList(container, ctx2, mech) {
     const { state: state2 } = ctx2;
     const t = PUZZLE_TYPES.find((x) => x.mech === mech);
-    const items = ALL_PUZZLES.filter((p) => typeOf(p) === mech);
+    const items = ALL_PUZZLES.filter((p) => typeOf2(p) === mech);
     container.appendChild(header(ctx2, `${t.icon} ${t.name}`, t.desc, "puzzles"));
     const firstUnsolved = items.find((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
     const list = document.createElement("div");
@@ -22202,7 +22609,7 @@
     let hintsUsed = 0;
     let hintCell = null;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: typeOf(level) }]));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: typeOf2(level) }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap";
     const canvasBox = document.createElement("div");
@@ -24355,6 +24762,13 @@ ${item2.description}
     puzzleTitle.textContent = "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438";
     puzzleTitle.style.marginTop = "16px";
     panel.appendChild(puzzleTitle);
+    const catalogBox = document.createElement("div");
+    catalogBox.className = "pc-settings-catalog";
+    const catalogLabel = document.createElement("div");
+    catalogLabel.className = "pc-layout-label";
+    catalogLabel.textContent = "\u0412\u0438\u0434 \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0430 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A";
+    catalogBox.append(catalogLabel, createPuzzleCatalogModePicker(ctx2));
+    panel.appendChild(catalogBox);
     const brewBtn = document.createElement("button");
     const brewBtnText = () => state2.settings.keepBookOpen ? "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439: \u0440\u0435\u0446\u0435\u043F\u0442 \u0432\u0441\u0435\u0433\u0434\u0430 \u043E\u0442\u043A\u0440\u044B\u0442" : "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439: \u0440\u0435\u0446\u0435\u043F\u0442 \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438";
     brewBtn.textContent = brewBtnText();
