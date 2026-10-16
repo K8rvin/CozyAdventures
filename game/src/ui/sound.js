@@ -84,6 +84,29 @@ export function sfx(name, step = 0) {
     case 'tap': tone(520, 0.08, { type: 'triangle', gain: 0.05 }); break;
     case 'rotate': tone(440, 0.07, { type: 'triangle', gain: 0.06, slide: 160 }); break;
     case 'hint': tone(660, 0.15, { type: 'sine', gain: 0.05 }); tone(880, 0.2, { delay: 0.1, gain: 0.04 }); break;
+    // --- Загадка Хранителя: дерево, перо и чернила ---
+    case 'riddleKey': // мягкий стук деревянной клавиши с небольшой естественной разницей
+      tone(175 + Math.random() * 30, 0.055, { type: 'triangle', gain: 0.035, slide: -30 });
+      noiseBurst(0.035, { freq: 900, gain: 0.018 });
+      break;
+    case 'riddleWrite': // короткий шелест пера следом за клавишей
+      noiseBurst(0.1, { freq: 3300, q: 0.7, gain: 0.016, delay: 0.035 });
+      break;
+    case 'riddleErase': // размытие ещё не высохших чернил
+      noiseBurst(0.13, { freq: 1500, q: 0.7, gain: 0.02 });
+      break;
+    case 'riddleExact': {
+      const f = 590 + (step % 5) * 32;
+      tone(f, 0.14, { gain: 0.026 });
+      tone(f * 1.25, 0.18, { delay: 0.045, gain: 0.018 });
+      break;
+    }
+    case 'riddlePresent':
+      tone(440 + (step % 4) * 30, 0.13, { type: 'triangle', gain: 0.022 });
+      break;
+    case 'riddleAbsent':
+      tone(220, 0.09, { type: 'sine', gain: 0.016, slide: -25 });
+      break;
     case 'fateExact': {
       // Тёплая восходящая терция; высота мягко растёт от позиции к позиции
       const notes = [523.25, 587.33, 659.25, 783.99];

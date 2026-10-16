@@ -17017,6 +17017,9 @@
   var MISTAKE_STEP = 0.1;
   var MIN_FACTOR = 0.5;
   var ALPHABET = "\u0410\u0411\u0412\u0413\u0414\u0415\u0401\u0416\u0417\u0418\u0419\u041A\u041B\u041C\u041D\u041E\u041F\u0420\u0421\u0422\u0423\u0424\u0425\u0426\u0427\u0428\u0429\u042A\u042B\u042C\u042D\u042E\u042F".split("");
+  function canonLetter(ch) {
+    return ch === "\u0401" ? "\u0415" : ch;
+  }
   function answerLetters(level) {
     return level.answer.replaceAll("\u2726", "").split("");
   }
@@ -17033,10 +17036,11 @@
     };
   }
   function placeLetter(state2, letter) {
-    if (!ALPHABET.includes(letter)) return false;
+    const canon = canonLetter(letter);
+    if (!ALPHABET.includes(canon)) return false;
     const slot = state2.slots.indexOf(null);
     if (slot < 0) return false;
-    state2.slots[slot] = letter;
+    state2.slots[slot] = canon;
     state2.history.push({ kind: "place", slot });
     state2.moves += 1;
     return true;
@@ -17065,28 +17069,33 @@
     return state2.slots.every(Boolean);
   }
   function isRiddleSolved(state2) {
-    return isFull(state2) && state2.slots.join("") === answerLetters(state2.level).join("");
+    const target = answerLetters(state2.level);
+    return isFull(state2) && state2.slots.every((ch, i) => canonLetter(ch) === canonLetter(target[i]));
   }
   function markAttempt(level, letters) {
-    const target = answerLetters(level);
+    const target = answerLetters(level).map(canonLetter);
+    const guess = letters.map(canonLetter);
     const marks = Array(letters.length).fill("absent");
     const rest = {};
-    for (let i = 0; i < letters.length; i++) {
-      if (letters[i] === target[i]) marks[i] = "exact";
+    for (let i = 0; i < guess.length; i++) {
+      if (guess[i] === target[i]) marks[i] = "exact";
       else rest[target[i]] = (rest[target[i]] || 0) + 1;
     }
-    for (let i = 0; i < letters.length; i++) {
+    for (let i = 0; i < guess.length; i++) {
       if (marks[i] === "exact") continue;
-      if (rest[letters[i]] > 0) {
+      if (rest[guess[i]] > 0) {
         marks[i] = "present";
-        rest[letters[i]] -= 1;
+        rest[guess[i]] -= 1;
       }
     }
     return marks;
   }
   function submitRiddle(state2) {
     if (!isFull(state2)) return null;
-    if (isRiddleSolved(state2)) return { solved: true };
+    if (isRiddleSolved(state2)) {
+      state2.slots = answerLetters(state2.level);
+      return { solved: true };
+    }
     const letters = [...state2.slots];
     const marks = markAttempt(state2.level, letters);
     state2.attempts.push({ letters, marks });
@@ -17100,8 +17109,9 @@
     const best = {};
     for (const att of state2.attempts) {
       att.letters.forEach((letter, i) => {
+        const key = canonLetter(letter);
         const m = att.marks[i];
-        if (!best[letter] || rank[m] > rank[best[letter]]) best[letter] = m;
+        if (!best[key] || rank[m] > rank[best[key]]) best[key] = m;
       });
     }
     return best;
@@ -17122,46 +17132,230 @@
     return h;
   }
 
+  // src/data/riddleChapters.js
+  var RIDDLE_CHAPTERS = [
+    {
+      theme: "dawn",
+      name: "\u041F\u0435\u0440\u0432\u044B\u0435 \u0447\u0435\u0440\u043D\u0438\u043B\u0430",
+      icon: "\u263C",
+      ornament: "\u2766",
+      catPose: "alert",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u0443\u044E \u0433\u043B\u0430\u0432\u0443 \u0438 \u0440\u0430\u0437\u0433\u043B\u0430\u0436\u0438\u0432\u0430\u0435\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u043B\u0430\u043F\u043E\u0439."
+    },
+    {
+      theme: "rain",
+      name: "\u0414\u043E\u0436\u0434\u044C \u0437\u0430 \u043E\u043A\u043D\u043E\u043C",
+      icon: "\u2571",
+      ornament: "\u2571 \u2571 \u2571",
+      catPose: "right",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u0417\u0430 \u043E\u043A\u043D\u043E\u043C \u0448\u0443\u043C\u0438\u0442 \u0434\u043E\u0436\u0434\u044C, \u0430 \u043A\u043E\u0442 \u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u043D\u0430 \u0442\u0451\u043C\u043D\u043E\u0435 \u0441\u0442\u0435\u043A\u043B\u043E."
+    },
+    {
+      theme: "herbs",
+      name: "\u0422\u0440\u0430\u0432\u044F\u043D\u043E\u0439 \u043F\u043E\u043B\u0434\u0435\u043D\u044C",
+      icon: "\u2767",
+      ornament: "\u2767 \u2767",
+      catPose: "left",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u0420\u044F\u0434\u043E\u043C \u0441\u043E \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435\u0439 \u043F\u0430\u0445\u043D\u0435\u0442 \u0441\u0443\u0445\u0438\u043C\u0438 \u0442\u0440\u0430\u0432\u0430\u043C\u0438 \u0438 \u043B\u0435\u0442\u043E\u043C."
+    },
+    {
+      theme: "amber",
+      name: "\u041E\u0441\u0435\u043D\u043D\u0438\u0435 \u0447\u0435\u0440\u043D\u0438\u043B\u0430",
+      icon: "\u25C6",
+      ornament: "\u2766",
+      catPose: "close",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0441\u0443\u0445\u0438\u043C\u0438 \u043B\u0438\u0441\u0442\u044C\u044F\u043C\u0438; \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043E\u0441\u043E\u0431\u0435\u043D\u043D\u043E \u0442\u0438\u0445."
+    },
+    {
+      theme: "frost",
+      name: "\u0417\u0438\u043C\u043D\u0438\u0435 \u0443\u0437\u043E\u0440\u044B",
+      icon: "\u2744",
+      ornament: "\u2744 \u2744",
+      catPose: "close",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u041C\u043E\u0440\u043E\u0437 \u0440\u0438\u0441\u0443\u0435\u0442 \u043D\u0430 \u0441\u0442\u0435\u043A\u043B\u0435, \u0430 \u043A\u043E\u0442 \u0433\u0440\u0435\u0435\u0442 \u043B\u0430\u043F\u044B \u0443 \u0441\u0432\u0435\u0447\u0438."
+    },
+    {
+      theme: "dawn",
+      name: "\u0420\u0430\u0441\u0441\u0432\u0435\u0442\u043D\u0430\u044F \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430",
+      icon: "\u263C",
+      ornament: "\u2726 \u2766",
+      catPose: "right",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u0421\u0432\u0435\u0442 \u043F\u043E\u043B\u0437\u0451\u0442 \u043F\u043E \u043A\u043E\u0440\u0435\u0448\u043A\u0430\u043C \u043A\u043D\u0438\u0433: \u043D\u043E\u0432\u0430\u044F \u0433\u043B\u0430\u0432\u0430 \u0443\u0436\u0435 \u0436\u0434\u0451\u0442."
+    },
+    {
+      theme: "rain",
+      name: "\u0428\u0451\u043F\u043E\u0442 \u0441\u0442\u0435\u043A\u043B\u0430",
+      icon: "\u2571",
+      ornament: "\u2571 \u2571 \u2571",
+      catPose: "close",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u041A\u0430\u043F\u043B\u0438 \u0441\u0442\u0443\u0447\u0430\u0442 \u043F\u043E \u0441\u0442\u0435\u043A\u043B\u0443 \u0432 \u0442\u0430\u043A\u0442 \u043E\u0441\u0442\u043E\u0440\u043E\u0436\u043D\u044B\u043C \u0431\u0443\u043A\u0432\u0430\u043C."
+    },
+    {
+      theme: "herbs",
+      name: "\u0410\u0440\u043E\u043C\u0430\u0442 \u043B\u0435\u0442\u0430",
+      icon: "\u2767",
+      ornament: "\u2767 \u2766",
+      catPose: "left",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u041A\u043E\u0442 \u043F\u0440\u0438\u043D\u0451\u0441 \u043D\u0430 \u0441\u0442\u043E\u043B \u0441\u0432\u0435\u0436\u0438\u0439 \u043B\u0438\u0441\u0442\u043E\u043A \u0438 \u043F\u0443\u0447\u043E\u043A \u0434\u0443\u0448\u0438\u0441\u0442\u044B\u0445 \u0442\u0440\u0430\u0432."
+    },
+    {
+      theme: "amber",
+      name: "\u0417\u043E\u043B\u043E\u0442\u0430\u044F \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430",
+      icon: "\u25C6",
+      ornament: "\u25C6 \u2766",
+      catPose: "alert",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u041F\u043E\u0437\u0434\u043D\u0438\u0439 \u0441\u0432\u0435\u0442 \u0434\u0435\u043B\u0430\u0435\u0442 \u0447\u0435\u0440\u043D\u0438\u043B\u0430 \u043F\u043E\u0447\u0442\u0438 \u0437\u043E\u043B\u043E\u0442\u044B\u043C\u0438."
+    },
+    {
+      theme: "frost",
+      name: "\u0421\u0435\u0432\u0435\u0440\u043D\u0430\u044F \u0441\u043A\u0430\u0437\u043A\u0430",
+      icon: "\u2744",
+      ornament: "\u2744 \u2726",
+      catPose: "alert",
+      catArt: "assets/fate/guest_cat_web.jpg",
+      greeting: "\u0417\u0430 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0433\u043B\u0430\u0432\u043E\u0439 \u2014 \u0442\u0438\u0448\u0438\u043D\u0430 \u0441\u043D\u0435\u0433\u0430 \u0438 \u0442\u0451\u043F\u043B\u043E\u0435 \u043C\u0443\u0440\u043B\u044B\u043A\u0430\u043D\u0438\u0435."
+    }
+  ];
+  var RIDDLE_INDEX = new Map(
+    BOOK_PUZZLES.filter((p) => p.mechanic === "riddle").map((p, i) => [p.id, i])
+  );
+  function riddleChapter(level) {
+    const index = RIDDLE_INDEX.get(level.id) ?? 0;
+    const chapterIndex = Math.floor(index / 10);
+    const chapter = RIDDLE_CHAPTERS[chapterIndex] || RIDDLE_CHAPTERS[0];
+    return {
+      ...chapter,
+      number: chapterIndex + 1,
+      levelInChapter: index % 10 + 1,
+      finale: index % 10 === 9
+    };
+  }
+
   // src/ui/riddleView.js
+  var VERDICT_STEP_MS = 110;
+  var VERDICT_SFX = {
+    exact: "riddleExact",
+    present: "riddlePresent",
+    absent: "riddleAbsent"
+  };
+  var KEEPER_REACTIONS = {
+    exact: [
+      "\u041C\u0443\u0440\u2026 \u043D\u0435\u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0431\u0443\u043A\u0432\u044B \u0443\u0436\u0435 \u0441\u0438\u0434\u044F\u0442 \u0432\u0435\u0440\u043D\u043E. \u0418\u0445 \u0442\u0451\u043F\u043B\u044B\u0439 \u0441\u043B\u0435\u0434 \u043F\u043E\u043C\u043E\u0436\u0435\u0442 \u0441 \u043D\u043E\u0432\u043E\u0439 \u043F\u043E\u043F\u044B\u0442\u043A\u043E\u0439.",
+      "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043C\u044F\u0433\u043A\u043E \u0441\u0442\u0443\u0447\u0438\u0442 \u043B\u0430\u043F\u043E\u0439 \u043F\u043E \u043F\u043E\u043B\u044F\u043C: \u0432\u0435\u0440\u043D\u044B\u0435 \u043C\u0435\u0441\u0442\u0430 \u0443\u0436\u0435 \u043F\u0440\u043E\u0441\u0442\u0443\u043F\u0438\u043B\u0438. \u041E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435 \u2014 \u0434\u0435\u043B\u043E \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439 \u0441\u0442\u0440\u043E\u043A\u0438.",
+      "\u041A\u043E\u0442 \u0441\u043A\u043B\u043E\u043D\u044F\u0435\u0442 \u0433\u043E\u043B\u043E\u0432\u0443: \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0431\u0443\u043A\u0432 \u043F\u0440\u0438\u0448\u043B\u0438 \u043F\u0440\u044F\u043C\u043E \u0434\u043E\u043C\u043E\u0439. \u0411\u0435\u0440\u0435\u0436\u0451\u043C \u0438\u0445 \u0438 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0435\u043C."
+    ],
+    present: [
+      "\u042D\u0442\u0438 \u0431\u0443\u043A\u0432\u044B \u0437\u043D\u0430\u043A\u043E\u043C\u044B \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435, \u043D\u043E \u043D\u0435\u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0437\u0430\u0431\u043B\u0443\u0434\u0438\u043B\u0438\u0441\u044C. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439 \u043F\u043E\u043C\u0435\u043D\u044F\u0442\u044C \u0438\u043C \u043C\u0435\u0441\u0442\u0430.",
+      "\u041C\u0443\u0440\u2026 \u0431\u0443\u043A\u0432\u044B \u0442\u0435, \u0434\u0430 \u0434\u043E\u0440\u043E\u0436\u043A\u0438 \u043F\u0435\u0440\u0435\u043F\u0443\u0442\u0430\u043B\u0438. \u041F\u0443\u0441\u0442\u044C \u043F\u043E\u0431\u0440\u043E\u0434\u044F\u0442 \u043F\u043E \u0441\u0442\u0440\u043E\u043A\u0435 \u0438 \u043D\u0430\u0439\u0434\u0443\u0442 \u0441\u0432\u043E\u0438 \u043C\u0435\u0441\u0442\u0430.",
+      "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u0440\u0438\u043D\u044E\u0445\u0430\u043B\u0441\u044F \u043A \u0447\u0435\u0440\u043D\u0438\u043B\u0430\u043C: \u043D\u0443\u0436\u043D\u044B\u0435 \u0431\u0443\u043A\u0432\u044B \u0437\u0434\u0435\u0441\u044C, \u043D\u043E \u0441\u043B\u043E\u0432\u043E \u043F\u043E\u043A\u0430 \u043D\u0435 \u0441\u043B\u043E\u0436\u0438\u043B\u043E\u0441\u044C."
+    ],
+    absent: [
+      "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0441\u043C\u043E\u0440\u0433\u043D\u0443\u043B\u0430 \u043A\u043B\u044F\u043A\u0441\u043E\u0439: \u0442\u0430\u043A\u043E\u0433\u043E \u0441\u043B\u043E\u0432\u0430 \u043E\u043D\u0430 \u043D\u0435 \u0437\u043D\u0430\u0435\u0442. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0435\u043C \u0434\u0440\u0443\u0433\u043E\u0435.",
+      "\u041A\u043E\u0442 \u0430\u043A\u043A\u0443\u0440\u0430\u0442\u043D\u043E \u043F\u0440\u0438\u043A\u0440\u044B\u043B \u0441\u0442\u0440\u043E\u043A\u0443 \u043B\u0430\u043F\u043E\u0439. \u041D\u0435 \u0442\u043E \u0441\u043B\u043E\u0432\u043E \u2014 \u0437\u0430\u0442\u043E \u0442\u0435\u043F\u0435\u0440\u044C \u043C\u044B \u0437\u043D\u0430\u0435\u043C, \u043A\u0443\u0434\u0430 \u043D\u0435 \u0441\u0442\u043E\u0438\u0442 \u0438\u0434\u0442\u0438.",
+      "\u041C\u0443\u0440\u2026 \u044D\u0442\u0438 \u0431\u0443\u043A\u0432\u044B \u0441\u0435\u0433\u043E\u0434\u043D\u044F \u043D\u0435 \u043F\u0440\u0438\u0448\u043B\u0438 \u043D\u0430 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443. \u0421\u043E\u0442\u0440\u0451\u043C \u0441\u043E\u043C\u043D\u0435\u043D\u0438\u044F \u0438 \u043F\u043E\u0437\u043E\u0432\u0451\u043C \u0434\u0440\u0443\u0433\u0438\u0435."
+    ]
+  };
+  var HINT_REACTIONS = [
+    (slot, letter) => `\u041C\u0443\u0440\u2026 \u043D\u0430 \u043C\u0435\u0441\u0442\u043E ${slot + 1} \u043B\u043E\u0436\u0438\u0442\u0441\u044F \xAB${letter}\xBB. \u041F\u0435\u0440\u043E \u0432\u0441\u0451 \u0437\u0430\u043F\u0438\u0448\u0435\u0442.`,
+    (slot, letter) => `\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0434\u0432\u043E\u0434\u0438\u0442 \u043F\u0435\u0440\u043E \u043A \u043E\u043A\u043E\u0448\u043A\u0443 ${slot + 1}: \u0437\u0434\u0435\u0441\u044C \u0434\u043E\u043B\u0436\u043D\u0430 \u0431\u044B\u0442\u044C \xAB${letter}\xBB.`,
+    (slot, letter) => `\u041A\u043E\u0442 \u0448\u0435\u043F\u0447\u0435\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435, \u0438 \u043D\u0430\u0434 \u043C\u0435\u0441\u0442\u043E\u043C ${slot + 1} \u043F\u0440\u043E\u0441\u0442\u0443\u043F\u0430\u0435\u0442 \xAB${letter}\xBB.`
+  ];
   function renderRiddlePuzzle(container, ctx2, level) {
     const puzzle = createRiddlePuzzle(level);
+    const chapter = riddleChapter(level);
     let hintsUsed = 0;
     let finished = false;
-    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: level.mechanic || "mirror" }]));
+    let checking = false;
+    let disposed = false;
+    let lastInkSlot = null;
+    let lastErasedSlot = null;
+    let currentSlotEls = [];
+    let keyEls = /* @__PURE__ */ new Map();
+    let reactionSerial = 0;
+    let quillSerial = 0;
+    let quillAvailable = true;
+    const reactionCounts = { exact: 0, present: 0, absent: 0 };
+    const timers = [];
+    const subtitle = `\u0413\u043B\u0430\u0432\u0430 ${chapter.number}: ${chapter.name} \xB7 ${chapter.levelInChapter}/10 \xB7 \u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}${chapter.finale ? " \u2726" : ""}`;
+    container.appendChild(header(ctx2, level.name, subtitle, ["puzzles", { mech: level.mechanic || "mirror" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap hang-wrap";
     const pageBox = document.createElement("div");
-    pageBox.className = "puzzle-canvas-box";
+    pageBox.className = "puzzle-canvas-box riddle-stage";
     const page = document.createElement("div");
     page.className = "riddle-page";
+    page.classList.add(`riddle-theme-${chapter.theme}`);
+    if (chapter.finale) page.classList.add("riddle-finale");
     pageBox.appendChild(page);
+    const quillImg = document.createElement("img");
+    quillImg.className = "riddle-quill";
+    quillImg.alt = "";
+    quillImg.src = "assets/trophies/tro_keeper_quill.png";
+    quillImg.addEventListener("error", () => {
+      quillAvailable = false;
+      quillImg.remove();
+    });
+    pageBox.appendChild(quillImg);
     wrap.appendChild(pageBox);
     const side = document.createElement("div");
     side.className = "puzzle-side";
-    const intro = document.createElement("div");
-    intro.className = "intro-text";
-    intro.textContent = level.intro;
-    side.appendChild(intro);
+    const keeper = document.createElement("div");
+    keeper.className = "riddle-keeper";
+    keeper.classList.add(`riddle-cat-${chapter.catPose}`);
+    const portrait = document.createElement("div");
+    portrait.className = "riddle-keeper-portrait";
+    const keeperImg = document.createElement("img");
+    keeperImg.className = "riddle-keeper-art";
+    keeperImg.alt = "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C";
+    keeperImg.src = chapter.catArt;
+    keeperImg.addEventListener("error", () => {
+      keeperImg.remove();
+      const fallback = document.createElement("span");
+      fallback.className = "riddle-keeper-fallback";
+      fallback.textContent = "\u{1F408}";
+      portrait.appendChild(fallback);
+    });
+    portrait.appendChild(keeperImg);
+    const keeperText = document.createElement("div");
+    keeperText.className = "intro-text riddle-keeper-text";
+    const finaleNote = chapter.finale ? " \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0443\u0436\u0435 \u0433\u043E\u0442\u043E\u0432\u0438\u0442 \u0441\u0443\u0440\u0433\u0443\u0447\u043D\u0443\u044E \u043F\u0435\u0447\u0430\u0442\u044C." : "";
+    keeperText.textContent = `${level.intro} ${chapter.greeting}${finaleNote}`;
+    keeperText.setAttribute("aria-live", "polite");
+    keeper.append(portrait, keeperText);
+    side.appendChild(keeper);
     const statusEl = document.createElement("div");
     statusEl.className = "puzzle-status";
     side.appendChild(statusEl);
-    const legend = document.createElement("div");
-    legend.className = "panel";
-    legend.style.padding = "10px 14px";
-    legend.innerHTML = `<div class="desc" style="line-height:1.8">
+    const legend = document.createElement("details");
+    legend.className = "panel riddle-rules";
+    legend.open = level.id === "bk_01" && !ctx2.state.puzzlesDone?.[level.id];
+    legend.innerHTML = `<summary>\u041A\u0430\u043A \u0438\u0433\u0440\u0430\u0442\u044C</summary><div class="desc" style="line-height:1.8">
     \u0422\u0430\u043F\u0430\u0439 \u0431\u0443\u043A\u0432\u044B (\u043C\u043E\u0436\u043D\u043E \u0438 \u0441 \u043A\u043B\u0430\u0432\u0438\u0430\u0442\u0443\u0440\u044B) \u2014 \u043E\u043D\u0438 \u0432\u0441\u0442\u0430\u043D\u0443\u0442 \u0432 \u043E\u043A\u043E\u0448\u043A\u0438 \u043E\u0442\u0432\u0435\u0442\u0430. \u0422\u0430\u043F \u043F\u043E \u043E\u043A\u043E\u0448\u043A\u0443 \u0443\u0431\u0438\u0440\u0430\u0435\u0442 \u0431\u0443\u043A\u0432\u0443.<br>
+    \u0415 \u0438 \u0401 \u2014 \u043E\u0434\u043D\u0430 \u043A\u043B\u0430\u0432\u0438\u0448\u0430; \u043F\u0440\u0438 \u043F\u043E\u0431\u0435\u0434\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043F\u043E\u043A\u0430\u0436\u0435\u0442 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E\u0435 \u043D\u0430\u043F\u0438\u0441\u0430\u043D\u0438\u0435.<br>
     \u0417\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0440\u043E\u043A\u0430 \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u0442\u0441\u044F: <span class="lg-exact">\u0431\u0443\u043A\u0432\u0430 \u043D\u0430 \u043C\u0435\u0441\u0442\u0435</span>,
     <span class="lg-present">\u0435\u0441\u0442\u044C \u0432 \u043E\u0442\u0432\u0435\u0442\u0435</span>, <span class="lg-absent">\u043D\u0435\u0442 \u0432 \u043E\u0442\u0432\u0435\u0442\u0435</span>.<br>
     ${FREE_MISTAKES} \u043E\u0448\u0438\u0431\u043E\u043A \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E, \u0434\u0430\u043B\u044C\u0448\u0435 \u2212${Math.round(MISTAKE_STEP * 100)}% \u043C\u043E\u043D\u0435\u0442 \u0437\u0430 \u043A\u0430\u0436\u0434\u0443\u044E.</div>`;
     side.appendChild(legend);
+    const drafts = document.createElement("div");
+    drafts.className = "panel riddle-drafts";
+    side.appendChild(drafts);
     const controls = document.createElement("div");
     controls.className = "puzzle-controls";
     controls.style.marginTop = "10px";
     const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
     const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
     const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
-    controls.append(btnUndo, btnHint, btnReset);
-    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
+    const btnSkip = puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level));
+    controls.append(btnUndo, btnHint, btnReset, btnSkip);
     side.appendChild(controls);
     wrap.appendChild(side);
     container.appendChild(wrap);
@@ -17171,60 +17365,164 @@
       b.addEventListener("click", fn);
       return b;
     }
+    function later(fn, ms) {
+      const timer = setTimeout(() => {
+        if (!disposed) fn();
+      }, ms);
+      timers.push(timer);
+      return timer;
+    }
+    function setChecking(value) {
+      checking = value;
+      page.classList.toggle("checking", checking);
+      for (const b of [btnUndo, btnHint, btnReset, btnSkip]) {
+        b.disabled = checking || finished;
+      }
+    }
+    function react(text) {
+      keeperText.textContent = text;
+      const serial = ++reactionSerial;
+      keeper.classList.add("is-speaking");
+      later(() => {
+        if (serial === reactionSerial) keeper.classList.remove("is-speaking");
+      }, 350);
+    }
+    function pulseKey(letter) {
+      const key = keyEls.get(letter);
+      if (!key) return;
+      key.classList.add("is-pressed");
+      later(() => key.classList.remove("is-pressed"), 130);
+    }
+    function animateQuill(slot) {
+      if (!quillAvailable) return;
+      const cell = currentSlotEls[slot];
+      if (!cell) return;
+      const stageRect = pageBox.getBoundingClientRect();
+      const cellRect = cell.getBoundingClientRect();
+      const left = cellRect.left - stageRect.left + cellRect.width / 2 - 8;
+      const top = cellRect.top - stageRect.top - 78;
+      quillImg.style.left = `${Math.max(2, left)}px`;
+      quillImg.style.top = `${Math.max(2, top)}px`;
+      const serial = ++quillSerial;
+      quillImg.classList.add("is-writing");
+      later(() => {
+        if (serial === quillSerial) quillImg.classList.remove("is-writing");
+      }, 380);
+    }
+    function showInkBlot() {
+      const blot = document.createElement("div");
+      blot.className = "riddle-ink-blot";
+      page.appendChild(blot);
+      later(() => blot.remove(), 850);
+    }
     function doUndo() {
-      if (finished) return;
+      if (finished || checking) return;
+      const last = puzzle.history[puzzle.history.length - 1];
       if (undoRiddle(puzzle)) {
-        ctx2.sfx?.("tap");
+        lastInkSlot = last?.kind === "remove" ? last.slot : null;
+        lastErasedSlot = last?.kind === "place" ? last.slot : null;
+        ctx2.sfx?.(last?.kind === "remove" ? "riddleWrite" : "riddleErase");
         renderAll();
+        if (last?.kind === "remove") animateQuill(last.slot);
       }
     }
     function doReset() {
-      if (finished) return;
+      if (finished || checking) return;
       resetRiddle(puzzle);
-      ctx2.sfx?.("tap");
+      lastInkSlot = null;
+      lastErasedSlot = null;
+      ctx2.sfx?.("riddleErase");
       renderAll();
     }
     function doHint() {
-      if (finished) return;
+      if (finished || checking) return;
       const h = applyRiddleHint(puzzle);
-      ctx2.sfx?.("hint");
       if (h) {
         hintsUsed += 1;
-        ctx2.toast(`\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0448\u0435\u043F\u0447\u0435\u0442: \u043D\u0430 \u043C\u0435\u0441\u0442\u043E ${h.slot + 1} \u043B\u043E\u0436\u0438\u0442\u0441\u044F \xAB${h.letter}\xBB`);
+        lastInkSlot = h.slot;
+        lastErasedSlot = null;
+        ctx2.sfx?.("hint");
+        const phrase = HINT_REACTIONS[(hintsUsed - 1) % HINT_REACTIONS.length];
+        react(phrase(h.slot, h.letter));
         renderAll();
+        animateQuill(h.slot);
         afterMove();
       } else {
-        ctx2.toast("\u0421\u0442\u0440\u043E\u043A\u0430 \u043F\u043E\u043B\u043D\u0430 \u2014 \u0440\u0435\u0448\u0438 \u0435\u0451 \u0438\u043B\u0438 \u0443\u0431\u0435\u0440\u0438 \u0431\u0443\u043A\u0432\u0443.");
+        react("\u0421\u0442\u0440\u043E\u043A\u0430 \u0443\u0436\u0435 \u043F\u043E\u043B\u043D\u0430. \u0421\u043E\u0442\u0440\u0438 \u0431\u0443\u043A\u0432\u0443 \u0438\u043B\u0438 \u0434\u0430\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435 \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0441\u043B\u043E\u0432\u043E.");
       }
     }
     function tapKey(letter) {
-      if (finished) return;
+      if (finished || checking) return;
+      const slot = puzzle.slots.indexOf(null);
       if (placeLetter(puzzle, letter)) {
-        ctx2.sfx?.("tap");
+        lastInkSlot = slot;
+        lastErasedSlot = null;
+        ctx2.sfx?.("riddleKey");
+        ctx2.sfx?.("riddleWrite");
         renderAll();
+        animateQuill(slot);
+        pulseKey(letter);
         afterMove();
       }
     }
     function tapSlot(slot) {
-      if (finished) return;
+      if (finished || checking) return;
       if (removeSlot(puzzle, slot)) {
-        ctx2.sfx?.("tap");
+        lastInkSlot = null;
+        lastErasedSlot = slot;
+        ctx2.sfx?.("riddleErase");
         renderAll();
       }
     }
+    function reactToAttempt(marks) {
+      const exact = marks.filter((m) => m === "exact").length;
+      const present = marks.filter((m) => m === "present").length;
+      const kind = exact > 0 ? "exact" : present > 0 ? "present" : "absent";
+      const options = KEEPER_REACTIONS[kind];
+      const index = reactionCounts[kind]++;
+      let text = options[index % options.length];
+      if (puzzle.mistakes > FREE_MISTAKES) text += " \u041A\u043B\u044F\u043A\u0441\u0430 \u0441\u044A\u0435\u043B\u0430 \u0447\u0430\u0441\u0442\u044C \u043D\u0430\u0433\u0440\u0430\u0434\u044B.";
+      react(text);
+    }
     function afterMove() {
-      const res = submitRiddle(puzzle);
-      if (!res) return;
-      if (res.solved) {
-        finish();
-        return;
-      }
-      ctx2.sfx?.("fail");
-      const over = puzzle.mistakes - FREE_MISTAKES;
-      ctx2.toast(over <= 0 ? `\u041D\u0435 \u0442\u043E \u0441\u043B\u043E\u0432\u043E \u2014 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0432 \u043A\u043B\u044F\u043A\u0441\u0435. \u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes} \u0438\u0437 ${FREE_MISTAKES} \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445.` : `\u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes}: \u043A\u043B\u044F\u043A\u0441\u044B \u0441\u044A\u0435\u0434\u0430\u044E\u0442 \u043D\u0430\u0433\u0440\u0430\u0434\u0443 (\u2212${Math.round((1 - rewardFactor(puzzle)) * 100)}% \u043C\u043E\u043D\u0435\u0442).`);
-      page.classList.add("shake");
-      setTimeout(() => page.classList.remove("shake"), 500);
-      renderAll();
+      if (finished || checking || !isFull(puzzle)) return;
+      const letters = [...puzzle.slots];
+      const solved = isRiddleSolved(puzzle);
+      const marks = solved ? letters.map(() => "exact") : markAttempt(level, letters);
+      const verdictEls = [...currentSlotEls];
+      setChecking(true);
+      lastInkSlot = null;
+      lastErasedSlot = null;
+      marks.forEach((mark, i) => {
+        later(() => {
+          verdictEls.forEach((el2) => el2.classList.remove("verdict-current"));
+          const el = verdictEls[i];
+          if (!el) return;
+          el.classList.add(`mark-${mark}`, "verdict-current", "verdict-reveal");
+          ctx2.sfx?.(VERDICT_SFX[mark], i);
+        }, 120 + i * VERDICT_STEP_MS);
+      });
+      later(() => {
+        const res = submitRiddle(puzzle);
+        if (res?.solved) {
+          finish();
+          return;
+        }
+        if (!res) {
+          setChecking(false);
+          renderAll();
+          return;
+        }
+        ctx2.sfx?.("fail");
+        renderAll();
+        page.classList.add("shake");
+        showInkBlot();
+        reactToAttempt(marks);
+        later(() => {
+          page.classList.remove("shake");
+          setChecking(false);
+        }, 500);
+      }, 120 + marks.length * VERDICT_STEP_MS + 220);
     }
     function onKey(ev) {
       if (ev.key === "Escape") {
@@ -17252,6 +17550,7 @@
     window.addEventListener("keydown", onKey);
     function finish() {
       finished = true;
+      setChecking(false);
       const factor = rewardFactor(puzzle);
       const rewards = completePuzzle(ctx2.state, level.id, {
         moves: puzzle.moves,
@@ -17259,9 +17558,13 @@
         coinFactor: factor
       });
       ctx2.save();
-      ctx2.sfx?.("success");
+      page.classList.add("riddle-solved");
       renderAll();
-      setTimeout(() => {
+      react("\u0412\u043E\u0442 \u043E\u043D\u043E, \u0432\u0435\u0440\u043D\u043E\u0435 \u0441\u043B\u043E\u0432\u043E. \u041C\u0443\u0440-\u0440\u2026 \u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0434\u043E\u0432\u043E\u043B\u044C\u043D\u0430, \u0438 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0442\u043E\u0436\u0435.");
+      ctx2.sfx?.("page");
+      ctx2.sfx?.("success");
+      later(() => ctx2.sfx?.("purr"), 250);
+      later(() => {
         const next = nextPuzzle(level.id);
         showOverlay(ctx2, {
           title: "\u{1F4DC} \u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u043E\u0442\u0433\u0430\u0434\u0430\u043D\u0430!",
@@ -17274,11 +17577,11 @@
             { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") }
           ]
         });
-      }, 450);
+      }, 1100);
     }
-    function slotsRow(letters, marks) {
+    function slotsRow(letters, marks, current = false) {
       const row = document.createElement("div");
-      row.className = "riddle-slots";
+      row.className = "riddle-slots" + (current ? " riddle-current" : "");
       let li = 0;
       for (const ch of level.answer) {
         if (ch === "\u2726") {
@@ -17290,22 +17593,78 @@
         }
         const cell = document.createElement("div");
         const letter = letters[li];
+        const idx = li;
         if (marks) {
           cell.className = `riddle-slot mark-${marks[li]}`;
-          cell.textContent = letter;
         } else {
           cell.className = "riddle-slot" + (letter ? " filled" : "");
-          cell.textContent = letter || "";
-          const idx = li;
-          cell.addEventListener("click", () => tapSlot(idx));
+          if (current) {
+            if (lastInkSlot === idx) cell.classList.add("ink-fresh");
+            if (lastErasedSlot === idx) cell.classList.add("ink-erased");
+            if (finished) cell.style.animationDelay = `${idx * 70}ms`;
+            cell.addEventListener("click", () => tapSlot(idx));
+            currentSlotEls.push(cell);
+          }
+        }
+        if (letter) {
+          const glyph = document.createElement("span");
+          glyph.className = "riddle-glyph";
+          glyph.textContent = letter;
+          cell.appendChild(glyph);
         }
         row.appendChild(cell);
         li += 1;
       }
       return row;
     }
+    function renderDrafts() {
+      drafts.innerHTML = "";
+      const title = document.createElement("div");
+      title.className = "riddle-drafts-title";
+      title.textContent = "\u0427\u0435\u0440\u043D\u043E\u0432\u0438\u043A\u0438 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F";
+      drafts.appendChild(title);
+      if (puzzle.attempts.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "muted riddle-drafts-empty";
+        empty.textContent = "\u041F\u043E\u043A\u0430 \u043D\u0438 \u043E\u0434\u043D\u043E\u0439 \u043A\u043B\u044F\u043A\u0441\u044B.";
+        drafts.appendChild(empty);
+        return;
+      }
+      puzzle.attempts.forEach((att, i) => {
+        const item2 = document.createElement("div");
+        item2.className = "riddle-draft";
+        const label = document.createElement("div");
+        label.className = "riddle-draft-name";
+        label.textContent = `\u041F\u043E\u043F\u044B\u0442\u043A\u0430 ${i + 1}`;
+        item2.append(label, slotsRow(att.letters, att.marks));
+        drafts.appendChild(item2);
+      });
+    }
     function renderAll() {
       page.innerHTML = "";
+      currentSlotEls = [];
+      keyEls = /* @__PURE__ */ new Map();
+      const sheet = document.createElement("div");
+      sheet.className = "riddle-sheet";
+      page.appendChild(sheet);
+      const bookmark = document.createElement("div");
+      bookmark.className = "riddle-bookmark";
+      bookmark.textContent = chapter.icon;
+      bookmark.title = `\u0413\u043B\u0430\u0432\u0430 ${chapter.number}: ${chapter.name}`;
+      bookmark.setAttribute("aria-hidden", "true");
+      const ornament = document.createElement("div");
+      ornament.className = "riddle-chapter-ornament";
+      ornament.textContent = chapter.ornament;
+      ornament.setAttribute("aria-hidden", "true");
+      sheet.append(bookmark, ornament);
+      if (chapter.finale) {
+        const seal = document.createElement("div");
+        seal.className = "riddle-wax-seal";
+        seal.textContent = "\u2726";
+        seal.title = `\u041E\u0441\u043E\u0431\u0430\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430: \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u0435 \u0433\u043B\u0430\u0432\u044B ${chapter.number}`;
+        seal.setAttribute("aria-label", seal.title);
+        sheet.appendChild(seal);
+      }
       const verse = document.createElement("div");
       verse.className = "riddle-text";
       for (const line of level.riddle) {
@@ -17319,11 +17678,13 @@
         a.textContent = `\u2014 ${level.author}`;
         verse.appendChild(a);
       }
-      page.appendChild(verse);
-      for (const att of puzzle.attempts) {
-        page.appendChild(slotsRow(att.letters, att.marks));
-      }
-      page.appendChild(slotsRow(puzzle.slots, null));
+      sheet.appendChild(verse);
+      const lastAttempt = document.createElement("div");
+      lastAttempt.className = "riddle-last-attempt";
+      const latest = puzzle.attempts[puzzle.attempts.length - 1];
+      if (latest) lastAttempt.appendChild(slotsRow(latest.letters, latest.marks));
+      sheet.appendChild(lastAttempt);
+      sheet.appendChild(slotsRow(puzzle.slots, null, true));
       const marks = letterMarks(puzzle);
       const kb = document.createElement("div");
       kb.className = "hang-kb has-art";
@@ -17345,17 +17706,21 @@
           b.className = "cipher-letter hang-key" + (marks[letter] ? ` mark-${marks[letter]}` : "");
           b.textContent = letter;
           b.addEventListener("click", () => tapKey(letter));
+          keyEls.set(letter, b);
           rowEl.appendChild(b);
         }
         kb.appendChild(rowEl);
       });
       page.appendChild(kb);
+      renderDrafts();
       const factor = rewardFactor(puzzle);
       const left = Math.max(0, FREE_MISTAKES - puzzle.mistakes);
-      statusEl.innerHTML = `\u{1F58B} \u041E\u0448\u0438\u0431\u043E\u043A: <b>${puzzle.mistakes}</b>` + (factor >= 1 ? ` \xB7 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445 \u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C: <b>${left}</b>` : ` \xB7 \u043D\u0430\u0433\u0440\u0430\u0434\u0430: <b>\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442</b>`) + `<div class="muted" style="font-size:13px">\u041F\u043E\u043F\u044B\u0442\u043E\u043A \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u0438: ${puzzle.attempts.length} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
+      statusEl.innerHTML = `\u{1F58B} \u041E\u0448\u0438\u0431\u043E\u043A: <b>${puzzle.mistakes}</b>` + (factor >= 1 ? ` \xB7 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0445 \u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C: <b>${left}</b>` : ` \xB7 \u043D\u0430\u0433\u0440\u0430\u0434\u0430: <b>\u2212${Math.round((1 - factor) * 100)}% \u043C\u043E\u043D\u0435\u0442</b>`) + `<div class="muted" style="font-size:13px">\u0427\u0435\u0440\u043D\u043E\u0432\u0438\u043A\u043E\u0432: ${puzzle.attempts.length} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed}</div>`;
     }
     renderAll();
     return () => {
+      disposed = true;
+      timers.forEach(clearTimeout);
       window.removeEventListener("keydown", onKey);
     };
   }
@@ -17365,11 +17730,11 @@
   var SPOIL_STEP = 0.1;
   var MIN_FACTOR2 = 0.5;
   var ALPHABET2 = "\u0410\u0411\u0412\u0413\u0414\u0415\u0401\u0416\u0417\u0418\u0419\u041A\u041B\u041C\u041D\u041E\u041F\u0420\u0421\u0422\u0423\u0424\u0425\u0426\u0427\u0428\u0429\u042A\u042B\u042C\u042D\u042E\u042F".split("");
-  function canonLetter(ch) {
+  function canonLetter2(ch) {
     return ch === "\u0401" ? "\u0415" : ch;
   }
   function answerLetters2(level) {
-    return level.answer.replaceAll("\u2726", "").split("").map(canonLetter);
+    return level.answer.replaceAll("\u2726", "").split("").map(canonLetter2);
   }
   function createHangmanPuzzle(level) {
     return {
@@ -17387,7 +17752,7 @@
     };
   }
   function guessLetter(state2, letter) {
-    const canon = canonLetter(letter);
+    const canon = canonLetter2(letter);
     if (!ALPHABET2.includes(canon)) return { ok: false };
     if (state2.revealed.has(canon) || state2.wrong.has(canon)) return { ok: false };
     if (isHangmanSolved(state2)) return { ok: false };
@@ -24498,6 +24863,29 @@ ${item2.description}
       case "hint":
         tone(660, 0.15, { type: "sine", gain: 0.05 });
         tone(880, 0.2, { delay: 0.1, gain: 0.04 });
+        break;
+      // --- Загадка Хранителя: дерево, перо и чернила ---
+      case "riddleKey":
+        tone(175 + Math.random() * 30, 0.055, { type: "triangle", gain: 0.035, slide: -30 });
+        noiseBurst(0.035, { freq: 900, gain: 0.018 });
+        break;
+      case "riddleWrite":
+        noiseBurst(0.1, { freq: 3300, q: 0.7, gain: 0.016, delay: 0.035 });
+        break;
+      case "riddleErase":
+        noiseBurst(0.13, { freq: 1500, q: 0.7, gain: 0.02 });
+        break;
+      case "riddleExact": {
+        const f = 590 + step % 5 * 32;
+        tone(f, 0.14, { gain: 0.026 });
+        tone(f * 1.25, 0.18, { delay: 0.045, gain: 0.018 });
+        break;
+      }
+      case "riddlePresent":
+        tone(440 + step % 4 * 30, 0.13, { type: "triangle", gain: 0.022 });
+        break;
+      case "riddleAbsent":
+        tone(220, 0.09, { type: "sine", gain: 0.016, slide: -25 });
         break;
       case "fateExact": {
         const notes = [523.25, 587.33, 659.25, 783.99];

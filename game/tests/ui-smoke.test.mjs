@@ -466,3 +466,192 @@ test('«Карты судьбы»: победа засчитывается то�
   assert.ok(sounds.some(([name]) => name === 'success'));
   cleanup();
 });
+
+test('«Загадки Хранителя»: буквы получают вердикты до черновика и кляксы', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const sounds = [];
+  ctx.sfx = (...args) => sounds.push(args);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'bk_01' });
+  const verdictSounds = () => sounds.filter(([name]) => (
+    ['riddleExact', 'riddlePresent', 'riddleAbsent'].includes(name)
+  ));
+
+  tapRiddleKey(root, 'К');
+  let slots = currentRiddleSlots(root);
+  assert.ok(slots[0].classList.contains('ink-fresh'), 'свежая буква проявляется как чернила');
+  assert.ok(riddleKey(root, 'К').classList.contains('is-pressed'), 'деревянная клавиша нажимается');
+  assert.ok(sounds.some(([name]) => name === 'riddleKey'));
+  assert.ok(sounds.some(([name]) => name === 'riddleWrite'));
+
+  slots[0].click();
+  slots = currentRiddleSlots(root);
+  assert.ok(slots[0].classList.contains('ink-erased'), 'удалённая буква оставляет тающий след');
+  assert.ok(sounds.some(([name]) => name === 'riddleErase'));
+
+  // КАБББ против КНИГА: точная К, затем А в слове и три отсутствующие Б.
+  for (const letter of ['К', 'А', 'Б', 'Б', 'Б']) tapRiddleKey(root, letter);
+  assert.ok(riddleStatus(root).includes('Ошибок: <b>0</b>'), 'заполнение строки ещё не считается ошибкой');
+  assert.equal(riddleDrafts(root).length, 0);
+
+  t.mock.timers.tick(120);
+  slots = currentRiddleSlots(root);
+  assert.ok(slots[0].classList.contains('mark-exact'));
+  assert.ok(slots[0].classList.contains('verdict-current'));
+  assert.deepEqual(verdictSounds(), [['riddleExact', 0]]);
+
+  t.mock.timers.tick(110);
+  slots = currentRiddleSlots(root);
+  assert.ok(!slots[0].classList.contains('verdict-current'));
+  assert.ok(slots[1].classList.contains('mark-present'));
+  assert.deepEqual(verdictSounds(), [['riddleExact', 0], ['riddlePresent', 1]]);
+
+  t.mock.timers.tick(330);
+  slots = currentRiddleSlots(root);
+  assert.ok(slots[4].classList.contains('mark-absent'));
+  assert.ok(riddleStatus(root).includes('Ошибок: <b>0</b>'), 'есть завершающая пауза после всех букв');
+  assert.equal(riddleDrafts(root).length, 0);
+
+  t.mock.timers.tick(329);
+  assert.ok(riddleStatus(root).includes('Ошибок: <b>0</b>'));
+  t.mock.timers.tick(1);
+  assert.ok(riddleStatus(root).includes('Ошибок: <b>1</b>'), 'ошибка применяется после вердиктов');
+  assert.equal(riddleDrafts(root).length, 1, 'попытка ушла в компактные черновики');
+  assert.ok(riddlePage(root).classList.contains('shake'), 'потряхивание сохранено');
+  assert.ok(riddleKeeperText(root).includes('Мур'), 'Хранитель комментирует результат');
+  assert.deepEqual(verdictSounds(), [
+    ['riddleExact', 0], ['riddlePresent', 1], ['riddleAbsent', 2],
+    ['riddleAbsent', 3], ['riddleAbsent', 4],
+  ]);
+  assert.ok(sounds.some(([name]) => name === 'fail'));
+  cleanup();
+});
+
+test('«Загадки Хранителя»: победа сияет после вердиктов и мурлычет', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const sounds = [];
+  ctx.sfx = (...args) => sounds.push(args);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'bk_01' });
+
+  for (const letter of 'КНИГА') tapRiddleKey(root, letter);
+  assert.ok(!state.puzzlesDone.bk_01, 'победа ждёт последовательный вердикт');
+  t.mock.timers.tick(889);
+  assert.ok(!state.puzzlesDone.bk_01, 'победа ждёт завершающую паузу');
+  t.mock.timers.tick(1);
+  assert.ok(state.puzzlesDone.bk_01, 'верное слово засчитано после вердиктов');
+  assert.ok(riddlePage(root).classList.contains('riddle-solved'), 'страница получила золотое свечение');
+  assert.equal(currentRiddleSlots(root)[4].style.animationDelay, '280ms', 'буквы сияют по очереди');
+  assert.ok(sounds.some(([name]) => name === 'page'), 'слышен шелест страницы');
+  assert.ok(sounds.some(([name]) => name === 'success'));
+  assert.ok(!sounds.some(([name]) => name === 'purr'), 'мурлыкание следует после короткой паузы');
+  t.mock.timers.tick(250);
+  assert.ok(sounds.some(([name]) => name === 'purr'));
+  assert.ok(riddleKeeperText(root).includes('верное слово'));
+  cleanup();
+});
+
+test('«Загадки Хранителя»: перо пишет подсказку, правила сворачиваются', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'bk_02' });
+  const all = flatElements(root);
+  const rules = all.find((el) => el.className === 'panel riddle-rules');
+  const quill = all.find((el) => el.className === 'riddle-quill');
+  const hint = all.find((el) => el.tagName === 'button' && el.innerHTML.includes('Подсказка'));
+
+  assert.ok(all.some((el) => el.className === 'riddle-sheet'), 'загадка лежит на отдельном пергаментном листе');
+  assert.equal(rules.open, false, 'после первого уровня правила компактно свёрнуты');
+  assert.ok(quill, 'перо Хранителя присутствует на сцене');
+  hint.click();
+  const firstReaction = riddleKeeperText(root);
+  assert.ok(quill.classList.contains('is-writing'), 'перо подлетаёт к подсказанному окошку');
+  assert.ok(quill.style.left.endsWith('px'), 'позиция пера вычислена по окошку');
+  hint.click();
+  assert.notEqual(riddleKeeperText(root), firstReaction, 'реплики Хранителя не повторяются подряд');
+  assert.ok(currentRiddleSlots(root)[1].classList.contains('ink-fresh'), 'подсказка тоже проявляется чернилами');
+  cleanup();
+});
+
+test('«Загадки Хранителя»: главы меняют сцену, десятая страница получает печать', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'bk_120' });
+  const all = flatElements(root);
+  const cat = all.find((el) => el.className === 'riddle-keeper-art');
+
+  assert.ok(riddlePage(root).classList.contains('riddle-theme-rain'), 'вторая глава — дождливая сцена');
+  assert.ok(riddlePage(root).classList.contains('riddle-finale'), 'двадцатый уровень — финал второй главы');
+  assert.ok(all.some((el) => el.className === 'riddle-bookmark'), 'на листе есть закладка главы');
+  assert.ok(all.some((el) => el.className === 'riddle-wax-seal'), 'на финальной странице есть сургучная печать');
+  assert.equal(cat.src, 'assets/fate/guest_cat_web.jpg', 'в главах используется читаемый портрет кота');
+  assert.ok(!all.some((el) => el.src === 'assets/crew/cmp_cat.webp'), 'ассет со свернувшимся котом не используется');
+  assert.ok(riddleKeeperText(root).includes('дождь'), 'реплика соответствует главе');
+  cleanup();
+
+  const root2 = new El('main');
+  const cleanup2 = renderPuzzle(root2, ctx, { id: 'bk_111' });
+  assert.ok(riddlePage(root2).classList.contains('riddle-theme-rain'));
+  assert.ok(!riddlePage(root2).classList.contains('riddle-finale'), 'первая страница главы не финальная');
+  assert.ok(!flatElements(root2).some((el) => el.className === 'riddle-wax-seal'), 'печати на обычной странице нет');
+  cleanup2();
+});
+
+test('«Загадки Хранителя»: ЛЕД решает ЛЁД без подсказки', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'bk_120' });
+
+  for (const letter of 'ЛЕД') tapRiddleKey(root, letter);
+  assert.ok(!state.puzzlesDone.bk_120, 'уровень ждёт последовательный вердикт');
+  t.mock.timers.tick(669);
+  assert.ok(!state.puzzlesDone.bk_120, 'уровень ждёт завершающую паузу');
+  t.mock.timers.tick(1);
+  assert.ok(state.puzzlesDone.bk_120, 'ЛЕД принято как ЛЁД без подсказки');
+  const shown = currentRiddleSlots(root).map((cell) => cell.children[0]?.textContent || '').join('');
+  assert.equal(shown, 'ЛЁД', 'победная страница показывает правильное написание');
+  const rules = flatElements(root).find((el) => el.className === 'panel riddle-rules');
+  assert.ok(rules.innerHTML.includes('Е и Ё — одна клавиша'), 'правило объяснено игроку');
+  cleanup();
+});
+
+function riddleKey(root, letter) {
+  return flatElements(root).find((el) => el.tagName === 'button'
+    && el.textContent === letter && (el.className || '').includes('hang-key'));
+}
+
+function tapRiddleKey(root, letter) {
+  const key = riddleKey(root, letter);
+  assert.ok(key, `клавиша ${letter} должна существовать`);
+  key.click();
+}
+
+function currentRiddleSlots(root) {
+  const row = flatElements(root).find((el) => el.className === 'riddle-slots riddle-current');
+  assert.ok(row, 'текущая строка ответа должна существовать');
+  return row.children.filter((el) => (el.className || '').startsWith('riddle-slot'));
+}
+
+function riddlePage(root) {
+  return flatElements(root).find((el) => el.className === 'riddle-page');
+}
+
+function riddleStatus(root) {
+  return flatElements(root).find((el) => el.className === 'puzzle-status')?.innerHTML || '';
+}
+
+function riddleDrafts(root) {
+  return flatElements(root).filter((el) => el.className === 'riddle-draft');
+}
+
+function riddleKeeperText(root) {
+  return flatElements(root).find((el) => el.className === 'intro-text riddle-keeper-text')?.textContent || '';
+}

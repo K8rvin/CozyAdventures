@@ -109,6 +109,42 @@ test('подсказки решают каждый уровень «Загадк
   }
 });
 
+test('Е и Ё — одна клавиша: ЛЕД решает ЛЁД и сохраняет написание', () => {
+  const s = createRiddlePuzzle(byId('bk_120'));
+  for (const ch of 'ЛЕД') assert.ok(placeLetter(s, ch));
+  assert.ok(isRiddleSolved(s), 'экранная Е эквивалентна Ё в ответе');
+  assert.ok(submitRiddle(s).solved);
+  assert.equal(s.slots.join(''), 'ЛЁД', 'при победе возвращается исходное написание');
+  assert.deepEqual(markAttempt(byId('bk_120'), 'ЛЕД'.split('')), ['exact', 'exact', 'exact']);
+  assert.deepEqual(markAttempt(byId('bk_120'), 'ЕЛВ'.split('')), ['present', 'present', 'absent']);
+  assert.deepEqual(markAttempt({ answer: 'ЕЁ' }, ['Ё', 'Е']), ['exact', 'exact'],
+    'дубли Е/Ё учитываются как одна буква');
+
+  const physical = createRiddlePuzzle(byId('bk_120'));
+  assert.ok(placeLetter(physical, 'Ё'), 'физическая Ё остаётся валидным ходом');
+  assert.equal(physical.slots[0], 'Е', 'в состоянии хранится каноническая Е');
+
+  const marked = createRiddlePuzzle(byId('bk_120'));
+  for (const ch of 'ЕЕЕ') placeLetter(marked, ch);
+  const wrong = submitRiddle(marked);
+  assert.equal(wrong.marks[1], 'exact');
+  assert.equal(letterMarks(marked)['Е'], 'exact', 'статус появляется на экранной клавише Е');
+  assert.equal(letterMarks(marked)['Ё'], undefined, 'отдельного статуса Ё не создаётся');
+});
+
+test('все 100 загадок решаются экранным алфавитом без Ё', () => {
+  for (const level of RIDDLE) {
+    const s = createRiddlePuzzle(level);
+    for (const ch of answerLetters(level)) {
+      const key = ch === 'Ё' ? 'Е' : ch;
+      assert.ok(placeLetter(s, key), `${level.id}: клавиша ${key}`);
+    }
+    assert.ok(isRiddleSolved(s), `${level.id}: ответ доступен без клавиши Ё`);
+    assert.ok(submitRiddle(s).solved, `${level.id}: победа засчитывается`);
+    assert.equal(s.slots.join(''), answerLetters(level).join(''), `${level.id}: исходное написание`);
+  }
+});
+
 test('штраф доезжает до награды: coinFactor уменьшает монеты', () => {
   // Заказ дня ×2 зависит от даты и состава кампании: гасим его,
   // чтобы тест был детерминированным

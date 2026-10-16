@@ -297,6 +297,483 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .riddle-keyboard { gap: 3px; }
 .riddle-keyboard .cipher-letter { min-width: 30px; font-size: 14px; padding: 5px 3px 7px; }
 
+/* Загадка: живые чернила, тактильные клавиши и черновики */
+.riddle-page { position: relative; }
+.riddle-page.checking .hang-key { pointer-events: none; cursor: default; }
+.riddle-slot {
+  position: relative;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, background 0.18s ease;
+}
+.riddle-glyph { position: relative; z-index: 1; display: inline-block; }
+.riddle-slot.ink-fresh .riddle-glyph {
+  animation: riddle-ink-in 0.3s ease-out;
+}
+@keyframes riddle-ink-in {
+  0% { opacity: 0; color: #2b2118; filter: blur(3px); transform: scale(1.18); }
+  55% { opacity: 0.85; color: #3c2c1b; filter: blur(0.7px); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+.riddle-slot.ink-erased::after {
+  content: '';
+  position: absolute;
+  inset: 24%;
+  border-radius: 50%;
+  background: rgba(38, 28, 20, 0.65);
+  pointer-events: none;
+  animation: riddle-ink-erase 0.32s ease-out forwards;
+}
+@keyframes riddle-ink-erase {
+  0% { opacity: 0.75; filter: blur(1px); transform: scale(1.25); }
+  100% { opacity: 0; filter: blur(4px); transform: scale(0.65); }
+}
+.hang-kb.has-art .hang-key {
+  transition: transform 0.08s ease, background 0.08s ease, color 0.12s ease;
+}
+.hang-kb.has-art .hang-key.is-pressed {
+  transform: translateY(3px) scale(0.97);
+  color: #fff0c9;
+  background: rgba(255, 202, 122, 0.28);
+  box-shadow: inset 0 2px 5px rgba(39, 23, 10, 0.5);
+}
+.hang-kb.has-art .hang-key.mark-present {
+  color: #ffe0a0;
+  background: rgba(138, 109, 47, 0.55);
+}
+.riddle-current .riddle-slot.verdict-current { transform: translateY(-3px); }
+.riddle-current .riddle-slot.verdict-current.mark-exact {
+  box-shadow: 0 0 20px rgba(168, 196, 126, 0.55);
+}
+.riddle-current .riddle-slot.verdict-current.mark-present {
+  box-shadow: 0 0 20px rgba(255, 202, 122, 0.5);
+}
+.riddle-current .riddle-slot.verdict-current.mark-absent {
+  box-shadow: 0 0 16px rgba(42, 31, 22, 0.55);
+}
+.riddle-current .riddle-slot.verdict-reveal { animation: riddle-verdict-in 0.18s ease-out; }
+@keyframes riddle-verdict-in {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
+  100% { filter: brightness(1); }
+}
+.riddle-last-attempt {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.riddle-last-attempt:empty::before {
+  content: 'Последний черновик';
+  color: #c9b48a;
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.45;
+}
+.riddle-ink-blot {
+  position: absolute;
+  z-index: 4;
+  right: 9%;
+  top: 43%;
+  width: 76px;
+  height: 58px;
+  border-radius: 48% 52% 61% 39% / 43% 58% 42% 57%;
+  background: radial-gradient(circle at 45% 45%, #17120e 0 35%, #2a2018 58%, transparent 72%);
+  pointer-events: none;
+  animation: riddle-blot-in 0.55s ease-out forwards;
+}
+@keyframes riddle-blot-in {
+  0% { opacity: 0; transform: rotate(-12deg) scale(0.2); filter: blur(3px); }
+  55% { opacity: 0.72; transform: rotate(-8deg) scale(1.08); filter: blur(0.5px); }
+  100% { opacity: 0.58; transform: rotate(-8deg) scale(1); filter: blur(0); }
+}
+.riddle-solved .riddle-text { text-shadow: 0 0 18px rgba(255, 202, 122, 0.35); }
+.riddle-solved .riddle-current .riddle-slot {
+  animation: riddle-win-slot 0.75s ease-out both;
+}
+@keyframes riddle-win-slot {
+  0% { transform: translateY(0); }
+  45% { transform: translateY(-5px); background: #9a742c; box-shadow: 0 0 28px rgba(255, 220, 138, 0.85); }
+  100% {
+    transform: translateY(0);
+    color: #fff0b8;
+    background: #7d6128;
+    border-color: #ffe09a;
+    box-shadow: 0 0 18px rgba(255, 202, 122, 0.48);
+    text-shadow: 0 0 10px rgba(255, 240, 184, 0.75);
+  }
+}
+.riddle-keeper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.riddle-keeper-portrait {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 202, 122, 0.5);
+  border-radius: 50%;
+  background: #2e2318;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+.riddle-keeper-art { width: 100%; height: 100%; object-fit: cover; }
+.riddle-keeper-fallback { font-size: 40px; }
+.riddle-keeper-text { flex: 1; margin: 0; font-size: 13px; line-height: 1.45; }
+.riddle-keeper.is-speaking .riddle-keeper-portrait { animation: riddle-keeper-nod 0.35s ease; }
+.riddle-keeper.is-speaking .riddle-keeper-text { color: #f3e6cf; }
+@keyframes riddle-keeper-nod {
+  0%, 100% { transform: rotate(0) scale(1); }
+  50% { transform: rotate(-4deg) scale(1.05); }
+}
+.riddle-rules { padding: 10px 14px; }
+.riddle-drafts {
+  max-height: 260px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  overflow-y: auto;
+}
+.riddle-drafts-title { color: #ffca7a; font-size: 13px; font-weight: 700; }
+.riddle-drafts-empty { margin-top: 4px; font-size: 12px; }
+.riddle-draft { margin-top: 8px; }
+.riddle-draft + .riddle-draft { padding-top: 8px; border-top: 1px solid rgba(243, 230, 207, 0.12); }
+.riddle-draft-name { margin-bottom: 4px; color: #c9b48a; font-size: 11px; }
+.riddle-drafts .riddle-slots { flex-wrap: nowrap; gap: 3px; justify-content: flex-start; }
+.riddle-drafts .riddle-slot {
+  width: 27px;
+  height: 32px;
+  border-width: 1px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: default;
+}
+
+/* Загадка: пергамент на столе, дыхание свечи, пылинки и перо */
+.riddle-stage { position: relative; }
+.riddle-page {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 4% 0%, rgba(255, 190, 96, 0.2), transparent 38%),
+    linear-gradient(145deg, #443122 0%, #2a1e15 75%);
+  box-shadow: inset 0 0 34px rgba(12, 8, 5, 0.42);
+}
+.riddle-page::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: -10%;
+  background:
+    radial-gradient(ellipse at 6% 4%, rgba(255, 191, 93, 0.28), transparent 40%),
+    radial-gradient(ellipse at 96% 16%, rgba(255, 170, 65, 0.13), transparent 32%);
+  pointer-events: none;
+  animation: riddle-candle-breathe 4.6s ease-in-out infinite alternate;
+}
+@keyframes riddle-candle-breathe {
+  0% { opacity: 0.62; transform: scale(0.99); }
+  45% { opacity: 0.84; }
+  100% { opacity: 1; transform: scale(1.015); }
+}
+.riddle-page::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255, 226, 157, 0.65) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 28% 72%, rgba(255, 226, 157, 0.45) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 52% 12%, rgba(255, 226, 157, 0.55) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 73% 64%, rgba(255, 226, 157, 0.5) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 88% 28%, rgba(255, 226, 157, 0.6) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 61% 86%, rgba(255, 226, 157, 0.4) 0 1px, transparent 1.7px);
+  opacity: 0.48;
+  pointer-events: none;
+  animation: riddle-dust-drift 9s ease-in-out infinite alternate;
+}
+@keyframes riddle-dust-drift {
+  0% { transform: translate(-2px, 3px); opacity: 0.25; }
+  45% { opacity: 0.55; }
+  100% { transform: translate(5px, -7px); opacity: 0.4; }
+}
+.riddle-sheet {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 20px 18px;
+  color: #3f2d1d;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(255, 255, 255, 0.28), transparent 45%),
+    repeating-linear-gradient(0deg, rgba(104, 75, 37, 0.025) 0 1px, transparent 1px 5px),
+    linear-gradient(100deg, #dec99c, #f0dfb8 48%, #dfc496);
+  border: 1px solid rgba(93, 61, 29, 0.45);
+  border-radius: 7px 11px 8px 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), inset 0 0 32px rgba(96, 59, 23, 0.16);
+}
+.riddle-sheet::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 22px rgba(83, 49, 19, 0.13);
+  pointer-events: none;
+}
+.riddle-sheet::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 0 0 7px 0;
+  background: linear-gradient(135deg, transparent 48%, rgba(99, 65, 32, 0.16) 50%, #c4a577 54%);
+  pointer-events: none;
+}
+.riddle-page > .hang-kb { z-index: 1; }
+.riddle-sheet .riddle-text {
+  color: #493420;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.65;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.25);
+}
+.riddle-sheet .riddle-author { color: #7a5c38; }
+.riddle-sheet .riddle-last-attempt:empty::before {
+  content: 'Здесь останется последний черновик';
+  color: #725c3d;
+  opacity: 0.65;
+}
+.riddle-sheet .riddle-current .riddle-slot {
+  color: #352418;
+  background: rgba(105, 75, 40, 0.04);
+  border: 0;
+  border-bottom: 2px dashed rgba(73, 52, 32, 0.45);
+  border-radius: 3px;
+}
+.riddle-sheet .riddle-current .riddle-slot.filled {
+  color: #2d1e13;
+  background: rgba(105, 75, 40, 0.09);
+  border-bottom-style: solid;
+  border-bottom-color: #6e4a29;
+}
+.riddle-sheet .riddle-current .riddle-slot.mark-exact {
+  color: #f3f0d4;
+  background: #68754a;
+  border: 2px solid #718052;
+}
+.riddle-sheet .riddle-current .riddle-slot.mark-present {
+  color: #fff0c9;
+  background: #9b742f;
+  border: 2px solid #b37c2e;
+}
+.riddle-sheet .riddle-current .riddle-slot.mark-absent {
+  color: #c1af90;
+  background: #4a3b2d;
+  border: 2px solid #6b5a47;
+}
+.riddle-sheet .riddle-glyph { font-family: Georgia, 'Times New Roman', serif; font-style: italic; }
+.riddle-sheet .riddle-sep { color: #6b4b2c; }
+.riddle-solved .riddle-text { text-shadow: 0 0 14px rgba(255, 244, 190, 0.65); }
+.riddle-page.shake .riddle-sheet { animation: riddle-sheet-tremor 0.45s ease; }
+@keyframes riddle-sheet-tremor {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-0.45deg); }
+  55% { transform: rotate(0.35deg); }
+  80% { transform: rotate(-0.15deg); }
+}
+.riddle-quill {
+  position: absolute;
+  z-index: 5;
+  width: 34px;
+  height: 88px;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 50% 92%;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.4));
+  transition: left 0.16s ease, top 0.16s ease, opacity 0.12s ease;
+}
+.riddle-quill.is-writing {
+  opacity: 0.92;
+  animation: riddle-quill-write 0.38s ease-in-out;
+}
+@keyframes riddle-quill-write {
+  0% { transform: rotate(-18deg) translateY(-4px); }
+  30% { transform: rotate(-8deg) translate(2px, 2px); }
+  60% { transform: rotate(-15deg) translate(-2px, 0); }
+  100% { transform: rotate(-10deg) translateY(1px); }
+}
+.riddle-rules { padding: 0; }
+.riddle-rules summary {
+  padding: 10px 14px;
+  color: #ffca7a;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+.riddle-rules .desc { padding: 0 14px 12px; }
+
+/* Загадка: десять глав, пять настроений и печать на каждой десятой странице */
+.riddle-page {
+  --chapter-accent: #b57b42;
+  --chapter-accent-ink: #704a28;
+  --chapter-accent-soft: rgba(255, 196, 100, 0.28);
+}
+.riddle-theme-dawn {
+  --chapter-accent: #b57b42;
+  --chapter-accent-ink: #704a28;
+  --chapter-accent-soft: rgba(255, 196, 100, 0.28);
+}
+.riddle-theme-rain {
+  --chapter-accent: #6f8e95;
+  --chapter-accent-ink: #42616a;
+  --chapter-accent-soft: rgba(130, 180, 200, 0.25);
+  background:
+    radial-gradient(ellipse at 4% 0%, rgba(151, 190, 199, 0.15), transparent 38%),
+    linear-gradient(145deg, #354446 0%, #223235 75%);
+}
+.riddle-theme-herbs {
+  --chapter-accent: #718153;
+  --chapter-accent-ink: #4c5e38;
+  --chapter-accent-soft: rgba(160, 190, 110, 0.22);
+  background:
+    radial-gradient(ellipse at 4% 0%, rgba(190, 205, 120, 0.14), transparent 38%),
+    linear-gradient(145deg, #3e442c 0%, #293222 75%);
+}
+.riddle-theme-amber {
+  --chapter-accent: #aa6938;
+  --chapter-accent-ink: #73421f;
+  --chapter-accent-soft: rgba(230, 150, 70, 0.25);
+  background:
+    radial-gradient(ellipse at 4% 0%, rgba(255, 166, 76, 0.18), transparent 38%),
+    linear-gradient(145deg, #4b2e1d 0%, #2c1c13 75%);
+}
+.riddle-theme-frost {
+  --chapter-accent: #7d9ba7;
+  --chapter-accent-ink: #4f6f7b;
+  --chapter-accent-soft: rgba(170, 215, 235, 0.26);
+  background:
+    radial-gradient(ellipse at 4% 0%, rgba(184, 218, 230, 0.16), transparent 38%),
+    linear-gradient(145deg, #35444c 0%, #222e36 75%);
+}
+.riddle-page .riddle-sheet { border-top: 3px solid var(--chapter-accent); }
+.riddle-bookmark {
+  position: absolute;
+  z-index: 3;
+  top: -7px;
+  left: 26px;
+  width: 38px;
+  height: 48px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5px 6px 10px;
+  color: #fff3d3;
+  background: var(--chapter-accent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.28));
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 22px;
+  line-height: 1;
+  pointer-events: none;
+}
+.riddle-chapter-ornament {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  right: 18px;
+  max-width: 42%;
+  color: var(--chapter-accent-ink);
+  opacity: 0.16;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 30px;
+  letter-spacing: 2px;
+  white-space: pre;
+  pointer-events: none;
+}
+.riddle-wax-seal {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  right: 16px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f3c38e;
+  background: radial-gradient(circle at 38% 32%, #b9674c 0 18%, #93442f 48%, #6e2d22 100%);
+  border: 2px solid rgba(105, 40, 27, 0.75);
+  border-radius: 47% 53% 55% 45% / 52% 45% 55% 48%;
+  box-shadow: 0 3px 7px rgba(60, 27, 16, 0.35), inset 0 0 0 3px rgba(245, 169, 117, 0.18);
+  font-size: 21px;
+  text-shadow: 0 1px 2px rgba(77, 28, 19, 0.65);
+  transform: rotate(-9deg);
+  pointer-events: none;
+}
+.riddle-finale .riddle-sheet {
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.35),
+    0 0 24px var(--chapter-accent-soft),
+    inset 0 0 32px rgba(96, 59, 23, 0.16);
+}
+.riddle-finale .riddle-bookmark { height: 56px; }
+.riddle-finale .riddle-chapter-ornament { top: auto; bottom: 16px; }
+.riddle-theme-rain::after {
+  background-image: repeating-linear-gradient(
+    105deg,
+    transparent 0 17px,
+    rgba(174, 207, 216, 0.18) 18px,
+    transparent 20px 33px
+  );
+  background-size: 46px 60px;
+  opacity: 0.4;
+  animation: riddle-rain-fall 1.8s linear infinite;
+}
+@keyframes riddle-rain-fall {
+  from { background-position: 0 -60px; }
+  to { background-position: -18px 60px; }
+}
+.riddle-cat-alert .riddle-keeper-art { transform: scale(1.02); }
+.riddle-cat-left .riddle-keeper-art { transform: scale(1.1) translateX(-4%); }
+.riddle-cat-right .riddle-keeper-art { transform: scale(1.1) translateX(4%); }
+.riddle-cat-close .riddle-keeper-art { transform: scale(1.26); }
+@media (max-width: 600px) {
+  .riddle-bookmark { left: 16px; width: 32px; height: 42px; font-size: 18px; }
+  .riddle-chapter-ornament { right: 12px; font-size: 22px; }
+  .riddle-wax-seal { top: 9px; right: 10px; width: 38px; height: 38px; font-size: 18px; }
+}
+@media (max-width: 600px) {
+  .riddle-sheet { padding: 18px 10px 14px; }
+  .riddle-sheet .riddle-text { font-size: 16px; }
+  .riddle-quill { width: 28px; height: 72px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .riddle-page.shake,
+  .riddle-slot.ink-fresh .riddle-glyph,
+  .riddle-slot.ink-erased::after,
+  .riddle-current .riddle-slot.verdict-reveal,
+  .riddle-ink-blot,
+  .riddle-solved .riddle-current .riddle-slot,
+  .riddle-keeper.is-speaking .riddle-keeper-portrait,
+  .riddle-page::before,
+  .riddle-page::after,
+  .riddle-page.shake .riddle-sheet,
+  .riddle-quill.is-writing { animation: none; }
+  .riddle-slot,
+  .riddle-quill,
+  .hang-kb.has-art .hang-key { transition: none; }
+  .riddle-current .riddle-slot.verdict-current,
+  .hang-kb.has-art .hang-key.is-pressed { transform: none; }
+}
+
 /* --- «Строка»: свеча вместо виселицы --- */
 .hang-candle-box {
   text-align: center;
