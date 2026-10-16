@@ -1,7 +1,8 @@
 // Книга собранных рецептов: все зелья алхимического стола.
-// Сваренные — с полным рецептом, остальные — под замком.
+// Сваренные — с флаконом цвета варки и полным рецептом, остальные — под замком.
 import { BREW_PUZZLES } from '../data/puzzlesBrew.js';
-import { brewStepText } from '../core/brewPuzzle.js';
+import { brewStepText, brewFinalLook } from '../core/brewPuzzle.js';
+import { brewFlaskHtml, brewFlaskVariant } from './brewFlask.js';
 import { header, quickNav } from './common.js';
 
 export function renderBrewBook(container, ctx) {
@@ -19,8 +20,9 @@ export function renderBrewBook(container, ctx) {
     const steps = done
       ? level.recipe.map((s, i) => `<div class="brew-step done">${i + 1}. ${brewStepText(level, s)}</div>`).join('')
       : '<div class="muted">Ещё не сварено — страница заполнится после первой варки.</div>';
+    const flask = done ? brewFlaskHtml(brewFinalLook(level), brewFlaskVariant(level.id), 40) : '';
     entry.innerHTML = `
-      <div class="name" style="font-weight:700">${done ? '⚗️' : '🔒'} ${level.name} <span class="badge">${stars}</span></div>
+      <div class="name" style="font-weight:700">${done ? flask : '🔒'} ${level.name} <span class="badge">${stars}</span></div>
       <div class="brew-book-steps">${steps}</div>`;
     list.appendChild(entry);
   }

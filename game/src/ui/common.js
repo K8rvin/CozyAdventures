@@ -83,12 +83,13 @@ export function rewardText(r) {
 }
 
 // Оверлей результата: showOverlay(ctx, { title, subtitle, rewardsHtml, advice, buttons: [{label, primary, onClick}] })
-export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons }) {
+export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons, art }) {
   const overlay = document.createElement('div');
   overlay.className = 'overlay';
   const rewardHtml = (rewards || []).map(rewardText).filter(Boolean).join('<br>');
   overlay.innerHTML = `
     <div class="card">
+      ${art ? `<div class="overlay-art">${art}</div>` : ''}
       <h2>${title}</h2>
       ${subtitle ? `<div class="muted">${subtitle}</div>` : ''}
       ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ''}

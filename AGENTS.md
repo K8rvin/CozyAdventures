@@ -92,6 +92,20 @@ game/
   Тесты также следят, что имена и рецепты всех 100 уровней уникальны.
   Уютный режим: `settings.keepBookOpen` (Настройки → Головоломки, плюс кнопка на
   экране варки уровней с памятью) — книга не закрывается, награды прежние.
+  Вид зелья — `brewPotionLook(level, history)`: средний цвет ингредиентов
+  (`color` в данных; `glow`/`sparkle` — свечение/блёстки). Микро-анимации
+  действий — `playFx` + `.brew-fx` (styles.css); крышка на котле —
+  `.brew-pot.covered` + пар; при порче зелье чернеет (`.brew-pot.spoiled`).
+  Звуки действий — case'ы в `sound.js` (stir/crush/cut/drop/cover/uncover/
+  heat/cool/wait/spoil, маппинг SFX_BY_DO в brewView); фоновое бульканье —
+  `brewAmb` по setTimeout-цепочке в brewView, стоп при уходе с экрана.
+  Заказчики — `data/brewGuests.js` (имя, icon, art из assets/fate или null →
+  медальон-эмодзи; реплики idle/success/spoiled; BREW_LEVEL_GUESTS — привязка
+  всех 100 уровней группами, тест следит). Благодарность — в оверлее победы,
+  запись о варке — journalPush в дневник кота.
+  Флакон-трофей — `ui/brewFlask.js` (6 SVG-силуэтов + тонировка, клип-маски
+  с уникальными id); в оверлее победы — `art` в showOverlay + brewPotionLook
+  по истории игрока, в «Книге рецептов» — brewFinalLook по полному рецепту.
 - fate «Карты судьбы»: `fatePuzzle.js` + `puzzlesFate.js` + `tools/fate-deck.mjs`
   (см. «Контент» ниже). Драг на pointer events, превью карты в боковой панели,
   реплики гостя порциями, история раскладов — в панели справа с паучьим скроллом.

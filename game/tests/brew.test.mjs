@@ -3,9 +3,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createBrewPuzzle, doBrewAction, undoBrew, resetBrew,
-  isBrewSolved, brewHint, brewStepText, brewHiddenCount, validateBrewLevel, BREW_MAX_MISTAKES,
+  isBrewSolved, brewHint, brewStepText, brewHiddenCount, validateBrewLevel, BREW_MAX_MISTAKES, brewPotionLook, brewFinalLook,
 } from '../src/core/brewPuzzle.js';
 import { BREW_PUZZLES } from '../src/data/puzzlesBrew.js';
+import { brewGuest, BREW_LEVEL_GUESTS } from '../src/data/brewGuests.js';
+import { brewFlaskHtml, brewFlaskVariant } from '../src/ui/brewFlask.js';
 import { newGame, completePuzzle, findPuzzle, ALL_PUZZLES } from '../src/core/state.js';
 
 const L1 = BREW_PUZZLES[0]; // brew_01: вода, ромашка, размешать
@@ -261,4 +263,65 @@ test('новые механики вводятся по главам: дебют
   assert.equal(withDo('drop')[0].id, 'brew_41', 'пипетка дебютирует в своей главе');
   assert.equal(withDo('cover')[0].id, 'brew_51', 'крышка дебютирует в своей главе');
   assert.equal(withTimes[0].id, 'brew_61', 'повторы дебютируют в своей главе');
+});
+
+test('вид зелья: цвет из ингредиентов, свечение и блёстки от особых', () => {
+  const p = createBrewPuzzle(L1); // brew_01: вода + ромашка
+  assert.equal(brewPotionLook(L1, p.history).color, 'rgb(111, 183, 217)', 'пустой котёл — вода');
+  doBrewAction(p, { do: 'add', ingredient: 'water' });
+  doBrewAction(p, { do: 'add', ingredient: 'chamomile' });
+  const look = brewPotionLook(L1, p.history);
+  assert.notEqual(look.color, 'rgb(111, 183, 217)', 'ромашка меняет цвет');
+  assert.equal(look.glow, false);
+  assert.equal(look.sparkles, false);
+
+  const L8 = BREW_PUZZLES.find((l) => l.id === 'brew_08'); // звёздная пыль
+  const q = createBrewPuzzle(L8);
+  for (const a of [{ do: 'add', ingredient: 'water' }, { do: 'heat' }, { do: 'crush', ingredient: 'star' }]) doBrewAction(q, a);
+  assert.equal(brewPotionLook(L8, q.history).sparkles, true, 'звёздная пыль даёт блёстки');
+
+  const L4 = BREW_PUZZLES.find((l) => l.id === 'brew_04'); // светляковый гриб
+  const m = createBrewPuzzle(L4);
+  for (const a of [{ do: 'add', ingredient: 'water' }, { do: 'heat' }, { do: 'add', ingredient: 'mushroom' }]) doBrewAction(m, a);
+  assert.equal(brewPotionLook(L4, m.history).glow, true, 'гриб светится');
+
+  const L41 = BREW_PUZZLES.find((l) => l.id === 'brew_41'); // чернила пипеткой
+  const k = createBrewPuzzle(L41);
+  doBrewAction(k, { do: 'add', ingredient: 'water' });
+  doBrewAction(k, { do: 'drop', ingredient: 'ink' });
+  const c = brewPotionLook(L41, k.history).color.match(/\d+/g).map(Number);
+  assert.ok(c[0] < 111 && c[1] < 183 && c[2] < 217, 'чернила делают зелье темнее воды');
+  // Отмена возвращает прежний цвет (вид — чистая функция от истории)
+  undoBrew(k);
+  assert.equal(brewPotionLook(L41, k.history).color, 'rgb(111, 183, 217)');
+});
+
+test('у каждого уровня свой заказчик, реплики по-русски', () => {
+  for (const l of BREW_PUZZLES) {
+    assert.ok(BREW_LEVEL_GUESTS[l.id], `${l.id}: не назначен заказчик`);
+    const g = brewGuest(l.id);
+    for (const key of ['name', 'idle', 'success', 'spoiled']) {
+      assert.ok(g[key], `${l.id}: пустая реплика ${key}`);
+      assert.ok(!/[a-zA-Z]/.test(g[key]), `${l.id}: латиница в реплике ${key}: «${g[key]}»`);
+    }
+  }
+  const uniqueGuests = new Set(Object.values(BREW_LEVEL_GUESTS));
+  assert.ok(uniqueGuests.size >= 10, `мало разных заказчиков: ${uniqueGuests.size}`);
+});
+
+test('флакон готового зелья: вид по полному рецепту, силуэт по id, SVG с цветом', () => {
+  const final = brewFinalLook(L1);
+  const p = createBrewPuzzle(L1);
+  for (const s of L1.recipe) doBrewAction(p, s);
+  assert.equal(final.color, brewPotionLook(L1, p.history).color, 'вид по рецепту = вид по игре');
+  const L8 = BREW_PUZZLES.find((l) => l.id === 'brew_08');
+  assert.equal(brewFinalLook(L8).sparkles, true, 'у звёздного эликсира — блёстки');
+  const html = brewFlaskHtml(final, brewFlaskVariant('brew_01'), 40);
+  assert.ok(html.includes('<svg'), 'есть SVG');
+  assert.ok(html.includes(final.color), 'флакон тонирован в цвет зелья');
+  assert.ok(html.includes('clipPath'), 'жидкость по силуэту флакона');
+  const other = brewFlaskHtml(final, brewFlaskVariant('brew_01'), 40);
+  assert.notEqual(html, other, 'клип-маски с уникальными id (несколько флаконов на странице)');
+  assert.equal(brewFlaskVariant('brew_01'), brewFlaskVariant('brew_01'), 'силуэт стабилен');
+  assert.notEqual(brewFlaskVariant('brew_01'), brewFlaskVariant('brew_02'), 'у соседних уровней разные силуэты');
 });

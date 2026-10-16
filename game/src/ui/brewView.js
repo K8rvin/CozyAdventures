@@ -3,13 +3,12 @@
 // Поздние уровни — на память: книга видна несколько секунд, потом закрывается.
 import {
   createBrewPuzzle, doBrewAction, undoBrew, resetBrew,
-  isBrewSolved, brewHint, brewStepText, brewHiddenCount, BREW_MAX_MISTAKES,
+  isBrewSolved, brewHint, brewStepText, brewHiddenCount, BREW_MAX_MISTAKES, brewPotionLook,
 } from '../core/brewPuzzle.js';
-import { completePuzzle, nextPuzzle } from '../core/state.js';
+import { completePuzzle, nextPuzzle, journalPush } from '../core/state.js';
+import { brewGuest } from '../data/brewGuests.js';
+import { brewFlaskHtml, brewFlaskVariant } from './brewFlask.js';
 import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
-
-// Цвет зелья по мере готовности: от родниковой воды к глубокому фиолетовому
-const POTION_COLORS = ['#6fb7d9', '#7fc98f', '#d9c26f', '#d9915f', '#b565a8', '#6f4fa8'];
 
 // Инструменты подготовки: сначала жмём инструмент, потом ингредиент (как ступка)
 const PREP_TOOLS = [
@@ -17,6 +16,13 @@ const PREP_TOOLS = [
   { do: 'cut', icon: '🔪', label: 'Нож', active: 'Что режем?', verb: 'Нарезать', hint: 'Жми нож, потом — что нарезать' },
   { do: 'drop', icon: '🧪', label: 'Пипетка', active: 'Что капаем?', verb: 'Накапать', hint: 'Жми пипетку, потом — что накапать' },
 ];
+
+// Звуки действий у котла (case'ы в sound.js)
+const SFX_BY_DO = {
+  add: 'potion', crush: 'crush', cut: 'cut', drop: 'drop',
+  stir: 'stir', heat: 'heat', cool: 'cool', wait: 'wait',
+  cover: 'cover', uncover: 'uncover',
+};
 
 export function renderBrewPuzzle(container, ctx, level) {
   const puzzle = createBrewPuzzle(level);
@@ -62,6 +68,23 @@ export function renderBrewPuzzle(container, ctx, level) {
   const fire = document.createElement('div');
   fire.className = 'brew-fire';
   pot.appendChild(fire);
+  // Блёстки над зельем (звёздная пыль, пыльца фей)
+  const sparkles = document.createElement('div');
+  sparkles.className = 'brew-sparkles';
+  sparkles.textContent = '✨';
+  pot.appendChild(sparkles);
+  // Крышка на котле и пар из-под неё (класс covered ставится в draw по lidOn())
+  const lidEl = document.createElement('div');
+  lidEl.className = 'brew-lid';
+  pot.appendChild(lidEl);
+  const lidSteam = document.createElement('div');
+  lidSteam.className = 'brew-lid-steam';
+  lidSteam.textContent = '♨️';
+  pot.appendChild(lidSteam);
+  // Слой микро-анимаций действий: иконка + класс эффекта
+  const fx = document.createElement('div');
+  fx.className = 'brew-fx';
+  pot.appendChild(fx);
   scene.appendChild(pot);
 
   // Инструменты
@@ -114,6 +137,32 @@ export function renderBrewPuzzle(container, ctx, level) {
   // --- Книга рецептов ---
   const side = document.createElement('div');
   side.className = 'puzzle-side';
+  // Заказчик у стола: портрет (или медальон с эмодзи), имя и реплики
+  const guest = brewGuest(level.id);
+  const guestEl = document.createElement('div');
+  guestEl.className = 'brew-guest';
+  const portrait = document.createElement('div');
+  portrait.className = 'brew-guest-portrait';
+  if (guest.art) {
+    const img = document.createElement('img');
+    img.src = guest.art;
+    img.alt = guest.name;
+    img.addEventListener('error', () => { img.remove(); portrait.textContent = guest.icon; });
+    portrait.appendChild(img);
+  } else {
+    portrait.textContent = guest.icon;
+  }
+  const guestText = document.createElement('div');
+  const guestName = document.createElement('div');
+  guestName.className = 'brew-guest-name';
+  guestName.textContent = guest.name;
+  const speech = document.createElement('div');
+  speech.className = 'brew-guest-speech';
+  speech.textContent = `«${guest.idle}»`;
+  guestText.append(guestName, speech);
+  guestEl.append(portrait, guestText);
+  side.appendChild(guestEl);
+
   const intro = document.createElement('div');
   intro.className = 'intro-text';
   intro.textContent = level.intro;
@@ -198,6 +247,13 @@ export function renderBrewPuzzle(container, ctx, level) {
 
   if (level.hideRecipe) startPeek();
 
+  // Фоновое бульканье котла: тихо, со случайными паузами, стоп при уходе с экрана
+  function ambient() {
+    if (!finished) ctx.sfx?.('brewAmb');
+    timers.push(setTimeout(ambient, 3000 + Math.random() * 3500));
+  }
+  timers.push(setTimeout(ambient, 2200));
+
   function heatLevel() {
     // Сколько раз грели после последнего остывания (0..3)
     let n = 0;
@@ -259,18 +315,21 @@ export function renderBrewPuzzle(container, ctx, level) {
     const r = doBrewAction(puzzle, action);
     if (r.ok) {
       hintAction = null;
-      const sfx = ['add', 'crush', 'cut', 'drop'].includes(action.do) ? 'potion'
-        : (action.do === 'cover' || action.do === 'uncover' ? 'tap' : 'bubble');
-      ctx.sfx?.(sfx);
+      ctx.sfx?.(SFX_BY_DO[action.do] || 'bubble');
       pulsePot();
+      playFx(action);
       draw();
       if (r.solved) finish();
       return;
     }
     if (r.mistake) {
-      ctx.sfx?.('tap');
+      ctx.sfx?.(r.spoiled ? 'spoil' : 'tap');
       puffSmoke();
       if (r.spoiled) {
+        // Зелье чернеет на глазах, прежде чем варка начнётся заново
+        pot.classList.add('spoiled');
+        timers.push(setTimeout(() => pot.classList.remove('spoiled'), 1200));
+        speech.textContent = `«${guest.spoiled}»`; // гость утешает, не ругает
         ctx.toast('💨 Зелье испорчено! Пузырится чёрным… Варим заново.');
       } else {
         ctx.toast(`Не тот шаг! Ошибка ${puzzle.mistakes} из ${BREW_MAX_MISTAKES}. Кот морщится от запаха.`);
@@ -279,6 +338,22 @@ export function renderBrewPuzzle(container, ctx, level) {
       return;
     }
     ctx.toast(r.error || 'Не выходит');
+  }
+
+  // Микро-анимация верного действия: иконка + класс эффекта (перезапуск через reflow)
+  function playFx(action) {
+    if (action.do === 'cover' || action.do === 'uncover') return; // крышка сама анимирована
+    const byDo = {
+      stir: ['🥄', 'fx-stir'], heat: ['🔥', 'fx-heat'], cool: ['❄️', 'fx-fall'],
+      wait: ['⏳', 'fx-wait'], crush: ['🥣', 'fx-pound'], cut: ['🔪', 'fx-chop'],
+    };
+    const ing = action.ingredient ? level.ingredients.find((i) => i.id === action.ingredient) : null;
+    const [icon, cls] = byDo[action.do] || [ing?.icon || '💧', 'fx-fall'];
+    fx.textContent = icon;
+    fx.className = 'brew-fx';
+    void fx.offsetWidth;
+    fx.classList.add(cls);
+    timers.push(setTimeout(() => { fx.className = 'brew-fx'; fx.textContent = ''; }, 950));
   }
 
   // Бурление котла при верном шаге
@@ -303,14 +378,18 @@ export function renderBrewPuzzle(container, ctx, level) {
   function finish() {
     finished = true;
     const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
+    journalPush(ctx.state, '⚗️', `Зелье «${level.name}» вручено гостю: ${guest.name}.`);
     ctx.save();
     ctx.sfx?.('success');
+    speech.textContent = `«${guest.success}»`; // благодарность за зелье
     draw();
     setTimeout(() => {
       const next = nextPuzzle(level.id);
       showOverlay(ctx, {
+        // Флакон именно этой варки: цвет по реальным действиям игрока
+        art: brewFlaskHtml(brewPotionLook(level, puzzle.history), brewFlaskVariant(level.id), 72),
         title: '⚗️ Зелье получилось!',
-        subtitle: `«${level.name}» — сварено по всем правилам${puzzle.spoiled ? ` (испорчено котлов: ${puzzle.spoiled})` : ''}`,
+        subtitle: `«${level.name}» — сварено по всем правилам${puzzle.spoiled ? ` (испорчено котлов: ${puzzle.spoiled})` : ''}. ${guest.name}: «${guest.success}»`,
         rewards,
         buttons: [
           ...(next ? [{ label: `Следующая → ${next.name}`, primary: true, onClick: () => ctx.go('puzzle', { id: next.id }) }] : []),
@@ -323,13 +402,18 @@ export function renderBrewPuzzle(container, ctx, level) {
   }
 
   function draw() {
-    // Котёл: цвет зелья по прогрессу, огонь по греву
+    // Котёл: цвет и эффекты зелья — от добавленных ингредиентов (brewPotionLook),
+    // высота — по прогрессу, огонь — по греву, крышка — по lidOn()
     const total = level.recipe.length;
-    const ci = Math.min(POTION_COLORS.length - 1, Math.floor((puzzle.progress / total) * POTION_COLORS.length));
-    potion.style.background = POTION_COLORS[puzzle.progress === 0 ? 0 : ci];
+    const look = brewPotionLook(level, puzzle.history);
+    potion.style.background = look.color;
+    potion.className = 'brew-potion' + (look.glow ? ' glow' : '');
+    sparkles.className = 'brew-sparkles' + (look.sparkles ? ' on' : '');
     potion.style.height = `${20 + (puzzle.progress / total) * 65}%`;
     const hl = heatLevel();
     fire.textContent = hl > 0 ? '🔥'.repeat(hl) : '';
+    if (lidOn()) pot.classList.add('covered');
+    else pot.classList.remove('covered');
 
     // Ингредиенты
     const hintOpts = hintAction ? (Array.isArray(hintAction.anyOf) ? hintAction.anyOf : [hintAction]) : [];

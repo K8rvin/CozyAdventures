@@ -140,6 +140,60 @@ export function sfx(name, step = 0) {
       }
       break;
     }
+    // --- Варка зелий: действия у котла (тихо, уютно) ---
+    case 'stir': // круг ложкой: мягкий низкий тон + шелест воды
+      tone(280, 0.22, { type: 'sine', gain: 0.035, slide: -90 });
+      noiseBurst(0.22, { freq: 600, gain: 0.02 });
+      break;
+    case 'crush': // два глухих удара пестиком
+      for (let i = 0; i < 2; i++) {
+        tone(130, 0.08, { type: 'triangle', gain: 0.06, delay: i * 0.13, slide: -30 });
+        noiseBurst(0.06, { freq: 420, gain: 0.04, delay: i * 0.13 });
+      }
+      break;
+    case 'cut': // два коротких рубящих удара ножа
+      for (let i = 0; i < 2; i++) {
+        noiseBurst(0.05, { freq: 2600, gain: 0.05, delay: i * 0.11 });
+        tone(190, 0.05, { type: 'triangle', gain: 0.04, delay: i * 0.11 });
+      }
+      break;
+    case 'drop': // «плюп» капли: восходящая нота + отголосок
+      tone(620, 0.1, { gain: 0.05, slide: 480 });
+      tone(930, 0.07, { delay: 0.07, gain: 0.025, slide: 300 });
+      break;
+    case 'cover': // глухой стук крышки
+      tone(150, 0.14, { type: 'triangle', gain: 0.06, slide: -50 });
+      noiseBurst(0.09, { freq: 600, gain: 0.04 });
+      break;
+    case 'uncover': // крышка снимается: чуть выше и легче
+      tone(220, 0.12, { type: 'triangle', gain: 0.045, slide: 80 });
+      noiseBurst(0.06, { freq: 900, gain: 0.025 });
+      break;
+    case 'heat': // треск огня и низкий гул
+      for (let i = 0; i < 4; i++) {
+        noiseBurst(0.05, { freq: 2000 + Math.random() * 1500, gain: 0.02, delay: i * 0.06 });
+      }
+      tone(90, 0.25, { type: 'sine', gain: 0.03, slide: 40 });
+      break;
+    case 'cool': // шипение остывающего котла
+      noiseBurst(0.35, { freq: 5200, q: 0.6, gain: 0.035 });
+      tone(700, 0.25, { gain: 0.02, slide: -350 });
+      break;
+    case 'wait': // два тихих тиканья часов
+      tone(1050, 0.04, { gain: 0.02 });
+      tone(1050, 0.04, { gain: 0.02, delay: 0.16 });
+      break;
+    case 'spoil': // порча зелья: низкий диссонанс
+      tone(220, 0.3, { type: 'sawtooth', gain: 0.04, slide: -140 });
+      tone(233, 0.3, { type: 'sawtooth', gain: 0.03, slide: -150 });
+      noiseBurst(0.3, { freq: 300, gain: 0.03 });
+      break;
+    case 'brewAmb': // фоновое бульканье: 1–2 очень тихих пузырька
+      tone(80 + Math.random() * 70, 0.12, { type: 'sine', gain: 0.016, slide: 45 });
+      if (Math.random() < 0.4) {
+        tone(90 + Math.random() * 60, 0.1, { type: 'sine', gain: 0.012, delay: 0.14, slide: 40 });
+      }
+      break;
     default: tone(440, 0.08, { gain: 0.04 });
   }
 }

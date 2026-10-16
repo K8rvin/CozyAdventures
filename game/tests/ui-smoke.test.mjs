@@ -258,6 +258,17 @@ test('уютная варка (keepBookOpen): рецепт всегда откр
   if (typeof cleanup2 === 'function') cleanup2();
 });
 
+test('книга рецептов: у сваренного зелья — флакон с цветом вместо значка', () => {
+  const state = newGame();
+  state.puzzlesDone.brew_01 = { moves: 3, hintsUsed: 0, at: Date.now() };
+  const root = new El('main');
+  renderBrewBook(root, makeUiCtx(state));
+  const entry = flatElements(root).find((el) => (el.className || '') === 'panel brew-book-entry');
+  assert.ok(entry, 'запись книги есть');
+  assert.ok((entry.innerHTML || '').includes('<svg'), 'у сваренного зелья — флакон');
+  assert.ok(!(entry.innerHTML || '').includes('🔒'), 'сваренное зелье не под замком');
+});
+
 test('подсказка «Сейчас надето» показывает текущий слот и пустые слоты', () => {
   const state = newGame();
   const anchor = new El('button');

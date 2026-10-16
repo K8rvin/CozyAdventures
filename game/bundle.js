@@ -5382,31 +5382,31 @@
   var FLOW_PUZZLE_BY_ID = Object.fromEntries(FLOW_PUZZLES.map((p) => [p.id, p]));
 
   // src/data/puzzlesBrew.js
-  var WATER = { id: "water", name: "\u0420\u043E\u0434\u043D\u0438\u043A\u043E\u0432\u0430\u044F \u0432\u043E\u0434\u0430", icon: "\u{1F4A7}" };
-  var HONEY = { id: "honey", name: "\u0414\u0438\u043A\u0438\u0439 \u043C\u0451\u0434", icon: "\u{1F36F}" };
-  var CHAMOMILE = { id: "chamomile", name: "\u0420\u043E\u043C\u0430\u0448\u043A\u0430", icon: "\u{1F33C}" };
-  var MINT = { id: "mint", name: "\u041C\u044F\u0442\u0430 \u043F\u0435\u0440\u0435\u0447\u043D\u0430\u044F", icon: "\u{1F33F}" };
-  var BERRIES = { id: "berries", name: "\u041B\u0435\u0441\u043D\u044B\u0435 \u044F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}" };
-  var MUSHROOM = { id: "mushroom", name: "\u0421\u0432\u0435\u0442\u043B\u044F\u043A\u043E\u0432\u044B\u0439 \u0433\u0440\u0438\u0431", icon: "\u{1F344}" };
-  var MOSS = { id: "moss", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0439\u0441\u044F \u043C\u043E\u0445", icon: "\u{1F7E2}" };
-  var FEATHER = { id: "feather", name: "\u041F\u0435\u0440\u043E \u0441\u043E\u0432\u044B", icon: "\u{1FAB6}" };
-  var SPIDER = { id: "spider", name: "\u041F\u0430\u0443\u0442\u0438\u043D\u043D\u0430\u044F \u043D\u0438\u0442\u044C", icon: "\u{1F578}\uFE0F" };
-  var ROSE = { id: "rose", name: "\u041B\u0435\u043F\u0435\u0441\u0442\u043A\u0438 \u0440\u043E\u0437", icon: "\u{1F339}" };
-  var SALT = { id: "salt", name: "\u0421\u043E\u043B\u044C", icon: "\u{1F9C2}" };
-  var CHESTNUT = { id: "chestnut", name: "\u041A\u0430\u0448\u0442\u0430\u043D", icon: "\u{1F330}" };
-  var STAR = { id: "star", name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u{1F31F}" };
-  var INK = { id: "ink", name: "\u041A\u0430\u043F\u043B\u044F \u0447\u0435\u0440\u043D\u0438\u043B", icon: "\u{1FADF}" };
-  var ICE = { id: "ice", name: "\u041B\u044C\u0434\u0438\u043D\u043A\u0430", icon: "\u{1F9CA}" };
-  var PEPPER = { id: "pepper", name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u0446", icon: "\u{1F336}\uFE0F" };
-  var GINGER = { id: "ginger", name: "\u041A\u043E\u0440\u0435\u043D\u044C \u0438\u043C\u0431\u0438\u0440\u044F", icon: "\u{1FADA}" };
-  var LEMON = { id: "lemon", name: "\u041B\u043E\u043C\u0442\u0438\u043A \u043B\u0438\u043C\u043E\u043D\u0430", icon: "\u{1F34B}" };
-  var CLOVER = { id: "clover", name: "\u041A\u043B\u0435\u0432\u0435\u0440 \u043D\u0430 \u0443\u0434\u0430\u0447\u0443", icon: "\u{1F340}" };
-  var MOONSTONE = { id: "moonstone", name: "\u041B\u0443\u043D\u043D\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C", icon: "\u{1F319}" };
-  var POLLEN = { id: "pollen", name: "\u041F\u044B\u043B\u044C\u0446\u0430 \u0444\u0435\u0439", icon: "\u2728" };
-  var MANDRAKE = { id: "mandrake", name: "\u041A\u043E\u0440\u0435\u043D\u044C \u043C\u0430\u043D\u0434\u0440\u0430\u0433\u043E\u0440\u044B", icon: "\u{1F955}" };
-  var CRYSTAL = { id: "crystal", name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B \u044D\u0445\u0430", icon: "\u{1F48E}" };
-  var PEARL = { id: "pearl", name: "\u0420\u0435\u0447\u043D\u043E\u0439 \u0436\u0435\u043C\u0447\u0443\u0433", icon: "\u{1F9AA}" };
-  var MIST = { id: "mist", name: "\u0424\u043B\u0430\u043A\u043E\u043D \u0442\u0443\u043C\u0430\u043D\u0430", icon: "\u{1F32B}\uFE0F" };
+  var WATER = { id: "water", name: "\u0420\u043E\u0434\u043D\u0438\u043A\u043E\u0432\u0430\u044F \u0432\u043E\u0434\u0430", icon: "\u{1F4A7}", color: "#6fb7d9" };
+  var HONEY = { id: "honey", name: "\u0414\u0438\u043A\u0438\u0439 \u043C\u0451\u0434", icon: "\u{1F36F}", color: "#dfa63e" };
+  var CHAMOMILE = { id: "chamomile", name: "\u0420\u043E\u043C\u0430\u0448\u043A\u0430", icon: "\u{1F33C}", color: "#eee1a0" };
+  var MINT = { id: "mint", name: "\u041C\u044F\u0442\u0430 \u043F\u0435\u0440\u0435\u0447\u043D\u0430\u044F", icon: "\u{1F33F}", color: "#7fc98f" };
+  var BERRIES = { id: "berries", name: "\u041B\u0435\u0441\u043D\u044B\u0435 \u044F\u0433\u043E\u0434\u044B", icon: "\u{1FAD0}", color: "#a85b9b" };
+  var MUSHROOM = { id: "mushroom", name: "\u0421\u0432\u0435\u0442\u043B\u044F\u043A\u043E\u0432\u044B\u0439 \u0433\u0440\u0438\u0431", icon: "\u{1F344}", color: "#9fe6b0", glow: true };
+  var MOSS = { id: "moss", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0438\u0439\u0441\u044F \u043C\u043E\u0445", icon: "\u{1F7E2}", color: "#6fd08c", glow: true };
+  var FEATHER = { id: "feather", name: "\u041F\u0435\u0440\u043E \u0441\u043E\u0432\u044B", icon: "\u{1FAB6}", color: "#b8c4d4" };
+  var SPIDER = { id: "spider", name: "\u041F\u0430\u0443\u0442\u0438\u043D\u043D\u0430\u044F \u043D\u0438\u0442\u044C", icon: "\u{1F578}\uFE0F", color: "#c9c9d6" };
+  var ROSE = { id: "rose", name: "\u041B\u0435\u043F\u0435\u0441\u0442\u043A\u0438 \u0440\u043E\u0437", icon: "\u{1F339}", color: "#e08a9b" };
+  var SALT = { id: "salt", name: "\u0421\u043E\u043B\u044C", icon: "\u{1F9C2}", color: "#e8e8e8" };
+  var CHESTNUT = { id: "chestnut", name: "\u041A\u0430\u0448\u0442\u0430\u043D", icon: "\u{1F330}", color: "#a8763e" };
+  var STAR = { id: "star", name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u{1F31F}", color: "#f2d94e", sparkle: true };
+  var INK = { id: "ink", name: "\u041A\u0430\u043F\u043B\u044F \u0447\u0435\u0440\u043D\u0438\u043B", icon: "\u{1FADF}", color: "#2c2c3a" };
+  var ICE = { id: "ice", name: "\u041B\u044C\u0434\u0438\u043D\u043A\u0430", icon: "\u{1F9CA}", color: "#bfe6f0" };
+  var PEPPER = { id: "pepper", name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u0446", icon: "\u{1F336}\uFE0F", color: "#d94f3d" };
+  var GINGER = { id: "ginger", name: "\u041A\u043E\u0440\u0435\u043D\u044C \u0438\u043C\u0431\u0438\u0440\u044F", icon: "\u{1FADA}", color: "#d9a05f" };
+  var LEMON = { id: "lemon", name: "\u041B\u043E\u043C\u0442\u0438\u043A \u043B\u0438\u043C\u043E\u043D\u0430", icon: "\u{1F34B}", color: "#f0dc5a" };
+  var CLOVER = { id: "clover", name: "\u041A\u043B\u0435\u0432\u0435\u0440 \u043D\u0430 \u0443\u0434\u0430\u0447\u0443", icon: "\u{1F340}", color: "#5fb36a" };
+  var MOONSTONE = { id: "moonstone", name: "\u041B\u0443\u043D\u043D\u044B\u0439 \u043A\u0430\u043C\u0435\u043D\u044C", icon: "\u{1F319}", color: "#b9b6e0" };
+  var POLLEN = { id: "pollen", name: "\u041F\u044B\u043B\u044C\u0446\u0430 \u0444\u0435\u0439", icon: "\u2728", color: "#f5e27a", sparkle: true };
+  var MANDRAKE = { id: "mandrake", name: "\u041A\u043E\u0440\u0435\u043D\u044C \u043C\u0430\u043D\u0434\u0440\u0430\u0433\u043E\u0440\u044B", icon: "\u{1F955}", color: "#c98d5f" };
+  var CRYSTAL = { id: "crystal", name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B \u044D\u0445\u0430", icon: "\u{1F48E}", color: "#a8e0e6" };
+  var PEARL = { id: "pearl", name: "\u0420\u0435\u0447\u043D\u043E\u0439 \u0436\u0435\u043C\u0447\u0443\u0433", icon: "\u{1F9AA}", color: "#e8e0f0" };
+  var MIST = { id: "mist", name: "\u0424\u043B\u0430\u043A\u043E\u043D \u0442\u0443\u043C\u0430\u043D\u0430", icon: "\u{1F32B}\uFE0F", color: "#b8c8d0" };
   var BREW_PUZZLES = [
     {
       id: "brew_01",
@@ -15674,12 +15674,13 @@
     if (r.type === "material") return `\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B: ${materialLabel(r.id)}${r.amount > 1 ? ` \xD7${r.amount}` : ""}`;
     return "";
   }
-  function showOverlay(ctx2, { title, subtitle, rewards, advice, buttons }) {
+  function showOverlay(ctx2, { title, subtitle, rewards, advice, buttons, art }) {
     const overlay = document.createElement("div");
     overlay.className = "overlay";
     const rewardHtml = (rewards || []).map(rewardText).filter(Boolean).join("<br>");
     overlay.innerHTML = `
     <div class="card">
+      ${art ? `<div class="overlay-art">${art}</div>` : ""}
       <h2>${title}</h2>
       ${subtitle ? `<div class="muted">${subtitle}</div>` : ""}
       ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ""}
@@ -20310,14 +20311,222 @@
     }
     return brewActionText(level, step) + suffix;
   }
+  function brewPotionLook(level, history) {
+    const byId = new Map(level.ingredients.map((i) => [i.id, i]));
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    let n = 0;
+    let glow = false;
+    let sparkles = false;
+    for (const h of history) {
+      if (!ING_ACTIONS.has(h.do)) continue;
+      const ing = byId.get(h.ingredient);
+      if (!ing?.color) continue;
+      const c = parseInt(ing.color.slice(1), 16);
+      r += c >> 16 & 255;
+      g += c >> 8 & 255;
+      b += c & 255;
+      n += 1;
+      if (ing.glow) glow = true;
+      if (ing.sparkle) sparkles = true;
+    }
+    if (n === 0) return { color: "rgb(111, 183, 217)", glow: false, sparkles: false };
+    return {
+      color: `rgb(${Math.round(r / n)}, ${Math.round(g / n)}, ${Math.round(b / n)})`,
+      glow,
+      sparkles
+    };
+  }
+  function brewFinalLook(level) {
+    const history = [];
+    for (const step of level.recipe) {
+      const a = Array.isArray(step.anyOf) ? step.anyOf[0] : step;
+      for (let k = 0; k < (step.times ?? 1); k += 1) {
+        history.push({ do: a.do, ingredient: a.ingredient ?? null });
+      }
+    }
+    return brewPotionLook(level, history);
+  }
+
+  // src/data/brewGuests.js
+  var GUESTS = {
+    cat: {
+      name: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C",
+      icon: "\u{1F408}",
+      art: "assets/fate/guest_cat_web.jpg",
+      idle: "\u0421\u0432\u0430\u0440\u0438 \u043F\u043E \u043A\u043D\u0438\u0433\u0435, \u044F \u043F\u043E\u0434\u0441\u043C\u043E\u0442\u0440\u044E \u0438 \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0443.",
+      success: "\u041C\u0443\u0440, \u043E\u0442\u043B\u0438\u0447\u043D\u0430\u044F \u0432\u0430\u0440\u043A\u0430! \u041A\u043D\u0438\u0433\u0430 \u0433\u043E\u0440\u0434\u0438\u0442\u0441\u044F \u0442\u043E\u0431\u043E\u0439.",
+      spoiled: "\u041D\u0435 \u043F\u0435\u0440\u0435\u0436\u0438\u0432\u0430\u0439: \u0438 \u0443 \u043C\u0435\u043D\u044F \u043C\u043E\u043B\u043E\u043A\u043E \u0443\u0431\u0435\u0433\u0430\u043B\u043E. \u0412\u0430\u0440\u0438\u043C \u0437\u0430\u043D\u043E\u0432\u043E!"
+    },
+    watchman: {
+      name: "\u0421\u0442\u043E\u0440\u043E\u0436",
+      icon: "\u{1F9D4}",
+      art: "assets/fate/guest_watchman_web.jpg",
+      idle: "\u0421\u0442\u043E\u0440\u043E\u0436\u0443 \u043D\u0443\u0436\u043D\u043E \u0437\u0435\u043B\u044C\u0435 \u2014 \u043D\u0435 \u0441\u043F\u0435\u0448\u0438, \u0434\u0435\u043B\u0430\u0439 \u0432\u0435\u0440\u043D\u043E.",
+      success: "\u0422\u0435\u043F\u0435\u0440\u044C \u0438 \u043D\u043E\u0447\u044C \u043D\u0435 \u0441\u0442\u0440\u0430\u0448\u043D\u0430. \u0421\u043F\u0430\u0441\u0438\u0431\u043E, \u0445\u043E\u0437\u044F\u0438\u043D!",
+      spoiled: "\u041F\u043E\u0434\u0443\u043C\u0430\u0435\u0448\u044C, \u043A\u043E\u0442\u0451\u043B! \u0423 \u043C\u0435\u043D\u044F \u0438 \u0441\u0443\u043F \u0447\u0451\u0440\u043D\u044B\u0439 \u0431\u044B\u0432\u0430\u043B. \u0414\u0430\u0432\u0430\u0439 \u0435\u0449\u0451 \u0440\u0430\u0437."
+    },
+    merchant: {
+      name: "\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446",
+      icon: "\u{1F9EE}",
+      art: "assets/fate/guest_merchant_web.jpg",
+      idle: "\u0421\u0434\u0435\u043B\u0430\u0439 \u043A\u0430\u043A \u0441\u043B\u0435\u0434\u0443\u0435\u0442 \u2014 \u0437\u0430 \u0434\u043E\u0431\u0440\u044B\u043C \u0442\u043E\u0432\u0430\u0440\u043E\u043C \u0432\u0435\u0440\u043D\u0443\u0441\u044C.",
+      success: "\u0422\u0430\u043A\u043E\u0435 \u0438 \u043F\u0440\u043E\u0434\u0430\u0442\u044C \u043D\u0435 \u0433\u0440\u0435\u0445... \u043D\u043E \u043B\u0443\u0447\u0448\u0435 \u0441\u0430\u043C\u043E\u043C\u0443 \u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C.",
+      spoiled: "\u0423\u0431\u044B\u0442\u043E\u043A \u043C\u0430\u043B\u044B\u0439, \u043E\u043F\u044B\u0442 \u0431\u043E\u043B\u044C\u0448\u043E\u0439. \u0412\u0430\u0440\u0438\u043C \u0441\u043D\u043E\u0432\u0430!"
+    },
+    owl: {
+      name: "\u0421\u043E\u0432\u0430-\u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430\u0440\u044C",
+      icon: "\u{1F989}",
+      art: "assets/fate/guest_owl_web.jpg",
+      idle: "\u0422\u0438\u0448\u0435, \u043F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430. \u0417\u0435\u043B\u044C\u0435 \u043B\u044E\u0431\u0438\u0442 \u0430\u043A\u043A\u0443\u0440\u0430\u0442\u043D\u043E\u0441\u0442\u044C.",
+      success: "\u041F\u0440\u0435\u043A\u0440\u0430\u0441\u043D\u043E. \u0417\u0430\u043F\u0438\u0448\u0443 \u044D\u0442\u043E\u0442 \u0434\u0435\u043D\u044C \u0432 \u043B\u0443\u0447\u0448\u0443\u044E \u043A\u043D\u0438\u0433\u0443.",
+      spoiled: "\u0423\u0445-\u0443\u0445, \u043D\u0435 \u043E\u0442\u0447\u0430\u0438\u0432\u0430\u0439\u0441\u044F. \u0414\u0430\u0436\u0435 \u0443 \u0441\u043E\u0432 \u0447\u0435\u0440\u043D\u0438\u043B\u0430 \u043A\u043E\u043D\u0447\u0430\u044E\u0442\u0441\u044F."
+    },
+    knight: {
+      name: "\u0420\u044B\u0446\u0430\u0440\u044C",
+      icon: "\u{1F6E1}\uFE0F",
+      art: "assets/fate/guest_knight_web.jpg",
+      idle: "\u041F\u043E\u0445\u043E\u0434 \u0436\u0434\u0451\u0442, \u043D\u043E \u044F \u0442\u0435\u0440\u043F\u0435\u043B\u0438\u0432. \u0412\u0430\u0440\u0438 \u043A\u0430\u043A \u043D\u0430\u0434\u043E!",
+      success: "\u0421 \u0442\u0430\u043A\u0438\u043C \u0437\u0435\u043B\u044C\u0435\u043C \u043B\u044E\u0431\u043E\u0439 \u043F\u043E\u0445\u043E\u0434 \u043F\u043E \u043F\u043B\u0435\u0447\u0443!",
+      spoiled: "\u0411\u0438\u0442\u0432\u044B \u0443\u0447\u0430\u0442 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u044E. \u0418 \u0432\u0430\u0440\u043A\u0430 \u0442\u043E\u0436\u0435. \u0412\u043F\u0435\u0440\u0451\u0434!"
+    },
+    ranger: {
+      name: "\u0421\u043B\u0435\u0434\u043E\u043F\u044B\u0442",
+      icon: "\u{1F9ED}",
+      art: "assets/fate/guest_ranger_web.jpg",
+      idle: "\u0421\u043B\u0435\u0434 \u0432\u0435\u0434\u0451\u0442 \u043A \u0442\u0432\u043E\u0435\u043C\u0443 \u043A\u043E\u0442\u043B\u0443. \u041D\u0435 \u043F\u043E\u0434\u0432\u0435\u0434\u0438.",
+      success: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0434\u043E\u0440\u043E\u0433\u043E\u0439 \u0438 \u0443\u0434\u0430\u0447\u0435\u0439. \u0411\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u044E, \u0445\u043E\u0437\u044F\u0438\u043D.",
+      spoiled: "\u0421\u043B\u0435\u0434 \u0441\u0431\u0438\u043B\u0441\u044F \u2014 \u043D\u0430\u0439\u0434\u0451\u043C \u043D\u043E\u0432\u044B\u0439. \u041D\u0430\u0447\u043D\u0438 \u0437\u0430\u043D\u043E\u0432\u043E."
+    },
+    wanderer: {
+      name: "\u042E\u043D\u0430\u044F \u043F\u0443\u0442\u043D\u0438\u0446\u0430",
+      icon: "\u{1F9D5}",
+      art: "assets/fate/guest_wanderer_web.jpg",
+      idle: "\u041C\u043D\u0435 \u0431\u044B \u0437\u0435\u043B\u044C\u0435 \u0432 \u0434\u043E\u0440\u043E\u0433\u0443, \u0434\u043E\u0431\u0440\u043E\u0435 \u0438 \u0442\u0451\u043F\u043B\u043E\u0435.",
+      success: "\u041E, \u043F\u0430\u0445\u043D\u0435\u0442 \u0447\u0443\u0434\u0435\u0441\u043D\u043E! \u0412\u043E\u0437\u044C\u043C\u0443 \u0441 \u0441\u043E\u0431\u043E\u0439 \u0432 \u043F\u0443\u0442\u044C.",
+      spoiled: "\u041D\u0438\u0447\u0435\u0433\u043E-\u043D\u0438\u0447\u0435\u0433\u043E, \u0443 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u043F\u0443\u0442\u043D\u0438\u043A\u0430 \u0431\u044B\u0432\u0430\u0435\u0442 \u0447\u0451\u0440\u043D\u044B\u0439 \u0434\u0435\u043D\u044C."
+    },
+    gardener: {
+      name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0441\u0430\u0434\u043E\u0432\u043D\u0438\u043A",
+      icon: "\u{1F331}",
+      art: "assets/fate/guest_gardener_web.jpg",
+      idle: "\u041F\u043E\u043C\u043E\u0433\u0438 \u0441 \u0437\u0435\u043B\u044C\u0435\u043C, \u0430 \u044F \u0440\u0430\u0441\u0441\u043A\u0430\u0436\u0443, \u043A\u0430\u043A \u0442\u0440\u0430\u0432\u044B \u0440\u0430\u0441\u0442\u0443\u0442.",
+      success: "\u0421\u0432\u0435\u0436\u043E \u0438 \u0434\u043E\u0431\u0440\u043E, \u043A\u0430\u043A \u0441 \u043C\u043E\u0435\u0439 \u0433\u0440\u044F\u0434\u043A\u0438. \u0421\u043F\u0430\u0441\u0438\u0431\u043E!",
+      spoiled: "\u0418 \u0443\u0440\u043E\u0436\u0430\u0439 \u043D\u0435 \u0432\u0441\u0435\u0433\u0434\u0430 \u0443\u0434\u0430\u0451\u0442\u0441\u044F. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439 \u0435\u0449\u0451 \u0440\u0430\u0437\u043E\u043A."
+    },
+    alchemist: {
+      name: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A",
+      icon: "\u2697\uFE0F",
+      art: "assets/fate/guest_alchemist_web.jpg",
+      idle: "\u041F\u043E\u043A\u0430\u0436\u0438, \u043D\u0430 \u0447\u0442\u043E \u0441\u043F\u043E\u0441\u043E\u0431\u0435\u043D \u0442\u0432\u043E\u0439 \u0430\u043B\u0445\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0441\u0442\u043E\u043B.",
+      success: "\u0427\u0438\u0441\u0442\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430. \u0422\u044B \u0440\u0430\u0441\u0442\u0451\u0448\u044C \u043D\u0430\u0434 \u0441\u043E\u0431\u043E\u0439, \u0445\u043E\u0437\u044F\u0438\u043D.",
+      spoiled: "\u0410\u043B\u0445\u0438\u043C\u0438\u044F \u2014 \u043D\u0430\u0443\u043A\u0430 \u043E\u0448\u0438\u0431\u043E\u043A. \u0417\u0430\u043F\u0438\u0441\u0430\u043B \u043D\u0430\u0431\u043B\u044E\u0434\u0435\u043D\u0438\u0435, \u0432\u0430\u0440\u0438\u043C \u0441\u043D\u043E\u0432\u0430!"
+    },
+    scribe: {
+      name: "\u041F\u0438\u0441\u0430\u0440\u044C",
+      icon: "\u{1F58B}\uFE0F",
+      art: "assets/fate/guest_scribe_web.jpg",
+      idle: "\u041C\u043D\u0435 \u0431\u044B \u0437\u0435\u043B\u044C\u0435 \u0434\u043B\u044F \u044F\u0441\u043D\u044B\u0445 \u043C\u044B\u0441\u043B\u0435\u0439 \u0438 \u0440\u043E\u0432\u043D\u043E\u0433\u043E \u043F\u0438\u0441\u044C\u043C\u0430.",
+      success: "\u0422\u0435\u043F\u0435\u0440\u044C \u043F\u043E\u0439\u0434\u0443 \u043F\u0438\u0441\u0430\u0442\u044C \u0434\u043E \u0443\u0442\u0440\u0430. \u0411\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u044E!",
+      spoiled: "\u041A\u043B\u044F\u043A\u0441\u0430 \u0432\u044B\u0448\u043B\u0430... \u043F\u0435\u0440\u0435\u043F\u0438\u0448\u0435\u043C \u0437\u0430\u043D\u043E\u0432\u043E. \u0411\u044B\u0432\u0430\u0435\u0442 \u0438 \u0442\u0430\u043A\u043E\u0435."
+    },
+    sailor: {
+      name: "\u041C\u043E\u0440\u044F\u043A",
+      icon: "\u2693",
+      art: "assets/fate/guest_sailor_web.jpg",
+      idle: "\u0417\u0435\u043B\u044C\u0435 \u0432 \u0434\u0430\u043B\u044C\u043D\u0435\u0435 \u043F\u043B\u0430\u0432\u0430\u043D\u0438\u0435, \u0431\u0443\u0434\u044C \u0434\u043E\u0431\u0440.",
+      success: "\u041F\u043E\u043F\u0443\u0442\u043D\u043E\u0433\u043E \u0432\u0435\u0442\u0440\u0430 \u0438 \u0432\u0430\u043C! \u0417\u0435\u043B\u044C\u0435 \u0447\u0442\u043E \u043D\u0430\u0434\u043E.",
+      spoiled: "\u0428\u0442\u043E\u0440\u043C \u043D\u0435 \u0448\u0442\u043E\u0440\u043C. \u0415\u0449\u0451 \u0437\u0430\u0445\u043E\u0434, \u0445\u043E\u0437\u044F\u0438\u043D!"
+    },
+    fairy: {
+      name: "\u0424\u0435\u044F \u043B\u0443\u0433\u0430",
+      icon: "\u{1F9DA}",
+      art: null,
+      idle: "\u041B\u0443\u0433 \u0436\u0434\u0451\u0442 \u0432\u043E\u043B\u0448\u0435\u0431\u0441\u0442\u0432\u0430! \u0421\u0432\u0430\u0440\u0438 \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C \u0431\u043B\u0435\u0441\u0442\u044F\u0449\u0435\u0435.",
+      success: "\u0411\u043B\u0435\u0441\u0442\u044F\u0449\u0435! \u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0430\u0435\u043C\u0441\u044F \u0442\u0430\u043D\u0446\u0435\u0432\u0430\u0442\u044C \u043D\u0430 \u043B\u0443\u0433.",
+      spoiled: "\u041E\u0439, \u043B\u0443\u043D\u043D\u044B\u0439 \u043B\u0443\u0447\u0438\u043A \u043F\u043E\u0433\u0430\u0441... \u0437\u0430\u0436\u0436\u0451\u043C \u0441\u043D\u043E\u0432\u0430!"
+    },
+    cook: {
+      name: "\u041F\u043E\u0432\u0430\u0440\u0451\u043D\u043E\u043A",
+      icon: "\u{1F372}",
+      art: null,
+      idle: "\u0414\u043B\u044F \u043C\u043E\u0435\u0439 \u043A\u0443\u0445\u043D\u0438 \u043D\u0443\u0436\u043D\u043E \u0437\u0435\u043B\u044C\u0435. \u0410\u0440\u043E\u043C\u0430\u0442 \u2014 \u0433\u043B\u0430\u0432\u043D\u043E\u0435!",
+      success: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0432\u043E\u0441\u0445\u0438\u0442\u0438\u0442\u0435\u043B\u044C\u043D\u043E! \u041F\u0440\u044F\u043C\u043E \u0432 \u043C\u0435\u043D\u044E.",
+      spoiled: "\u0418 \u0443 \u043C\u0435\u043D\u044F \u043A\u0430\u0448\u0430 \u043F\u0440\u0438\u0433\u043E\u0440\u0430\u043B\u0430. \u041D\u0435 \u0431\u0435\u0434\u0430, \u0432\u0430\u0440\u0438\u043C \u0441\u043D\u043E\u0432\u0430!"
+    }
+  };
+  var GROUPS = {
+    cat: [1, 10, 30, 60, 61, 86, 87, 99, 100],
+    watchman: [2, 18, 29, 49, 54, 74, 89],
+    merchant: [3, 13, 22, 69, 71],
+    owl: [6, 23, 36, 48, 72, 76, 96],
+    knight: [5, 16, 24, 26, 34, 39, 77, 91],
+    ranger: [4, 7, 19, 66, 81],
+    wanderer: [11, 15, 37, 63, 82, 92],
+    gardener: [32, 67],
+    alchemist: [8, 14, 20, 25, 28, 40, 43, 46, 50, 59, 65, 70, 79, 80, 90, 95, 98],
+    scribe: [21, 41, 44, 58, 64, 83, 93],
+    sailor: [12, 42, 53, 56, 78, 88],
+    fairy: [27, 31, 35, 38, 47, 55, 68, 75, 85],
+    cook: [9, 17, 33, 45, 51, 52, 57, 62, 73, 84, 94, 97]
+  };
+  var BREW_LEVEL_GUESTS = {};
+  for (const [guestId, nums] of Object.entries(GROUPS)) {
+    for (const n of nums) BREW_LEVEL_GUESTS[`brew_${String(n).padStart(2, "0")}`] = guestId;
+  }
+  function brewGuest(levelId) {
+    return GUESTS[BREW_LEVEL_GUESTS[levelId]] || GUESTS.cat;
+  }
+
+  // src/ui/brewFlask.js
+  var SHAPES = [
+    { path: "M26 8 h12 v18 c4 6 14 16 14 32 a20 20 0 1 1 -40 0 c0 -16 10 -26 14 -32 z", liquidY: 48, cork: { x: 25, y: 1, w: 14, h: 8 } },
+    { path: "M24 4 h16 v28 l10 12 v30 a8 8 0 0 1 -8 8 h-16 a8 8 0 0 1 -8 -8 v-30 l6 -12 z", liquidY: 44, cork: { x: 22, y: 0, w: 20, h: 7 } },
+    { path: "M22 12 h20 v12 h6 v52 a6 6 0 0 1 -6 6 h-20 a6 6 0 0 1 -6 -6 v-52 h6 z", liquidY: 42, cork: { x: 23, y: 4, w: 18, h: 8 } },
+    { path: "M32 6 h16 v48 a16 16 0 0 1 -32 0 v-48 z", liquidY: 36, cork: { x: 14, y: 0, w: 36, h: 7 } },
+    { path: "M26 10 h12 v10 h14 v44 a10 10 0 0 1 -10 10 h-20 a10 10 0 0 1 -10 -10 v-44 h14 z", liquidY: 36, cork: { x: 25, y: 2, w: 14, h: 8 } },
+    { path: "M26 6 h12 v20 l16 44 a8 8 0 0 1 -8 12 h-28 a8 8 0 0 1 -8 -12 l16 -44 z", liquidY: 58, cork: { x: 25, y: 0, w: 14, h: 7 } }
+  ];
+  var flaskSeq = 0;
+  function brewFlaskVariant(levelId) {
+    const n = parseInt(String(levelId).replace(/\D/g, ""), 10);
+    return Number.isFinite(n) ? n % SHAPES.length : 0;
+  }
+  function brewFlaskHtml(look, variant = 0, size = 64) {
+    const s = SHAPES[(variant % SHAPES.length + SHAPES.length) % SHAPES.length];
+    const clipId = `brew-flask-${flaskSeq += 1}`;
+    const h = Math.round(size * 88 / 64);
+    const spark = look.sparkles ? '<span class="brew-flask-spark">\u2728</span>' : "";
+    return `<span class="brew-flask${look.glow ? " glow" : ""}"><svg width="${size}" height="${h}" viewBox="0 0 64 88" role="img" aria-label="\u0424\u043B\u0430\u043A\u043E\u043D \u0437\u0435\u043B\u044C\u044F">
+  <defs><clipPath id="${clipId}"><path d="${s.path}"/></clipPath></defs>
+  <g clip-path="url(#${clipId})">
+    <rect x="0" y="${s.liquidY}" width="64" height="${88 - s.liquidY}" fill="${look.color}"/>
+    <ellipse cx="24" cy="60" rx="4" ry="10" fill="rgba(255,255,255,0.22)"/>
+  </g>
+  <path d="${s.path}" fill="rgba(215,232,245,0.10)" stroke="rgba(215,232,245,0.75)" stroke-width="2.5"/>
+  <rect x="${s.cork.x}" y="${s.cork.y}" width="${s.cork.w}" height="${s.cork.h}" rx="2" fill="#8a6a42" stroke="#5d4426"/>
+</svg>${spark}</span>`;
+  }
 
   // src/ui/brewView.js
-  var POTION_COLORS = ["#6fb7d9", "#7fc98f", "#d9c26f", "#d9915f", "#b565a8", "#6f4fa8"];
   var PREP_TOOLS = [
     { do: "crush", icon: "\u{1F963}", label: "\u0421\u0442\u0443\u043F\u043A\u0430", active: "\u0427\u0442\u043E \u0442\u043E\u043B\u0447\u0451\u043C?", verb: "\u0420\u0430\u0441\u0442\u043E\u043B\u043E\u0447\u044C", hint: "\u0416\u043C\u0438 \u0441\u0442\u0443\u043F\u043A\u0443, \u043F\u043E\u0442\u043E\u043C \u2014 \u0447\u0442\u043E \u0440\u0430\u0441\u0442\u043E\u043B\u043E\u0447\u044C" },
     { do: "cut", icon: "\u{1F52A}", label: "\u041D\u043E\u0436", active: "\u0427\u0442\u043E \u0440\u0435\u0436\u0435\u043C?", verb: "\u041D\u0430\u0440\u0435\u0437\u0430\u0442\u044C", hint: "\u0416\u043C\u0438 \u043D\u043E\u0436, \u043F\u043E\u0442\u043E\u043C \u2014 \u0447\u0442\u043E \u043D\u0430\u0440\u0435\u0437\u0430\u0442\u044C" },
     { do: "drop", icon: "\u{1F9EA}", label: "\u041F\u0438\u043F\u0435\u0442\u043A\u0430", active: "\u0427\u0442\u043E \u043A\u0430\u043F\u0430\u0435\u043C?", verb: "\u041D\u0430\u043A\u0430\u043F\u0430\u0442\u044C", hint: "\u0416\u043C\u0438 \u043F\u0438\u043F\u0435\u0442\u043A\u0443, \u043F\u043E\u0442\u043E\u043C \u2014 \u0447\u0442\u043E \u043D\u0430\u043A\u0430\u043F\u0430\u0442\u044C" }
   ];
+  var SFX_BY_DO = {
+    add: "potion",
+    crush: "crush",
+    cut: "cut",
+    drop: "drop",
+    stir: "stir",
+    heat: "heat",
+    cool: "cool",
+    wait: "wait",
+    cover: "cover",
+    uncover: "uncover"
+  };
   function renderBrewPuzzle(container, ctx2, level) {
     const puzzle = createBrewPuzzle(level);
     let hintsUsed = 0;
@@ -20356,6 +20565,20 @@
     const fire = document.createElement("div");
     fire.className = "brew-fire";
     pot.appendChild(fire);
+    const sparkles = document.createElement("div");
+    sparkles.className = "brew-sparkles";
+    sparkles.textContent = "\u2728";
+    pot.appendChild(sparkles);
+    const lidEl = document.createElement("div");
+    lidEl.className = "brew-lid";
+    pot.appendChild(lidEl);
+    const lidSteam = document.createElement("div");
+    lidSteam.className = "brew-lid-steam";
+    lidSteam.textContent = "\u2668\uFE0F";
+    pot.appendChild(lidSteam);
+    const fx = document.createElement("div");
+    fx.className = "brew-fx";
+    pot.appendChild(fx);
     scene.appendChild(pot);
     const tools = document.createElement("div");
     tools.className = "brew-tools";
@@ -20401,6 +20624,33 @@
     wrap.appendChild(scene);
     const side = document.createElement("div");
     side.className = "puzzle-side";
+    const guest = brewGuest(level.id);
+    const guestEl = document.createElement("div");
+    guestEl.className = "brew-guest";
+    const portrait = document.createElement("div");
+    portrait.className = "brew-guest-portrait";
+    if (guest.art) {
+      const img = document.createElement("img");
+      img.src = guest.art;
+      img.alt = guest.name;
+      img.addEventListener("error", () => {
+        img.remove();
+        portrait.textContent = guest.icon;
+      });
+      portrait.appendChild(img);
+    } else {
+      portrait.textContent = guest.icon;
+    }
+    const guestText = document.createElement("div");
+    const guestName = document.createElement("div");
+    guestName.className = "brew-guest-name";
+    guestName.textContent = guest.name;
+    const speech = document.createElement("div");
+    speech.className = "brew-guest-speech";
+    speech.textContent = `\xAB${guest.idle}\xBB`;
+    guestText.append(guestName, speech);
+    guestEl.append(portrait, guestText);
+    side.appendChild(guestEl);
     const intro = document.createElement("div");
     intro.className = "intro-text";
     intro.textContent = level.intro;
@@ -20477,6 +20727,11 @@
       draw();
     }
     if (level.hideRecipe) startPeek();
+    function ambient() {
+      if (!finished) ctx2.sfx?.("brewAmb");
+      timers.push(setTimeout(ambient, 3e3 + Math.random() * 3500));
+    }
+    timers.push(setTimeout(ambient, 2200));
     function heatLevel() {
       let n = 0;
       for (const h of puzzle.history) {
@@ -20535,17 +20790,20 @@
       const r = doBrewAction(puzzle, action);
       if (r.ok) {
         hintAction = null;
-        const sfx2 = ["add", "crush", "cut", "drop"].includes(action.do) ? "potion" : action.do === "cover" || action.do === "uncover" ? "tap" : "bubble";
-        ctx2.sfx?.(sfx2);
+        ctx2.sfx?.(SFX_BY_DO[action.do] || "bubble");
         pulsePot();
+        playFx(action);
         draw();
         if (r.solved) finish();
         return;
       }
       if (r.mistake) {
-        ctx2.sfx?.("tap");
+        ctx2.sfx?.(r.spoiled ? "spoil" : "tap");
         puffSmoke();
         if (r.spoiled) {
+          pot.classList.add("spoiled");
+          timers.push(setTimeout(() => pot.classList.remove("spoiled"), 1200));
+          speech.textContent = `\xAB${guest.spoiled}\xBB`;
           ctx2.toast("\u{1F4A8} \u0417\u0435\u043B\u044C\u0435 \u0438\u0441\u043F\u043E\u0440\u0447\u0435\u043D\u043E! \u041F\u0443\u0437\u044B\u0440\u0438\u0442\u0441\u044F \u0447\u0451\u0440\u043D\u044B\u043C\u2026 \u0412\u0430\u0440\u0438\u043C \u0437\u0430\u043D\u043E\u0432\u043E.");
         } else {
           ctx2.toast(`\u041D\u0435 \u0442\u043E\u0442 \u0448\u0430\u0433! \u041E\u0448\u0438\u0431\u043A\u0430 ${puzzle.mistakes} \u0438\u0437 ${BREW_MAX_MISTAKES}. \u041A\u043E\u0442 \u043C\u043E\u0440\u0449\u0438\u0442\u0441\u044F \u043E\u0442 \u0437\u0430\u043F\u0430\u0445\u0430.`);
@@ -20554,6 +20812,27 @@
         return;
       }
       ctx2.toast(r.error || "\u041D\u0435 \u0432\u044B\u0445\u043E\u0434\u0438\u0442");
+    }
+    function playFx(action) {
+      if (action.do === "cover" || action.do === "uncover") return;
+      const byDo = {
+        stir: ["\u{1F944}", "fx-stir"],
+        heat: ["\u{1F525}", "fx-heat"],
+        cool: ["\u2744\uFE0F", "fx-fall"],
+        wait: ["\u23F3", "fx-wait"],
+        crush: ["\u{1F963}", "fx-pound"],
+        cut: ["\u{1F52A}", "fx-chop"]
+      };
+      const ing = action.ingredient ? level.ingredients.find((i) => i.id === action.ingredient) : null;
+      const [icon, cls] = byDo[action.do] || [ing?.icon || "\u{1F4A7}", "fx-fall"];
+      fx.textContent = icon;
+      fx.className = "brew-fx";
+      void fx.offsetWidth;
+      fx.classList.add(cls);
+      timers.push(setTimeout(() => {
+        fx.className = "brew-fx";
+        fx.textContent = "";
+      }, 950));
     }
     function pulsePot() {
       pot.classList.remove("bubble");
@@ -20576,14 +20855,18 @@
     function finish() {
       finished = true;
       const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      journalPush(ctx2.state, "\u2697\uFE0F", `\u0417\u0435\u043B\u044C\u0435 \xAB${level.name}\xBB \u0432\u0440\u0443\u0447\u0435\u043D\u043E \u0433\u043E\u0441\u0442\u044E: ${guest.name}.`);
       ctx2.save();
       ctx2.sfx?.("success");
+      speech.textContent = `\xAB${guest.success}\xBB`;
       draw();
       setTimeout(() => {
         const next = nextPuzzle(level.id);
         showOverlay(ctx2, {
+          // Флакон именно этой варки: цвет по реальным действиям игрока
+          art: brewFlaskHtml(brewPotionLook(level, puzzle.history), brewFlaskVariant(level.id), 72),
           title: "\u2697\uFE0F \u0417\u0435\u043B\u044C\u0435 \u043F\u043E\u043B\u0443\u0447\u0438\u043B\u043E\u0441\u044C!",
-          subtitle: `\xAB${level.name}\xBB \u2014 \u0441\u0432\u0430\u0440\u0435\u043D\u043E \u043F\u043E \u0432\u0441\u0435\u043C \u043F\u0440\u0430\u0432\u0438\u043B\u0430\u043C${puzzle.spoiled ? ` (\u0438\u0441\u043F\u043E\u0440\u0447\u0435\u043D\u043E \u043A\u043E\u0442\u043B\u043E\u0432: ${puzzle.spoiled})` : ""}`,
+          subtitle: `\xAB${level.name}\xBB \u2014 \u0441\u0432\u0430\u0440\u0435\u043D\u043E \u043F\u043E \u0432\u0441\u0435\u043C \u043F\u0440\u0430\u0432\u0438\u043B\u0430\u043C${puzzle.spoiled ? ` (\u0438\u0441\u043F\u043E\u0440\u0447\u0435\u043D\u043E \u043A\u043E\u0442\u043B\u043E\u0432: ${puzzle.spoiled})` : ""}. ${guest.name}: \xAB${guest.success}\xBB`,
           rewards,
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
@@ -20596,11 +20879,15 @@
     }
     function draw() {
       const total = level.recipe.length;
-      const ci = Math.min(POTION_COLORS.length - 1, Math.floor(puzzle.progress / total * POTION_COLORS.length));
-      potion.style.background = POTION_COLORS[puzzle.progress === 0 ? 0 : ci];
+      const look = brewPotionLook(level, puzzle.history);
+      potion.style.background = look.color;
+      potion.className = "brew-potion" + (look.glow ? " glow" : "");
+      sparkles.className = "brew-sparkles" + (look.sparkles ? " on" : "");
       potion.style.height = `${20 + puzzle.progress / total * 65}%`;
       const hl = heatLevel();
       fire.textContent = hl > 0 ? "\u{1F525}".repeat(hl) : "";
+      if (lidOn()) pot.classList.add("covered");
+      else pot.classList.remove("covered");
       const hintOpts = hintAction ? Array.isArray(hintAction.anyOf) ? hintAction.anyOf : [hintAction] : [];
       const prepTool = PREP_TOOLS.find((t) => t.do === prepMode) || null;
       ingRow.innerHTML = "";
@@ -23867,6 +24154,60 @@ ${item2.description}
         }
         break;
       }
+      // --- Варка зелий: действия у котла (тихо, уютно) ---
+      case "stir":
+        tone(280, 0.22, { type: "sine", gain: 0.035, slide: -90 });
+        noiseBurst(0.22, { freq: 600, gain: 0.02 });
+        break;
+      case "crush":
+        for (let i = 0; i < 2; i++) {
+          tone(130, 0.08, { type: "triangle", gain: 0.06, delay: i * 0.13, slide: -30 });
+          noiseBurst(0.06, { freq: 420, gain: 0.04, delay: i * 0.13 });
+        }
+        break;
+      case "cut":
+        for (let i = 0; i < 2; i++) {
+          noiseBurst(0.05, { freq: 2600, gain: 0.05, delay: i * 0.11 });
+          tone(190, 0.05, { type: "triangle", gain: 0.04, delay: i * 0.11 });
+        }
+        break;
+      case "drop":
+        tone(620, 0.1, { gain: 0.05, slide: 480 });
+        tone(930, 0.07, { delay: 0.07, gain: 0.025, slide: 300 });
+        break;
+      case "cover":
+        tone(150, 0.14, { type: "triangle", gain: 0.06, slide: -50 });
+        noiseBurst(0.09, { freq: 600, gain: 0.04 });
+        break;
+      case "uncover":
+        tone(220, 0.12, { type: "triangle", gain: 0.045, slide: 80 });
+        noiseBurst(0.06, { freq: 900, gain: 0.025 });
+        break;
+      case "heat":
+        for (let i = 0; i < 4; i++) {
+          noiseBurst(0.05, { freq: 2e3 + Math.random() * 1500, gain: 0.02, delay: i * 0.06 });
+        }
+        tone(90, 0.25, { type: "sine", gain: 0.03, slide: 40 });
+        break;
+      case "cool":
+        noiseBurst(0.35, { freq: 5200, q: 0.6, gain: 0.035 });
+        tone(700, 0.25, { gain: 0.02, slide: -350 });
+        break;
+      case "wait":
+        tone(1050, 0.04, { gain: 0.02 });
+        tone(1050, 0.04, { gain: 0.02, delay: 0.16 });
+        break;
+      case "spoil":
+        tone(220, 0.3, { type: "sawtooth", gain: 0.04, slide: -140 });
+        tone(233, 0.3, { type: "sawtooth", gain: 0.03, slide: -150 });
+        noiseBurst(0.3, { freq: 300, gain: 0.03 });
+        break;
+      case "brewAmb":
+        tone(80 + Math.random() * 70, 0.12, { type: "sine", gain: 0.016, slide: 45 });
+        if (Math.random() < 0.4) {
+          tone(90 + Math.random() * 60, 0.1, { type: "sine", gain: 0.012, delay: 0.14, slide: 40 });
+        }
+        break;
       default:
         tone(440, 0.08, { gain: 0.04 });
     }
@@ -25390,8 +25731,9 @@ ${item2.description}
       const entry = document.createElement("div");
       entry.className = "panel brew-book-entry";
       const steps = done ? level.recipe.map((s, i) => `<div class="brew-step done">${i + 1}. ${brewStepText(level, s)}</div>`).join("") : '<div class="muted">\u0415\u0449\u0451 \u043D\u0435 \u0441\u0432\u0430\u0440\u0435\u043D\u043E \u2014 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u0437\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0441\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u0435\u0440\u0432\u043E\u0439 \u0432\u0430\u0440\u043A\u0438.</div>';
+      const flask = done ? brewFlaskHtml(brewFinalLook(level), brewFlaskVariant(level.id), 40) : "";
       entry.innerHTML = `
-      <div class="name" style="font-weight:700">${done ? "\u2697\uFE0F" : "\u{1F512}"} ${level.name} <span class="badge">${stars}</span></div>
+      <div class="name" style="font-weight:700">${done ? flask : "\u{1F512}"} ${level.name} <span class="badge">${stars}</span></div>
       <div class="brew-book-steps">${steps}</div>`;
       list.appendChild(entry);
     }

@@ -8,31 +8,31 @@
 // кристалл эха (41–50), речной жемчуг (51–60), флакон тумана (61–70).
 // Каждый уровень проверен валидатором в tests/brew.test.mjs.
 
-const WATER = { id: 'water', name: 'Родниковая вода', icon: '💧' };
-const HONEY = { id: 'honey', name: 'Дикий мёд', icon: '🍯' };
-const CHAMOMILE = { id: 'chamomile', name: 'Ромашка', icon: '🌼' };
-const MINT = { id: 'mint', name: 'Мята перечная', icon: '🌿' };
-const BERRIES = { id: 'berries', name: 'Лесные ягоды', icon: '🫐' };
-const MUSHROOM = { id: 'mushroom', name: 'Светляковый гриб', icon: '🍄' };
-const MOSS = { id: 'moss', name: 'Светящийся мох', icon: '🟢' };
-const FEATHER = { id: 'feather', name: 'Перо совы', icon: '🪶' };
-const SPIDER = { id: 'spider', name: 'Паутинная нить', icon: '🕸️' };
-const ROSE = { id: 'rose', name: 'Лепестки роз', icon: '🌹' };
-const SALT = { id: 'salt', name: 'Соль', icon: '🧂' };
-const CHESTNUT = { id: 'chestnut', name: 'Каштан', icon: '🌰' };
-const STAR = { id: 'star', name: 'Звёздная пыль', icon: '🌟' };
-const INK = { id: 'ink', name: 'Капля чернил', icon: '🫟' };
-const ICE = { id: 'ice', name: 'Льдинка', icon: '🧊' };
-const PEPPER = { id: 'pepper', name: 'Огненный перец', icon: '🌶️' };
-const GINGER = { id: 'ginger', name: 'Корень имбиря', icon: '🫚' };
-const LEMON = { id: 'lemon', name: 'Ломтик лимона', icon: '🍋' };
-const CLOVER = { id: 'clover', name: 'Клевер на удачу', icon: '🍀' };
-const MOONSTONE = { id: 'moonstone', name: 'Лунный камень', icon: '🌙' };
-const POLLEN = { id: 'pollen', name: 'Пыльца фей', icon: '✨' };
-const MANDRAKE = { id: 'mandrake', name: 'Корень мандрагоры', icon: '🥕' };
-const CRYSTAL = { id: 'crystal', name: 'Кристалл эха', icon: '💎' };
-const PEARL = { id: 'pearl', name: 'Речной жемчуг', icon: '🦪' };
-const MIST = { id: 'mist', name: 'Флакон тумана', icon: '🌫️' };
+const WATER = { id: 'water', name: 'Родниковая вода', icon: '💧', color: '#6fb7d9' };
+const HONEY = { id: 'honey', name: 'Дикий мёд', icon: '🍯', color: '#dfa63e' };
+const CHAMOMILE = { id: 'chamomile', name: 'Ромашка', icon: '🌼', color: '#eee1a0' };
+const MINT = { id: 'mint', name: 'Мята перечная', icon: '🌿', color: '#7fc98f' };
+const BERRIES = { id: 'berries', name: 'Лесные ягоды', icon: '🫐', color: '#a85b9b' };
+const MUSHROOM = { id: 'mushroom', name: 'Светляковый гриб', icon: '🍄', color: '#9fe6b0', glow: true };
+const MOSS = { id: 'moss', name: 'Светящийся мох', icon: '🟢', color: '#6fd08c', glow: true };
+const FEATHER = { id: 'feather', name: 'Перо совы', icon: '🪶', color: '#b8c4d4' };
+const SPIDER = { id: 'spider', name: 'Паутинная нить', icon: '🕸️', color: '#c9c9d6' };
+const ROSE = { id: 'rose', name: 'Лепестки роз', icon: '🌹', color: '#e08a9b' };
+const SALT = { id: 'salt', name: 'Соль', icon: '🧂', color: '#e8e8e8' };
+const CHESTNUT = { id: 'chestnut', name: 'Каштан', icon: '🌰', color: '#a8763e' };
+const STAR = { id: 'star', name: 'Звёздная пыль', icon: '🌟', color: '#f2d94e', sparkle: true };
+const INK = { id: 'ink', name: 'Капля чернил', icon: '🫟', color: '#2c2c3a' };
+const ICE = { id: 'ice', name: 'Льдинка', icon: '🧊', color: '#bfe6f0' };
+const PEPPER = { id: 'pepper', name: 'Огненный перец', icon: '🌶️', color: '#d94f3d' };
+const GINGER = { id: 'ginger', name: 'Корень имбиря', icon: '🫚', color: '#d9a05f' };
+const LEMON = { id: 'lemon', name: 'Ломтик лимона', icon: '🍋', color: '#f0dc5a' };
+const CLOVER = { id: 'clover', name: 'Клевер на удачу', icon: '🍀', color: '#5fb36a' };
+const MOONSTONE = { id: 'moonstone', name: 'Лунный камень', icon: '🌙', color: '#b9b6e0' };
+const POLLEN = { id: 'pollen', name: 'Пыльца фей', icon: '✨', color: '#f5e27a', sparkle: true };
+const MANDRAKE = { id: 'mandrake', name: 'Корень мандрагоры', icon: '🥕', color: '#c98d5f' };
+const CRYSTAL = { id: 'crystal', name: 'Кристалл эха', icon: '💎', color: '#a8e0e6' };
+const PEARL = { id: 'pearl', name: 'Речной жемчуг', icon: '🦪', color: '#e8e0f0' };
+const MIST = { id: 'mist', name: 'Флакон тумана', icon: '🌫️', color: '#b8c8d0' };
 
 export const BREW_PUZZLES = [
   {

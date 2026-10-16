@@ -180,6 +180,44 @@ export function brewStepText(level, step) {
   return brewActionText(level, step) + suffix;
 }
 
+// Внешний вид зелья по истории действий (для view, чистая функция):
+// цвет — среднее цветов добавленных ингредиентов (поле color в данных),
+// glow — есть светящийся ингредиент (мох, гриб), sparkles — блёстки (пыль, пыльца).
+// Отмена/сброс меняют history, поэтому вид всегда соответствует варке.
+export function brewPotionLook(level, history) {
+  const byId = new Map(level.ingredients.map((i) => [i.id, i]));
+  let r = 0; let g = 0; let b = 0; let n = 0;
+  let glow = false; let sparkles = false;
+  for (const h of history) {
+    if (!ING_ACTIONS.has(h.do)) continue;
+    const ing = byId.get(h.ingredient);
+    if (!ing?.color) continue;
+    const c = parseInt(ing.color.slice(1), 16);
+    r += (c >> 16) & 255; g += (c >> 8) & 255; b += c & 255; n += 1;
+    if (ing.glow) glow = true;
+    if (ing.sparkle) sparkles = true;
+  }
+  if (n === 0) return { color: 'rgb(111, 183, 217)', glow: false, sparkles: false }; // родниковая вода
+  return {
+    color: `rgb(${Math.round(r / n)}, ${Math.round(g / n)}, ${Math.round(b / n)})`,
+    glow,
+    sparkles,
+  };
+}
+
+// Вид готового зелья по ПОЛНОМУ рецепту (флакон в книге рецептов):
+// шаги разворачиваются в историю (anyOf — первый вариант, times — повторы).
+export function brewFinalLook(level) {
+  const history = [];
+  for (const step of level.recipe) {
+    const a = Array.isArray(step.anyOf) ? step.anyOf[0] : step;
+    for (let k = 0; k < (step.times ?? 1); k += 1) {
+      history.push({ do: a.do, ingredient: a.ingredient ?? null });
+    }
+  }
+  return brewPotionLook(level, history);
+}
+
 // Валидация уровня для конвейера и тестов.
 export function validateBrewLevel(level) {
   const problems = [];
