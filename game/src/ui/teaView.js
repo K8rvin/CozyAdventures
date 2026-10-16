@@ -2,7 +2,7 @@
 // Сцена со столом травницы: котёл (в него льётся цвет), стакан заказа,
 // огонь под котлом по степени жара, чашечки ингредиентов.
 // Без чисел: близость к заказу — метр сходства со словесными стадиями.
-// Арт: assets/tea_table_web.jpg, tea_pot/tea_cup/tea_fire_N/tea_ing_<id>.png —
+// Арт: assets/tea/tea_table_fire_N_web.jpg, tea_pot/tea_cup/tea_ing_<id>.png —
 // без файлов работают эмодзи-фолбэки.
 import {
   createTeaPuzzle, addIngredient, undoTea, resetTea,
@@ -40,12 +40,12 @@ export function renderTeaPuzzle(container, ctx, level) {
   bg.className = 'tea-scene-bg';
   bg.alt = '';
   bg.addEventListener('error', () => {
-    if (bgStage > 0) { bgStage = 0; bg.src = 'assets/tea_table_fire_0_web.jpg'; return; }
+    if (bgStage > 0) { bgStage = 0; bg.src = 'assets/tea/tea_table_fire_0_web.jpg'; return; }
     tableArt = false;
     bg.remove();
   });
   bgStage = 0;
-  bg.src = 'assets/tea_table_fire_0_web.jpg';
+  bg.src = 'assets/tea/tea_table_fire_0_web.jpg';
   scene.appendChild(bg);
 
   function spotEl(spot) {
@@ -74,7 +74,7 @@ export function renderTeaPuzzle(container, ctx, level) {
   const potColor = document.createElement('div');
   potColor.className = 'tea-pot-color';
   potSpot.appendChild(potColor);
-  potSpot.appendChild(artImg('assets/tea_pot.png', 'tea-pot-art', () => {
+  potSpot.appendChild(artImg('assets/tea/tea_pot.png', 'tea-pot-art', () => {
     potSpot.classList.add('tea-noart');
     potSpot.appendChild(Object.assign(document.createElement('div'), { className: 'tea-emoji', textContent: '🫖' }));
   }));
@@ -90,7 +90,7 @@ export function renderTeaPuzzle(container, ctx, level) {
   cupColor.className = 'tea-cup-color';
   cupColor.style.background = rgbCss(level.target);
   cupSpot.appendChild(cupColor);
-  cupSpot.appendChild(artImg('assets/tea_cup.png', 'tea-cup-art', () => {
+  cupSpot.appendChild(artImg('assets/tea/tea_cup.png', 'tea-cup-art', () => {
     cupSpot.appendChild(Object.assign(document.createElement('div'), { className: 'tea-emoji', textContent: '🍷' }));
   }));
   scene.appendChild(cupSpot);
@@ -121,7 +121,7 @@ export function renderTeaPuzzle(container, ctx, level) {
     const top = document.createElement('div');
     top.className = 'tea-ing-top';
     el.appendChild(top);
-    el.appendChild(artImg(`assets/tea_ing_${ing.id}.png`, 'tea-ing-art', () => {
+    el.appendChild(artImg(`assets/tea/tea_ing_${ing.id}.png`, 'tea-ing-art', () => {
       el.appendChild(Object.assign(document.createElement('div'), { className: 'tea-emoji ing', textContent: ing.icon }));
     }));
     const meta = document.createElement('div');
@@ -344,7 +344,7 @@ export function renderTeaPuzzle(container, ctx, level) {
     if (tableArt) {
       if (stage !== bgStage) {
         bgStage = stage;
-        bg.src = `assets/tea_table_fire_${stage}_web.jpg`;
+        bg.src = `assets/tea/tea_table_fire_${stage}_web.jpg`;
       }
     } else {
       let fe = fireSpot.querySelector('.tea-emoji.fire');

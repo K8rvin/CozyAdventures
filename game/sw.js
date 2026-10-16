@@ -1,7 +1,7 @@
 // Service Worker: офлайн-режим игры «Лавка на перекрёстке миров».
 // Документ и код — network-first (свежее сразу, офлайн — из кэша),
 // ассеты — cache-first (картинки/звуки меняются редко, кэш ускоряет).
-const CACHE = 'cozy-adventures-v2';
+const CACHE = 'cozy-adventures-v3';
 
 // Ядро: то, без чего игра не откроется офлайн.
 const CORE = [
@@ -10,9 +10,9 @@ const CORE = [
   'styles.css',
   'bundle.js',
   'manifest.webmanifest',
-  'assets/fav2_mug.svg',
-  'assets/icon-192.png',
-  'assets/icon-512.png',
+  'assets/brand/fav2_mug.svg',
+  'assets/brand/icon-192.png',
+  'assets/brand/icon-512.png',
 ];
 
 self.addEventListener('install', (ev) => {

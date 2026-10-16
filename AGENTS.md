@@ -32,7 +32,8 @@ game/
   src/data/   — контент как данные (items, enemies, battles, puzzles*, crew, shop, sets…)
   src/ui/     — экраны (app.js — роутер и ctx; hub.js — сцены-хабы; *View.js)
   tests/      — node --test; ui-smoke.test.mjs рендерит все экраны на DOM-стабе
-  assets/     — картинки; PROMPTS.md — промты для генерации (пользователь генерирует сам)
+  assets/     — только рантайм-картинки по тематическим папкам;
+                исходники и PROMPTS.md — в ../art-src/ (пользователь генерирует сам)
   tools/      — sim-world.mjs (баланс), generate-assets.mjs (API-генерация),
                 fate-deck.mjs (пересборка уровней и рук «Карт судьбы»)
 ```
@@ -121,7 +122,7 @@ game/
   реплики гостя порциями, история раскладов — в панели справа с паучьим скроллом.
 - glass «Витраж миров»: `glassPuzzle.js` + `puzzlesGlass.js`; пазл-перестановка
   сетки cols×rows, перемешка seeded-ГСЧ (гарантированно не собран на старте);
-  арты `assets/glass/`, промты в `PROMPTS.md`.
+  арты `assets/glass/`, промты в `art-src/PROMPTS.md`.
 - Оверлеи победы: Enter/Пробел нажимает основную кнопку («Следующая →») —
   `showOverlay` в `common.js` + локальный `showVictory` в `puzzleView.js`.
 
@@ -142,9 +143,9 @@ game/
   промежуточно. Порядок уровней и руки пересобирает `node tools/fate-deck.mjs`
   (спека историй в нём, вход — puzzlesFate.js; не идемпотентен: после прогона
   вход восстановить из git), затем `npm run build && npm test`. Промпты карт —
-  `PROMPTS.md`, р.16.
+  `art-src/PROMPTS.md`, р.16.
 - Витраж миров: `puzzlesGlass.js` (уровень = `grid: [cols, rows]` + `image` +
-  награды; арты `assets/glass/`, промты в `PROMPTS.md`).
+  награды; арты `assets/glass/`, промты в `art-src/PROMPTS.md`).
 - Питомцы/спутники на сценах: `PET_SPOTS`/`CREW_SPOTS` в `hub.js`.
 
 ## Известные грабли (не наступай повторно)
@@ -161,8 +162,9 @@ game/
 - Глоб в `npm test` требует Node ≥ 22.
 - SW (sw.js): код — network-first, ассеты — cache-first. Меняешь кэширование —
   подними версию CACHE.
-- Пользователь генерирует ассеты сам по `assets/PROMPTS.md`; большие оригиналы
-  (jfif/png) — исходники, в рантайм идут сжатые `*_web.jpg` / `*.webp`.
+- Пользователь генерирует ассеты сам по `art-src/PROMPTS.md`; большие оригиналы
+  (jfif/png) хранятся в `art-src/<тема>/`, в рантайм идут сжатые `*_web.jpg` / `*.webp`
+  из тематических папок `game/assets/`.
 
 ## Git и секреты
 

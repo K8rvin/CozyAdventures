@@ -51,7 +51,7 @@ export function renderHub(container, ctx, params = {}) {
   // --- Сцены хаба: уютная лавка и городская площадь ---
   const SCENES = {
     lavka: {
-      candidates: ['assets/hub_banner_web.jpg', 'assets/hub_banner.jfif', 'assets/hub_banner.png', 'assets/hub_banner.svg'],
+      candidates: ['assets/hub/hub_banner_web.jpg'],
       alt: 'Лавка на перекрёстке миров',
       // Хотспоты: [icon, label, screen, x%, y%, showDot]
       hotspots: [
@@ -64,7 +64,7 @@ export function renderHub(container, ctx, params = {}) {
       ],
     },
     square: {
-      candidates: ['assets/town_square_web.jpg', 'assets/seek_town_web.jpg'],
+      candidates: ['assets/hub/town_square_web.jpg'],
       alt: 'Городская площадь',
       hotspots: [
         ['🍺', 'Таверна', 'tavern', 79, 60, () => false],
@@ -76,7 +76,7 @@ export function renderHub(container, ctx, params = {}) {
       ],
     },
     market: {
-      candidates: ['assets/town_market_web.jpg', 'assets/town_market.jfif', 'assets/town_square_web.jpg'],
+      candidates: ['assets/hub/town_market_web.jpg'],
       alt: 'Торговый квартал',
       hotspots: [
         ['🗡️', 'Оружейник', 'shopArmory', 7, 60, () => hasUnseenIn(state, 'armory')],
@@ -87,7 +87,7 @@ export function renderHub(container, ctx, params = {}) {
       ],
     },
     cabinet: {
-      candidates: ['assets/trophy_room_web.jpg', 'assets/trophy_room.png'],
+      candidates: ['assets/hub/trophy_room_web.jpg'],
       alt: 'Кабинет трофеев',
       hotspots: [
         ['📖', 'Книга рекордов', 'achievements', 87.5, 64, () => false],
@@ -397,11 +397,11 @@ export function renderHub(container, ctx, params = {}) {
     container.appendChild(catPanel);
   }
 
-  // Заставка: реалистичная картинка, фолбэк — анимированный SVG
+  // Заставка: реалистичная картинка
   const anim = document.createElement('img');
   anim.alt = '';
   anim.style.cssText = 'width:100%;border-radius:14px;margin-top:14px;opacity:0.9';
-  const animCandidates = ['assets/intro_web.jpg', 'assets/intro.jfif', 'assets/intro_anim.svg'];
+  const animCandidates = ['assets/hub/intro_web.jpg'];
   let animIdx = 0;
   anim.addEventListener('error', () => {
     animIdx += 1;

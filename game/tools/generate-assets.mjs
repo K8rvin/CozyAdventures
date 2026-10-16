@@ -3,19 +3,21 @@
 // Модель пишет SVG-код — он же и есть ассет.
 //
 // Режимы:
-//   node tools/generate-assets.mjs              — финальные ассеты в assets/
+//   node tools/generate-assets.mjs              — финальные SVG-исходники в art-src/generated/
 //   node tools/generate-assets.mjs --only=hub_banner
 //   node tools/generate-assets.mjs --variants   — сетка СТИЛИ × МОДЕЛИ в
-//                                                 assets/variants/ + assets/gallery.html
+//                                                 art-src/variants/ + art-src/gallery.html
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const ENV_PATH = join(ROOT, '..', '.env');
-const OUT_DIR = join(ROOT, 'assets');
-const VARIANTS_DIR = join(OUT_DIR, 'variants');
+const REPO_ROOT = join(ROOT, '..');
+const ENV_PATH = join(REPO_ROOT, '.env');
+const ART_SRC_DIR = join(REPO_ROOT, 'art-src');
+const OUT_DIR = join(ART_SRC_DIR, 'generated');
+const VARIANTS_DIR = join(ART_SRC_DIR, 'variants');
 
 function loadEnv() {
   const out = {};
@@ -148,7 +150,7 @@ async function genVariants() {
     }
   }
   writeGallery(results);
-  console.log('Галерея: assets/gallery.html — открой в браузере и выбери вариант.');
+  console.log('Галерея: art-src/gallery.html — открой в браузере и выбери вариант.');
 }
 
 const STYLE_RU = { storybook: 'Книжная акварель', pixel: 'Пиксель-арт', flat: 'Флэт-вектор' };
@@ -173,11 +175,11 @@ code{font-size:11px;color:#c9b294;display:block;margin-top:6px;word-break:break-
 </style></head><body>
 <h1>Варианты ассетов: 3 стиля × 3 модели</h1>
 <p>Скажи разработчику (или ИИ-агенту), какой вариант нравится — например «hub_banner_storybook_gpt-5-6-luna».
-Выбранный файл будет скопирован в assets/ как основной.</p>
+Выбранный файл можно использовать как исходник для основного рантайм-ассета.</p>
 <div class="grid">
 ${cards}
 </div></body></html>`;
-  writeFileSync(join(OUT_DIR, 'gallery.html'), html, 'utf8');
+  writeFileSync(join(ART_SRC_DIR, 'gallery.html'), html, 'utf8');
 }
 
 const isVariants = process.argv.includes('--variants');

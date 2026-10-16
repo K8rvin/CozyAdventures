@@ -9405,7 +9405,7 @@
       name: "\u041F\u043B\u043E\u0449\u0430\u0434\u044C \u0413\u043E\u0440\u043E\u0434\u043A\u0430",
       difficulty: 3,
       grid: [6, 2],
-      image: "assets/town_square_web.jpg",
+      image: "assets/hub/town_square_web.jpg",
       rewards: [{ type: "coins", amount: 130 }],
       intro: "\u0428\u0438\u0440\u043E\u043A\u0430\u044F \u043F\u0430\u043D\u043E\u0440\u0430\u043C\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u043B\u0435\u0433\u043B\u0430 \u0432 \u0443\u0437\u043A\u043E\u0435 \u043E\u043A\u043D\u043E-\u0444\u0440\u0430\u043C\u0443\u0433\u0443. \u0414\u0432\u0435\u043D\u0430\u0434\u0446\u0430\u0442\u044C \u0434\u043B\u0438\u043D\u043D\u044B\u0445 \u0441\u0442\u0451\u043A\u043E\u043B \u2014 \u043D\u0430\u0439\u0434\u0438, \u0433\u0434\u0435 \u0447\u0435\u0439 \u043A\u0440\u0430\u0439."
     },
@@ -9416,7 +9416,7 @@
       name: "\u0421\u0442\u043E\u043B \u0430\u043B\u0445\u0438\u043C\u0438\u043A\u0430",
       difficulty: 3,
       grid: [4, 3],
-      image: "assets/brew_table_web.jpg",
+      image: "assets/brew/brew_table_web.jpg",
       rewards: [{ type: "coins", amount: 135 }],
       intro: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A \u0437\u0430\u043A\u0430\u0437\u0430\u043B \u0432\u0438\u0442\u0440\u0430\u0436 \u0441\u0432\u043E\u0435\u0433\u043E \u0441\u0442\u043E\u043B\u0430: \u043A\u043E\u0442\u0451\u043B, \u0441\u043A\u043B\u044F\u043D\u043A\u0438, \u0442\u0440\u0430\u0432\u044B. \u0421\u043E\u0431\u0435\u0440\u0438 \u0440\u0430\u0431\u043E\u0447\u0435\u0435 \u043C\u0435\u0441\u0442\u043E \u043C\u0430\u0441\u0442\u0435\u0440\u0430."
     },
@@ -9427,7 +9427,7 @@
       name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
       difficulty: 3,
       grid: [5, 3],
-      image: "assets/battle_bg_nm_web.jpg",
+      image: "assets/battle/battle_bg_nm_web.jpg",
       rewards: [{ type: "coins", amount: 140 }],
       intro: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u0433\u043E\u0440\u0438\u0442 \u0444\u043E\u043D\u0430\u0440\u044F\u043C\u0438 \u0434\u0430\u0436\u0435 \u043D\u0430 \u0441\u0442\u0435\u043A\u043B\u0435. \u041E\u0433\u043E\u043D\u044C\u043A\u0438 \u043F\u043E\u043C\u043E\u0433\u0443\u0442 \u043D\u0430\u0439\u0442\u0438 \u0441\u043E\u0441\u0435\u0434\u043D\u0438\u0435 \u043E\u0441\u043A\u043E\u043B\u043A\u0438."
     },
@@ -9438,7 +9438,7 @@
       name: "\u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438",
       difficulty: 3,
       grid: [5, 3],
-      image: "assets/battle_bg_sw_web.jpg",
+      image: "assets/battle/battle_bg_sw_web.jpg",
       rewards: [{ type: "coins", amount: 145 }, { type: "item", id: "pot_vigor" }],
       intro: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u0442\u0443\u043C\u0430\u043D \u0441\u0442\u0451\u043A\u043B\u044B\u0448\u0435\u043A \u043D\u0435 \u0449\u0430\u0434\u0438\u0442. \u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439 \u043E\u0431\u0435\u0449\u0430\u043B\u0430 \u043D\u0435 \u043C\u0435\u0448\u0430\u0442\u044C \u2014 \u043F\u043E\u0447\u0442\u0438."
     },
@@ -9449,7 +9449,7 @@
       name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
       difficulty: 4,
       grid: [5, 4],
-      image: "assets/battle_bg_sf_web.jpg",
+      image: "assets/battle/battle_bg_sf_web.jpg",
       rewards: [{ type: "coins", amount: 155 }],
       intro: "\u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u0432 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0430: \u043A\u0430\u0440\u0443\u0441\u0435\u043B\u0438, \u0433\u0438\u0440\u043B\u044F\u043D\u0434\u044B, \u0444\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A. \u042F\u0440\u043C\u0430\u0440\u043A\u0430 \u0436\u0434\u0451\u0442 \u0437\u0440\u0438\u0442\u0435\u043B\u0435\u0439."
     },
@@ -9460,7 +9460,7 @@
       name: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B",
       difficulty: 4,
       grid: [5, 4],
-      image: "assets/battle_bg_cr_web.jpg",
+      image: "assets/battle/battle_bg_cr_web.jpg",
       rewards: [{ type: "coins", amount: 160 }],
       intro: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u044B \u043D\u0430 \u0441\u0442\u0435\u043A\u043B\u0435 \u0438\u0433\u0440\u0430\u044E\u0442 \u0432\u0441\u0435\u043C\u0438 \u0433\u0440\u0430\u043D\u044F\u043C\u0438. \u041D\u0435 \u0441\u043F\u0435\u0448\u0438 \u2014 \u0433\u0440\u0430\u043D\u044C \u043A \u0433\u0440\u0430\u043D\u0438, \u0438 \u0433\u043E\u0440\u044B \u0432\u0441\u0442\u0430\u043D\u0443\u0442."
     },
@@ -9471,7 +9471,7 @@
       name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438",
       difficulty: 4,
       grid: [5, 4],
-      image: "assets/battle_bg_ash_web.jpg",
+      image: "assets/battle/battle_bg_ash_web.jpg",
       rewards: [{ type: "coins", amount: 165 }, { type: "item", id: "scr_frost" }],
       intro: "\u0416\u0430\u0440 \u0441\u0442\u0435\u043F\u0435\u0439 \u0442\u0440\u043E\u043D\u0443\u043B \u0434\u0430\u0436\u0435 \u0432\u0438\u0442\u0440\u0430\u0436 \u2014 \u043A\u0440\u0430\u0441\u043A\u0438 \u0440\u0430\u0441\u043F\u043B\u044B\u043B\u0438\u0441\u044C \u043F\u043E \u043E\u0441\u043A\u043E\u043B\u043A\u0430\u043C. \u0421\u043E\u0431\u0435\u0440\u0438 \u0442\u0451\u043F\u043B\u044B\u0439 \u0437\u0430\u043A\u0430\u0442."
     },
@@ -9482,7 +9482,7 @@
       name: "\u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442",
       difficulty: 4,
       grid: [5, 4],
-      image: "assets/battle_bg_deep_web.jpg",
+      image: "assets/battle/battle_bg_deep_web.jpg",
       rewards: [{ type: "coins", amount: 170 }],
       intro: "\u0413\u043B\u0443\u0431\u0438\u043D\u0430 \u043D\u0430 \u0441\u0442\u0435\u043A\u043B\u0435: \u0441\u0432\u0435\u0442 \u0441\u043A\u0432\u043E\u0437\u044C \u0432\u043E\u0434\u0443, \u0440\u0430\u043A\u0443\u0448\u043A\u0438, \u0442\u0435\u043D\u0438 \u0440\u044B\u0431. \u0421\u043E\u0431\u0435\u0440\u0438 \u0433\u0440\u043E\u0442 \u0434\u043E \u0434\u043D\u0430."
     },
@@ -9493,7 +9493,7 @@
       name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0435\u0446",
       difficulty: 5,
       grid: [6, 4],
-      image: "assets/battle_bg_jade_web.jpg",
+      image: "assets/battle/battle_bg_jade_web.jpg",
       rewards: [{ type: "coins", amount: 180 }],
       intro: "\u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u0447\u0435\u0442\u044B\u0440\u0435 \u043E\u0442\u0442\u0435\u043D\u043A\u0430 \u043D\u0435\u0444\u0440\u0438\u0442\u0430. \u0421\u0430\u0434 \u0443\u0436\u0435 \u0431\u044B\u043B \u2014 \u0442\u0435\u043F\u0435\u0440\u044C \u0441\u043E\u0431\u0435\u0440\u0438 \u0435\u0433\u043E \u0441\u0435\u0440\u0434\u0446\u0435."
     },
@@ -9504,7 +9504,7 @@
       name: "\u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
       difficulty: 5,
       grid: [6, 4],
-      image: "assets/battle_bg_mist_web.jpg",
+      image: "assets/battle/battle_bg_mist_web.jpg",
       rewards: [{ type: "coins", amount: 190 }],
       intro: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u043C\u0438\u0440 \u0432 \u0442\u0443\u043C\u0430\u043D\u0435: \u0441\u0442\u0440\u0435\u043B\u043A\u0438, \u0448\u0435\u0441\u0442\u0435\u0440\u043D\u0438, \u043C\u0433\u043B\u0430. \u041A\u043E\u0442 \u0433\u043E\u0432\u043E\u0440\u0438\u0442 \u2014 \u0432\u0440\u0435\u043C\u044F \u0441\u043E\u0431\u0438\u0440\u0430\u0442\u044C."
     },
@@ -9515,7 +9515,7 @@
       name: "\u0427\u0430\u0439\u043D\u044B\u0439 \u0441\u0442\u043E\u043B\u0438\u043A",
       difficulty: 5,
       grid: [7, 4],
-      image: "assets/tea_table_fire_3_web.jpg",
+      image: "assets/tea/tea_table_fire_3_web.jpg",
       rewards: [{ type: "coins", amount: 200 }],
       intro: "\u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u0432\u043E\u0441\u0435\u043C\u044C \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u0432 \u0443\u044E\u0442\u043D\u043E\u0433\u043E \u0447\u0430\u0439\u043D\u043E\u0433\u043E \u0441\u0442\u043E\u043B\u0430. \u0421\u0430\u043C\u044B\u0439 \u0437\u0430\u0442\u043E\u0440\u043D\u044B\u0439 \u0432\u0438\u0442\u0440\u0430\u0436 \u0441\u0435\u0437\u043E\u043D\u0430."
     },
@@ -9526,7 +9526,7 @@
       name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u043B\u0430\u0432\u043A\u0438",
       difficulty: 5,
       grid: [9, 3],
-      image: "assets/hub_banner_web.jpg",
+      image: "assets/hub/hub_banner_web.jpg",
       rewards: [{ type: "coins", amount: 240 }, { type: "seals", amount: 1 }],
       intro: "\u0424\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0439 \u0432\u0438\u0442\u0440\u0430\u0436 \u2014 \u0441\u0430\u043C\u0430 \u043B\u0430\u0432\u043A\u0430 \u0432\u043E \u0432\u0441\u044E \u0448\u0438\u0440\u0438\u043D\u0443 \u043E\u043A\u043D\u0430. \u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u0441\u0435\u043C\u044C \u0441\u0442\u0451\u043A\u043E\u043B \u0434\u043E\u043C\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u0442\u044B \u043F\u043E\u0441\u0442\u0440\u043E\u0438\u043B."
     },
@@ -9538,7 +9538,7 @@
       name: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432",
       difficulty: 3,
       grid: [4, 3],
-      image: "assets/recipe_book_web.jpg",
+      image: "assets/brew/recipe_book_web.jpg",
       rewards: [{ type: "coins", amount: 130 }],
       intro: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A \u043F\u0435\u0440\u0435\u043F\u043B\u0451\u043B \u0441\u0432\u043E\u044E \u043A\u043D\u0438\u0433\u0443 \u0432 \u0441\u0442\u0435\u043A\u043B\u043E: \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B, \u0442\u0440\u0430\u0432\u044B, \u0447\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0435 \u043F\u044F\u0442\u043D\u0430. \u0421\u043E\u0431\u0435\u0440\u0438 \u0440\u0435\u0446\u0435\u043F\u0442 \u0446\u0435\u043B\u0438\u043A\u043E\u043C."
     },
@@ -9560,7 +9560,7 @@
       name: "\u0420\u0430\u0441\u0441\u0432\u0435\u0442 \u043E\u043F\u0443\u0448\u043A\u0438",
       difficulty: 4,
       grid: [5, 3],
-      image: "assets/battle_bg_meadow_web.jpg",
+      image: "assets/battle/battle_bg_meadow_web.jpg",
       rewards: [{ type: "coins", amount: 150 }],
       intro: "\u0422\u0430 \u0436\u0435 \u043E\u043F\u0443\u0448\u043A\u0430, \u043D\u043E \u043D\u0430 \u0440\u0430\u0441\u0441\u0432\u0435\u0442\u0435: \u0440\u043E\u0441\u0430, \u0442\u0443\u043C\u0430\u043D, \u043F\u0435\u0440\u0432\u044B\u0435 \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u0438. \u0421\u043E\u0431\u0435\u0440\u0438 \u0443\u0442\u0440\u043E \u043F\u043E \u043E\u0441\u043A\u043E\u043B\u043A\u0430\u043C."
     },
@@ -9571,7 +9571,7 @@
       name: "\u0427\u0430\u0439 \u043D\u0430 \u0440\u0430\u0441\u0441\u0432\u0435\u0442\u0435",
       difficulty: 4,
       grid: [5, 3],
-      image: "assets/tea_table_fire_0_web.jpg",
+      image: "assets/tea/tea_table_fire_0_web.jpg",
       rewards: [{ type: "coins", amount: 155 }],
       intro: "\u0427\u0430\u0439\u043D\u044B\u0439 \u0441\u0442\u043E\u043B\u0438\u043A \u0434\u043E \u0442\u043E\u0433\u043E, \u043A\u0430\u043A \u0440\u0430\u0437\u043E\u0436\u0433\u043B\u0438 \u043E\u0433\u043E\u043D\u044C. \u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439, \u043D\u043E \u0432\u0441\u0451 \u0440\u0430\u0432\u043D\u043E \u0443\u044E\u0442\u043D\u044B\u0439 \u2014 \u0441\u043E\u0431\u0435\u0440\u0438 \u0435\u0433\u043E."
     },
@@ -9582,7 +9582,7 @@
       name: "\u0427\u0430\u0439 \u0432 \u043F\u043E\u043B\u0434\u0435\u043D\u044C",
       difficulty: 4,
       grid: [5, 4],
-      image: "assets/tea_table_fire_1_web.jpg",
+      image: "assets/tea/tea_table_fire_1_web.jpg",
       rewards: [{ type: "coins", amount: 160 }, { type: "item", id: "pot_heal" }],
       intro: "\u041E\u0433\u043E\u043D\u0451\u043A \u0442\u043E\u043B\u044C\u043A\u043E \u0440\u0430\u0437\u0433\u043E\u0440\u0430\u0435\u0442\u0441\u044F, \u0447\u0430\u0439\u043D\u0438\u043A \u0435\u0449\u0451 \u043D\u0435 \u0441\u0432\u0438\u0441\u0442\u0435\u043B. \u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u0432 \u0434\u043D\u0435\u0432\u043D\u043E\u0433\u043E \u0443\u044E\u0442\u0430."
     },
@@ -9593,7 +9593,7 @@
       name: "\u0427\u0430\u0439 \u0432 \u043F\u043E\u043B\u043D\u043E\u0447\u044C",
       difficulty: 5,
       grid: [6, 4],
-      image: "assets/tea_table_fire_2_web.jpg",
+      image: "assets/tea/tea_table_fire_2_web.jpg",
       rewards: [{ type: "coins", amount: 170 }, { type: "item", id: "scr_storm" }],
       intro: "\u041F\u043E\u043B\u043D\u043E\u0447\u043D\u044B\u0439 \u0447\u0430\u0439 \u043F\u0440\u0438 \u0436\u0438\u0432\u043E\u043C \u043E\u0433\u043D\u0435 \u2014 \u043A\u043E\u0442 \u0443\u0436\u0435 \u0443\u0441\u043D\u0443\u043B \u0440\u044F\u0434\u043E\u043C. \u0421\u043E\u0431\u0435\u0440\u0438 \u0442\u0438\u0445\u0438\u0439 \u0432\u0435\u0447\u0435\u0440 \u043B\u0430\u0432\u043A\u0438."
     },
@@ -9604,7 +9604,7 @@
       name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0434\u0435\u043D\u044C",
       difficulty: 5,
       grid: [8, 4],
-      image: "assets/intro_web.jpg",
+      image: "assets/hub/intro_web.jpg",
       rewards: [{ type: "coins", amount: 185 }],
       intro: "\u0412\u0438\u0442\u0440\u0430\u0436 \u043E \u0442\u043E\u043C, \u043A\u0430\u043A \u0432\u0441\u0451 \u043D\u0430\u0447\u0430\u043B\u043E\u0441\u044C: \u0442\u044B, \u043B\u0430\u0432\u043A\u0430 \u0438 \u0434\u043E\u0440\u043E\u0433\u0430 \u043A \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0443. \u0422\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u0434\u0432\u0430 \u043E\u0441\u043A\u043E\u043B\u043A\u0430 \u0432\u043E\u0441\u043F\u043E\u043C\u0438\u043D\u0430\u043D\u0438\u0439."
     },
@@ -9615,7 +9615,7 @@
       name: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u0440\u044F\u0434",
       difficulty: 5,
       grid: [9, 3],
-      image: "assets/town_market_web.jpg",
+      image: "assets/hub/town_market_web.jpg",
       rewards: [{ type: "coins", amount: 195 }],
       intro: "\u0414\u043B\u0438\u043D\u043D\u0430\u044F \u043B\u0435\u043D\u0442\u0430 \u0440\u044B\u043D\u043A\u0430: \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u043A \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0443. \u0423\u0437\u043A\u0430\u044F \u0444\u0440\u0430\u043C\u0443\u0433\u0430 \u043F\u0443\u0442\u0430\u0435\u0442 \u0434\u0430\u0436\u0435 \u0441\u0442\u0430\u0440\u0448\u0435\u0433\u043E \u043A\u043E\u0442\u0430."
     },
@@ -9626,7 +9626,7 @@
       name: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432",
       difficulty: 5,
       grid: [9, 3],
-      image: "assets/trophy_room_web.jpg",
+      image: "assets/hub/trophy_room_web.jpg",
       rewards: [{ type: "coins", amount: 210 }, { type: "item", id: "rng_crit" }],
       intro: "\u0422\u0432\u043E\u0438 \u0442\u0440\u043E\u0444\u0435\u0438 \u2014 \u043D\u0430 \u0441\u0442\u0435\u043A\u043B\u0435 \u043D\u0430\u0434 \u043A\u0430\u043C\u0438\u043D\u043E\u043C. \u0421\u043E\u0431\u0435\u0440\u0438 \u043A\u0430\u0431\u0438\u043D\u0435\u0442, \u043A\u043E\u0442\u043E\u0440\u044B\u043C \u0433\u043E\u0440\u0434\u0438\u0448\u044C\u0441\u044F."
     },
@@ -9637,12 +9637,11 @@
       name: "\u0412\u0441\u0435 \u0441\u043E\u043A\u0440\u043E\u0432\u0438\u0449\u0430 \u0447\u0435\u0440\u0434\u0430\u043A\u0430",
       difficulty: 5,
       grid: [8, 5],
-      image: "assets/battle_bg_attic_web.jpg",
+      image: "assets/battle/battle_bg_attic_web.jpg",
       rewards: [{ type: "coins", amount: 250 }, { type: "seals", amount: 1 }],
       intro: "\u0421\u043E\u0440\u043E\u043A \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u0432 \u2014 \u0441\u0430\u043C\u044B\u0439 \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0432\u0438\u0442\u0440\u0430\u0436 \u043B\u0430\u0432\u043A\u0438. \u0412\u0435\u0441\u044C \u0447\u0435\u0440\u0434\u0430\u043A, \u043A\u0430\u0436\u0434\u0430\u044F \u043A\u043E\u0440\u043E\u0431\u043A\u0430, \u043A\u0430\u0436\u0434\u0430\u044F \u043F\u044B\u043B\u0438\u043D\u043A\u0430 \u0441\u0432\u0435\u0442\u0430."
     },
-    // Четвёртая серия: посвящённые арты assets/glass/ (промты — PROMPTS.md, раздел 17).
-    // Пока файлов нет, играется процедурный витраж-заменитель, засеянный id уровня.
+    // Четвёртая серия: посвящённые арты assets/glass/ (промты — art-src/PROMPTS.md, раздел 17).
     {
       id: "gl_35",
       world: "shop",
@@ -9775,7 +9774,7 @@
       rewards: [{ type: "coins", amount: 260 }, { type: "seals", amount: 1 }],
       intro: "\u0421\u0430\u043C\u044B\u0439 \u0442\u0451\u043F\u043B\u044B\u0439 \u0432\u0438\u0442\u0440\u0430\u0436: \u043A\u0430\u043C\u0438\u043D, \u043A\u0440\u0435\u0441\u043B\u043E, \u043A\u043E\u0442 \u043A\u043B\u0443\u0431\u043A\u043E\u043C. \u0421\u043E\u0440\u043E\u043A \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u0432 \u0434\u043E\u043C\u0430. \u0422\u044B \u0434\u043E\u0448\u0451\u043B \u0434\u043E \u043A\u043E\u043D\u0446\u0430 \u2014 \u0447\u0430\u0439 \u0443\u0436\u0435 \u0437\u0430\u0432\u0430\u0440\u0435\u043D."
     },
-    // Пятая серия: посвящённые арты assets/glass/ (промты — PROMPTS.md, раздел 17).
+    // Пятая серия: посвящённые арты assets/glass/ (промты — art-src/PROMPTS.md, раздел 17).
     {
       id: "gl_47",
       world: "town",
@@ -15873,7 +15872,7 @@
     }
     const SCENES = {
       lavka: {
-        candidates: ["assets/hub_banner_web.jpg", "assets/hub_banner.jfif", "assets/hub_banner.png", "assets/hub_banner.svg"],
+        candidates: ["assets/hub/hub_banner_web.jpg"],
         alt: "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432",
         // Хотспоты: [icon, label, screen, x%, y%, showDot]
         hotspots: [
@@ -15886,7 +15885,7 @@
         ]
       },
       square: {
-        candidates: ["assets/town_square_web.jpg", "assets/seek_town_web.jpg"],
+        candidates: ["assets/hub/town_square_web.jpg"],
         alt: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
         hotspots: [
           ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 79, 60, () => false],
@@ -15898,7 +15897,7 @@
         ]
       },
       market: {
-        candidates: ["assets/town_market_web.jpg", "assets/town_market.jfif", "assets/town_square_web.jpg"],
+        candidates: ["assets/hub/town_market_web.jpg"],
         alt: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B",
         hotspots: [
           ["\u{1F5E1}\uFE0F", "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", "shopArmory", 7, 60, () => hasUnseenIn(state2, "armory")],
@@ -15909,7 +15908,7 @@
         ]
       },
       cabinet: {
-        candidates: ["assets/trophy_room_web.jpg", "assets/trophy_room.png"],
+        candidates: ["assets/hub/trophy_room_web.jpg"],
         alt: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432",
         hotspots: [
           ["\u{1F4D6}", "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u043A\u043E\u0440\u0434\u043E\u0432", "achievements", 87.5, 64, () => false],
@@ -16200,7 +16199,7 @@
     const anim = document.createElement("img");
     anim.alt = "";
     anim.style.cssText = "width:100%;border-radius:14px;margin-top:14px;opacity:0.9";
-    const animCandidates = ["assets/intro_web.jpg", "assets/intro.jfif", "assets/intro_anim.svg"];
+    const animCandidates = ["assets/hub/intro_web.jpg"];
     let animIdx = 0;
     anim.addEventListener("error", () => {
       animIdx += 1;
@@ -17695,7 +17694,7 @@
         kbArt.remove();
         kb.classList.remove("has-art");
       });
-      kbArt.src = "assets/hang_keyboard_scene.png";
+      kbArt.src = "assets/hang/hang_keyboard_scene.png";
       kb.appendChild(kbArt);
       const KB_ROWS = ["\u0419\u0426\u0423\u041A\u0415\u041D\u0413\u0428\u0429\u0417\u0425\u042A", "\u0424\u042B\u0412\u0410\u041F\u0420\u041E\u041B\u0414\u0416\u042D", "\u042F\u0427\u0421\u041C\u0418\u0422\u042C\u0411\u042E"];
       KB_ROWS.forEach((rowLetters, ri) => {
@@ -17849,7 +17848,7 @@
       candleBox.appendChild(candleFallback);
       draw();
     });
-    candleImg.src = "assets/hang_candle_full.png";
+    candleImg.src = "assets/hang/hang_candle_full.png";
     candleBox.appendChild(candleImg);
     const candleLabel = document.createElement("div");
     candleLabel.className = "muted";
@@ -18022,7 +18021,7 @@
         kbArt.remove();
         kb.classList.remove("has-art");
       });
-      kbArt.src = "assets/hang_keyboard_scene.png";
+      kbArt.src = "assets/hang/hang_keyboard_scene.png";
       kb.appendChild(kbArt);
       const KB_ROWS = ["\u0419\u0426\u0423\u041A\u0415\u041D\u0413\u0428\u0429\u0417\u0425\u042A", "\u0424\u042B\u0412\u0410\u041F\u0420\u041E\u041B\u0414\u0416\u042D", "\u042F\u0427\u0421\u041C\u0418\u0422\u042C\u0411\u042E"];
       KB_ROWS.forEach((rowLetters, ri) => {
@@ -18043,7 +18042,7 @@
       page.appendChild(kb);
       const stage = burningOut ? "out" : candleStage(puzzle.candleLeft);
       if (candleImg.parentNode) {
-        candleImg.src = `assets/hang_candle_${stage}.png`;
+        candleImg.src = `assets/hang/hang_candle_${stage}.png`;
         candleImg.classList.toggle("hang-fading", !burningOut && puzzle.candleLeft <= 2);
       }
       if (candleFallback) {
@@ -18217,12 +18216,7 @@
     let bgImage = null;
     if (typeof Image !== "undefined") {
       const bgName = level.bg || `seek_${level.world}`;
-      const candidates = [
-        `assets/${bgName}_web.jpg`,
-        `assets/${bgName}.jfif`,
-        `assets/${bgName}.png`,
-        `assets/${bgName}.svg`
-      ];
+      const candidates = [`assets/seek/${bgName}_web.jpg`];
       let idx = 0;
       const tryNext = () => {
         if (idx >= candidates.length) return;
@@ -18895,14 +18889,14 @@
     bg.addEventListener("error", () => {
       if (bgStage > 0) {
         bgStage = 0;
-        bg.src = "assets/tea_table_fire_0_web.jpg";
+        bg.src = "assets/tea/tea_table_fire_0_web.jpg";
         return;
       }
       tableArt = false;
       bg.remove();
     });
     bgStage = 0;
-    bg.src = "assets/tea_table_fire_0_web.jpg";
+    bg.src = "assets/tea/tea_table_fire_0_web.jpg";
     scene.appendChild(bg);
     function spotEl(spot) {
       const el = document.createElement("div");
@@ -18927,7 +18921,7 @@
     const potColor = document.createElement("div");
     potColor.className = "tea-pot-color";
     potSpot.appendChild(potColor);
-    potSpot.appendChild(artImg("assets/tea_pot.png", "tea-pot-art", () => {
+    potSpot.appendChild(artImg("assets/tea/tea_pot.png", "tea-pot-art", () => {
       potSpot.classList.add("tea-noart");
       potSpot.appendChild(Object.assign(document.createElement("div"), { className: "tea-emoji", textContent: "\u{1FAD6}" }));
     }));
@@ -18939,7 +18933,7 @@
     cupColor.className = "tea-cup-color";
     cupColor.style.background = rgbCss(level.target);
     cupSpot.appendChild(cupColor);
-    cupSpot.appendChild(artImg("assets/tea_cup.png", "tea-cup-art", () => {
+    cupSpot.appendChild(artImg("assets/tea/tea_cup.png", "tea-cup-art", () => {
       cupSpot.appendChild(Object.assign(document.createElement("div"), { className: "tea-emoji", textContent: "\u{1F377}" }));
     }));
     scene.appendChild(cupSpot);
@@ -18968,7 +18962,7 @@
       const top = document.createElement("div");
       top.className = "tea-ing-top";
       el.appendChild(top);
-      el.appendChild(artImg(`assets/tea_ing_${ing.id}.png`, "tea-ing-art", () => {
+      el.appendChild(artImg(`assets/tea/tea_ing_${ing.id}.png`, "tea-ing-art", () => {
         el.appendChild(Object.assign(document.createElement("div"), { className: "tea-emoji ing", textContent: ing.icon }));
       }));
       const meta = document.createElement("div");
@@ -19171,7 +19165,7 @@
       if (tableArt) {
         if (stage !== bgStage) {
           bgStage = stage;
-          bg.src = `assets/tea_table_fire_${stage}_web.jpg`;
+          bg.src = `assets/tea/tea_table_fire_${stage}_web.jpg`;
         }
       } else {
         let fe = fireSpot.querySelector(".tea-emoji.fire");
@@ -20910,7 +20904,7 @@
     const bg = document.createElement("img");
     bg.className = "brew-table-bg";
     bg.alt = "";
-    const bgCandidates = ["assets/brew_table_web.jpg", "assets/brew_table.jfif", "assets/brew_table.png"];
+    const bgCandidates = ["assets/brew/brew_table_web.jpg"];
     let bgIdx = 0;
     bg.addEventListener("error", () => {
       bgIdx += 1;
@@ -21027,7 +21021,7 @@
     bookBg.className = "brew-book-bg";
     bookBg.alt = "";
     bookBg.addEventListener("error", () => bookBg.remove());
-    bookBg.src = "assets/recipe_book_web.jpg";
+    bookBg.src = "assets/brew/recipe_book_web.jpg";
     book.appendChild(bookBg);
     side.appendChild(book);
     const statusEl = document.createElement("div");
@@ -23301,7 +23295,7 @@
     const kIcon = document.createElement("img");
     kIcon.alt = "";
     kIcon.style.cssText = "width:56px;height:56px;border-radius:12px;margin-right:10px;vertical-align:middle";
-    const kCandidates = ["assets/icon_knight_web.jpg", "assets/icon_knight.jfif", "assets/icon_knight.svg"];
+    const kCandidates = ["assets/knight/icon_knight_web.jpg"];
     let kIdx = 0;
     kIcon.addEventListener("error", () => {
       kIdx += 1;
@@ -24942,7 +24936,7 @@ ${item2.description}
         break;
       }
       case "purr": {
-        if (playAudio("assets/3d-zvuk-murchanie-koshki_1sec.mp3", 0.7)) break;
+        if (playAudio("assets/audio/3d-zvuk-murchanie-koshki_1sec.mp3", 0.7)) break;
         for (let i = 0; i < 5; i++) {
           tone(65, 0.09, { type: "sawtooth", gain: 0.05, delay: i * 0.11 });
           tone(80, 0.09, { type: "sawtooth", gain: 0.03, delay: i * 0.11 + 0.05 });
@@ -25275,7 +25269,7 @@ ${item2.description}
     const bg = document.createElement("img");
     bg.className = "form-field-bg";
     bg.alt = "";
-    const cands = [`assets/battle_bg_${world}_web.jpg`, `assets/battle_bg_${world}.jfif`];
+    const cands = [`assets/battle/battle_bg_${world}_web.jpg`];
     let i = 0;
     bg.addEventListener("error", () => {
       i += 1;
@@ -25923,12 +25917,7 @@ ${item2.description}
     let bgImage = null;
     if (typeof Image !== "undefined") {
       const bgName = raw.bg || `seek_${raw.world}`;
-      const candidates = [
-        `assets/${bgName}_web.jpg`,
-        `assets/${bgName}.jfif`,
-        `assets/${bgName}.png`,
-        `assets/${bgName}.svg`
-      ];
+      const candidates = [`assets/seek/${bgName}_web.jpg`];
       let idx = 0;
       const tryNext = () => {
         if (idx >= candidates.length) return;

@@ -500,7 +500,7 @@ export function renderRiddlePuzzle(container, ctx, level) {
     kbArt.className = 'hang-kb-art';
     kbArt.alt = '';
     kbArt.addEventListener('error', () => { kbArt.remove(); kb.classList.remove('has-art'); });
-    kbArt.src = 'assets/hang_keyboard_scene.png';
+    kbArt.src = 'assets/hang/hang_keyboard_scene.png';
     kb.appendChild(kbArt);
     const KB_ROWS = ['ЙЦУКЕНГШЩЗХЪ', 'ФЫВАПРОЛДЖЭ', 'ЯЧСМИТЬБЮ'];
     KB_ROWS.forEach((rowLetters, ri) => {

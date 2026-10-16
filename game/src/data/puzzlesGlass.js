@@ -1,8 +1,8 @@
 // Уровни головоломки «Витраж миров»: картина разрезана на сетку и перемешана,
 // игрок меняет фрагменты местами, пока окно не «оживёт».
 // grid: [cols, rows] — фрагменты квадратные, картинка кадрируется под сетку.
-// image: путь к арту (пока — сцены миров; посвящённые арты — assets/glass/,
-// промты в assets/PROMPTS.md, раздел «Витраж миров»).
+// image: путь к рантайм-арту (сцены — тематические папки assets/, посвящённые — assets/glass/,
+// промты в art-src/PROMPTS.md, раздел «Витраж миров»).
 // Каждый уровень проверен в tests/glass.test.mjs (подсказки всегда решают).
 
 export const GLASS_PUZZLES = [
@@ -81,80 +81,80 @@ export const GLASS_PUZZLES = [
   // Вторая дюжина: витражная галерея дальних миров
   {
     id: 'gl_13', world: 'town', mechanic: 'glass', name: 'Площадь Городка', difficulty: 3,
-    grid: [6, 2], image: 'assets/town_square_web.jpg',
+    grid: [6, 2], image: 'assets/hub/town_square_web.jpg',
     rewards: [{ type: 'coins', amount: 130 }],
     intro: 'Широкая панорама площади легла в узкое окно-фрамугу. Двенадцать длинных стёкол — найди, где чей край.',
   },
   {
     id: 'gl_14', world: 'attic', mechanic: 'glass', name: 'Стол алхимика', difficulty: 3,
-    grid: [4, 3], image: 'assets/brew_table_web.jpg',
+    grid: [4, 3], image: 'assets/brew/brew_table_web.jpg',
     rewards: [{ type: 'coins', amount: 135 }],
     intro: 'Алхимик заказал витраж своего стола: котёл, склянки, травы. Собери рабочее место мастера.',
   },
   {
     id: 'gl_15', world: 'nm', mechanic: 'glass', name: 'Ночной рынок', difficulty: 3,
-    grid: [5, 3], image: 'assets/battle_bg_nm_web.jpg',
+    grid: [5, 3], image: 'assets/battle/battle_bg_nm_web.jpg',
     rewards: [{ type: 'coins', amount: 140 }],
     intro: 'Ночной рынок горит фонарями даже на стекле. Огоньки помогут найти соседние осколки.',
   },
   {
     id: 'gl_16', world: 'sw', mechanic: 'glass', name: 'Сказочные топи', difficulty: 3,
-    grid: [5, 3], image: 'assets/battle_bg_sw_web.jpg',
+    grid: [5, 3], image: 'assets/battle/battle_bg_sw_web.jpg',
     rewards: [{ type: 'coins', amount: 145 }, { type: 'item', id: 'pot_vigor' }],
     intro: 'Болотный туман стёклышек не щадит. Хозяйка Топей обещала не мешать — почти.',
   },
   {
     id: 'gl_17', world: 'sf', mechanic: 'glass', name: 'Звёздная ярмарка', difficulty: 4,
-    grid: [5, 4], image: 'assets/battle_bg_sf_web.jpg',
+    grid: [5, 4], image: 'assets/battle/battle_bg_sf_web.jpg',
     rewards: [{ type: 'coins', amount: 155 }],
     intro: 'Двадцать осколков праздника: карусели, гирлянды, фейерверк. Ярмарка ждёт зрителей.',
   },
   {
     id: 'gl_18', world: 'cr', mechanic: 'glass', name: 'Хрустальные горы', difficulty: 4,
-    grid: [5, 4], image: 'assets/battle_bg_cr_web.jpg',
+    grid: [5, 4], image: 'assets/battle/battle_bg_cr_web.jpg',
     rewards: [{ type: 'coins', amount: 160 }],
     intro: 'Кристаллы на стекле играют всеми гранями. Не спеши — грань к грани, и горы встанут.',
   },
   {
     id: 'gl_19', world: 'ash', mechanic: 'glass', name: 'Пепельные степи', difficulty: 4,
-    grid: [5, 4], image: 'assets/battle_bg_ash_web.jpg',
+    grid: [5, 4], image: 'assets/battle/battle_bg_ash_web.jpg',
     rewards: [{ type: 'coins', amount: 165 }, { type: 'item', id: 'scr_frost' }],
     intro: 'Жар степей тронул даже витраж — краски расплылись по осколкам. Собери тёплый закат.',
   },
   {
     id: 'gl_20', world: 'deep', mechanic: 'glass', name: 'Подводный грот', difficulty: 4,
-    grid: [5, 4], image: 'assets/battle_bg_deep_web.jpg',
+    grid: [5, 4], image: 'assets/battle/battle_bg_deep_web.jpg',
     rewards: [{ type: 'coins', amount: 170 }],
     intro: 'Глубина на стекле: свет сквозь воду, ракушки, тени рыб. Собери грот до дна.',
   },
   {
     id: 'gl_21', world: 'jade', mechanic: 'glass', name: 'Нефритовый дворец', difficulty: 5,
-    grid: [6, 4], image: 'assets/battle_bg_jade_web.jpg',
+    grid: [6, 4], image: 'assets/battle/battle_bg_jade_web.jpg',
     rewards: [{ type: 'coins', amount: 180 }],
     intro: 'Двадцать четыре оттенка нефрита. Сад уже был — теперь собери его сердце.',
   },
   {
     id: 'gl_22', world: 'mist', mechanic: 'glass', name: 'Туманные часы', difficulty: 5,
-    grid: [6, 4], image: 'assets/battle_bg_mist_web.jpg',
+    grid: [6, 4], image: 'assets/battle/battle_bg_mist_web.jpg',
     rewards: [{ type: 'coins', amount: 190 }],
     intro: 'Часовой мир в тумане: стрелки, шестерни, мгла. Кот говорит — время собирать.',
   },
   {
     id: 'gl_23', world: 'tea', mechanic: 'glass', name: 'Чайный столик', difficulty: 5,
-    grid: [7, 4], image: 'assets/tea_table_fire_3_web.jpg',
+    grid: [7, 4], image: 'assets/tea/tea_table_fire_3_web.jpg',
     rewards: [{ type: 'coins', amount: 200 }],
     intro: 'Двадцать восемь осколков уютного чайного стола. Самый заторный витраж сезона.',
   },
   {
     id: 'gl_24', world: 'shop', mechanic: 'glass', name: 'Сердце лавки', difficulty: 5,
-    grid: [9, 3], image: 'assets/hub_banner_web.jpg',
+    grid: [9, 3], image: 'assets/hub/hub_banner_web.jpg',
     rewards: [{ type: 'coins', amount: 240 }, { type: 'seals', amount: 1 }],
     intro: 'Финальный витраж — сама лавка во всю ширину окна. Двадцать семь стёкол дома, который ты построил.',
   },
   // Третья серия: редкие форматы — вертикальный витраж, панорамы, максимум осколков
   {
     id: 'gl_25', world: 'attic', mechanic: 'glass', name: 'Книга рецептов', difficulty: 3,
-    grid: [4, 3], image: 'assets/recipe_book_web.jpg',
+    grid: [4, 3], image: 'assets/brew/recipe_book_web.jpg',
     rewards: [{ type: 'coins', amount: 130 }],
     intro: 'Алхимик переплёл свою книгу в стекло: страницы, травы, чернильные пятна. Собери рецепт целиком.',
   },
@@ -166,54 +166,53 @@ export const GLASS_PUZZLES = [
   },
   {
     id: 'gl_27', world: 'meadow', mechanic: 'glass', name: 'Рассвет опушки', difficulty: 4,
-    grid: [5, 3], image: 'assets/battle_bg_meadow_web.jpg',
+    grid: [5, 3], image: 'assets/battle/battle_bg_meadow_web.jpg',
     rewards: [{ type: 'coins', amount: 150 }],
     intro: 'Та же опушка, но на рассвете: роса, туман, первые светлячки. Собери утро по осколкам.',
   },
   {
     id: 'gl_28', world: 'tea', mechanic: 'glass', name: 'Чай на рассвете', difficulty: 4,
-    grid: [5, 3], image: 'assets/tea_table_fire_0_web.jpg',
+    grid: [5, 3], image: 'assets/tea/tea_table_fire_0_web.jpg',
     rewards: [{ type: 'coins', amount: 155 }],
     intro: 'Чайный столик до того, как разожгли огонь. Холодный, но всё равно уютный — собери его.',
   },
   {
     id: 'gl_29', world: 'tea', mechanic: 'glass', name: 'Чай в полдень', difficulty: 4,
-    grid: [5, 4], image: 'assets/tea_table_fire_1_web.jpg',
+    grid: [5, 4], image: 'assets/tea/tea_table_fire_1_web.jpg',
     rewards: [{ type: 'coins', amount: 160 }, { type: 'item', id: 'pot_heal' }],
     intro: 'Огонёк только разгорается, чайник ещё не свистел. Двадцать осколков дневного уюта.',
   },
   {
     id: 'gl_30', world: 'tea', mechanic: 'glass', name: 'Чай в полночь', difficulty: 5,
-    grid: [6, 4], image: 'assets/tea_table_fire_2_web.jpg',
+    grid: [6, 4], image: 'assets/tea/tea_table_fire_2_web.jpg',
     rewards: [{ type: 'coins', amount: 170 }, { type: 'item', id: 'scr_storm' }],
     intro: 'Полночный чай при живом огне — кот уже уснул рядом. Собери тихий вечер лавки.',
   },
   {
     id: 'gl_31', world: 'shop', mechanic: 'glass', name: 'Первый день', difficulty: 5,
-    grid: [8, 4], image: 'assets/intro_web.jpg',
+    grid: [8, 4], image: 'assets/hub/intro_web.jpg',
     rewards: [{ type: 'coins', amount: 185 }],
     intro: 'Витраж о том, как всё началось: ты, лавка и дорога к перекрёстку. Тридцать два осколка воспоминаний.',
   },
   {
     id: 'gl_32', world: 'town', mechanic: 'glass', name: 'Торговый ряд', difficulty: 5,
-    grid: [9, 3], image: 'assets/town_market_web.jpg',
+    grid: [9, 3], image: 'assets/hub/town_market_web.jpg',
     rewards: [{ type: 'coins', amount: 195 }],
     intro: 'Длинная лента рынка: прилавок к прилавку. Узкая фрамуга путает даже старшего кота.',
   },
   {
     id: 'gl_33', world: 'shop', mechanic: 'glass', name: 'Кабинет трофеев', difficulty: 5,
-    grid: [9, 3], image: 'assets/trophy_room_web.jpg',
+    grid: [9, 3], image: 'assets/hub/trophy_room_web.jpg',
     rewards: [{ type: 'coins', amount: 210 }, { type: 'item', id: 'rng_crit' }],
     intro: 'Твои трофеи — на стекле над камином. Собери кабинет, которым гордишься.',
   },
   {
     id: 'gl_34', world: 'attic', mechanic: 'glass', name: 'Все сокровища чердака', difficulty: 5,
-    grid: [8, 5], image: 'assets/battle_bg_attic_web.jpg',
+    grid: [8, 5], image: 'assets/battle/battle_bg_attic_web.jpg',
     rewards: [{ type: 'coins', amount: 250 }, { type: 'seals', amount: 1 }],
     intro: 'Сорок осколков — самый большой витраж лавки. Весь чердак, каждая коробка, каждая пылинка света.',
   },
-  // Четвёртая серия: посвящённые арты assets/glass/ (промты — PROMPTS.md, раздел 17).
-  // Пока файлов нет, играется процедурный витраж-заменитель, засеянный id уровня.
+  // Четвёртая серия: посвящённые арты assets/glass/ (промты — art-src/PROMPTS.md, раздел 17).
   {
     id: 'gl_35', world: 'shop', mechanic: 'glass', name: 'Зима у порога', difficulty: 3,
     grid: [5, 3], image: 'assets/glass/glass_winter_web.jpg',
@@ -286,7 +285,7 @@ export const GLASS_PUZZLES = [
     rewards: [{ type: 'coins', amount: 260 }, { type: 'seals', amount: 1 }],
     intro: 'Самый тёплый витраж: камин, кресло, кот клубком. Сорок осколков дома. Ты дошёл до конца — чай уже заварен.',
   },
-  // Пятая серия: посвящённые арты assets/glass/ (промты — PROMPTS.md, раздел 17).
+  // Пятая серия: посвящённые арты assets/glass/ (промты — art-src/PROMPTS.md, раздел 17).
   {
     id: 'gl_47', world: 'town', mechanic: 'glass', name: 'Пекарня на рассвете', difficulty: 3,
     grid: [5, 3], image: 'assets/glass/glass_bakery_web.jpg',

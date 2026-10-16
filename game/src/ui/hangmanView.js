@@ -1,5 +1,5 @@
 // Экран головоломки «Строка»: стих без последней строки, скрытая строка,
-// алфавит; промахи топят свечу (арт assets/hang_candle_*.png, фолбэк — CSS).
+// алфавит; промахи топят свечу (арт assets/hang/hang_candle_*.png, фолбэк — CSS).
 import {
   createHangmanPuzzle, guessLetter, undoHangman, resetHangman,
   isHangmanSolved, applyHangmanHint, rewardFactor,
@@ -52,7 +52,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
     candleBox.appendChild(candleFallback);
     draw();
   });
-  candleImg.src = 'assets/hang_candle_full.png';
+  candleImg.src = 'assets/hang/hang_candle_full.png';
   candleBox.appendChild(candleImg);
   const candleLabel = document.createElement('div');
   candleLabel.className = 'muted';
@@ -236,7 +236,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
     kbArt.className = 'hang-kb-art';
     kbArt.alt = '';
     kbArt.addEventListener('error', () => { kbArt.remove(); kb.classList.remove('has-art'); });
-    kbArt.src = 'assets/hang_keyboard_scene.png';
+    kbArt.src = 'assets/hang/hang_keyboard_scene.png';
     kb.appendChild(kbArt);
     const KB_ROWS = ['ЙЦУКЕНГШЩЗХЪ', 'ФЫВАПРОЛДЖЭ', 'ЯЧСМИТЬБЮ'];
     KB_ROWS.forEach((rowLetters, ri) => {
@@ -261,7 +261,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
     // --- Свеча (огарок виден на паузе догорания) ---
     const stage = burningOut ? 'out' : candleStage(puzzle.candleLeft);
     if (candleImg.parentNode) {
-      candleImg.src = `assets/hang_candle_${stage}.png`;
+      candleImg.src = `assets/hang/hang_candle_${stage}.png`;
       candleImg.classList.toggle('hang-fading', !burningOut && puzzle.candleLeft <= 2);
     }
     if (candleFallback) {

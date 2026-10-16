@@ -24,7 +24,7 @@ function addFieldBg(fieldEl, world) {
   const bg = document.createElement('img');
   bg.className = 'form-field-bg';
   bg.alt = '';
-  const cands = [`assets/battle_bg_${world}_web.jpg`, `assets/battle_bg_${world}.jfif`];
+  const cands = [`assets/battle/battle_bg_${world}_web.jpg`];
   let i = 0;
   bg.addEventListener('error', () => {
     i += 1;

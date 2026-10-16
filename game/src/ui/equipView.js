@@ -32,11 +32,11 @@ export function renderEquip(container, ctx) {
   head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
     <h2 style="margin:0">Комната рыцаря</h2></div>
     <div class="muted">Надевай вещи — они реально меняют бой. Двуручное оружие занимает обе руки.</div>`;
-  // AI-иконка рыцаря: web.jpg → jfif → svg
+  // AI-иконка рыцаря: web.jpg, фолбэк — без иконки
   const kIcon = document.createElement('img');
   kIcon.alt = '';
   kIcon.style.cssText = 'width:56px;height:56px;border-radius:12px;margin-right:10px;vertical-align:middle';
-  const kCandidates = ['assets/icon_knight_web.jpg', 'assets/icon_knight.jfif', 'assets/icon_knight.svg'];
+  const kCandidates = ['assets/knight/icon_knight_web.jpg'];
   let kIdx = 0;
   kIcon.addEventListener('error', () => {
     kIdx += 1;

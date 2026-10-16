@@ -156,7 +156,7 @@ export function sfx(name, step = 0) {
     }
     case 'purr': {
       // Настоящее мурлыкание кота (assets/…_1sec.mp3), фолбэк — синтез
-      if (playAudio('assets/3d-zvuk-murchanie-koshki_1sec.mp3', 0.7)) break;
+      if (playAudio('assets/audio/3d-zvuk-murchanie-koshki_1sec.mp3', 0.7)) break;
       for (let i = 0; i < 5; i++) {
         tone(65, 0.09, { type: 'sawtooth', gain: 0.05, delay: i * 0.11 });
         tone(80, 0.09, { type: 'sawtooth', gain: 0.03, delay: i * 0.11 + 0.05 });

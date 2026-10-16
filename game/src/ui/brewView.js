@@ -46,7 +46,7 @@ export function renderBrewPuzzle(container, ctx, level) {
   const bg = document.createElement('img');
   bg.className = 'brew-table-bg';
   bg.alt = '';
-  const bgCandidates = ['assets/brew_table_web.jpg', 'assets/brew_table.jfif', 'assets/brew_table.png'];
+  const bgCandidates = ['assets/brew/brew_table_web.jpg'];
   let bgIdx = 0;
   bg.addEventListener('error', () => {
     bgIdx += 1;
@@ -174,7 +174,7 @@ export function renderBrewPuzzle(container, ctx, level) {
   bookBg.className = 'brew-book-bg';
   bookBg.alt = '';
   bookBg.addEventListener('error', () => bookBg.remove());
-  bookBg.src = 'assets/recipe_book_web.jpg';
+  bookBg.src = 'assets/brew/recipe_book_web.jpg';
   book.appendChild(bookBg);
   side.appendChild(book);
 

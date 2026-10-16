@@ -150,14 +150,11 @@ export function renderSeekEditor(container, ctx, params) {
     return b;
   }
 
-  // Фон уровня (та же цепочка, что в игре)
+  // Фон уровня (тот же web-файл, что в игре)
   let bgImage = null;
   if (typeof Image !== 'undefined') {
     const bgName = raw.bg || `seek_${raw.world}`;
-    const candidates = [
-      `assets/${bgName}_web.jpg`, `assets/${bgName}.jfif`,
-      `assets/${bgName}.png`, `assets/${bgName}.svg`,
-    ];
+    const candidates = [`assets/seek/${bgName}_web.jpg`];
     let idx = 0;
     const tryNext = () => {
       if (idx >= candidates.length) return;

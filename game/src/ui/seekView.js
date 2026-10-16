@@ -1,5 +1,5 @@
 // Экран «Поиск предметов»: цельная иллюстрированная сцена, поиск по названиям.
-// Фон: assets/seek_<world>.png, фолбэк — assets/seek_<world>.svg, затем заливка.
+// Фон: assets/seek/seek_<world>_web.jpg, фолбэк — заливка.
 import {
   createSeekPuzzle, seekTap, isSeekSolved, seekProgress, seekHint, groupProgress,
 } from '../core/seekPuzzle.js';
@@ -80,16 +80,11 @@ export function renderSeekPuzzle(container, ctx, rawLevel) {
     return b;
   }
 
-  // Фон: web.jpg → jfif → png → svg → заливка (уровень может задать свой bg)
+  // Фон: web.jpg → заливка (уровень может задать свой bg)
   let bgImage = null;
   if (typeof Image !== 'undefined') {
     const bgName = level.bg || `seek_${level.world}`;
-    const candidates = [
-      `assets/${bgName}_web.jpg`,
-      `assets/${bgName}.jfif`,
-      `assets/${bgName}.png`,
-      `assets/${bgName}.svg`,
-    ];
+    const candidates = [`assets/seek/${bgName}_web.jpg`];
     let idx = 0;
     const tryNext = () => {
       if (idx >= candidates.length) return;
