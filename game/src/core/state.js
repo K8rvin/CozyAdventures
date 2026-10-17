@@ -58,7 +58,7 @@ export function newGame() {
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
     story: newStoryState(), // режим истории: шаг, круг гостей, память визитов
-    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf', guestCatalogMode: 'shelf', storyMode: true, themedCursors: true }, // настройки (бой, каталоги)
+    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf', guestCatalogMode: 'shelf', storyMode: true, cursorMode: 'themed', cursorTheme: 'default' }, // настройки (бой, каталоги)
     formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
     cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
@@ -94,7 +94,10 @@ function migrate(state) {
   state.settings.puzzleCatalogMode ??= 'shelf'; // вид каталога: полка, превью, список или мозаика
   state.settings.guestCatalogMode ??= 'shelf'; // вид гостевой книги: полка, портрет, список или мозаика
   state.settings.storyMode ??= true; // режим истории: гость в лавке ведёт по сюжету
-  state.settings.themedCursors ??= true; // тематические курсоры по режимам игры
+  // Курсоры: system (обычная стрелка) / themed (по режимам) / fixed (один везде)
+  state.settings.cursorMode ??= state.settings.themedCursors === false ? 'system' : 'themed';
+  delete state.settings.themedCursors;
+  state.settings.cursorTheme ??= 'default';
   state.story ||= newStoryState();
   state.story.guests ||= {};
   state.story.guestCursor ||= 0;

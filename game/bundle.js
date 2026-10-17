@@ -15604,7 +15604,7 @@
       // игрок пропустил обучение целиком
       story: newStoryState(),
       // режим истории: шаг, круг гостей, память визитов
-      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true, themedCursors: true },
+      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true, cursorMode: "themed", cursorTheme: "default" },
       // настройки (бой, каталоги)
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
@@ -15641,7 +15641,9 @@
     state2.settings.puzzleCatalogMode ??= "shelf";
     state2.settings.guestCatalogMode ??= "shelf";
     state2.settings.storyMode ??= true;
-    state2.settings.themedCursors ??= true;
+    state2.settings.cursorMode ??= state2.settings.themedCursors === false ? "system" : "themed";
+    delete state2.settings.themedCursors;
+    state2.settings.cursorTheme ??= "default";
     state2.story ||= newStoryState();
     state2.story.guests ||= {};
     state2.story.guestCursor ||= 0;
@@ -17088,30 +17090,30 @@
 
   // src/ui/cursors.js
   var CURSOR_THEMES = {
-    default: { hotspot: [4, 28], name: "\u041F\u0435\u0440\u043E \u0445\u043E\u0437\u044F\u0438\u043D\u0430" },
-    hub_lavka: { hotspot: [8, 4], name: "\u0424\u043E\u043D\u0430\u0440\u0438\u043A \u043B\u0430\u0432\u043A\u0438" },
-    hub_square: { hotspot: [6, 4], name: "\u0423\u043B\u0438\u0447\u043D\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C" },
-    hub_market: { hotspot: [16, 4], name: "\u0412\u0435\u0441\u044B \u0442\u043E\u0440\u0433\u043E\u0432\u0446\u0430" },
-    hub_cabinet: { hotspot: [16, 6], name: "\u041A\u0443\u0431\u043E\u043A \u0442\u0440\u043E\u0444\u0435\u0435\u0432" },
-    mirror: { hotspot: [8, 6], name: "\u0417\u0435\u0440\u043A\u0430\u043B\u044C\u0446\u0435" },
-    shelf: { hotspot: [10, 6], name: "\u041A\u0443\u0432\u0448\u0438\u043D \u0441 \u043F\u043E\u043B\u043A\u0438" },
-    riddle: { hotspot: [8, 6], name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0437\u0430\u0433\u0430\u0434\u043E\u043A" },
-    hang: { hotspot: [4, 28], name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u043E\u0435 \u043F\u0435\u0440\u043E" },
-    seek: { hotspot: [12, 12], name: "\u041B\u0443\u043F\u0430" },
-    path: { hotspot: [5, 5], name: "\u0411\u043E\u0442\u0438\u043D\u043E\u043A \u043F\u0443\u0442\u043D\u0438\u043A\u0430" },
-    tea: { hotspot: [16, 8], name: "\u0427\u0430\u0448\u043A\u0430 \u0447\u0430\u044F" },
-    mech: { hotspot: [16, 16], name: "\u0428\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0430" },
-    candle: { hotspot: [16, 4], name: "\u0421\u0432\u0435\u0447\u0430" },
-    flow: { hotspot: [8, 8], name: "\u0412\u043E\u043B\u043D\u0430" },
-    brew: { hotspot: [16, 4], name: "\u041A\u043E\u043B\u0431\u0430" },
-    fate: { hotspot: [6, 4], name: "\u041A\u0430\u0440\u0442\u0430 \u0441\u0443\u0434\u044C\u0431\u044B" },
-    glass: { hotspot: [16, 4], name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0432\u0438\u0442\u0440\u0430\u0436\u0430" },
-    battle: { hotspot: [4, 4], name: "\u041C\u0435\u0447 \u0440\u044B\u0446\u0430\u0440\u044F" },
-    equip: { hotspot: [16, 6], name: "\u0428\u043B\u0435\u043C \u0440\u044B\u0446\u0430\u0440\u044F" },
-    shop: { hotspot: [16, 16], name: "\u041C\u043E\u043D\u0435\u0442\u0430" },
-    tavern: { hotspot: [10, 6], name: "\u041A\u0440\u0443\u0436\u043A\u0430" },
-    craft: { hotspot: [6, 6], name: "\u041C\u043E\u043B\u043E\u0442 \u043A\u0443\u0437\u043D\u0435\u0446\u0430" },
-    workshop: { hotspot: [6, 6], name: "\u041A\u043B\u044E\u0447 \u043C\u0430\u0441\u0442\u0435\u0440\u0430" }
+    default: { hotspot: [4, 28], name: "\u041F\u0435\u0440\u043E \u0445\u043E\u0437\u044F\u0438\u043D\u0430", icon: "\u{1FAB6}" },
+    hub_lavka: { hotspot: [8, 4], name: "\u0424\u043E\u043D\u0430\u0440\u0438\u043A \u043B\u0430\u0432\u043A\u0438", icon: "\u{1F3EE}" },
+    hub_square: { hotspot: [6, 4], name: "\u0423\u043B\u0438\u0447\u043D\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C", icon: "\u{1F307}" },
+    hub_market: { hotspot: [16, 4], name: "\u0412\u0435\u0441\u044B \u0442\u043E\u0440\u0433\u043E\u0432\u0446\u0430", icon: "\u2696\uFE0F" },
+    hub_cabinet: { hotspot: [16, 6], name: "\u041A\u0443\u0431\u043E\u043A \u0442\u0440\u043E\u0444\u0435\u0435\u0432", icon: "\u{1F3C6}" },
+    mirror: { hotspot: [8, 6], name: "\u0417\u0435\u0440\u043A\u0430\u043B\u044C\u0446\u0435", icon: "\u{1FA9E}" },
+    shelf: { hotspot: [10, 6], name: "\u041A\u0443\u0432\u0448\u0438\u043D \u0441 \u043F\u043E\u043B\u043A\u0438", icon: "\u{1F3FA}" },
+    riddle: { hotspot: [8, 6], name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0437\u0430\u0433\u0430\u0434\u043E\u043A", icon: "\u{1F4DC}" },
+    hang: { hotspot: [4, 28], name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u043E\u0435 \u043F\u0435\u0440\u043E", icon: "\u{1F58B}\uFE0F" },
+    seek: { hotspot: [12, 12], name: "\u041B\u0443\u043F\u0430", icon: "\u{1F50D}" },
+    path: { hotspot: [5, 5], name: "\u0411\u043E\u0442\u0438\u043D\u043E\u043A \u043F\u0443\u0442\u043D\u0438\u043A\u0430", icon: "\u{1F97E}" },
+    tea: { hotspot: [16, 8], name: "\u0427\u0430\u0448\u043A\u0430 \u0447\u0430\u044F", icon: "\u{1F375}" },
+    mech: { hotspot: [16, 16], name: "\u0428\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0430", icon: "\u2699\uFE0F" },
+    candle: { hotspot: [16, 4], name: "\u0421\u0432\u0435\u0447\u0430", icon: "\u{1F56F}\uFE0F" },
+    flow: { hotspot: [8, 8], name: "\u0412\u043E\u043B\u043D\u0430", icon: "\u{1F30A}" },
+    brew: { hotspot: [16, 4], name: "\u041A\u043E\u043B\u0431\u0430", icon: "\u2697\uFE0F" },
+    fate: { hotspot: [6, 4], name: "\u041A\u0430\u0440\u0442\u0430 \u0441\u0443\u0434\u044C\u0431\u044B", icon: "\u{1F52E}" },
+    glass: { hotspot: [16, 4], name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0432\u0438\u0442\u0440\u0430\u0436\u0430", icon: "\u{1FA9F}" },
+    battle: { hotspot: [4, 4], name: "\u041C\u0435\u0447 \u0440\u044B\u0446\u0430\u0440\u044F", icon: "\u2694\uFE0F" },
+    equip: { hotspot: [16, 6], name: "\u0428\u043B\u0435\u043C \u0440\u044B\u0446\u0430\u0440\u044F", icon: "\u{1FA96}" },
+    shop: { hotspot: [16, 16], name: "\u041C\u043E\u043D\u0435\u0442\u0430", icon: "\u{1FA99}" },
+    tavern: { hotspot: [10, 6], name: "\u041A\u0440\u0443\u0436\u043A\u0430", icon: "\u{1F37A}" },
+    craft: { hotspot: [6, 6], name: "\u041C\u043E\u043B\u043E\u0442 \u043A\u0443\u0437\u043D\u0435\u0446\u0430", icon: "\u{1F528}" },
+    workshop: { hotspot: [6, 6], name: "\u041A\u043B\u044E\u0447 \u043C\u0430\u0441\u0442\u0435\u0440\u0430", icon: "\u{1F527}" }
   };
   var ROUTE_CURSORS = {
     puzzle: (p, state2) => findPuzzle(state2, p.id)?.mechanic || "mirror",
@@ -17139,10 +17141,23 @@
     if (key && CURSOR_THEMES[key]) return key;
     return "default";
   }
+  function fixedCursorTheme(state2) {
+    const key = state2?.settings?.cursorTheme;
+    return CURSOR_THEMES[key] ? key : "default";
+  }
+  function cursorMode(state2) {
+    const mode = state2?.settings?.cursorMode;
+    return ["system", "themed", "fixed"].includes(mode) ? mode : "themed";
+  }
   function applyCursor(name, params = {}, state2 = null, body = document.body) {
     if (!body) return;
-    if (state2?.settings?.themedCursors === false) {
+    const mode = cursorMode(state2);
+    if (mode === "system") {
       delete body.dataset.cursor;
+      return;
+    }
+    if (mode === "fixed") {
+      body.dataset.cursor = fixedCursorTheme(state2);
       return;
     }
     const prev = body.dataset?.cursor;
@@ -27159,23 +27174,68 @@
     }));
     container.appendChild(puzzleSec);
     const cursorSec = makeSection("\u{1F5B1}\uFE0F \u041A\u0443\u0440\u0441\u043E\u0440\u044B");
-    cursorSec.appendChild(makeToggleRow({
-      name: "\u0422\u0435\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043A\u0443\u0440\u0441\u043E\u0440\u044B",
-      hint: "\u0423 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0430 \u0441\u0432\u043E\u0439 \u043A\u0443\u0440\u0441\u043E\u0440: \u043B\u0443\u043F\u0430 \u0432 \u043F\u043E\u0438\u0441\u043A\u0435, \u043A\u043E\u043B\u0431\u0430 \u0432 \u0432\u0430\u0440\u043A\u0435. \u0412\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u043E \u2014 \u043E\u0431\u044B\u0447\u043D\u0430\u044F \u0441\u0442\u0440\u0435\u043B\u043A\u0430 \u0432\u0435\u0437\u0434\u0435.",
-      get: () => state2.settings.themedCursors !== false,
-      flip: () => {
-        state2.settings.themedCursors = state2.settings.themedCursors === false;
+    const CURSOR_MODES = [
+      { id: "system", name: "\u0421\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0439", icon: "\u{1F5B1}\uFE0F", hint: "\u041E\u0431\u044B\u0447\u043D\u0430\u044F \u0441\u0442\u0440\u0435\u043B\u043A\u0430 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0430 \u0432\u0435\u0437\u0434\u0435" },
+      { id: "themed", name: "\u0422\u0435\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435", icon: "\u{1F3AD}", hint: "\u0421\u0432\u043E\u0439 \u043A\u0443\u0440\u0441\u043E\u0440 \u0443 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0430 \u0438\u0433\u0440\u044B" },
+      { id: "fixed", name: "\u041E\u0434\u0438\u043D \u0432\u0435\u0437\u0434\u0435", icon: "\u{1F4CC}", hint: "\u041E\u0434\u0438\u043D \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441\u043E\u0440 \u043D\u0430 \u0432\u0441\u044E \u0438\u0433\u0440\u0443" }
+    ];
+    const cursorPicker = document.createElement("div");
+    cursorPicker.className = "pc-mode-picker set-cursor-modes";
+    cursorPicker.setAttribute("role", "group");
+    cursorPicker.setAttribute("aria-label", "\u0420\u0435\u0436\u0438\u043C \u043A\u0443\u0440\u0441\u043E\u0440\u0430");
+    const themeGrid = document.createElement("div");
+    themeGrid.className = "set-cursor-grid";
+    const syncCursorUI = () => {
+      const mode = cursorMode(state2);
+      for (const b of cursorPicker.children) {
+        const active = b.dataset.mode === mode;
+        b.className = `small pc-mode-option${active ? " primary is-active" : " ghost"}`;
+        b.setAttribute("aria-pressed", String(active));
+      }
+      themeGrid.style.display = mode === "fixed" ? "" : "none";
+      const current = fixedCursorTheme(state2);
+      for (const chip of themeGrid.children) {
+        const active = chip.dataset.theme === current;
+        chip.className = `small set-cursor-chip${active ? " primary is-active" : " ghost"}`;
+        chip.setAttribute("aria-pressed", String(active));
+      }
+    };
+    for (const mode of CURSOR_MODES) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.mode = mode.id;
+      b.textContent = `${mode.icon} ${mode.name}`;
+      b.title = mode.hint;
+      b.addEventListener("click", () => {
+        if (cursorMode(state2) === mode.id) return;
+        state2.settings.cursorMode = mode.id;
         ctx2.save();
         ctx2.sfx?.("tap");
-        const on = state2.settings.themedCursors !== false;
-        const body = globalThis.document?.body;
-        if (body?.dataset) {
-          if (on) body.dataset.cursor = "default";
-          else delete body.dataset.cursor;
-        }
-        return on;
-      }
-    }));
+        syncCursorUI();
+        applyCursor("settings", {}, state2);
+      });
+      cursorPicker.appendChild(b);
+    }
+    for (const [key, t] of Object.entries(CURSOR_THEMES)) {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.dataset.theme = key;
+      chip.textContent = `${t.icon} ${t.name}`;
+      chip.addEventListener("click", () => {
+        if (fixedCursorTheme(state2) === key) return;
+        state2.settings.cursorTheme = key;
+        ctx2.save();
+        ctx2.sfx?.("tap");
+        syncCursorUI();
+        applyCursor("settings", {}, state2);
+      });
+      themeGrid.appendChild(chip);
+    }
+    const cursorHint = document.createElement("div");
+    cursorHint.className = "set-hint";
+    cursorHint.textContent = "\u041B\u0443\u043F\u0430 \u0432 \u043F\u043E\u0438\u0441\u043A\u0435, \u043A\u043E\u043B\u0431\u0430 \u0432 \u0432\u0430\u0440\u043A\u0435, \u043C\u0435\u0447 \u0432 \u043F\u043E\u0445\u043E\u0434\u0435. \u0412 \u0440\u0435\u0436\u0438\u043C\u0435 \xAB\u041E\u0434\u0438\u043D \u0432\u0435\u0437\u0434\u0435\xBB \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u044B\u0439 \u043A\u0443\u0440\u0441\u043E\u0440 \u0432\u0438\u0434\u0435\u043D \u0441\u0440\u0430\u0437\u0443.";
+    cursorSec.append(cursorPicker, cursorHint, themeGrid);
+    syncCursorUI();
     container.appendChild(cursorSec);
     const helpSec = makeSection("\u{1F408} \u041F\u043E\u043C\u043E\u0449\u044C");
     helpSec.appendChild(makeActionRow({

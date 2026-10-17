@@ -34,7 +34,9 @@ game/
                 cursors.js — тематические курсоры: роутер ставит body[data-cursor],
                 правила и хотспоты в styles.css (хвост файла), PNG 32×32 в
                 assets/cursors/<key>.png (+_hover) — промты р.19, без файла —
-                молча стандартный курсор; тест tests/cursors.test.mjs следит
+                молча стандартный курсор; три режима в настройках: system /
+                themed (по режимам) / fixed (один везде, тема в
+                settings.cursorTheme); тест tests/cursors.test.mjs следит
                 за синхронностью темы↔CSS
   tests/      — node --test; ui-smoke.test.mjs рендерит все экраны на DOM-стабе
   assets/     — только рантайм-картинки по тематическим папкам;

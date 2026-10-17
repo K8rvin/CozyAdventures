@@ -3,6 +3,7 @@ import { header } from './common.js';
 import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js';
 import { applyCheat } from '../core/state.js';
 import { createPuzzleCatalogModePicker } from './puzzleCatalogView.js';
+import { CURSOR_THEMES, applyCursor, cursorMode, fixedCursorTheme } from './cursors.js';
 
 function makeSection(title, danger = false) {
   const sec = document.createElement('div');
@@ -123,23 +124,68 @@ export function renderSettings(container, ctx) {
   container.appendChild(puzzleSec);
 
   const cursorSec = makeSection('🖱️ Курсоры');
-  cursorSec.appendChild(makeToggleRow({
-    name: 'Тематические курсоры',
-    hint: 'У каждого режима свой курсор: лупа в поиске, колба в варке. Выключено — обычная стрелка везде.',
-    get: () => state.settings.themedCursors !== false,
-    flip: () => {
-      state.settings.themedCursors = state.settings.themedCursors === false;
+  const CURSOR_MODES = [
+    { id: 'system', name: 'Системный', icon: '🖱️', hint: 'Обычная стрелка браузера везде' },
+    { id: 'themed', name: 'Тематические', icon: '🎭', hint: 'Свой курсор у каждого режима игры' },
+    { id: 'fixed', name: 'Один везде', icon: '📌', hint: 'Один выбранный курсор на всю игру' },
+  ];
+  const cursorPicker = document.createElement('div');
+  cursorPicker.className = 'pc-mode-picker set-cursor-modes';
+  cursorPicker.setAttribute('role', 'group');
+  cursorPicker.setAttribute('aria-label', 'Режим курсора');
+  const themeGrid = document.createElement('div');
+  themeGrid.className = 'set-cursor-grid';
+  const syncCursorUI = () => {
+    const mode = cursorMode(state);
+    for (const b of cursorPicker.children) {
+      const active = b.dataset.mode === mode;
+      b.className = `small pc-mode-option${active ? ' primary is-active' : ' ghost'}`;
+      b.setAttribute('aria-pressed', String(active));
+    }
+    themeGrid.style.display = mode === 'fixed' ? '' : 'none';
+    const current = fixedCursorTheme(state);
+    for (const chip of themeGrid.children) {
+      const active = chip.dataset.theme === current;
+      chip.className = `small set-cursor-chip${active ? ' primary is-active' : ' ghost'}`;
+      chip.setAttribute('aria-pressed', String(active));
+    }
+  };
+  for (const mode of CURSOR_MODES) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.dataset.mode = mode.id;
+    b.textContent = `${mode.icon} ${mode.name}`;
+    b.title = mode.hint;
+    b.addEventListener('click', () => {
+      if (cursorMode(state) === mode.id) return;
+      state.settings.cursorMode = mode.id;
       ctx.save();
       ctx.sfx?.('tap');
-      const on = state.settings.themedCursors !== false;
-      const body = globalThis.document?.body;
-      if (body?.dataset) {
-        if (on) body.dataset.cursor = 'default';
-        else delete body.dataset.cursor;
-      }
-      return on;
-    },
-  }));
+      syncCursorUI();
+      applyCursor('settings', {}, state);
+    });
+    cursorPicker.appendChild(b);
+  }
+  for (const [key, t] of Object.entries(CURSOR_THEMES)) {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.dataset.theme = key;
+    chip.textContent = `${t.icon} ${t.name}`;
+    chip.addEventListener('click', () => {
+      if (fixedCursorTheme(state) === key) return;
+      state.settings.cursorTheme = key;
+      ctx.save();
+      ctx.sfx?.('tap');
+      syncCursorUI();
+      applyCursor('settings', {}, state); // живой предпросмотр: курсор меняется сразу
+    });
+    themeGrid.appendChild(chip);
+  }
+  const cursorHint = document.createElement('div');
+  cursorHint.className = 'set-hint';
+  cursorHint.textContent = 'Лупа в поиске, колба в варке, меч в походе. В режиме «Один везде» выбранный курсор виден сразу.';
+  cursorSec.append(cursorPicker, cursorHint, themeGrid);
+  syncCursorUI();
   container.appendChild(cursorSec);
 
   const helpSec = makeSection('🐈 Помощь');

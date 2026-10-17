@@ -310,7 +310,8 @@ test('миграция старого сейва: настройки катал�
   delete old.settings.keepBookOpen; // сейв до появления настройки уютной варки
   delete old.settings.puzzleCatalogMode; // сейв до появления вариантов каталога
   delete old.settings.guestCatalogMode; // сейв до появления гостевой книги
-  delete old.settings.themedCursors; // сейв до появления настройки курсоров
+  delete old.settings.cursorMode; // сейв до появления режимов курсоров
+  delete old.settings.cursorTheme;
   const mem = { cozy_adventures_save_v2: JSON.stringify(old) };
   const storage = {
     getItem: (k) => mem[k] ?? null,
@@ -320,7 +321,23 @@ test('миграция старого сейва: настройки катал�
   assert.equal(loaded.settings.keepBookOpen, false, 'прежнее поведение: рецепт по памяти');
   assert.equal(loaded.settings.puzzleCatalogMode, 'shelf', 'каталог по умолчанию показывается полкой');
   assert.equal(loaded.settings.guestCatalogMode, 'shelf', 'гостевая книга по умолчанию показывается полкой');
-  assert.equal(loaded.settings.themedCursors, true, 'тематические курсоры по умолчанию включены');
+  assert.equal(loaded.settings.cursorMode, 'themed', 'курсоры по умолчанию тематические');
+  assert.equal(loaded.settings.cursorTheme, 'default', 'тема «один везде» по умолчанию — перо хозяина');
+});
+
+test('миграция сейва с булевой themedCursors: false становится системным режимом', () => {
+  const old = newGame();
+  delete old.settings.cursorMode;
+  delete old.settings.cursorTheme;
+  old.settings.themedCursors = false; // сейв эпохи тумблера «системный курсор»
+  const mem = { cozy_adventures_save_v2: JSON.stringify(old) };
+  const storage = {
+    getItem: (k) => mem[k] ?? null,
+    setItem: (k, v) => { mem[k] = v; },
+  };
+  const loaded = loadGame(storage);
+  assert.equal(loaded.settings.cursorMode, 'system', 'выключенные тематические курсоры → системный режим');
+  assert.equal('themedCursors' in loaded.settings, false, 'старый ключ удалён');
 });
 
 test('новинки прилавка: появились, видны, гаснут после визита', () => {

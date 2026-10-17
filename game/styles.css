@@ -1345,6 +1345,9 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .set-text { flex: 1; min-width: 0; }
 .set-name { font-weight: 600; }
 .set-hint { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.set-cursor-modes { margin-bottom: 8px; }
+.set-cursor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 8px; margin-top: 10px; }
+.set-cursor-chip { text-align: left; white-space: normal; }
 button.set-toggle {
   min-height: 0;
   padding: 0;

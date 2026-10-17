@@ -276,8 +276,9 @@ test('каталог головоломок: четыре режима и общ
 
   const settingsRoot = new El('main');
   renderSettings(settingsRoot, ctx);
+  const catalogModeIds = ['shelf', 'preview', 'accordion', 'bento'];
   const settingsOptions = flatElements(settingsRoot)
-    .filter((el) => (el.className || '').includes('pc-mode-option'));
+    .filter((el) => (el.className || '').includes('pc-mode-option') && catalogModeIds.includes(el.dataset.mode));
   assert.equal(settingsOptions.length, 4, 'в настройках доступны все варианты');
   settingsOptions.find((el) => el.dataset.mode === 'preview').click();
   assert.equal(state.settings.puzzleCatalogMode, 'preview');

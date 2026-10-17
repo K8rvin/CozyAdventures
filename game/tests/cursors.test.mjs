@@ -69,17 +69,36 @@ test('applyCursor ставит body.dataset.cursor и держит сцену х
   assert.equal(body.dataset.cursor, 'hub_lavka');
 });
 
-test('applyCursor: выключенные тематические курсоры снимают тему', () => {
+test('режим system: тема снимается, курсор обычный', () => {
   const body = { dataset: { cursor: 'brew' } };
-  const state = { settings: { themedCursors: false } };
+  const state = { settings: { cursorMode: 'system' } };
   applyCursor('equip', {}, state, body);
-  assert.equal(body.dataset.cursor, undefined, 'без настройки темы — обычный курсор браузера');
+  assert.equal(body.dataset.cursor, undefined, 'без темы — обычный курсор браузера');
   applyCursor('hub', { scene: 'square' }, state, body);
   assert.equal(body.dataset.cursor, undefined);
-  // Включили обратно — темы возвращаются
-  state.settings.themedCursors = true;
+});
+
+test('режим fixed: выбранная тема на любом экране, невалидная — фолбэк на default', () => {
+  const body = { dataset: {} };
+  const state = { settings: { cursorMode: 'fixed', cursorTheme: 'seek' } };
+  applyCursor('equip', {}, state, body);
+  assert.equal(body.dataset.cursor, 'seek', 'fixed давит маршрутную тему');
+  applyCursor('puzzle', { id: ALL_PUZZLES.find((p) => (p.mechanic || 'mirror') === 'brew').id }, state, body);
+  assert.equal(body.dataset.cursor, 'seek', 'даже на головоломке');
+  applyCursor('hub', { scene: 'market' }, state, body);
+  assert.equal(body.dataset.cursor, 'seek', 'и на сценах хаба');
+  state.settings.cursorTheme = 'несуществующая';
+  applyCursor('equip', {}, state, body);
+  assert.equal(body.dataset.cursor, 'default', 'невалидная тема из сейва — фолбэк');
+});
+
+test('режим themed: прежнее поведение по режимам игры', () => {
+  const body = { dataset: {} };
+  const state = { settings: { cursorMode: 'themed' } };
   applyCursor('equip', {}, state, body);
   assert.equal(body.dataset.cursor, 'equip');
+  applyCursor('hub', { scene: 'cabinet' }, state, body);
+  assert.equal(body.dataset.cursor, 'hub_cabinet');
 });
 
 test('styles.css содержит оба правила на каждую тему с тем же хотспотом', () => {
@@ -97,8 +116,10 @@ test('styles.css содержит оба правила на каждую тем
   }
 });
 
-test('имена файлов курсоров валидны', () => {
-  for (const key of Object.keys(CURSOR_THEMES)) {
+test('имена файлов курсоров валидны, у каждой темы есть имя и иконка', () => {
+  for (const [key, t] of Object.entries(CURSOR_THEMES)) {
     assert.match(key, /^[a-z][a-z0-9_]*$/, key);
+    assert.ok(t.name && /[а-яё]/i.test(t.name), `${key}: нужно русское имя`);
+    assert.ok(t.icon, `${key}: нужна иконка для чипа выбора в настройках`);
   }
 });
