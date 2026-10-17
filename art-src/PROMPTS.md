@@ -1281,3 +1281,53 @@ and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
 - **card_grape.png** — `a hanging bunch of dark grapes with a curling vine tendril`
 - **card_suitcase.png** — `a small old leather suitcase with travel stickers, buckled straps`
 - **card_scarf.png** — `a hand-knitted wool scarf rolled into a cozy coil`
+
+## 18. Иконки предметов — assets/items/<id>_web.jpg (оружие, потом остальное)
+
+Переходим с эмодзи на полноценные иконки. Код уже умеет подхватывать арт:
+`itemIconEl()` в `game/src/ui/itemTip.js` кладёт `assets/items/<id>_web.jpg`
+поверх эмодзи, при отсутствии файла картинка молча убирается. Оригиналы —
+в `art-src/items/`, в рантайм — сжатые `*_web.jpg` (квадрат, 256–512 px хватает).
+
+**Фон = редкость предмета.** Просим ровно этот HEX (те же цвета, что у
+подложки `.item-ico` в `styles.css` — иконка и подложка сольются бесшовно):
+
+| Редкость    | HEX фона  | Ощущение |
+|-------------|-----------|----------|
+| common      | `#4a3f33` | тёплый тёмно-коричневый, «дерево и кожа» |
+| rare        | `#2e4a66` | глубокий синий, «ночное небо» |
+| epic        | `#4a3466` | глубокий фиолетовый, «магия и чернила» |
+| legendary   | `#6a5216` | тёмное золото, «старинная легенда» |
+
+Модель может промахнуться по оттенку — тогда фон доводим скриптом
+(заливка от углов точным HEX, как с белым фоном у питомцев).
+
+Шаблон (подставить SUBJECT и BG_HEX по редкости):
+
+```
+Game inventory icon, {SUBJECT}, single object centered, filling about 70%
+of the frame, slightly angled three-quarter view, cozy storybook watercolor
+style with gentle ink outlines, warm light from the upper left, soft shadow
+under the object, plain solid background of exact hex color {BG_HEX}, no
+other objects, no text, no watermark --ar 1:1
+```
+
+### Оружие (11 штук, slot: weapon)
+
+- **wpn_rusty_sword.png** (common) — `an old but sharp knight's shortsword with a worn leather grip and a tiny dried lavender sprig tied to the pommel`
+- **wpn_oak_mace.png** (common) — `a heavy oak mace with a rough carved wooden head and iron bands, bark texture`
+- **wpn_dagger_firefly.png** (rare) — `a slim elegant dagger with a softly glowing green blade, tiny firefly sparks around the tip`
+- **wpn_greatsword_oak.png** (rare) — `a massive two-handed greatsword of dark bog oak with a wide steel blade and brass crossguard`
+- **wpn_iron_sword.png** (rare) — `a plain reliable guardsman's iron longsword, polished blade, simple wrapped grip, no ornament`
+- **wpn_hunter_bow.png** (rare) — `a dark wooden longbow with a whisper-quiet string and one silver-fletched arrow resting along the limb`
+- **wpn_lumberaxe.png** (epic) — `a huge two-handed lumberjack greataxe with a broad crescent blade, faint green spirit wisps curling off the edge`
+- **wpn_warhammer.png** (epic) — `a massive stonemason's war hammer with a square stone head and a sturdy oak haft, chips of granite`
+- **wpn_candle_staff.png** (epic) — `a tall mage staff topped with a burning candle flame inside a brass lantern cage, wax drips frozen mid-fall`
+- **wpn_master_dagger.png** (epic) — `a masterwork stiletto dagger forged from glowing moss and mossy stone, thin green veins of light in the blade`
+- **wpn_firebird_quill.png** (legendary) — `a legendary dagger shaped like a firebird feather quill, blade of warm ember-orange feather barbs with tiny sparks, ornate gold nib-like hilt`
+
+### Следующие партии (тот же шаблон, свой SUBJECT)
+
+Щиты, шлемы, броня, перчатки, сапоги, амулеты, кольца, зелья и свитки —
+генерируем тем же шаблоном, фон строго по редкости предмета из
+`game/src/data/items.js`. Имя файла = id предмета.

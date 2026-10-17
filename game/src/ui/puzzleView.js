@@ -467,10 +467,21 @@ function showVictory(ctx, level, rewards) {
       <div class="actions"></div>
     </div>`;
   const actions = overlay.querySelector('.actions');
+  // Режим истории: только что закрыто задание гостя — ведём к следующему
+  const story = ctx.state?.story;
+  const storyNext = ctx.state?.settings?.storyMode !== false && story?.justCompleted;
+  if (storyNext) {
+    story.justCompleted = null;
+    const storyBtn = document.createElement('button');
+    storyBtn.className = 'primary';
+    storyBtn.textContent = '📖 Дальше по истории';
+    storyBtn.addEventListener('click', () => { overlay.remove(); ctx.go('story'); });
+    actions.appendChild(storyBtn);
+  }
   const next = nextPuzzle(level.id);
   if (next) {
     const nextBtn = document.createElement('button');
-    nextBtn.className = 'primary';
+    if (!storyNext) nextBtn.className = 'primary';
     nextBtn.textContent = `Следующая → ${next.name}`;
     nextBtn.addEventListener('click', () => { overlay.remove(); ctx.go('puzzle', { id: next.id }); });
     actions.appendChild(nextBtn);
@@ -479,7 +490,7 @@ function showVictory(ctx, level, rewards) {
   again.textContent = 'Ещё раз';
   again.addEventListener('click', () => { overlay.remove(); ctx.go('puzzle', { id: level.id }); });
   const toList = document.createElement('button');
-  if (!next) toList.className = 'primary';
+  if (!next && !storyNext) toList.className = 'primary';
   toList.textContent = 'К загадкам';
   toList.addEventListener('click', () => { overlay.remove(); backToPuzzleType(ctx, level); });
   const toShop = document.createElement('button');

@@ -14,6 +14,8 @@ import { renderSeekEditorList, renderSeekEditor } from './seekEditorView.js';
 import { renderAchievements } from './achievementsView.js';
 import { renderSandbox } from './sandboxView.js';
 import { renderBrewBook } from './brewBookView.js';
+import { renderGuestBook } from './guestBookView.js';
+import { renderStory } from './storyView.js';
 import { renderBoard } from './boardView.js';
 import { renderMarket } from './shopView.js';
 import { checkAchievements } from '../data/achievements.js';
@@ -73,6 +75,8 @@ const routes = {
   seekeditor: (c, p) => (p.id ? renderSeekEditor(c, ctx, p) : renderSeekEditorList(c, ctx, p)),
   achievements: (c, p) => renderAchievements(c, ctx, p),
   brewbook: (c, p) => renderBrewBook(c, ctx, p),
+  guests: (c, p) => renderGuestBook(c, ctx, p),
+  story: (c, p) => renderStory(c, ctx, p),
   sandbox: (c, p) => renderSandbox(c, ctx, p),
   board: (c, p) => renderBoard(c, ctx, p),
   shopArmory: (c) => renderMarket(c, ctx, 'armory'),

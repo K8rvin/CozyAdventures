@@ -6,7 +6,7 @@ import {
   saveGame, loadGame, removeFromBelt, nextPuzzle, firstUnsolvedPuzzle, ALL_PUZZLES,
   nextBattle, firstUnbeatenBattle, skipPuzzle, skipPuzzlePrice, applyCheat,
   findPuzzle, applySeekOverrides, saveSeekOverride, resetSeekOverride,
-  unseenShopItems, markShopSeen, loadSeekOverrides,
+  unseenShopItems, markShopSeen, loadSeekOverrides, autoEquipBest,
   dailyPuzzle, currentSeason, SEASON_LABEL, petTheCat, todayKey, isDailyPuzzle,
 } from '../src/core/state.js';
 import { PUZZLES } from '../src/data/puzzles.js';
@@ -302,10 +302,11 @@ test('миграция правок искалок из старого сохр�
   assert.ok(ov.sk_md_01, 'правки переехали в отдельное хранилище');
 });
 
-test('миграция старого сейва: настройки головоломок получают значения по умолчанию', () => {
+test('миграция старого сейва: настройки каталогов получают значения по умолчанию', () => {
   const old = newGame();
   delete old.settings.keepBookOpen; // сейв до появления настройки уютной варки
   delete old.settings.puzzleCatalogMode; // сейв до появления вариантов каталога
+  delete old.settings.guestCatalogMode; // сейв до появления гостевой книги
   const mem = { cozy_adventures_save_v2: JSON.stringify(old) };
   const storage = {
     getItem: (k) => mem[k] ?? null,
@@ -314,6 +315,7 @@ test('миграция старого сейва: настройки голов�
   const loaded = loadGame(storage);
   assert.equal(loaded.settings.keepBookOpen, false, 'прежнее поведение: рецепт по памяти');
   assert.equal(loaded.settings.puzzleCatalogMode, 'shelf', 'каталог по умолчанию показывается полкой');
+  assert.equal(loaded.settings.guestCatalogMode, 'shelf', 'гостевая книга по умолчанию показывается полкой');
 });
 
 test('новинки прилавка: появились, видны, гаснут после визита', () => {
@@ -425,6 +427,33 @@ test('тематические лавки: весь ассортимент ра�
   assert.ok(itemsForShop(s, 'armory', all).every((i) => i.slot === 'weapon'));
   assert.ok(itemsForShop(s, 'magic', all).every((i) => i.slot === 'amulet' || i.slot === 'ring' || i.type === 'scroll'));
   assert.ok(itemsForShop(s, 'magic', all).some((i) => i.type === 'scroll'), 'витрина Мага содержит свитки');
+});
+
+test('«Надеть лучшее»: надевает сильнейшее и не трогает худшее', () => {
+  const s = newGame();
+  // стартовые: Дедов меч (атака 6, common) и Щит из липы надеты
+  s.inventory.push('wpn_greatsword_oak', 'arm_padded', 'pot_heal');
+  const r = autoEquipBest(s);
+  assert.ok(r.changed >= 2, 'двуручник и камзол должны надеться');
+  assert.equal(s.equipped.weapon, 'wpn_greatsword_oak', 'лучшее оружие надето');
+  assert.equal(s.equipped.armor, 'arm_padded');
+  assert.equal(s.equipped.shield, null, 'двуручник снял щит');
+  assert.ok(s.inventory.includes('wpn_rusty_sword'), 'старый меч вернулся в сундук');
+  assert.ok(s.inventory.includes('shd_wooden'), 'щит вернулся в сундук');
+  assert.ok(s.inventory.includes('pot_heal'), 'зелья остаются в сундуке');
+  // Повторный вызов ничего не меняет
+  assert.equal(autoEquipBest(s).changed, 0);
+});
+
+test('«Надеть лучшее»: кольцо вытесняет более слабое', () => {
+  const s = newGame();
+  s.inventory.push('rng_luck', 'rng_health', 'rng_crit');
+  autoEquipBest(s);
+  const rings = [s.equipped.ring1, s.equipped.ring2].filter(Boolean);
+  assert.equal(rings.length, 2);
+  // rng_crit (rare, крит) сильнее rng_luck (common) — третьим захода не должно быть хуже
+  const r2 = autoEquipBest(s);
+  assert.equal(r2.changed, 0, 'худшие кольца не вытесняют лучшие');
 });
 
 test('сохранение и загрузка', () => {

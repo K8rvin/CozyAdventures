@@ -1,12 +1,39 @@
 // Экран головоломки «Строка»: стих без последней строки, скрытая строка,
 // алфавит; промахи топят свечу (арт assets/hang/hang_candle_*.png, фолбэк — CSS).
+// Каждый ход сначала получает короткую паузу, затем чернильный вердикт.
 import {
   createHangmanPuzzle, guessLetter, undoHangman, resetHangman,
-  isHangmanSolved, applyHangmanHint, rewardFactor,
-  CANDLE_STEPS,
+  isHangmanSolved, applyHangmanHint, rewardFactor, canonLetter,
+  CANDLE_STEPS, MISTAKE_STEP, SPOIL_STEP, MIN_FACTOR, PERFECT_FACTOR,
 } from '../core/hangmanPuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
+
+const VERDICT_DELAY_MS = 260;
+const BURNOUT_DELAY_MS = 1400;
+const VICTORY_DELAY_MS = 1050;
+
+const KEEPER_REACTIONS = {
+  hit: [
+    'Мур… есть такая буква. Смотри, чернила разбегаются по всем её местам.',
+    'Хранитель кивает: верно. Строка стала чуть теплее.',
+    'Кот проводит лапой по странице: эта буква здесь действительно живёт.',
+  ],
+  miss: [
+    'Такой буквы строка не знает. Свеча вздрогнула, а монет стало на пять процентов меньше.',
+    'Мур… мимо. Клякса останется, зато следующий выбор будет точнее.',
+    'Хранитель бережно закрывает строку лапой: этой буквы здесь нет.',
+  ],
+  burn: [
+    'Свеча догорела, и страница погасла. Зажжём новую, но утраченной награды не вернуть.',
+    'Огонёк исчез вместе с частью награды. Хранитель уже достал новую свечу.',
+  ],
+};
+const HINT_REACTIONS = [
+  (letter) => `Кот дышит на страницу, и проступает буква «${letter}». Подсказка ошибкой не считается.`,
+  (letter) => `Хранитель касается чернил лапой: здесь пригодится буква «${letter}».`,
+  (letter) => `Мур… страница сама шепнула букву «${letter}». Слушаем дальше.`,
+];
 
 // Стадия арта свечи по остатку воска (0 промахов — полная, догорела — out)
 function candleStage(candleLeft) {
@@ -17,11 +44,22 @@ function candleStage(candleLeft) {
   return 'out';
 }
 
+function formatFactor(value) {
+  return String(Math.round(value * 100) / 100).replace('.', ',');
+}
+
 export function renderHangmanPuzzle(container, ctx, level) {
   const puzzle = createHangmanPuzzle(level);
   let hintsUsed = 0;
   let finished = false;
+  let checking = false;
   let burningOut = false; // пауза на догоревшей свече: показываем огарок, ввод заперт
+  let disposed = false;
+  let freshLetter = null;
+  let reactionSerial = 0;
+  let keyEls = new Map();
+  const reactionCounts = { hit: 0, miss: 0, burn: 0 };
+  const timers = [];
 
   container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: 'hang' }]));
 
@@ -29,7 +67,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
   wrap.className = 'puzzle-wrap hang-wrap';
 
   const pageBox = document.createElement('div');
-  pageBox.className = 'puzzle-canvas-box';
+  pageBox.className = 'puzzle-canvas-box riddle-stage';
   const page = document.createElement('div');
   page.className = 'riddle-page';
   pageBox.appendChild(page);
@@ -50,7 +88,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
     candleFallback = document.createElement('div');
     candleFallback.className = 'hang-candle-css';
     candleBox.appendChild(candleFallback);
-    draw();
+    if (!disposed) draw();
   });
   candleImg.src = 'assets/hang/hang_candle_full.png';
   candleBox.appendChild(candleImg);
@@ -60,22 +98,42 @@ export function renderHangmanPuzzle(container, ctx, level) {
   candleBox.appendChild(candleLabel);
   side.appendChild(candleBox);
 
-  const intro = document.createElement('div');
-  intro.className = 'intro-text';
-  intro.textContent = level.intro;
-  side.appendChild(intro);
+  // Кот комментирует ходы на месте вместо технических всплывающих сообщений.
+  const keeper = document.createElement('div');
+  keeper.className = 'riddle-keeper hang-keeper';
+  const portrait = document.createElement('div');
+  portrait.className = 'riddle-keeper-portrait';
+  const keeperImg = document.createElement('img');
+  keeperImg.className = 'riddle-keeper-art';
+  keeperImg.alt = 'Кот-хранитель';
+  keeperImg.src = 'assets/fate/guest_cat_web.jpg';
+  keeperImg.addEventListener('error', () => {
+    keeperImg.remove();
+    const fallback = document.createElement('span');
+    fallback.className = 'riddle-keeper-fallback';
+    fallback.textContent = '🐈';
+    portrait.appendChild(fallback);
+  });
+  portrait.appendChild(keeperImg);
+  const keeperText = document.createElement('div');
+  keeperText.className = 'intro-text riddle-keeper-text';
+  keeperText.textContent = level.intro;
+  keeperText.setAttribute('aria-live', 'polite');
+  keeper.append(portrait, keeperText);
+  side.appendChild(keeper);
 
   const statusEl = document.createElement('div');
   statusEl.className = 'puzzle-status';
   side.appendChild(statusEl);
 
-  const legend = document.createElement('div');
-  legend.className = 'panel';
-  legend.style.padding = '10px 14px';
-  legend.innerHTML = `<div class="desc" style="line-height:1.8">
+  const legend = document.createElement('details');
+  legend.className = 'panel riddle-rules hang-rules';
+  legend.open = level.id === 'bk_06' && !ctx.state.puzzlesDone?.[level.id];
+  legend.innerHTML = `<summary>Как играть</summary><div class="desc" style="line-height:1.8">
     Тапай буквы (можно и с клавиатуры). Верная откроется <b>во всех</b> местах строки.<br>
-    Промах блокирует букву и топит свечу. Свеча догорела — страница погасла:
-    −10% монет награды, но открытые буквы остаются.</div>`;
+    Каждый промах: <b>−${Math.round(MISTAKE_STEP * 100)}% монет</b>; догоревшая свеча — ещё <b>−${Math.round(SPOIL_STEP * 100)}%</b>.<br>
+    Награда не опустится ниже ${Math.round(MIN_FACTOR * 100)}%. Решение без ошибок — <b>×${formatFactor(PERFECT_FACTOR)} монет</b>.<br>
+    Отмена и сброс возвращают буквы и воск, но не стирают цену уже сделанных ошибок.</div>`;
   side.appendChild(legend);
 
   const controls = document.createElement('div');
@@ -84,8 +142,8 @@ export function renderHangmanPuzzle(container, ctx, level) {
   const btnUndo = mkBtn('↩️ Отмена (Ctrl+Z)', doUndo);
   const btnHint = mkBtn('💡 Подсказка', doHint);
   const btnReset = mkBtn('🔄 Сброс', doReset);
-  controls.append(btnUndo, btnHint, btnReset);
-  controls.appendChild(puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level)));
+  const btnSkip = puzzleSkipButton(ctx, level, () => backToPuzzleType(ctx, level));
+  controls.append(btnUndo, btnHint, btnReset, btnSkip);
   side.appendChild(controls);
 
   wrap.appendChild(side);
@@ -98,55 +156,128 @@ export function renderHangmanPuzzle(container, ctx, level) {
     return b;
   }
 
-  function doUndo() {
-    if (finished) return;
-    if (undoHangman(puzzle)) { ctx.sfx?.('tap'); draw(); }
+  function later(fn, ms) {
+    const timer = setTimeout(() => { if (!disposed) fn(); }, ms);
+    timers.push(timer);
+    return timer;
   }
-  function doReset() {
-    if (finished) return;
-    resetHangman(puzzle);
-    ctx.sfx?.('tap');
-    draw();
-  }
-  function doHint() {
-    if (finished) return;
-    const h = applyHangmanHint(puzzle);
-    ctx.sfx?.('hint');
-    if (h) {
-      hintsUsed += 1;
-      ctx.toast(`Кот-хранитель дышит на страницу: буква «${h.letter}» открывается`);
-      draw();
-      if (isHangmanSolved(puzzle)) finish();
-    } else {
-      ctx.toast('Строка уже открыта!');
+
+  function setChecking(value) {
+    checking = value;
+    page.classList.toggle('checking', checking);
+    for (const b of [btnUndo, btnHint, btnReset, btnSkip]) {
+      b.disabled = checking || burningOut || finished;
     }
   }
 
-  function tapKey(letter) {
-    if (finished || burningOut) return;
-    const r = guessLetter(puzzle, letter);
-    if (!r.ok) return;
-    if (r.hit) {
-      ctx.sfx?.('rotate');
-    } else if (r.burned) {
-      ctx.sfx?.('fail');
-      // Пауза на огарке: видим догоревшую свечу, ввод заперт, затем новая свеча
-      burningOut = true;
-      ctx.toast(`🕯️ Свеча догорела — страница погасла! Новая свеча, но награда тает (−${Math.round((1 - rewardFactor(puzzle)) * 100)}% монет).`);
-      page.classList.add('shake');
+  function react(text) {
+    keeperText.textContent = text;
+    const serial = ++reactionSerial;
+    keeper.classList.add('is-speaking');
+    later(() => {
+      if (serial === reactionSerial) keeper.classList.remove('is-speaking');
+    }, 350);
+  }
+
+  function reactToResult(kind) {
+    const options = KEEPER_REACTIONS[kind];
+    const index = reactionCounts[kind]++;
+    react(options[index % options.length]);
+  }
+
+  function showInkBlot() {
+    const blot = document.createElement('div');
+    blot.className = 'riddle-ink-blot hang-ink-blot';
+    page.appendChild(blot);
+    later(() => blot.remove(), 850);
+  }
+
+  function doUndo() {
+    if (finished || checking || burningOut) return;
+    if (undoHangman(puzzle)) {
+      freshLetter = null;
+      ctx.sfx?.('riddleErase');
       draw();
-      setTimeout(() => {
-        page.classList.remove('shake');
-        burningOut = false;
-        draw();
-      }, 1400);
-      return;
-    } else {
-      ctx.sfx?.('fail');
-      ctx.toast(`Буквы «${letter}» нет в строке. Свеча короче…`);
     }
+  }
+
+  function doReset() {
+    if (finished || checking || burningOut) return;
+    resetHangman(puzzle);
+    freshLetter = null;
+    ctx.sfx?.('riddleErase');
     draw();
-    if (r.hit && isHangmanSolved(puzzle)) finish();
+  }
+
+  function doHint() {
+    if (finished || checking || burningOut) return;
+    const h = applyHangmanHint(puzzle);
+    if (h) {
+      hintsUsed += 1;
+      freshLetter = h.letter;
+      ctx.sfx?.('hint');
+      ctx.sfx?.('riddleWrite');
+      react(HINT_REACTIONS[(hintsUsed - 1) % HINT_REACTIONS.length](h.letter));
+      draw();
+      const key = keyEls.get(h.letter);
+      key?.classList.add('is-pressed');
+      later(() => key?.classList.remove('is-pressed'), 130);
+      if (isHangmanSolved(puzzle)) finish();
+    } else {
+      react('Вся строка уже открыта. Хранителю осталось только мурлыкнуть.');
+    }
+  }
+
+  // Состояние меняется только после короткой паузы: сначала тактильная клавиша
+  // и дрожание света, затем проявленные буквы, клякса или догоревшая свеча.
+  function tapKey(letter) {
+    if (finished || checking || burningOut) return;
+    const canon = canonLetter(letter);
+    if (puzzle.revealed.has(canon) || puzzle.wrong.has(canon)) return;
+    setChecking(true);
+    page.classList.add('hang-awaiting');
+    candleBox.classList.add('hang-candle-check');
+    keyEls.get(canon)?.classList.add('is-pressed');
+    ctx.sfx?.('riddleKey');
+    ctx.sfx?.('riddleWrite');
+
+    later(() => {
+      page.classList.remove('hang-awaiting');
+      candleBox.classList.remove('hang-candle-check');
+      const r = guessLetter(puzzle, canon);
+      freshLetter = r.ok && r.hit ? canon : null;
+      if (!r.ok) {
+        setChecking(false);
+        draw();
+        return;
+      }
+
+      if (r.hit) {
+        ctx.sfx?.('riddleExact');
+        if (isHangmanSolved(puzzle)) { finish(); return; }
+        draw();
+        reactToResult('hit');
+        setChecking(false);
+        return;
+      }
+
+      burningOut = r.burned;
+      ctx.sfx?.(r.burned ? 'fail' : 'riddleAbsent');
+      draw();
+      showInkBlot();
+      reactToResult(r.burned ? 'burn' : 'miss');
+      if (r.burned) {
+        page.classList.add('shake');
+        later(() => {
+          page.classList.remove('shake');
+          burningOut = false;
+          setChecking(false);
+          draw();
+        }, BURNOUT_DELAY_MS);
+        return;
+      }
+      setChecking(false);
+    }, VERDICT_DELAY_MS);
   }
 
   // Физическая клавиатура: кириллические буквы — ходы; Ctrl+Z — отмена, Esc — назад
@@ -165,20 +296,33 @@ export function renderHangmanPuzzle(container, ctx, level) {
 
   function finish() {
     finished = true;
+    burningOut = false;
+    setChecking(false);
     const factor = rewardFactor(puzzle);
+    const perfect = puzzle.mistakes === 0 && puzzle.spoiled === 0;
     const rewards = completePuzzle(ctx.state, level.id, {
       moves: puzzle.moves, hintsUsed, coinFactor: factor,
     });
     ctx.save();
-    ctx.sfx?.('success');
+    page.classList.add('riddle-solved');
     draw();
-    setTimeout(() => {
+    react(perfect
+      ? 'Ни одной кляксы! Мур-р… За такую чистую строку монет положено в полтора раза больше.'
+      : 'Последняя строка встала на место. Страница снова тёплая, и Хранитель доволен.');
+    ctx.sfx?.('page');
+    ctx.sfx?.('success');
+    later(() => ctx.sfx?.('purr'), 250);
+    later(() => {
       const next = nextPuzzle(level.id);
       showOverlay(ctx, {
-        title: '📖 Строка восстановлена!',
+        title: perfect ? '✨ Строка восстановлена без клякс!' : '📖 Строка восстановлена!',
         subtitle: `«${level.name}» — ${level.answer.replaceAll('✦', ' · ')}`
           + (level.author ? ` <span class="muted">(${level.author})</span>` : '')
-          + (factor < 1 ? `<br>Погасшие свечи съели часть награды (−${Math.round((1 - factor) * 100)}% монет).` : ''),
+          + (perfect
+            ? `<br>Без ошибок — монеты <b>×${formatFactor(PERFECT_FACTOR)}</b>!`
+            : factor < 1
+              ? `<br>Ошибки и погасшие страницы съели часть награды (−${Math.round((1 - factor) * 100)}% монет).`
+              : ''),
         rewards,
         buttons: [
           ...(next ? [{ label: `Следующая → ${next.name}`, primary: true, onClick: () => ctx.go('puzzle', { id: next.id }) }] : []),
@@ -187,12 +331,17 @@ export function renderHangmanPuzzle(container, ctx, level) {
           { label: 'В лавку', onClick: () => ctx.go('hub') },
         ],
       });
-    }, 450);
+    }, VICTORY_DELAY_MS);
   }
 
   function draw() {
-    // --- Страница: стих + скрытая строка ---
+    // --- Пергамент: стих + скрытая строка ---
     page.innerHTML = '';
+    keyEls = new Map();
+
+    const sheet = document.createElement('div');
+    sheet.className = 'riddle-sheet';
+    page.appendChild(sheet);
 
     const verse = document.createElement('div');
     verse.className = 'riddle-text';
@@ -207,11 +356,12 @@ export function renderHangmanPuzzle(container, ctx, level) {
       a.textContent = `— ${level.author}`;
       verse.appendChild(a);
     }
-    page.appendChild(verse);
+    sheet.appendChild(verse);
 
-    // Скрытая строка: окошки с открытыми буквами или подчёркиваниями
+    // Скрытая строка: новая буква проявляется чернилами во всех своих окошках.
     const row = document.createElement('div');
-    row.className = 'riddle-slots';
+    row.className = 'riddle-slots riddle-current hang-answer';
+    let slotIndex = 0;
     for (const ch of level.answer) {
       if (ch === '✦') {
         const sep = document.createElement('div');
@@ -221,12 +371,21 @@ export function renderHangmanPuzzle(container, ctx, level) {
         continue;
       }
       const cell = document.createElement('div');
-      const open = puzzle.revealed.has(ch === 'Ё' ? 'Е' : ch); // Ё открывается клавишей Е
+      const canon = canonLetter(ch);
+      const open = puzzle.revealed.has(canon);
       cell.className = 'riddle-slot hang-slot' + (open ? ' filled' : '');
-      cell.textContent = open ? ch : '';
+      if (open && freshLetter === canon) cell.classList.add('ink-fresh');
+      if (finished) cell.style.animationDelay = `${slotIndex * 55}ms`;
+      if (open) {
+        const glyph = document.createElement('span');
+        glyph.className = 'riddle-glyph';
+        glyph.textContent = ch;
+        cell.appendChild(glyph);
+      }
       row.appendChild(cell);
+      slotIndex += 1;
     }
-    page.appendChild(row);
+    sheet.appendChild(row);
 
     // Клавиатура ЙЦУКЕН (без Ё — она открывается клавишей Е):
     // арт клавиатуры подложен под кнопки; состояния — тонировкой буквы.
@@ -250,7 +409,8 @@ export function renderHangmanPuzzle(container, ctx, level) {
           + (isOpen ? ' mark-exact' : '')
           + (isWrong ? ' mark-absent' : '');
         b.textContent = letter;
-        if (!isOpen && !isWrong) b.addEventListener('click', () => tapKey(letter));
+        keyEls.set(letter, b);
+        if (!isOpen && !isWrong && !finished) b.addEventListener('click', () => tapKey(letter));
         else b.disabled = true;
         rowEl.appendChild(b);
       }
@@ -260,7 +420,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
 
     // --- Свеча (огарок виден на паузе догорания) ---
     const stage = burningOut ? 'out' : candleStage(puzzle.candleLeft);
-    if (candleImg.parentNode) {
+    if (candleImg.parentNode || candleImg.parent) {
       candleImg.src = `assets/hang/hang_candle_${stage}.png`;
       candleImg.classList.toggle('hang-fading', !burningOut && puzzle.candleLeft <= 2);
     }
@@ -274,19 +434,21 @@ export function renderHangmanPuzzle(container, ctx, level) {
         : puzzle.candleLeft >= 2 ? 'Свеча тает…'
           : 'Огонёк на последнем воске!';
 
-    // --- Статус ---
+    // --- Статус и текущая цена строки ---
     const factor = rewardFactor(puzzle);
+    const perfect = puzzle.mistakes === 0 && puzzle.spoiled === 0;
     statusEl.innerHTML =
-      `🕯️ Воска: <b>${puzzle.candleLeft}/${CANDLE_STEPS}</b>`
-      + (puzzle.spoiled > 0
-        ? ` · погасло страниц: <b>${puzzle.spoiled}</b> (−${Math.round((1 - factor) * 100)}% монет)`
-        : '')
+      `🕯️ Воска: <b>${puzzle.candleLeft}/${CANDLE_STEPS}</b> · Ошибок: <b>${puzzle.mistakes}</b>`
+      + `<div>Монеты: <b>×${formatFactor(factor)}</b>${perfect ? ' · бонус без ошибок сохранён' : ''}</div>`
+      + (puzzle.spoiled > 0 ? `<div class="warn">Погасло страниц: ${puzzle.spoiled}</div>` : '')
       + `<div class="muted" style="font-size:13px">Ходы: ${puzzle.moves} · Подсказки: ${hintsUsed}</div>`;
   }
 
   draw();
 
   return () => {
+    disposed = true;
+    timers.forEach(clearTimeout);
     window.removeEventListener('keydown', onKey);
   };
 }

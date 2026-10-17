@@ -5,7 +5,7 @@
 // одного гостя — его маленькая история. Реплики: idle (у стола),
 // success (за готовое зелье), spoiled (добрая реакция на испорченный котёл).
 
-const GUESTS = {
+export const GUESTS = {
   cat: {
     name: 'Кот-хранитель', icon: '🐈', art: 'assets/fate/guest_cat_web.jpg',
     idle: 'Свари по книге, я подсмотрю и подскажу.',

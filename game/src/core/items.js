@@ -117,6 +117,26 @@ export function collectStats(equipment) {
   return { stats: s, traits, activeSets };
 }
 
+// Оценка «крутости» предмета для сортировки и кнопки «Надеть лучшее».
+const RARITY_RANK = { common: 0, rare: 1, epic: 2, legendary: 3 };
+const PCT_STATS = ['crit', 'dodge', 'block', 'goldFind', 'itemFind', 'materialsFind'];
+
+export function itemScore(item) {
+  if (!item) return 0;
+  let sum = 0;
+  for (const [k, v] of Object.entries(item.stats || {})) {
+    if (k === 'resist') {
+      for (const rv of Object.values(v)) sum += rv * 50;
+    } else if (PCT_STATS.includes(k)) {
+      sum += v * 100;
+    } else {
+      sum += v;
+    }
+  }
+  sum += (item.traits?.length || 0) * 8;
+  return (RARITY_RANK[item.rarity] ?? 0) * 100 + sum;
+}
+
 // Краткое текстовое описание характеристик предмета для UI.
 export function describeItem(item) {
   const parts = [];

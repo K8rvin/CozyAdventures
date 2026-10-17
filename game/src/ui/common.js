@@ -97,6 +97,16 @@ export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons, ar
       <div class="actions"></div>
     </div>`;
   const actions = overlay.querySelector('.actions');
+  // Режим истории: только что закрыто задание гостя — ведём к следующему
+  const story = ctx.state?.story;
+  if (ctx.state?.settings?.storyMode !== false && story?.justCompleted) {
+    story.justCompleted = null;
+    const storyBtn = document.createElement('button');
+    storyBtn.className = 'primary';
+    storyBtn.textContent = '📖 Дальше по истории';
+    storyBtn.addEventListener('click', () => { overlay.remove(); ctx.go('story'); });
+    actions.appendChild(storyBtn);
+  }
   for (const b of buttons) {
     const btn = document.createElement('button');
     btn.textContent = b.label;

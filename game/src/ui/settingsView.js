@@ -62,6 +62,25 @@ export function renderSettings(container, ctx) {
   brewNote.textContent = 'Без тренировки памяти: в варке зелий книга рецептов не закрывается. Награды прежние.';
   panel.appendChild(brewNote);
 
+  // --- Режим истории: гость в лавке ведёт по сюжету, выбирать не нужно ---
+  const storyBtn = document.createElement('button');
+  const storyBtnText = () => (state.settings.storyMode !== false
+    ? '📖 Режим истории: включён'
+    : '📖 Режим истории: выключен');
+  storyBtn.textContent = storyBtnText();
+  storyBtn.addEventListener('click', () => {
+    state.settings.storyMode = state.settings.storyMode === false;
+    ctx.save();
+    storyBtn.textContent = storyBtnText();
+    ctx.sfx?.('tap');
+  });
+  panel.appendChild(storyBtn);
+  const storyNote = document.createElement('div');
+  storyNote.className = 'muted';
+  storyNote.style.fontSize = '13px';
+  storyNote.textContent = 'В лавке ждёт гость с заданием: история сама подсовывает головоломки всех типов по очереди.';
+  panel.appendChild(storyNote);
+
   // --- Обучение ---
   const tutTitle = document.createElement('h3');
   tutTitle.textContent = 'Обучение';

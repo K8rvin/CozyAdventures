@@ -5,7 +5,9 @@ import {
   createHangmanPuzzle, guessLetter, undoHangman, resetHangman,
   isHangmanSolved, applyHangmanHint, rewardFactor, hangmanProgress,
   answerLetters, validateHangmanLevel, CANDLE_STEPS,
+  MIN_FACTOR, PERFECT_FACTOR,
 } from '../src/core/hangmanPuzzle.js';
+import { newGame, completePuzzle, todayKey } from '../src/core/state.js';
 
 const HANG = BOOK_PUZZLES.filter((l) => l.mechanic === 'hang');
 const byId = (id) => HANG.find((l) => l.id === id);
@@ -30,17 +32,20 @@ test('верная буква открывается во всех местах 
   assert.equal(isHangmanSolved(s), false);
 });
 
-test('промах блокирует букву и топит свечу', () => {
+test('промах блокирует букву, топит свечу и сразу съедает 5% монет', () => {
   const s = createHangmanPuzzle(byId('bk_07')); // СОННОГО✦РУЧЬЯ — без Ы
+  assert.equal(rewardFactor(s), PERFECT_FACTOR, 'до первой ошибки доступен бонус ×1,5');
   const r = guessLetter(s, 'Ы');
   assert.ok(r.ok && !r.hit && !r.burned);
   assert.equal(s.candleLeft, CANDLE_STEPS - 1);
+  assert.equal(s.mistakes, 1);
   assert.ok(s.wrong.has('Ы'));
+  assert.ok(Math.abs(rewardFactor(s) - 0.95) < 1e-9, 'один промах оставляет 95% монет');
   assert.equal(guessLetter(s, 'Ы').ok, false, 'та же буква не принимается повторно');
   assert.equal(guessLetter(s, '!').ok, false, 'не-алфавит отклонён');
 });
 
-test('свеча догорела: страница погасла, открытые буквы остаются, штраф растёт', () => {
+test('свеча догорела: дополнительный штраф, открытые буквы остаются', () => {
   const s = createHangmanPuzzle(byId('bk_09'));
   guessLetter(s, 'У'); // откроем букву («кругом»)
   assert.ok(s.revealed.has('У'));
@@ -49,37 +54,58 @@ test('свеча догорела: страница погасла, открыт
     burned = guessLetter(s, ch).burned || burned;
   }
   assert.ok(burned, 'шестой промах догорел свечу');
+  assert.equal(s.mistakes, 6);
   assert.equal(s.spoiled, 1);
   assert.equal(s.candleLeft, CANDLE_STEPS, 'новая свеча полная');
   assert.ok(s.revealed.has('У'), 'открытые буквы не скрываются');
-  assert.ok(Math.abs(rewardFactor(s) - 0.9) < 1e-9, '−10% за погасшую страницу');
+  assert.ok(Math.abs(rewardFactor(s) - 0.6) < 1e-9, '−30% за промахи и ещё −10% за страницу');
   s.spoiled = 10;
-  assert.equal(rewardFactor(s), 0.5, 'пол штрафа — 50%');
+  assert.equal(rewardFactor(s), MIN_FACTOR, 'длинный перебор упирается в пол 30%');
 });
 
-test('отмена возвращает воск и разблокирует букву (включая догоревшую)', () => {
+test('отмена возвращает воск и букву, но не стирает цену ошибки', () => {
   const s = createHangmanPuzzle(byId('bk_08'));
   guessLetter(s, 'Ю'); // промах
   assert.equal(s.candleLeft, CANDLE_STEPS - 1);
   undoHangman(s);
   assert.equal(s.candleLeft, CANDLE_STEPS);
   assert.equal(s.wrong.size, 0);
-  // Догорание тоже отменяется корректно
+  assert.equal(s.mistakes, 1, 'отменённый промах всё равно лишает бонуса');
+  assert.ok(Math.abs(rewardFactor(s) - 0.95) < 1e-9);
+  // Поле откатывается и после догорания, но погасшая страница остаётся в счёте.
   for (const ch of ['Б', 'Г', 'Ж', 'Й', 'Ф', 'Ы']) guessLetter(s, ch);
   assert.equal(s.spoiled, 1);
   undoHangman(s);
-  assert.equal(s.spoiled, 0, 'отмена догорания возвращает страницу');
+  assert.equal(s.spoiled, 1, 'отмена не возвращает награду за погасшую страницу');
+  assert.equal(s.mistakes, 7);
   assert.equal(s.candleLeft, 1, 'отмена возвращает последний воск');
 });
 
-test('сброс скрывает строку, но помнит погасшие страницы', () => {
+test('сброс скрывает строку, но помнит ошибки и погасшие страницы', () => {
   const s = createHangmanPuzzle(byId('bk_06'));
-  guessLetter(s, 'О');
+  guessLetter(s, 'Ы');
   s.spoiled = 1;
   resetHangman(s);
   assert.equal(s.revealed.size, 0);
   assert.equal(s.candleLeft, CANDLE_STEPS);
+  assert.equal(s.mistakes, 1, 'сброс не возвращает бонус без ошибок');
   assert.equal(s.spoiled, 1, 'штраф за погасшие страницы сохраняется');
+  assert.notEqual(rewardFactor(s), PERFECT_FACTOR);
+});
+
+test('решение без ошибок даёт ×1,5 и фактически начисляет 195 монет за bk_06', () => {
+  const puzzle = createHangmanPuzzle(byId('bk_06'));
+  let guard = 40;
+  while (!isHangmanSolved(puzzle) && guard-- > 0) applyHangmanHint(puzzle);
+  assert.ok(isHangmanSolved(puzzle));
+  assert.equal(puzzle.mistakes, 0, 'подсказки не считаются ошибками');
+  const factor = rewardFactor(puzzle);
+  assert.equal(factor, PERFECT_FACTOR);
+
+  const state = newGame();
+  state.lastDailyBonus = todayKey(); // детерминированный тест без дневного ×2
+  const rewards = completePuzzle(state, 'bk_06', { coinFactor: factor });
+  assert.equal(rewards.find((r) => r.type === 'coins').amount, 195, '130 × 1,5 = 195');
 });
 
 test('подсказки решают каждый уровень «Строки»', () => {

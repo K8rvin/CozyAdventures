@@ -19,12 +19,13 @@ import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
 import { COSMETIC_BY_ID } from '../data/cosmetics.js';
 import { RECIPES, RECIPE_BY_ID } from '../data/recipes.js';
 import { MATERIALS } from '../data/materials.js';
-import { emptyEquipment, equip, unequip, collectStats, isShieldBlocked } from './items.js';
+import { emptyEquipment, equip, unequip, collectStats, isShieldBlocked, itemScore } from './items.js';
 import {
   makeFormationKnight, makeFormationMerc, makeFormationEnemy,
   simulateFormationBattle, enemyFormationSlots,
 } from './formBattle.js';
 import { ENEMY_BY_ID } from '../data/enemies.js';
+import { newStoryState, storyOnPuzzleComplete } from './storyEngine.js';
 
 const SAVE_KEY = 'cozy_adventures_save_v2';
 
@@ -49,13 +50,15 @@ export function newGame() {
     cosmeticsActive: [],    // выставленные украшения
     seekOverrides: {},      // правки хотспотов искалок из редактора: levelId -> groups
     shopSeenStock: [],      // id товаров прилавка, которые игрок уже видел
+    inventorySeen: [],      // id предметов сундука, которые игрок уже видел (метка «новое»)
     achievements: {},       // id -> timestamp разблокировки
     trophies: [],           // id трофеев кабинета (за боссов и розыск)
     trophiesSeen: [],       // id трофеев, которые игрок уже посмотрел в кабинете
     journal: [],            // дневник кота: последние события [{icon, text, at}]
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
-    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf' }, // настройки (бой, головоломки)
+    story: newStoryState(), // режим истории: шаг, круг гостей, память визитов
+    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf', guestCatalogMode: 'shelf', storyMode: true }, // настройки (бой, каталоги)
     formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
     cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
@@ -73,6 +76,7 @@ function migrate(state) {
   state.cosmeticsActive ||= [];
   state.seekOverrides ||= {};
   state.shopSeenStock ||= [];
+  state.inventorySeen ||= [];
   state.lastDailyBonus ??= null;
   state.lastCatGift ??= null;
   state.stats.catPets ||= 0;
@@ -88,6 +92,11 @@ function migrate(state) {
   state.settings.tactic ??= 'balance';
   state.settings.keepBookOpen ??= false; // уютная варка: рецепт всегда открыт (без памяти)
   state.settings.puzzleCatalogMode ??= 'shelf'; // вид каталога: полка, превью, список или мозаика
+  state.settings.guestCatalogMode ??= 'shelf'; // вид гостевой книги: полка, портрет, список или мозаика
+  state.settings.storyMode ??= true; // режим истории: гость в лавке ведёт по сюжету
+  state.story ||= newStoryState();
+  state.story.guests ||= {};
+  state.story.guestCursor ||= 0;
   state.formation ||= { knight: 1, merc0: 0, merc1: 5 };
   state.cheats ||= { used: [], spiderHat: false };
   state.materials ||= {};
@@ -295,6 +304,41 @@ export function removeFromBelt(state, index) {
   state.consumableBelt.splice(index, 1);
   state.inventory.push(id);
   return true;
+}
+
+// Кнопка «Надеть лучшее»: жадно надевает лучшие по itemScore вещи из сундука.
+// Расходники не трогает. Возвращает { changed, names }.
+export function autoEquipBest(state) {
+  const scoreOf = (slotId) => {
+    const id = state.equipped[slotId];
+    return id ? itemScore(ITEM_BY_ID[id]) : -1;
+  };
+  const names = [];
+  // Кандидаты по убыванию скора; дубли одного id равнозначны — берём по одному
+  const candIds = [...new Set(
+    state.inventory.filter((id) => ITEM_BY_ID[id] && ITEM_BY_ID[id].slot !== 'consumable'),
+  )].sort((a, b) => itemScore(ITEM_BY_ID[b]) - itemScore(ITEM_BY_ID[a]));
+
+  for (const id of candIds) {
+    const item = ITEM_BY_ID[id];
+    const sc = itemScore(item);
+    let ringSlot = null;
+    if (item.slot === 'ring') {
+      // Целимся в более слабое из двух колец
+      ringSlot = scoreOf('ring1') <= scoreOf('ring2') ? 'ring1' : 'ring2';
+      if (sc <= scoreOf(ringSlot)) continue;
+    } else if (sc <= scoreOf(item.slot)) {
+      continue;
+    }
+    if (item.slot === 'shield' && isShieldBlocked(state.equipped)) continue;
+    // Кольцо в конкретный слот: сначала освобождаем его (вытесненное — в сундук)
+    if (ringSlot && state.equipped[ringSlot]) unequipToInventory(state, ringSlot);
+    const idx = state.inventory.indexOf(id);
+    if (idx < 0) continue;
+    const r = equipFromInventory(state, idx);
+    if (r.ok) names.push(item.name);
+  }
+  return { changed: names.length, names };
 }
 
 // --- Крафт: материалы → зелья и снаряжение ---
@@ -557,7 +601,7 @@ export function completePuzzle(state, puzzleId, info = {}) {
   const puzzle = findPuzzle(state, puzzleId);
   if (!puzzle) return null;
   const firstTime = !state.puzzlesDone[puzzleId];
-  // Штраф за перебор (загадки): уменьшает монетную часть награды
+  // Модификатор монетной части: штраф за ошибки или бонус вроде ×1,5
   const coinFactor = info.coinFactor ?? 1;
   // Заказ дня определяем ДО отметки о решении: после неё загадка выпадает
   // из списка открытых, dailyPuzzle укажет на другую и бонус никогда не дойдёт.
@@ -568,6 +612,7 @@ export function completePuzzle(state, puzzleId, info = {}) {
     at: Date.now(),
   };
   state.stats.puzzlesSolved += 1;
+  storyOnPuzzleComplete(state, puzzleId); // режим истории: уровень мог быть заданием гостя
   journalPush(state, '🧩', firstTime
     ? `Загадка «${puzzle.name}» решена. Лавка светлеет.`
     : `«${puzzle.name}» — снова решена, кот доволен.`);
@@ -613,6 +658,7 @@ export function skipPuzzle(state, puzzleId) {
   state.coins -= price;
   state.puzzlesDone[puzzleId] = { moves: 0, hintsUsed: 0, skipped: true, at: Date.now() };
   state.stats.puzzlesSolved += 1;
+  storyOnPuzzleComplete(state, puzzleId); // пропуск тоже закрывает задание истории
   // Утешение от кота-хранителя: треть монет уровня, без предметов и печатей
   const coins = (puzzle.rewards || []).find((r) => r.type === 'coins');
   const consolation = Math.round((coins?.amount || 30) / 3);

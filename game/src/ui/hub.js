@@ -10,6 +10,8 @@ function hasUnseenIn(state, shopKey) {
 import { COMPANION_BY_ID, PET_BY_ID } from '../data/crew.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHIES, MINI_TROPHIES } from '../data/trophies.js';
+import { storyHubGuest } from '../core/storyEngine.js';
+import { GUEST_BY_ID } from '../data/guests.js';
 import { showOverlay } from './common.js';
 import { startTutorial } from './tutorial.js';
 
@@ -57,6 +59,7 @@ export function renderHub(container, ctx, params = {}) {
       hotspots: [
         ['📚', 'Головоломки', 'puzzles', 10, 42, () => solved === 0],
         ['🪙', 'Прилавок', 'shop', 43, 55, () => false],
+        ['📖', 'Гостевая книга', 'guests', 47, 70, () => false],
         ['🛡️', 'Комната рыцаря', 'equip', 68, 50, () => false],
         ['🌆', 'На площадь', '@square', 77, 52, () => false],
         ['🪟', 'В поход', 'battles', 93, 45, () => firstPurchaseDone && won === 0],
@@ -179,7 +182,7 @@ export function renderHub(container, ctx, params = {}) {
     pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 62 },
     pet_fox: { scene: 'lavka', x: 34, y: 75, size: 90 },
     pet_puppy: { scene: 'lavka', x: 87, y: 88, size: 92, flip: true },
-    pet_owl: { scene: 'lavka', x: 55, y: 65, size: 64 },
+    pet_owl: { scene: 'square', x: 7, y: 44, size: 64 },
     pet_horse: { scene: 'square', x: 90, y: 90, size: 130 },
   };
   for (const [petId, spot] of Object.entries(PET_SPOTS)) {
@@ -248,6 +251,41 @@ export function renderHub(container, ctx, params = {}) {
       ctx.toast(lines[Math.floor(Math.random() * lines.length)]);
     });
     scenePanel.appendChild(el);
+  }
+
+  // --- Гость режима истории: ждёт в лавке с заданием, клик = сцена-монолог.
+  // Портрет — арт из assets/fate/, фолбэк — эмодзи (как у питомцев выше).
+  const STORY_GUEST_SPOT = { scene: 'lavka', x: 57, y: 78, size: 110 };
+  const storyGuestId = storyHubGuest(state);
+  if (storyGuestId && STORY_GUEST_SPOT.scene === sceneId) {
+    const g = GUEST_BY_ID[storyGuestId];
+    if (g) {
+      const el = document.createElement('div');
+      el.className = 'hub-pet hub-guest';
+      el.style.left = `${STORY_GUEST_SPOT.x}%`;
+      el.style.top = `${STORY_GUEST_SPOT.y}%`;
+      el.title = `${g.name} — ждёт с заданием`;
+      if (g.art) {
+        const img = document.createElement('img');
+        img.src = g.art;
+        img.alt = g.name;
+        img.style.width = `${STORY_GUEST_SPOT.size}px`;
+        img.addEventListener('error', () => {
+          img.remove();
+          el.textContent = g.icon;
+          el.style.fontSize = `${Math.round(STORY_GUEST_SPOT.size * 0.7)}px`;
+        });
+        el.appendChild(img);
+      } else {
+        el.textContent = g.icon;
+        el.style.fontSize = `${Math.round(STORY_GUEST_SPOT.size * 0.7)}px`;
+      }
+      const dot = document.createElement('span');
+      dot.className = 'hs-dot hub-guest-dot';
+      el.appendChild(dot);
+      el.addEventListener('click', () => { ctx.sfx?.('page'); ctx.go('story'); });
+      scenePanel.appendChild(el);
+    }
   }
 
   // --- Кабинет трофеев: места на стене (12 боссов) и полка жетонов (розыск).

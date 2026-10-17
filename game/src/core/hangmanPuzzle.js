@@ -2,9 +2,9 @@
 // Чистая логика, без DOM. Стих без последней строки; строка скрыта под
 // подчёркиваниями, игрок тапает буквы полного алфавита: верно — буква
 // открывается во ВСЕХ местах строки, промах — буква блокируется, а свеча
-// догорает на ступень. Свеча догорела — страница погасла: попытка испорчена
-// (−10% монет награды за каждую, пол 50%), открытые буквы остаются,
-// новая свеча.
+// догорает на ступень. Каждый промах съедает 5% монет, догоревшая страница —
+// ещё 10% (пол 30%). Решение без промахов даёт ×1,5 монет. Открытые буквы
+// после догорания остаются, а новая свеча не возвращает уже потерянную награду.
 //
 // Уровень:
 //   riddle: ['строка', ...]  — стих без последней строки
@@ -12,8 +12,10 @@
 //   author: 'С. А. Есенин'   — необязательная атрибуция-подсказка
 
 export const CANDLE_STEPS = 6; // ступеней воска до догорания
-export const SPOIL_STEP = 0.1; // −10% монет за погасшую страницу
-export const MIN_FACTOR = 0.5;
+export const MISTAKE_STEP = 0.05; // −5% монет за каждый промах
+export const SPOIL_STEP = 0.1; // дополнительно −10% за погасшую страницу
+export const MIN_FACTOR = 0.3;
+export const PERFECT_FACTOR = 1.5;
 
 export const ALPHABET = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('');
 
@@ -32,8 +34,9 @@ export function createHangmanPuzzle(level) {
     level,
     revealed: new Set(),  // открытые буквы
     wrong: new Set(),     // промахи (заблокированные буквы)
+    mistakes: 0,          // все промахи попытки; отмена и сброс не стирают их
     candleLeft: CANDLE_STEPS,
-    spoiled: 0,           // сколько страниц погасло
+    spoiled: 0,           // сколько страниц погасло (тоже накопительно)
     history: [],          // для отмены
     moves: 0,
   };
@@ -47,13 +50,14 @@ export function guessLetter(state, letter) {
   if (isHangmanSolved(state)) return { ok: false };
   state.moves += 1;
   const hit = answerLetters(state.level).includes(canon);
-  const entry = { letter: canon, hit, prevCandle: state.candleLeft, prevSpoiled: state.spoiled };
+  const entry = { letter: canon, hit, prevCandle: state.candleLeft };
   state.history.push(entry);
   if (hit) {
     state.revealed.add(canon);
     return { ok: true, hit: true, burned: false };
   }
   state.wrong.add(canon);
+  state.mistakes += 1;
   state.candleLeft -= 1;
   if (state.candleLeft <= 0) {
     // Свеча догорела: страница погасла. Открытые буквы остаются, новая свеча.
@@ -70,8 +74,8 @@ export function undoHangman(state) {
   if (last.hit) state.revealed.delete(last.letter);
   else state.wrong.delete(last.letter);
   state.candleLeft = last.prevCandle;
-  state.spoiled = last.prevSpoiled;
   state.moves += 1;
+  // mistakes и spoiled сохраняются: отмена возвращает поле, но не стирает цену ошибки
   return true;
 }
 
@@ -81,16 +85,17 @@ export function resetHangman(state) {
   state.candleLeft = CANDLE_STEPS;
   state.history = [];
   state.moves += 1;
-  // spoiled сохраняется: погасшие страницы — часть цены
+  // mistakes и spoiled сохраняются: сброс не обнуляет цену уже сделанных ошибок
 }
 
 export function isHangmanSolved(state) {
   return answerLetters(state.level).every((ch) => state.revealed.has(ch));
 }
 
-// Множитель монет награды: −10% за каждую погасшую страницу, пол 50%
+// ×1,5 без единого промаха; иначе −5% за промах и −10% за страницу, пол 30%
 export function rewardFactor(state) {
-  return Math.max(MIN_FACTOR, 1 - state.spoiled * SPOIL_STEP);
+  if (state.mistakes === 0 && state.spoiled === 0) return PERFECT_FACTOR;
+  return Math.max(MIN_FACTOR, 1 - state.mistakes * MISTAKE_STEP - state.spoiled * SPOIL_STEP);
 }
 
 // Прогресс: сколько различных букв строки открыто

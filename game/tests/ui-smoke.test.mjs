@@ -124,6 +124,8 @@ const { renderAchievements } = await import('../src/ui/achievementsView.js');
 const { renderBoard } = await import('../src/ui/boardView.js');
 const { renderMarket } = await import('../src/ui/shopView.js');
 const { renderBrewBook } = await import('../src/ui/brewBookView.js');
+const { renderGuestBook } = await import('../src/ui/guestBookView.js');
+const { renderStory } = await import('../src/ui/storyView.js');
 const { renderSandbox } = await import('../src/ui/sandboxView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
 const { ITEM_BY_ID } = await import('../src/data/items.js');
@@ -207,6 +209,15 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'gl_46' }),  // витраж с посвящённым артом (фолбэк)
     () => renderPuzzle(new El('main'), ctx, { id: 'gl_58' }),  // финал пятой серии 8×5
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
+    () => renderGuestBook(new El('main'), ctx), // гостевая книга
+    () => renderStory(new El('main'), ctx), // режим истории: пролог
+    () => { // режим истории: обычный визит гостя (пролог пройден)
+      state.story.prologSeen = true;
+      return renderStory(new El('main'), ctx);
+    },
+    () => { // хаб с гостем истории в лавке
+      return renderHub(new El('main'), ctx);
+    },
     () => renderSandbox(new El('main'), ctx), // конструктор боя
     () => renderEquip(new El('main'), ctx),
     () => renderShop(new El('main'), ctx),
@@ -315,6 +326,79 @@ test('каталог головоломок: превью, аккордеон и
   assert.equal(bentoAll.find((el) => el.className === 'muted pc-bento-empty').hidden, false);
   filters.find((el) => el.dataset.filter === 'all').click();
   assert.equal(cards.filter((card) => !card.hidden).length, 13, 'фильтр «Все» возвращает карточки');
+});
+
+test('гостевая книга: четыре режима и сохранение выбранного вида', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const layouts = {
+    shelf: 'guest-shelf-track',
+    preview: 'guest-preview-layout',
+    accordion: 'guest-accordion',
+    bento: 'guest-bento-grid',
+  };
+  for (const [mode, marker] of Object.entries(layouts)) {
+    state.settings.guestCatalogMode = mode;
+    const root = new El('main');
+    const cleanup = renderGuestBook(root, ctx);
+    assert.ok(
+      flatElements(root).some((el) => (el.className || '').split(' ').includes(marker)),
+      `режим ${mode} должен рендерить ${marker}`,
+    );
+    cleanup();
+  }
+
+  state.settings.guestCatalogMode = 'shelf';
+  const root = new El('main');
+  const cleanup = renderGuestBook(root, ctx);
+  const options = flatElements(root).filter((el) => (el.className || '').includes('guest-mode-option'));
+  assert.equal(options.length, 4, 'на экране гостей доступны все варианты');
+  options.find((el) => el.dataset.mode === 'bento').click();
+  assert.equal(state.settings.guestCatalogMode, 'bento');
+  assert.ok(flatElements(root).some((el) => el.className === 'guest-bento-grid'), 'каталог обновляется сразу');
+  const saved = JSON.parse(localStorage.getItem('cozy_adventures_save_v2'));
+  assert.equal(saved.settings.guestCatalogMode, 'bento', 'выбор вида гостей сохраняется');
+  cleanup();
+});
+
+test('гостевая книга: фильтры, разговор, листание и закрытие профиля', () => {
+  const state = newGame();
+  state.settings.guestCatalogMode = 'bento';
+  const ctx = makeUiCtx(state);
+  const root = new El('main');
+  const cleanup = renderGuestBook(root, ctx);
+  const all = flatElements(root);
+  const cards = all.filter((el) => (el.className || '').includes('guest-bento-card'));
+  const filters = all.filter((el) => (el.className || '').includes('guest-bento-filter'));
+  assert.ok(cards.length >= 36, 'в мозаике показаны все гости');
+
+  filters.find((el) => el.dataset.filter === 'known').click();
+  assert.equal(cards.filter((card) => !card.hidden).length, 0, 'в новой игре знакомых гостей ещё нет');
+  assert.equal(all.find((el) => el.className === 'muted guest-bento-empty').hidden, false);
+  filters.find((el) => el.dataset.filter === 'fresh').click();
+  assert.equal(cards.filter((card) => !card.hidden).length, cards.length, 'фильтр показывает новые знакомства');
+  state.puzzlesDone.fate_01 = { moves: 1, hintsUsed: 0 };
+  filters.find((el) => el.dataset.filter === 'known').click();
+  assert.ok(cards.filter((card) => !card.hidden).length > 0, 'пройденная история делает гостя знакомым');
+  filters.find((el) => el.dataset.filter === 'all').click();
+
+  cards[0].click();
+  const overlay = documentStub.body.children.find((el) => (el.className || '').includes('guest-profile-overlay'));
+  assert.ok(overlay, 'карточка открывает профиль гостя');
+  const firstName = flatElements(overlay).find((el) => el.className === 'guest-name').textContent;
+  const chat = flatElements(overlay).find((el) => el.className === 'guest-chat');
+  assert.equal(chat.children.length, 1, 'в новом разговоре видно приветствие');
+  const topic = flatElements(overlay).find((el) => el.className === 'guest-topic');
+  topic.click();
+  assert.equal(chat.children.length, 3, 'фраза игрока и ответ гостя добавляются в переписку');
+  assert.equal(topic.disabled, true, 'одну тему нельзя повторять бесконечно');
+
+  flatElements(overlay).find((el) => (el.className || '').includes('guest-profile-next')).click();
+  const secondName = flatElements(overlay).find((el) => el.className === 'guest-name').textContent;
+  assert.notEqual(secondName, firstName, 'следующий гость открывается без закрытия окна');
+  flatElements(overlay).find((el) => (el.className || '').includes('guest-profile-close')).click();
+  assert.ok(!documentStub.body.children.some((el) => (el.className || '').includes('guest-profile-overlay')), 'профиль закрывается');
+  cleanup();
 });
 
 test('уютная варка (keepBookOpen): рецепт всегда открыт, без отсчёта и скрытых шагов', () => {
@@ -622,6 +706,92 @@ test('«Загадки Хранителя»: ЛЕД решает ЛЁД без �
   assert.ok(rules.innerHTML.includes('Е и Ё — одна клавиша'), 'правило объяснено игроку');
   cleanup();
 });
+
+test('«Строки при свече»: вердикт наступает после паузы, ввод не зависает', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const sounds = [];
+  ctx.sfx = (...args) => sounds.push(args);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'bk_06' });
+  const all = flatElements(root);
+  const rules = all.find((el) => (el.className || '').includes('hang-rules'));
+
+  assert.ok(all.some((el) => el.className === 'riddle-sheet'), 'стих лежит на пергаменте');
+  assert.ok(all.some((el) => (el.className || '').includes('hang-keeper')), 'Хранитель остаётся рядом со свечой');
+  assert.ok(rules.innerHTML.includes('−5% монет') && rules.innerHTML.includes('×1,5 монет'));
+  assert.ok(riddleStatus(root).includes('Монеты: <b>×1,5</b>'), 'бонус без ошибок виден сразу');
+
+  tapRiddleKey(root, 'Т');
+  assert.ok(riddleStatus(root).includes('Ходы: 0'), 'до паузы ход ещё не применён');
+  assert.equal(currentHangSlots(root)[0].children.length, 0, 'буква ещё не проявилась');
+  assert.ok(riddlePage(root).classList.contains('hang-awaiting'));
+  assert.ok(riddlePage(root).classList.contains('checking'));
+  assert.ok(riddleKey(root, 'Т').classList.contains('is-pressed'));
+  assert.ok(sounds.some(([name]) => name === 'riddleKey'));
+  assert.ok(sounds.some(([name]) => name === 'riddleWrite'));
+
+  t.mock.timers.tick(259);
+  assert.ok(riddleStatus(root).includes('Ходы: 0'), 'вердикт не наступает раньше времени');
+  t.mock.timers.tick(1);
+  assert.ok(riddleStatus(root).includes('Ходы: 1'));
+  assert.equal(currentHangSlots(root)[0].children[0]?.textContent, 'Т');
+  assert.ok(currentHangSlots(root)[0].classList.contains('ink-fresh'), 'верная буква проявляется чернилами');
+  assert.ok(!riddlePage(root).classList.contains('checking'), 'после обычного вердикта ввод свободен');
+  assert.ok(sounds.some(([name]) => name === 'riddleExact'));
+
+  tapRiddleKey(root, 'Ы');
+  tapRiddleKey(root, 'О'); // во время паузы второй ход должен быть проигнорирован
+  t.mock.timers.tick(260);
+  assert.ok(riddleStatus(root).includes('Ходы: 2'));
+  assert.ok(riddleStatus(root).includes('Ошибок: <b>1</b>'));
+  assert.ok(riddleStatus(root).includes('Монеты: <b>×0,95</b>'));
+  assert.equal(currentHangSlots(root)[1].children.length, 0, 'ход во время паузы не прошёл');
+  assert.ok(riddleKey(root, 'Ы').className.includes('mark-absent'));
+  assert.ok(flatElements(root).some((el) => (el.className || '').includes('hang-ink-blot')));
+  assert.ok(riddleKeeperText(root).includes('пять процентов'));
+  assert.ok(sounds.some(([name]) => name === 'riddleAbsent'));
+  cleanup();
+});
+
+test('«Строки при свече»: безошибочная победа сияет после последнего вердикта', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const sounds = [];
+  ctx.sfx = (...args) => sounds.push(args);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'bk_06' });
+
+  for (const letter of ['Т', 'О', 'Ч', 'Н', 'С', 'Е', 'Р', 'Б']) {
+    tapRiddleKey(root, letter);
+    t.mock.timers.tick(260);
+  }
+  assert.ok(!state.puzzlesDone.bk_06, 'строка ждёт последней буквы');
+  tapRiddleKey(root, 'М');
+  t.mock.timers.tick(259);
+  assert.ok(!state.puzzlesDone.bk_06, 'победа ждёт последний вердикт');
+  t.mock.timers.tick(1);
+  assert.ok(state.puzzlesDone.bk_06, 'после вердикта строка засчитана');
+  assert.ok(riddlePage(root).classList.contains('riddle-solved'));
+  assert.ok(riddleStatus(root).includes('Монеты: <b>×1,5</b>'));
+  const slots = currentHangSlots(root);
+  assert.equal(slots.at(-1).style.animationDelay, `${(slots.length - 1) * 55}ms`, 'буквы сияют по очереди');
+  assert.ok(sounds.some(([name]) => name === 'page'));
+  assert.ok(sounds.some(([name]) => name === 'success'));
+  assert.ok(!sounds.some(([name]) => name === 'purr'), 'мурлыкание следует после короткой паузы');
+  t.mock.timers.tick(250);
+  assert.ok(sounds.some(([name]) => name === 'purr'));
+  assert.ok(riddleKeeperText(root).includes('полтора'));
+  cleanup();
+});
+
+function currentHangSlots(root) {
+  const row = flatElements(root).find((el) => (el.className || '').includes('hang-answer'));
+  assert.ok(row, 'строка «Строк при свече» должна существовать');
+  return row.children.filter((el) => (el.className || '').startsWith('riddle-slot'));
+}
 
 function riddleKey(root, letter) {
   return flatElements(root).find((el) => el.tagName === 'button'
