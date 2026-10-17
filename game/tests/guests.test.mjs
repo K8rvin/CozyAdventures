@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { GUESTS, GUEST_BY_ID, guestKnown } from '../src/data/guests.js';
 import { FATE_PUZZLES } from '../src/data/puzzlesFate.js';
@@ -57,4 +57,14 @@ test('знакомство определяется по любой пройде
   assert.equal(guestKnown(fairyState, fairy), false);
   fairyState.puzzlesDone[fairy.brewLevels[0]] = { moves: 1 };
   assert.equal(guestKnown(fairyState, fairy), true);
+});
+
+test('полка гостей использует координаты карточек относительно самой ленты', () => {
+  const css = readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
+  const track = css.match(/\.guest-shelf-track\s*\{[^}]*\}/)?.[0] || '';
+  assert.match(
+    track,
+    /position:\s*relative/,
+    'без position:relative offsetLeft карточки считается от внешнего блока и ломает правый стык',
+  );
 });

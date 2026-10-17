@@ -1282,6 +1282,23 @@ and deep brown, no text, no letters, no symbols, no watermark --ar 2:3
 - **card_suitcase.png** — `a small old leather suitcase with travel stickers, buckled straps`
 - **card_scarf.png** — `a hand-knitted wool scarf rolled into a cozy coil`
 
+### 16.11 Заказчики варки (brewGuests) — портреты по мере надобности
+
+Тот же шаблон бюстов, что в 16.3:
+
+```
+cozy storybook watercolor bust portrait of <ПЕРСОНАЖ>, gentle ink
+outlines, warm candlelight, amber and deep brown palette, character
+facing viewer, plain warm dark background, no text, no watermark --ar 1:1
+```
+
+- **guest_fairy.png** — `a tiny meadow fairy with iridescent dragonfly wings, a dress of bluebell petals and a clover crown, mischievous kind smile, a pinch of glowing golden dust between her fingers, soft sparkles floating around`
+- **guest_cook.png** — уже есть в 16.7 (поварёнок из «Карт судьбы»): при появлении файла использовать тот же портрет
+
+После генерации: сжать в `game/assets/fate/guest_<id>_web.jpg` и заменить
+`art: null` на путь в `game/src/data/brewGuests.js` — гостевая книга подхватит
+автоматически.
+
 ## 18. Иконки предметов — assets/items/<id>_web.jpg (оружие, потом остальное)
 
 Переходим с эмодзи на полноценные иконки. Код уже умеет подхватывать арт:
@@ -1326,8 +1343,146 @@ other objects, no text, no watermark --ar 1:1
 - **wpn_master_dagger.png** (epic) — `a masterwork stiletto dagger forged from glowing moss and mossy stone, thin green veins of light in the blade`
 - **wpn_firebird_quill.png** (legendary) — `a legendary dagger shaped like a firebird feather quill, blade of warm ember-orange feather barbs with tiny sparks, ornate gold nib-like hilt`
 
-### Следующие партии (тот же шаблон, свой SUBJECT)
+### Щиты (5 штук, slot: shield)
 
-Щиты, шлемы, броня, перчатки, сапоги, амулеты, кольца, зелья и свитки —
-генерируем тем же шаблоном, фон строго по редкости предмета из
-`game/src/data/items.js`. Имя файла = id предмета.
+- **shd_wooden.png** (common) — `a light round linden wood shield with a warm honey grain, simple iron boss and a child's charcoal drawing faintly visible on the rim`
+- **shd_guardian.png** (rare) — `a sturdy shop-guard shield of dark oak with a polished steel rim and small thorn-like studs, a brass lantern emblem in the center`
+- **shd_tower.png** (epic) — `a massive rectangular tower shield with rounded corners, weathered grey steel plates and a worn wooden handle, a narrow vertical highlight stripe`
+- **shd_master.png** (epic) — `a kite-shaped shield polished to a perfect mirror shine, reflecting a tiny warm window light, golden trim and a pale blue enamel boss`
+- **shd_page_shield.png** (rare) — `a shield made from the cover of an ancient leather-bound tome strapped to a wooden frame, brass corners, faded embossed title swirls, a leather belt strap on the back edge`
+
+### Шлемы (5 штук, slot: helmet)
+
+- **hlm_leather.png** (common) — `a soft brown leather hood with stitched seams and a folded rim, smelling of rain and herbs`
+- **hlm_badger.png** (rare) — `a rounded steel cap trimmed with striped badger fur and two small furry badger ears on top, sleepy cozy look`
+- **hlm_kettle.png** (rare) — `a classic iron kettle hat with a wide slightly dented brim and a small rivet loop on top, honest guard gear`
+- **hlm_page_wanderer.png** (rare) — `a tall soft pointed traveler hood of deep violet cloth with a floppy tip and a tiny glowing amber star charm, storybook wanderer mood`
+- **hlm_master.png** (epic) — `a light golden circlet with a small glowing heart of old willow wood set in the front, delicate engraved leaves`
+
+### Перчатки (5 штук, slot: gloves)
+
+- **glv_herbalist.png** (common) — `a pair of soft herbalist gloves of greenish canvas with leather palms, a sprig of dried nettle tucked into the cuff`
+- **glv_crit.png** (rare) — `a pair of fitted dark leather gloves with precise golden stitching following fate lines across the palm`
+- **glv_smithee.png** (rare) — `a pair of heavy blacksmith mitts of scorched brown leather with metal rivets and heat-darkened fingertips, faint ember glow in the seams`
+- **glv_binder.png** (rare) — `a pair of sturdy bookbinder gloves of waxed grey cloth with strong saddle stitching and a brass thimble on the thumb, faint ink stains`
+- **glv_master.png** (epic) — `a pair of elegant fingerless master gloves with engraved brass thimble-caps on the fingertips, glowing faint golden seams`
+
+### Броня (6 штук, slot: armor)
+
+- **arm_padded.png** (common) — `a warm quilted gambeson jacket of beige linen with diamond stitching and wooden toggles, handmade and honest`
+- **arm_oak_guardian.png** (epic) — `a guardian armor of polished dark oak plates riveted over a leather jerkin, carved leaf motifs and a living green sprout on the shoulder`
+- **arm_silken.png** (rare) — `a weightless silken armor of sea-green moth wings layered like scales, shimmering softly with a delicate fuzzy collar`
+- **arm_chain.png** (rare) — `a veteran chainmail shirt of blue-grey steel rings with a patched leather hem and one mismatched bronze ring, well-kept and storied`
+- **arm_ink_cloak.png** (epic) — `a flowing cloak of deep violet-black cloth that glistens like wet ink, a stray ink blot sliding off its edge without a trace, high collar and silver clasp`
+- **arm_master.png** (epic) — `a masterwork quilted doublet of deep blue cloth soaked in magical ink brew, faint glowing runes in the seams and polished brass buttons`
+
+### Сапоги (5 штук, slot: boots)
+
+- **bt_path.png** (common) — `a pair of light trail boots of tan leather with grass-green laces and a tiny clover leaf stuck to the heel, mud-brushed toes`
+- **bt_merchant.png** (rare) — `a pair of well-traveled merchant wanderer boots of chestnut leather with folded cuffs, a brass buckle and a lucky coin stitched into the side`
+- **bt_cobble.png** (rare) — `a pair of sturdy town boots with hobnail heels and reinforced toes, polished by cobblestone streets, confident upright stance`
+- **bt_quiet_step.png** (epic) — `a pair of soft silent boots of midnight-violet suede with felt soles and a page-corner motif stitched in silver thread, whisper-quiet look`
+- **bt_master.png** (epic) — `a pair of sleek masterwork boots of dark supple leather with silent braided grey soles and faint golden stitching, elegant and noiseless`
+
+### Амулеты (5 штук, slot: amulet)
+
+- **amu_hearth.png** (rare) — `a cozy pendant shaped like a tiny hearth with a warm ember glowing inside, on a braided leather cord`
+- **amu_antidote.png** (rare) — `a small round glass pendant with a bundle of dried clubmoss herbs sealed inside, green cork top and a twine loop`
+- **amu_fearless.png** (epic) — `a bold bronze medallion with a roaring lion relief and a steady red garnet heart in the center, on a sturdy chain`
+- **amu_pages.png** (epic) — `a pendant of tiny folded ancient book pages layered into a flower shape, smelling of old paper, with a miniature brass bookmark chain`
+- **amu_master.png** (epic) — `a delicate golden filigree pendant holding a bundle of dried clubmoss and a single glowing drop of luminous moss, intricate swirling metalwork`
+
+### Кольца (9 штук, slot: ring)
+
+- **rng_luck.png** (common) — `a simple copper ring with a tiny pressed four-leaf clover set in clear resin`
+- **rng_crit.png** (rare) — `a silver ring with a sharp-cut crimson stone that flashes with a spark at its facet`
+- **rng_health.png** (common) — `a warm smooth amber ring glowing softly like a mug of tea, rounded and comforting`
+- **rng_iron.png** (rare) — `a plain sturdy iron ring like a bent nail, honest forged texture with a slight hammered shine`
+- **rng_duelist.png** (epic) — `an elegant duelist ring of dark steel with a thin rapier-shaped crest and a small diamond at its tip`
+- **rng_ink.png** (rare) — `a glass ring with a dark ink drop floating and swirling inside, silver setting`
+- **rng_contents.png** (epic) — `a golden ring with a tiny engraved open book on the bezel and a miniature compass needle pointing sideways`
+- **rng_master.png** (epic) — `a masterwork signet ring cast of golden honeyed amber with moth pollen glints and a tiny swirl of luck moving inside`
+- **rng_master_loop.png** (epic) — `a matching golden band ring engraved with intertwined loops and a warm purring glow along the inner rim`
+
+### Зелья (4 штуки, slot: consumable, type: potion)
+
+- **pot_heal.png** (common) — `a round glass potion bottle with a warm rose-red healing brew, tiny heart-shaped bubbles rising inside, cork stopper`
+- **pot_vigor.png** (common) — `a slim glass vial with a sparkling mint-amber invigorating brew, tiny awake sparkles and a leaf of peppermint at the neck, cork stopper`
+- **pot_stone.png** (rare) — `a heavy squat bottle with a swirling granite-grey brew, tiny pebbles settled at the bottom and a slate shard as a stopper`
+- **pot_ink.png** (rare) — `a dark glass bottle with an inky violet-black brew that slowly curls like a calligraphy stroke inside, wax-sealed cork`
+
+### Свитки (5 штук, slot: consumable, type: scroll)
+
+- **scr_fire_arrow.png** (rare) — `a rolled parchment scroll tied with a red ribbon, glowing rune of a fiery arrow on its side, small ember scorch marks on the edges`
+- **scr_heal_mist.png** (rare) — `a rolled parchment scroll tied with a mint-green ribbon, glowing rune of a dewdrop on its side, soft healing mist curling around it`
+- **scr_frost.png** (rare) — `a rolled parchment scroll tied with a pale blue ribbon, glowing rune of an ice chain link on its side, frost crystals creeping over the paper edges`
+- **scr_storm.png** (epic) — `a rolled parchment scroll tied with a storm-grey ribbon, glowing rune of a lightning bolt on its side, tiny crackling sparks around the seal`
+- **scr_fire_step.png** (epic) — `a rolled parchment scroll tied with a scorched orange ribbon, glowing rune of spreading flame footsteps on its side, smoldering edge embers`
+
+Все предметы из `game/src/data/items.js` покрыты. Новые предметы — тем же
+шаблоном, фон строго по редкости, имя файла = id предмета.
+
+## 19. Курсоры — assets/cursors/<key>.png + <key>_hover.png (24 темы × 2)
+
+Тематические курсоры мыши для ПК-версии: у каждого режима игры (типы
+головоломок, бой, комната рыцаря, сцены хаба, лавки) свой курсор. Код готов:
+роутер ставит `body[data-cursor="<key>"]` (`game/src/ui/cursors.js`), а
+`styles.css` берёт `assets/cursors/<key>.png`, над кликабельным —
+`<key>_hover.png`. **Пока файла нет — стоит стандартный курсор**, так что
+генерируем в любом темпе, игра не ломается.
+
+**Техника.** Итоговый файл — PNG **32×32 с прозрачным фоном**. Генерируем
+крупно (512×512), вырезаем белый фон скриптом (как питомцев: маска «яркий и
+почти серый» + заливка от краёв + разрастание), ужимаем до 32×32 **только с
+премультиплицированной альфой**, иначе цветной ореол. Оригиналы —
+в `art-src/cursors/`, в рантайм — `game/assets/cursors/`.
+
+**Хотспот** (точка клика) задан в `CURSOR_THEMES` в `cursors.js` и зашит в
+`styles.css` — предмет рисуем так, чтобы «рабочий кончик» смотрел в указанную
+точку сетки 32×32 (0,0 — левый верх). Остриё/носик — к хотспоту.
+
+**Hover-вариант** (`*_hover.png`) — тот же предмет, но чуть приподнят/наклонён
+и с тёплым золотым свечением вокруг. Проще всего: берём готовый вырезанный
+PNG базового курсора и добавляем свечение скриптом (размытый золотой контур
+`#ffca7a` под слоем), без повторной генерации.
+
+Шаблон:
+
+```
+Mouse cursor icon for a cozy fantasy shop game, {SUBJECT}, single small
+object, bold readable silhouette that stays clear at 32 pixels, dark
+warm-brown ink outline, cozy storybook watercolor style, warm palette with
+golden #ffca7a accents, pointing tip oriented toward {TIP}, plain solid
+white background, no drop shadow, no text, no watermark --ar 1:1
+```
+
+Приоритет — волна 1 (самые частые экраны): default, hub_lavka, seek, brew,
+fate, battle, equip, shop. Волна 2 — остальные.
+
+| Файл (без .png) | Сюжет (SUBJECT) | Кончик смотрит в |
+|---|---|---|
+| default | a goose quill pen angled like an arrow cursor, tip down-left | левый верх (4,2) |
+| hub_lavka | a tiny hanging shop lantern with a warm candle flame, handle up | верх (8,4) |
+| hub_square | a wrought-iron street lantern on a small post | левый верх (6,4) |
+| hub_market | a tiny merchant's brass balance scale | верх (16,4) |
+| hub_cabinet | a small golden trophy cup | верх (16,6) |
+| mirror | a small round hand mirror in a brass frame, handle down | левый верх (8,6) |
+| shelf | a small clay jug with a cork | верх (10,6) |
+| riddle | a curled parchment scroll with a wax seal | левый верх (8,6) |
+| hang | an ink-dipped quill pen, nib pointing down-left | левый низ (4,28) |
+| seek | a round magnifying glass with a wooden handle | центр стекла (12,12) |
+| path | a tiny worn traveler's boot, toe pointing up-left | левый верх (5,5) |
+| tea | a small steaming tea cup, side view | верх (16,8) |
+| mech | a single brass gear with a hole in the middle | центр (16,16) |
+| candle | a lit candle with a small flame | пламя, верх (16,4) |
+| flow | a stylized curling water wave | левый верх (8,8) |
+| brew | a round alchemical flask with glowing teal liquid | горлышко, верх (16,4) |
+| fate | a single ornate tarot card, corner tilted up-left | левый верх (6,4) |
+| glass | a diamond-shaped stained-glass shard, amber and teal | вершина ромба (16,4) |
+| battle | a knight's sword pointing up-left, tip first | остриё (4,4) |
+| equip | a knight's helmet with a tiny plume | верх (16,6) |
+| shop | a single golden coin with a lantern emblem | центр (16,16) |
+| tavern | a foamy wooden beer mug | верх (10,6) |
+| craft | a blacksmith's hammer, head up-left | левый верх (6,6) |
+| workshop | a small wrench or awl, tip up-left | левый верх (6,6) |
+

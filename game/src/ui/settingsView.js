@@ -1,115 +1,150 @@
-// Настройки игры: звук, обучение, новая игра и тайные места.
+// Настройки игры: секции со строками-тумблерами, действия отдельно от переключателей.
 import { header } from './common.js';
 import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js';
 import { applyCheat } from '../core/state.js';
 import { createPuzzleCatalogModePicker } from './puzzleCatalogView.js';
 
+function makeSection(title, danger = false) {
+  const sec = document.createElement('div');
+  sec.className = danger ? 'panel set-danger' : 'panel set-section';
+  const h = document.createElement('h3');
+  h.textContent = title;
+  sec.appendChild(h);
+  return sec;
+}
+
+function makeToggleRow({ name, hint, get, flip }) {
+  const row = document.createElement('div');
+  row.className = 'set-row';
+  const text = document.createElement('div');
+  text.className = 'set-text';
+  const nm = document.createElement('div');
+  nm.className = 'set-name';
+  nm.textContent = name;
+  text.appendChild(nm);
+  if (hint) {
+    const h = document.createElement('div');
+    h.className = 'set-hint';
+    h.textContent = hint;
+    text.appendChild(h);
+  }
+  const btn = document.createElement('button');
+  btn.className = 'set-toggle';
+  btn.setAttribute('aria-label', name);
+  const paint = (on) => {
+    btn.classList.toggle('on', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  };
+  paint(get());
+  btn.addEventListener('click', () => paint(flip()));
+  row.append(text, btn);
+  return row;
+}
+
+function makeActionRow({ name, hint, btnText, onClick }) {
+  const row = document.createElement('div');
+  row.className = 'set-row';
+  const text = document.createElement('div');
+  text.className = 'set-text';
+  const nm = document.createElement('div');
+  nm.className = 'set-name';
+  nm.textContent = name;
+  text.appendChild(nm);
+  if (hint) {
+    const h = document.createElement('div');
+    h.className = 'set-hint';
+    h.textContent = hint;
+    text.appendChild(h);
+  }
+  const btn = document.createElement('button');
+  btn.className = 'ghost';
+  btn.textContent = btnText;
+  btn.addEventListener('click', onClick);
+  row.append(text, btn);
+  return row;
+}
+
 export function renderSettings(container, ctx) {
   const { state } = ctx;
   container.appendChild(header(ctx, 'Настройки', 'Лавка подстраивается под хозяина'));
 
-  const panel = document.createElement('div');
-  panel.className = 'panel';
+  const soundSec = makeSection('🔊 Звук');
+  soundSec.appendChild(makeToggleRow({
+    name: 'Звуковые эффекты',
+    hint: 'Шаги кота, звон монет и победные фанфары.',
+    get: () => soundEnabled(),
+    flip: () => {
+      const on = toggleSound();
+      if (on) ctx.sfx?.('coin');
+      return on;
+    },
+  }));
+  soundSec.appendChild(makeToggleRow({
+    name: 'Музыка',
+    hint: 'Тихий дождь и уютный фон в лавке.',
+    get: () => musicEnabled(),
+    flip: () => toggleMusic(),
+  }));
+  container.appendChild(soundSec);
 
-  // --- Звук ---
-  const soundTitle = document.createElement('h3');
-  soundTitle.textContent = 'Звук';
-  soundTitle.style.marginTop = '16px';
-  panel.appendChild(soundTitle);
-  const soundBtn = document.createElement('button');
-  soundBtn.textContent = soundEnabled() ? '🔔 Звук включён' : '🔕 Звук выключен';
-  soundBtn.addEventListener('click', () => {
-    const on = toggleSound();
-    soundBtn.textContent = on ? '🔔 Звук включён' : '🔕 Звук выключен';
-    if (on) ctx.sfx?.('coin');
-  });
-  const musicBtn = document.createElement('button');
-  musicBtn.textContent = musicEnabled() ? '🎵 Музыка включена' : '🎵 Музыка выключена';
-  musicBtn.style.marginLeft = '8px';
-  musicBtn.addEventListener('click', () => {
-    const on = toggleMusic();
-    musicBtn.textContent = on ? '🎵 Музыка включена' : '🎵 Музыка выключена';
-  });
-  panel.append(soundBtn, musicBtn);
+  const storySec = makeSection('📖 История');
+  storySec.appendChild(makeToggleRow({
+    name: 'Режим истории',
+    hint: 'В лавке ждёт гость с заданием: история сама подсовывает головоломки всех типов по очереди.',
+    get: () => state.settings.storyMode !== false,
+    flip: () => {
+      state.settings.storyMode = state.settings.storyMode === false;
+      ctx.save();
+      ctx.sfx?.('tap');
+      return state.settings.storyMode !== false;
+    },
+  }));
+  container.appendChild(storySec);
 
-  // --- Головоломки: вид каталога и уютная варка без тренировки памяти ---
-  const puzzleTitle = document.createElement('h3');
-  puzzleTitle.textContent = 'Головоломки';
-  puzzleTitle.style.marginTop = '16px';
-  panel.appendChild(puzzleTitle);
+  const puzzleSec = makeSection('🧩 Головоломки');
   const catalogBox = document.createElement('div');
   catalogBox.className = 'pc-settings-catalog';
   const catalogLabel = document.createElement('div');
   catalogLabel.className = 'pc-layout-label';
   catalogLabel.textContent = 'Вид каталога головоломок';
   catalogBox.append(catalogLabel, createPuzzleCatalogModePicker(ctx));
-  panel.appendChild(catalogBox);
-  const brewBtn = document.createElement('button');
-  const brewBtnText = () => (state.settings.keepBookOpen
-    ? 'Варка зелий: рецепт всегда открыт'
-    : 'Варка зелий: рецепт по памяти');
-  brewBtn.textContent = brewBtnText();
-  brewBtn.addEventListener('click', () => {
-    state.settings.keepBookOpen = !state.settings.keepBookOpen;
-    ctx.save();
-    brewBtn.textContent = brewBtnText();
-    ctx.sfx?.('tap');
-  });
-  panel.appendChild(brewBtn);
-  const brewNote = document.createElement('div');
-  brewNote.className = 'muted';
-  brewNote.style.fontSize = '13px';
-  brewNote.textContent = 'Без тренировки памяти: в варке зелий книга рецептов не закрывается. Награды прежние.';
-  panel.appendChild(brewNote);
+  puzzleSec.appendChild(catalogBox);
+  puzzleSec.appendChild(makeToggleRow({
+    name: 'Книга рецептов всегда открыта',
+    hint: 'В варке зелий рецепт не прячется: без тренировки памяти. Награды прежние.',
+    get: () => !!state.settings.keepBookOpen,
+    flip: () => {
+      state.settings.keepBookOpen = !state.settings.keepBookOpen;
+      ctx.save();
+      ctx.sfx?.('tap');
+      return state.settings.keepBookOpen;
+    },
+  }));
+  container.appendChild(puzzleSec);
 
-  // --- Режим истории: гость в лавке ведёт по сюжету, выбирать не нужно ---
-  const storyBtn = document.createElement('button');
-  const storyBtnText = () => (state.settings.storyMode !== false
-    ? '📖 Режим истории: включён'
-    : '📖 Режим истории: выключен');
-  storyBtn.textContent = storyBtnText();
-  storyBtn.addEventListener('click', () => {
-    state.settings.storyMode = state.settings.storyMode === false;
-    ctx.save();
-    storyBtn.textContent = storyBtnText();
-    ctx.sfx?.('tap');
-  });
-  panel.appendChild(storyBtn);
-  const storyNote = document.createElement('div');
-  storyNote.className = 'muted';
-  storyNote.style.fontSize = '13px';
-  storyNote.textContent = 'В лавке ждёт гость с заданием: история сама подсовывает головоломки всех типов по очереди.';
-  panel.appendChild(storyNote);
+  const helpSec = makeSection('🐈 Помощь');
+  helpSec.appendChild(makeActionRow({
+    name: 'Обучение',
+    hint: 'Кот-хранитель снова проведёт по лавке и всё покажет.',
+    btnText: '🐈 Показать обучение снова',
+    onClick: () => {
+      state.tutorial = {};
+      state.tutorialSkipped = false;
+      ctx.save();
+      ctx.toast('Кот-хранитель снова будет вести тебя. Начнём с лавки!');
+      ctx.go('hub');
+    },
+  }));
+  container.appendChild(helpSec);
 
-  // --- Обучение ---
-  const tutTitle = document.createElement('h3');
-  tutTitle.textContent = 'Обучение';
-  tutTitle.style.marginTop = '16px';
-  panel.appendChild(tutTitle);
-  const tutBtn = document.createElement('button');
-  tutBtn.className = 'ghost';
-  tutBtn.textContent = '🐈 Показать обучение снова';
-  tutBtn.addEventListener('click', () => {
-    state.tutorial = {};
-    state.tutorialSkipped = false;
-    ctx.save();
-    ctx.toast('Кот-хранитель снова будет вести тебя. Начнём с лавки!');
-    ctx.go('hub');
-  });
-  panel.appendChild(tutBtn);
-
-  // --- Новая игра (переехала сюда с главной) ---
-  const newTitle = document.createElement('h3');
-  newTitle.textContent = 'Лавка';
-  newTitle.style.marginTop = '16px';
-  panel.appendChild(newTitle);
-  const newBtn = document.createElement('button');
-  newBtn.className = 'ghost';
-  newBtn.textContent = '🕯️ Начать новую игру';
-  newBtn.addEventListener('click', () => ctx.newGameConfirm());
-  panel.appendChild(newBtn);
-
-  container.appendChild(panel);
+  const dangerSec = makeSection('⚠️ Опасная зона', true);
+  dangerSec.appendChild(makeActionRow({
+    name: 'Новая игра',
+    hint: 'Весь прогресс лавки будет стёрт. Сначала спросит подтверждение.',
+    btnText: '🕯️ Начать новую игру',
+    onClick: () => ctx.newGameConfirm(),
+  }));
+  container.appendChild(dangerSec);
 
   // --- Потайное место: версия. Пять тапов открывают чит-коды. ---
   const secret = document.createElement('div');
@@ -167,10 +202,5 @@ export function renderSettings(container, ctx) {
     }
     secret.replaceWith(box);
     input.focus();
-  }
-
-  function rerender() {
-    container.innerHTML = '';
-    renderSettings(container, ctx);
   }
 }

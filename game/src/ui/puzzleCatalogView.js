@@ -4,7 +4,7 @@ import { puzzleAvailable, ALL_PUZZLES } from '../core/state.js';
 export const PUZZLE_CATALOG_MODES = [
   { id: 'shelf', name: 'Полка', icon: '📚', hint: 'Горизонтальная лента с крупными карточками' },
   { id: 'preview', name: 'Живое превью', icon: '🖼️', hint: 'Список и иллюстрация выбранной категории' },
-  { id: 'accordion', name: 'Раскрывающийся список', icon: '📜', hint: 'Компактные строки с раскрывающимися карточками' },
+  { id: 'accordion', name: 'Список', icon: '📜', hint: 'Простой список с миниатюрами и прогрессом' },
   { id: 'bento', name: 'Мозаика', icon: '🧩', hint: 'Асимметричная сетка с фильтрами' },
 ];
 
@@ -184,53 +184,98 @@ function renderShelf(container, entries, onOpen) {
   track.tabIndex = 0;
   track.setAttribute('role', 'region');
   track.setAttribute('aria-label', 'Полка головоломок');
-  const cards = entries.map((entry, i) => {
+  const cards = [];
+  const addCard = (entry, entryIndex, loopClone = false) => {
+    const slot = cards.length;
     const card = makeCard(entry, 'pc-shelf-card', onOpen, true);
-    card.addEventListener('focus', () => setActive(i));
+    card.dataset.entryIndex = String(entryIndex);
+    if (loopClone) {
+      // Стыковочные карточки видимы и кликабельны, но не дублируются в Tab и для скринридера.
+      card.dataset.loopClone = 'true';
+      card.tabIndex = -1;
+      card.setAttribute('aria-hidden', 'true');
+    }
+    card.addEventListener('focus', () => setActive(slot));
     track.appendChild(card);
-    return card;
-  });
+    cards.push(card);
+  };
+  addCard(entries[entries.length - 1], entries.length - 1, true);
+  entries.forEach((entry, i) => addCard(entry, i));
+  addCard(entries[0], 0, true);
   section.append(toolbar, track);
   container.appendChild(section);
 
+  let activeSlot = 1;
   let active = 0;
-  function setActive(index) {
-    active = Math.max(0, Math.min(cards.length - 1, index));
-    cards.forEach((card, i) => card.classList.toggle('is-active', i === active));
-    counter.textContent = `${active + 1} / ${cards.length}`;
-    prev.disabled = active === 0;
-    next.disabled = active === cards.length - 1;
+  function setActive(slot) {
+    activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
+    active = Number(cards[activeSlot].dataset.entryIndex);
+    cards.forEach((card, i) => card.classList.toggle('is-active', i === activeSlot));
+    counter.textContent = `${active + 1} / ${entries.length}`;
   }
 
-  function scrollTo(index, smooth = true) {
-    setActive(index);
-    const card = cards[active];
+  function placeCard(slot, smooth) {
+    const card = cards[slot];
     const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
     if (!Number.isFinite(left)) return;
-    if (smooth && track.scrollTo) track.scrollTo({ left, behavior: 'smooth' });
+    if (smooth) {
+      if (track.scrollTo) track.scrollTo({ left, behavior: 'smooth' });
+      else track.scrollLeft = left;
+      return;
+    }
+    // При переходе через край клон заменяется настоящей карточкой без видимого скачка анимации.
+    const behavior = track.style.scrollBehavior;
+    track.style.scrollBehavior = 'auto';
+    if (track.scrollTo) track.scrollTo({ left, behavior: 'auto' });
     else track.scrollLeft = left;
+    track.style.scrollBehavior = behavior;
   }
 
-  prev.addEventListener('click', () => scrollTo(active - 1));
-  next.addEventListener('click', () => scrollTo(active + 1));
+  function scrollToSlot(slot, smooth = true) {
+    const bounded = Math.max(0, Math.min(cards.length - 1, slot));
+    setActive(bounded);
+    placeCard(bounded, smooth);
+  }
+
+  function step(direction) {
+    const nextEntry = (active + direction + entries.length) % entries.length;
+    let target = nextEntry + 1;
+    // На границах движемся к клону: анимация не перескакивает через всю ленту.
+    if (direction < 0 && activeSlot === 1) target = 0;
+    if (direction > 0 && activeSlot === entries.length) target = entries.length + 1;
+    scrollToSlot(target);
+  }
+
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
   track.addEventListener('keydown', (ev) => {
     if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
     ev.preventDefault();
-    scrollTo(active + (ev.key === 'ArrowRight' ? 1 : -1));
+    step(ev.key === 'ArrowRight' ? 1 : -1);
   });
   track.addEventListener('scroll', () => {
-    if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0) return;
+    if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0
+      || !Number.isFinite(track.scrollWidth)) return;
     const center = track.scrollLeft + track.clientWidth / 2;
-    let nearest = active;
+    let nearest = activeSlot;
     let distance = Infinity;
     cards.forEach((card, i) => {
       if (!Number.isFinite(card.offsetLeft) || !Number.isFinite(card.offsetWidth)) return;
       const d = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
       if (d < distance) { distance = d; nearest = i; }
     });
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    if (nearest === 0 && track.scrollLeft <= 1) {
+      scrollToSlot(entries.length, false);
+      return;
+    }
+    if (nearest === cards.length - 1 && track.scrollLeft >= maxScroll - 1) {
+      scrollToSlot(1, false);
+      return;
+    }
     setActive(nearest);
   });
-  scrollTo(recommendedIndex(entries), false);
+  scrollToSlot(recommendedIndex(entries) + 1, false);
 }
 
 function renderPreview(container, entries, onOpen) {
@@ -312,73 +357,33 @@ function renderPreview(container, entries, onOpen) {
   show(recommendedIndex(entries));
 }
 
-function renderAccordion(container, entries, onOpen) {
+function renderSimpleList(container, entries, onOpen) {
   const list = document.createElement('section');
-  list.className = 'pc-accordion';
-  const rows = [];
-  let opened = recommendedIndex(entries);
-
-  function sync() {
-    rows.forEach((row, i) => {
-      const isOpen = i === opened;
-      row.item.classList.toggle('is-open', isOpen);
-      row.header.setAttribute('aria-expanded', String(isOpen));
-      row.reveal.setAttribute('aria-hidden', String(!isOpen));
-      row.open.tabIndex = isOpen ? 0 : -1;
-    });
-  }
-
-  entries.forEach((entry, i) => {
-    const item = document.createElement('article');
-    item.className = `pc-accordion-item${entry.complete ? ' pc-complete' : ''}`;
-    const header = document.createElement('button');
-    header.type = 'button';
-    header.className = 'pc-accordion-header';
-    header.setAttribute('aria-controls', `pc-accordion-${entry.mech}`);
-    header.appendChild(makeArt(entry, 'pc-accordion-thumb'));
+  list.className = 'pc-simple-list';
+  list.setAttribute('aria-label', 'Список головоломок');
+  for (const entry of entries) {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = `pc-simple-item${entry.complete ? ' pc-complete' : ''}`;
+    item.setAttribute('aria-label', `${entry.name}. Пройдено ${entry.done} из ${entry.total}`);
+    item.appendChild(makeArt(entry, 'pc-simple-thumb'));
     const text = document.createElement('span');
-    text.className = 'pc-accordion-text';
-    text.append(makeName(entry), makeProgressText(entry));
-    if (entry.hasFresh) text.appendChild(makeFreshBadge());
-    const chevron = document.createElement('span');
-    chevron.className = 'pc-accordion-chevron';
-    chevron.textContent = '⌄';
-    header.append(text, chevron);
-    header.addEventListener('click', () => {
-      opened = opened === i ? -1 : i;
-      sync();
-    });
-
-    const reveal = document.createElement('div');
-    reveal.className = 'pc-accordion-reveal';
-    reveal.id = `pc-accordion-${entry.mech}`;
-    const inner = document.createElement('div');
-    inner.className = 'pc-accordion-inner';
-    const content = document.createElement('div');
-    content.className = 'pc-accordion-content';
-    content.appendChild(makeArt(entry));
-    const body = document.createElement('div');
-    body.className = 'pc-accordion-body';
-    const desc = document.createElement('div');
-    desc.className = 'pc-desc';
+    text.className = 'pc-simple-text';
+    text.appendChild(makeName(entry));
+    const desc = document.createElement('span');
+    desc.className = 'pc-desc pc-simple-desc';
     desc.textContent = entry.desc;
-    body.appendChild(desc);
-    body.appendChild(makeProgress(entry));
-    const open = document.createElement('button');
-    open.type = 'button';
-    open.className = 'primary pc-accordion-open';
-    open.textContent = 'К уровням →';
-    open.addEventListener('click', () => onOpen(entry));
-    body.appendChild(open);
-    content.appendChild(body);
-    inner.appendChild(content);
-    reveal.appendChild(inner);
-    item.append(header, reveal);
+    text.appendChild(desc);
+    text.appendChild(makeProgressText(entry));
+    if (entry.hasFresh) text.appendChild(makeFreshBadge());
+    const arrow = document.createElement('span');
+    arrow.className = 'pc-simple-arrow';
+    arrow.textContent = '→';
+    item.append(text, arrow);
+    item.addEventListener('click', () => onOpen(entry));
     list.appendChild(item);
-    rows.push({ item, header, reveal, open });
-  });
+  }
   container.appendChild(list);
-  sync();
 }
 
 const BENTO_FILTERS = [
@@ -447,7 +452,7 @@ export function renderPuzzleCatalog(container, ctx, types, onSelect) {
   };
   const mode = currentPuzzleCatalogMode(ctx.state);
   if (mode === 'preview') renderPreview(container, entries, onOpen);
-  else if (mode === 'accordion') renderAccordion(container, entries, onOpen);
+  else if (mode === 'accordion') renderSimpleList(container, entries, onOpen);
   else if (mode === 'bento') renderBento(container, entries, onOpen);
   else renderShelf(container, entries, onOpen);
 }

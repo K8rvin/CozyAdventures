@@ -14,6 +14,7 @@ import { storyHubGuest } from '../core/storyEngine.js';
 import { GUEST_BY_ID } from '../data/guests.js';
 import { showOverlay } from './common.js';
 import { startTutorial } from './tutorial.js';
+import { applyCursor } from './cursors.js';
 
 // Реплики спутников и питомцев для дневника (случайная при визите)
 const CHATTER = {
@@ -102,6 +103,7 @@ export function renderHub(container, ctx, params = {}) {
 
   const sceneId = params.scene || 'lavka';
   const scene = SCENES[sceneId] || SCENES.lavka;
+  applyCursor('hub', { scene: sceneId }, state);
 
   const scenePanel = document.createElement('div');
   scenePanel.className = 'panel hub-picture';

@@ -30,7 +30,12 @@ game/
   index.html, styles.css, bundle.js (собранный), manifest.webmanifest, sw.js (PWA/офлайн)
   src/core/   — чистая логика БЕЗ DOM (state.js, formBattle.js, *Puzzle.js, items.js, rng.js)
   src/data/   — контент как данные (items, enemies, battles, puzzles*, crew, shop, sets…)
-  src/ui/     — экраны (app.js — роутер и ctx; hub.js — сцены-хабы; *View.js)
+  src/ui/     — экраны (app.js — роутер и ctx; hub.js — сцены-хабы; *View.js);
+                cursors.js — тематические курсоры: роутер ставит body[data-cursor],
+                правила и хотспоты в styles.css (хвост файла), PNG 32×32 в
+                assets/cursors/<key>.png (+_hover) — промты р.19, без файла —
+                молча стандартный курсор; тест tests/cursors.test.mjs следит
+                за синхронностью темы↔CSS
   tests/      — node --test; ui-smoke.test.mjs рендерит все экраны на DOM-стабе
   assets/     — только рантайм-картинки по тематическим папкам;
                 исходники и PROMPTS.md — в ../art-src/ (пользователь генерирует сам)

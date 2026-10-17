@@ -215,7 +215,8 @@ export function renderFormation(container, ctx, params) {
     tacticBox.appendChild(b);
   }
   const beltLabel = document.createElement('label');
-  beltLabel.style.cssText = 'display:flex;gap:6px;align-items:center;cursor:pointer;margin-left:8px;font-size:14px';
+  beltLabel.style.cssText = 'display:flex;gap:6px;align-items:center;margin-left:8px;font-size:14px';
+  beltLabel.classList.add('clickable');
   const beltCheck = document.createElement('input');
   beltCheck.type = 'checkbox';
   beltCheck.checked = state.settings.useBeltItems !== false;

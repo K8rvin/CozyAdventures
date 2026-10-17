@@ -22,16 +22,17 @@ test('новая игра: стартовый набор и монеты', () =>
 
 test('покупка и продажа', () => {
   const s = newGame();
+  s.coins = 200;
   const r = buyItem(s, 'arm_padded');
   assert.ok(r.ok);
-  assert.equal(s.coins, 80 - 60);
+  assert.equal(s.coins, 200 - 90);
   // камзол авто-наделся (слот был свободен) — сначала снимаем, потом продаём
   assert.equal(s.equipped.armor, 'arm_padded');
   unequipToInventory(s, 'armor');
   const idx = s.inventory.indexOf('arm_padded');
   const sell = sellItem(s, idx);
   assert.ok(sell.ok);
-  assert.equal(s.coins, 80 - 60 + 30);
+  assert.equal(s.coins, 200 - 90 + 45);
 });
 
 test('не хватает монет — покупка отклоняется', () => {
@@ -52,6 +53,7 @@ test('ассортимент магазина растёт после побед
 
 test('экипировка из инвентаря и обратно', () => {
   const s = newGame();
+  s.coins = 200;
   const r = buyItem(s, 'arm_padded');
   assert.ok(r.ok);
   assert.equal(s.equipped.armor, 'arm_padded', 'покупка авто-надевается в свободный слот');
@@ -104,6 +106,7 @@ test('авто-экипировка щита не срабатывает при 
   equipFromInventory(s, s.inventory.indexOf('wpn_greatsword_oak'));
   assert.equal(s.equipped.shield, null);
   s.battlesDone.bt_bees = { victories: 1 }; // щит есть в продаже всегда
+  s.coins = 200;
   const r = buyItem(s, 'shd_wooden');
   assert.equal(r.autoEquipped, null, 'щит не должен авто-надеваться под двуручник');
   assert.ok(s.inventory.includes('shd_wooden'));

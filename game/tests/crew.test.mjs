@@ -45,7 +45,7 @@ test('найм списывает монеты и добавляет в кома
   const r = hireCrew(s, 'cmp_cat', 'companion');
   assert.ok(r.ok);
   assert.ok(s.crew.includes('cmp_cat'));
-  assert.equal(s.coins, 5000 - 110);
+  assert.equal(s.coins, 5000 - 330);
   // Повторный найм нельзя
   assert.equal(hireCrew(s, 'cmp_cat', 'companion').ok, false);
 });

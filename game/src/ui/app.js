@@ -23,6 +23,7 @@ import { ALL_PUZZLES } from '../core/state.js';
 import { BATTLES } from '../data/battles.js';
 import { SEEK_PUZZLES } from '../data/puzzlesSeek.js';
 import { initSound, sfx, startMusic } from './sound.js';
+import { applyCursor } from './cursors.js';
 
 const screenEl = document.getElementById('screen');
 const toastEl = document.getElementById('toast');
@@ -96,6 +97,7 @@ function go(name, params = {}) {
   screenEl.classList.add('screen-enter');
   const route = routes[name] || routes.hub;
   currentCleanup = route(screenEl, params) || null;
+  applyCursor(name, params, state);
   window.scrollTo(0, 0);
 }
 
@@ -240,7 +242,6 @@ document.getElementById('achievements-btn')?.addEventListener('click', () => { s
 const brandEl = document.querySelector('.brand');
 let brandTaps = 0;
 let brandTimer = null;
-brandEl.style.cursor = 'pointer';
 brandEl.addEventListener('click', () => {
   brandTaps += 1;
   sfx('tap');

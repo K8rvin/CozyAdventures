@@ -303,8 +303,9 @@ export function renderSeekEditor(container, ctx, params) {
     groupsList.innerHTML = '';
     for (const g of groups) {
       const row = document.createElement('div');
-      row.style.cssText = `font-size:13px;padding:3px 6px;border-radius:6px;cursor:pointer;${
+      row.style.cssText = `font-size:13px;padding:3px 6px;border-radius:6px;${
         selected?.groupId === g.id ? 'background:rgba(255,202,122,0.15)' : ''}`;
+      row.classList.add('clickable');
       row.textContent = `${g.label} — ${g.spots.length} шт.`;
       row.addEventListener('click', () => {
         // При повторном тапе по виду — следующий экземпляр, при первом — первый

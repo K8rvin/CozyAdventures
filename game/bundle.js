@@ -9,7 +9,7 @@
       hand: "one",
       type: "sword",
       rarity: "common",
-      price: 40,
+      price: 60,
       stats: { attack: 6 },
       description: "\u0421\u0442\u0430\u0440\u044B\u0439, \u043D\u043E \u043E\u0441\u0442\u0440\u044B\u0439. \u041F\u0430\u0445\u043D\u0435\u0442 \u043B\u0430\u0432\u0430\u043D\u0434\u043E\u0439 \u0438\u0437 \u043B\u0430\u0432\u043A\u0438."
     },
@@ -21,7 +21,7 @@
       hand: "one",
       type: "mace",
       rarity: "common",
-      price: 70,
+      price: 110,
       stats: { attack: 9, speed: -1 },
       description: "\u0422\u044F\u0436\u0451\u043B\u0430\u044F \u0434\u0443\u0431\u0438\u043D\u0430. \u0425\u043E\u0440\u043E\u0448\u043E \u0441\u0442\u0443\u0447\u0438\u0442 \u043F\u043E \u043C\u0448\u0438\u0441\u0442\u044B\u043C \u0433\u043E\u043B\u0435\u043C\u0430\u043C."
     },
@@ -33,7 +33,7 @@
       hand: "one",
       type: "dagger",
       rarity: "rare",
-      price: 130,
+      price: 330,
       stats: { attack: 7, speed: 3, crit: 0.08 },
       description: "\u041B\u0451\u0433\u043A\u0438\u0439 \u043A\u043B\u0438\u043D\u043E\u043A, \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435."
     },
@@ -45,7 +45,7 @@
       hand: "two",
       type: "greatsword",
       rarity: "rare",
-      price: 180,
+      price: 450,
       stats: { attack: 18, speed: -2 },
       traits: ["cleave_small"],
       description: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u043D\u043E \u043D\u0430\u0434\u0451\u0436\u043D\u044B\u0439 \u043C\u0435\u0447 \u0438\u0437 \u043C\u043E\u0440\u0451\u043D\u043E\u0433\u043E \u0434\u0443\u0431\u0430. \u0429\u0438\u0442 \u0441 \u043D\u0438\u043C \u043D\u0435 \u0443\u0434\u0435\u0440\u0436\u0430\u0442\u044C."
@@ -57,7 +57,7 @@
       hand: "two",
       type: "greataxe",
       rarity: "epic",
-      price: 260,
+      price: 910,
       stats: { attack: 24, speed: -3, crit: 0.05 },
       traits: ["cleave_small", "bonus_spirit"],
       description: "\u0420\u0430\u0441\u0441\u0435\u043A\u0430\u0435\u0442 \u0442\u043E\u043B\u043F\u044B \u0434\u0443\u0445\u043E\u0432, \u043A\u0430\u043A \u0441\u0443\u0445\u0438\u0435 \u0432\u0435\u0442\u043A\u0438."
@@ -70,7 +70,7 @@
       hand: "two",
       type: "bow",
       rarity: "rare",
-      price: 200,
+      price: 500,
       stats: { attack: 13, speed: 2, crit: 0.12 },
       traits: ["ranged", "bonus_spirit"],
       description: "\u0422\u0435\u0442\u0438\u0432\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442 \u0442\u0438\u0445\u043E, \u0447\u0442\u043E\u0431\u044B \u043D\u0435 \u0441\u043F\u0443\u0433\u043D\u0443\u0442\u044C \u0434\u0443\u0445\u043E\u0432."
@@ -84,7 +84,7 @@
       hand: "one",
       type: "shield",
       rarity: "common",
-      price: 50,
+      price: 80,
       stats: { armor: 8, block: 0.15 },
       description: "\u041B\u0451\u0433\u043A\u0438\u0439 \u0449\u0438\u0442. \u041D\u0430 \u043E\u0431\u043E\u0440\u043E\u0442\u0435 \u2014 \u0434\u0435\u0442\u0441\u043A\u0438\u0439 \u0440\u0438\u0441\u0443\u043D\u043E\u043A \u0443\u0433\u043B\u0451\u043C."
     },
@@ -96,7 +96,7 @@
       hand: "one",
       type: "shield",
       rarity: "rare",
-      price: 150,
+      price: 380,
       stats: { armor: 14, hp: 10, block: 0.25 },
       traits: ["thorns_small"],
       description: "\u0421 \u0442\u0430\u043A\u0438\u043C \u0449\u0438\u0442\u043E\u043C \u043B\u0430\u0432\u043A\u0430 \u043C\u043E\u0436\u0435\u0442 \u0441\u043F\u0430\u0442\u044C \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u043E."
@@ -109,7 +109,7 @@
       slot: "helmet",
       type: "helmet",
       rarity: "rare",
-      price: 120,
+      price: 300,
       stats: { hp: 15, resist: { sleep: 0.55 } },
       description: "\u0420\u044B\u0446\u0430\u0440\u044C \u043D\u0435 \u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442 \u043E\u0442 \u043F\u044B\u043B\u044C\u0446\u044B \u043D\u043E\u0447\u043D\u044B\u0445 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432."
     },
@@ -119,7 +119,7 @@
       slot: "helmet",
       type: "helmet",
       rarity: "common",
-      price: 45,
+      price: 70,
       stats: { hp: 8, dodge: 0.03 },
       description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0434\u043E\u0436\u0434\u0451\u043C \u0438 \u0442\u0440\u0430\u0432\u0430\u043C\u0438."
     },
@@ -130,7 +130,7 @@
       slot: "armor",
       type: "armor",
       rarity: "common",
-      price: 60,
+      price: 90,
       stats: { armor: 10, hp: 10 },
       description: "\u0421\u0448\u0438\u0442 \u0445\u043E\u0437\u044F\u0439\u043A\u043E\u0439 \u043B\u0430\u0432\u043A\u0438. \u0422\u0451\u043F\u043B\u044B\u0439 \u0438 \u0447\u0435\u0441\u0442\u043D\u044B\u0439."
     },
@@ -140,7 +140,7 @@
       slot: "armor",
       type: "armor",
       rarity: "epic",
-      price: 240,
+      price: 600,
       stats: { armor: 30, hp: 10 },
       traits: ["first_hit_reduction"],
       description: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0443\u0434\u0430\u0440 \u0432 \u0431\u043E\u044E \u0441\u043D\u0438\u0436\u0430\u0435\u0442\u0441\u044F \u043D\u0430 20%."
@@ -152,7 +152,7 @@
       slot: "armor",
       type: "armor",
       rarity: "rare",
-      price: 170,
+      price: 430,
       stats: { armor: 12, speed: 3, dodge: 0.07 },
       description: "\u041B\u0451\u0433\u043A\u0438\u0439, \u043A\u0430\u043A \u043A\u0440\u044B\u043B\u043E. \u041F\u043E\u0447\u0442\u0438 \u043D\u0435 \u0447\u0443\u0432\u0441\u0442\u0432\u0443\u0435\u0442\u0441\u044F."
     },
@@ -164,7 +164,7 @@
       slot: "gloves",
       type: "gloves",
       rarity: "common",
-      price: 55,
+      price: 80,
       stats: { attack: 3, resist: { poison: 0.25 } },
       description: "\u041D\u0435 \u0431\u043E\u044F\u0442\u0441\u044F \u043D\u0438 \u043A\u0440\u0430\u043F\u0438\u0432\u044B, \u043D\u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0445 \u0441\u043B\u0438\u0437\u043D\u0435\u0439."
     },
@@ -174,7 +174,7 @@
       slot: "gloves",
       type: "gloves",
       rarity: "rare",
-      price: 140,
+      price: 350,
       stats: { attack: 4, crit: 0.07 },
       description: "\u0428\u0432\u044B \u043B\u043E\u0436\u0430\u0442\u0441\u044F \u0442\u043E\u0447\u043D\u043E \u043F\u043E \u043B\u0438\u043D\u0438\u044F\u043C \u0441\u0443\u0434\u044C\u0431\u044B."
     },
@@ -186,7 +186,7 @@
       slot: "boots",
       type: "boots",
       rarity: "common",
-      price: 50,
+      price: 80,
       stats: { speed: 2, dodge: 0.04 },
       description: "\u0421\u0430\u043C\u0438 \u043D\u0430\u0445\u043E\u0434\u044F\u0442 \u0441\u0443\u0445\u043E\u0435 \u043C\u0435\u0441\u0442\u043E \u0432 \u043B\u0443\u0436\u0435."
     },
@@ -197,7 +197,7 @@
       slot: "boots",
       type: "boots",
       rarity: "rare",
-      price: 110,
+      price: 280,
       stats: { speed: 1, goldFind: 0.15 },
       description: "\u041F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F \u0432 \u0442\u0440\u0430\u0432\u0435 \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F \u0431\u043E\u043B\u044C\u0448\u0435 \u043C\u043E\u043D\u0435\u0442."
     },
@@ -208,7 +208,7 @@
       slot: "amulet",
       type: "amulet",
       rarity: "rare",
-      price: 130,
+      price: 330,
       stats: { hp: 10, resist: { fire: 0.3 } },
       traits: ["heal_after_battle"],
       description: "\u041F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F \u0440\u044B\u0446\u0430\u0440\u044C \u0447\u0443\u0432\u0441\u0442\u0432\u0443\u0435\u0442 \u0441\u0435\u0431\u044F \u043A\u0430\u043A \u0434\u043E\u043C\u0430."
@@ -220,7 +220,7 @@
       slot: "amulet",
       type: "amulet",
       rarity: "rare",
-      price: 120,
+      price: 300,
       stats: { resist: { poison: 0.45 } },
       description: "\u041F\u0443\u0447\u043E\u043A \u0441\u0443\u0448\u0451\u043D\u043E\u0433\u043E \u043F\u043B\u0430\u0443\u043D\u0430 \u043F\u043E\u0434 \u0441\u0442\u0435\u043A\u043B\u043E\u043C."
     },
@@ -232,7 +232,7 @@
       slot: "ring",
       type: "ring",
       rarity: "common",
-      price: 60,
+      price: 90,
       stats: { itemFind: 0.1, goldFind: 0.05 },
       description: "\u041B\u0451\u0433\u043A\u043E\u0435 \u043F\u043E\u043A\u0430\u043B\u044B\u0432\u0430\u043D\u0438\u0435 \u0432 \u043F\u0430\u043B\u044C\u0446\u0435 \u2014 \u043A \u043D\u0430\u0445\u043E\u0434\u043A\u0435."
     },
@@ -243,7 +243,7 @@
       slot: "ring",
       type: "ring",
       rarity: "rare",
-      price: 120,
+      price: 300,
       stats: { crit: 0.06 },
       description: "\u041A\u0430\u043C\u0435\u043D\u044C \u0432\u0441\u043F\u044B\u0445\u0438\u0432\u0430\u0435\u0442 \u0432 \u043C\u043E\u043C\u0435\u043D\u0442 \u0432\u0435\u0440\u043D\u043E\u0433\u043E \u0443\u0434\u0430\u0440\u0430."
     },
@@ -254,7 +254,7 @@
       slot: "ring",
       type: "ring",
       rarity: "common",
-      price: 55,
+      price: 80,
       stats: { hp: 12 },
       description: "\u0422\u0451\u043F\u043B\u043E\u0435 \u043D\u0430 \u043E\u0449\u0443\u043F\u044C, \u043A\u0430\u043A \u043A\u0440\u0443\u0436\u043A\u0430 \u0447\u0430\u044F."
     },
@@ -265,7 +265,7 @@
       slot: "consumable",
       type: "potion",
       rarity: "common",
-      price: 30,
+      price: 50,
       stackable: true,
       effect: { kind: "heal", amount: 40, atHpBelow: 0.35 },
       description: "\u0410\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u0432\u044B\u043F\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0432 \u0431\u043E\u044E \u043F\u0440\u0438 \u043D\u0438\u0437\u043A\u043E\u043C \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435."
@@ -276,7 +276,7 @@
       slot: "consumable",
       type: "potion",
       rarity: "common",
-      price: 35,
+      price: 50,
       stackable: true,
       effect: { kind: "cleanse_sleep", resistAfter: { sleep: 0.6 } },
       description: "\u0421\u043D\u0438\u043C\u0430\u0435\u0442 \u0441\u043E\u043D \u0438 \u0431\u043E\u0434\u0440\u0438\u0442 \u0434\u043E \u043A\u043E\u043D\u0446\u0430 \u0431\u043E\u044F."
@@ -288,7 +288,7 @@
       slot: "consumable",
       type: "scroll",
       rarity: "rare",
-      price: 90,
+      price: 140,
       stackable: true,
       effect: { kind: "scroll_fire_arrow", dmg: 25 },
       description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0431\u044C\u0451\u0442 \u043E\u0433\u043D\u0451\u043C \u0441\u0430\u043C\u043E\u0433\u043E \u0436\u0438\u0432\u0443\u0447\u0435\u0433\u043E \u0432\u0440\u0430\u0433\u0430, \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u044F \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0431\u0440\u043E\u043D\u0438."
@@ -299,7 +299,7 @@
       slot: "consumable",
       type: "scroll",
       rarity: "rare",
-      price: 120,
+      price: 300,
       stackable: true,
       effect: { kind: "scroll_heal_mist", amount: 20 },
       description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u043B\u0435\u0447\u0438\u0442 \u0432\u0435\u0441\u044C \u043E\u0442\u0440\u044F\u0434 \u043D\u0430 20 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F."
@@ -310,7 +310,7 @@
       slot: "consumable",
       type: "scroll",
       rarity: "rare",
-      price: 140,
+      price: 350,
       stackable: true,
       effect: { kind: "scroll_frost", ticks: 40, factor: 0.6 },
       description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0432\u0441\u0435\u0445 \u0432\u0440\u0430\u0433\u043E\u0432 \u2014 \u043E\u043D\u0438 \u0440\u0435\u0436\u0435 \u0445\u043E\u0434\u044F\u0442."
@@ -321,7 +321,7 @@
       slot: "consumable",
       type: "scroll",
       rarity: "epic",
-      price: 160,
+      price: 400,
       stackable: true,
       effect: { kind: "scroll_storm", dmg: 22 },
       description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0431\u044C\u0451\u0442 \u043C\u043E\u043B\u043D\u0438\u0435\u0439 \u0434\u0432\u0443\u0445 \u0441\u0430\u043C\u044B\u0445 \u0445\u0440\u0443\u043F\u043A\u0438\u0445 \u0432\u0440\u0430\u0433\u043E\u0432."
@@ -332,7 +332,7 @@
       slot: "consumable",
       type: "scroll",
       rarity: "epic",
-      price: 240,
+      price: 600,
       stackable: true,
       effect: { kind: "scroll_fire_step", dmg: 18 },
       description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0431\u044C\u0451\u0442 \u043E\u0433\u043D\u0451\u043C \u043F\u043E \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u2014 \u0437\u0430\u0434\u0435\u0432\u0430\u0435\u0442 \u0412\u0421\u0415\u0425 \u0432\u0440\u0430\u0433\u043E\u0432. \u0414\u043E\u0440\u043E\u0433\u043E."
@@ -347,7 +347,7 @@
       hand: "one",
       type: "sword",
       rarity: "rare",
-      price: 220,
+      price: 550,
       stats: { attack: 14, block: 0.03 },
       description: "\u041A\u0430\u0437\u0430\u0440\u043C\u0435\u043D\u043D\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430: \u0431\u0435\u0437 \u0438\u0437\u043B\u0438\u0448\u0435\u0441\u0442\u0432, \u043D\u043E \u043D\u0430\u0434\u0451\u0436\u043D\u043E."
     },
@@ -358,7 +358,7 @@
       hand: "two",
       type: "greataxe",
       rarity: "epic",
-      price: 340,
+      price: 1190,
       stats: { attack: 30, speed: -3 },
       traits: ["cleave_small"],
       description: "\u0418\u043C \u043A\u043B\u0430\u0434\u0443\u0442 \u0441\u0442\u0435\u043D\u044B. \u0418 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u044B\u0432\u0430\u044E\u0442 \u0431\u0440\u043E\u0434\u044F\u0447\u0438\u0445 \u0433\u043E\u043B\u0435\u043C\u043E\u0432."
@@ -371,7 +371,7 @@
       hand: "one",
       type: "shield",
       rarity: "epic",
-      price: 280,
+      price: 980,
       stats: { armor: 20, hp: 15, block: 0.3, speed: -1 },
       description: "\u0417\u0430 \u0442\u0430\u043A\u0438\u043C \u0449\u0438\u0442\u043E\u043C \u043C\u043E\u0436\u043D\u043E \u043F\u0435\u0440\u0435\u0436\u0434\u0430\u0442\u044C \u0438 \u043E\u0441\u0430\u0434\u0443, \u0438 \u0434\u043E\u0436\u0434\u044C."
     },
@@ -382,7 +382,7 @@
       slot: "helmet",
       type: "helmet",
       rarity: "rare",
-      price: 190,
+      price: 480,
       stats: { armor: 8, hp: 12, resist: { sleep: 0.2 } },
       description: "\u0413\u0443\u043B\u043A\u043E \u0437\u0432\u0435\u043D\u0438\u0442, \u0435\u0441\u043B\u0438 \u0437\u0430\u0434\u0440\u0435\u043C\u0430\u0442\u044C \u043D\u0430 \u043F\u043E\u0441\u0442\u0443."
     },
@@ -393,7 +393,7 @@
       slot: "armor",
       type: "armor",
       rarity: "rare",
-      price: 260,
+      price: 910,
       stats: { armor: 22, hp: 15 },
       description: "\u041A\u0430\u0436\u0434\u043E\u0435 \u043A\u043E\u043B\u044C\u0446\u043E \u043F\u043E\u043C\u043D\u0438\u0442 \u0441\u0432\u043E\u044E \u0438\u0441\u0442\u043E\u0440\u0438\u044E."
     },
@@ -404,7 +404,7 @@
       slot: "gloves",
       type: "gloves",
       rarity: "rare",
-      price: 200,
+      price: 500,
       stats: { attack: 6, resist: { fire: 0.25 } },
       description: "\u041D\u0435 \u0431\u043E\u044F\u0442\u0441\u044F \u043D\u0438 \u0433\u043E\u0440\u043D\u0430, \u043D\u0438 \u0447\u0443\u0436\u043E\u0433\u043E \u043E\u0433\u043D\u044F."
     },
@@ -415,7 +415,7 @@
       slot: "boots",
       type: "boots",
       rarity: "rare",
-      price: 170,
+      price: 430,
       stats: { speed: 3, dodge: 0.05 },
       description: "\u041A\u0430\u0431\u043B\u0443\u043A\u0438 \u0432\u044B\u0431\u0438\u0432\u0430\u044E\u0442 \u0443\u0432\u0435\u0440\u0435\u043D\u043D\u0443\u044E \u0434\u0440\u043E\u0431\u044C \u043F\u043E \u043C\u043E\u0441\u0442\u043E\u0432\u043E\u0439."
     },
@@ -426,7 +426,7 @@
       slot: "amulet",
       type: "amulet",
       rarity: "epic",
-      price: 300,
+      price: 1050,
       stats: { hp: 8, resist: { sleep: 0.15 } },
       traits: ["fearless"],
       description: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0440\u044B\u0446\u0430\u0440\u044F \u0431\u044C\u0451\u0442\u0441\u044F \u0440\u043E\u0432\u043D\u043E, \u0434\u0430\u0436\u0435 \u043A\u043E\u0433\u0434\u0430 \u0437\u0430 \u0441\u043F\u0438\u043D\u043E\u0439 \u0448\u0435\u043F\u0447\u0435\u0442 \u043F\u0440\u0438\u0437\u0440\u0430\u043A."
@@ -438,7 +438,7 @@
       slot: "ring",
       type: "ring",
       rarity: "rare",
-      price: 150,
+      price: 380,
       stats: { attack: 3, armor: 4 },
       description: "\u041F\u0440\u043E\u0441\u0442\u043E\u0435, \u043A\u0430\u043A \u0433\u0432\u043E\u0437\u0434\u044C. \u041A\u0440\u0435\u043F\u043A\u043E\u0435, \u043A\u0430\u043A \u0433\u0432\u043E\u0437\u0434\u044C."
     },
@@ -449,7 +449,7 @@
       slot: "ring",
       type: "ring",
       rarity: "epic",
-      price: 260,
+      price: 910,
       stats: { crit: 0.08, speed: 1 },
       description: "\u0414\u043B\u044F \u0442\u0435\u0445, \u043A\u0442\u043E \u0431\u044C\u0451\u0442 \u043F\u0435\u0440\u0432\u044B\u043C \u0438 \u043C\u0435\u0442\u043A\u043E."
     },
@@ -459,7 +459,7 @@
       slot: "consumable",
       type: "potion",
       rarity: "rare",
-      price: 60,
+      price: 90,
       stackable: true,
       effect: { kind: "shield", amount: 25, atStart: true },
       description: "\u0412 \u043D\u0430\u0447\u0430\u043B\u0435 \u0431\u043E\u044F \u0434\u0430\u0451\u0442 \u0449\u0438\u0442, \u043F\u043E\u0433\u043B\u043E\u0449\u0430\u044E\u0449\u0438\u0439 25 \u0443\u0440\u043E\u043D\u0430."
@@ -474,7 +474,7 @@
       hand: "two",
       type: "staff",
       rarity: "epic",
-      price: 420,
+      price: 1890,
       stats: { attack: 34, speed: -2 },
       traits: ["pierce", "ranged", "magic"],
       description: "\u041F\u043B\u0430\u043C\u044F \u043D\u0430 \u043A\u043E\u043D\u0446\u0435 \u043F\u0440\u043E\u0448\u0438\u0432\u0430\u0435\u0442 \u0434\u0430\u0436\u0435 \u043A\u0430\u043C\u0435\u043D\u044C. \u041E\u0431\u0435 \u0440\u0443\u043A\u0438 \u0437\u0430\u043D\u044F\u0442\u044B."
@@ -498,7 +498,7 @@
       slot: "armor",
       type: "armor",
       rarity: "epic",
-      price: 380,
+      price: 1330,
       stats: { armor: 18, dodge: 0.1, resist: { poison: 0.3 } },
       description: "\u041A\u043B\u044F\u043A\u0441\u044B \u0441\u043A\u043E\u043B\u044C\u0437\u044F\u0442, \u043D\u0435 \u043E\u0441\u0442\u0430\u0432\u043B\u044F\u044F \u0441\u043B\u0435\u0434\u043E\u0432."
     },
@@ -509,7 +509,7 @@
       slot: "helmet",
       type: "helmet",
       rarity: "rare",
-      price: 260,
+      price: 910,
       stats: { hp: 18, resist: { sleep: 0.35 }, itemFind: 0.08 },
       description: "\u041F\u043E\u0434 \u0442\u0430\u043A\u0438\u043C \u043A\u043E\u043B\u043F\u0430\u043A\u043E\u043C \u0441\u043D\u044F\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u0445\u043E\u0440\u043E\u0448\u0438\u0435 \u0438\u0441\u0442\u043E\u0440\u0438\u0438."
     },
@@ -520,7 +520,7 @@
       slot: "gloves",
       type: "gloves",
       rarity: "rare",
-      price: 240,
+      price: 600,
       stats: { attack: 5, armor: 4 },
       description: "\u041A\u0440\u0435\u043F\u043A\u0438\u0435 \u0448\u0432\u044B \u2014 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u0445\u0432\u0430\u0442\u043A\u0430."
     },
@@ -531,7 +531,7 @@
       slot: "boots",
       type: "boots",
       rarity: "epic",
-      price: 300,
+      price: 1050,
       stats: { speed: 4, dodge: 0.08 },
       description: "\u0428\u0430\u0433 \u043C\u044F\u0433\u0447\u0435 \u043F\u0435\u0440\u0435\u0432\u043E\u0440\u0430\u0447\u0438\u0432\u0430\u0435\u043C\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B."
     },
@@ -542,7 +542,7 @@
       slot: "amulet",
       type: "amulet",
       rarity: "epic",
-      price: 340,
+      price: 1190,
       stats: { hp: 15, resist: { sleep: 0.2, poison: 0.2 } },
       traits: ["heal_after_battle"],
       description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0441\u0442\u0430\u0440\u043E\u0439 \u0431\u0443\u043C\u0430\u0433\u043E\u0439. \u041F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F \u0440\u044B\u0446\u0430\u0440\u044C \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442 \u0431\u044B\u0441\u0442\u0440\u0435\u0435."
@@ -554,7 +554,7 @@
       slot: "ring",
       type: "ring",
       rarity: "rare",
-      price: 180,
+      price: 450,
       stats: { attack: 4, resist: { poison: 0.15 } },
       description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043F\u043B\u0430\u0432\u0430\u0435\u0442 \u0442\u0451\u043C\u043D\u0430\u044F \u043A\u0430\u043F\u043B\u044F."
     },
@@ -565,7 +565,7 @@
       slot: "ring",
       type: "ring",
       rarity: "epic",
-      price: 280,
+      price: 980,
       stats: { speed: 2, goldFind: 0.1, itemFind: 0.1 },
       description: "\u0412\u0441\u0435\u0433\u0434\u0430 \u0437\u043D\u0430\u0435\u0442, \u043D\u0430 \u043A\u0430\u043A\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435 \u043A\u043B\u0430\u0434."
     },
@@ -575,7 +575,7 @@
       slot: "consumable",
       type: "potion",
       rarity: "rare",
-      price: 70,
+      price: 110,
       stackable: true,
       effect: { kind: "cleanse_poison", resistAfter: { poison: 0.6 } },
       description: "\u0413\u043E\u0440\u044C\u043A\u0438\u0439. \u0412\u044B\u0432\u043E\u0434\u0438\u0442 \u044F\u0434 \u0438\u0437 \u043A\u0440\u043E\u0432\u0438 \u0438 \u0438\u0437 \u043A\u043D\u0438\u0433."
@@ -691,7 +691,7 @@
       hand: "one",
       type: "shield",
       rarity: "rare",
-      price: 230,
+      price: 580,
       stats: { armor: 10, dodge: 0.05, hp: 8 },
       description: "\u041A\u0440\u044B\u0448\u043A\u0430 \u0434\u0440\u0435\u0432\u043D\u0435\u0433\u043E \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u0430 \u043D\u0430 \u0440\u0435\u043C\u043D\u0435. \u041B\u0435\u0433\u0447\u0435 \u0434\u0435\u0440\u0435\u0432\u0430, \u043A\u0440\u0435\u043F\u0447\u0435 \u043A\u043E\u0436\u0438."
     }
@@ -12916,7 +12916,7 @@
       id: "cmp_firefly",
       name: "\u0421\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A",
       icon: "\u2728",
-      price: 90,
+      price: 270,
       currency: "coins",
       bonus: { itemFind: 0.1 },
       trait: "firefly_hint",
@@ -12926,7 +12926,7 @@
       id: "cmp_herbalist",
       name: "\u0422\u0440\u0430\u0432\u043D\u0438\u0446\u0430",
       icon: "\u{1F33F}",
-      price: 140,
+      price: 420,
       currency: "coins",
       bonus: {},
       trait: "regen_ally",
@@ -12936,7 +12936,7 @@
       id: "cmp_cat",
       name: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C",
       icon: "\u{1F408}",
-      price: 110,
+      price: 330,
       currency: "coins",
       bonus: { goldFind: 0.1, dodge: 0.02 },
       trait: null,
@@ -12958,7 +12958,7 @@
       id: "pet_puppy",
       name: "\u0429\u0435\u043D\u043E\u043A",
       icon: "\u{1F415}",
-      price: 160,
+      price: 480,
       currency: "coins",
       bonus: { goldFind: 0.15 },
       description: "\u0411\u0435\u0436\u0438\u0442 \u0440\u044F\u0434\u043E\u043C \u0438 \u0441\u043E\u0431\u0438\u0440\u0430\u0435\u0442 \u043C\u043E\u043D\u0435\u0442\u044B \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F."
@@ -12967,7 +12967,7 @@
       id: "pet_hedgehog",
       name: "\u0401\u0436\u0438\u043A",
       icon: "\u{1F994}",
-      price: 190,
+      price: 570,
       currency: "coins",
       bonus: { itemFind: 0.12 },
       description: "\u041D\u0430\u0445\u043E\u0434\u0438\u0442 \u043C\u0435\u043B\u043A\u0438\u0435 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u0432 \u0442\u0440\u0430\u0432\u0435."
@@ -12989,7 +12989,7 @@
       icon: "\u{1F3F9}",
       race: "\u044D\u043B\u044C\u0444",
       role: "\u0441\u0442\u0440\u0435\u043B\u043E\u043A",
-      price: 240,
+      price: 720,
       currency: "coins",
       hp: 40,
       attack: 14,
@@ -13007,7 +13007,7 @@
       icon: "\u{1F528}",
       race: "\u0447\u0435\u043B\u043E\u0432\u0435\u043A",
       role: "\u0442\u0430\u043D\u043A",
-      price: 300,
+      price: 900,
       currency: "coins",
       hp: 85,
       attack: 9,
@@ -13026,7 +13026,7 @@
       icon: "\u{1F9EA}",
       race: "\u0447\u0435\u043B\u043E\u0432\u0435\u043A",
       role: "\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430",
-      price: 400,
+      price: 1200,
       currency: "coins",
       hp: 45,
       attack: 8,
@@ -13064,7 +13064,7 @@
       name: "\u0421\u0438\u0432\u043A\u0430",
       icon: "\u{1F434}",
       kind: "riding",
-      price: 450,
+      price: 1350,
       currency: "coins",
       bonus: { speed: 2, materialsFind: 0.5 },
       description: "\u0415\u0437\u0434\u043E\u0432\u043E\u0439: \u0431\u044B\u0441\u0442\u0440\u0435\u0435 \u0434\u043E\u0440\u043E\u0433\u0438, \u0431\u043E\u043B\u044C\u0448\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u043E\u0432 \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F."
@@ -14455,6 +14455,7 @@
       name: "\u0424\u0435\u044F \u043B\u0443\u0433\u0430",
       icon: "\u{1F9DA}",
       art: null,
+      // ждёт assets/fate/guest_fairy_web.jpg (промт 16.11)
       idle: "\u041B\u0443\u0433 \u0436\u0434\u0451\u0442 \u0432\u043E\u043B\u0448\u0435\u0431\u0441\u0442\u0432\u0430! \u0421\u0432\u0430\u0440\u0438 \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C \u0431\u043B\u0435\u0441\u0442\u044F\u0449\u0435\u0435.",
       success: "\u0411\u043B\u0435\u0441\u0442\u044F\u0449\u0435! \u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0430\u0435\u043C\u0441\u044F \u0442\u0430\u043D\u0446\u0435\u0432\u0430\u0442\u044C \u043D\u0430 \u043B\u0443\u0433.",
       spoiled: "\u041E\u0439, \u043B\u0443\u043D\u043D\u044B\u0439 \u043B\u0443\u0447\u0438\u043A \u043F\u043E\u0433\u0430\u0441... \u0437\u0430\u0436\u0436\u0451\u043C \u0441\u043D\u043E\u0432\u0430!"
@@ -14462,7 +14463,7 @@
     cook: {
       name: "\u041F\u043E\u0432\u0430\u0440\u0451\u043D\u043E\u043A",
       icon: "\u{1F372}",
-      art: null,
+      art: "assets/fate/guest_cook_web.jpg",
       idle: "\u0414\u043B\u044F \u043C\u043E\u0435\u0439 \u043A\u0443\u0445\u043D\u0438 \u043D\u0443\u0436\u043D\u043E \u0437\u0435\u043B\u044C\u0435. \u0410\u0440\u043E\u043C\u0430\u0442 \u2014 \u0433\u043B\u0430\u0432\u043D\u043E\u0435!",
       success: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0432\u043E\u0441\u0445\u0438\u0442\u0438\u0442\u0435\u043B\u044C\u043D\u043E! \u041F\u0440\u044F\u043C\u043E \u0432 \u043C\u0435\u043D\u044E.",
       spoiled: "\u0418 \u0443 \u043C\u0435\u043D\u044F \u043A\u0430\u0448\u0430 \u043F\u0440\u0438\u0433\u043E\u0440\u0430\u043B\u0430. \u041D\u0435 \u0431\u0435\u0434\u0430, \u0432\u0430\u0440\u0438\u043C \u0441\u043D\u043E\u0432\u0430!"
@@ -17076,6 +17077,68 @@
     bubble.style.top = `${fitsBelow ? below : above}px`;
   }
 
+  // src/ui/cursors.js
+  var CURSOR_THEMES = {
+    default: { hotspot: [4, 2], name: "\u041F\u0435\u0440\u043E \u0445\u043E\u0437\u044F\u0438\u043D\u0430" },
+    hub_lavka: { hotspot: [8, 4], name: "\u0424\u043E\u043D\u0430\u0440\u0438\u043A \u043B\u0430\u0432\u043A\u0438" },
+    hub_square: { hotspot: [6, 4], name: "\u0423\u043B\u0438\u0447\u043D\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C" },
+    hub_market: { hotspot: [16, 4], name: "\u0412\u0435\u0441\u044B \u0442\u043E\u0440\u0433\u043E\u0432\u0446\u0430" },
+    hub_cabinet: { hotspot: [16, 6], name: "\u041A\u0443\u0431\u043E\u043A \u0442\u0440\u043E\u0444\u0435\u0435\u0432" },
+    mirror: { hotspot: [8, 6], name: "\u0417\u0435\u0440\u043A\u0430\u043B\u044C\u0446\u0435" },
+    shelf: { hotspot: [10, 6], name: "\u041A\u0443\u0432\u0448\u0438\u043D \u0441 \u043F\u043E\u043B\u043A\u0438" },
+    riddle: { hotspot: [8, 6], name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0437\u0430\u0433\u0430\u0434\u043E\u043A" },
+    hang: { hotspot: [4, 28], name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u043E\u0435 \u043F\u0435\u0440\u043E" },
+    seek: { hotspot: [12, 12], name: "\u041B\u0443\u043F\u0430" },
+    path: { hotspot: [5, 5], name: "\u0411\u043E\u0442\u0438\u043D\u043E\u043A \u043F\u0443\u0442\u043D\u0438\u043A\u0430" },
+    tea: { hotspot: [16, 8], name: "\u0427\u0430\u0448\u043A\u0430 \u0447\u0430\u044F" },
+    mech: { hotspot: [16, 16], name: "\u0428\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0430" },
+    candle: { hotspot: [16, 4], name: "\u0421\u0432\u0435\u0447\u0430" },
+    flow: { hotspot: [8, 8], name: "\u0412\u043E\u043B\u043D\u0430" },
+    brew: { hotspot: [16, 4], name: "\u041A\u043E\u043B\u0431\u0430" },
+    fate: { hotspot: [6, 4], name: "\u041A\u0430\u0440\u0442\u0430 \u0441\u0443\u0434\u044C\u0431\u044B" },
+    glass: { hotspot: [16, 4], name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0432\u0438\u0442\u0440\u0430\u0436\u0430" },
+    battle: { hotspot: [4, 4], name: "\u041C\u0435\u0447 \u0440\u044B\u0446\u0430\u0440\u044F" },
+    equip: { hotspot: [16, 6], name: "\u0428\u043B\u0435\u043C \u0440\u044B\u0446\u0430\u0440\u044F" },
+    shop: { hotspot: [16, 16], name: "\u041C\u043E\u043D\u0435\u0442\u0430" },
+    tavern: { hotspot: [10, 6], name: "\u041A\u0440\u0443\u0436\u043A\u0430" },
+    craft: { hotspot: [6, 6], name: "\u041C\u043E\u043B\u043E\u0442 \u043A\u0443\u0437\u043D\u0435\u0446\u0430" },
+    workshop: { hotspot: [6, 6], name: "\u041A\u043B\u044E\u0447 \u043C\u0430\u0441\u0442\u0435\u0440\u0430" }
+  };
+  var ROUTE_CURSORS = {
+    puzzle: (p, state2) => findPuzzle(state2, p.id)?.mechanic || "mirror",
+    hub: (p) => `hub_${p.scene || "lavka"}`,
+    // без сцены applyCursor оставит прошлую hub_*-тему
+    equip: () => "equip",
+    shop: () => "shop",
+    shopArmory: () => "shop",
+    shopArmorer: () => "shop",
+    shopMagic: () => "shop",
+    shopAlchemy: () => "shop",
+    battles: () => "battle",
+    battle: () => "battle",
+    tavern: () => "tavern",
+    craft: () => "craft",
+    workshop: () => "workshop",
+    editor: () => "workshop",
+    seekeditor: () => "workshop",
+    sandbox: () => "workshop"
+  };
+  function cursorForRoute(name, params = {}, state2 = null) {
+    const fn = ROUTE_CURSORS[name];
+    const key = fn ? fn(params, state2) : "default";
+    if (key && CURSOR_THEMES[key]) return key;
+    return "default";
+  }
+  function applyCursor(name, params = {}, state2 = null, body = document.body) {
+    if (!body) return;
+    const prev = body.dataset?.cursor;
+    let key = cursorForRoute(name, params, state2);
+    if (name === "hub" && !params.scene && prev && CURSOR_THEMES[prev] && prev.startsWith("hub_")) {
+      key = prev;
+    }
+    body.dataset.cursor = key;
+  }
+
   // src/ui/hub.js
   function hasUnseenIn(state2, shopKey) {
     const unseen = new Set(unseenShopItems(state2).map((i) => i.id));
@@ -17160,6 +17223,7 @@
     };
     const sceneId = params.scene || "lavka";
     const scene = SCENES[sceneId] || SCENES.lavka;
+    applyCursor("hub", { scene: sceneId }, state2);
     const scenePanel = document.createElement("div");
     scenePanel.className = "panel hub-picture";
     scenePanel.style.padding = "0";
@@ -23696,7 +23760,7 @@
   var PUZZLE_CATALOG_MODES = [
     { id: "shelf", name: "\u041F\u043E\u043B\u043A\u0430", icon: "\u{1F4DA}", hint: "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u043B\u0435\u043D\u0442\u0430 \u0441 \u043A\u0440\u0443\u043F\u043D\u044B\u043C\u0438 \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430\u043C\u0438" },
     { id: "preview", name: "\u0416\u0438\u0432\u043E\u0435 \u043F\u0440\u0435\u0432\u044C\u044E", icon: "\u{1F5BC}\uFE0F", hint: "\u0421\u043F\u0438\u0441\u043E\u043A \u0438 \u0438\u043B\u043B\u044E\u0441\u0442\u0440\u0430\u0446\u0438\u044F \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0439 \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438" },
-    { id: "accordion", name: "\u0420\u0430\u0441\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u0439\u0441\u044F \u0441\u043F\u0438\u0441\u043E\u043A", icon: "\u{1F4DC}", hint: "\u041A\u043E\u043C\u043F\u0430\u043A\u0442\u043D\u044B\u0435 \u0441\u0442\u0440\u043E\u043A\u0438 \u0441 \u0440\u0430\u0441\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u043C\u0438\u0441\u044F \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0430\u043C\u0438" },
+    { id: "accordion", name: "\u0421\u043F\u0438\u0441\u043E\u043A", icon: "\u{1F4DC}", hint: "\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u0441\u043F\u0438\u0441\u043E\u043A \u0441 \u043C\u0438\u043D\u0438\u0430\u0442\u044E\u0440\u0430\u043C\u0438 \u0438 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441\u043E\u043C" },
     { id: "bento", name: "\u041C\u043E\u0437\u0430\u0438\u043A\u0430", icon: "\u{1F9E9}", hint: "\u0410\u0441\u0438\u043C\u043C\u0435\u0442\u0440\u0438\u0447\u043D\u0430\u044F \u0441\u0435\u0442\u043A\u0430 \u0441 \u0444\u0438\u043B\u044C\u0442\u0440\u0430\u043C\u0438" }
   ];
   var MODE_IDS = PUZZLE_CATALOG_MODES.map((m) => m.id);
@@ -23861,41 +23925,71 @@
     track.tabIndex = 0;
     track.setAttribute("role", "region");
     track.setAttribute("aria-label", "\u041F\u043E\u043B\u043A\u0430 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
-    const cards = entries2.map((entry, i) => {
+    const cards = [];
+    const addCard = (entry, entryIndex, loopClone = false) => {
+      const slot = cards.length;
       const card = makeCard(entry, "pc-shelf-card", onOpen, true);
-      card.addEventListener("focus", () => setActive(i));
+      card.dataset.entryIndex = String(entryIndex);
+      if (loopClone) {
+        card.dataset.loopClone = "true";
+        card.tabIndex = -1;
+        card.setAttribute("aria-hidden", "true");
+      }
+      card.addEventListener("focus", () => setActive(slot));
       track.appendChild(card);
-      return card;
-    });
+      cards.push(card);
+    };
+    addCard(entries2[entries2.length - 1], entries2.length - 1, true);
+    entries2.forEach((entry, i) => addCard(entry, i));
+    addCard(entries2[0], 0, true);
     section.append(toolbar, track);
     container.appendChild(section);
+    let activeSlot = 1;
     let active = 0;
-    function setActive(index) {
-      active = Math.max(0, Math.min(cards.length - 1, index));
-      cards.forEach((card, i) => card.classList.toggle("is-active", i === active));
-      counter.textContent = `${active + 1} / ${cards.length}`;
-      prev.disabled = active === 0;
-      next.disabled = active === cards.length - 1;
+    function setActive(slot) {
+      activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
+      active = Number(cards[activeSlot].dataset.entryIndex);
+      cards.forEach((card, i) => card.classList.toggle("is-active", i === activeSlot));
+      counter.textContent = `${active + 1} / ${entries2.length}`;
     }
-    function scrollTo(index, smooth = true) {
-      setActive(index);
-      const card = cards[active];
+    function placeCard2(slot, smooth) {
+      const card = cards[slot];
       const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
       if (!Number.isFinite(left)) return;
-      if (smooth && track.scrollTo) track.scrollTo({ left, behavior: "smooth" });
+      if (smooth) {
+        if (track.scrollTo) track.scrollTo({ left, behavior: "smooth" });
+        else track.scrollLeft = left;
+        return;
+      }
+      const behavior = track.style.scrollBehavior;
+      track.style.scrollBehavior = "auto";
+      if (track.scrollTo) track.scrollTo({ left, behavior: "auto" });
       else track.scrollLeft = left;
+      track.style.scrollBehavior = behavior;
     }
-    prev.addEventListener("click", () => scrollTo(active - 1));
-    next.addEventListener("click", () => scrollTo(active + 1));
+    function scrollToSlot(slot, smooth = true) {
+      const bounded = Math.max(0, Math.min(cards.length - 1, slot));
+      setActive(bounded);
+      placeCard2(bounded, smooth);
+    }
+    function step(direction) {
+      const nextEntry = (active + direction + entries2.length) % entries2.length;
+      let target = nextEntry + 1;
+      if (direction < 0 && activeSlot === 1) target = 0;
+      if (direction > 0 && activeSlot === entries2.length) target = entries2.length + 1;
+      scrollToSlot(target);
+    }
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
     track.addEventListener("keydown", (ev) => {
       if (ev.key !== "ArrowLeft" && ev.key !== "ArrowRight") return;
       ev.preventDefault();
-      scrollTo(active + (ev.key === "ArrowRight" ? 1 : -1));
+      step(ev.key === "ArrowRight" ? 1 : -1);
     });
     track.addEventListener("scroll", () => {
-      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0) return;
+      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0 || !Number.isFinite(track.scrollWidth)) return;
       const center = track.scrollLeft + track.clientWidth / 2;
-      let nearest = active;
+      let nearest = activeSlot;
       let distance = Infinity;
       cards.forEach((card, i) => {
         if (!Number.isFinite(card.offsetLeft) || !Number.isFinite(card.offsetWidth)) return;
@@ -23905,9 +23999,18 @@
           nearest = i;
         }
       });
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (nearest === 0 && track.scrollLeft <= 1) {
+        scrollToSlot(entries2.length, false);
+        return;
+      }
+      if (nearest === cards.length - 1 && track.scrollLeft >= maxScroll - 1) {
+        scrollToSlot(1, false);
+        return;
+      }
       setActive(nearest);
     });
-    scrollTo(recommendedIndex(entries2), false);
+    scrollToSlot(recommendedIndex(entries2) + 1, false);
   }
   function renderPreview(container, entries2, onOpen) {
     const section = document.createElement("section");
@@ -23985,70 +24088,33 @@
     });
     show(recommendedIndex(entries2));
   }
-  function renderAccordion(container, entries2, onOpen) {
+  function renderSimpleList(container, entries2, onOpen) {
     const list = document.createElement("section");
-    list.className = "pc-accordion";
-    const rows = [];
-    let opened = recommendedIndex(entries2);
-    function sync() {
-      rows.forEach((row, i) => {
-        const isOpen = i === opened;
-        row.item.classList.toggle("is-open", isOpen);
-        row.header.setAttribute("aria-expanded", String(isOpen));
-        row.reveal.setAttribute("aria-hidden", String(!isOpen));
-        row.open.tabIndex = isOpen ? 0 : -1;
-      });
-    }
-    entries2.forEach((entry, i) => {
-      const item2 = document.createElement("article");
-      item2.className = `pc-accordion-item${entry.complete ? " pc-complete" : ""}`;
-      const header2 = document.createElement("button");
-      header2.type = "button";
-      header2.className = "pc-accordion-header";
-      header2.setAttribute("aria-controls", `pc-accordion-${entry.mech}`);
-      header2.appendChild(makeArt(entry, "pc-accordion-thumb"));
+    list.className = "pc-simple-list";
+    list.setAttribute("aria-label", "\u0421\u043F\u0438\u0441\u043E\u043A \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
+    for (const entry of entries2) {
+      const item2 = document.createElement("button");
+      item2.type = "button";
+      item2.className = `pc-simple-item${entry.complete ? " pc-complete" : ""}`;
+      item2.setAttribute("aria-label", `${entry.name}. \u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E ${entry.done} \u0438\u0437 ${entry.total}`);
+      item2.appendChild(makeArt(entry, "pc-simple-thumb"));
       const text = document.createElement("span");
-      text.className = "pc-accordion-text";
-      text.append(makeName(entry), makeProgressText(entry));
-      if (entry.hasFresh) text.appendChild(makeFreshBadge());
-      const chevron = document.createElement("span");
-      chevron.className = "pc-accordion-chevron";
-      chevron.textContent = "\u2304";
-      header2.append(text, chevron);
-      header2.addEventListener("click", () => {
-        opened = opened === i ? -1 : i;
-        sync();
-      });
-      const reveal = document.createElement("div");
-      reveal.className = "pc-accordion-reveal";
-      reveal.id = `pc-accordion-${entry.mech}`;
-      const inner = document.createElement("div");
-      inner.className = "pc-accordion-inner";
-      const content = document.createElement("div");
-      content.className = "pc-accordion-content";
-      content.appendChild(makeArt(entry));
-      const body = document.createElement("div");
-      body.className = "pc-accordion-body";
-      const desc = document.createElement("div");
-      desc.className = "pc-desc";
+      text.className = "pc-simple-text";
+      text.appendChild(makeName(entry));
+      const desc = document.createElement("span");
+      desc.className = "pc-desc pc-simple-desc";
       desc.textContent = entry.desc;
-      body.appendChild(desc);
-      body.appendChild(makeProgress(entry));
-      const open = document.createElement("button");
-      open.type = "button";
-      open.className = "primary pc-accordion-open";
-      open.textContent = "\u041A \u0443\u0440\u043E\u0432\u043D\u044F\u043C \u2192";
-      open.addEventListener("click", () => onOpen(entry));
-      body.appendChild(open);
-      content.appendChild(body);
-      inner.appendChild(content);
-      reveal.appendChild(inner);
-      item2.append(header2, reveal);
+      text.appendChild(desc);
+      text.appendChild(makeProgressText(entry));
+      if (entry.hasFresh) text.appendChild(makeFreshBadge());
+      const arrow = document.createElement("span");
+      arrow.className = "pc-simple-arrow";
+      arrow.textContent = "\u2192";
+      item2.append(text, arrow);
+      item2.addEventListener("click", () => onOpen(entry));
       list.appendChild(item2);
-      rows.push({ item: item2, header: header2, reveal, open });
-    });
+    }
     container.appendChild(list);
-    sync();
   }
   var BENTO_FILTERS = [
     { id: "all", name: "\u0412\u0441\u0435", match: () => true },
@@ -24112,7 +24178,7 @@
     };
     const mode = currentPuzzleCatalogMode(ctx2.state);
     if (mode === "preview") renderPreview(container, entries2, onOpen);
-    else if (mode === "accordion") renderAccordion(container, entries2, onOpen);
+    else if (mode === "accordion") renderSimpleList(container, entries2, onOpen);
     else if (mode === "bento") renderBento(container, entries2, onOpen);
     else renderShelf(container, entries2, onOpen);
   }
@@ -26966,96 +27032,139 @@
   }
 
   // src/ui/settingsView.js
+  function makeSection(title, danger = false) {
+    const sec = document.createElement("div");
+    sec.className = danger ? "panel set-danger" : "panel set-section";
+    const h = document.createElement("h3");
+    h.textContent = title;
+    sec.appendChild(h);
+    return sec;
+  }
+  function makeToggleRow({ name, hint: hint2, get, flip }) {
+    const row = document.createElement("div");
+    row.className = "set-row";
+    const text = document.createElement("div");
+    text.className = "set-text";
+    const nm = document.createElement("div");
+    nm.className = "set-name";
+    nm.textContent = name;
+    text.appendChild(nm);
+    if (hint2) {
+      const h = document.createElement("div");
+      h.className = "set-hint";
+      h.textContent = hint2;
+      text.appendChild(h);
+    }
+    const btn = document.createElement("button");
+    btn.className = "set-toggle";
+    btn.setAttribute("aria-label", name);
+    const paint = (on) => {
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    };
+    paint(get());
+    btn.addEventListener("click", () => paint(flip()));
+    row.append(text, btn);
+    return row;
+  }
+  function makeActionRow({ name, hint: hint2, btnText, onClick }) {
+    const row = document.createElement("div");
+    row.className = "set-row";
+    const text = document.createElement("div");
+    text.className = "set-text";
+    const nm = document.createElement("div");
+    nm.className = "set-name";
+    nm.textContent = name;
+    text.appendChild(nm);
+    if (hint2) {
+      const h = document.createElement("div");
+      h.className = "set-hint";
+      h.textContent = hint2;
+      text.appendChild(h);
+    }
+    const btn = document.createElement("button");
+    btn.className = "ghost";
+    btn.textContent = btnText;
+    btn.addEventListener("click", onClick);
+    row.append(text, btn);
+    return row;
+  }
   function renderSettings(container, ctx2) {
     const { state: state2 } = ctx2;
     container.appendChild(header(ctx2, "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438", "\u041B\u0430\u0432\u043A\u0430 \u043F\u043E\u0434\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u043E\u0434 \u0445\u043E\u0437\u044F\u0438\u043D\u0430"));
-    const panel = document.createElement("div");
-    panel.className = "panel";
-    const soundTitle = document.createElement("h3");
-    soundTitle.textContent = "\u0417\u0432\u0443\u043A";
-    soundTitle.style.marginTop = "16px";
-    panel.appendChild(soundTitle);
-    const soundBtn = document.createElement("button");
-    soundBtn.textContent = soundEnabled() ? "\u{1F514} \u0417\u0432\u0443\u043A \u0432\u043A\u043B\u044E\u0447\u0451\u043D" : "\u{1F515} \u0417\u0432\u0443\u043A \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D";
-    soundBtn.addEventListener("click", () => {
-      const on = toggleSound();
-      soundBtn.textContent = on ? "\u{1F514} \u0417\u0432\u0443\u043A \u0432\u043A\u043B\u044E\u0447\u0451\u043D" : "\u{1F515} \u0417\u0432\u0443\u043A \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D";
-      if (on) ctx2.sfx?.("coin");
-    });
-    const musicBtn = document.createElement("button");
-    musicBtn.textContent = musicEnabled() ? "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0430" : "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u0430";
-    musicBtn.style.marginLeft = "8px";
-    musicBtn.addEventListener("click", () => {
-      const on = toggleMusic();
-      musicBtn.textContent = on ? "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0430" : "\u{1F3B5} \u041C\u0443\u0437\u044B\u043A\u0430 \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u0430";
-    });
-    panel.append(soundBtn, musicBtn);
-    const puzzleTitle = document.createElement("h3");
-    puzzleTitle.textContent = "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438";
-    puzzleTitle.style.marginTop = "16px";
-    panel.appendChild(puzzleTitle);
+    const soundSec = makeSection("\u{1F50A} \u0417\u0432\u0443\u043A");
+    soundSec.appendChild(makeToggleRow({
+      name: "\u0417\u0432\u0443\u043A\u043E\u0432\u044B\u0435 \u044D\u0444\u0444\u0435\u043A\u0442\u044B",
+      hint: "\u0428\u0430\u0433\u0438 \u043A\u043E\u0442\u0430, \u0437\u0432\u043E\u043D \u043C\u043E\u043D\u0435\u0442 \u0438 \u043F\u043E\u0431\u0435\u0434\u043D\u044B\u0435 \u0444\u0430\u043D\u0444\u0430\u0440\u044B.",
+      get: () => soundEnabled(),
+      flip: () => {
+        const on = toggleSound();
+        if (on) ctx2.sfx?.("coin");
+        return on;
+      }
+    }));
+    soundSec.appendChild(makeToggleRow({
+      name: "\u041C\u0443\u0437\u044B\u043A\u0430",
+      hint: "\u0422\u0438\u0445\u0438\u0439 \u0434\u043E\u0436\u0434\u044C \u0438 \u0443\u044E\u0442\u043D\u044B\u0439 \u0444\u043E\u043D \u0432 \u043B\u0430\u0432\u043A\u0435.",
+      get: () => musicEnabled(),
+      flip: () => toggleMusic()
+    }));
+    container.appendChild(soundSec);
+    const storySec = makeSection("\u{1F4D6} \u0418\u0441\u0442\u043E\u0440\u0438\u044F");
+    storySec.appendChild(makeToggleRow({
+      name: "\u0420\u0435\u0436\u0438\u043C \u0438\u0441\u0442\u043E\u0440\u0438\u0438",
+      hint: "\u0412 \u043B\u0430\u0432\u043A\u0435 \u0436\u0434\u0451\u0442 \u0433\u043E\u0441\u0442\u044C \u0441 \u0437\u0430\u0434\u0430\u043D\u0438\u0435\u043C: \u0438\u0441\u0442\u043E\u0440\u0438\u044F \u0441\u0430\u043C\u0430 \u043F\u043E\u0434\u0441\u043E\u0432\u044B\u0432\u0430\u0435\u0442 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u0432\u0441\u0435\u0445 \u0442\u0438\u043F\u043E\u0432 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438.",
+      get: () => state2.settings.storyMode !== false,
+      flip: () => {
+        state2.settings.storyMode = state2.settings.storyMode === false;
+        ctx2.save();
+        ctx2.sfx?.("tap");
+        return state2.settings.storyMode !== false;
+      }
+    }));
+    container.appendChild(storySec);
+    const puzzleSec = makeSection("\u{1F9E9} \u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438");
     const catalogBox = document.createElement("div");
     catalogBox.className = "pc-settings-catalog";
     const catalogLabel = document.createElement("div");
     catalogLabel.className = "pc-layout-label";
     catalogLabel.textContent = "\u0412\u0438\u0434 \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0430 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A";
     catalogBox.append(catalogLabel, createPuzzleCatalogModePicker(ctx2));
-    panel.appendChild(catalogBox);
-    const brewBtn = document.createElement("button");
-    const brewBtnText = () => state2.settings.keepBookOpen ? "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439: \u0440\u0435\u0446\u0435\u043F\u0442 \u0432\u0441\u0435\u0433\u0434\u0430 \u043E\u0442\u043A\u0440\u044B\u0442" : "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439: \u0440\u0435\u0446\u0435\u043F\u0442 \u043F\u043E \u043F\u0430\u043C\u044F\u0442\u0438";
-    brewBtn.textContent = brewBtnText();
-    brewBtn.addEventListener("click", () => {
-      state2.settings.keepBookOpen = !state2.settings.keepBookOpen;
-      ctx2.save();
-      brewBtn.textContent = brewBtnText();
-      ctx2.sfx?.("tap");
-    });
-    panel.appendChild(brewBtn);
-    const brewNote = document.createElement("div");
-    brewNote.className = "muted";
-    brewNote.style.fontSize = "13px";
-    brewNote.textContent = "\u0411\u0435\u0437 \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u0430\u043C\u044F\u0442\u0438: \u0432 \u0432\u0430\u0440\u043A\u0435 \u0437\u0435\u043B\u0438\u0439 \u043A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432 \u043D\u0435 \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F. \u041D\u0430\u0433\u0440\u0430\u0434\u044B \u043F\u0440\u0435\u0436\u043D\u0438\u0435.";
-    panel.appendChild(brewNote);
-    const storyBtn = document.createElement("button");
-    const storyBtnText = () => state2.settings.storyMode !== false ? "\u{1F4D6} \u0420\u0435\u0436\u0438\u043C \u0438\u0441\u0442\u043E\u0440\u0438\u0438: \u0432\u043A\u043B\u044E\u0447\u0451\u043D" : "\u{1F4D6} \u0420\u0435\u0436\u0438\u043C \u0438\u0441\u0442\u043E\u0440\u0438\u0438: \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D";
-    storyBtn.textContent = storyBtnText();
-    storyBtn.addEventListener("click", () => {
-      state2.settings.storyMode = state2.settings.storyMode === false;
-      ctx2.save();
-      storyBtn.textContent = storyBtnText();
-      ctx2.sfx?.("tap");
-    });
-    panel.appendChild(storyBtn);
-    const storyNote = document.createElement("div");
-    storyNote.className = "muted";
-    storyNote.style.fontSize = "13px";
-    storyNote.textContent = "\u0412 \u043B\u0430\u0432\u043A\u0435 \u0436\u0434\u0451\u0442 \u0433\u043E\u0441\u0442\u044C \u0441 \u0437\u0430\u0434\u0430\u043D\u0438\u0435\u043C: \u0438\u0441\u0442\u043E\u0440\u0438\u044F \u0441\u0430\u043C\u0430 \u043F\u043E\u0434\u0441\u043E\u0432\u044B\u0432\u0430\u0435\u0442 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u0432\u0441\u0435\u0445 \u0442\u0438\u043F\u043E\u0432 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438.";
-    panel.appendChild(storyNote);
-    const tutTitle = document.createElement("h3");
-    tutTitle.textContent = "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435";
-    tutTitle.style.marginTop = "16px";
-    panel.appendChild(tutTitle);
-    const tutBtn = document.createElement("button");
-    tutBtn.className = "ghost";
-    tutBtn.textContent = "\u{1F408} \u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0441\u043D\u043E\u0432\u0430";
-    tutBtn.addEventListener("click", () => {
-      state2.tutorial = {};
-      state2.tutorialSkipped = false;
-      ctx2.save();
-      ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043D\u043E\u0432\u0430 \u0431\u0443\u0434\u0435\u0442 \u0432\u0435\u0441\u0442\u0438 \u0442\u0435\u0431\u044F. \u041D\u0430\u0447\u043D\u0451\u043C \u0441 \u043B\u0430\u0432\u043A\u0438!");
-      ctx2.go("hub");
-    });
-    panel.appendChild(tutBtn);
-    const newTitle = document.createElement("h3");
-    newTitle.textContent = "\u041B\u0430\u0432\u043A\u0430";
-    newTitle.style.marginTop = "16px";
-    panel.appendChild(newTitle);
-    const newBtn = document.createElement("button");
-    newBtn.className = "ghost";
-    newBtn.textContent = "\u{1F56F}\uFE0F \u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443";
-    newBtn.addEventListener("click", () => ctx2.newGameConfirm());
-    panel.appendChild(newBtn);
-    container.appendChild(panel);
+    puzzleSec.appendChild(catalogBox);
+    puzzleSec.appendChild(makeToggleRow({
+      name: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432 \u0432\u0441\u0435\u0433\u0434\u0430 \u043E\u0442\u043A\u0440\u044B\u0442\u0430",
+      hint: "\u0412 \u0432\u0430\u0440\u043A\u0435 \u0437\u0435\u043B\u0438\u0439 \u0440\u0435\u0446\u0435\u043F\u0442 \u043D\u0435 \u043F\u0440\u044F\u0447\u0435\u0442\u0441\u044F: \u0431\u0435\u0437 \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0438 \u043F\u0430\u043C\u044F\u0442\u0438. \u041D\u0430\u0433\u0440\u0430\u0434\u044B \u043F\u0440\u0435\u0436\u043D\u0438\u0435.",
+      get: () => !!state2.settings.keepBookOpen,
+      flip: () => {
+        state2.settings.keepBookOpen = !state2.settings.keepBookOpen;
+        ctx2.save();
+        ctx2.sfx?.("tap");
+        return state2.settings.keepBookOpen;
+      }
+    }));
+    container.appendChild(puzzleSec);
+    const helpSec = makeSection("\u{1F408} \u041F\u043E\u043C\u043E\u0449\u044C");
+    helpSec.appendChild(makeActionRow({
+      name: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435",
+      hint: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043D\u043E\u0432\u0430 \u043F\u0440\u043E\u0432\u0435\u0434\u0451\u0442 \u043F\u043E \u043B\u0430\u0432\u043A\u0435 \u0438 \u0432\u0441\u0451 \u043F\u043E\u043A\u0430\u0436\u0435\u0442.",
+      btnText: "\u{1F408} \u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0441\u043D\u043E\u0432\u0430",
+      onClick: () => {
+        state2.tutorial = {};
+        state2.tutorialSkipped = false;
+        ctx2.save();
+        ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043D\u043E\u0432\u0430 \u0431\u0443\u0434\u0435\u0442 \u0432\u0435\u0441\u0442\u0438 \u0442\u0435\u0431\u044F. \u041D\u0430\u0447\u043D\u0451\u043C \u0441 \u043B\u0430\u0432\u043A\u0438!");
+        ctx2.go("hub");
+      }
+    }));
+    container.appendChild(helpSec);
+    const dangerSec = makeSection("\u26A0\uFE0F \u041E\u043F\u0430\u0441\u043D\u0430\u044F \u0437\u043E\u043D\u0430", true);
+    dangerSec.appendChild(makeActionRow({
+      name: "\u041D\u043E\u0432\u0430\u044F \u0438\u0433\u0440\u0430",
+      hint: "\u0412\u0435\u0441\u044C \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u043B\u0430\u0432\u043A\u0438 \u0431\u0443\u0434\u0435\u0442 \u0441\u0442\u0451\u0440\u0442. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u043F\u0440\u043E\u0441\u0438\u0442 \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043D\u0438\u0435.",
+      btnText: "\u{1F56F}\uFE0F \u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443",
+      onClick: () => ctx2.newGameConfirm()
+    }));
+    container.appendChild(dangerSec);
     const secret = document.createElement("div");
     secret.className = "muted center";
     secret.style.cssText = "font-size:12px;margin-top:6px;user-select:none;cursor:default";
@@ -27115,10 +27224,6 @@
       }
       secret.replaceWith(box);
       input.focus();
-    }
-    function rerender() {
-      container.innerHTML = "";
-      renderSettings(container, ctx2);
     }
   }
 
@@ -27308,7 +27413,8 @@
       tacticBox.appendChild(b);
     }
     const beltLabel = document.createElement("label");
-    beltLabel.style.cssText = "display:flex;gap:6px;align-items:center;cursor:pointer;margin-left:8px;font-size:14px";
+    beltLabel.style.cssText = "display:flex;gap:6px;align-items:center;margin-left:8px;font-size:14px";
+    beltLabel.classList.add("clickable");
     const beltCheck = document.createElement("input");
     beltCheck.type = "checkbox";
     beltCheck.checked = state2.settings.useBeltItems !== false;
@@ -27936,7 +28042,8 @@
       groupsList.innerHTML = "";
       for (const g of groups) {
         const row = document.createElement("div");
-        row.style.cssText = `font-size:13px;padding:3px 6px;border-radius:6px;cursor:pointer;${selected?.groupId === g.id ? "background:rgba(255,202,122,0.15)" : ""}`;
+        row.style.cssText = `font-size:13px;padding:3px 6px;border-radius:6px;${selected?.groupId === g.id ? "background:rgba(255,202,122,0.15)" : ""}`;
+        row.classList.add("clickable");
         row.textContent = `${g.label} \u2014 ${g.spots.length} \u0448\u0442.`;
         row.addEventListener("click", () => {
           if (selected?.groupId === g.id && g.spots.length > 1) {
@@ -28404,7 +28511,7 @@
   var GUEST_CATALOG_MODES = [
     { id: "shelf", name: "\u041F\u043E\u043B\u043A\u0430", icon: "\u{1F4DA}", hint: "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u043B\u0435\u043D\u0442\u0430 \u0441 \u043A\u0440\u0443\u043F\u043D\u044B\u043C\u0438 \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u0430\u043C\u0438" },
     { id: "preview", name: "\u041F\u043E\u0440\u0442\u0440\u0435\u0442", icon: "\u{1F5BC}\uFE0F", hint: "\u0421\u043F\u0438\u0441\u043E\u043A \u0433\u043E\u0441\u0442\u0435\u0439 \u0438 \u0436\u0438\u0432\u043E\u0435 \u043F\u0440\u0435\u0432\u044C\u044E \u0432\u044B\u0431\u0440\u0430\u043D\u043D\u043E\u0433\u043E \u043F\u0435\u0440\u0441\u043E\u043D\u0430\u0436\u0430" },
-    { id: "accordion", name: "\u0421\u043F\u0438\u0441\u043E\u043A", icon: "\u{1F4DC}", hint: "\u041A\u043E\u043C\u043F\u0430\u043A\u0442\u043D\u044B\u0435 \u0441\u0442\u0440\u043E\u043A\u0438 \u0441 \u0440\u0430\u0441\u043A\u0440\u044B\u0432\u0430\u044E\u0449\u0438\u043C\u0438\u0441\u044F \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u044F\u043C\u0438" },
+    { id: "accordion", name: "\u0421\u043F\u0438\u0441\u043E\u043A", icon: "\u{1F4DC}", hint: "\u041A\u043E\u043C\u043F\u0430\u043A\u0442\u043D\u044B\u0435 \u0441\u0442\u0440\u043E\u043A\u0438 \u0441 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435\u043C \u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u043E\u043C \u043A \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440\u0443" },
     { id: "bento", name: "\u041C\u043E\u0437\u0430\u0438\u043A\u0430", icon: "\u{1F9E9}", hint: "\u0421\u0435\u0442\u043A\u0430 \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u043E\u0432 \u0441 \u0444\u0438\u043B\u044C\u0442\u0440\u0430\u043C\u0438 \u0437\u043D\u0430\u043A\u043E\u043C\u0441\u0442\u0432" }
   ];
   var MODE_IDS2 = GUEST_CATALOG_MODES.map((mode) => mode.id);
@@ -28530,41 +28637,74 @@
     track.tabIndex = 0;
     track.setAttribute("role", "region");
     track.setAttribute("aria-label", "\u041F\u043E\u043B\u043A\u0430 \u0433\u043E\u0441\u0442\u0435\u0439");
-    const cards = GUESTS2.map((guest, index) => {
+    const cards = [];
+    const addCard = (guest, guestIndex, loopClone = false) => {
+      const slot = cards.length;
       const card = makeGuestCard(ctx2.state, guest, "guest-shelf-card", onOpen, true);
-      card.addEventListener("focus", () => setActive(index));
+      card.dataset.guestIndex = String(guestIndex);
+      if (loopClone) {
+        card.dataset.loopClone = "true";
+        card.tabIndex = -1;
+        card.setAttribute("aria-hidden", "true");
+      }
+      card.addEventListener("focus", () => setActive(slot));
       track.appendChild(card);
-      return card;
-    });
+      cards.push(card);
+    };
+    addCard(GUESTS2[GUESTS2.length - 1], GUESTS2.length - 1, true);
+    GUESTS2.forEach((guest, index) => addCard(guest, index));
+    addCard(GUESTS2[0], 0, true);
     section.append(toolbar, track);
     container.appendChild(section);
+    let activeSlot = 1;
     let active = 0;
-    function setActive(index) {
-      active = Math.max(0, Math.min(cards.length - 1, index));
-      cards.forEach((card, i) => card.classList.toggle("is-active", i === active));
-      counter.textContent = `${active + 1} / ${cards.length}`;
-      prev.disabled = active === 0;
-      next.disabled = active === cards.length - 1;
+    function setActive(slot) {
+      activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
+      active = Number(cards[activeSlot].dataset.guestIndex);
+      cards.forEach((card, index) => card.classList.toggle("is-active", index === activeSlot));
+      counter.textContent = `${active + 1} / ${GUESTS2.length}`;
     }
-    function scrollTo(index, smooth = true) {
-      setActive(index);
-      const card = cards[active];
+    function placeCard2(slot, smooth) {
+      const card = cards[slot];
       const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
       if (!Number.isFinite(left)) return;
-      if (smooth && track.scrollTo) track.scrollTo({ left, behavior: "smooth" });
+      if (smooth) {
+        if (track.scrollTo) track.scrollTo({ left, behavior: "smooth" });
+        else track.scrollLeft = left;
+        return;
+      }
+      const behavior = track.style.scrollBehavior;
+      const snap = track.style.scrollSnapType;
+      track.style.scrollBehavior = "auto";
+      track.style.scrollSnapType = "none";
+      if (track.scrollTo) track.scrollTo({ left, behavior: "instant" });
       else track.scrollLeft = left;
+      void track.offsetWidth;
+      track.style.scrollBehavior = behavior;
+      track.style.scrollSnapType = snap;
     }
-    prev.addEventListener("click", () => scrollTo(active - 1));
-    next.addEventListener("click", () => scrollTo(active + 1));
+    function scrollToSlot(slot, smooth = true) {
+      const bounded = Math.max(0, Math.min(cards.length - 1, slot));
+      setActive(bounded);
+      placeCard2(bounded, smooth);
+    }
+    function step(direction) {
+      const nextGuest = (active + direction + GUESTS2.length) % GUESTS2.length;
+      let target = nextGuest + 1;
+      if (direction < 0 && activeSlot === 1) target = 0;
+      if (direction > 0 && activeSlot === GUESTS2.length) target = GUESTS2.length + 1;
+      scrollToSlot(target);
+    }
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
     track.addEventListener("keydown", (event) => {
       if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
       event.preventDefault();
-      scrollTo(active + (event.key === "ArrowRight" ? 1 : -1));
+      step(event.key === "ArrowRight" ? 1 : -1);
     });
-    track.addEventListener("scroll", () => {
-      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0) return;
+    function nearestSlot() {
       const center = track.scrollLeft + track.clientWidth / 2;
-      let nearest = active;
+      let nearest = activeSlot;
       let distance = Infinity;
       cards.forEach((card, index) => {
         if (!Number.isFinite(card.offsetLeft) || !Number.isFinite(card.offsetWidth)) return;
@@ -28574,9 +28714,27 @@
           nearest = index;
         }
       });
-      setActive(nearest);
+      return nearest;
+    }
+    let settleTimer = null;
+    function settleAtEdge() {
+      settleTimer = null;
+      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0 || !Number.isFinite(track.scrollWidth)) return;
+      const nearest = nearestSlot();
+      if (nearest === 0) {
+        scrollToSlot(GUESTS2.length, false);
+        return;
+      }
+      if (nearest === cards.length - 1) scrollToSlot(1, false);
+    }
+    track.addEventListener("scroll", () => {
+      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0 || !Number.isFinite(track.scrollWidth)) return;
+      setActive(nearestSlot());
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(settleAtEdge, 90);
+      settleTimer.unref?.();
     });
-    scrollTo(recommendedIndex2(ctx2.state), false);
+    scrollToSlot(recommendedIndex2(ctx2.state) + 1, false);
   }
   function renderPreview2(container, ctx2, onOpen) {
     const section = document.createElement("section");
@@ -28637,65 +28795,30 @@
     });
     show(recommendedIndex2(ctx2.state));
   }
-  function renderAccordion2(container, ctx2, onOpen) {
+  function renderSimpleList2(container, ctx2, onOpen) {
     const list = document.createElement("section");
-    list.className = "guest-accordion";
-    const rows = [];
-    let opened = recommendedIndex2(ctx2.state);
-    function sync() {
-      rows.forEach((row, index) => {
-        const isOpen = index === opened;
-        row.item.classList.toggle("is-open", isOpen);
-        row.header.setAttribute("aria-expanded", String(isOpen));
-        row.reveal.setAttribute("aria-hidden", String(!isOpen));
-        row.open.tabIndex = isOpen ? 0 : -1;
-      });
-    }
-    GUESTS2.forEach((guest, index) => {
-      const item2 = document.createElement("article");
-      item2.className = "guest-accordion-item";
-      const head = document.createElement("button");
-      head.type = "button";
-      head.className = "guest-accordion-header";
-      head.setAttribute("aria-controls", `guest-accordion-${guest.id}`);
-      head.appendChild(makePortrait(guest, "guest-accordion-thumb"));
+    list.className = "guest-simple-list";
+    list.setAttribute("aria-label", "\u0421\u043F\u0438\u0441\u043E\u043A \u0433\u043E\u0441\u0442\u0435\u0439");
+    for (const guest of GUESTS2) {
+      const item2 = document.createElement("button");
+      item2.type = "button";
+      item2.className = `guest-simple-item${guestKnown(ctx2.state, guest) ? " guest-known" : ""}`;
+      item2.setAttribute("aria-label", `${guest.name}. \u0420\u0430\u0441\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0438 \u043F\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u044C`);
+      item2.appendChild(makePortrait(guest, "guest-simple-thumb"));
       const text = document.createElement("span");
-      text.className = "guest-accordion-text";
-      text.append(makeName2(guest), makeStatus(ctx2.state, guest));
-      const chevron = document.createElement("span");
-      chevron.className = "guest-accordion-chevron";
-      chevron.textContent = "\u2304";
-      head.append(text, chevron);
-      head.addEventListener("click", () => {
-        opened = opened === index ? -1 : index;
-        sync();
-      });
-      const reveal = document.createElement("div");
-      reveal.className = "guest-accordion-reveal";
-      reveal.id = `guest-accordion-${guest.id}`;
-      const inner = document.createElement("div");
-      inner.className = "guest-accordion-inner";
-      const content = document.createElement("div");
-      content.className = "guest-accordion-content";
-      content.appendChild(makePortrait(guest));
-      const body = document.createElement("div");
-      body.className = "guest-accordion-body";
-      body.appendChild(makeDescription(guest));
-      const open = document.createElement("button");
-      open.type = "button";
-      open.className = "primary guest-accordion-open";
-      open.textContent = "\u0420\u0430\u0441\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0438 \u043F\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u044C \u2192";
-      open.addEventListener("click", () => onOpen(guest.id));
-      body.appendChild(open);
-      content.appendChild(body);
-      inner.appendChild(content);
-      reveal.appendChild(inner);
-      item2.append(head, reveal);
+      text.className = "guest-simple-text";
+      text.appendChild(makeName2(guest));
+      const description = makeDescription(guest);
+      description.classList.add("guest-simple-desc");
+      text.append(description, makeStatus(ctx2.state, guest));
+      const arrow = document.createElement("span");
+      arrow.className = "guest-simple-arrow";
+      arrow.textContent = "\u2192";
+      item2.append(text, arrow);
+      item2.addEventListener("click", () => onOpen(guest.id));
       list.appendChild(item2);
-      rows.push({ item: item2, header: head, reveal, open });
-    });
+    }
     container.appendChild(list);
-    sync();
   }
   var BENTO_FILTERS2 = [
     { id: "all", name: "\u0412\u0441\u0435", match: () => true },
@@ -28751,7 +28874,7 @@
   function renderCatalog(container, ctx2, onOpen) {
     const mode = currentGuestCatalogMode(ctx2.state);
     if (mode === "preview") renderPreview2(container, ctx2, onOpen);
-    else if (mode === "accordion") renderAccordion2(container, ctx2, onOpen);
+    else if (mode === "accordion") renderSimpleList2(container, ctx2, onOpen);
     else if (mode === "bento") renderBento2(container, ctx2, onOpen);
     else renderShelf2(container, ctx2, onOpen);
   }
@@ -29236,6 +29359,7 @@
     screenEl.classList.add("screen-enter");
     const route = routes[name] || routes.hub;
     currentCleanup = route(screenEl, params) || null;
+    applyCursor(name, params, state);
     window.scrollTo(0, 0);
   }
   function newGameConfirm() {
@@ -29378,7 +29502,6 @@
   var brandEl = document.querySelector(".brand");
   var brandTaps = 0;
   var brandTimer = null;
-  brandEl.style.cursor = "pointer";
   brandEl.addEventListener("click", () => {
     brandTaps += 1;
     sfx("tap");

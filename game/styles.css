@@ -34,7 +34,8 @@ html, body {
   z-index: 10;
 }
 
-.brand { font-weight: 600; font-size: 17px; }
+.brand { font-weight: 600; font-size: 17px; cursor: pointer; }
+.clickable { cursor: pointer; }
 .wallet { display: flex; gap: 14px; font-size: 16px; font-weight: 600; }
 .wallet span { background: var(--panel-2); padding: 4px 12px; border-radius: 20px; }
 
@@ -1336,6 +1337,38 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .pc-mode-option { min-height: 38px; }
 .pc-settings-catalog { margin-bottom: 16px; }
 .pc-settings-catalog .pc-layout-label { margin-bottom: 8px; }
+
+/* Настройки: секции со строками-тумблерами */
+.set-section h3 { margin-top: 0; }
+.set-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; }
+.set-row + .set-row { border-top: 1px solid #58452f; }
+.set-text { flex: 1; min-width: 0; }
+.set-name { font-weight: 600; }
+.set-hint { color: var(--muted); font-size: 13px; margin-top: 2px; }
+button.set-toggle {
+  min-height: 0;
+  padding: 0;
+  width: 58px;
+  height: 32px;
+  border-radius: 16px;
+  position: relative;
+  flex: none;
+}
+button.set-toggle::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: left 0.15s ease, background 0.15s ease;
+}
+button.set-toggle.on { background: #6d8a55; border-color: var(--accent-2); }
+button.set-toggle.on::after { left: 30px; background: #fff; }
+.set-danger { border: 2px solid var(--danger); }
+.set-danger h3 { color: var(--danger); }
 .pc-catalog-host { margin-bottom: 16px; }
 
 .pc-media {
@@ -1402,7 +1435,7 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .pc-complete .pc-meter-fill { background: var(--accent-2); }
 .pc-card.pc-complete,
 .pc-preview-card.pc-complete,
-.pc-accordion-item.pc-complete { border-color: #6d8a55; }
+.pc-simple-item.pc-complete { border-color: #6d8a55; }
 .pc-fresh-badge {
   position: absolute;
   z-index: 2;
@@ -1420,7 +1453,7 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .pc-mode-option:focus-visible,
 .pc-shelf-track:focus-visible,
 .pc-preview-item:focus-visible,
-.pc-accordion-header:focus-visible,
+.pc-simple-item:focus-visible,
 .pc-bento-filter:focus-visible,
 .pc-card:focus-visible {
   outline: 3px solid var(--accent);
@@ -1528,62 +1561,43 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Раскрывающийся список. */
-.pc-accordion { display: flex; flex-direction: column; gap: 10px; }
-.pc-accordion-item {
-  overflow: hidden;
+/* Простой список: вся строка ведёт к уровням. */
+.pc-simple-list { display: flex; flex-direction: column; gap: 8px; }
+.pc-simple-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 88px;
+  padding: 10px 14px;
+  text-align: left;
   border: 1px solid #6b5a3d;
   border-radius: 14px;
   background: #3d2f22;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  transition: border-color 0.2s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
-.pc-accordion-item.is-open { border-color: #a9824d; }
-.pc-accordion-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  min-height: 86px;
-  padding: 10px 14px;
-  text-align: left;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-}
-.pc-accordion-thumb { width: 108px; border-radius: 9px; }
-.pc-accordion-thumb .pc-fallback { font-size: 30px; }
-.pc-accordion-text { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 0; }
-.pc-accordion-text .pc-fresh-badge {
+.pc-simple-thumb { width: 108px; border-radius: 9px; }
+.pc-simple-thumb .pc-fallback { font-size: 30px; }
+.pc-simple-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.pc-simple-text .pc-fresh-badge {
   position: static;
   align-self: flex-start;
   margin-top: 2px;
   padding: 1px 7px;
 }
-.pc-accordion-chevron { color: var(--accent); font-size: 26px; transition: transform 0.22s ease; }
-.pc-accordion-item.is-open .pc-accordion-chevron { transform: rotate(180deg); }
-.pc-accordion-reveal {
-  display: grid;
-  grid-template-rows: 0fr;
-  visibility: hidden;
-  transition: grid-template-rows 0.25s ease, visibility 0s linear 0.25s;
+.pc-simple-arrow {
+  justify-self: end;
+  color: var(--accent);
+  font-size: 22px;
+  transition: transform 0.18s ease;
 }
-.pc-accordion-item.is-open .pc-accordion-reveal {
-  grid-template-rows: 1fr;
-  visibility: visible;
-  transition: grid-template-rows 0.25s ease, visibility 0s;
+@media (hover: hover) {
+  .pc-simple-item:hover { transform: translateY(-2px); border-color: #a9824d; background: #4a3827; }
+  .pc-simple-item:hover .pc-simple-arrow { transform: translateX(3px); }
 }
-.pc-accordion-inner { min-height: 0; overflow: hidden; }
-.pc-accordion-content {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 1fr);
-  gap: 18px;
-  align-items: center;
-  padding: 4px 18px 18px;
-}
-.pc-accordion-content .pc-media { border-radius: 12px; }
-.pc-accordion-body { display: flex; flex-direction: column; gap: 12px; }
-.pc-accordion-open { align-self: flex-start; margin-top: 6px; }
 
 /* Мозаика с фильтрами и рекомендованной карточкой. */
 .pc-bento-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
@@ -1608,7 +1622,6 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   .pc-preview-layout { grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr); }
   .pc-bento-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pc-bento-card.is-featured { grid-column: span 2; grid-row: auto; }
-  .pc-accordion-content { grid-template-columns: minmax(0, 1fr) 220px; }
 }
 
 @media (max-width: 760px) {
@@ -1634,11 +1647,10 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
   .pc-shelf-counter { margin-left: auto; }
   .pc-preview-body { padding: 14px; }
   .pc-preview-open { width: 100%; }
-  .pc-accordion-header { gap: 10px; padding: 10px; }
-  .pc-accordion-header .pc-name { font-size: 14px; }
-  .pc-accordion-thumb { width: 88px; }
-  .pc-accordion-content { grid-template-columns: 1fr; padding: 4px 12px 14px; }
-  .pc-accordion-open { width: 100%; }
+  .pc-simple-item { grid-template-columns: 88px minmax(0, 1fr) 18px; gap: 10px; padding: 10px; }
+  .pc-simple-item .pc-name { font-size: 14px; }
+  .pc-simple-thumb { width: 88px; }
+  .pc-simple-desc { display: none; }
   .pc-bento-grid { grid-template-columns: 1fr; }
   .pc-bento-card.is-featured { grid-column: auto; }
   .pc-bento-card .pc-desc { display: block; }
@@ -1647,9 +1659,8 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 @media (prefers-reduced-motion: reduce) {
   .pc-card,
   .pc-shelf-card,
-  .pc-accordion-item,
-  .pc-accordion-chevron,
-  .pc-accordion-reveal { transition: none; }
+  .pc-simple-item,
+  .pc-simple-arrow { transition: none; }
   .pc-shelf-track { scroll-behavior: auto; }
   .pc-preview-card { animation: none; }
 }
@@ -3114,7 +3125,7 @@ body::-webkit-scrollbar { display: none; }
 .guest-mode-option:focus-visible,
 .guest-shelf-track:focus-visible,
 .guest-preview-item:focus-visible,
-.guest-accordion-header:focus-visible,
+.guest-simple-item:focus-visible,
 .guest-bento-filter:focus-visible,
 .guest-card:focus-visible,
 .guest-profile button:focus-visible {
@@ -3137,6 +3148,7 @@ body::-webkit-scrollbar { display: none; }
 .guest-shelf-next { width: 40px; padding-right: 8px; padding-left: 8px; }
 .guest-shelf-track {
   --guest-shelf-w: clamp(250px, 46vw, 400px);
+  position: relative;
   display: flex;
   gap: 16px;
   overflow-x: auto;
@@ -3215,55 +3227,38 @@ body::-webkit-scrollbar { display: none; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Компактный раскрывающийся список. */
-.guest-accordion { display: flex; flex-direction: column; gap: 10px; }
-.guest-accordion-item {
-  overflow: hidden;
+/* Простой список: вся строка открывает профиль гостя. */
+.guest-simple-list { display: flex; flex-direction: column; gap: 8px; }
+.guest-simple-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 88px;
+  padding: 10px 14px;
+  text-align: left;
   border: 1px solid #6b5a3d;
   border-radius: 14px;
   background: #3d2f22;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-  transition: border-color 0.2s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
-.guest-accordion-item.is-open { border-color: #a9824d; }
-.guest-accordion-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  min-height: 86px;
-  padding: 10px 14px;
-  text-align: left;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
+.guest-simple-item.guest-known { border-color: #6d8a55; }
+.guest-simple-thumb { width: 108px; border-radius: 9px; }
+.guest-simple-thumb .guest-fallback { font-size: 30px; }
+.guest-simple-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.guest-simple-arrow {
+  justify-self: end;
+  color: var(--accent);
+  font-size: 22px;
+  transition: transform 0.18s ease;
 }
-.guest-accordion-thumb { width: 74px; border-radius: 9px; }
-.guest-accordion-thumb .guest-fallback { font-size: 30px; }
-.guest-accordion-text { display: flex; flex: 1; flex-direction: column; gap: 4px; min-width: 0; }
-.guest-accordion-chevron { color: var(--accent); font-size: 26px; transition: transform 0.22s ease; }
-.guest-accordion-item.is-open .guest-accordion-chevron { transform: rotate(180deg); }
-.guest-accordion-reveal {
-  display: grid;
-  grid-template-rows: 0fr;
-  visibility: hidden;
-  transition: grid-template-rows 0.25s ease, visibility 0s linear 0.25s;
+@media (hover: hover) {
+  .guest-simple-item:hover { transform: translateY(-2px); border-color: #a9824d; background: #4a3827; }
+  .guest-simple-item:hover .guest-simple-arrow { transform: translateX(3px); }
 }
-.guest-accordion-item.is-open .guest-accordion-reveal {
-  grid-template-rows: 1fr;
-  visibility: visible;
-  transition: grid-template-rows 0.25s ease, visibility 0s;
-}
-.guest-accordion-inner { min-height: 0; overflow: hidden; }
-.guest-accordion-content {
-  display: grid;
-  grid-template-columns: 180px minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-  padding: 4px 18px 18px;
-}
-.guest-accordion-content .guest-media { border-radius: 12px; }
-.guest-accordion-body { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
 
 /* Мозаика гостей и фильтры знакомств. */
 .guest-bento-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
@@ -3383,12 +3378,10 @@ body::-webkit-scrollbar { display: none; }
   .guest-preview-card { grid-template-columns: 1fr; }
   .guest-preview-body { padding: 14px; }
   .guest-preview-open { width: 100%; }
-  .guest-accordion-header { gap: 10px; padding: 10px; }
-  .guest-accordion-header .guest-name { font-size: 14px; }
-  .guest-accordion-thumb { width: 64px; }
-  .guest-accordion-content { grid-template-columns: 1fr; padding: 4px 12px 14px; }
-  .guest-accordion-content .guest-media { max-width: 220px; }
-  .guest-accordion-open { width: 100%; }
+  .guest-simple-item { grid-template-columns: 88px minmax(0, 1fr) 18px; gap: 10px; padding: 10px; }
+  .guest-simple-item .guest-name { font-size: 14px; }
+  .guest-simple-thumb { width: 88px; }
+  .guest-simple-desc { display: none; }
   .guest-bento-grid { grid-template-columns: 1fr; }
   .guest-bento-card.is-featured { grid-column: auto; grid-row: auto; }
   .guest-bento-card .guest-description { display: block; }
@@ -3407,9 +3400,8 @@ body::-webkit-scrollbar { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .guest-card,
   .guest-shelf-card,
-  .guest-accordion-item,
-  .guest-accordion-chevron,
-  .guest-accordion-reveal { transition: none; }
+  .guest-simple-item,
+  .guest-simple-arrow { transition: none; }
   .guest-shelf-track { scroll-behavior: auto; }
   .guest-preview-card,
   .guest-profile,
@@ -3494,3 +3486,55 @@ body::-webkit-scrollbar { display: none; }
   top: 0;
   right: 0;
 }
+
+/* === Тематические курсоры: body[data-cursor] ставит роутер (src/ui/cursors.js).
+   PNG 32x32 в assets/cursors/ генерируются по art-src/PROMPTS.md; пока файла нет —
+   браузер молча откатывается на auto/pointer. Хотспоты синхронны с CURSOR_THEMES. === */
+body[data-cursor="default"] { cursor: url("assets/cursors/default.png") 4 2, auto; } /* Перо хозяина */
+body[data-cursor="default"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/default_hover.png") 4 2, pointer; }
+body[data-cursor="hub_lavka"] { cursor: url("assets/cursors/hub_lavka.png") 8 4, auto; } /* Фонарик лавки */
+body[data-cursor="hub_lavka"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/hub_lavka_hover.png") 8 4, pointer; }
+body[data-cursor="hub_square"] { cursor: url("assets/cursors/hub_square.png") 6 4, auto; } /* Уличный фонарь */
+body[data-cursor="hub_square"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/hub_square_hover.png") 6 4, pointer; }
+body[data-cursor="hub_market"] { cursor: url("assets/cursors/hub_market.png") 16 4, auto; } /* Весы торговца */
+body[data-cursor="hub_market"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/hub_market_hover.png") 16 4, pointer; }
+body[data-cursor="hub_cabinet"] { cursor: url("assets/cursors/hub_cabinet.png") 16 6, auto; } /* Кубок трофеев */
+body[data-cursor="hub_cabinet"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/hub_cabinet_hover.png") 16 6, pointer; }
+body[data-cursor="mirror"] { cursor: url("assets/cursors/mirror.png") 8 6, auto; } /* Зеркальце */
+body[data-cursor="mirror"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/mirror_hover.png") 8 6, pointer; }
+body[data-cursor="shelf"] { cursor: url("assets/cursors/shelf.png") 10 6, auto; } /* Кувшин с полки */
+body[data-cursor="shelf"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/shelf_hover.png") 10 6, pointer; }
+body[data-cursor="riddle"] { cursor: url("assets/cursors/riddle.png") 8 6, auto; } /* Свиток загадок */
+body[data-cursor="riddle"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/riddle_hover.png") 8 6, pointer; }
+body[data-cursor="hang"] { cursor: url("assets/cursors/hang.png") 4 28, auto; } /* Чернильное перо */
+body[data-cursor="hang"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/hang_hover.png") 4 28, pointer; }
+body[data-cursor="seek"] { cursor: url("assets/cursors/seek.png") 12 12, auto; } /* Лупа */
+body[data-cursor="seek"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/seek_hover.png") 12 12, pointer; }
+body[data-cursor="path"] { cursor: url("assets/cursors/path.png") 5 5, auto; } /* Ботинок путника */
+body[data-cursor="path"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/path_hover.png") 5 5, pointer; }
+body[data-cursor="tea"] { cursor: url("assets/cursors/tea.png") 16 8, auto; } /* Чашка чая */
+body[data-cursor="tea"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/tea_hover.png") 16 8, pointer; }
+body[data-cursor="mech"] { cursor: url("assets/cursors/mech.png") 16 16, auto; } /* Шестерёнка */
+body[data-cursor="mech"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/mech_hover.png") 16 16, pointer; }
+body[data-cursor="candle"] { cursor: url("assets/cursors/candle.png") 16 4, auto; } /* Свеча */
+body[data-cursor="candle"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/candle_hover.png") 16 4, pointer; }
+body[data-cursor="flow"] { cursor: url("assets/cursors/flow.png") 8 8, auto; } /* Волна */
+body[data-cursor="flow"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/flow_hover.png") 8 8, pointer; }
+body[data-cursor="brew"] { cursor: url("assets/cursors/brew.png") 16 4, auto; } /* Колба */
+body[data-cursor="brew"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/brew_hover.png") 16 4, pointer; }
+body[data-cursor="fate"] { cursor: url("assets/cursors/fate.png") 6 4, auto; } /* Карта судьбы */
+body[data-cursor="fate"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/fate_hover.png") 6 4, pointer; }
+body[data-cursor="glass"] { cursor: url("assets/cursors/glass.png") 16 4, auto; } /* Осколок витража */
+body[data-cursor="glass"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/glass_hover.png") 16 4, pointer; }
+body[data-cursor="battle"] { cursor: url("assets/cursors/battle.png") 4 4, auto; } /* Меч рыцаря */
+body[data-cursor="battle"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/battle_hover.png") 4 4, pointer; }
+body[data-cursor="equip"] { cursor: url("assets/cursors/equip.png") 16 6, auto; } /* Шлем рыцаря */
+body[data-cursor="equip"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/equip_hover.png") 16 6, pointer; }
+body[data-cursor="shop"] { cursor: url("assets/cursors/shop.png") 16 16, auto; } /* Монета */
+body[data-cursor="shop"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/shop_hover.png") 16 16, pointer; }
+body[data-cursor="tavern"] { cursor: url("assets/cursors/tavern.png") 10 6, auto; } /* Кружка */
+body[data-cursor="tavern"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/tavern_hover.png") 10 6, pointer; }
+body[data-cursor="craft"] { cursor: url("assets/cursors/craft.png") 6 6, auto; } /* Молот кузнеца */
+body[data-cursor="craft"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/craft_hover.png") 6 6, pointer; }
+body[data-cursor="workshop"] { cursor: url("assets/cursors/workshop.png") 6 6, auto; } /* Ключ мастера */
+body[data-cursor="workshop"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/workshop_hover.png") 6 6, pointer; }

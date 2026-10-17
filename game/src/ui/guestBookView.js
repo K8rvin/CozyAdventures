@@ -5,7 +5,7 @@ import { header, quickNav } from './common.js';
 export const GUEST_CATALOG_MODES = [
   { id: 'shelf', name: 'Полка', icon: '📚', hint: 'Горизонтальная лента с крупными портретами' },
   { id: 'preview', name: 'Портрет', icon: '🖼️', hint: 'Список гостей и живое превью выбранного персонажа' },
-  { id: 'accordion', name: 'Список', icon: '📜', hint: 'Компактные строки с раскрывающимися описаниями' },
+  { id: 'accordion', name: 'Список', icon: '📜', hint: 'Компактные строки с описанием и переходом к разговору' },
   { id: 'bento', name: 'Мозаика', icon: '🧩', hint: 'Сетка портретов с фильтрами знакомств' },
 ];
 
@@ -144,53 +144,117 @@ function renderShelf(container, ctx, onOpen) {
   track.tabIndex = 0;
   track.setAttribute('role', 'region');
   track.setAttribute('aria-label', 'Полка гостей');
-  const cards = GUESTS.map((guest, index) => {
+  const cards = [];
+  const addCard = (guest, guestIndex, loopClone = false) => {
+    const slot = cards.length;
     const card = makeGuestCard(ctx.state, guest, 'guest-shelf-card', onOpen, true);
-    card.addEventListener('focus', () => setActive(index));
+    card.dataset.guestIndex = String(guestIndex);
+    if (loopClone) {
+      // Края ленты кликабельны, но не дублируют гостей в Tab и для скринридера.
+      card.dataset.loopClone = 'true';
+      card.tabIndex = -1;
+      card.setAttribute('aria-hidden', 'true');
+    }
+    card.addEventListener('focus', () => setActive(slot));
     track.appendChild(card);
-    return card;
-  });
+    cards.push(card);
+  };
+  addCard(GUESTS[GUESTS.length - 1], GUESTS.length - 1, true);
+  GUESTS.forEach((guest, index) => addCard(guest, index));
+  addCard(GUESTS[0], 0, true);
   section.append(toolbar, track);
   container.appendChild(section);
 
+  let activeSlot = 1;
   let active = 0;
-  function setActive(index) {
-    active = Math.max(0, Math.min(cards.length - 1, index));
-    cards.forEach((card, i) => card.classList.toggle('is-active', i === active));
-    counter.textContent = `${active + 1} / ${cards.length}`;
-    prev.disabled = active === 0;
-    next.disabled = active === cards.length - 1;
+  function setActive(slot) {
+    activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
+    active = Number(cards[activeSlot].dataset.guestIndex);
+    cards.forEach((card, index) => card.classList.toggle('is-active', index === activeSlot));
+    counter.textContent = `${active + 1} / ${GUESTS.length}`;
   }
 
-  function scrollTo(index, smooth = true) {
-    setActive(index);
-    const card = cards[active];
+  function placeCard(slot, smooth) {
+    const card = cards[slot];
     const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
     if (!Number.isFinite(left)) return;
-    if (smooth && track.scrollTo) track.scrollTo({ left, behavior: 'smooth' });
+    if (smooth) {
+      if (track.scrollTo) track.scrollTo({ left, behavior: 'smooth' });
+      else track.scrollLeft = left;
+      return;
+    }
+    // Подмена мгновенная; snap временно выключен, чтобы браузер не вернул старую точку.
+    const behavior = track.style.scrollBehavior;
+    const snap = track.style.scrollSnapType;
+    track.style.scrollBehavior = 'auto';
+    track.style.scrollSnapType = 'none';
+    if (track.scrollTo) track.scrollTo({ left, behavior: 'instant' });
     else track.scrollLeft = left;
+    void track.offsetWidth;
+    track.style.scrollBehavior = behavior;
+    track.style.scrollSnapType = snap;
   }
 
-  prev.addEventListener('click', () => scrollTo(active - 1));
-  next.addEventListener('click', () => scrollTo(active + 1));
+  function scrollToSlot(slot, smooth = true) {
+    const bounded = Math.max(0, Math.min(cards.length - 1, slot));
+    setActive(bounded);
+    placeCard(bounded, smooth);
+  }
+
+  function step(direction) {
+    const nextGuest = (active + direction + GUESTS.length) % GUESTS.length;
+    let target = nextGuest + 1;
+    // На границах листаем к клону, чтобы не прокручивать всю ленту обратно.
+    if (direction < 0 && activeSlot === 1) target = 0;
+    if (direction > 0 && activeSlot === GUESTS.length) target = GUESTS.length + 1;
+    scrollToSlot(target);
+  }
+
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
   track.addEventListener('keydown', (event) => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
     event.preventDefault();
-    scrollTo(active + (event.key === 'ArrowRight' ? 1 : -1));
+    step(event.key === 'ArrowRight' ? 1 : -1);
   });
-  track.addEventListener('scroll', () => {
-    if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0) return;
+
+  function nearestSlot() {
     const center = track.scrollLeft + track.clientWidth / 2;
-    let nearest = active;
+    let nearest = activeSlot;
     let distance = Infinity;
     cards.forEach((card, index) => {
       if (!Number.isFinite(card.offsetLeft) || !Number.isFinite(card.offsetWidth)) return;
       const current = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
       if (current < distance) { distance = current; nearest = index; }
     });
-    setActive(nearest);
+    return nearest;
+  }
+
+  let settleTimer = null;
+  function settleAtEdge() {
+    settleTimer = null;
+    if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0
+      || !Number.isFinite(track.scrollWidth)) return;
+    const nearest = nearestSlot();
+    // После остановки клон не должен оставаться на экране. Координаты края не проверяем:
+    // scroll-snap может остановить правую ленту в нескольких пикселях от maxScroll.
+    if (nearest === 0) {
+      scrollToSlot(GUESTS.length, false);
+      return;
+    }
+    if (nearest === cards.length - 1) scrollToSlot(1, false);
+  }
+
+  track.addEventListener('scroll', () => {
+    if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0
+      || !Number.isFinite(track.scrollWidth)) return;
+    setActive(nearestSlot());
+    // Во время инерции и snap не телепортируем ленту: ждём короткой паузы в событиях.
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(settleAtEdge, 90);
+    settleTimer.unref?.();
   });
-  scrollTo(recommendedIndex(ctx.state), false);
+  scrollToSlot(recommendedIndex(ctx.state) + 1, false);
 }
 
 function renderPreview(container, ctx, onOpen) {
@@ -255,68 +319,30 @@ function renderPreview(container, ctx, onOpen) {
   show(recommendedIndex(ctx.state));
 }
 
-function renderAccordion(container, ctx, onOpen) {
+function renderSimpleList(container, ctx, onOpen) {
   const list = document.createElement('section');
-  list.className = 'guest-accordion';
-  const rows = [];
-  let opened = recommendedIndex(ctx.state);
-
-  function sync() {
-    rows.forEach((row, index) => {
-      const isOpen = index === opened;
-      row.item.classList.toggle('is-open', isOpen);
-      row.header.setAttribute('aria-expanded', String(isOpen));
-      row.reveal.setAttribute('aria-hidden', String(!isOpen));
-      row.open.tabIndex = isOpen ? 0 : -1;
-    });
-  }
-
-  GUESTS.forEach((guest, index) => {
-    const item = document.createElement('article');
-    item.className = 'guest-accordion-item';
-    const head = document.createElement('button');
-    head.type = 'button';
-    head.className = 'guest-accordion-header';
-    head.setAttribute('aria-controls', `guest-accordion-${guest.id}`);
-    head.appendChild(makePortrait(guest, 'guest-accordion-thumb'));
+  list.className = 'guest-simple-list';
+  list.setAttribute('aria-label', 'Список гостей');
+  for (const guest of GUESTS) {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = `guest-simple-item${guestKnown(ctx.state, guest) ? ' guest-known' : ''}`;
+    item.setAttribute('aria-label', `${guest.name}. Рассмотреть и поговорить`);
+    item.appendChild(makePortrait(guest, 'guest-simple-thumb'));
     const text = document.createElement('span');
-    text.className = 'guest-accordion-text';
-    text.append(makeName(guest), makeStatus(ctx.state, guest));
-    const chevron = document.createElement('span');
-    chevron.className = 'guest-accordion-chevron';
-    chevron.textContent = '⌄';
-    head.append(text, chevron);
-    head.addEventListener('click', () => {
-      opened = opened === index ? -1 : index;
-      sync();
-    });
-
-    const reveal = document.createElement('div');
-    reveal.className = 'guest-accordion-reveal';
-    reveal.id = `guest-accordion-${guest.id}`;
-    const inner = document.createElement('div');
-    inner.className = 'guest-accordion-inner';
-    const content = document.createElement('div');
-    content.className = 'guest-accordion-content';
-    content.appendChild(makePortrait(guest));
-    const body = document.createElement('div');
-    body.className = 'guest-accordion-body';
-    body.appendChild(makeDescription(guest));
-    const open = document.createElement('button');
-    open.type = 'button';
-    open.className = 'primary guest-accordion-open';
-    open.textContent = 'Рассмотреть и поговорить →';
-    open.addEventListener('click', () => onOpen(guest.id));
-    body.appendChild(open);
-    content.appendChild(body);
-    inner.appendChild(content);
-    reveal.appendChild(inner);
-    item.append(head, reveal);
+    text.className = 'guest-simple-text';
+    text.appendChild(makeName(guest));
+    const description = makeDescription(guest);
+    description.classList.add('guest-simple-desc');
+    text.append(description, makeStatus(ctx.state, guest));
+    const arrow = document.createElement('span');
+    arrow.className = 'guest-simple-arrow';
+    arrow.textContent = '→';
+    item.append(text, arrow);
+    item.addEventListener('click', () => onOpen(guest.id));
     list.appendChild(item);
-    rows.push({ item, header: head, reveal, open });
-  });
+  }
   container.appendChild(list);
-  sync();
 }
 
 const BENTO_FILTERS = [
@@ -377,7 +403,7 @@ function renderBento(container, ctx, onOpen) {
 function renderCatalog(container, ctx, onOpen) {
   const mode = currentGuestCatalogMode(ctx.state);
   if (mode === 'preview') renderPreview(container, ctx, onOpen);
-  else if (mode === 'accordion') renderAccordion(container, ctx, onOpen);
+  else if (mode === 'accordion') renderSimpleList(container, ctx, onOpen);
   else if (mode === 'bento') renderBento(container, ctx, onOpen);
   else renderShelf(container, ctx, onOpen);
 }

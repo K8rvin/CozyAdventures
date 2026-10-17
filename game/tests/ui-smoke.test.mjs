@@ -250,7 +250,7 @@ test('каталог головоломок: четыре режима и общ
   const layouts = {
     shelf: 'pc-shelf-track',
     preview: 'pc-preview-layout',
-    accordion: 'pc-accordion',
+    accordion: 'pc-simple-list',
     bento: 'pc-bento-grid',
   };
   for (const [mode, marker] of Object.entries(layouts)) {
@@ -283,7 +283,47 @@ test('каталог головоломок: четыре режима и общ
   assert.equal(saved.settings.puzzleCatalogMode, 'preview', 'выбор сохраняется');
 });
 
-test('каталог головоломок: превью, аккордеон и фильтры мозаики реагируют на выбор', () => {
+test('каталог головоломок: полка зацикливается с обеих сторон', () => {
+  const state = newGame();
+  state.settings.puzzleCatalogMode = 'shelf';
+  const root = new El('main');
+  renderPuzzleList(root, makeUiCtx(state));
+  const all = flatElements(root);
+  const track = all.find((el) => el.className === 'pc-shelf-track');
+  const cards = all.filter((el) => (el.className || '').includes('pc-shelf-card'));
+  const prev = all.find((el) => el.className === 'small ghost pc-shelf-prev');
+  const next = all.find((el) => el.className === 'small ghost pc-shelf-next');
+  const counter = all.find((el) => el.className === 'pc-shelf-counter');
+  assert.equal(cards.length, 15, 'по краям добавлены две стыковочные карточки');
+  assert.equal(cards[0].dataset.entryIndex, '12', 'слева от первой находится последняя');
+  assert.equal(cards.at(-1).dataset.entryIndex, '0', 'справа от последней находится первая');
+  assert.equal(cards[0].dataset.loopClone, 'true');
+  assert.equal(cards.at(-1).dataset.loopClone, 'true');
+
+  prev.click();
+  assert.equal(counter.textContent, '13 / 13', 'стрелка назад ведёт с первой к последней');
+  next.click();
+  assert.equal(counter.textContent, '1 / 13', 'стрелка вперёд возвращает к первой');
+  assert.equal(prev.disabled, false, 'у бесконечной ленты нет заблокированного края');
+  assert.equal(next.disabled, false);
+
+  cards.forEach((card, i) => {
+    card.offsetLeft = 100 + i * 320;
+    card.offsetWidth = 300;
+  });
+  track.clientWidth = 500;
+  track.scrollWidth = 4980;
+  track.scrollLeft = 0;
+  for (const fn of track._listeners.scroll || []) fn();
+  assert.equal(track.scrollLeft, 4160, 'левый клон незаметно заменяется настоящей последней карточкой');
+  assert.equal(counter.textContent, '13 / 13');
+  track.scrollLeft = 4480;
+  for (const fn of track._listeners.scroll || []) fn();
+  assert.equal(track.scrollLeft, 320, 'правый клон незаметно заменяется настоящей первой карточкой');
+  assert.equal(counter.textContent, '1 / 13');
+});
+
+test('каталог головоломок: превью, простой список и фильтры мозаики реагируют на выбор', () => {
   const state = newGame();
   const ctx = makeUiCtx(state);
 
@@ -296,19 +336,15 @@ test('каталог головоломок: превью, аккордеон и
   assert.ok(previewItems[1].classList.contains('is-active'), 'пункт обновляет живое превью');
 
   state.settings.puzzleCatalogMode = 'accordion';
-  const accordionRoot = new El('main');
-  renderPuzzleList(accordionRoot, ctx);
-  const accordionAll = flatElements(accordionRoot);
-  const rows = accordionAll.filter((el) => (el.className || '').startsWith('pc-accordion-item'));
-  const headers = accordionAll.filter((el) => el.className === 'pc-accordion-header');
-  const openButtons = accordionAll.filter((el) => el.className === 'primary pc-accordion-open');
-  const firstOpen = rows.findIndex((row) => row.classList.contains('is-open'));
-  const nextOpen = (firstOpen + 1) % rows.length;
-  headers[nextOpen].click();
-  assert.ok(rows[nextOpen].classList.contains('is-open'), 'выбранная строка раскрывается');
-  assert.ok(!rows[firstOpen].classList.contains('is-open'), 'прежняя строка закрывается');
-  assert.equal(openButtons[nextOpen].tabIndex, 0, 'кнопка раскрытой панели доступна с клавиатуры');
-  assert.equal(openButtons[firstOpen].tabIndex, -1, 'кнопка скрытой панели не попадает в Tab');
+  const listRoot = new El('main');
+  renderPuzzleList(listRoot, ctx);
+  const listAll = flatElements(listRoot);
+  const simpleItems = listAll.filter((el) => (el.className || '').startsWith('pc-simple-item'));
+  assert.equal(simpleItems.length, 13);
+  assert.ok(!listAll.some((el) => (el.className || '').includes('pc-accordion')), 'раскрывающихся панелей больше нет');
+  assert.ok(!listAll.some((el) => el.textContent === 'К уровням →'), 'отдельной кнопки перехода нет');
+  simpleItems[1].click();
+  assert.ok(flatElements(listRoot).some((el) => el.className === 'list'), 'вся строка ведёт к списку уровней');
 
   for (let i = 1; i <= 12; i += 1) {
     state.puzzlesDone[`md_${String(i).padStart(2, '0')}`] = { moves: 1, hintsUsed: 0 };
@@ -334,7 +370,7 @@ test('гостевая книга: четыре режима и сохранен
   const layouts = {
     shelf: 'guest-shelf-track',
     preview: 'guest-preview-layout',
-    accordion: 'guest-accordion',
+    accordion: 'guest-simple-list',
     bento: 'guest-bento-grid',
   };
   for (const [mode, marker] of Object.entries(layouts)) {
@@ -358,6 +394,87 @@ test('гостевая книга: четыре режима и сохранен
   assert.ok(flatElements(root).some((el) => el.className === 'guest-bento-grid'), 'каталог обновляется сразу');
   const saved = JSON.parse(localStorage.getItem('cozy_adventures_save_v2'));
   assert.equal(saved.settings.guestCatalogMode, 'bento', 'выбор вида гостей сохраняется');
+  cleanup();
+});
+
+test('гостевая книга: полка зацикливается с обеих сторон после завершения жеста', async () => {
+  const state = newGame();
+  state.settings.guestCatalogMode = 'shelf';
+  const root = new El('main');
+  const cleanup = renderGuestBook(root, makeUiCtx(state));
+  const all = flatElements(root);
+  const track = all.find((el) => el.className === 'guest-shelf-track');
+  const cards = all.filter((el) => (el.className || '').includes('guest-shelf-card'));
+  const prev = all.find((el) => el.className === 'small ghost guest-shelf-prev');
+  const next = all.find((el) => el.className === 'small ghost guest-shelf-next');
+  const counter = all.find((el) => el.className === 'guest-shelf-counter');
+  const total = cards.length - 2;
+  const settle = () => new Promise((resolve) => setTimeout(resolve, 140));
+  assert.ok(total >= 36, 'на полке показаны все гости и два стыковочных клона');
+  assert.equal(cards[0].dataset.guestIndex, String(total - 1), 'слева от первого находится последний гость');
+  assert.equal(cards.at(-1).dataset.guestIndex, '0', 'справа от последнего находится первый гость');
+  assert.equal(cards[0].dataset.loopClone, 'true');
+  assert.equal(cards.at(-1).dataset.loopClone, 'true');
+  assert.equal(cards[0].tabIndex, -1, 'клон не дублируется в клавиатурной навигации');
+  assert.equal(cards.at(-1).tabIndex, -1);
+
+  prev.click();
+  assert.equal(counter.textContent, `${total} / ${total}`, 'стрелка назад ведёт с первого к последнему');
+  next.click();
+  assert.equal(counter.textContent, `1 / ${total}`, 'стрелка вперёд возвращает к первому');
+  assert.equal(prev.disabled, false, 'у бесконечной ленты нет заблокированного края');
+  assert.equal(next.disabled, false);
+  const onKey = track._listeners.keydown[0];
+  onKey({ key: 'ArrowLeft', preventDefault: () => {} });
+  assert.equal(counter.textContent, `${total} / ${total}`, 'клавиатура тоже переходит через левый край');
+  onKey({ key: 'ArrowRight', preventDefault: () => {} });
+  assert.equal(counter.textContent, `1 / ${total}`, 'клавиатура тоже переходит через правый край');
+
+  cards.forEach((card, index) => {
+    card.offsetLeft = 100 + index * 320;
+    card.offsetWidth = 300;
+  });
+  track.clientWidth = 500;
+  const centerOffset = (track.clientWidth - 300) / 2;
+  const rightCloneLeft = cards.at(-1).offsetLeft - centerOffset;
+  track.scrollWidth = track.clientWidth + rightCloneLeft;
+  track.scrollLeft = 0;
+  for (const fn of track._listeners.scroll || []) fn();
+  assert.equal(track.scrollLeft, 0, 'во время жеста лента ещё не телепортируется');
+  await settle();
+  assert.equal(
+    track.scrollLeft,
+    cards[total].offsetLeft - centerOffset,
+    'после остановки левый клон незаметно заменяется настоящей последней карточкой',
+  );
+  assert.equal(counter.textContent, `${total} / ${total}`);
+  const rightEdge = track.scrollWidth - track.clientWidth;
+  const snappedRight = rightEdge - 10; // scroll-snap в браузере может остановиться не на расчётном maxScroll
+  track.scrollLeft = snappedRight;
+  for (const fn of track._listeners.scroll || []) fn();
+  assert.equal(track.scrollLeft, snappedRight, 'и на правом клоне ждём завершения инерции');
+  await settle();
+  assert.equal(track.scrollLeft, cards[1].offsetLeft - centerOffset, 'правый клон заменяется даже с погрешностью координат snap');
+  assert.equal(counter.textContent, `1 / ${total}`);
+  cleanup();
+});
+
+test('гостевая книга: простой список открывает профиль всей строкой', () => {
+  const state = newGame();
+  state.settings.guestCatalogMode = 'accordion';
+  const root = new El('main');
+  const cleanup = renderGuestBook(root, makeUiCtx(state));
+  const all = flatElements(root);
+  const items = all.filter((el) => (el.className || '').startsWith('guest-simple-item'));
+  assert.ok(items.length >= 36, 'в простом списке показаны все гости');
+  assert.ok(items.every((el) => el.tagName === 'button'), 'каждая строка является единой кнопкой');
+  assert.ok(!all.some((el) => (el.className || '').includes('guest-accordion')), 'раскрывающихся панелей больше нет');
+  assert.ok(!all.some((el) => el.textContent === 'Рассмотреть и поговорить →'), 'отдельной кнопки перехода нет');
+  items[1].click();
+  assert.ok(
+    documentStub.body.children.some((el) => (el.className || '').includes('guest-profile-overlay')),
+    'клик по строке открывает профиль гостя',
+  );
   cleanup();
 });
 
