@@ -15,6 +15,7 @@ import { renderAchievements } from './achievementsView.js';
 import { renderSandbox } from './sandboxView.js';
 import { renderBrewBook } from './brewBookView.js';
 import { renderGuestBook } from './guestBookView.js';
+import { renderFateDeck } from './fateDeckView.js';
 import { renderStory } from './storyView.js';
 import { renderBoard } from './boardView.js';
 import { renderMarket } from './shopView.js';
@@ -77,6 +78,7 @@ const routes = {
   achievements: (c, p) => renderAchievements(c, ctx, p),
   brewbook: (c, p) => renderBrewBook(c, ctx, p),
   guests: (c, p) => renderGuestBook(c, ctx, p),
+  deck: (c, p) => renderFateDeck(c, ctx, p),
   story: (c, p) => renderStory(c, ctx, p),
   sandbox: (c, p) => renderSandbox(c, ctx, p),
   board: (c, p) => renderBoard(c, ctx, p),

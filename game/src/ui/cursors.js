@@ -5,7 +5,7 @@
 import { findPuzzle } from '../core/state.js';
 
 export const CURSOR_THEMES = {
-  default: { hotspot: [4, 2], name: 'Перо хозяина' },
+  default: { hotspot: [4, 28], name: 'Перо хозяина' },
   hub_lavka: { hotspot: [8, 4], name: 'Фонарик лавки' },
   hub_square: { hotspot: [6, 4], name: 'Уличный фонарь' },
   hub_market: { hotspot: [16, 4], name: 'Весы торговца' },
@@ -49,6 +49,7 @@ const ROUTE_CURSORS = {
   editor: () => 'workshop',
   seekeditor: () => 'workshop',
   sandbox: () => 'workshop',
+  deck: () => 'fate',
 };
 
 export function cursorForRoute(name, params = {}, state = null) {

@@ -125,6 +125,7 @@ const { renderBoard } = await import('../src/ui/boardView.js');
 const { renderMarket } = await import('../src/ui/shopView.js');
 const { renderBrewBook } = await import('../src/ui/brewBookView.js');
 const { renderGuestBook } = await import('../src/ui/guestBookView.js');
+const { renderFateDeck } = await import('../src/ui/fateDeckView.js');
 const { renderStory } = await import('../src/ui/storyView.js');
 const { renderSandbox } = await import('../src/ui/sandboxView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
@@ -210,6 +211,7 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'gl_58' }),  // финал пятой серии 8×5
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
     () => renderGuestBook(new El('main'), ctx), // гостевая книга
+    () => renderFateDeck(new El('main'), ctx), // колода судьбы
     () => renderStory(new El('main'), ctx), // режим истории: пролог
     () => { // режим истории: обычный визит гостя (пролог пройден)
       state.story.prologSeen = true;
@@ -394,6 +396,90 @@ test('гостевая книга: четыре режима и сохранен
   assert.ok(flatElements(root).some((el) => el.className === 'guest-bento-grid'), 'каталог обновляется сразу');
   const saved = JSON.parse(localStorage.getItem('cozy_adventures_save_v2'));
   assert.equal(saved.settings.guestCatalogMode, 'bento', 'выбор вида гостей сохраняется');
+  cleanup();
+});
+
+test('колода судьбы: виды, рубашки и профиль карты', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const notices = [];
+  ctx.toast = (text) => notices.push(text);
+
+  // Новая игра: вся колода рубашкой, полка на первой карте
+  let root = new El('main');
+  let cleanup = renderFateDeck(root, ctx);
+  let all = flatElements(root);
+  assert.ok(all.some((el) => el.className === 'deck-shelf-track'), 'полка рендерится по умолчанию');
+  assert.equal(all.filter((el) => (el.className || '').includes('deck-shelf-card')).length, 86, '84 карты и два клона');
+  assert.equal(all.filter((el) => (el.className || '').includes('deck-met')).length, 0, 'открытых карт нет');
+  assert.equal(all.find((el) => el.className === 'deck-shelf-counter').textContent, '1 / 84');
+  assert.ok(all.some((el) => (el.textContent || '').includes('Открыто 0 из 84')));
+  const backs = all.filter((el) => (el.className || '').split(' ').includes('deck-back'));
+  assert.equal(backs.length, 86, 'все карты лежат рубашкой');
+  cleanup();
+
+  // Пройден fate_01: его рука из 6 карт открыта, лента подводит к первой закрытой
+  state.puzzlesDone.fate_01 = { moves: 1, hintsUsed: 0 };
+  root = new El('main');
+  cleanup = renderFateDeck(root, ctx);
+  all = flatElements(root);
+  assert.equal(
+    all.filter((el) => (el.className || '').includes('deck-met') && el.dataset.loopClone !== 'true').length,
+    6,
+    'рука fate_01 открыта (стайковочный клон «Дома» не считается)',
+  );
+  assert.equal(all.find((el) => el.className === 'deck-shelf-counter').textContent, '3 / 84',
+    'первая невстреченная карта — третья в колоде');
+  assert.ok(all.some((el) => (el.textContent || '').includes('Открыто 6 из 84')));
+  cleanup();
+
+  // Переключение вида: мозаика с фильтрами, выбор сохраняется
+  const options = all.filter((el) => (el.className || '').includes('deck-mode-option'));
+  assert.equal(options.length, 2, 'два вида отображения');
+  root = new El('main');
+  cleanup = renderFateDeck(root, ctx);
+  flatElements(root).find((el) => el.dataset.mode === 'bento').click();
+  assert.equal(state.settings.fateDeckMode, 'bento');
+  all = flatElements(root);
+  assert.ok(all.some((el) => el.className === 'deck-bento-grid'), 'мозаика обновляется сразу');
+  const saved = JSON.parse(localStorage.getItem('cozy_adventures_save_v2'));
+  assert.equal(saved.settings.fateDeckMode, 'bento', 'выбор вида колоды сохраняется');
+
+  const cards = all.filter((el) => (el.className || '').includes('deck-bento-card'));
+  assert.equal(cards.length, 84, 'в мозаике вся колода');
+  const filters = all.filter((el) => (el.className || '').includes('deck-bento-filter'));
+  filters.find((el) => el.dataset.filter === 'met').click();
+  assert.equal(cards.filter((card) => !card.hidden).length, 6, 'фильтр оставляет открытые');
+  filters.find((el) => el.dataset.filter === 'fresh').click();
+  assert.equal(cards.filter((card) => !card.hidden).length, 78, 'фильтр показывает рубашки');
+  filters.find((el) => el.dataset.filter === 'all').click();
+
+  // Закрытая карта профиль не открывает — только подсказку
+  const overlaysBefore = documentStub.body.children
+    .filter((el) => (el.className || '').includes('deck-profile-overlay')).length;
+  cards[2].click();
+  assert.equal(notices.length, 1, 'тап по рубашке подсказывает, где искать карту');
+  assert.equal(
+    documentStub.body.children.filter((el) => (el.className || '').includes('deck-profile-overlay')).length,
+    overlaysBefore,
+    'профиль рубашки не открывается',
+  );
+
+  // Открытая карта: крупный профиль, листание и закрытие
+  cards[0].click();
+  const overlay = documentStub.body.children
+    .find((el) => (el.className || '').includes('deck-profile-overlay'));
+  assert.ok(overlay, 'тап по открытой карте открывает профиль');
+  const flat = () => flatElements(overlay);
+  assert.ok(flat().some((el) => el.className === 'deck-name' && (el.textContent || '').includes('Дом')));
+  assert.ok(flat().some((el) => (el.textContent || '').includes('Расклады с этой картой')),
+    'профиль показывает расклады, где карта встречалась');
+  flat().find((el) => (el.className || '').includes('deck-profile-next')).click();
+  assert.ok(flat().some((el) => el.className === 'deck-name' && (el.textContent || '').includes('Дорога')),
+    'следующая карта открывается без закрытия окна');
+  flat().find((el) => (el.className || '').includes('deck-profile-close')).click();
+  assert.ok(!documentStub.body.children.some((el) => (el.className || '').includes('deck-profile-overlay')),
+    'профиль закрывается');
   cleanup();
 });
 

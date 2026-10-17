@@ -99,6 +99,17 @@ export const FATE_CARDS = {
   scarf: { id: 'scarf', name: 'Шарф', icon: '🧣', meanings: ['вязка', 'шея'] },
 };
 
+// Карты, которые игрок уже держал в руках: входят в hand хотя бы одного
+// пройденного или пропущенного уровня (обманки в руке тоже «встречены»).
+export function metFateCards(puzzlesDone) {
+  const met = new Set();
+  for (const level of FATE_PUZZLES) {
+    if (!puzzlesDone[level.id]) continue;
+    for (const cardId of level.hand) met.add(cardId);
+  }
+  return met;
+}
+
 export const FATE_PUZZLES = [
   {
     id: 'fate_01', world: 'fate', mechanic: 'fate', name: 'Сторож у двери', difficulty: 1,

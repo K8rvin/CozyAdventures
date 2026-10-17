@@ -1,7 +1,7 @@
 // Тесты механики «Карты судьбы».
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { FATE_PUZZLES, FATE_CARDS } from '../src/data/puzzlesFate.js';
+import { FATE_PUZZLES, FATE_CARDS, metFateCards } from '../src/data/puzzlesFate.js';
 import {
   createFatePuzzle, placeCard, placeCardAt, removeSlot, undoFate, resetFate,
   submitFate, isFateSolved, applyFateHint, rewardFactor, markSpread,
@@ -165,6 +165,23 @@ test('колода растёт по одной карте за уровень (
     fresh.forEach((c) => seen.add(c));
   });
   assert.equal(seen.size, Object.keys(FATE_CARDS).length, 'вся колода вошла в игру');
+});
+
+test('metFateCards: карты из рук пройденных уровней (и пропусков)', () => {
+  assert.equal(metFateCards({}).size, 0, 'в новой игре колода закрыта');
+  const first = FATE_PUZZLES[0];
+  const met = metFateCards({ [first.id]: { moves: 1 } });
+  assert.equal(met.size, first.hand.length, 'первая игра открывает всю базовую руку');
+  for (const cardId of first.hand) assert.ok(met.has(cardId));
+  assert.ok(!met.has('scarf'), 'поздние карты ещё рубашкой');
+  const skipped = metFateCards({ [FATE_PUZZLES[1].id]: { skipped: true } });
+  assert.equal(skipped.size, FATE_PUZZLES[1].hand.length, 'пропуск тоже знакомит с картами');
+  const both = metFateCards({
+    [FATE_PUZZLES[0].id]: { moves: 1 },
+    [FATE_PUZZLES[1].id]: { skipped: true },
+  });
+  assert.equal(both.size, new Set([...FATE_PUZZLES[0].hand, ...FATE_PUZZLES[1].hand]).size);
+  assert.equal(both.has('scarf'), false);
 });
 
 test('тексты уровней и карт — по-русски, без латиницы', () => {

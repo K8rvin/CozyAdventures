@@ -96,6 +96,7 @@ export function renderHub(container, ctx, params = {}) {
       hotspots: [
         ['📖', 'Книга рекордов', 'achievements', 87.5, 64, () => false],
         ['🗺️', 'Карта миров', 'battles', 87, 33, () => false],
+        ['🃏', 'Колода судьбы', 'deck', 12, 55, () => false],
         ['🏮', 'В лавку', '@lavka', 50, 92, () => false],
       ],
     },

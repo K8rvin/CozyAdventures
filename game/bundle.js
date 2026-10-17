@@ -7703,6 +7703,14 @@
     suitcase: { id: "suitcase", name: "\u0427\u0435\u043C\u043E\u0434\u0430\u043D", icon: "\u{1F9F3}", meanings: ["\u0441\u0431\u043E\u0440\u044B", "\u0432\u0435\u0449\u0438"] },
     scarf: { id: "scarf", name: "\u0428\u0430\u0440\u0444", icon: "\u{1F9E3}", meanings: ["\u0432\u044F\u0437\u043A\u0430", "\u0448\u0435\u044F"] }
   };
+  function metFateCards(puzzlesDone) {
+    const met = /* @__PURE__ */ new Set();
+    for (const level of FATE_PUZZLES) {
+      if (!puzzlesDone[level.id]) continue;
+      for (const cardId of level.hand) met.add(cardId);
+    }
+    return met;
+  }
   var FATE_PUZZLES = [
     {
       id: "fate_01",
@@ -17079,7 +17087,7 @@
 
   // src/ui/cursors.js
   var CURSOR_THEMES = {
-    default: { hotspot: [4, 2], name: "\u041F\u0435\u0440\u043E \u0445\u043E\u0437\u044F\u0438\u043D\u0430" },
+    default: { hotspot: [4, 28], name: "\u041F\u0435\u0440\u043E \u0445\u043E\u0437\u044F\u0438\u043D\u0430" },
     hub_lavka: { hotspot: [8, 4], name: "\u0424\u043E\u043D\u0430\u0440\u0438\u043A \u043B\u0430\u0432\u043A\u0438" },
     hub_square: { hotspot: [6, 4], name: "\u0423\u043B\u0438\u0447\u043D\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C" },
     hub_market: { hotspot: [16, 4], name: "\u0412\u0435\u0441\u044B \u0442\u043E\u0440\u0433\u043E\u0432\u0446\u0430" },
@@ -17121,7 +17129,8 @@
     workshop: () => "workshop",
     editor: () => "workshop",
     seekeditor: () => "workshop",
-    sandbox: () => "workshop"
+    sandbox: () => "workshop",
+    deck: () => "fate"
   };
   function cursorForRoute(name, params = {}, state2 = null) {
     const fn = ROUTE_CURSORS[name];
@@ -17217,6 +17226,7 @@
         hotspots: [
           ["\u{1F4D6}", "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u043A\u043E\u0440\u0434\u043E\u0432", "achievements", 87.5, 64, () => false],
           ["\u{1F5FA}\uFE0F", "\u041A\u0430\u0440\u0442\u0430 \u043C\u0438\u0440\u043E\u0432", "battles", 87, 33, () => false],
+          ["\u{1F0CF}", "\u041A\u043E\u043B\u043E\u0434\u0430 \u0441\u0443\u0434\u044C\u0431\u044B", "deck", 12, 55, () => false],
           ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 50, 92, () => false]
         ]
       }
@@ -24218,13 +24228,13 @@
       container.innerHTML = "";
       renderPuzzleTypeList(container, ctx2, mech);
     };
-    const renderCatalog2 = () => {
+    const renderCatalog3 = () => {
       catalogHost.innerHTML = "";
       renderPuzzleCatalog(catalogHost, ctx2, PUZZLE_TYPES, openType);
     };
-    layoutPanel.append(layoutLabel, createPuzzleCatalogModePicker(ctx2, renderCatalog2));
+    layoutPanel.append(layoutLabel, createPuzzleCatalogModePicker(ctx2, renderCatalog3));
     container.append(layoutPanel, catalogHost);
-    renderCatalog2();
+    renderCatalog3();
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F4D6}", label: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", screen: "brewbook" },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
@@ -29026,6 +29036,419 @@
     return closeProfile;
   }
 
+  // src/ui/fateDeckView.js
+  var DECK_MODES = [
+    { id: "shelf", name: "\u041F\u043E\u043B\u043A\u0430", icon: "\u{1F4DA}", hint: "\u0413\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u043B\u0435\u043D\u0442\u0430 \u0441 \u043A\u0440\u0443\u043F\u043D\u044B\u043C\u0438 \u043A\u0430\u0440\u0442\u0430\u043C\u0438" },
+    { id: "bento", name: "\u041C\u043E\u0437\u0430\u0438\u043A\u0430", icon: "\u{1F9E9}", hint: "\u0421\u0435\u0442\u043A\u0430 \u043A\u0430\u0440\u0442 \u0441 \u0444\u0438\u043B\u044C\u0442\u0440\u0430\u043C\u0438" }
+  ];
+  var MODE_IDS3 = DECK_MODES.map((mode) => mode.id);
+  var CARD_LIST = Object.values(FATE_CARDS);
+  var TOTAL = CARD_LIST.length;
+  function currentDeckMode(state2) {
+    const mode = state2.settings?.fateDeckMode;
+    return MODE_IDS3.includes(mode) ? mode : "shelf";
+  }
+  function deckEntries(state2) {
+    const met = metFateCards(state2.puzzlesDone);
+    return CARD_LIST.map((card) => ({ card, met: met.has(card.id) }));
+  }
+  function frontierIndex(entries2) {
+    const fresh = entries2.findIndex((entry) => !entry.met);
+    return fresh >= 0 ? fresh : 0;
+  }
+  function metInLevels(state2, cardId) {
+    return FATE_PUZZLES.filter((level) => state2.puzzlesDone[level.id] && level.hand.includes(cardId));
+  }
+  function createModePicker2(ctx2, onChange) {
+    const picker = document.createElement("div");
+    picker.className = "deck-mode-picker";
+    picker.setAttribute("role", "group");
+    picker.setAttribute("aria-label", "\u0412\u0430\u0440\u0438\u0430\u043D\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u043A\u043E\u043B\u043E\u0434\u044B");
+    const buttons = [];
+    const sync = () => {
+      const current = currentDeckMode(ctx2.state);
+      for (const button of buttons) {
+        const active = button.dataset.mode === current;
+        button.className = `small deck-mode-option${active ? " primary is-active" : " ghost"}`;
+        button.setAttribute("aria-pressed", String(active));
+      }
+    };
+    for (const mode of DECK_MODES) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.mode = mode.id;
+      button.textContent = `${mode.icon} ${mode.name}`;
+      button.title = mode.hint;
+      button.addEventListener("click", () => {
+        if (currentDeckMode(ctx2.state) === mode.id) return;
+        ctx2.state.settings.fateDeckMode = mode.id;
+        ctx2.save();
+        ctx2.sfx?.("tap");
+        sync();
+        onChange(mode.id);
+      });
+      buttons.push(button);
+      picker.appendChild(button);
+    }
+    sync();
+    return picker;
+  }
+  function makeCardMedia(entry, extraClass = "") {
+    const media = document.createElement("div");
+    media.className = `deck-media${extraClass ? ` ${extraClass}` : ""}${entry.met ? "" : " deck-back"}`;
+    const fallback = document.createElement("div");
+    fallback.className = entry.met ? "deck-card-icon" : "deck-back-icon";
+    fallback.textContent = entry.met ? entry.card.icon : "\u{1F319}";
+    media.appendChild(fallback);
+    const img = document.createElement("img");
+    img.className = "deck-card-art";
+    img.src = entry.met ? `assets/fate/card_${entry.card.id}_web.jpg` : "assets/fate/card_back_web.jpg";
+    img.alt = entry.met ? entry.card.name : "\u0420\u0443\u0431\u0430\u0448\u043A\u0430 \u043A\u0430\u0440\u0442\u044B";
+    img.loading = "lazy";
+    img.decoding = "async";
+    img.draggable = false;
+    img.addEventListener("error", () => img.remove());
+    media.appendChild(img);
+    return media;
+  }
+  function makeName3(entry) {
+    const name = document.createElement("div");
+    name.className = "deck-name";
+    name.textContent = entry.met ? `${entry.card.icon} ${entry.card.name}` : "???";
+    return name;
+  }
+  function makeStatus2(entry) {
+    const status2 = document.createElement("div");
+    status2.className = `deck-status${entry.met ? " is-met" : ""}`;
+    status2.textContent = entry.met ? entry.card.meanings.join(" \xB7 ") : "\u0415\u0449\u0451 \u043D\u0435 \u0432\u0441\u0442\u0440\u0435\u0447\u0435\u043D\u0430";
+    return status2;
+  }
+  function makeCard2(entry, className, onOpen, withStatus = true) {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = `deck-card ${className}${entry.met ? " deck-met" : ""}`;
+    card.dataset.cardId = entry.card.id;
+    card.setAttribute("aria-label", entry.met ? `${entry.card.name}. \u0420\u0430\u0441\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u043A\u0430\u0440\u0442\u0443` : "\u041A\u0430\u0440\u0442\u0430 \u0435\u0449\u0451 \u043D\u0435 \u0432\u0441\u0442\u0440\u0435\u0447\u0435\u043D\u0430");
+    card.appendChild(makeCardMedia(entry));
+    const body = document.createElement("div");
+    body.className = "deck-card-body";
+    body.appendChild(makeName3(entry));
+    if (withStatus) body.appendChild(makeStatus2(entry));
+    card.appendChild(body);
+    card.addEventListener("click", () => onOpen(entry.card.id));
+    return card;
+  }
+  function renderShelf3(container, ctx2, entries2, onOpen) {
+    const section = document.createElement("section");
+    section.className = "deck-shelf";
+    const toolbar = document.createElement("div");
+    toolbar.className = "deck-shelf-toolbar";
+    const hint2 = document.createElement("span");
+    hint2.className = "muted";
+    hint2.textContent = "\u041B\u0438\u0441\u0442\u0430\u0439 \u043A\u043E\u043B\u043E\u0434\u0443";
+    const counter = document.createElement("span");
+    counter.className = "deck-shelf-counter";
+    const prev = document.createElement("button");
+    prev.type = "button";
+    prev.className = "small ghost deck-shelf-prev";
+    prev.textContent = "\u2190";
+    prev.setAttribute("aria-label", "\u041F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0430\u044F \u043A\u0430\u0440\u0442\u0430");
+    const next = document.createElement("button");
+    next.type = "button";
+    next.className = "small ghost deck-shelf-next";
+    next.textContent = "\u2192";
+    next.setAttribute("aria-label", "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u043A\u0430\u0440\u0442\u0430");
+    toolbar.append(hint2, counter, prev, next);
+    const track = document.createElement("div");
+    track.className = "deck-shelf-track";
+    track.tabIndex = 0;
+    track.setAttribute("role", "region");
+    track.setAttribute("aria-label", "\u041F\u043E\u043B\u043A\u0430 \u043A\u043E\u043B\u043E\u0434\u044B");
+    const cards = [];
+    const addCard = (entry, entryIndex, loopClone = false) => {
+      const slot = cards.length;
+      const card = makeCard2(entry, "deck-shelf-card", onOpen);
+      card.dataset.entryIndex = String(entryIndex);
+      if (loopClone) {
+        card.dataset.loopClone = "true";
+        card.tabIndex = -1;
+        card.setAttribute("aria-hidden", "true");
+      }
+      card.addEventListener("focus", () => setActive(slot));
+      track.appendChild(card);
+      cards.push(card);
+    };
+    addCard(entries2[entries2.length - 1], entries2.length - 1, true);
+    entries2.forEach((entry, index) => addCard(entry, index));
+    addCard(entries2[0], 0, true);
+    section.append(toolbar, track);
+    container.appendChild(section);
+    let activeSlot = 1;
+    let active = 0;
+    function setActive(slot) {
+      activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
+      active = Number(cards[activeSlot].dataset.entryIndex);
+      cards.forEach((card, index) => card.classList.toggle("is-active", index === activeSlot));
+      counter.textContent = `${active + 1} / ${entries2.length}`;
+    }
+    function placeCard2(slot, smooth) {
+      const card = cards[slot];
+      const left = card.offsetLeft - (track.clientWidth - card.offsetWidth) / 2;
+      if (!Number.isFinite(left)) return;
+      if (smooth) {
+        if (track.scrollTo) track.scrollTo({ left, behavior: "smooth" });
+        else track.scrollLeft = left;
+        return;
+      }
+      const behavior = track.style.scrollBehavior;
+      const snap = track.style.scrollSnapType;
+      track.style.scrollBehavior = "auto";
+      track.style.scrollSnapType = "none";
+      if (track.scrollTo) track.scrollTo({ left, behavior: "instant" });
+      else track.scrollLeft = left;
+      void track.offsetWidth;
+      track.style.scrollBehavior = behavior;
+      track.style.scrollSnapType = snap;
+    }
+    function scrollToSlot(slot, smooth = true) {
+      const bounded = Math.max(0, Math.min(cards.length - 1, slot));
+      setActive(bounded);
+      placeCard2(bounded, smooth);
+    }
+    function step(direction) {
+      const nextEntry = (active + direction + entries2.length) % entries2.length;
+      let target = nextEntry + 1;
+      if (direction < 0 && activeSlot === 1) target = 0;
+      if (direction > 0 && activeSlot === entries2.length) target = entries2.length + 1;
+      scrollToSlot(target);
+    }
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
+    track.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      step(event.key === "ArrowRight" ? 1 : -1);
+    });
+    function nearestSlot() {
+      const center = track.scrollLeft + track.clientWidth / 2;
+      let nearest = activeSlot;
+      let distance = Infinity;
+      cards.forEach((card, index) => {
+        if (!Number.isFinite(card.offsetLeft) || !Number.isFinite(card.offsetWidth)) return;
+        const current = Math.abs(card.offsetLeft + card.offsetWidth / 2 - center);
+        if (current < distance) {
+          distance = current;
+          nearest = index;
+        }
+      });
+      return nearest;
+    }
+    let settleTimer = null;
+    function settleAtEdge() {
+      settleTimer = null;
+      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0 || !Number.isFinite(track.scrollWidth)) return;
+      const nearest = nearestSlot();
+      if (nearest === 0) {
+        scrollToSlot(entries2.length, false);
+        return;
+      }
+      if (nearest === cards.length - 1) scrollToSlot(1, false);
+    }
+    track.addEventListener("scroll", () => {
+      if (!Number.isFinite(track.scrollLeft) || !Number.isFinite(track.clientWidth) || track.clientWidth <= 0 || !Number.isFinite(track.scrollWidth)) return;
+      setActive(nearestSlot());
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(settleAtEdge, 90);
+      settleTimer.unref?.();
+    });
+    scrollToSlot(frontierIndex(entries2) + 1, false);
+  }
+  var BENTO_FILTERS3 = [
+    { id: "all", name: "\u0412\u0441\u0435", match: () => true },
+    { id: "met", name: "\u041E\u0442\u043A\u0440\u044B\u0442\u044B\u0435", match: (entry) => entry.met },
+    { id: "fresh", name: "\u0415\u0449\u0451 \u043D\u0435 \u0432\u0441\u0442\u0440\u0435\u0447\u0435\u043D\u044B", match: (entry) => !entry.met }
+  ];
+  function renderBento3(container, ctx2, entries2, onOpen) {
+    const section = document.createElement("section");
+    section.className = "deck-bento";
+    const filters = document.createElement("div");
+    filters.className = "deck-bento-filters";
+    filters.setAttribute("role", "group");
+    filters.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u043A\u0430\u0440\u0442");
+    const grid = document.createElement("div");
+    grid.className = "deck-bento-grid";
+    const empty = document.createElement("div");
+    empty.className = "muted deck-bento-empty";
+    empty.textContent = "\u0417\u0434\u0435\u0441\u044C \u043F\u043E\u043A\u0430 \u043F\u0443\u0441\u0442\u043E. \u0412\u044B\u0431\u0435\u0440\u0438 \u0434\u0440\u0443\u0433\u043E\u0439 \u0444\u0438\u043B\u044C\u0442\u0440.";
+    empty.hidden = true;
+    const featured = frontierIndex(entries2);
+    const cards = entries2.map((entry) => makeCard2(entry, "deck-bento-card", onOpen, false));
+    cards.forEach((card) => grid.appendChild(card));
+    section.append(filters, grid, empty);
+    container.appendChild(section);
+    const filterButtons = [];
+    function applyFilter(id) {
+      const filter = BENTO_FILTERS3.find((item2) => item2.id === id) || BENTO_FILTERS3[0];
+      let visible = 0;
+      cards.forEach((card, index) => {
+        const show = filter.match(entries2[index]);
+        card.hidden = !show;
+        card.classList.toggle("is-featured", filter.id === "all" && index === featured);
+        if (show) visible += 1;
+      });
+      empty.hidden = visible > 0;
+      for (const button of filterButtons) {
+        const active = button.dataset.filter === filter.id;
+        button.className = `small deck-bento-filter${active ? " primary is-active" : " ghost"}`;
+        button.setAttribute("aria-pressed", String(active));
+      }
+    }
+    for (const filter of BENTO_FILTERS3) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.filter = filter.id;
+      button.textContent = filter.name;
+      button.addEventListener("click", () => applyFilter(filter.id));
+      filterButtons.push(button);
+      filters.appendChild(button);
+    }
+    applyFilter("all");
+  }
+  function renderCatalog2(container, ctx2, entries2, onOpen) {
+    const mode = currentDeckMode(ctx2.state);
+    if (mode === "bento") renderBento3(container, ctx2, entries2, onOpen);
+    else renderShelf3(container, ctx2, entries2, onOpen);
+  }
+  function renderFateDeck(container, ctx2) {
+    const { state: state2 } = ctx2;
+    const entries2 = deckEntries(state2);
+    const metCount = entries2.filter((entry) => entry.met).length;
+    container.appendChild(header(
+      ctx2,
+      "\u041A\u043E\u043B\u043E\u0434\u0430 \u0441\u0443\u0434\u044C\u0431\u044B",
+      `\u041E\u0442\u043A\u0440\u044B\u0442\u043E ${metCount} \u0438\u0437 ${TOTAL} \u043A\u0430\u0440\u0442. \u041D\u043E\u0432\u044B\u0435 \u043A\u0430\u0440\u0442\u044B \u043F\u0440\u0438\u0445\u043E\u0434\u044F\u0442 \u0441 \u0433\u043E\u0441\u0442\u044F\u043C\u0438 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u043E\u0432.`,
+      ["hub", { scene: "cabinet" }]
+    ));
+    let profile = null;
+    function closeProfile() {
+      if (!profile) return;
+      window.removeEventListener("keydown", profile.onKey);
+      profile.overlay.remove();
+      profile = null;
+    }
+    function openProfile(cardId) {
+      let index = entries2.findIndex((entry) => entry.card.id === cardId);
+      if (index < 0) return;
+      if (!entries2[index].met) {
+        ctx2.toast("\u042D\u0442\u0430 \u043A\u0430\u0440\u0442\u0430 \u0435\u0449\u0451 \u043D\u0435 \u0432\u0441\u0442\u0440\u0435\u0447\u0430\u043B\u0430\u0441\u044C \u0432 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u0430\u0445. \u0417\u0430\u0433\u043B\u044F\u0434\u044B\u0432\u0430\u0439 \u043A \u0433\u043E\u0441\u0442\u044F\u043C \u043F\u043E\u0447\u0430\u0449\u0435!");
+        return;
+      }
+      closeProfile();
+      const overlay = document.createElement("div");
+      overlay.className = "overlay deck-profile-overlay";
+      const panel = document.createElement("section");
+      panel.className = "deck-profile";
+      panel.setAttribute("role", "dialog");
+      panel.setAttribute("aria-modal", "true");
+      overlay.appendChild(panel);
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) closeProfile();
+      });
+      document.body.appendChild(overlay);
+      const onKey = (event) => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeProfile();
+        }
+      };
+      window.addEventListener("keydown", onKey);
+      profile = { overlay, onKey };
+      function show() {
+        const entry = entries2[index];
+        const { card } = entry;
+        panel.setAttribute("aria-label", entry.met ? `\u041A\u0430\u0440\u0442\u0430: ${card.name}` : "\u041A\u0430\u0440\u0442\u0430 \u0435\u0449\u0451 \u043D\u0435 \u0432\u0441\u0442\u0440\u0435\u0447\u0435\u043D\u0430");
+        panel.innerHTML = "";
+        const top = document.createElement("div");
+        top.className = "deck-profile-top";
+        const prev = document.createElement("button");
+        prev.type = "button";
+        prev.className = "small ghost deck-profile-prev";
+        prev.textContent = "\u2190 \u041F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0430\u044F";
+        const counter = document.createElement("span");
+        counter.className = "deck-profile-counter";
+        counter.textContent = `${index + 1} / ${entries2.length}`;
+        const next = document.createElement("button");
+        next.type = "button";
+        next.className = "small ghost deck-profile-next";
+        next.textContent = "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192";
+        const close = document.createElement("button");
+        close.type = "button";
+        close.className = "small ghost deck-profile-close";
+        close.textContent = "\u2715 \u0417\u0430\u043A\u0440\u044B\u0442\u044C";
+        prev.addEventListener("click", () => {
+          index = (index - 1 + entries2.length) % entries2.length;
+          ctx2.sfx?.("page");
+          show();
+        });
+        next.addEventListener("click", () => {
+          index = (index + 1) % entries2.length;
+          ctx2.sfx?.("page");
+          show();
+        });
+        close.addEventListener("click", closeProfile);
+        top.append(prev, counter, next, close);
+        const layout = document.createElement("div");
+        layout.className = "deck-profile-layout";
+        const mediaBox = document.createElement("div");
+        mediaBox.className = "deck-profile-media-box";
+        mediaBox.appendChild(makeCardMedia(entry, "deck-profile-media"));
+        layout.appendChild(mediaBox);
+        const body = document.createElement("div");
+        body.className = "deck-profile-body";
+        body.append(makeName3(entry), makeStatus2(entry));
+        if (entry.met) {
+          const levels = metInLevels(state2, card.id);
+          if (levels.length > 0) {
+            const places = document.createElement("div");
+            places.className = "deck-profile-levels";
+            const shown = levels.slice(0, 5).map((level) => `\xAB${level.name}\xBB`).join(", ");
+            places.textContent = `\u0420\u0430\u0441\u043A\u043B\u0430\u0434\u044B \u0441 \u044D\u0442\u043E\u0439 \u043A\u0430\u0440\u0442\u043E\u0439: ${shown}${levels.length > 5 ? ` \u0438 \u0435\u0449\u0451 ${levels.length - 5}` : ""}`;
+            body.appendChild(places);
+          }
+        } else {
+          const hint2 = document.createElement("div");
+          hint2.className = "deck-profile-hint muted";
+          hint2.textContent = "\u041A\u043E\u043B\u043E\u0434\u0430 \u0440\u0430\u0441\u0442\u0451\u0442: \u043D\u043E\u0432\u0430\u044F \u043A\u0430\u0440\u0442\u0430 \u043F\u0440\u0438\u0445\u043E\u0434\u0438\u0442 \u0432\u043C\u0435\u0441\u0442\u0435 \u0441 \u043D\u043E\u0432\u044B\u043C \u0433\u043E\u0441\u0442\u0435\u043C \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u043E\u0432.";
+          body.appendChild(hint2);
+        }
+        layout.appendChild(body);
+        panel.append(top, layout);
+        close.focus?.();
+      }
+      show();
+      ctx2.sfx?.("page");
+    }
+    const layoutPanel = document.createElement("div");
+    layoutPanel.className = "panel deck-layout-panel";
+    const layoutLabel = document.createElement("div");
+    layoutLabel.className = "deck-layout-label";
+    layoutLabel.textContent = "\u0412\u0438\u0434 \u043A\u043E\u043B\u043E\u0434\u044B";
+    const catalogHost = document.createElement("div");
+    catalogHost.className = "deck-catalog-host";
+    const rerenderCatalog = () => {
+      closeProfile();
+      catalogHost.innerHTML = "";
+      renderCatalog2(catalogHost, ctx2, entries2, openProfile);
+    };
+    layoutPanel.append(layoutLabel, createModePicker2(ctx2, rerenderCatalog));
+    container.append(layoutPanel, catalogHost);
+    renderCatalog2(catalogHost, ctx2, entries2, openProfile);
+    container.appendChild(quickNav(ctx2, [
+      { icon: "\u{1F98C}", label: "\u0412 \u043A\u0430\u0431\u0438\u043D\u0435\u0442", screen: "hub", params: { scene: "cabinet" } }
+    ]));
+    return closeProfile;
+  }
+
   // src/ui/storyView.js
   function renderStory(container, ctx2) {
     const { state: state2 } = ctx2;
@@ -29339,6 +29762,7 @@
     achievements: (c, p) => renderAchievements(c, ctx, p),
     brewbook: (c, p) => renderBrewBook(c, ctx, p),
     guests: (c, p) => renderGuestBook(c, ctx, p),
+    deck: (c, p) => renderFateDeck(c, ctx, p),
     story: (c, p) => renderStory(c, ctx, p),
     sandbox: (c, p) => renderSandbox(c, ctx, p),
     board: (c, p) => renderBoard(c, ctx, p),

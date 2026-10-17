@@ -1299,6 +1299,24 @@ facing viewer, plain warm dark background, no text, no watermark --ar 1:1
 `art: null` на путь в `game/src/data/brewGuests.js` — гостевая книга подхватит
 автоматически.
 
+### 16.12 Рубашка колоды — card_back.png (1 шт)
+
+Рубашка для ещё не встреченных карт на странице «Колода судьбы». Та же рамка
+и пропорции, что у лицевых карт (16.2), но зеркально-тёмная гамма и строгая
+симметрия — рубашка должна читаться как «оборот той же колоды»:
+
+```
+hand-painted fortune-teller card back, cozy storybook watercolor with gentle
+ink outlines, symmetrical ornamental pattern of interwoven vines and tiny
+stars around a small central crescent moon emblem, on aged deep-indigo card
+stock, thin dark-wood ornamental frame border, warm candlelit palette of
+amber, deep brown and midnight blue, perfectly symmetrical, centered,
+no text, no letters, no watermark --ar 2:3
+```
+
+После генерации: сжать в `game/assets/fate/card_back_web.jpg`. До появления
+файла игра молча рисует CSS-рубашку (градиент + 🌙).
+
 ## 18. Иконки предметов — assets/items/<id>_web.jpg (оружие, потом остальное)
 
 Переходим с эмодзи на полноценные иконки. Код уже умеет подхватывать арт:
@@ -1461,7 +1479,7 @@ fate, battle, equip, shop. Волна 2 — остальные.
 
 | Файл (без .png) | Сюжет (SUBJECT) | Кончик смотрит в |
 |---|---|---|
-| default | a goose quill pen angled like an arrow cursor, tip down-left | левый верх (4,2) |
+| default | a goose quill pen angled like an arrow cursor, tip down-left | левый низ (4,28) |
 | hub_lavka | a tiny hanging shop lantern with a warm candle flame, handle up | верх (8,4) |
 | hub_square | a wrought-iron street lantern on a small post | левый верх (6,4) |
 | hub_market | a tiny merchant's brass balance scale | верх (16,4) |
