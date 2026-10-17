@@ -69,6 +69,19 @@ test('applyCursor ставит body.dataset.cursor и держит сцену х
   assert.equal(body.dataset.cursor, 'hub_lavka');
 });
 
+test('applyCursor: выключенные тематические курсоры снимают тему', () => {
+  const body = { dataset: { cursor: 'brew' } };
+  const state = { settings: { themedCursors: false } };
+  applyCursor('equip', {}, state, body);
+  assert.equal(body.dataset.cursor, undefined, 'без настройки темы — обычный курсор браузера');
+  applyCursor('hub', { scene: 'square' }, state, body);
+  assert.equal(body.dataset.cursor, undefined);
+  // Включили обратно — темы возвращаются
+  state.settings.themedCursors = true;
+  applyCursor('equip', {}, state, body);
+  assert.equal(body.dataset.cursor, 'equip');
+});
+
 test('styles.css содержит оба правила на каждую тему с тем же хотспотом', () => {
   const css = fs.readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
   const keys = Object.keys(CURSOR_THEMES);

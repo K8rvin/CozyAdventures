@@ -15604,7 +15604,7 @@
       // игрок пропустил обучение целиком
       story: newStoryState(),
       // режим истории: шаг, круг гостей, память визитов
-      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true },
+      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true, themedCursors: true },
       // настройки (бой, каталоги)
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
@@ -15641,6 +15641,7 @@
     state2.settings.puzzleCatalogMode ??= "shelf";
     state2.settings.guestCatalogMode ??= "shelf";
     state2.settings.storyMode ??= true;
+    state2.settings.themedCursors ??= true;
     state2.story ||= newStoryState();
     state2.story.guests ||= {};
     state2.story.guestCursor ||= 0;
@@ -17140,6 +17141,10 @@
   }
   function applyCursor(name, params = {}, state2 = null, body = document.body) {
     if (!body) return;
+    if (state2?.settings?.themedCursors === false) {
+      delete body.dataset.cursor;
+      return;
+    }
     const prev = body.dataset?.cursor;
     let key = cursorForRoute(name, params, state2);
     if (name === "hub" && !params.scene && prev && CURSOR_THEMES[prev] && prev.startsWith("hub_")) {
@@ -27153,6 +27158,25 @@
       }
     }));
     container.appendChild(puzzleSec);
+    const cursorSec = makeSection("\u{1F5B1}\uFE0F \u041A\u0443\u0440\u0441\u043E\u0440\u044B");
+    cursorSec.appendChild(makeToggleRow({
+      name: "\u0422\u0435\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043A\u0443\u0440\u0441\u043E\u0440\u044B",
+      hint: "\u0423 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0440\u0435\u0436\u0438\u043C\u0430 \u0441\u0432\u043E\u0439 \u043A\u0443\u0440\u0441\u043E\u0440: \u043B\u0443\u043F\u0430 \u0432 \u043F\u043E\u0438\u0441\u043A\u0435, \u043A\u043E\u043B\u0431\u0430 \u0432 \u0432\u0430\u0440\u043A\u0435. \u0412\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u043E \u2014 \u043E\u0431\u044B\u0447\u043D\u0430\u044F \u0441\u0442\u0440\u0435\u043B\u043A\u0430 \u0432\u0435\u0437\u0434\u0435.",
+      get: () => state2.settings.themedCursors !== false,
+      flip: () => {
+        state2.settings.themedCursors = state2.settings.themedCursors === false;
+        ctx2.save();
+        ctx2.sfx?.("tap");
+        const on = state2.settings.themedCursors !== false;
+        const body = globalThis.document?.body;
+        if (body?.dataset) {
+          if (on) body.dataset.cursor = "default";
+          else delete body.dataset.cursor;
+        }
+        return on;
+      }
+    }));
+    container.appendChild(cursorSec);
     const helpSec = makeSection("\u{1F408} \u041F\u043E\u043C\u043E\u0449\u044C");
     helpSec.appendChild(makeActionRow({
       name: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435",

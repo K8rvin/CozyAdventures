@@ -122,6 +122,26 @@ export function renderSettings(container, ctx) {
   }));
   container.appendChild(puzzleSec);
 
+  const cursorSec = makeSection('🖱️ Курсоры');
+  cursorSec.appendChild(makeToggleRow({
+    name: 'Тематические курсоры',
+    hint: 'У каждого режима свой курсор: лупа в поиске, колба в варке. Выключено — обычная стрелка везде.',
+    get: () => state.settings.themedCursors !== false,
+    flip: () => {
+      state.settings.themedCursors = state.settings.themedCursors === false;
+      ctx.save();
+      ctx.sfx?.('tap');
+      const on = state.settings.themedCursors !== false;
+      const body = globalThis.document?.body;
+      if (body?.dataset) {
+        if (on) body.dataset.cursor = 'default';
+        else delete body.dataset.cursor;
+      }
+      return on;
+    },
+  }));
+  container.appendChild(cursorSec);
+
   const helpSec = makeSection('🐈 Помощь');
   helpSec.appendChild(makeActionRow({
     name: 'Обучение',

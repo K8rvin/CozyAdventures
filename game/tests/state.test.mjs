@@ -310,6 +310,7 @@ test('миграция старого сейва: настройки катал�
   delete old.settings.keepBookOpen; // сейв до появления настройки уютной варки
   delete old.settings.puzzleCatalogMode; // сейв до появления вариантов каталога
   delete old.settings.guestCatalogMode; // сейв до появления гостевой книги
+  delete old.settings.themedCursors; // сейв до появления настройки курсоров
   const mem = { cozy_adventures_save_v2: JSON.stringify(old) };
   const storage = {
     getItem: (k) => mem[k] ?? null,
@@ -319,6 +320,7 @@ test('миграция старого сейва: настройки катал�
   assert.equal(loaded.settings.keepBookOpen, false, 'прежнее поведение: рецепт по памяти');
   assert.equal(loaded.settings.puzzleCatalogMode, 'shelf', 'каталог по умолчанию показывается полкой');
   assert.equal(loaded.settings.guestCatalogMode, 'shelf', 'гостевая книга по умолчанию показывается полкой');
+  assert.equal(loaded.settings.themedCursors, true, 'тематические курсоры по умолчанию включены');
 });
 
 test('новинки прилавка: появились, видны, гаснут после визита', () => {

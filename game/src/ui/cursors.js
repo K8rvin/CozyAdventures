@@ -62,6 +62,11 @@ export function cursorForRoute(name, params = {}, state = null) {
 // Вызывается роутером после отрисовки экрана.
 export function applyCursor(name, params = {}, state = null, body = document.body) {
   if (!body) return;
+  // Настройка «стандартный курсор»: снимаем тему, браузер рисует обычную стрелку
+  if (state?.settings?.themedCursors === false) {
+    delete body.dataset.cursor;
+    return;
+  }
   const prev = body.dataset?.cursor;
   let key = cursorForRoute(name, params, state);
   // Хаб без явной сцены — остаёмся на прошлой hub_*-теме
