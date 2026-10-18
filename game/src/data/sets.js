@@ -33,4 +33,29 @@ export const SETS = {
       9: { traits: ['pierce'], desc: 'Глаз мастера: пробитие брони вдвое' },
     },
   },
+  // --- Сеты миров-сателлитов ---
+  swamp: {
+    name: 'Топь',
+    tiers: {
+      3: { stats: { }, resist: { poison: 0.15, sleep: 0.15 }, desc: 'Дыхание топи: сопр. яду и сну +15%' },
+      6: { traits: ['bonus_spirit', 'lifesteal_small'], desc: 'Ведьмин круг: урон по духам ×1.3, вампиризм' },
+      9: { traits: ['regen_ally'], desc: 'Милость Хозяйки: регенерация всю битву' },
+    },
+  },
+  fair: {
+    name: 'Ярмарка',
+    tiers: {
+      3: { stats: { goldFind: 0.15 }, desc: 'Звон монет: монеты после боя +15%' },
+      6: { stats: { itemFind: 0.1 }, traits: ['first_hit_reduction'], desc: 'Счастливый билет: находки +10%, первый удар слабее на 20%' },
+      9: { stats: { goldFind: 0.25, itemFind: 0.1 }, desc: 'Звезда ярмарки: монеты +25%, находки ещё +10%' },
+    },
+  },
+  ember: {
+    name: 'Пепел',
+    tiers: {
+      3: { stats: { attack: 8 }, desc: 'Жар горна: атака +8' },
+      6: { stats: { crit: 0.08 }, desc: 'Разгорание: крит +8%' },
+      9: { traits: ['pierce'], desc: 'Белый кал: броня врага считается вдвое слабее' },
+    },
+  },
 };

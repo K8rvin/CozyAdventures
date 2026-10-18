@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { ITEMS, ITEM_BY_ID } from '../src/data/items.js';
+import { SHOP_STOCK } from '../src/data/shop.js';
 import {
   emptyEquipment, equip, unequip, collectStats, isShieldBlocked, KNIGHT_BASE, SLOTS, describeItem,
 } from '../src/core/items.js';
@@ -110,6 +111,71 @@ test('не-сетовые предметы не дают сетовых бону
   equip(eq, 'arm_padded');
   const r = collectStats(eq);
   assert.equal(r.activeSets.length, 0);
+});
+
+test('сеты миров-сателлитов: у каждого ровно 9 предметов и все слоты', () => {
+  for (const setKey of ['swamp', 'fair', 'ember']) {
+    const pieces = ITEMS.filter((i) => i.set === setKey);
+    assert.equal(pieces.length, 9, `сет ${setKey}: должно быть 9 предметов`);
+    const slots = pieces.map((i) => i.slot);
+    for (const need of ['weapon', 'shield', 'helmet', 'armor', 'gloves', 'boots', 'amulet']) {
+      assert.ok(slots.includes(need), `сет ${setKey}: нет слота ${need}`);
+    }
+    assert.equal(slots.filter((s) => s === 'ring').length, 2, `сет ${setKey}: два кольца`);
+  }
+});
+
+test('сет «Топь»: тиры 3/6/9 дают вампиризм и регенерацию', () => {
+  const eq = emptyEquipment();
+  // Без серпа: вампиризм — только от сетового тира 6, не от предметов
+  equip(eq, 'shd_swamp_lily');
+  equip(eq, 'hlm_swamp_wreath');
+  equip(eq, 'glv_swamp_fern');
+  let r = collectStats(eq);
+  assert.ok(r.activeSets.some((s) => s.set === 'swamp' && s.tier === 3));
+  assert.ok(!r.traits.includes('lifesteal_small'), 'до тира 6 вампиризма нет');
+  equip(eq, 'arm_swamp_weave');
+  equip(eq, 'bt_swamp_moss');
+  equip(eq, 'amu_swamp_frog');
+  r = collectStats(eq);
+  assert.ok(r.traits.includes('lifesteal_small'), 'тир 6: вампиризм');
+  assert.ok(r.traits.includes('bonus_spirit'), 'тир 6: бонус против духов');
+  equip(eq, 'rng_swamp_thread');
+  equip(eq, 'rng_swamp_glow');
+  equip(eq, 'wpn_swamp_sickle');
+  r = collectStats(eq);
+  assert.ok(r.traits.includes('regen_ally'), 'тир 9: регенерация');
+});
+
+test('сет «Ярмарка»: экономика растёт по тирам', () => {
+  const eq = emptyEquipment();
+  equip(eq, 'wpn_fair_hammer');
+  equip(eq, 'shd_fair_target');
+  equip(eq, 'hlm_fair_jester');
+  const r = collectStats(eq);
+  assert.ok(Math.abs(r.stats.goldFind - 0.15) < 1e-9, 'тир 3: монеты +15% (предметы goldFind не дают)');
+  assert.ok(Math.abs(r.stats.itemFind - 0.05) < 1e-9, 'itemFind только с колпака');
+});
+
+test('сет «Пепел»: тир 9 даёт пробитие', () => {
+  const eq = emptyEquipment();
+  for (const id of ['wpn_ember_scimitar', 'shd_ember_brazier', 'hlm_ember_khan', 'arm_ember_scalemail',
+    'glv_ember_forge', 'bt_ember_storm', 'amu_ember_heart', 'rng_ember_coal', 'rng_ember_spark']) {
+    assert.ok(equip(eq, id).ok, `надевается ${id}`);
+  }
+  const r = collectStats(eq);
+  assert.ok(r.traits.includes('pierce'), 'тир 9: пробитие');
+  assert.ok(r.stats.attack >= KNIGHT_BASE.attack + 32 + 8, 'тир 3: атака сета учтена');
+});
+
+test('крафтовые части новых сетов не продаются в лавках', () => {
+  // цены 0 у крафтовых — в SHOP_STOCK их быть не должно
+  const stockIds = new Set(SHOP_STOCK.map((s) => s.itemId));
+  for (const id of ['shd_swamp_lily', 'hlm_swamp_wreath', 'amu_swamp_frog', 'rng_swamp_thread',
+    'hlm_fair_jester', 'glv_fair_magician', 'bt_fair_dancer', 'rng_fair_star',
+    'shd_ember_brazier', 'hlm_ember_khan', 'bt_ember_storm', 'amu_ember_heart']) {
+    assert.ok(!stockIds.has(id), `${id} — только крафт`);
+  }
 });
 
 test('зелья нельзя надеть в слот экипировки', () => {

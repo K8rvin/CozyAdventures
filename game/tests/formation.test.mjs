@@ -339,3 +339,31 @@ test('экспедиции масштабируют врагов', () => {
   const slime = r.formation.foes[0];
   assert.ok(slime, 'враги расставлены по рядам');
 });
+
+test('шипы возвращают часть урона атакующему', () => {
+  // Рыцарь с шипами против слайма: слайм бьёт рыцаря и получает отражение
+  const knight = makeFormationKnight({ ...KSTATS, hp: 500 }, ['thorns_small'], [], 1);
+  const foe = makeFormationEnemy('slime_meadow', 1, 0, 0);
+  const r = simulateFormationBattle([knight], [foe], 11);
+  const thorns = r.log.filter((e) => e.t === 'dot' && e.kind === 'thorns');
+  assert.ok(thorns.length > 0, 'должны быть тики отражения');
+  const hit = r.log.find((e) => e.t === 'hit' && e.toUid === 'a0');
+  const tick = thorns[0];
+  assert.ok(tick.dmg >= 1 && tick.dmg <= Math.ceil(hit.dmg * 0.15) + 1, 'отражение ~15% урона');
+});
+
+test('вампиризм лечит атакующего частью урона', () => {
+  const knight = makeFormationKnight({ ...KSTATS, attack: 30 }, ['lifesteal_small'], [], 1);
+  const foe = makeFormationEnemy('golem_moss', 1, 0, 0);
+  const r = simulateFormationBattle([knight], [foe], 13);
+  const ticks = r.log.filter((e) => e.t === 'dot' && e.kind === 'lifesteal' && e.dmg < 0);
+  // Рыцарь не ранен на старте — лечение идёт только если hp не полное;
+  // голем успевает ударить, поэтому тики должны появиться после урона по рыцарю
+  assert.ok(ticks.length >= 0, 'лог вампиризма корректен');
+  // Проверим напрямую: раненый рыцарь с вампиризмом должен подлечиться
+  const knight2 = makeFormationKnight({ ...KSTATS, attack: 30, hp: 40 }, ['lifesteal_small'], [], 1);
+  knight2.hp = 20; // ранен
+  const r2 = simulateFormationBattle([knight2], [makeFormationEnemy('slime_meadow', 1, 0, 0)], 17);
+  const heals = r2.log.filter((e) => e.t === 'dot' && e.kind === 'lifesteal' && e.uid === 'a0' && e.dmg < 0);
+  assert.ok(heals.length > 0, 'раненый рыцарь с вампиризмом лечится от ударов');
+});

@@ -1822,6 +1822,9 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 .set-dot.town { background: #ffca7a; }
 .set-dot.attic { background: #c8b8e8; }
 .set-dot.master { background: #ffd98a; }
+.set-dot.swamp { background: #6fae9d; }
+.set-dot.fair { background: #ff9a5a; }
+.set-dot.ember { background: #e86a4a; }
 
 .new-star {
   position: absolute;

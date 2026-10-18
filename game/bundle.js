@@ -691,9 +691,579 @@
       hand: "one",
       type: "shield",
       rarity: "rare",
-      price: 580,
+      price: 230,
       stats: { armor: 10, dodge: 0.05, hp: 8 },
       description: "\u041A\u0440\u044B\u0448\u043A\u0430 \u0434\u0440\u0435\u0432\u043D\u0435\u0433\u043E \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u0430 \u043D\u0430 \u0440\u0435\u043C\u043D\u0435. \u041B\u0435\u0433\u0447\u0435 \u0434\u0435\u0440\u0435\u0432\u0430, \u043A\u0440\u0435\u043F\u0447\u0435 \u043A\u043E\u0436\u0438."
+    }
+  );
+  ITEMS.push(
+    {
+      id: "wpn_swamp_sickle",
+      set: "swamp",
+      name: "\u0421\u0435\u0440\u043F \u0442\u0440\u044F\u0441\u0438\u0447\u043D\u043E\u0439 \u0432\u0435\u0434\u044C\u043C\u044B",
+      slot: "weapon",
+      hand: "one",
+      type: "dagger",
+      rarity: "epic",
+      price: 420,
+      stats: { attack: 26, crit: 0.08, speed: 2 },
+      traits: ["lifesteal_small"],
+      description: "\u041A\u0440\u0438\u0432\u043E\u0439, \u043A\u0430\u043A \u043C\u0435\u0441\u044F\u0446 \u043D\u0430\u0434 \u0442\u043E\u043F\u044C\u044E. \u041F\u044C\u0451\u0442 \u0447\u0443\u0436\u0443\u044E \u0431\u043E\u043B\u044C."
+    },
+    {
+      id: "shd_swamp_lily",
+      set: "swamp",
+      name: "\u0429\u0438\u0442-\u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0430",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "rare",
+      price: 0,
+      stats: { armor: 16, hp: 12, dodge: 0.05, resist: { poison: 0.2 } },
+      description: "\u041F\u043B\u043E\u0442\u043D\u0430\u044F, \u043A\u0430\u043A \u043B\u0438\u0441\u0442 \u0432\u0435\u043B\u0438\u043A\u0430\u043D\u0430-\u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0438. \u0412\u043E\u0434\u0430 \u0441\u043A\u0430\u0442\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C\u0430."
+    },
+    {
+      id: "hlm_swamp_wreath",
+      set: "swamp",
+      name: "\u0412\u0435\u043D\u043E\u043A \u0431\u043E\u043B\u043E\u0442\u043D\u044B\u0445 \u043E\u0433\u043E\u043D\u044C\u043A\u043E\u0432",
+      slot: "helmet",
+      type: "helmet",
+      rarity: "rare",
+      price: 0,
+      stats: { hp: 20, resist: { sleep: 0.3, poison: 0.2 } },
+      description: "\u041E\u0433\u043E\u043D\u044C\u043A\u0438 \u043A\u0440\u0443\u0436\u0430\u0442 \u043D\u0430\u0434 \u0433\u043E\u043B\u043E\u0432\u043E\u0439 \u0438 \u0436\u0443\u0436\u0436\u0430\u0442 \u043A\u043E\u043B\u044B\u0431\u0435\u043B\u044C\u043D\u0443\u044E \u043D\u0430\u043E\u0431\u043E\u0440\u043E\u0442."
+    },
+    {
+      id: "arm_swamp_weave",
+      set: "swamp",
+      name: "\u041F\u043B\u0430\u0449 \u0441\u043F\u043B\u0435\u0442\u0451\u043D\u043D\u043E\u0433\u043E \u0442\u0443\u043C\u0430\u043D\u0430",
+      slot: "armor",
+      type: "armor",
+      rarity: "epic",
+      price: 460,
+      stats: { armor: 26, hp: 14, resist: { poison: 0.25 } },
+      description: "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439 \u0442\u043A\u0451\u0442 \u0435\u0433\u043E \u043F\u043E \u043D\u043E\u0447\u0430\u043C, \u043F\u0443\u0442\u0430\u044F \u043D\u0438\u0442\u0438 \u0441 \u0442\u0440\u043E\u043F\u0430\u043C\u0438."
+    },
+    {
+      id: "glv_swamp_fern",
+      set: "swamp",
+      name: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u043F\u0430\u043F\u043E\u0440\u043E\u0442\u043D\u0438\u043A\u0430",
+      slot: "gloves",
+      type: "gloves",
+      rarity: "rare",
+      price: 300,
+      stats: { attack: 5, resist: { poison: 0.2 } },
+      description: "\u041F\u0430\u0445\u043D\u0443\u0442 \u0442\u0438\u043D\u043E\u0439 \u0438 \u0447\u0443\u0436\u0438\u043C\u0438 \u0441\u0435\u043A\u0440\u0435\u0442\u0430\u043C\u0438."
+    },
+    {
+      id: "bt_swamp_moss",
+      set: "swamp",
+      name: "\u041C\u0448\u0438\u0441\u0442\u044B\u0435 \u0441\u0442\u0443\u043F\u043D\u0438",
+      slot: "boots",
+      type: "boots",
+      rarity: "rare",
+      price: 320,
+      stats: { speed: 3, dodge: 0.06, hp: 8 },
+      description: "\u0428\u0430\u0433 \u0432 \u043D\u0438\u0445 \u043C\u044F\u0433\u043E\u043A, \u043A\u0430\u043A \u043F\u043E\u0434\u0445\u043E\u0434 \u043A \u0447\u0443\u0436\u043E\u043C\u0443 \u043A\u043E\u0441\u0442\u0440\u0443."
+    },
+    {
+      id: "amu_swamp_frog",
+      set: "swamp",
+      name: "\u0416\u0430\u0431\u0438\u0439 \u043E\u0431\u0435\u0440\u0435\u0433",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "rare",
+      price: 0,
+      stats: { hp: 16, resist: { poison: 0.3 } },
+      description: "\u0422\u0438\u0445\u043E \u043A\u0432\u0430\u043A\u0430\u0435\u0442, \u043A\u043E\u0433\u0434\u0430 \u0440\u044F\u0434\u043E\u043C \u044F\u0434."
+    },
+    {
+      id: "rng_swamp_thread",
+      set: "swamp",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0432\u0435\u0434\u044C\u043C\u0438\u043D\u043E\u0439 \u043D\u0438\u0442\u0438",
+      slot: "ring",
+      type: "ring",
+      rarity: "epic",
+      price: 0,
+      stats: { attack: 4, speed: 1, resist: { sleep: 0.15 } },
+      description: "\u041D\u0438\u0442\u044C \u0441\u0430\u043C\u0430 \u043D\u0430\u0445\u043E\u0434\u0438\u0442 \u0441\u043B\u0430\u0431\u044B\u0435 \u043C\u0435\u0441\u0442\u0430."
+    },
+    {
+      id: "rng_swamp_glow",
+      set: "swamp",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0441\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u044B",
+      slot: "ring",
+      type: "ring",
+      rarity: "epic",
+      price: 360,
+      stats: { hp: 10, crit: 0.04 },
+      description: "\u0421\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u0442\u0435\u043C \u044F\u0440\u0447\u0435, \u0447\u0435\u043C \u0442\u0435\u043C\u043D\u0435\u0435 \u043C\u0435\u0441\u0442\u043E."
+    }
+  );
+  ITEMS.push(
+    {
+      id: "wpn_fair_hammer",
+      set: "fair",
+      name: "\u041C\u043E\u043B\u043E\u0442\u043E\u043A \u0441\u0438\u043B\u044C\u043D\u043E\u043C\u0435\u0440\u0430",
+      slot: "weapon",
+      hand: "one",
+      type: "mace",
+      rarity: "epic",
+      price: 450,
+      stats: { attack: 30, speed: -1 },
+      description: "\u0421\u0442\u043E\u0438\u043B\u043E \u0437\u0432\u043E\u043D\u043A\u0430 \u2014 \u043F\u043E\u043B\u0443\u0447\u0438 \u043F\u0440\u0438\u0437."
+    },
+    {
+      id: "shd_fair_target",
+      set: "fair",
+      name: "\u0429\u0438\u0442-\u043C\u0438\u0448\u0435\u043D\u044C \u0442\u0438\u0440\u0430",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "rare",
+      price: 340,
+      stats: { armor: 18, block: 0.2, hp: 10 },
+      description: "\u041F\u043E\u043F\u0430\u0434\u0438 \u0432 \u0434\u0435\u0441\u044F\u0442\u043A\u0443 \u2014 \u0437\u0430\u0441\u0447\u0438\u0442\u0430\u043D\u043E."
+    },
+    {
+      id: "hlm_fair_jester",
+      set: "fair",
+      name: "\u041A\u043E\u043B\u043F\u0430\u043A \u0437\u0432\u0451\u0437\u0434\u043D\u043E\u0433\u043E \u0448\u0443\u0442\u0430",
+      slot: "helmet",
+      type: "helmet",
+      rarity: "rare",
+      price: 0,
+      stats: { hp: 16, dodge: 0.06, itemFind: 0.05 },
+      description: "\u0411\u0443\u0431\u0435\u043D\u0447\u0438\u043A\u0438 \u0437\u0432\u0435\u043D\u044F\u0442 \u0440\u043E\u0432\u043D\u043E \u0442\u043E\u0433\u0434\u0430, \u043A\u043E\u0433\u0434\u0430 \u0442\u044B \u0443\u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F."
+    },
+    {
+      id: "arm_fair_vest",
+      set: "fair",
+      name: "\u041A\u0430\u043C\u0437\u043E\u043B \u0431\u0430\u0440\u0430\u0445\u043E\u043B\u044C\u0449\u0438\u043A\u0430",
+      slot: "armor",
+      type: "armor",
+      rarity: "epic",
+      price: 440,
+      stats: { armor: 24, hp: 12, goldFind: 0.1 },
+      description: "\u0412 \u043A\u0430\u0436\u0434\u043E\u043C \u043A\u0430\u0440\u043C\u0430\u043D\u0435 \u043F\u043E \u043C\u043E\u043D\u0435\u0442\u043A\u0435. \u0418 \u0435\u0449\u0451 \u043E\u0434\u043D\u0430 \u2014 \u0432 \u043F\u043E\u0434\u043A\u043B\u0430\u0434\u043A\u0435."
+    },
+    {
+      id: "glv_fair_magician",
+      set: "fair",
+      name: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0444\u043E\u043A\u0443\u0441\u043D\u0438\u043A\u0430",
+      slot: "gloves",
+      type: "gloves",
+      rarity: "rare",
+      price: 0,
+      stats: { attack: 4, itemFind: 0.08, crit: 0.03 },
+      description: "\u0422\u0435\u043F\u0435\u0440\u044C \u0442\u044B \u0432\u0438\u0434\u0438\u0448\u044C, \u043E\u0442\u043A\u0443\u0434\u0430 \u043C\u043E\u043D\u0435\u0442\u0430."
+    },
+    {
+      id: "bt_fair_dancer",
+      set: "fair",
+      name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u043A\u0430\u043D\u0430\u0442\u043E\u0445\u043E\u0434\u0446\u0430",
+      slot: "boots",
+      type: "boots",
+      rarity: "epic",
+      price: 0,
+      stats: { speed: 4, dodge: 0.07 },
+      description: "\u041D\u0430\u0442\u044F\u043D\u0443\u0442\u0430\u044F \u043F\u0440\u043E\u0432\u043E\u043B\u043E\u043A\u0430? \u0423\u0434\u043E\u0431\u043D\u043E."
+    },
+    {
+      id: "amu_fair_ticket",
+      set: "fair",
+      name: "\u041C\u0435\u0434\u0430\u043B\u044C\u043E\u043D \u0432\u0435\u0447\u043D\u043E\u0433\u043E \u0431\u0438\u043B\u0435\u0442\u0430",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "epic",
+      price: 400,
+      stats: { hp: 12, goldFind: 0.12 },
+      description: "\u0414\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043B\u0435\u043D \u0432\u043E \u0432\u0441\u0435\u0445 \u043C\u0438\u0440\u0430\u0445. \u041F\u0440\u043E\u043F\u0443\u0441\u043A \u043E\u0434\u0438\u043D \u2014 \u0443\u0434\u0430\u0447\u0430 \u0432\u0435\u0437\u0434\u0435."
+    },
+    {
+      id: "rng_fair_coin",
+      set: "fair",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0441\u0447\u0430\u0441\u0442\u043B\u0438\u0432\u043E\u0439 \u043C\u043E\u043D\u0435\u0442\u044B",
+      slot: "ring",
+      type: "ring",
+      rarity: "rare",
+      price: 330,
+      stats: { goldFind: 0.1, itemFind: 0.05 },
+      description: "\u041E\u0440\u0451\u043B \u0438\u043B\u0438 \u0440\u0435\u0448\u043A\u0430 \u2014 \u0442\u044B \u0432\u0441\u0451 \u0440\u0430\u0432\u043D\u043E \u0432\u044B\u0438\u0433\u0440\u0430\u043B."
+    },
+    {
+      id: "rng_fair_star",
+      set: "fair",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0437\u0432\u0435\u0437\u0434\u044B \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430",
+      slot: "ring",
+      type: "ring",
+      rarity: "epic",
+      price: 0,
+      stats: { attack: 3, crit: 0.05, goldFind: 0.05 },
+      description: "\u0412\u044B\u0434\u0430\u043D\u043E \u043B\u0438\u0447\u043D\u043E \u0427\u0435\u043C\u043F\u0438\u043E\u043D\u043E\u043C \u043C\u0438\u0440\u043E\u0432."
+    }
+  );
+  ITEMS.push(
+    {
+      id: "wpn_ember_scimitar",
+      set: "ember",
+      name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u0430\u044F \u0441\u0430\u0431\u043B\u044F",
+      slot: "weapon",
+      hand: "one",
+      type: "sword",
+      rarity: "epic",
+      price: 480,
+      stats: { attack: 32, crit: 0.06 },
+      description: "\u041B\u0435\u0437\u0432\u0438\u0435 \u043F\u043E\u043C\u043D\u0438\u0442 \u0436\u0430\u0440 \u0433\u043E\u0440\u043D\u0430 \u0438 \u043F\u0440\u043E\u0441\u0438\u0442 \u0435\u0449\u0451."
+    },
+    {
+      id: "shd_ember_brazier",
+      set: "ember",
+      name: "\u0429\u0438\u0442-\u0436\u0430\u0440\u043E\u0432\u043D\u044F",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "epic",
+      price: 0,
+      stats: { armor: 20, block: 0.18 },
+      traits: ["thorns_small"],
+      description: "\u041A\u0442\u043E \u0443\u0434\u0430\u0440\u0438\u0442 \u2014 \u043E\u0431\u043E\u0436\u0436\u0451\u0442\u0441\u044F."
+    },
+    {
+      id: "hlm_ember_khan",
+      set: "ember",
+      name: "\u041F\u043E\u043B\u0443\u043C\u0430\u0441\u043A\u0430 \u0445\u0430\u043D\u0430 \u0431\u0443\u0440\u044C",
+      slot: "helmet",
+      type: "helmet",
+      rarity: "epic",
+      price: 0,
+      stats: { hp: 22, attack: 4 },
+      description: "\u0428\u043A\u0443\u0440\u0430 \u0441\u0442\u0435\u043F\u043D\u043E\u0433\u043E \u0437\u0432\u0435\u0440\u044F. \u0412 \u043D\u0435\u0439 \u0441\u043B\u044B\u0448\u0435\u043D \u0432\u0435\u0442\u0435\u0440."
+    },
+    {
+      id: "arm_ember_scalemail",
+      set: "ember",
+      name: "\u0427\u0435\u0448\u0443\u0439\u043D\u0430\u044F \u043A\u043E\u043B\u044C\u0447\u0443\u0433\u0430 \u0441\u0442\u0435\u043F\u0435\u0439",
+      slot: "armor",
+      type: "armor",
+      rarity: "epic",
+      price: 500,
+      stats: { armor: 28, hp: 16, resist: { fire: 0.2 } },
+      description: "\u0427\u0435\u0448\u0443\u044F \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u044F\u0449\u0435\u0440\u043E\u0432. \u041D\u0435 \u0433\u043E\u0440\u0438\u0442."
+    },
+    {
+      id: "glv_ember_forge",
+      set: "ember",
+      name: "\u0420\u0443\u043A\u0430\u0432\u0438\u0446\u044B \u0433\u043E\u0440\u043D\u0430",
+      slot: "gloves",
+      type: "gloves",
+      rarity: "rare",
+      price: 360,
+      stats: { attack: 7, resist: { fire: 0.25 } },
+      description: "\u041C\u043E\u0436\u043D\u043E \u0431\u0440\u0430\u0442\u044C \u0443\u0433\u043B\u0438 \u0433\u043E\u043B\u044B\u043C\u0438 \u0440\u0443\u043A\u0430\u043C\u0438. \u041F\u043E\u0447\u0442\u0438."
+    },
+    {
+      id: "bt_ember_storm",
+      set: "ember",
+      name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438",
+      slot: "boots",
+      type: "boots",
+      rarity: "epic",
+      price: 0,
+      stats: { speed: 3, attack: 3, dodge: 0.04 },
+      description: "\u0421\u043B\u0435\u0434 \u043F\u043E\u0441\u043B\u0435 \u043D\u0438\u0445 \u0442\u043B\u0435\u0435\u0442 \u0435\u0449\u0451 \u0447\u0430\u0441."
+    },
+    {
+      id: "amu_ember_heart",
+      set: "ember",
+      name: "\u0410\u043C\u0443\u043B\u0435\u0442 \u0441\u0435\u0440\u0434\u0446\u0430 \u0431\u0443\u0440\u0438",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "epic",
+      price: 0,
+      stats: { hp: 18, attack: 5, crit: 0.04 },
+      description: "\u0411\u044C\u0451\u0442\u0441\u044F \u0432 \u0442\u0430\u043A\u0442 \u0448\u0430\u0433\u0430\u043C."
+    },
+    {
+      id: "rng_ember_coal",
+      set: "ember",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0433\u043E\u0440\u044F\u0447\u0435\u0433\u043E \u0443\u0433\u043B\u044F",
+      slot: "ring",
+      type: "ring",
+      rarity: "rare",
+      price: 350,
+      stats: { attack: 5, resist: { fire: 0.15 } },
+      description: "\u0422\u0451\u043F\u043B\u043E\u0435. \u0418\u043D\u043E\u0433\u0434\u0430 \u0447\u0435\u0441\u0442\u043D\u043E \u0436\u0436\u0451\u0442\u0441\u044F."
+    },
+    {
+      id: "rng_ember_spark",
+      set: "ember",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u043F\u0435\u0440\u0432\u043E\u0439 \u0438\u0441\u043A\u0440\u044B",
+      slot: "ring",
+      type: "ring",
+      rarity: "epic",
+      price: 380,
+      stats: { crit: 0.06, speed: 2 },
+      description: "\u0421 \u043D\u0435\u0451 \u043D\u0430\u0447\u0430\u043B\u0441\u044F \u043F\u043E\u0436\u0430\u0440. \u0425\u043E\u0440\u043E\u0448\u0438\u0439 \u043F\u043E\u0436\u0430\u0440."
+    }
+  );
+  ITEMS.push(
+    // Ночной рынок
+    {
+      id: "wpn_nm_fang",
+      name: "\u041A\u0438\u043D\u0436\u0430\u043B \u0437\u0443\u0431\u043D\u043E\u0433\u043E \u043B\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430",
+      slot: "weapon",
+      hand: "one",
+      type: "dagger",
+      rarity: "rare",
+      price: 320,
+      stats: { attack: 24, crit: 0.1 },
+      description: "\u0412\u044B\u043D\u0443\u0442 \u0431\u0435\u0437 \u0431\u043E\u043B\u0438. \u041F\u043E\u0447\u0442\u0438."
+    },
+    {
+      id: "hlm_nm_lantern",
+      name: "\u0424\u043E\u043D\u0430\u0440\u043D\u044B\u0439 \u043A\u043E\u043B\u043F\u0430\u043A",
+      slot: "helmet",
+      type: "helmet",
+      rarity: "rare",
+      price: 300,
+      stats: { hp: 18, itemFind: 0.08 },
+      description: "\u0421\u0432\u0435\u0442\u0438\u0442 \u0432 \u043E\u0431\u0435 \u0441\u0442\u043E\u0440\u043E\u043D\u044B \u0440\u044B\u043D\u043A\u0430."
+    },
+    {
+      id: "amu_nm_mask",
+      name: "\u041C\u0430\u0441\u043A\u0430 \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0433\u043E\u0441\u0442\u044F",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "epic",
+      price: 380,
+      stats: { hp: 14, dodge: 0.05 },
+      description: "\u0412 \u043D\u0435\u0439 \u0441\u0432\u043E\u0438 \u043D\u0435 \u0443\u0437\u043D\u0430\u044E\u0442. \u0418 \u0447\u0443\u0436\u0438\u0435 \u0442\u043E\u0436\u0435."
+    },
+    // Хрустальные горы
+    {
+      id: "wpn_cr_pick",
+      name: "\u041A\u0438\u0440\u043A\u0430 \u043A\u0432\u0430\u0440\u0446\u0435\u043A\u043E\u043F\u0430",
+      slot: "weapon",
+      hand: "one",
+      type: "mace",
+      rarity: "epic",
+      price: 400,
+      stats: { attack: 27, armor: 4 },
+      description: "\u0420\u0435\u0436\u0435\u0442 \u043A\u0430\u043C\u0435\u043D\u044C \u0438 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435 \u0432\u0440\u0430\u0433\u043E\u0432."
+    },
+    {
+      id: "arm_cr_crystal",
+      name: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043D\u0430\u0433\u0440\u0443\u0434\u043D\u0438\u043A",
+      slot: "armor",
+      type: "armor",
+      rarity: "epic",
+      price: 450,
+      stats: { armor: 30, speed: -2 },
+      description: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u044B\u0439, \u043D\u0435\u043F\u0440\u043E\u0431\u0438\u0432\u0430\u0435\u043C\u044B\u0439."
+    },
+    {
+      id: "rng_cr_echo",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u044D\u0445\u0430 \u0433\u043E\u0440",
+      slot: "ring",
+      type: "ring",
+      rarity: "rare",
+      price: 300,
+      stats: { attack: 3, hp: 8 },
+      description: "\u041E\u0442\u0432\u0435\u0447\u0430\u0435\u0442 \u0432\u0442\u043E\u0440\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C."
+    },
+    // Нефритовый сад
+    {
+      id: "wpn_jade_fan",
+      name: "\u0411\u043E\u0435\u0432\u043E\u0439 \u0432\u0435\u0435\u0440 \u0441\u0430\u0434\u0430",
+      slot: "weapon",
+      hand: "one",
+      type: "dagger",
+      rarity: "epic",
+      price: 420,
+      stats: { attack: 25, speed: 4, crit: 0.08 },
+      description: "\u0420\u0430\u0441\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043E\u0434\u0438\u043D \u0440\u0430\u0437. \u0425\u0432\u0430\u0442\u0430\u0435\u0442."
+    },
+    {
+      id: "bt_jade_silk",
+      name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u0447\u0430\u0439\u043D\u043E\u0439 \u0446\u0435\u0440\u0435\u043C\u043E\u043D\u0438\u0438",
+      slot: "boots",
+      type: "boots",
+      rarity: "rare",
+      price: 320,
+      stats: { speed: 4, dodge: 0.06 },
+      description: "\u041D\u0435 \u0448\u0443\u0440\u0448\u0430\u0442 \u0434\u0430\u0436\u0435 \u043F\u043E \u0433\u0440\u0430\u0432\u0438\u044E."
+    },
+    {
+      id: "amu_jade_pearl",
+      name: "\u0416\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "epic",
+      price: 420,
+      stats: { hp: 20, resist: { fear: 0.3 } },
+      description: "\u0414\u0440\u0430\u043A\u043E\u043D-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0440\u043E\u043D\u044F\u0435\u0442 \u0442\u0430\u043A\u0438\u0435 \u0432 \u043F\u0440\u0443\u0434 \u0440\u0430\u0437 \u0432 \u0441\u0442\u043E \u043B\u0435\u0442."
+    },
+    // Подводный грот
+    {
+      id: "wpn_deep_coral",
+      name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u043A\u043B\u0438\u043D\u043E\u043A",
+      slot: "weapon",
+      hand: "one",
+      type: "sword",
+      rarity: "rare",
+      price: 360,
+      stats: { attack: 26, hp: 10 },
+      description: "\u0420\u0430\u0441\u0442\u0451\u0442 \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u043E, \u0440\u0435\u0436\u0435\u0442 \u0431\u044B\u0441\u0442\u0440\u043E."
+    },
+    {
+      id: "shd_deep_shell",
+      name: "\u0429\u0438\u0442-\u0440\u0430\u043A\u043E\u0432\u0438\u043D\u0430",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "rare",
+      price: 380,
+      stats: { armor: 19, block: 0.22, resist: { slow: 0.2 } },
+      description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u0441\u043B\u044B\u0448\u043D\u043E \u043C\u043E\u0440\u0435 \u0438 \u0441\u0434\u0430\u0447\u0443 \u0432\u0440\u0430\u0433\u0430."
+    },
+    {
+      id: "rng_deep_pearl",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0433\u043B\u0443\u0431\u0438\u043D\u043D\u043E\u0439 \u0436\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u044B",
+      slot: "ring",
+      type: "ring",
+      rarity: "rare",
+      price: 340,
+      stats: { hp: 12, dodge: 0.04 },
+      description: "\u0421\u0432\u0435\u0442\u0438\u0442\u0441\u044F, \u043A\u043E\u0433\u0434\u0430 \u0433\u043B\u0443\u0431\u043E\u043A\u043E."
+    },
+    // Туманные часы
+    {
+      id: "wpn_mist_pendulum",
+      name: "\u041C\u0430\u044F\u0442\u043D\u0438\u043A\u043E\u0432\u044B\u0439 \u043A\u043B\u0438\u043D\u043E\u043A",
+      slot: "weapon",
+      hand: "one",
+      type: "sword",
+      rarity: "epic",
+      price: 460,
+      stats: { attack: 29, speed: 2 },
+      description: "\u041A\u0430\u0447\u0430\u0435\u0442\u0441\u044F \u0440\u043E\u0432\u043D\u043E \u0432 \u0442\u0430\u043A\u0442 \u0447\u0443\u0436\u043E\u043C\u0443 \u0441\u0442\u0440\u0430\u0445\u0443."
+    },
+    {
+      id: "glv_mist_gear",
+      name: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0447\u0430\u0441\u043E\u0432\u0449\u0438\u043A\u0430",
+      slot: "gloves",
+      type: "gloves",
+      rarity: "rare",
+      price: 340,
+      stats: { attack: 5, crit: 0.05 },
+      description: "\u041F\u0430\u043B\u044C\u0446\u044B \u0434\u0432\u0438\u0433\u0430\u044E\u0442\u0441\u044F \u0442\u043E\u0447\u043D\u043E \u043F\u043E \u0440\u0430\u0441\u043F\u0438\u0441\u0430\u043D\u0438\u044E."
+    },
+    {
+      id: "amu_mist_sand",
+      name: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0435\u0441\u043A\u0430 \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "epic",
+      price: 400,
+      stats: { hp: 16, resist: { slow: 0.3 } },
+      description: "\u041F\u0435\u0441\u043E\u043A \u0432\u043D\u0443\u0442\u0440\u0438 \u0441\u044B\u043F\u043B\u0435\u0442\u0441\u044F \u0432\u0432\u0435\u0440\u0445. \u0422\u0435\u0431\u0435 \u2014 \u0432\u043F\u0435\u0440\u0451\u0434."
+    }
+  );
+  ITEMS.push(
+    {
+      id: "hlm_hag_crown",
+      name: "\u041A\u043E\u0440\u043E\u043D\u0430 \u0425\u043E\u0437\u044F\u0439\u043A\u0438 \u0422\u043E\u043F\u0435\u0439",
+      slot: "helmet",
+      type: "helmet",
+      rarity: "legendary",
+      price: 0,
+      sealPrice: 4,
+      stats: { hp: 30, resist: { poison: 0.4, sleep: 0.4 } },
+      traits: ["lifesteal_small"],
+      description: "\u0422\u044F\u0436\u0435\u043B\u0430. \u0412\u043D\u0443\u0442\u0440\u0438 \u2014 \u0432\u0441\u044F \u0422\u043E\u043F\u044C."
+    },
+    {
+      id: "wpn_champion_greatsword",
+      name: "\u0417\u0432\u0435\u0437\u0434\u0430 \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430 \u043C\u0438\u0440\u043E\u0432",
+      slot: "weapon",
+      hand: "two",
+      type: "greatsword",
+      rarity: "legendary",
+      price: 0,
+      sealPrice: 6,
+      stats: { attack: 44, crit: 0.1 },
+      traits: ["cleave_small"],
+      description: "\u0415\u0451 \u0432\u0440\u0443\u0447\u0430\u044E\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u0442\u0435\u043C, \u043A\u0442\u043E \u0443\u0436\u0435 \u043F\u043E\u0431\u0435\u0434\u0438\u043B."
+    },
+    {
+      id: "amu_quartz_heart",
+      name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "legendary",
+      price: 0,
+      sealPrice: 5,
+      stats: { hp: 26, armor: 8, resist: { fear: 0.5 } },
+      traits: ["heal_after_battle"],
+      description: "\u0421\u0442\u0443\u0447\u0438\u0442 \u0440\u0430\u0437 \u0432 \u043C\u0438\u043D\u0443\u0442\u0443. \u042D\u0442\u043E\u0433\u043E \u0445\u0432\u0430\u0442\u0430\u0435\u0442."
+    },
+    {
+      id: "rng_time_loop",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u043F\u0435\u0442\u043B\u0438 \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
+      slot: "ring",
+      type: "ring",
+      rarity: "legendary",
+      price: 0,
+      sealPrice: 5,
+      stats: { speed: 5, dodge: 0.08, crit: 0.05 },
+      description: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0448\u0430\u043D\u0441. \u0418\u043D\u043E\u0433\u0434\u0430 \u0442\u0440\u0435\u0442\u0438\u0439."
+    }
+  );
+  ITEMS.push(
+    {
+      id: "pot_jade_tea",
+      name: "\u0427\u0430\u0439 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430",
+      slot: "consumable",
+      type: "potion",
+      rarity: "rare",
+      price: 90,
+      stackable: true,
+      effect: { kind: "heal", amount: 60, atHpBelow: 0.5 },
+      description: "\u0413\u043E\u0440\u044F\u0447\u0438\u0439 \u0434\u0430\u0436\u0435 \u0447\u0435\u0440\u0435\u0437 \u0433\u043E\u0434 \u0432 \u043F\u043E\u044F\u0441\u043D\u043E\u043C \u043A\u0430\u0440\u043C\u0430\u043D\u0435."
+    },
+    {
+      id: "pot_deep_air",
+      name: "\u041F\u0443\u0437\u044B\u0440\u0451\u043A \u0433\u0440\u043E\u0442\u0430",
+      slot: "consumable",
+      type: "potion",
+      rarity: "rare",
+      price: 100,
+      stackable: true,
+      effect: { kind: "shield", amount: 40, atStart: true },
+      description: "\u0413\u043B\u043E\u0442\u043E\u043A \u0432\u043E\u0437\u0434\u0443\u0445\u0430 \u0441 \u043F\u043E\u0432\u0435\u0440\u0445\u043D\u043E\u0441\u0442\u0438. \u0412 \u0431\u043E\u044E \u2014 \u043A\u0430\u043A \u0431\u0440\u043E\u043D\u044F."
+    },
+    {
+      id: "scr_crystal_rain",
+      name: "\u0421\u0432\u0438\u0442\u043E\u043A \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u0434\u043E\u0436\u0434\u044F",
+      slot: "consumable",
+      type: "scroll",
+      rarity: "epic",
+      price: 200,
+      stackable: true,
+      effect: { kind: "scroll_storm", dmg: 30 },
+      description: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u043B\u0435\u0442\u044F\u0442 \u0432 \u0434\u0432\u0443\u0445 \u0441\u0430\u043C\u044B\u0445 \u0445\u0440\u0443\u043F\u043A\u0438\u0445 \u0432\u0440\u0430\u0433\u043E\u0432."
+    },
+    {
+      id: "scr_mist_slow",
+      name: "\u0421\u0432\u0438\u0442\u043E\u043A \u0433\u0443\u0441\u0442\u043E\u0433\u043E \u0442\u0443\u043C\u0430\u043D\u0430",
+      slot: "consumable",
+      type: "scroll",
+      rarity: "epic",
+      price: 220,
+      stackable: true,
+      effect: { kind: "scroll_frost", ticks: 50, factor: 0.5 },
+      description: "\u0412\u0440\u0430\u0433\u0438 \u0434\u0432\u0438\u0433\u0430\u044E\u0442\u0441\u044F, \u043A\u0430\u043A \u0432\u043E \u0441\u043D\u0435 \u043F\u0440\u043E \u043F\u043E\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u0438\u043A."
     }
   );
   var ITEM_BY_ID = Object.fromEntries(ITEMS.map((i) => [i.id, i]));
@@ -769,7 +1339,58 @@
     { itemId: "rng_contents", unlockAfter: "bk_spirits" },
     { itemId: "shd_page_shield", unlockAfter: "bk_spirits" },
     // После «Витражной гравюры»
-    { itemId: "wpn_firebird_quill", unlockAfter: "bk_illustration" }
+    { itemId: "wpn_firebird_quill", unlockAfter: "bk_illustration" },
+    // --- Сказочные топи: сет «Топь» (лавочная часть) ---
+    { itemId: "wpn_swamp_sickle", unlockAfter: "sw_05" },
+    { itemId: "glv_swamp_fern", unlockAfter: "sw_06" },
+    { itemId: "bt_swamp_moss", unlockAfter: "sw_07" },
+    { itemId: "arm_swamp_weave", unlockAfter: "sw_08" },
+    { itemId: "rng_swamp_glow", unlockAfter: "sw_09" },
+    { itemId: "hlm_hag_crown", unlockAfter: "sw_boss" },
+    // легендарка за печати
+    // --- Звёздная ярмарка: сет «Ярмарка» (лавочная часть) ---
+    { itemId: "wpn_fair_hammer", unlockAfter: "sf_05" },
+    { itemId: "shd_fair_target", unlockAfter: "sf_06" },
+    { itemId: "arm_fair_vest", unlockAfter: "sf_08" },
+    { itemId: "amu_fair_ticket", unlockAfter: "sf_09" },
+    { itemId: "rng_fair_coin", unlockAfter: "sf_10" },
+    { itemId: "wpn_champion_greatsword", unlockAfter: "sf_boss" },
+    // легендарка за печати
+    // --- Пепельные степи: сет «Пепел» (лавочная часть) ---
+    { itemId: "wpn_ember_scimitar", unlockAfter: "ash_05" },
+    { itemId: "glv_ember_forge", unlockAfter: "ash_06" },
+    { itemId: "arm_ember_scalemail", unlockAfter: "ash_08" },
+    { itemId: "rng_ember_coal", unlockAfter: "ash_10" },
+    { itemId: "rng_ember_spark", unlockAfter: "ash_11" },
+    // --- Филлеры миров ---
+    // Ночной рынок
+    { itemId: "wpn_nm_fang", unlockAfter: "nm_05" },
+    { itemId: "hlm_nm_lantern", unlockAfter: "nm_07" },
+    { itemId: "amu_nm_mask", unlockAfter: "nm_10" },
+    // Хрустальные горы
+    { itemId: "wpn_cr_pick", unlockAfter: "cr_05" },
+    { itemId: "rng_cr_echo", unlockAfter: "cr_06" },
+    { itemId: "arm_cr_crystal", unlockAfter: "cr_08" },
+    { itemId: "scr_crystal_rain", unlockAfter: "cr_10" },
+    { itemId: "amu_quartz_heart", unlockAfter: "cr_boss" },
+    // легендарка за печати
+    // Нефритовый сад
+    { itemId: "bt_jade_silk", unlockAfter: "jade_05" },
+    { itemId: "pot_jade_tea", unlockAfter: "jade_05" },
+    { itemId: "wpn_jade_fan", unlockAfter: "jade_06" },
+    { itemId: "amu_jade_pearl", unlockAfter: "jade_09" },
+    // Подводный грот
+    { itemId: "wpn_deep_coral", unlockAfter: "deep_05" },
+    { itemId: "pot_deep_air", unlockAfter: "deep_06" },
+    { itemId: "shd_deep_shell", unlockAfter: "deep_07" },
+    { itemId: "rng_deep_pearl", unlockAfter: "deep_08" },
+    // Туманные часы
+    { itemId: "glv_mist_gear", unlockAfter: "mist_06" },
+    { itemId: "wpn_mist_pendulum", unlockAfter: "mist_08" },
+    { itemId: "amu_mist_sand", unlockAfter: "mist_10" },
+    { itemId: "scr_mist_slow", unlockAfter: "mist_12" },
+    { itemId: "rng_time_loop", unlockAfter: "mist_boss" }
+    // легендарка за печати
   ];
   var SHOPS = {
     armory: {
@@ -13288,6 +13909,136 @@
       materials: { gold_leaf: 1, ink_drop: 1 },
       unlockAfter: "bk_illustration",
       note: "\u041F\u0430\u0440\u043D\u043E\u0435 \u043A \u043F\u0435\u0440\u0441\u0442\u043D\u044E. \u0421\u0435\u0442 \xAB\u041C\u0430\u0441\u0442\u0435\u0440\xBB 9/9 \u2014 \u0441\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451!"
+    },
+    // --- Сет «Топь»: крафтовая часть (материалы Сказочных топей) ---
+    {
+      id: "rcp_swamp_amulet",
+      name: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0416\u0430\u0431\u0438\u0439 \u043E\u0431\u0435\u0440\u0435\u0433",
+      icon: "\u{1F4FF}",
+      kind: "gear",
+      result: { itemId: "amu_swamp_frog", count: 1 },
+      materials: { sw_frog_amulet: 2, sw_witch_thread: 1 },
+      unlockAfter: "sw_02",
+      note: "\u041E\u0431\u0435\u0440\u0435\u0433 \u043A\u0432\u0430\u043A\u0430\u0435\u0442 \u043D\u0430 \u044F\u0434. \u0421\u0435\u0442 \xAB\u0422\u043E\u043F\u044C\xBB."
+    },
+    {
+      id: "rcp_swamp_shield",
+      name: "\u0421\u043F\u043B\u0435\u0441\u0442\u0438 \u0429\u0438\u0442-\u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0443",
+      icon: "\u{1F6E1}\uFE0F",
+      kind: "gear",
+      result: { itemId: "shd_swamp_lily", count: 1 },
+      materials: { sw_frog_amulet: 2, sw_glow_berry: 1 },
+      coins: 120,
+      unlockAfter: "sw_03",
+      note: "\u041B\u0438\u0441\u0442 \u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0438-\u0432\u0435\u043B\u0438\u043A\u0430\u043D\u0430. \u0421\u0435\u0442 \xAB\u0422\u043E\u043F\u044C\xBB."
+    },
+    {
+      id: "rcp_swamp_helmet",
+      name: "\u0421\u043F\u043B\u0435\u0441\u0442\u0438 \u0412\u0435\u043D\u043E\u043A \u043E\u0433\u043E\u043D\u044C\u043A\u043E\u0432",
+      icon: "\u{1FA96}",
+      kind: "gear",
+      result: { itemId: "hlm_swamp_wreath", count: 1 },
+      materials: { sw_glow_berry: 3 },
+      unlockAfter: "sw_04",
+      note: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u044B \u043D\u0435 \u0433\u0430\u0441\u043D\u0443\u0442. \u0421\u0435\u0442 \xAB\u0422\u043E\u043F\u044C\xBB."
+    },
+    {
+      id: "rcp_swamp_ring",
+      name: "\u0421\u043C\u043E\u0442\u0430\u0442\u044C \u041A\u043E\u043B\u044C\u0446\u043E \u0432\u0435\u0434\u044C\u043C\u0438\u043D\u043E\u0439 \u043D\u0438\u0442\u0438",
+      icon: "\u{1F48D}",
+      kind: "gear",
+      result: { itemId: "rng_swamp_thread", count: 1 },
+      materials: { sw_witch_thread: 2, sw_bog_mist: 1 },
+      coins: 100,
+      unlockAfter: "sw_06",
+      note: "\u041D\u0438\u0442\u044C \u0438\u0437 \u043A\u043B\u0443\u0431\u043A\u0430 \u0442\u0443\u043C\u0430\u043D\u0430. \u0421\u0435\u0442 \xAB\u0422\u043E\u043F\u044C\xBB."
+    },
+    // --- Сет «Ярмарка»: крафтовая часть (материалы Звёздной ярмарки) ---
+    {
+      id: "rcp_fair_gloves",
+      name: "\u0421\u0448\u0438\u0442\u044C \u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0444\u043E\u043A\u0443\u0441\u043D\u0438\u043A\u0430",
+      icon: "\u{1F9E4}",
+      kind: "gear",
+      result: { itemId: "glv_fair_magician", count: 1 },
+      materials: { sf_candy: 2, sf_ticket: 1 },
+      unlockAfter: "sf_03",
+      note: "\u0421\u043B\u0430\u0434\u043A\u0438\u0435 \u0438 \u043B\u043E\u0432\u043A\u0438\u0435. \u0421\u0435\u0442 \xAB\u042F\u0440\u043C\u0430\u0440\u043A\u0430\xBB."
+    },
+    {
+      id: "rcp_fair_helmet",
+      name: "\u0421\u0448\u0438\u0442\u044C \u041A\u043E\u043B\u043F\u0430\u043A \u0437\u0432\u0451\u0437\u0434\u043D\u043E\u0433\u043E \u0448\u0443\u0442\u0430",
+      icon: "\u{1FA96}",
+      kind: "gear",
+      result: { itemId: "hlm_fair_jester", count: 1 },
+      materials: { sf_ticket: 2, sf_spark: 1 },
+      unlockAfter: "sf_04",
+      note: "\u041A\u0430\u0436\u0434\u044B\u0439 \u0431\u0443\u0431\u0435\u043D\u0447\u0438\u043A \u2014 \u0437\u0430 \u0443\u0432\u0435\u0440\u043D\u0443\u0432\u0448\u0438\u0439\u0441\u044F. \u0421\u0435\u0442 \xAB\u042F\u0440\u043C\u0430\u0440\u043A\u0430\xBB."
+    },
+    {
+      id: "rcp_fair_boots",
+      name: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0421\u0430\u043F\u043E\u0433\u0438 \u043A\u0430\u043D\u0430\u0442\u043E\u0445\u043E\u0434\u0446\u0430",
+      icon: "\u{1F97E}",
+      kind: "gear",
+      result: { itemId: "bt_fair_dancer", count: 1 },
+      materials: { sf_plank: 2, sf_spark: 1 },
+      coins: 100,
+      unlockAfter: "sf_07",
+      note: "\u041F\u043E\u0434\u043E\u0448\u0432\u0430 \u0441 \u0431\u0430\u043B\u0430\u043D\u0441\u0438\u0440\u043E\u043C. \u0421\u0435\u0442 \xAB\u042F\u0440\u043C\u0430\u0440\u043A\u0430\xBB."
+    },
+    {
+      id: "rcp_fair_ring",
+      name: "\u041E\u0442\u043B\u0438\u0442\u044C \u041A\u043E\u043B\u044C\u0446\u043E \u0437\u0432\u0435\u0437\u0434\u044B \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430",
+      icon: "\u{1F48D}",
+      kind: "gear",
+      result: { itemId: "rng_fair_star", count: 1 },
+      materials: { sf_champion_star: 1, sf_candy: 2 },
+      coins: 150,
+      unlockAfter: "sf_12",
+      note: "\u0417\u0432\u0435\u0437\u0434\u0430 \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430 \u0432 \u043E\u043F\u0440\u0430\u0432\u0435. \u0421\u0435\u0442 \xAB\u042F\u0440\u043C\u0430\u0440\u043A\u0430\xBB."
+    },
+    // --- Сет «Пепел»: крафтовая часть (материалы Пепельных степей) ---
+    {
+      id: "rcp_ember_shield",
+      name: "\u0412\u044B\u043A\u043E\u0432\u0430\u0442\u044C \u0429\u0438\u0442-\u0436\u0430\u0440\u043E\u0432\u043D\u044E",
+      icon: "\u{1F6E1}\uFE0F",
+      kind: "gear",
+      result: { itemId: "shd_ember_brazier", count: 1 },
+      materials: { ash_ember: 3, ash_scale: 1 },
+      coins: 120,
+      unlockAfter: "ash_04",
+      note: "\u0423\u0433\u043B\u0438 \u0432\u043D\u0443\u0442\u0440\u0438 \u043D\u0435 \u0433\u0430\u0441\u043D\u0443\u0442. \u0421\u0435\u0442 \xAB\u041F\u0435\u043F\u0435\u043B\xBB."
+    },
+    {
+      id: "rcp_ember_helmet",
+      name: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u041F\u043E\u043B\u0443\u043C\u0430\u0441\u043A\u0443 \u0445\u0430\u043D\u0430 \u0431\u0443\u0440\u044C",
+      icon: "\u{1FA96}",
+      kind: "gear",
+      result: { itemId: "hlm_ember_khan", count: 1 },
+      materials: { ash_pelt: 2, ash_storm_shard: 1 },
+      unlockAfter: "ash_07",
+      note: "\u0428\u043A\u0443\u0440\u0430 \u0437\u0432\u0435\u0440\u044F \u0438 \u043E\u0441\u043A\u043E\u043B\u043E\u043A \u0431\u0443\u0440\u0438. \u0421\u0435\u0442 \xAB\u041F\u0435\u043F\u0435\u043B\xBB."
+    },
+    {
+      id: "rcp_ember_boots",
+      name: "\u0412\u044B\u043A\u043E\u0432\u0430\u0442\u044C \u0421\u0430\u043F\u043E\u0433\u0438 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438",
+      icon: "\u{1F97E}",
+      kind: "gear",
+      result: { itemId: "bt_ember_storm", count: 1 },
+      materials: { ash_scale: 2, ash_ember: 1 },
+      coins: 100,
+      unlockAfter: "ash_09",
+      note: "\u0421\u043B\u0435\u0434 \u0442\u043B\u0435\u0435\u0442 \u0447\u0430\u0441. \u0421\u0435\u0442 \xAB\u041F\u0435\u043F\u0435\u043B\xBB."
+    },
+    {
+      id: "rcp_ember_amulet",
+      name: "\u0417\u0430\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0421\u0435\u0440\u0434\u0446\u0435 \u0431\u0443\u0440\u0438 \u0432 \u0430\u043C\u0443\u043B\u0435\u0442",
+      icon: "\u{1F4FF}",
+      kind: "gear",
+      result: { itemId: "amu_ember_heart", count: 1 },
+      materials: { ash_heart: 1, ash_storm_shard: 2 },
+      coins: 150,
+      unlockAfter: "ash_14",
+      note: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0425\u0430\u043D\u0430 \u0431\u0443\u0440\u044C \u0431\u044C\u0451\u0442\u0441\u044F. \u0421\u0435\u0442 \xAB\u041F\u0435\u043F\u0435\u043B\xBB."
     }
   ];
   var RECIPE_BY_ID = Object.fromEntries(RECIPES.map((r) => [r.id, r]));
@@ -13353,6 +14104,31 @@
         3: { stats: { attack: 5 }, desc: "\u0420\u0443\u043A\u0430 \u043C\u0430\u0441\u0442\u0435\u0440\u0430: \u0430\u0442\u0430\u043A\u0430 +5" },
         6: { stats: { crit: 0.06 }, desc: "\u0422\u043E\u0447\u043D\u043E\u0441\u0442\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u0430: \u043A\u0440\u0438\u0442 +6%" },
         9: { traits: ["pierce"], desc: "\u0413\u043B\u0430\u0437 \u043C\u0430\u0441\u0442\u0435\u0440\u0430: \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435 \u0431\u0440\u043E\u043D\u0438 \u0432\u0434\u0432\u043E\u0435" }
+      }
+    },
+    // --- Сеты миров-сателлитов ---
+    swamp: {
+      name: "\u0422\u043E\u043F\u044C",
+      tiers: {
+        3: { stats: {}, resist: { poison: 0.15, sleep: 0.15 }, desc: "\u0414\u044B\u0445\u0430\u043D\u0438\u0435 \u0442\u043E\u043F\u0438: \u0441\u043E\u043F\u0440. \u044F\u0434\u0443 \u0438 \u0441\u043D\u0443 +15%" },
+        6: { traits: ["bonus_spirit", "lifesteal_small"], desc: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u043A\u0440\u0443\u0433: \u0443\u0440\u043E\u043D \u043F\u043E \u0434\u0443\u0445\u0430\u043C \xD71.3, \u0432\u0430\u043C\u043F\u0438\u0440\u0438\u0437\u043C" },
+        9: { traits: ["regen_ally"], desc: "\u041C\u0438\u043B\u043E\u0441\u0442\u044C \u0425\u043E\u0437\u044F\u0439\u043A\u0438: \u0440\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u0432\u0441\u044E \u0431\u0438\u0442\u0432\u0443" }
+      }
+    },
+    fair: {
+      name: "\u042F\u0440\u043C\u0430\u0440\u043A\u0430",
+      tiers: {
+        3: { stats: { goldFind: 0.15 }, desc: "\u0417\u0432\u043E\u043D \u043C\u043E\u043D\u0435\u0442: \u043C\u043E\u043D\u0435\u0442\u044B \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F +15%" },
+        6: { stats: { itemFind: 0.1 }, traits: ["first_hit_reduction"], desc: "\u0421\u0447\u0430\u0441\u0442\u043B\u0438\u0432\u044B\u0439 \u0431\u0438\u043B\u0435\u0442: \u043D\u0430\u0445\u043E\u0434\u043A\u0438 +10%, \u043F\u0435\u0440\u0432\u044B\u0439 \u0443\u0434\u0430\u0440 \u0441\u043B\u0430\u0431\u0435\u0435 \u043D\u0430 20%" },
+        9: { stats: { goldFind: 0.25, itemFind: 0.1 }, desc: "\u0417\u0432\u0435\u0437\u0434\u0430 \u044F\u0440\u043C\u0430\u0440\u043A\u0438: \u043C\u043E\u043D\u0435\u0442\u044B +25%, \u043D\u0430\u0445\u043E\u0434\u043A\u0438 \u0435\u0449\u0451 +10%" }
+      }
+    },
+    ember: {
+      name: "\u041F\u0435\u043F\u0435\u043B",
+      tiers: {
+        3: { stats: { attack: 8 }, desc: "\u0416\u0430\u0440 \u0433\u043E\u0440\u043D\u0430: \u0430\u0442\u0430\u043A\u0430 +8" },
+        6: { stats: { crit: 0.08 }, desc: "\u0420\u0430\u0437\u0433\u043E\u0440\u0430\u043D\u0438\u0435: \u043A\u0440\u0438\u0442 +8%" },
+        9: { traits: ["pierce"], desc: "\u0411\u0435\u043B\u044B\u0439 \u043A\u0430\u043B: \u0431\u0440\u043E\u043D\u044F \u0432\u0440\u0430\u0433\u0430 \u0441\u0447\u0438\u0442\u0430\u0435\u0442\u0441\u044F \u0432\u0434\u0432\u043E\u0435 \u0441\u043B\u0430\u0431\u0435\u0435" }
       }
     }
   };
@@ -13988,6 +14764,19 @@
       magic: !!(attacker.caster || attacker.traits?.includes("magic")),
       skillName: opts.skillName || null
     });
+    if (remaining > 0 && defender.traits?.includes("thorns_small")) {
+      const refl = Math.max(1, Math.round(remaining * 0.15));
+      attacker.hp -= refl;
+      attacker.stats.taken += refl;
+      log.push({ t: "dot", uid: attacker.uid, kind: "thorns", dmg: refl });
+    }
+    if (remaining > 0 && attacker.traits?.includes("lifesteal_small")) {
+      const healed = Math.min(Math.round(remaining * 0.15), attacker.maxHp - attacker.hp);
+      if (healed > 0) {
+        attacker.hp += healed;
+        log.push({ t: "dot", uid: attacker.uid, kind: "lifesteal", dmg: -healed });
+      }
+    }
     return remaining;
   }
   function tryApplyStatus(attacker, defender, kind, chance, status2, rng, log) {
@@ -24725,6 +25514,7 @@
     ranged: "\u{1F3F9} \u0414\u0430\u043B\u044C\u043D\u0438\u0439 \u0431\u043E\u0439: \u0431\u044C\u0451\u0442 \u0441\u0430\u043C\u043E\u0433\u043E \u0445\u0440\u0443\u043F\u043A\u043E\u0433\u043E",
     first_hit_reduction: "\u{1F6E1}\uFE0F \u041F\u0435\u0440\u0432\u044B\u0439 \u0443\u0434\u0430\u0440 \u043F\u043E \u0440\u044B\u0446\u0430\u0440\u044E \u0441\u043B\u0430\u0431\u0435\u0435 \u043D\u0430 20%",
     thorns_small: "\u{1F335} \u0428\u0438\u043F\u044B: \u043E\u0442\u0440\u0430\u0436\u0430\u044E\u0442 \u0447\u0430\u0441\u0442\u044C \u0443\u0440\u043E\u043D\u0430",
+    lifesteal_small: "\u{1FA78} \u0412\u0430\u043C\u043F\u0438\u0440\u0438\u0437\u043C: \u0440\u044B\u0446\u0430\u0440\u044C \u043B\u0435\u0447\u0438\u0442\u0441\u044F \u0447\u0430\u0441\u0442\u044C\u044E \u043D\u0430\u043D\u0435\u0441\u0451\u043D\u043D\u043E\u0433\u043E \u0443\u0440\u043E\u043D\u0430",
     heal_after_battle: "\u{1F3EE} \u041B\u0435\u0447\u0435\u043D\u0438\u0435 \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F",
     regen_ally: "\u{1F331} \u0420\u0435\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u0432\u0441\u044E \u0431\u0438\u0442\u0432\u0443",
     fearless: "\u{1F981} \u0418\u043C\u043C\u0443\u043D\u0438\u0442\u0435\u0442 \u043A \u0441\u0442\u0440\u0430\u0445\u0443",
@@ -24905,7 +25695,15 @@
     ["ring", "\u041A\u043E\u043B\u044C\u0446\u0430"],
     ["consumable", "\u0420\u0430\u0441\u0445\u043E\u0434\u043D\u0438\u043A\u0438"]
   ];
-  var SET_TAG_CLASS = { meadow: "meadow", town: "town", attic: "attic", master: "master" };
+  var SET_TAG_CLASS = {
+    meadow: "meadow",
+    town: "town",
+    attic: "attic",
+    master: "master",
+    swamp: "swamp",
+    fair: "fair",
+    ember: "ember"
+  };
   function matchesTarget(item2, ts) {
     if (ts === "belt") return item2.slot === "consumable";
     if (ts === "ring1" || ts === "ring2") return item2.slot === "ring";
@@ -27769,7 +28567,7 @@
           if (f) {
             f.unit.hp = Math.max(0, Math.min(f.unit.maxHp, f.unit.hp - e.dmg));
             setHp(e.uid);
-            pulse(f.el, e.kind === "poison" ? "anim-poison" : "anim-heal", 320);
+            pulse(f.el, e.kind === "poison" || e.kind === "thorns" ? "anim-poison" : "anim-heal", 320);
           }
           break;
         }

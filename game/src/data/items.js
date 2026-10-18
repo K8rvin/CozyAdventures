@@ -394,9 +394,343 @@ ITEMS.push(
   },
   {
     id: 'shd_page_shield', set: 'attic', name: 'Щит-переплёт', slot: 'shield', hand: 'one', type: 'shield',
-    rarity: 'rare', price: 580,
+    rarity: 'rare', price: 230,
     stats: { armor: 10, dodge: 0.05, hp: 8 },
     description: 'Крышка древнего фолианта на ремне. Легче дерева, крепче кожи.',
+  },
+);
+
+// --- Мир «Сказочные топи»: сет «Топь» (5 в лавке, 4 в крафте) ---
+ITEMS.push(
+  {
+    id: 'wpn_swamp_sickle', set: 'swamp', name: 'Серп трясичной ведьмы', slot: 'weapon', hand: 'one', type: 'dagger',
+    rarity: 'epic', price: 420,
+    stats: { attack: 26, crit: 0.08, speed: 2 },
+    traits: ['lifesteal_small'],
+    description: 'Кривой, как месяц над топью. Пьёт чужую боль.',
+  },
+  {
+    id: 'shd_swamp_lily', set: 'swamp', name: 'Щит-кувшинка', slot: 'shield', hand: 'one', type: 'shield',
+    rarity: 'rare', price: 0,
+    stats: { armor: 16, hp: 12, dodge: 0.05, resist: { poison: 0.2 } },
+    description: 'Плотная, как лист великана-кувшинки. Вода скатывается сама.',
+  },
+  {
+    id: 'hlm_swamp_wreath', set: 'swamp', name: 'Венок болотных огоньков', slot: 'helmet', type: 'helmet',
+    rarity: 'rare', price: 0,
+    stats: { hp: 20, resist: { sleep: 0.3, poison: 0.2 } },
+    description: 'Огоньки кружат над головой и жужжат колыбельную наоборот.',
+  },
+  {
+    id: 'arm_swamp_weave', set: 'swamp', name: 'Плащ сплетённого тумана', slot: 'armor', type: 'armor',
+    rarity: 'epic', price: 460,
+    stats: { armor: 26, hp: 14, resist: { poison: 0.25 } },
+    description: 'Хозяйка Топей ткёт его по ночам, путая нити с тропами.',
+  },
+  {
+    id: 'glv_swamp_fern', set: 'swamp', name: 'Перчатки папоротника', slot: 'gloves', type: 'gloves',
+    rarity: 'rare', price: 300,
+    stats: { attack: 5, resist: { poison: 0.2 } },
+    description: 'Пахнут тиной и чужими секретами.',
+  },
+  {
+    id: 'bt_swamp_moss', set: 'swamp', name: 'Мшистые ступни', slot: 'boots', type: 'boots',
+    rarity: 'rare', price: 320,
+    stats: { speed: 3, dodge: 0.06, hp: 8 },
+    description: 'Шаг в них мягок, как подход к чужому костру.',
+  },
+  {
+    id: 'amu_swamp_frog', set: 'swamp', name: 'Жабий оберег', slot: 'amulet', type: 'amulet',
+    rarity: 'rare', price: 0,
+    stats: { hp: 16, resist: { poison: 0.3 } },
+    description: 'Тихо квакает, когда рядом яд.',
+  },
+  {
+    id: 'rng_swamp_thread', set: 'swamp', name: 'Кольцо ведьминой нити', slot: 'ring', type: 'ring',
+    rarity: 'epic', price: 0,
+    stats: { attack: 4, speed: 1, resist: { sleep: 0.15 } },
+    description: 'Нить сама находит слабые места.',
+  },
+  {
+    id: 'rng_swamp_glow', set: 'swamp', name: 'Кольцо светоягоды', slot: 'ring', type: 'ring',
+    rarity: 'epic', price: 360,
+    stats: { hp: 10, crit: 0.04 },
+    description: 'Светится тем ярче, чем темнее место.',
+  },
+);
+
+// --- Мир «Звёздная ярмарка»: сет «Ярмарка» (экономика: монеты и находки) ---
+ITEMS.push(
+  {
+    id: 'wpn_fair_hammer', set: 'fair', name: 'Молоток сильномера', slot: 'weapon', hand: 'one', type: 'mace',
+    rarity: 'epic', price: 450,
+    stats: { attack: 30, speed: -1 },
+    description: 'Стоило звонка — получи приз.',
+  },
+  {
+    id: 'shd_fair_target', set: 'fair', name: 'Щит-мишень тира', slot: 'shield', hand: 'one', type: 'shield',
+    rarity: 'rare', price: 340,
+    stats: { armor: 18, block: 0.2, hp: 10 },
+    description: 'Попади в десятку — засчитано.',
+  },
+  {
+    id: 'hlm_fair_jester', set: 'fair', name: 'Колпак звёздного шута', slot: 'helmet', type: 'helmet',
+    rarity: 'rare', price: 0,
+    stats: { hp: 16, dodge: 0.06, itemFind: 0.05 },
+    description: 'Бубенчики звенят ровно тогда, когда ты увернулся.',
+  },
+  {
+    id: 'arm_fair_vest', set: 'fair', name: 'Камзол барахольщика', slot: 'armor', type: 'armor',
+    rarity: 'epic', price: 440,
+    stats: { armor: 24, hp: 12, goldFind: 0.1 },
+    description: 'В каждом кармане по монетке. И ещё одна — в подкладке.',
+  },
+  {
+    id: 'glv_fair_magician', set: 'fair', name: 'Перчатки фокусника', slot: 'gloves', type: 'gloves',
+    rarity: 'rare', price: 0,
+    stats: { attack: 4, itemFind: 0.08, crit: 0.03 },
+    description: 'Теперь ты видишь, откуда монета.',
+  },
+  {
+    id: 'bt_fair_dancer', set: 'fair', name: 'Сапоги канатоходца', slot: 'boots', type: 'boots',
+    rarity: 'epic', price: 0,
+    stats: { speed: 4, dodge: 0.07 },
+    description: 'Натянутая проволока? Удобно.',
+  },
+  {
+    id: 'amu_fair_ticket', set: 'fair', name: 'Медальон вечного билета', slot: 'amulet', type: 'amulet',
+    rarity: 'epic', price: 400,
+    stats: { hp: 12, goldFind: 0.12 },
+    description: 'Действителен во всех мирах. Пропуск один — удача везде.',
+  },
+  {
+    id: 'rng_fair_coin', set: 'fair', name: 'Кольцо счастливой монеты', slot: 'ring', type: 'ring',
+    rarity: 'rare', price: 330,
+    stats: { goldFind: 0.1, itemFind: 0.05 },
+    description: 'Орёл или решка — ты всё равно выиграл.',
+  },
+  {
+    id: 'rng_fair_star', set: 'fair', name: 'Кольцо звезды чемпиона', slot: 'ring', type: 'ring',
+    rarity: 'epic', price: 0,
+    stats: { attack: 3, crit: 0.05, goldFind: 0.05 },
+    description: 'Выдано лично Чемпионом миров.',
+  },
+);
+
+// --- Мир «Пепельные степи»: сет «Пепел» (жар горна: атака и крит) ---
+ITEMS.push(
+  {
+    id: 'wpn_ember_scimitar', set: 'ember', name: 'Пепельная сабля', slot: 'weapon', hand: 'one', type: 'sword',
+    rarity: 'epic', price: 480,
+    stats: { attack: 32, crit: 0.06 },
+    description: 'Лезвие помнит жар горна и просит ещё.',
+  },
+  {
+    id: 'shd_ember_brazier', set: 'ember', name: 'Щит-жаровня', slot: 'shield', hand: 'one', type: 'shield',
+    rarity: 'epic', price: 0,
+    stats: { armor: 20, block: 0.18 },
+    traits: ['thorns_small'],
+    description: 'Кто ударит — обожжётся.',
+  },
+  {
+    id: 'hlm_ember_khan', set: 'ember', name: 'Полумаска хана бурь', slot: 'helmet', type: 'helmet',
+    rarity: 'epic', price: 0,
+    stats: { hp: 22, attack: 4 },
+    description: 'Шкура степного зверя. В ней слышен ветер.',
+  },
+  {
+    id: 'arm_ember_scalemail', set: 'ember', name: 'Чешуйная кольчуга степей', slot: 'armor', type: 'armor',
+    rarity: 'epic', price: 500,
+    stats: { armor: 28, hp: 16, resist: { fire: 0.2 } },
+    description: 'Чешуя пепельных ящеров. Не горит.',
+  },
+  {
+    id: 'glv_ember_forge', set: 'ember', name: 'Рукавицы горна', slot: 'gloves', type: 'gloves',
+    rarity: 'rare', price: 360,
+    stats: { attack: 7, resist: { fire: 0.25 } },
+    description: 'Можно брать угли голыми руками. Почти.',
+  },
+  {
+    id: 'bt_ember_storm', set: 'ember', name: 'Сапоги пепельной бури', slot: 'boots', type: 'boots',
+    rarity: 'epic', price: 0,
+    stats: { speed: 3, attack: 3, dodge: 0.04 },
+    description: 'След после них тлеет ещё час.',
+  },
+  {
+    id: 'amu_ember_heart', set: 'ember', name: 'Амулет сердца бури', slot: 'amulet', type: 'amulet',
+    rarity: 'epic', price: 0,
+    stats: { hp: 18, attack: 5, crit: 0.04 },
+    description: 'Бьётся в такт шагам.',
+  },
+  {
+    id: 'rng_ember_coal', set: 'ember', name: 'Кольцо горячего угля', slot: 'ring', type: 'ring',
+    rarity: 'rare', price: 350,
+    stats: { attack: 5, resist: { fire: 0.15 } },
+    description: 'Тёплое. Иногда честно жжётся.',
+  },
+  {
+    id: 'rng_ember_spark', set: 'ember', name: 'Кольцо первой искры', slot: 'ring', type: 'ring',
+    rarity: 'epic', price: 380,
+    stats: { crit: 0.06, speed: 2 },
+    description: 'С неё начался пожар. Хороший пожар.',
+  },
+);
+
+// --- Филлеры миров nm, cr, jade, deep, mist: по три вещи в лавку ---
+ITEMS.push(
+  // Ночной рынок
+  {
+    id: 'wpn_nm_fang', name: 'Кинжал зубного лавочника', slot: 'weapon', hand: 'one', type: 'dagger',
+    rarity: 'rare', price: 320,
+    stats: { attack: 24, crit: 0.1 },
+    description: 'Вынут без боли. Почти.',
+  },
+  {
+    id: 'hlm_nm_lantern', name: 'Фонарный колпак', slot: 'helmet', type: 'helmet',
+    rarity: 'rare', price: 300,
+    stats: { hp: 18, itemFind: 0.08 },
+    description: 'Светит в обе стороны рынка.',
+  },
+  {
+    id: 'amu_nm_mask', name: 'Маска ночного гостя', slot: 'amulet', type: 'amulet',
+    rarity: 'epic', price: 380,
+    stats: { hp: 14, dodge: 0.05 },
+    description: 'В ней свои не узнают. И чужие тоже.',
+  },
+  // Хрустальные горы
+  {
+    id: 'wpn_cr_pick', name: 'Кирка кварцекопа', slot: 'weapon', hand: 'one', type: 'mace',
+    rarity: 'epic', price: 400,
+    stats: { attack: 27, armor: 4 },
+    description: 'Режет камень и настроение врагов.',
+  },
+  {
+    id: 'arm_cr_crystal', name: 'Хрустальный нагрудник', slot: 'armor', type: 'armor',
+    rarity: 'epic', price: 450,
+    stats: { armor: 30, speed: -2 },
+    description: 'Тяжёлый, прозрачный, непробиваемый.',
+  },
+  {
+    id: 'rng_cr_echo', name: 'Кольцо эха гор', slot: 'ring', type: 'ring',
+    rarity: 'rare', price: 300,
+    stats: { attack: 3, hp: 8 },
+    description: 'Отвечает вторым ударом.',
+  },
+  // Нефритовый сад
+  {
+    id: 'wpn_jade_fan', name: 'Боевой веер сада', slot: 'weapon', hand: 'one', type: 'dagger',
+    rarity: 'epic', price: 420,
+    stats: { attack: 25, speed: 4, crit: 0.08 },
+    description: 'Раскрывается один раз. Хватает.',
+  },
+  {
+    id: 'bt_jade_silk', name: 'Сапоги чайной церемонии', slot: 'boots', type: 'boots',
+    rarity: 'rare', price: 320,
+    stats: { speed: 4, dodge: 0.06 },
+    description: 'Не шуршат даже по гравию.',
+  },
+  {
+    id: 'amu_jade_pearl', name: 'Жемчужина хранителя', slot: 'amulet', type: 'amulet',
+    rarity: 'epic', price: 420,
+    stats: { hp: 20, resist: { fear: 0.3 } },
+    description: 'Дракон-хранитель роняет такие в пруд раз в сто лет.',
+  },
+  // Подводный грот
+  {
+    id: 'wpn_deep_coral', name: 'Коралловый клинок', slot: 'weapon', hand: 'one', type: 'sword',
+    rarity: 'rare', price: 360,
+    stats: { attack: 26, hp: 10 },
+    description: 'Растёт медленно, режет быстро.',
+  },
+  {
+    id: 'shd_deep_shell', name: 'Щит-раковина', slot: 'shield', hand: 'one', type: 'shield',
+    rarity: 'rare', price: 380,
+    stats: { armor: 19, block: 0.22, resist: { slow: 0.2 } },
+    description: 'Внутри слышно море и сдачу врага.',
+  },
+  {
+    id: 'rng_deep_pearl', name: 'Кольцо глубинной жемчужины', slot: 'ring', type: 'ring',
+    rarity: 'rare', price: 340,
+    stats: { hp: 12, dodge: 0.04 },
+    description: 'Светится, когда глубоко.',
+  },
+  // Туманные часы
+  {
+    id: 'wpn_mist_pendulum', name: 'Маятниковый клинок', slot: 'weapon', hand: 'one', type: 'sword',
+    rarity: 'epic', price: 460,
+    stats: { attack: 29, speed: 2 },
+    description: 'Качается ровно в такт чужому страху.',
+  },
+  {
+    id: 'glv_mist_gear', name: 'Перчатки часовщика', slot: 'gloves', type: 'gloves',
+    rarity: 'rare', price: 340,
+    stats: { attack: 5, crit: 0.05 },
+    description: 'Пальцы двигаются точно по расписанию.',
+  },
+  {
+    id: 'amu_mist_sand', name: 'Амулет песка времени', slot: 'amulet', type: 'amulet',
+    rarity: 'epic', price: 400,
+    stats: { hp: 16, resist: { slow: 0.3 } },
+    description: 'Песок внутри сыплется вверх. Тебе — вперёд.',
+  },
+);
+
+// --- Легендарки боссов: только за печати мастера ---
+ITEMS.push(
+  {
+    id: 'hlm_hag_crown', name: 'Корона Хозяйки Топей', slot: 'helmet', type: 'helmet',
+    rarity: 'legendary', price: 0, sealPrice: 4,
+    stats: { hp: 30, resist: { poison: 0.4, sleep: 0.4 } },
+    traits: ['lifesteal_small'],
+    description: 'Тяжела. Внутри — вся Топь.',
+  },
+  {
+    id: 'wpn_champion_greatsword', name: 'Звезда чемпиона миров', slot: 'weapon', hand: 'two', type: 'greatsword',
+    rarity: 'legendary', price: 0, sealPrice: 6,
+    stats: { attack: 44, crit: 0.1 },
+    traits: ['cleave_small'],
+    description: 'Её вручают только тем, кто уже победил.',
+  },
+  {
+    id: 'amu_quartz_heart', name: 'Сердце кварцевого дракона', slot: 'amulet', type: 'amulet',
+    rarity: 'legendary', price: 0, sealPrice: 5,
+    stats: { hp: 26, armor: 8, resist: { fear: 0.5 } },
+    traits: ['heal_after_battle'],
+    description: 'Стучит раз в минуту. Этого хватает.',
+  },
+  {
+    id: 'rng_time_loop', name: 'Кольцо петли времени', slot: 'ring', type: 'ring',
+    rarity: 'legendary', price: 0, sealPrice: 5,
+    stats: { speed: 5, dodge: 0.08, crit: 0.05 },
+    description: 'Второй шанс. Иногда третий.',
+  },
+);
+
+// --- Расходники поздних миров: зелья Алхимику, свитки Магу ---
+ITEMS.push(
+  {
+    id: 'pot_jade_tea', name: 'Чай нефритового дракона', slot: 'consumable', type: 'potion',
+    rarity: 'rare', price: 90, stackable: true,
+    effect: { kind: 'heal', amount: 60, atHpBelow: 0.5 },
+    description: 'Горячий даже через год в поясном кармане.',
+  },
+  {
+    id: 'pot_deep_air', name: 'Пузырёк грота', slot: 'consumable', type: 'potion',
+    rarity: 'rare', price: 100, stackable: true,
+    effect: { kind: 'shield', amount: 40, atStart: true },
+    description: 'Глоток воздуха с поверхности. В бою — как броня.',
+  },
+  {
+    id: 'scr_crystal_rain', name: 'Свиток кристального дождя', slot: 'consumable', type: 'scroll',
+    rarity: 'epic', price: 200, stackable: true,
+    effect: { kind: 'scroll_storm', dmg: 30 },
+    description: 'Осколки летят в двух самых хрупких врагов.',
+  },
+  {
+    id: 'scr_mist_slow', name: 'Свиток густого тумана', slot: 'consumable', type: 'scroll',
+    rarity: 'epic', price: 220, stackable: true,
+    effect: { kind: 'scroll_frost', ticks: 50, factor: 0.5 },
+    description: 'Враги двигаются, как во сне про понедельник.',
   },
 );
 

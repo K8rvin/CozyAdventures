@@ -164,6 +164,21 @@ function computeDamage(attacker, defender, rng, log, opts = {}) {
     magic: !!(attacker.caster || attacker.traits?.includes('magic')),
     skillName: opts.skillName || null,
   });
+  // Шипы: часть урона возвращается атакующему
+  if (remaining > 0 && defender.traits?.includes('thorns_small')) {
+    const refl = Math.max(1, Math.round(remaining * 0.15));
+    attacker.hp -= refl;
+    attacker.stats.taken += refl;
+    log.push({ t: 'dot', uid: attacker.uid, kind: 'thorns', dmg: refl });
+  }
+  // Вампиризм: атакующий подлечивается частью нанесённого урона
+  if (remaining > 0 && attacker.traits?.includes('lifesteal_small')) {
+    const healed = Math.min(Math.round(remaining * 0.15), attacker.maxHp - attacker.hp);
+    if (healed > 0) {
+      attacker.hp += healed;
+      log.push({ t: 'dot', uid: attacker.uid, kind: 'lifesteal', dmg: -healed });
+    }
+  }
   return remaining;
 }
 

@@ -31,7 +31,10 @@ const SLOT_CHIPS = [
   ['gloves', 'Перчатки'], ['boots', 'Сапоги'], ['amulet', 'Амулет'],
   ['ring', 'Кольца'], ['consumable', 'Расходники'],
 ];
-const SET_TAG_CLASS = { meadow: 'meadow', town: 'town', attic: 'attic', master: 'master' };
+const SET_TAG_CLASS = {
+  meadow: 'meadow', town: 'town', attic: 'attic', master: 'master',
+  swamp: 'swamp', fair: 'fair', ember: 'ember',
+};
 
 function matchesTarget(item, ts) {
   if (ts === 'belt') return item.slot === 'consumable';

@@ -1437,6 +1437,74 @@ other objects, no text, no watermark --ar 1:1
 - **scr_storm.png** (epic) — `a rolled parchment scroll tied with a storm-grey ribbon, glowing rune of a lightning bolt on its side, tiny crackling sparks around the seal`
 - **scr_fire_step.png** (epic) — `a rolled parchment scroll tied with a scorched orange ribbon, glowing rune of spreading flame footsteps on its side, smoldering edge embers`
 
+### Сет «Топь» (Сказочные топи, 9 штук)
+
+- **wpn_swamp_sickle.png** (epic) — `a curved swamp witch sickle with a crescent-moon blade, faint green wisp lights orbiting the edge`
+- **shd_swamp_lily.png** (rare) — `a shield made of a giant lily pad leaf stretched over a wooden frame, water droplets rolling off`
+- **hlm_swamp_wreath.png** (rare) — `a wreath helmet of glowing marsh berries and firefly lights hovering in a circle`
+- **arm_swamp_weave.png** (epic) — `a woven cloak of grey-green bog mist threads, wisps curling off the hem`
+- **glv_swamp_fern.png** (rare) — `gloves woven of dark fern fronds with tiny glowing spores on the knuckles`
+- **bt_swamp_moss.png** (rare) — `soft mossy boots with peat-brown laces, tiny mushrooms growing on the heels`
+- **amu_swamp_frog.png** (rare) — `a small frog-shaped wooden amulet with amber eyes, on a reed-fiber cord`
+- **rng_swamp_thread.png** (epic) — `a ring of twisted witch's thread with a glowing mist bead caught in the knot`
+- **rng_swamp_glow.png** (epic) — `a ring holding a single glowing marsh berry, soft green light pulsing inside`
+
+### Сет «Ярмарка» (Звёздная ярмарка, 9 штук)
+
+- **wpn_fair_hammer.png** (epic) — `a festive strongman carnival hammer with red-white striped handle and a brass bell on the head`
+- **shd_fair_target.png** (rare) — `a round shield painted as a carnival shooting-range target with concentric red and cream rings`
+- **hlm_fair_jester.png** (rare) — `a starry jester cap with three floppy points ending in tiny gold bells`
+- **arm_fair_vest.png** (epic) — `a second-hand dealer's vest of patchwork velvet with many little pockets and brass buttons`
+- **glv_fair_magician.png** (rare) — `sleek magician gloves of white silk with a hidden card peeking from the cuff`
+- **bt_fair_dancer.png** (epic) — `tightrope dancer boots with pointed toes and balancing ribbons at the ankles`
+- **amu_fair_ticket.png** (epic) — `a medallion made from an eternal carnival ticket stamped with a star, on a striped ribbon`
+- **rng_fair_coin.png** (rare) — `a ring made from a bent lucky fair coin, heads and tails both smiling`
+- **rng_fair_star.png** (epic) — `a ring topped with a small golden champion star, engraved rays`
+
+### Сет «Пепел» (Пепельные степи, 9 штук)
+
+- **wpn_ember_scimitar.png** (epic) — `a curved ash-steppe scimitar with a heat-shimmer blade and ember glow along the fuller`
+- **shd_ember_brazier.png** (epic) — `a shield shaped like a shallow brazier with glowing coals behind a metal grate`
+- **hlm_ember_khan.png** (epic) — `a half-mask helmet of steppe beast pelt with a storm shard embedded in the brow`
+- **arm_ember_scalemail.png** (epic) — `scale mail of overlapping ash-lizard scales, dark grey with ember-lit seams`
+- **glv_ember_forge.png** (rare) — `forge gloves of heat-darkened leather with glowing coal dust in the creases`
+- **bt_ember_storm.png** (epic) — `boots of the ash storm with smoldering soles and wind-swept straps`
+- **amu_ember_heart.png** (epic) — `an amulet holding a beating storm heart ember in a wire cage`
+- **rng_ember_coal.png** (rare) — `a ring set with a small hot coal that glows when danger is near`
+- **rng_ember_spark.png** (epic) — `a ring with the very first spark of a fire trapped in a tiny glass vial`
+
+### Филлеры миров (по 3 на мир, 15 штук)
+
+- **wpn_nm_fang.png** (rare) — `a sharp dagger made from a polished fang, wrapped handle of night-market cord`
+- **hlm_nm_lantern.png** (rare) — `a hooded cap with a small glowing lantern fixed on the side, night market reflections`
+- **amu_nm_mask.png** (epic) — `a mysterious lacquered night guest mask with a painted smile, on a silk cord`
+- **wpn_cr_pick.png** (epic) — `a sturdy quartz-miner's pickaxe with a crystal-tipped head catching rainbows`
+- **arm_cr_crystal.png** (epic) — `a translucent crystal breastplate, heavy and clear, light refracting inside`
+- **rng_cr_echo.png** (rare) — `a mountain echo ring of hollow silver that hums faintly when tapped`
+- **wpn_jade_fan.png** (epic) — `a folded combat fan of pale jade blades with bamboo ribs, half-open`
+- **bt_jade_silk.png** (rare) — `soft silk tea-ceremony boots of pale green, embroidered with bamboo leaves`
+- **amu_jade_pearl.png** (epic) — `a single luminous jade pearl pendant on a silk garden-green cord`
+- **wpn_deep_coral.png** (rare) — `a coral blade grown into a sword shape, pink branches fused along the fuller`
+- **shd_deep_shell.png** (rare) — `a shield made of a giant scallop shell, pearly inside and barnacled outside`
+- **rng_deep_pearl.png** (rare) — `a ring with a deep-sea pearl that glows brighter the deeper you go`
+- **wpn_mist_pendulum.png** (epic) — `a pendulum blade on a short chain, swinging in perfect rhythm, clock engravings`
+- **glv_mist_gear.png** (rare) — `clockmaker gloves with tiny brass gears on the knuckles and measuring marks`
+- **amu_mist_sand.png** (epic) — `an hourglass pendant with mist-grey sand flowing upward`
+
+### Легендарки боссов (4 штуки, legendary)
+
+- **hlm_hag_crown.png** (legendary) — `the crown of the Mistress of the Mires, woven of black reeds with a crown of will-o-wisps`
+- **wpn_champion_greatsword.png** (legendary) — `a colossal greatsword shaped like a five-pointed star of the world champion, gold and crimson`
+- **amu_quartz_heart.png** (legendary) — `the heart of the ancient quartz dragon, a large faceted crystal beating with slow light`
+- **rng_time_loop.png** (legendary) — `a ring shaped as a tiny looping spiral of time, silver mist circling inside`
+
+### Расходники поздних миров (4 штуки)
+
+- **pot_jade_tea.png** (rare) — `a jade-green tea potion in a porcelain bottle with a bamboo stopper, steam curling`
+- **pot_deep_air.png** (rare) — `a bottle of captured surface air, shimmering bubbles swirling inside, cork sealed with wax`
+- **scr_crystal_rain.png** (epic) — `a scroll tied with a crystal-clear ribbon, glowing rune of falling shards on its side`
+- **scr_mist_slow.png** (epic) — `a scroll tied with a grey velvet ribbon, glowing rune of thick fog on its side`
+
 Все предметы из `game/src/data/items.js` покрыты. Новые предметы — тем же
 шаблоном, фон строго по редкости, имя файла = id предмета.
 

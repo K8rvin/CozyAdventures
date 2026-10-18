@@ -64,6 +64,57 @@ export const SHOP_STOCK = [
   { itemId: 'shd_page_shield', unlockAfter: 'bk_spirits' },
   // После «Витражной гравюры»
   { itemId: 'wpn_firebird_quill', unlockAfter: 'bk_illustration' },
+
+  // --- Сказочные топи: сет «Топь» (лавочная часть) ---
+  { itemId: 'wpn_swamp_sickle', unlockAfter: 'sw_05' },
+  { itemId: 'glv_swamp_fern', unlockAfter: 'sw_06' },
+  { itemId: 'bt_swamp_moss', unlockAfter: 'sw_07' },
+  { itemId: 'arm_swamp_weave', unlockAfter: 'sw_08' },
+  { itemId: 'rng_swamp_glow', unlockAfter: 'sw_09' },
+  { itemId: 'hlm_hag_crown', unlockAfter: 'sw_boss' }, // легендарка за печати
+
+  // --- Звёздная ярмарка: сет «Ярмарка» (лавочная часть) ---
+  { itemId: 'wpn_fair_hammer', unlockAfter: 'sf_05' },
+  { itemId: 'shd_fair_target', unlockAfter: 'sf_06' },
+  { itemId: 'arm_fair_vest', unlockAfter: 'sf_08' },
+  { itemId: 'amu_fair_ticket', unlockAfter: 'sf_09' },
+  { itemId: 'rng_fair_coin', unlockAfter: 'sf_10' },
+  { itemId: 'wpn_champion_greatsword', unlockAfter: 'sf_boss' }, // легендарка за печати
+
+  // --- Пепельные степи: сет «Пепел» (лавочная часть) ---
+  { itemId: 'wpn_ember_scimitar', unlockAfter: 'ash_05' },
+  { itemId: 'glv_ember_forge', unlockAfter: 'ash_06' },
+  { itemId: 'arm_ember_scalemail', unlockAfter: 'ash_08' },
+  { itemId: 'rng_ember_coal', unlockAfter: 'ash_10' },
+  { itemId: 'rng_ember_spark', unlockAfter: 'ash_11' },
+
+  // --- Филлеры миров ---
+  // Ночной рынок
+  { itemId: 'wpn_nm_fang', unlockAfter: 'nm_05' },
+  { itemId: 'hlm_nm_lantern', unlockAfter: 'nm_07' },
+  { itemId: 'amu_nm_mask', unlockAfter: 'nm_10' },
+  // Хрустальные горы
+  { itemId: 'wpn_cr_pick', unlockAfter: 'cr_05' },
+  { itemId: 'rng_cr_echo', unlockAfter: 'cr_06' },
+  { itemId: 'arm_cr_crystal', unlockAfter: 'cr_08' },
+  { itemId: 'scr_crystal_rain', unlockAfter: 'cr_10' },
+  { itemId: 'amu_quartz_heart', unlockAfter: 'cr_boss' }, // легендарка за печати
+  // Нефритовый сад
+  { itemId: 'bt_jade_silk', unlockAfter: 'jade_05' },
+  { itemId: 'pot_jade_tea', unlockAfter: 'jade_05' },
+  { itemId: 'wpn_jade_fan', unlockAfter: 'jade_06' },
+  { itemId: 'amu_jade_pearl', unlockAfter: 'jade_09' },
+  // Подводный грот
+  { itemId: 'wpn_deep_coral', unlockAfter: 'deep_05' },
+  { itemId: 'pot_deep_air', unlockAfter: 'deep_06' },
+  { itemId: 'shd_deep_shell', unlockAfter: 'deep_07' },
+  { itemId: 'rng_deep_pearl', unlockAfter: 'deep_08' },
+  // Туманные часы
+  { itemId: 'glv_mist_gear', unlockAfter: 'mist_06' },
+  { itemId: 'wpn_mist_pendulum', unlockAfter: 'mist_08' },
+  { itemId: 'amu_mist_sand', unlockAfter: 'mist_10' },
+  { itemId: 'scr_mist_slow', unlockAfter: 'mist_12' },
+  { itemId: 'rng_time_loop', unlockAfter: 'mist_boss' }, // легендарка за печати
 ];
 
 // Тематические лавки города (площадь): ассортимент выводится из SHOP_STOCK

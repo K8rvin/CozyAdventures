@@ -492,7 +492,7 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
           if (f) {
             f.unit.hp = Math.max(0, Math.min(f.unit.maxHp, f.unit.hp - e.dmg));
             setHp(e.uid);
-            pulse(f.el, e.kind === 'poison' ? 'anim-poison' : 'anim-heal', 320);
+            pulse(f.el, e.kind === 'poison' || e.kind === 'thorns' ? 'anim-poison' : 'anim-heal', 320);
           }
           break;
         }
