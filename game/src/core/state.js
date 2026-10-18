@@ -13,6 +13,7 @@ import { FLOW_PUZZLES } from '../data/puzzlesFlow.js';
 import { BREW_PUZZLES } from '../data/puzzlesBrew.js';
 import { FATE_PUZZLES } from '../data/puzzlesFate.js';
 import { GLASS_PUZZLES } from '../data/puzzlesGlass.js';
+import { GIFT_PUZZLES } from '../data/puzzlesGift.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
@@ -428,7 +429,8 @@ export function toggleCosmetic(state, id) {
 // сложность растёт по своей цепочке.
 const PUZZLE_POOL = new Map(
   [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES,
-    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES, ...FATE_PUZZLES, ...GLASS_PUZZLES]
+    ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES, ...FATE_PUZZLES, ...GLASS_PUZZLES,
+    ...GIFT_PUZZLES]
     .map((p) => [p.id, p]),
 );
 const CAMPAIGN_ORDER = [
@@ -523,6 +525,32 @@ const CAMPAIGN_ORDER = [
   // Филлеры и остаток вечера гаданий
   'fate_85', 'fate_86', 'fate_87', 'fate_88', 'fate_89', 'fate_90',
   'fate_91', 'fate_92', 'fate_93', 'fate_94', 'fate_95', 'fate_96',
+  // Подарок для гостя: витрина сувениров и истории с зашитыми условиями
+  'gift_01', 'gift_02', 'gift_03', 'gift_04', 'gift_05', 'gift_06',
+  'gift_07', 'gift_08', 'gift_09', 'gift_10', 'gift_11', 'gift_12',
+  // Вторая дюжина: кузнец, поварёнок, мельник… картограф (шесть новых сувениров)
+  'gift_13', 'gift_14', 'gift_15', 'gift_16', 'gift_17', 'gift_18',
+  'gift_19', 'gift_20', 'gift_21', 'gift_22', 'gift_23', 'gift_24',
+  // Третья дюжина: сторож, паучок, рыцарь… финал для духа перекрёстка
+  'gift_25', 'gift_26', 'gift_27', 'gift_28', 'gift_29', 'gift_30',
+  'gift_31', 'gift_32', 'gift_33', 'gift_34', 'gift_35', 'gift_36',
+  // Четвёртая дюжина: старые знакомые с новыми историями (гости повторяются)
+  'gift_37', 'gift_38', 'gift_39', 'gift_40', 'gift_41', 'gift_42',
+  'gift_43', 'gift_44', 'gift_45', 'gift_46', 'gift_47', 'gift_48',
+  // Пятая дюжина: водяной, полярник, матрёшка; финал — ответный подарок паучка
+  'gift_49', 'gift_50', 'gift_51', 'gift_52', 'gift_53', 'gift_54',
+  'gift_55', 'gift_56', 'gift_57', 'gift_58', 'gift_59', 'gift_60',
+  // Шестая дюжина: свадьбы, юбилеи, новоселья; финал — кот на сто дежурств
+  'gift_61', 'gift_62', 'gift_63', 'gift_64', 'gift_65', 'gift_66',
+  'gift_67', 'gift_68', 'gift_69', 'gift_70', 'gift_71', 'gift_72',
+  // Седьмая дюжина: награды верным помощникам; финал — подарок хозяину
+  'gift_73', 'gift_74', 'gift_75', 'gift_76', 'gift_77', 'gift_78',
+  'gift_79', 'gift_80', 'gift_81', 'gift_82', 'gift_83', 'gift_84',
+  // Восьмая дюжина: витрина пополняется (санки, глёг, вышивка, призма…)
+  'gift_85', 'gift_86', 'gift_87', 'gift_88', 'gift_89', 'gift_90',
+  'gift_91', 'gift_92', 'gift_93', 'gift_94', 'gift_95', 'gift_96',
+  // Финал витрины: от кассира до праздника ста подарков
+  'gift_97', 'gift_98', 'gift_99', 'gift_100',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 

@@ -73,7 +73,7 @@ export const GUESTS = {
     spoiled: 'Шторм не шторм. Ещё заход, хозяин!',
   },
   fairy: {
-    name: 'Фея луга', icon: '🧚', art: null, // ждёт assets/fate/guest_fairy_web.jpg (промт 16.11)
+    name: 'Фея луга', icon: '🧚', art: 'assets/fate/guest_fairy_web.jpg',
     idle: 'Луг ждёт волшебства! Свари что-нибудь блестящее.',
     success: 'Блестяще! Возвращаемся танцевать на луг.',
     spoiled: 'Ой, лунный лучик погас... зажжём снова!',

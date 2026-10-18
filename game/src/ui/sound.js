@@ -123,6 +123,13 @@ export function sfx(name, step = 0) {
       tone(f * 0.84, 0.3, { delay: 0.1, gain: 0.019 });
       break;
     }
+    case 'gift': {
+      // Шелест упаковочной бумаги + мягкий хлопок завязанного узелка
+      noiseBurst(0.22, { freq: 2600, q: 0.8, gain: 0.03 });
+      noiseBurst(0.16, { freq: 3300, q: 0.7, gain: 0.022, delay: 0.14 });
+      tone(340, 0.1, { delay: 0.3, type: 'triangle', gain: 0.04, slide: -60 });
+      break;
+    }
     case 'success':
       [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
       break;

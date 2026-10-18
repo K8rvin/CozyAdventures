@@ -917,7 +917,7 @@ honey and deep brown, no text, no letters, no watermark --ar 16:9
 
 ---
 
-## 15. Карточки типов головоломок — assets/puzzle_cards/pc_<mech>.png (12 шт)
+## 15. Карточки типов головоломок — assets/puzzle_cards/pc_<mech>.png (13 шт)
 
 Обложки для экрана выбора типа головоломки. Яркая тематическая виньетка
 на каждую: крупно, читаемо в маленьком размере, без текста. Имя файла =
@@ -943,6 +943,7 @@ fantasy game card art, no text, no letters, no watermark --ar 3:2
 - **pc_flow.png** — `a cozy shop counter seen from above with glowing arrows on the floor guiding the way to the counter, footprints of light, + хвост`
 - **pc_brew.png** — `an alchemist workbench with a bubbling glowing cauldron, open recipe book, hanging herbs and potion bottles, + хвост`
 - **pc_fate.png** — `a fan of hand-painted fortune-teller cards on dark velvet, one card face-up glowing softly, a candle flame reflected in a crystal ball nearby, + хвост`
+- **pc_gift.png** — `a small gift box wrapped in craft paper with a red-gold ribbon on a cozy shop counter, tiny souvenirs blurred on shelves behind, warm candlelight, + хвост`
 
 ---
 
@@ -1508,7 +1509,7 @@ other objects, no text, no watermark --ar 1:1
 Все предметы из `game/src/data/items.js` покрыты. Новые предметы — тем же
 шаблоном, фон строго по редкости, имя файла = id предмета.
 
-## 19. Курсоры — assets/cursors/<key>.png + <key>_hover.png (24 темы × 2)
+## 19. Курсоры — assets/cursors/<key>.png + <key>_hover.png (25 тем × 2)
 
 Тематические курсоры мыши для ПК-версии: у каждого режима игры (типы
 головоломок, бой, комната рыцаря, сцены хаба, лавки) свой курсор. Код готов:
@@ -1571,4 +1572,124 @@ fate, battle, equip, shop. Волна 2 — остальные.
 | tavern | a foamy wooden beer mug | верх (10,6) |
 | craft | a blacksmith's hammer, head up-left | левый верх (6,6) |
 | workshop | a small wrench or awl, tip up-left | левый верх (6,6) |
+| gift | a tiny gift box in craft paper with a red ribbon bow | бант, левый верх (8,8) |
+
+---
+
+## 20. «Подарок для гостя» — assets/gift/ (фон-сцена + 66 сувениров)
+
+Новая механика: гость рассказывает историю с зашитыми условиями, игрок
+выбирает подарок на витрине (`game/src/data/puzzlesGift.js`). Гости и их
+портреты — уже готовые из раздела 16, генерировать не нужно. Здесь только
+фон прилавка и сувениры. До генерации игра показывает эмодзи-фолбэки.
+
+### 20.1 gift_counter.png — прилавок-витрина (фон сцены)
+
+Поверх лягут портрет гостя, реплики и сетка сувениров, поэтому центр —
+спокойная деревянная столешница без крупных объектов; товары размыты
+на заднем плане у краёв.
+
+```
+Cozy fantasy shop counter for gift-giving seen from a slight top-down angle,
+warm polished wooden countertop with an EMPTY calm center (souvenirs will be
+placed here by the player), shelves with blurred jars, boxes and folded
+ribbons along the top edge, a small brass bell and a burning candle at the
+top corners, craft wrapping paper and twine spool at the bottom edge, warm
+candlelight with honey-amber glow and deep brown shadows, soft vignette,
+storybook watercolor illustration with gentle ink outlines, no text,
+no watermark --ar 8:5
+```
+
+Сохранить в `game/assets/gift/gift_counter_web.jpg` (≥1600×1000, сжать).
+
+### 20.2 Сувениры — assets/gift/souv_<id>_png → souv_<id>_web.jpg (66 шт)
+
+Иконки сувениров на витрине и в превью (квадрат). Как иконки предметов
+(р.18), но не боевые: тёплые сувениры лавки. Один предмет крупно в центре
+(70% кадра), вид в три четверти, на тёплом кремовом фоне `#f3e6cf` (НЕ
+прозрачном: рендер — `object-fit: cover` поверх карточки). Генерировать
+512×512, сжимать в `souv_<id>_web.jpg`.
+
+Общий хвост стиля:
+
+```
+single souvenir item centered, three-quarter view, storybook watercolor
+illustration with gentle ink outlines, warm palette of amber, honey and deep
+brown, plain warm cream background #f3e6cf, cozy fantasy shop keepsake,
+no text, no watermark --ar 1:1
+```
+
+| id | Сувенир | SUBJECT |
+|---|---|---|
+| souv_scarf | Шарф мёдовой шерсти | a folded knitted scarf in honey-yellow wool with a tassel fringe |
+| souv_honey | Липовый мёд | a small glass jar of golden linden honey with a wooden dipper leaning on it |
+| souv_candle | Свеча «Тихий вечер» | a thick cream beeswax candle with a small calm flame, wax drips |
+| souv_box | Шкатулка с напевом | a carved wooden music box with a brass crank, lid slightly open showing a twirling tiny dancer |
+| souv_bell | Колокольчик с лентой | a small brass bell with a red ribbon bow on its handle |
+| souv_comb | Гребень из бука | a polished beechwood hair comb with carved vine pattern |
+| souv_whistle | Свистулька-птица | a clay bird-shaped whistle, painted folk-style, cheerful |
+| souv_tea | Чайная смесь «Камин» | a small paper pouch of herbal tea with dried berries spilling out, tied with twine |
+| souv_lantern | Фонарик-крошка | a palm-sized brass travel lantern with a warm glowing flame inside |
+| souv_book | Тетрадь в ситцевой обложке | a small notebook in floral chintz cloth cover, tied with a string |
+| souv_quill | Перо странствующего писца | an elegant travel quill with a carved wooden handle and a tiny ink stain |
+| souv_marmalade | Мармелад звёздный | star-shaped marmalade candies dusted with sugar in a small paper cone |
+| souv_socks | Носки бабушкиной вязки | a pair of thick hand-knitted socks with a colorful fir-tree pattern |
+| souv_brooch | Брошь «Лунный мох» | an ornate bronze brooch with a moonstone that seems to hold moss under moonlight |
+| souv_snowball | Шар со снегом | a glass snow globe with a tiny cozy shop inside, snowflakes mid-air |
+| souv_sachet | Саше с лавандой | a small linen sachet pouch with lavender sprigs tucked under a string bow |
+| souv_spoon | Ложка резная | a carved wooden spoon with a vine pattern on the handle |
+| souv_inkwell | Чернильница «Паучок» | a glass inkwell with dark ink and a tiny decorative glass spider at the bottom |
+| souv_gingerbread | Пряничный домик | a gingerbread house with icing windows and a snowy roof |
+| souv_nightowl | Ночник «Совушка» | a small clay owl night lamp with a warm glow from within |
+| souv_kite | Воздушный змей | a folded paper kite with a diamond shape, red and gold pattern, tail of bows |
+| souv_thimble | Напёрсток счастливый | a tiny brass thimble with an engraved star, lying on its side |
+| souv_ribbon | Лента ярмарочная | a curled roll of scarlet ribbon with golden edges |
+| souv_spyglass | Подзорная трубка | a brass three-section spyglass with a leather grip, slightly extended |
+| souv_pie | Пирог с рябиной | a rustic lattice-crust pie with red rowan berries peeking through |
+| souv_flute | Свирель из ивы | a slender willow-wood flute with carved rings, calm and plain |
+| souv_map | Карта звёздного неба | a hand-drawn star chart on aged paper, constellations inked, slightly rolled |
+| souv_accordion | Гармошка тульская | a small folk accordion, half-extended bellows, mother-of-pearl buttons |
+| souv_yarn | Клубок со спицами | a soft ball of wool yarn with two smooth knitting needles stuck through |
+| souv_seeds | Семена редких трав | little paper seed packets with handwritten-style marks (NOT readable), twine-tied |
+| souv_samovar | Самоварчик медный | a small copper samovar for two cups, gently steaming, cherry-wood handles |
+| souv_letters | Пачка писем с сургучом | a bundle of old letters tied with string, one red wax seal, mysterious |
+| souv_basket | Корзинка плетёная | a woven willow basket with a curved handle |
+| souv_rattle | Погремушка из тыквы | a dried gourd rattle with a carved wooden handle, peas inside |
+| souv_blanket | Плед лоскутный | a folded patchwork quilt of colorful fabric scraps, warm and cheerful |
+| souv_fan | Веер из перьев | an elegant feather hand fan, half-open, calm earthy tones |
+| souv_pillow | Подушечка с душицей | a small linen sachet-pillow with embroidered herbs, dried oregano sprigs |
+| souv_paints | Краски яичные | a small box of twelve egg tempera paint pods with a tiny brush |
+| souv_compass | Компас ладонный | a palm-sized brass compass with a glass top, needle pointing north |
+| souv_cocoa | Какао с зефиром | a tin of cocoa powder with a small bag of marshmallows, cozy |
+| souv_chimes | Металлофон нежный | a small wind chime of thin brass plates, gentle and calm |
+| souv_ushanka | Ушанка заячья | a fluffy rabbit-fur ushanka hat with ear flaps tied up |
+| souv_jam | Варенье из шишек | a jar of young pine cone jam, amber and resinous, a small cone on top |
+| souv_doll | Матрёшка резная | a hand-painted wooden nesting doll, the smallest one beside it, cheerful |
+| souv_dreamcatcher | Ловец снов | a dreamcatcher with a woven web and a single feather, calm earthy tones |
+| souv_kaleidoscope | Калейдоскоп | a brass-and-glass kaleidoscope with a splash of colorful shards beside it |
+| souv_snowshoes | Снегоступы | a pair of wooden snowshoes with leather straps, light and sturdy |
+| souv_birdhouse | Скворечник | a neat wooden birdhouse with a round entrance hole, welcoming |
+| souv_bellows | Мехи домашние | a wooden fireplace bellows with leather sides and a brass nozzle |
+| souv_astrolabe | Астролябия | a brass astrolabe with rings within rings, engraved stars, mysterious |
+| souv_perfume | Духи луговые | a delicate glass perfume bottle with meadow flowers inside |
+| souv_abacus | Счёты дубовые | an oak abacus with smooth wooden beads, well-worn |
+| souv_locket | Медальон с портретом | an oval brass locket, open, showing a tiny painted portrait inside |
+| souv_gloves | Перчатки охотничьи | a pair of soft leather hunting gloves with sturdy stitching |
+| souv_toy_knight | Рыцарь деревянный | a wooden toy knight with a linden-wood sword and bark shield |
+| souv_seedling | Саженец в горшочке | a young apple tree seedling in a birch-bark pot, ready to travel |
+| souv_seal | Печать с сургучом | a brass wax seal stamp with a crest and a stick of red sealing wax |
+| souv_moth | Моль плюшевая | a plush moth toy with velvet wings, soft and smiling |
+| souv_watch | Часы карманные | a pocket watch on a chain with a lighthouse engraving |
+| souv_herbarium | Гербарий | an old herbarium album with pressed herbs and dated pages |
+| souv_sleigh | Санки детские | a small wooden sled with curved runners and a rope |
+| souv_glogg | Глёг ягодный | a bottle of berry glogg with steam rising from a poured mug beside |
+| souv_embroidery | Вышивка «Перекрёсток» | a framed embroidery of a cozy shop with a lantern and a cat, cross-stitch |
+| souv_prism | Призма солнечная | a faceted glass prism casting a small rainbow, mysterious sparkle |
+| souv_brazier | Жаровня походная | a brass travel brazier with glowing coals behind a vented lid |
+| souv_ladle | Ковш кедровый | a carved cedar ladle with painted folk pattern on the side |
+
+### 20.3 Карточка типа и курсор
+
+- Карточка типа **pc_gift.png** — в разделе 15 (добавлена в список).
+- Курсор **gift.png / gift_hover.png** — в разделе 19 (строка в таблице).
 

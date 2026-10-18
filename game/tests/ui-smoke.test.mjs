@@ -177,8 +177,8 @@ test('все экраны рендерятся без ошибок', () => {
       return renderHub(new El('main'), ctx, { scene: 'cabinet' });
     },
     () => renderPuzzleList(new El('main'), ctx),
-    // Списки по типам головоломок (13 карточек → свой список)
-    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate', 'glass']
+    // Списки по типам головоломок (14 карточек → свой список)
+    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate', 'glass', 'gift']
       .map((mech) => () => renderPuzzleTypeList(new El('main'), ctx, mech)),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_01' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_12' }),
@@ -209,6 +209,8 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'gl_34' }),  // витраж 8×5, 40 осколков
     () => renderPuzzle(new El('main'), ctx, { id: 'gl_46' }),  // витраж с посвящённым артом (фолбэк)
     () => renderPuzzle(new El('main'), ctx, { id: 'gl_58' }),  // финал пятой серии 8×5
+    () => renderPuzzle(new El('main'), ctx, { id: 'gift_01' }), // подарок для гостя
+    () => renderPuzzle(new El('main'), ctx, { id: 'gift_12' }), // подарок от кота (9 сувениров)
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
     () => renderGuestBook(new El('main'), ctx), // гостевая книга
     () => renderFateDeck(new El('main'), ctx), // колода судьбы
@@ -297,16 +299,16 @@ test('каталог головоломок: полка зацикливаетс
   const prev = all.find((el) => el.className === 'small ghost pc-shelf-prev');
   const next = all.find((el) => el.className === 'small ghost pc-shelf-next');
   const counter = all.find((el) => el.className === 'pc-shelf-counter');
-  assert.equal(cards.length, 15, 'по краям добавлены две стыковочные карточки');
-  assert.equal(cards[0].dataset.entryIndex, '12', 'слева от первой находится последняя');
+  assert.equal(cards.length, 16, 'по краям добавлены две стыковочные карточки');
+  assert.equal(cards[0].dataset.entryIndex, '13', 'слева от первой находится последняя');
   assert.equal(cards.at(-1).dataset.entryIndex, '0', 'справа от последней находится первая');
   assert.equal(cards[0].dataset.loopClone, 'true');
   assert.equal(cards.at(-1).dataset.loopClone, 'true');
 
   prev.click();
-  assert.equal(counter.textContent, '13 / 13', 'стрелка назад ведёт с первой к последней');
+  assert.equal(counter.textContent, '14 / 14', 'стрелка назад ведёт с первой к последней');
   next.click();
-  assert.equal(counter.textContent, '1 / 13', 'стрелка вперёд возвращает к первой');
+  assert.equal(counter.textContent, '1 / 14', 'стрелка вперёд возвращает к первой');
   assert.equal(prev.disabled, false, 'у бесконечной ленты нет заблокированного края');
   assert.equal(next.disabled, false);
 
@@ -315,15 +317,15 @@ test('каталог головоломок: полка зацикливаетс
     card.offsetWidth = 300;
   });
   track.clientWidth = 500;
-  track.scrollWidth = 4980;
+  track.scrollWidth = 5220;
   track.scrollLeft = 0;
   for (const fn of track._listeners.scroll || []) fn();
-  assert.equal(track.scrollLeft, 4160, 'левый клон незаметно заменяется настоящей последней карточкой');
-  assert.equal(counter.textContent, '13 / 13');
-  track.scrollLeft = 4480;
+  assert.equal(track.scrollLeft, 4480, 'левый клон незаметно заменяется настоящей последней карточкой');
+  assert.equal(counter.textContent, '14 / 14');
+  track.scrollLeft = 4720;
   for (const fn of track._listeners.scroll || []) fn();
   assert.equal(track.scrollLeft, 320, 'правый клон незаметно заменяется настоящей первой карточкой');
-  assert.equal(counter.textContent, '1 / 13');
+  assert.equal(counter.textContent, '1 / 14');
 });
 
 test('каталог головоломок: превью, простой список и фильтры мозаики реагируют на выбор', () => {
@@ -334,7 +336,7 @@ test('каталог головоломок: превью, простой спи
   const previewRoot = new El('main');
   renderPuzzleList(previewRoot, ctx);
   const previewItems = flatElements(previewRoot).filter((el) => el.className === 'pc-preview-item');
-  assert.equal(previewItems.length, 13);
+  assert.equal(previewItems.length, 14);
   previewItems[1].click();
   assert.ok(previewItems[1].classList.contains('is-active'), 'пункт обновляет живое превью');
 
@@ -343,7 +345,7 @@ test('каталог головоломок: превью, простой спи
   renderPuzzleList(listRoot, ctx);
   const listAll = flatElements(listRoot);
   const simpleItems = listAll.filter((el) => (el.className || '').startsWith('pc-simple-item'));
-  assert.equal(simpleItems.length, 13);
+  assert.equal(simpleItems.length, 14);
   assert.ok(!listAll.some((el) => (el.className || '').includes('pc-accordion')), 'раскрывающихся панелей больше нет');
   assert.ok(!listAll.some((el) => el.textContent === 'К уровням →'), 'отдельной кнопки перехода нет');
   simpleItems[1].click();
@@ -364,7 +366,7 @@ test('каталог головоломок: превью, простой спи
   assert.equal(cards.filter((card) => !card.hidden).length, 0, 'пустая выборка поддерживается');
   assert.equal(bentoAll.find((el) => el.className === 'muted pc-bento-empty').hidden, false);
   filters.find((el) => el.dataset.filter === 'all').click();
-  assert.equal(cards.filter((card) => !card.hidden).length, 13, 'фильтр «Все» возвращает карточки');
+  assert.equal(cards.filter((card) => !card.hidden).length, 14, 'фильтр «Все» возвращает карточки');
 });
 
 test('гостевая книга: четыре режима и сохранение выбранного вида', () => {

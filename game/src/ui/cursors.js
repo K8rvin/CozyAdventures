@@ -23,6 +23,7 @@ export const CURSOR_THEMES = {
   brew: { hotspot: [16, 4], name: 'Колба', icon: '⚗️' },
   fate: { hotspot: [6, 4], name: 'Карта судьбы', icon: '🔮' },
   glass: { hotspot: [16, 4], name: 'Осколок витража', icon: '🪟' },
+  gift: { hotspot: [8, 8], name: 'Подарочный свёрток', icon: '🎁' },
   battle: { hotspot: [4, 4], name: 'Меч рыцаря', icon: '⚔️' },
   equip: { hotspot: [16, 6], name: 'Шлем рыцаря', icon: '🪖' },
   shop: { hotspot: [16, 16], name: 'Монета', icon: '🪙' },

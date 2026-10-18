@@ -1202,6 +1202,102 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .fate-preview-name { font-weight: 700; font-size: 16px; color: #ffe9c0; }
 .fate-preview-meanings { font-size: 13px; color: #d8c9a8; }
 
+/* === Подарок для гостя: прилавок с витриной сувениров === */
+.gift-scene {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #3a2c1c 0%, #2a2012 55%, #1c140a 100%);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  min-height: 560px;
+}
+.gift-counter-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  opacity: 0.85;
+}
+.gift-scene > *:not(.gift-counter-art) { position: relative; z-index: 1; }
+.gift-scene.shake { animation: riddle-shake 0.45s ease; }
+.gift-scene.checking .gift-item { pointer-events: none; cursor: default; }
+
+/* Витрина: сетка сувениров */
+.gift-shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 10px;
+  align-self: stretch;
+  background: rgba(30, 22, 14, 0.55);
+  border-radius: 12px;
+  padding: 12px;
+}
+.gift-item {
+  position: relative;
+  background: rgba(255, 236, 190, 0.07);
+  border: 2px solid rgba(255, 202, 122, 0.18);
+  border-radius: 10px;
+  padding: 8px 6px;
+  text-align: center;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.gift-item:hover { border-color: rgba(255, 202, 122, 0.55); transform: translateY(-2px); }
+.gift-item.selected {
+  border-color: #ffca7a;
+  background: rgba(255, 202, 122, 0.16);
+  box-shadow: 0 0 14px rgba(255, 202, 122, 0.25);
+}
+.gift-item.gift-hidden { opacity: 0.38; filter: grayscale(0.8); }
+.gift-item-box {
+  position: relative;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gift-item-icon { font-size: 34px; }
+.gift-item-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gift-item-name { font-size: 12px; color: #f3e6cf; margin-top: 6px; line-height: 1.3; }
+.gift-item-paw {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 15px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+}
+/* Кнопка вручения — прямо под витриной */
+.gift-give { align-self: stretch; padding: 12px; font-size: 16px; }
+.gift-give:disabled { opacity: 0.55; }
+/* Упаковка подарка: свёрток подпрыгивает и светится */
+.gift-item.gift-wrapping { animation: gift-wrap 0.6s ease; }
+@keyframes gift-wrap {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.12) rotate(-3deg); box-shadow: 0 0 22px rgba(255, 202, 122, 0.6); }
+  70% { transform: scale(0.94) rotate(2deg); }
+  100% { transform: scale(1); }
+}
+/* Превью сувенира в боковой панели: квадрат вместо карточного 2:3 */
+.gift-preview-frame { width: 180px; height: 180px; }
+.gift-preview-desc { font-size: 13px; color: #d8c9a8; font-style: italic; text-align: center; line-height: 1.45; }
+@media (prefers-reduced-motion: reduce) {
+  .gift-item,
+  .gift-item.gift-wrapping { transition: none; animation: none; }
+}
+
 
 /* --- Чай для путника: образы вместо чисел --- */
 .tea-ing { display: inline-flex; align-items: center; gap: 5px; }
@@ -3720,6 +3816,8 @@ body[data-cursor="fate"] { cursor: url("assets/cursors/fate.png") 6 4, auto; } /
 body[data-cursor="fate"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/fate_hover.png") 6 4, pointer; }
 body[data-cursor="glass"] { cursor: url("assets/cursors/glass.png") 16 4, auto; } /* Осколок витража */
 body[data-cursor="glass"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/glass_hover.png") 16 4, pointer; }
+body[data-cursor="gift"] { cursor: url("assets/cursors/gift.png") 8 8, auto; } /* Подарочный свёрток */
+body[data-cursor="gift"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/gift_hover.png") 8 8, pointer; }
 body[data-cursor="battle"] { cursor: url("assets/cursors/battle.png") 4 4, auto; } /* Меч рыцаря */
 body[data-cursor="battle"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/battle_hover.png") 4 4, pointer; }
 body[data-cursor="equip"] { cursor: url("assets/cursors/equip.png") 16 6, auto; } /* Шлем рыцаря */
