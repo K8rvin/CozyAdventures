@@ -1,6 +1,6 @@
 // Таверна и конюшня: найм спутников, питомцев, наёмников, состав отряда.
 import { crewStock, hireCrew, toggleCompanion, toggleMerc, setPet } from '../core/state.js';
-import { quickNav } from './common.js';
+import { header, quickNav } from './common.js';
 
 const KIND_LABEL = {
   companion: '✨ Спутники (в отряде до 3)',
@@ -27,17 +27,8 @@ export function bonusText(def) {
 export function renderTavern(container, ctx) {
   const { state } = ctx;
 
-  const head = document.createElement('div');
-  head.className = 'panel';
-  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">Таверна и конюшня</h2></div>
-    <div class="muted">Очаг, кружки, тихий бард. Здесь рыцарь находит друзей и помощников.</div>`;
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← Назад';
-  back.addEventListener('click', () => ctx.go('hub'));
-  head.firstElementChild.appendChild(back);
-  container.appendChild(head);
+  container.appendChild(header(ctx, 'Таверна и конюшня',
+    'Очаг, кружки, тихий бард. Здесь рыцарь находит друзей и помощников.', 'hub'));
   container.appendChild(quickNav(ctx, [
     { icon: '🌇', label: 'На площадь', screen: 'hub', params: { scene: 'square' } },
   ]));

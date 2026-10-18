@@ -26,6 +26,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 10px 16px;
   background: var(--panel);
   border-bottom: 2px solid #58452f;
@@ -34,19 +35,32 @@ html, body {
   z-index: 10;
 }
 
-.brand { font-weight: 600; font-size: 17px; cursor: pointer; }
+.topbar-context { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+#topbar .topbar-back { flex: none; min-height: 36px; padding: 4px 10px; white-space: nowrap; }
+#topbar .topbar-back[hidden] { display: none; }
+.brand {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 17px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
 .clickable { cursor: pointer; }
-.wallet { display: flex; gap: 14px; font-size: 16px; font-weight: 600; }
-.wallet span { background: var(--panel-2); padding: 4px 12px; border-radius: 20px; }
+.wallet { display: flex; align-items: center; flex: none; gap: 14px; font-size: 16px; font-weight: 600; }
+.wallet span { background: var(--panel-2); padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
 
 #screen { max-width: 1060px; margin: 0 auto; padding: 16px; }
 
-/* Шапка экрана (название + «Назад») прилипает под топбаром при скролле */
-.app-header {
-  position: sticky;
-  top: 52px;
-  z-index: 9;
-}
+/* Хаб на широких мониторах: сцена крупнее (до 1800px), остальные экраны — как были */
+body[data-route="hub"] #screen { max-width: min(1800px, 96vw); }
+body[data-route="hub"] #screen > .panel:not(.hub-picture),
+body[data-route="hub"] #screen > .muted { max-width: 1060px; margin-left: auto; margin-right: auto; }
+
+/* Подзаголовок прокручивается вместе с содержимым; заголовок и «Назад» — в topbar. */
+.app-header { margin: 0 2px 14px; line-height: 1.45; }
+.app-header:empty { display: none; }
 
 h2 { margin: 6px 0 14px; font-size: 22px; }
 h3 { margin: 14px 0 8px; font-size: 17px; color: var(--accent); }
@@ -2273,6 +2287,12 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 .mt { margin-top: 12px; }
 
 @media (max-width: 640px) {
+  #topbar { gap: 8px; padding: 6px 10px; }
+  .topbar-context { gap: 6px; }
+  #topbar .topbar-back { min-height: 44px; padding: 4px 8px; }
+  .topbar-back-label { display: none; }
+  .wallet { gap: 6px; font-size: 14px; }
+  .wallet span { padding: 4px 8px; }
   #screen { padding: 10px; }
   .brand { font-size: 14px; }
   .equip-grid { grid-template-columns: repeat(3, 1fr); }
@@ -2295,7 +2315,7 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 /* Плавающая быстрая навигация — всегда под рукой, в любом положении скролла */
 .quick-nav {
   position: fixed;
-  right: 14px;
+  right: 48px;
   bottom: 14px;
   display: flex;
   flex-direction: column;
@@ -2382,7 +2402,7 @@ body::-webkit-scrollbar { display: none; }
 
 #spidertrack {
   position: fixed;
-  left: 0;
+  right: 0;
   top: 0;
   bottom: 0;
   width: 34px;
@@ -2452,15 +2472,18 @@ body::-webkit-scrollbar { display: none; }
 .hotspot.zap { animation: hs-zap 0.22s ease; }
 
 /* --- Хаб: интерактивные объекты на большой картинке --- */
-.hub-picture { position: relative; }
+/* cqw = % ширины самой сцены (container): размеры растут вместе с картинкой, */
+/* max() сохраняет прежний вид на узких экранах (база ~1028px) */
+.hub-picture { position: relative; container-type: inline-size; }
 .hotspot {
   position: absolute;
   transform: translate(-50%, -50%);
   background: rgba(61, 47, 34, 0.35);
   border: 2px solid transparent;
   border-radius: 50%;
-  width: 76px;
-  height: 76px;
+  width: max(58px, 7.4cqw);
+  height: auto;
+  aspect-ratio: 1;
   min-height: 0;
   padding: 0;
   display: flex;
@@ -2471,9 +2494,9 @@ body::-webkit-scrollbar { display: none; }
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
   backdrop-filter: blur(1px);
 }
-.hotspot .hs-icon { font-size: 30px; line-height: 1.1; }
+.hotspot .hs-icon { font-size: max(24px, 2.9cqw); line-height: 1.1; }
 .hotspot .hs-label {
-  font-size: 10px;
+  font-size: max(10px, 1cqw);
   font-weight: 700;
   color: var(--accent);
   opacity: 0;
@@ -2487,12 +2510,13 @@ body::-webkit-scrollbar { display: none; }
   z-index: 6;
 }
 .hotspot:hover .hs-label, .hotspot:focus-visible .hs-label { opacity: 1; }
-.hotspot .hs-dot {
+.hs-dot {
   position: absolute;
   top: 2px;
   right: 6px;
-  width: 12px;
-  height: 12px;
+  width: max(12px, 1.17cqw);
+  height: auto;
+  aspect-ratio: 1;
   border-radius: 50%;
   background: var(--accent-2);
   box-shadow: 0 0 8px var(--accent-2);
@@ -2502,9 +2526,65 @@ body::-webkit-scrollbar { display: none; }
   0%, 100% { transform: scale(1); opacity: 0.9; }
   50% { transform: scale(1.5); opacity: 0.4; }
 }
-@media (max-width: 640px) {
-  .hotspot { width: 58px; height: 58px; }
-  .hotspot .hs-icon { font-size: 24px; }
+
+/* Линза: прозрачная кнопка; при наведении — увеличенный кусок арта из той же */
+/* точки (фон задан инлайном в hub.js, ::before наследует его, чтобы анимировать) */
+.hotspot.lens {
+  background-color: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+}
+.hotspot.lens::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.hotspot.lens:hover, .hotspot.lens:focus-visible {
+  background-color: transparent;
+  border-color: var(--accent);
+  box-shadow: 0 0 18px rgba(255, 202, 122, 0.35);
+}
+.hotspot.lens:hover::before, .hotspot.lens:focus-visible::before,
+.hotspot.lens:active::before { opacity: 1; transform: scale(1); }
+.hotspot.lens:hover .hs-glint, .hotspot.lens:focus-visible .hs-glint { opacity: 0; }
+
+/* Огонёк-маркер хотспота в покое */
+.hs-glint {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(10px, 1.2cqw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 190, 0.95) 0%, rgba(255, 202, 122, 0.55) 40%, rgba(255, 202, 122, 0) 70%);
+  filter: blur(1px);
+  pointer-events: none;
+  animation: glint-pulse 2.4s ease-in-out infinite;
+  transition: opacity 0.18s ease;
+}
+@keyframes glint-pulse {
+  0%, 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(0.8); }
+  50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.25); }
+}
+
+/* Подпись-табличка под линзой */
+.hotspot.lens .hs-label {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(29, 21, 14, 0.92);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 3px 10px;
+  z-index: 7;
 }
 
 /* --- Обучение: прожектор и кот-гид --- */

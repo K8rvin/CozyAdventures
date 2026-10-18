@@ -33,6 +33,65 @@ counter, sleeping cat, knight helmet on a stand, window with forest view,
 no text --ar 3:1
 ```
 
+## 1б. hub_banner — детальная версия под хотспоты
+
+Более детальный вариант главной сцены: у каждого хотспота и пет-спота есть свой
+тематический «якорь» в арте (координаты совпадают с текущими в `hub.js`, так что
+хотспоты останутся на местах). Животных и людей НЕ рисуем — кот, питомцы,
+спутники и гость истории накладываются спрайтами.
+
+Якоря: 📚 Головоломки (10,42) — книжный шкаф слева · 🪙 Прилавок (43,55) ·
+📖 Гостевая книга (47,70) — аналой перед прилавком · 🛡️ Комната рыцаря (68,50) —
+доспех + арка · 🌆 На площадь (77,52) — круглая дверь · 🪟 В поход (93,45) — окно
+с дорогой · 🦌 Кабинет трофеев (72,90) — низкая арка со ступенями вниз и рогами ·
+пет-споты: травница (19,97), кот (30,97 — пустой пуфик), лисёнок (34,75), щенок
+(87,88), гость (57,78), светлячок (47,15 — фонарик под потолком).
+
+```
+Cozy magical general store interior, very wide establishing shot, storybook
+watercolor illustration with gentle ink outlines, warm candlelight, dark wooden
+beams, amber glow, deep brown shadows, high detail, lived-in and loved
+atmosphere, no people, no animals, no text, no watermark.
+
+Layout, left to right:
+- Far left wall (about 10% from the left edge, middle height): a tall dark-wood
+  bookcase crammed with ancient tomes, scrolls, puzzle boxes and a small glowing
+  riddle lantern — a "puzzle corner";
+- Lower-left floor (about 19-30% from the left, near the bottom edge): a low
+  herbalist's side table with drying herbs and a teapot, and an empty round
+  cushioned stool;
+- Center (about 43% from the left, middle height): a long wooden merchant
+  counter with a brass bell, balance scales, an open ledger, a coin pouch and
+  an inkwell;
+- In front of the counter (about 47% from the left, lower): a small wooden
+  lectern with an open guest book and a quill;
+- Open floor in front of the counter (about 34% and 57% from the left, lower
+  third): patterned rugs, clear standing space for visitors;
+- Right of center (about 68% from the left): a polished knight's armor stand
+  with helmet, shield and halberd beside a small arched doorway to the knight's
+  room;
+- Lower right wall (about 72% from the left, near the floor): a low arched
+  cellar doorway with three stone steps going down, mounted deer antlers and a
+  small golden trophy cup above the arch, faint golden light from below —
+  the entrance to a trophy cabinet;
+- Right wall (about 77% from the left): a round wooden door with iron hinges
+  and a warm hanging lantern above it, leading to the town square;
+- Far right (about 93% from the left, middle height): a large multi-paned
+  window showing a misty forest road winding toward distant blue mountains;
+- Lower-right corner (about 87% from the left, near the floor): clear floor
+  with the corner of a rug;
+- Top center (about 47% from the left, near the ceiling): a small glowing
+  hanging lantern among garlands of dried herbs and garlic.
+
+Stone floor, candles in brass candelabras, shelves with potion bottles and jars
+along the back wall, soft evening light mixing candlelight and cool window glow.
+--ar 3:1
+```
+
+Размер: ≥2400×800, 3:1. Оригинал → `art-src/hub/`, сжатый `_web.jpg` → заменить
+`game/assets/hub/hub_banner_web.jpg` (код менять не нужно, путь тот же).
+После замены при желании подправить координаты в `hub.js`.
+
 ## 2. seek_meadow.png — сцена поиска «Тихая опушка»
 
 ВАЖНО: это искалка — предметов должно быть ОЧЕНЬ много, плотный зажор сцены,

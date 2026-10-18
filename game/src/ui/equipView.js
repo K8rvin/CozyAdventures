@@ -9,7 +9,7 @@ import {
 } from '../core/state.js';
 import { SETS } from '../data/sets.js';
 import { PET_BY_ID } from '../data/crew.js';
-import { quickNav } from './common.js';
+import { header, quickNav } from './common.js';
 import {
   itemEmoji, itemIconEl, showItemTip, hideItemTip, bindItemTip, TRAIT_LABEL,
 } from './itemTip.js';
@@ -98,15 +98,15 @@ export function renderEquip(container, ctx) {
   }
   if (targetSlot && targetSlot !== 'belt' && state.equipped[targetSlot]) targetSlot = null;
 
-  const head = document.createElement('div');
-  head.className = 'panel';
-  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">Комната рыцаря</h2></div>
-    <div class="muted">Надевай вещи — они реально меняют бой. Перетаскивай предметы или кликай по пустому слоту.</div>`;
+  const head = header(ctx, 'Комната рыцаря',
+    'Надевай вещи — они реально меняют бой. Перетаскивай предметы или кликай по пустому слоту.', 'hub');
+  head.style.display = 'flex';
+  head.style.alignItems = 'center';
+  head.style.gap = '10px';
   // AI-иконка рыцаря: web.jpg, фолбэк — без иконки
   const kIcon = document.createElement('img');
   kIcon.alt = '';
-  kIcon.style.cssText = 'width:56px;height:56px;border-radius:12px;margin-right:10px;vertical-align:middle';
+  kIcon.style.cssText = 'width:56px;height:56px;border-radius:12px;flex:none';
   const kCandidates = ['assets/knight/icon_knight_web.jpg'];
   let kIdx = 0;
   kIcon.addEventListener('error', () => {
@@ -115,12 +115,7 @@ export function renderEquip(container, ctx) {
     else kIcon.remove();
   });
   kIcon.src = kCandidates[0];
-  head.querySelector('h2').prepend(kIcon);
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← Назад';
-  back.addEventListener('click', () => ctx.go('hub'));
-  head.firstElementChild.appendChild(back);
+  head.prepend(kIcon);
   container.appendChild(head);
   container.appendChild(quickNav(ctx, [
     { icon: '🏪', label: 'Прилавок', screen: 'shop', primary: true },

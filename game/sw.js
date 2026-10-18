@@ -1,7 +1,7 @@
 // Service Worker: офлайн-режим игры «Лавка на перекрёстке миров».
 // Документ и код — network-first (свежее сразу, офлайн — из кэша),
 // ассеты — cache-first (картинки/звуки меняются редко, кэш ускоряет).
-const CACHE = 'cozy-adventures-v3';
+const CACHE = 'cozy-adventures-v4';
 
 // Ядро: то, без чего игра не откроется офлайн.
 const CORE = [

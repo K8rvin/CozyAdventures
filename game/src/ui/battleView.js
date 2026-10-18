@@ -5,7 +5,7 @@ import { ENEMY_BY_ID } from '../data/enemies.js';
 import { TROPHIES } from '../data/trophies.js';
 import { battleAvailable, firstUnbeatenBattle } from '../core/state.js';
 import { startTutorial } from './tutorial.js';
-import { quickNav } from './common.js';
+import { header, quickNav } from './common.js';
 
 // Метаданные миров для плиток. Арт — готовые фоны боёв assets/battle/.
 const WORLD_META = {
@@ -58,17 +58,8 @@ let seenFirstUnbeaten = null;
 export function renderBattleList(container, ctx) {
   const { state } = ctx;
 
-  const head = document.createElement('div');
-  head.className = 'panel';
-  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">Походы рыцаря</h2></div>
-    <div class="muted">Рыцарь сражается сам — твоя работа: снарядить его с заботой. Выбери мир и отправляйся в путь.</div>`;
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← Назад';
-  back.addEventListener('click', () => ctx.go('hub'));
-  head.firstElementChild.appendChild(back);
-  container.appendChild(head);
+  container.appendChild(header(ctx, 'Походы рыцаря',
+    'Рыцарь сражается сам — твоя работа: снарядить его с заботой. Выбери мир и отправляйся в путь.', 'hub'));
   container.appendChild(quickNav(ctx, [
     { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },

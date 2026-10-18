@@ -38,6 +38,10 @@ function pickChatter(state) {
   return lines[Math.floor(Math.random() * lines.length)];
 }
 
+// Размер спрайта на сцене: до базовой ширины (~1028px) — как раньше в px,
+// на широких экранах — пропорционально сцене (cqw = % ширины .hub-picture)
+const spr = (px) => `max(${px}px, ${(px / 10.28).toFixed(2)}cqw)`;
+
 export function renderHub(container, ctx, params = {}) {
   const { state } = ctx;
 
@@ -55,16 +59,17 @@ export function renderHub(container, ctx, params = {}) {
   const SCENES = {
     lavka: {
       candidates: ['assets/hub/hub_banner_web.jpg'],
+      lens: true,
       alt: 'Лавка на перекрёстке миров',
       // Хотспоты: [icon, label, screen, x%, y%, showDot]
       hotspots: [
         ['📚', 'Головоломки', 'puzzles', 10, 42, () => solved === 0],
-        ['🪙', 'Прилавок', 'shop', 43, 55, () => false],
-        ['📖', 'Гостевая книга', 'guests', 47, 70, () => false],
-        ['🛡️', 'Комната рыцаря', 'equip', 68, 50, () => false],
-        ['🌆', 'На площадь', '@square', 77, 52, () => false],
-        ['🪟', 'В поход', 'battles', 93, 45, () => firstPurchaseDone && won === 0],
-        ['🦌', 'Кабинет трофеев', '@cabinet', 72, 90, () => (state.trophies || []).some((id) => !(state.trophiesSeen || []).includes(id))],
+        ['🪙', 'Прилавок', 'shop', 37, 60, () => false],
+        ['📖', 'Гостевая книга', 'guests', 44, 66, () => false],
+        ['🛡️', 'Комната рыцаря', 'equip', 55, 42, () => false],
+        ['🌆', 'На площадь', '@square', 80, 52, () => false],
+        ['🪟', 'В поход', 'battles', 94, 32, () => firstPurchaseDone && won === 0],
+        ['🦌', 'Кабинет трофеев', '@cabinet', 68, 62, () => (state.trophies || []).some((id) => !(state.trophiesSeen || []).includes(id))],
       ],
     },
     square: {
@@ -124,13 +129,32 @@ export function renderHub(container, ctx, params = {}) {
   container.appendChild(scenePanel);
 
   const hotspotEls = {};
+  // Линза (сцены с lens: true): кнопка прозрачная, при наведении показывает
+  // увеличенный в LENS_Z раз кусок арта в точке хотспота. Позиция фона —
+  // константа из % координат (измерять ничего не нужно), аспект баннера 3:1.
+  const LENS_Z = 14;
+  const lensBgPos = (hx, hy) => {
+    const ih = LENS_Z / 3;
+    const bx = ((hx * LENS_Z - 0.5) / (LENS_Z - 1)) * 100;
+    const by = ((hy * ih - 0.5) / (ih - 1)) * 100;
+    return `${bx.toFixed(2)}% ${by.toFixed(2)}%`;
+  };
+  let hsIndex = 0;
   for (const [icon, label, screen, x, y, dot] of scene.hotspots) {
     const b = document.createElement('button');
-    b.className = 'hotspot';
+    b.className = scene.lens ? 'hotspot lens' : 'hotspot';
     b.style.left = `${x}%`;
     b.style.top = `${y}%`;
     b.setAttribute('aria-label', label);
-    b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ''}`;
+    if (scene.lens) {
+      b.style.backgroundImage = `url("${scene.candidates[0]}")`;
+      b.style.backgroundSize = `${LENS_Z * 100}% auto`;
+      b.style.backgroundPosition = lensBgPos(x / 100, y / 100);
+      b.innerHTML = `<span class="hs-glint" style="animation-delay:${(hsIndex * 0.35).toFixed(2)}s"></span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ''}`;
+    } else {
+      b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ''}`;
+    }
+    hsIndex += 1;
     b.addEventListener('click', () => {
       ctx.sfx?.('tap');
       b.classList.add('zap');
@@ -182,9 +206,9 @@ export function renderHub(container, ctx, params = {}) {
   // Питомцы — все купленные, каждый на своём месте в своей сцене.
   // Картинка assets/pets/<id>.webp; если её нет — иконка-фолбэк.
   const PET_SPOTS = {
-    pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 62 },
-    pet_fox: { scene: 'lavka', x: 34, y: 75, size: 90 },
-    pet_puppy: { scene: 'lavka', x: 87, y: 88, size: 92, flip: true },
+    pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 50 },
+    pet_fox: { scene: 'square', x: 9, y: 97, size: 60 },
+    pet_puppy: { scene: 'lavka', x: 88, y: 92, size: 92, flip: true },
     pet_owl: { scene: 'square', x: 7, y: 44, size: 64 },
     pet_horse: { scene: 'square', x: 90, y: 90, size: 130 },
   };
@@ -200,12 +224,12 @@ export function renderHub(container, ctx, params = {}) {
     const img = document.createElement('img');
     img.src = `assets/pets/${petId}.webp`;
     img.alt = def.name;
-    img.style.width = `${spot.size}px`;
+    img.style.width = spr(spot.size);
     if (spot.flip) img.style.transform = 'scaleX(-1)';
     img.addEventListener('error', () => {
       img.remove();
       el.textContent = def.icon;
-      el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+      el.style.fontSize = spr(Math.round(spot.size * 0.7));
     });
     el.appendChild(img);
     el.addEventListener('click', () => {
@@ -220,9 +244,9 @@ export function renderHub(container, ctx, params = {}) {
   // появляются, когда наняты (активность в отряде не обязательна).
   // Картинка assets/crew/<id>.webp; если её нет — иконка-фолбэк.
   const CREW_SPOTS = [
-    { id: 'cmp_cat', icon: '🐈', name: 'Кот-хранитель — погладить', scene: 'lavka', x: 30, y: 97, size: 145, pet: true },
-    { id: 'cmp_firefly', scene: 'lavka', x: 47, y: 15, size: 46 },
-    { id: 'cmp_herbalist', scene: 'lavka', x: 19, y: 97, size: 145 },
+    { id: 'cmp_cat', icon: '🐈', name: 'Кот-хранитель — погладить', scene: 'lavka', x: 26, y: 89, size: 85, pet: true },
+    { id: 'cmp_firefly', scene: 'lavka', x: 47, y: 13, size: 26 },
+    { id: 'cmp_herbalist', scene: 'square', x: 21, y: 97, size: 85 },
     { id: 'cmp_smith', scene: 'square', x: 45, y: 86, size: 50 },
   ];
   for (const spot of CREW_SPOTS) {
@@ -239,12 +263,12 @@ export function renderHub(container, ctx, params = {}) {
     const img = document.createElement('img');
     img.src = `assets/crew/${spot.id}.webp`;
     img.alt = name;
-    img.style.width = `${spot.size}px`;
+    img.style.width = spr(spot.size);
     if (spot.flip) img.style.transform = 'scaleX(-1)';
     img.addEventListener('error', () => {
       img.remove();
       el.textContent = icon;
-      el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+      el.style.fontSize = spr(Math.round(spot.size * 0.7));
     });
     el.appendChild(img);
     el.addEventListener('click', () => {
@@ -258,7 +282,7 @@ export function renderHub(container, ctx, params = {}) {
 
   // --- Гость режима истории: ждёт в лавке с заданием, клик = сцена-монолог.
   // Портрет — арт из assets/fate/, фолбэк — эмодзи (как у питомцев выше).
-  const STORY_GUEST_SPOT = { scene: 'lavka', x: 57, y: 78, size: 110 };
+  const STORY_GUEST_SPOT = { scene: 'lavka', x: 57, y: 90, size: 110 };
   const storyGuestId = storyHubGuest(state);
   if (storyGuestId && STORY_GUEST_SPOT.scene === sceneId) {
     const g = GUEST_BY_ID[storyGuestId];
@@ -272,16 +296,16 @@ export function renderHub(container, ctx, params = {}) {
         const img = document.createElement('img');
         img.src = g.art;
         img.alt = g.name;
-        img.style.width = `${STORY_GUEST_SPOT.size}px`;
+        img.style.width = spr(STORY_GUEST_SPOT.size);
         img.addEventListener('error', () => {
           img.remove();
           el.textContent = g.icon;
-          el.style.fontSize = `${Math.round(STORY_GUEST_SPOT.size * 0.7)}px`;
+          el.style.fontSize = spr(Math.round(STORY_GUEST_SPOT.size * 0.7));
         });
         el.appendChild(img);
       } else {
         el.textContent = g.icon;
-        el.style.fontSize = `${Math.round(STORY_GUEST_SPOT.size * 0.7)}px`;
+        el.style.fontSize = spr(Math.round(STORY_GUEST_SPOT.size * 0.7));
       }
       const dot = document.createElement('span');
       dot.className = 'hs-dot hub-guest-dot';
@@ -319,16 +343,16 @@ export function renderHub(container, ctx, params = {}) {
         const img = document.createElement('img');
         img.src = `assets/trophies/tro_${spot.t.id}.png`;
         img.alt = spot.t.name;
-        img.style.width = `${spot.size}px`;
+        img.style.width = spr(spot.size);
         img.addEventListener('error', () => {
           img.remove();
           el.textContent = spot.t.icon;
-          el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+          el.style.fontSize = spr(Math.round(spot.size * 0.7));
         });
         el.appendChild(img);
       } else {
         el.textContent = '❔';
-        el.style.fontSize = `${Math.round(spot.size * 0.6)}px`;
+        el.style.fontSize = spr(Math.round(spot.size * 0.6));
       }
       el.addEventListener('click', () => {
         ctx.sfx?.('tap');
@@ -380,12 +404,12 @@ export function renderHub(container, ctx, params = {}) {
     }
     if (cos.has('cos_crest')) {
       // Текст зашит в картинку (генерация), подложки больше нет
-      fxImg('cos_crest', 'left:71%;top:9%;width:85px', () => fx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров'),-4);
+      fxImg('cos_crest', 'left:71%;top:9%;width:max(85px, 8.27cqw)', () => fx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров'),-4);
     }
     if (cos.has('cos_flowers')) {
       const spots = [
         //['left:24%;top:20%;width:60px', () => fx('sway', 'left:11%;top:33%;font-size:26px', '🌸')],
-        ['left:50%;top:76%;width:74px', () => fx('sway', 'left:22%;top:60%;font-size:22px;animation-delay:.5s', '🌷')],
+        ['left:50%;top:76%;width:max(74px, 7.2cqw)', () => fx('sway', 'left:22%;top:60%;font-size:22px;animation-delay:.5s', '🌷')],
         //['left:60%;top:41%;width:60px', () => fx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼')],
       ];
       for (const [style, stub] of spots) {
@@ -393,7 +417,7 @@ export function renderHub(container, ctx, params = {}) {
       }
     }
     if (cos.has('cos_fireflies')) {
-      fxImg('cos_fireflies', 'left:22%;top:22%;width:80px;animation:fx-float 5s ease-in-out infinite alternate', () => {
+      fxImg('cos_fireflies', 'left:22%;top:22%;width:max(80px, 7.78cqw);animation:fx-float 5s ease-in-out infinite alternate', () => {
         for (let i = 0; i < 5; i++) fx('firefly', `left:${35 + i * 7}%;top:${38 + (i % 3) * 8}%;animation-delay:${i * 0.7}s`);
       });
     }

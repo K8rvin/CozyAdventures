@@ -25,6 +25,7 @@ import { BATTLES } from '../data/battles.js';
 import { SEEK_PUZZLES } from '../data/puzzlesSeek.js';
 import { initSound, sfx, startMusic } from './sound.js';
 import { applyCursor } from './cursors.js';
+import { resetTopbarHeader } from './common.js';
 
 const screenEl = document.getElementById('screen');
 const toastEl = document.getElementById('toast');
@@ -92,12 +93,14 @@ let currentCleanup = null;
 
 function go(name, params = {}) {
   if (currentCleanup) { currentCleanup(); currentCleanup = null; }
+  resetTopbarHeader();
   screenEl.innerHTML = '';
   // Плавный переход между экранами
   screenEl.classList.remove('screen-enter');
   void screenEl.offsetWidth;
   screenEl.classList.add('screen-enter');
   const route = routes[name] || routes.hub;
+  document.body.dataset.route = routes[name] ? name : 'hub';
   currentCleanup = route(screenEl, params) || null;
   applyCursor(name, params, state);
   window.scrollTo(0, 0);
@@ -131,6 +134,7 @@ document.addEventListener?.('pointerdown', musicUnlock);
 document.addEventListener?.('keydown', musicUnlock);
 
 // Паучок = скроллбар: паутина прибита к верху трека, паучок плавно спускается.
+const topbarEl = document.getElementById('topbar');
 const spiderTrack = document.createElement('div');
 spiderTrack.id = 'spidertrack';
 spiderTrack.innerHTML = '<span class="thread"></span><div class="mover"><span class="bug">🕷️</span></div>';
@@ -138,6 +142,19 @@ document.body.appendChild(spiderTrack);
 const spiderThread = spiderTrack.querySelector('.thread');
 const spiderMover = spiderTrack.querySelector('.mover');
 const spiderBug = spiderTrack.querySelector('.bug');
+
+function syncSpiderTrack() {
+  const top = topbarEl?.getBoundingClientRect().height || 0;
+  spiderTrack.style.top = `${top}px`;
+}
+
+function spiderMetrics() {
+  const rect = spiderTrack.getBoundingClientRect();
+  return {
+    top: rect.top || 0,
+    height: spiderTrack.clientHeight || rect.height || 0,
+  };
+}
 
 function scrollInfo() {
   const docH = document.documentElement.scrollHeight || 0;
@@ -153,13 +170,15 @@ let shownY = 0;
 let spiderRaf = null;
 
 function computeTargetY() {
-  const { viewH, ratio } = scrollInfo();
-  return ratio * Math.max(0, viewH - BUG_H - 8) + 4;
+  const { ratio } = scrollInfo();
+  const { height } = spiderMetrics();
+  return ratio * Math.max(0, height - BUG_H - 8) + 4;
 }
 
 function renderSpider() {
-  // Клэмп, чтобы паучок никогда не уходил за пределы экрана
-  const y = Math.max(0, Math.min(shownY, (window.innerHeight || 600) - BUG_H));
+  // Клэмп, чтобы паучок никогда не уходил за пределы своего трека
+  const { height } = spiderMetrics();
+  const y = Math.max(0, Math.min(shownY, height - BUG_H));
   spiderMover.style.transform = `translateY(${y}px)`;
   spiderThread.style.height = `${Math.max(0, y + 8)}px`;
   // Пасхалка: праздничная шляпа из чит-кода ПАУЧОК
@@ -182,6 +201,7 @@ function spiderLoop() {
 }
 
 function kickSpider() {
+  syncSpiderTrack();
   const { docH, viewH } = scrollInfo();
   if (docH <= viewH + 40) { spiderTrack.style.display = 'none'; return; }
   spiderTrack.style.display = 'block';
@@ -204,10 +224,11 @@ spiderBug.addEventListener('pointerdown', (ev) => {
 });
 window.addEventListener('pointermove', (ev) => {
   if (!dragging) return;
-  const { viewH } = scrollInfo();
-  const ratio = (ev.clientY - 20) / Math.max(1, viewH - BUG_H - 24);
+  const { top, height } = spiderMetrics();
+  const localY = ev.clientY - top;
+  const ratio = (localY - 20) / Math.max(1, height - BUG_H - 24);
   scrollToRatio(ratio, false);
-  shownY = targetY = Math.max(4, Math.min(ev.clientY - 12, viewH - BUG_H));
+  shownY = targetY = Math.max(4, Math.min(localY - 12, height - BUG_H));
   renderSpider();
 });
 window.addEventListener('pointerup', () => {
@@ -218,14 +239,21 @@ window.addEventListener('pointerup', () => {
 // Клик по треку (не по паучку) — прыжок
 spiderTrack.addEventListener('pointerdown', (ev) => {
   if (ev.target === spiderBug || dragging) return;
-  const { viewH } = scrollInfo();
-  scrollToRatio((ev.clientY - 20) / Math.max(1, viewH - BUG_H - 24), true);
+  const { top, height } = spiderMetrics();
+  const localY = ev.clientY - top;
+  scrollToRatio((localY - 20) / Math.max(1, height - BUG_H - 24), true);
 });
 
 const raf = window.requestAnimationFrame?.bind(window) || ((f) => setTimeout(f, 16));
 kickSpider(); // стартовая позиция
 window.addEventListener('scroll', () => { if (!dragging) kickSpider(); });
-window.addEventListener('resize', () => { targetY = computeTargetY(); shownY = targetY; renderSpider(); kickSpider(); });
+window.addEventListener('resize', () => {
+  syncSpiderTrack();
+  targetY = computeTargetY();
+  shownY = targetY;
+  renderSpider();
+  kickSpider();
+});
 // контент меняет высоту при переходах; unref — чтобы не держать Node-процесс в тестах
 const spiderTimer = setInterval(() => {
   const { ratio } = scrollInfo();

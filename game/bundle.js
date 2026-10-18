@@ -21150,25 +21150,35 @@
   function backToPuzzleType(ctx2, level) {
     ctx2.go("puzzles", { mech: level?.mechanic || "mirror" });
   }
+  var DEFAULT_TOPBAR_TITLE = "\u{1F3EE} \u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432";
+  function resetTopbarHeader() {
+    const titleEl = document.getElementById("topbar-title");
+    const back = document.getElementById("topbar-back");
+    if (titleEl) {
+      titleEl.textContent = DEFAULT_TOPBAR_TITLE;
+      titleEl.title = DEFAULT_TOPBAR_TITLE;
+    }
+    if (back) {
+      back.hidden = true;
+      back.onclick = null;
+    }
+  }
   function header(ctx2, title, subtitle, backTo = "hub") {
+    const titleEl = document.getElementById("topbar-title");
+    const back = document.getElementById("topbar-back");
+    if (titleEl) {
+      titleEl.textContent = title;
+      titleEl.title = title;
+    }
+    if (back) {
+      back.hidden = false;
+      back.onclick = () => {
+        if (Array.isArray(backTo)) ctx2.go(backTo[0], backTo[1]);
+        else ctx2.go(backTo);
+      };
+    }
     const box = document.createElement("div");
-    box.className = "panel app-header";
-    const top = document.createElement("div");
-    top.style.display = "flex";
-    top.style.justifyContent = "space-between";
-    top.style.alignItems = "center";
-    const h = document.createElement("h2");
-    h.textContent = title;
-    h.style.margin = "0";
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => {
-      if (Array.isArray(backTo)) ctx2.go(backTo[0], backTo[1]);
-      else ctx2.go(backTo);
-    });
-    top.append(h, back);
-    box.appendChild(top);
+    box.className = "app-header";
     if (subtitle) {
       const s = document.createElement("div");
       s.className = "muted";
@@ -21480,6 +21490,7 @@
     const lines = CHATTER[speaker];
     return lines[Math.floor(Math.random() * lines.length)];
   }
+  var spr = (px) => `max(${px}px, ${(px / 10.28).toFixed(2)}cqw)`;
   function renderHub(container, ctx2, params = {}) {
     const { state: state2 } = ctx2;
     const solved = Object.keys(state2.puzzlesDone).length;
@@ -21493,16 +21504,17 @@
     const SCENES = {
       lavka: {
         candidates: ["assets/hub/hub_banner_web.jpg"],
+        lens: true,
         alt: "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432",
         // Хотспоты: [icon, label, screen, x%, y%, showDot]
         hotspots: [
           ["\u{1F4DA}", "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438", "puzzles", 10, 42, () => solved === 0],
-          ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 43, 55, () => false],
-          ["\u{1F4D6}", "\u0413\u043E\u0441\u0442\u0435\u0432\u0430\u044F \u043A\u043D\u0438\u0433\u0430", "guests", 47, 70, () => false],
-          ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 68, 50, () => false],
-          ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 77, 52, () => false],
-          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 93, 45, () => firstPurchaseDone && won === 0],
-          ["\u{1F98C}", "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432", "@cabinet", 72, 90, () => (state2.trophies || []).some((id) => !(state2.trophiesSeen || []).includes(id))]
+          ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 37, 60, () => false],
+          ["\u{1F4D6}", "\u0413\u043E\u0441\u0442\u0435\u0432\u0430\u044F \u043A\u043D\u0438\u0433\u0430", "guests", 44, 66, () => false],
+          ["\u{1F6E1}\uFE0F", "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", "equip", 55, 42, () => false],
+          ["\u{1F306}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 80, 52, () => false],
+          ["\u{1FA9F}", "\u0412 \u043F\u043E\u0445\u043E\u0434", "battles", 94, 32, () => firstPurchaseDone && won === 0],
+          ["\u{1F98C}", "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432", "@cabinet", 68, 62, () => (state2.trophies || []).some((id) => !(state2.trophiesSeen || []).includes(id))]
         ]
       },
       square: {
@@ -21559,13 +21571,29 @@
     scenePanel.appendChild(picture);
     container.appendChild(scenePanel);
     const hotspotEls = {};
+    const LENS_Z = 14;
+    const lensBgPos = (hx, hy) => {
+      const ih = LENS_Z / 3;
+      const bx = (hx * LENS_Z - 0.5) / (LENS_Z - 1) * 100;
+      const by = (hy * ih - 0.5) / (ih - 1) * 100;
+      return `${bx.toFixed(2)}% ${by.toFixed(2)}%`;
+    };
+    let hsIndex = 0;
     for (const [icon, label, screen, x, y, dot] of scene.hotspots) {
       const b = document.createElement("button");
-      b.className = "hotspot";
+      b.className = scene.lens ? "hotspot lens" : "hotspot";
       b.style.left = `${x}%`;
       b.style.top = `${y}%`;
       b.setAttribute("aria-label", label);
-      b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
+      if (scene.lens) {
+        b.style.backgroundImage = `url("${scene.candidates[0]}")`;
+        b.style.backgroundSize = `${LENS_Z * 100}% auto`;
+        b.style.backgroundPosition = lensBgPos(x / 100, y / 100);
+        b.innerHTML = `<span class="hs-glint" style="animation-delay:${(hsIndex * 0.35).toFixed(2)}s"></span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
+      } else {
+        b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
+      }
+      hsIndex += 1;
       b.addEventListener("click", () => {
         ctx2.sfx?.("tap");
         b.classList.add("zap");
@@ -21606,9 +21634,9 @@
       rerender(sceneId);
     }
     const PET_SPOTS = {
-      pet_hedgehog: { scene: "square", x: 30, y: 82, size: 62 },
-      pet_fox: { scene: "lavka", x: 34, y: 75, size: 90 },
-      pet_puppy: { scene: "lavka", x: 87, y: 88, size: 92, flip: true },
+      pet_hedgehog: { scene: "square", x: 30, y: 82, size: 50 },
+      pet_fox: { scene: "square", x: 9, y: 97, size: 60 },
+      pet_puppy: { scene: "lavka", x: 88, y: 92, size: 92, flip: true },
       pet_owl: { scene: "square", x: 7, y: 44, size: 64 },
       pet_horse: { scene: "square", x: 90, y: 90, size: 130 }
     };
@@ -21624,12 +21652,12 @@
       const img = document.createElement("img");
       img.src = `assets/pets/${petId}.webp`;
       img.alt = def.name;
-      img.style.width = `${spot.size}px`;
+      img.style.width = spr(spot.size);
       if (spot.flip) img.style.transform = "scaleX(-1)";
       img.addEventListener("error", () => {
         img.remove();
         el.textContent = def.icon;
-        el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+        el.style.fontSize = spr(Math.round(spot.size * 0.7));
       });
       el.appendChild(img);
       el.addEventListener("click", () => {
@@ -21640,9 +21668,9 @@
       scenePanel.appendChild(el);
     }
     const CREW_SPOTS = [
-      { id: "cmp_cat", icon: "\u{1F408}", name: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u2014 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C", scene: "lavka", x: 30, y: 97, size: 145, pet: true },
-      { id: "cmp_firefly", scene: "lavka", x: 47, y: 15, size: 46 },
-      { id: "cmp_herbalist", scene: "lavka", x: 19, y: 97, size: 145 },
+      { id: "cmp_cat", icon: "\u{1F408}", name: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u2014 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C", scene: "lavka", x: 26, y: 89, size: 85, pet: true },
+      { id: "cmp_firefly", scene: "lavka", x: 47, y: 13, size: 26 },
+      { id: "cmp_herbalist", scene: "square", x: 21, y: 97, size: 85 },
       { id: "cmp_smith", scene: "square", x: 45, y: 86, size: 50 }
     ];
     for (const spot of CREW_SPOTS) {
@@ -21659,12 +21687,12 @@
       const img = document.createElement("img");
       img.src = `assets/crew/${spot.id}.webp`;
       img.alt = name;
-      img.style.width = `${spot.size}px`;
+      img.style.width = spr(spot.size);
       if (spot.flip) img.style.transform = "scaleX(-1)";
       img.addEventListener("error", () => {
         img.remove();
         el.textContent = icon;
-        el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+        el.style.fontSize = spr(Math.round(spot.size * 0.7));
       });
       el.appendChild(img);
       el.addEventListener("click", () => {
@@ -21678,7 +21706,7 @@
       });
       scenePanel.appendChild(el);
     }
-    const STORY_GUEST_SPOT = { scene: "lavka", x: 57, y: 78, size: 110 };
+    const STORY_GUEST_SPOT = { scene: "lavka", x: 57, y: 90, size: 110 };
     const storyGuestId = storyHubGuest(state2);
     if (storyGuestId && STORY_GUEST_SPOT.scene === sceneId) {
       const g = GUEST_BY_ID[storyGuestId];
@@ -21692,16 +21720,16 @@
           const img = document.createElement("img");
           img.src = g.art;
           img.alt = g.name;
-          img.style.width = `${STORY_GUEST_SPOT.size}px`;
+          img.style.width = spr(STORY_GUEST_SPOT.size);
           img.addEventListener("error", () => {
             img.remove();
             el.textContent = g.icon;
-            el.style.fontSize = `${Math.round(STORY_GUEST_SPOT.size * 0.7)}px`;
+            el.style.fontSize = spr(Math.round(STORY_GUEST_SPOT.size * 0.7));
           });
           el.appendChild(img);
         } else {
           el.textContent = g.icon;
-          el.style.fontSize = `${Math.round(STORY_GUEST_SPOT.size * 0.7)}px`;
+          el.style.fontSize = spr(Math.round(STORY_GUEST_SPOT.size * 0.7));
         }
         const dot = document.createElement("span");
         dot.className = "hs-dot hub-guest-dot";
@@ -21742,16 +21770,16 @@
           const img = document.createElement("img");
           img.src = `assets/trophies/tro_${spot.t.id}.png`;
           img.alt = spot.t.name;
-          img.style.width = `${spot.size}px`;
+          img.style.width = spr(spot.size);
           img.addEventListener("error", () => {
             img.remove();
             el.textContent = spot.t.icon;
-            el.style.fontSize = `${Math.round(spot.size * 0.7)}px`;
+            el.style.fontSize = spr(Math.round(spot.size * 0.7));
           });
           el.appendChild(img);
         } else {
           el.textContent = "\u2754";
-          el.style.fontSize = `${Math.round(spot.size * 0.6)}px`;
+          el.style.fontSize = spr(Math.round(spot.size * 0.6));
         }
         el.addEventListener("click", () => {
           ctx2.sfx?.("tap");
@@ -21801,12 +21829,12 @@
         fxImg("cos_carpet", "left:52%;top:74%;width:30%", () => fx("cos-carpet", "left:36%;top:78%;width:26%;height:16%"), 10);
       }
       if (cos.has("cos_crest")) {
-        fxImg("cos_crest", "left:71%;top:9%;width:85px", () => fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432"), -4);
+        fxImg("cos_crest", "left:71%;top:9%;width:max(85px, 8.27cqw)", () => fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432"), -4);
       }
       if (cos.has("cos_flowers")) {
         const spots = [
           //['left:24%;top:20%;width:60px', () => fx('sway', 'left:11%;top:33%;font-size:26px', '🌸')],
-          ["left:50%;top:76%;width:74px", () => fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}")]
+          ["left:50%;top:76%;width:max(74px, 7.2cqw)", () => fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}")]
           //['left:60%;top:41%;width:60px', () => fx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼')],
         ];
         for (const [style, stub] of spots) {
@@ -21814,7 +21842,7 @@
         }
       }
       if (cos.has("cos_fireflies")) {
-        fxImg("cos_fireflies", "left:22%;top:22%;width:80px;animation:fx-float 5s ease-in-out infinite alternate", () => {
+        fxImg("cos_fireflies", "left:22%;top:22%;width:max(80px, 7.78cqw);animation:fx-float 5s ease-in-out infinite alternate", () => {
           for (let i = 0; i < 5; i++) fx("firefly", `left:${35 + i * 7}%;top:${38 + i % 3 * 8}%;animation-delay:${i * 0.7}s`);
         });
       }
@@ -30268,14 +30296,18 @@
       }
     }
     if (targetSlot && targetSlot !== "belt" && state2.equipped[targetSlot]) targetSlot = null;
-    const head = document.createElement("div");
-    head.className = "panel";
-    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F</h2></div>
-    <div class="muted">\u041D\u0430\u0434\u0435\u0432\u0430\u0439 \u0432\u0435\u0449\u0438 \u2014 \u043E\u043D\u0438 \u0440\u0435\u0430\u043B\u044C\u043D\u043E \u043C\u0435\u043D\u044F\u044E\u0442 \u0431\u043E\u0439. \u041F\u0435\u0440\u0435\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u0438\u043B\u0438 \u043A\u043B\u0438\u043A\u0430\u0439 \u043F\u043E \u043F\u0443\u0441\u0442\u043E\u043C\u0443 \u0441\u043B\u043E\u0442\u0443.</div>`;
+    const head = header(
+      ctx2,
+      "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F",
+      "\u041D\u0430\u0434\u0435\u0432\u0430\u0439 \u0432\u0435\u0449\u0438 \u2014 \u043E\u043D\u0438 \u0440\u0435\u0430\u043B\u044C\u043D\u043E \u043C\u0435\u043D\u044F\u044E\u0442 \u0431\u043E\u0439. \u041F\u0435\u0440\u0435\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u0438\u043B\u0438 \u043A\u043B\u0438\u043A\u0430\u0439 \u043F\u043E \u043F\u0443\u0441\u0442\u043E\u043C\u0443 \u0441\u043B\u043E\u0442\u0443.",
+      "hub"
+    );
+    head.style.display = "flex";
+    head.style.alignItems = "center";
+    head.style.gap = "10px";
     const kIcon = document.createElement("img");
     kIcon.alt = "";
-    kIcon.style.cssText = "width:56px;height:56px;border-radius:12px;margin-right:10px;vertical-align:middle";
+    kIcon.style.cssText = "width:56px;height:56px;border-radius:12px;flex:none";
     const kCandidates = ["assets/knight/icon_knight_web.jpg"];
     let kIdx = 0;
     kIcon.addEventListener("error", () => {
@@ -30284,12 +30316,7 @@
       else kIcon.remove();
     });
     kIcon.src = kCandidates[0];
-    head.querySelector("h2").prepend(kIcon);
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go("hub"));
-    head.firstElementChild.appendChild(back);
+    head.prepend(kIcon);
     container.appendChild(head);
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F3EA}", label: "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", screen: "shop", primary: true },
@@ -31254,17 +31281,7 @@
       ctx2.go("hub", { scene: "square" });
       return;
     }
-    const head = document.createElement("div");
-    head.className = "panel";
-    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">${shop.icon} ${shop.name}</h2></div>
-    <div class="muted">${shop.desc}</div>`;
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u0412 \u043A\u0432\u0430\u0440\u0442\u0430\u043B";
-    back.addEventListener("click", () => ctx2.go("hub", { scene: "market" }));
-    head.firstElementChild.appendChild(back);
-    container.appendChild(head);
+    container.appendChild(header(ctx2, `${shop.icon} ${shop.name}`, shop.desc, ["hub", { scene: "market" }]));
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
       { icon: "\u{1F3EC}", label: "\u0412 \u0442\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B", screen: "hub", params: { scene: "market" } }
@@ -31301,17 +31318,12 @@
   }
   function renderShop(container, ctx2) {
     const { state: state2 } = ctx2;
-    const head = document.createElement("div");
-    head.className = "panel";
-    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u043B\u0430\u0432\u043A\u0438</h2></div>
-    <div class="muted">\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u0434\u043E\u043C\u0430 \u0438 \u0441\u043A\u0443\u043F\u043A\u0430 \u0442\u0432\u043E\u0438\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A. \u0421\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u2014 \u0432 \u043B\u0430\u0432\u043A\u0430\u0445 \u043F\u043B\u043E\u0449\u0430\u0434\u0438.</div>`;
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go("hub"));
-    head.firstElementChild.appendChild(back);
-    container.appendChild(head);
+    container.appendChild(header(
+      ctx2,
+      "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u043B\u0430\u0432\u043A\u0438",
+      "\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u0434\u043E\u043C\u0430 \u0438 \u0441\u043A\u0443\u043F\u043A\u0430 \u0442\u0432\u043E\u0438\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A. \u0421\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u2014 \u0432 \u043B\u0430\u0432\u043A\u0430\u0445 \u043F\u043B\u043E\u0449\u0430\u0434\u0438.",
+      "hub"
+    ));
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
       { icon: "\u{1F5E1}\uFE0F", label: "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", screen: "shopArmory" },
@@ -31463,17 +31475,12 @@
   var seenFirstUnbeaten = null;
   function renderBattleList(container, ctx2) {
     const { state: state2 } = ctx2;
-    const head = document.createElement("div");
-    head.className = "panel";
-    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">\u041F\u043E\u0445\u043E\u0434\u044B \u0440\u044B\u0446\u0430\u0440\u044F</h2></div>
-    <div class="muted">\u0420\u044B\u0446\u0430\u0440\u044C \u0441\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C \u2014 \u0442\u0432\u043E\u044F \u0440\u0430\u0431\u043E\u0442\u0430: \u0441\u043D\u0430\u0440\u044F\u0434\u0438\u0442\u044C \u0435\u0433\u043E \u0441 \u0437\u0430\u0431\u043E\u0442\u043E\u0439. \u0412\u044B\u0431\u0435\u0440\u0438 \u043C\u0438\u0440 \u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0439\u0441\u044F \u0432 \u043F\u0443\u0442\u044C.</div>`;
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go("hub"));
-    head.firstElementChild.appendChild(back);
-    container.appendChild(head);
+    container.appendChild(header(
+      ctx2,
+      "\u041F\u043E\u0445\u043E\u0434\u044B \u0440\u044B\u0446\u0430\u0440\u044F",
+      "\u0420\u044B\u0446\u0430\u0440\u044C \u0441\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C \u2014 \u0442\u0432\u043E\u044F \u0440\u0430\u0431\u043E\u0442\u0430: \u0441\u043D\u0430\u0440\u044F\u0434\u0438\u0442\u044C \u0435\u0433\u043E \u0441 \u0437\u0430\u0431\u043E\u0442\u043E\u0439. \u0412\u044B\u0431\u0435\u0440\u0438 \u043C\u0438\u0440 \u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0439\u0441\u044F \u0432 \u043F\u0443\u0442\u044C.",
+      "hub"
+    ));
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
@@ -31592,17 +31599,12 @@
   }
   function renderTavern(container, ctx2) {
     const { state: state2 } = ctx2;
-    const head = document.createElement("div");
-    head.className = "panel";
-    head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">\u0422\u0430\u0432\u0435\u0440\u043D\u0430 \u0438 \u043A\u043E\u043D\u044E\u0448\u043D\u044F</h2></div>
-    <div class="muted">\u041E\u0447\u0430\u0433, \u043A\u0440\u0443\u0436\u043A\u0438, \u0442\u0438\u0445\u0438\u0439 \u0431\u0430\u0440\u0434. \u0417\u0434\u0435\u0441\u044C \u0440\u044B\u0446\u0430\u0440\u044C \u043D\u0430\u0445\u043E\u0434\u0438\u0442 \u0434\u0440\u0443\u0437\u0435\u0439 \u0438 \u043F\u043E\u043C\u043E\u0449\u043D\u0438\u043A\u043E\u0432.</div>`;
-    const back = document.createElement("button");
-    back.className = "ghost small";
-    back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
-    back.addEventListener("click", () => ctx2.go("hub"));
-    head.firstElementChild.appendChild(back);
-    container.appendChild(head);
+    container.appendChild(header(
+      ctx2,
+      "\u0422\u0430\u0432\u0435\u0440\u043D\u0430 \u0438 \u043A\u043E\u043D\u044E\u0448\u043D\u044F",
+      "\u041E\u0447\u0430\u0433, \u043A\u0440\u0443\u0436\u043A\u0438, \u0442\u0438\u0445\u0438\u0439 \u0431\u0430\u0440\u0434. \u0417\u0434\u0435\u0441\u044C \u0440\u044B\u0446\u0430\u0440\u044C \u043D\u0430\u0445\u043E\u0434\u0438\u0442 \u0434\u0440\u0443\u0437\u0435\u0439 \u0438 \u043F\u043E\u043C\u043E\u0449\u043D\u0438\u043A\u043E\u0432.",
+      "hub"
+    ));
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F307}", label: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", screen: "hub", params: { scene: "square" } }
     ]));
@@ -35267,11 +35269,13 @@
       currentCleanup();
       currentCleanup = null;
     }
+    resetTopbarHeader();
     screenEl.innerHTML = "";
     screenEl.classList.remove("screen-enter");
     void screenEl.offsetWidth;
     screenEl.classList.add("screen-enter");
     const route = routes[name] || routes.hub;
+    document.body.dataset.route = routes[name] ? name : "hub";
     currentCleanup = route(screenEl, params) || null;
     applyCursor(name, params, state);
     window.scrollTo(0, 0);
@@ -35305,6 +35309,7 @@
   };
   document.addEventListener?.("pointerdown", musicUnlock);
   document.addEventListener?.("keydown", musicUnlock);
+  var topbarEl = document.getElementById("topbar");
   var spiderTrack = document.createElement("div");
   spiderTrack.id = "spidertrack";
   spiderTrack.innerHTML = '<span class="thread"></span><div class="mover"><span class="bug">\u{1F577}\uFE0F</span></div>';
@@ -35312,6 +35317,17 @@
   var spiderThread = spiderTrack.querySelector(".thread");
   var spiderMover = spiderTrack.querySelector(".mover");
   var spiderBug = spiderTrack.querySelector(".bug");
+  function syncSpiderTrack() {
+    const top = topbarEl?.getBoundingClientRect().height || 0;
+    spiderTrack.style.top = `${top}px`;
+  }
+  function spiderMetrics() {
+    const rect = spiderTrack.getBoundingClientRect();
+    return {
+      top: rect.top || 0,
+      height: spiderTrack.clientHeight || rect.height || 0
+    };
+  }
   function scrollInfo() {
     const docH = document.documentElement.scrollHeight || 0;
     const viewH = window.innerHeight || 0;
@@ -35323,11 +35339,13 @@
   var shownY = 0;
   var spiderRaf = null;
   function computeTargetY() {
-    const { viewH, ratio } = scrollInfo();
-    return ratio * Math.max(0, viewH - BUG_H - 8) + 4;
+    const { ratio } = scrollInfo();
+    const { height } = spiderMetrics();
+    return ratio * Math.max(0, height - BUG_H - 8) + 4;
   }
   function renderSpider() {
-    const y = Math.max(0, Math.min(shownY, (window.innerHeight || 600) - BUG_H));
+    const { height } = spiderMetrics();
+    const y = Math.max(0, Math.min(shownY, height - BUG_H));
     spiderMover.style.transform = `translateY(${y}px)`;
     spiderThread.style.height = `${Math.max(0, y + 8)}px`;
     const hat = !!state.cheats?.spiderHat;
@@ -35347,6 +35365,7 @@
     }
   }
   function kickSpider() {
+    syncSpiderTrack();
     const { docH, viewH } = scrollInfo();
     if (docH <= viewH + 40) {
       spiderTrack.style.display = "none";
@@ -35369,10 +35388,11 @@
   });
   window.addEventListener("pointermove", (ev) => {
     if (!dragging) return;
-    const { viewH } = scrollInfo();
-    const ratio = (ev.clientY - 20) / Math.max(1, viewH - BUG_H - 24);
+    const { top, height } = spiderMetrics();
+    const localY = ev.clientY - top;
+    const ratio = (localY - 20) / Math.max(1, height - BUG_H - 24);
     scrollToRatio(ratio, false);
-    shownY = targetY = Math.max(4, Math.min(ev.clientY - 12, viewH - BUG_H));
+    shownY = targetY = Math.max(4, Math.min(localY - 12, height - BUG_H));
     renderSpider();
   });
   window.addEventListener("pointerup", () => {
@@ -35382,8 +35402,9 @@
   });
   spiderTrack.addEventListener("pointerdown", (ev) => {
     if (ev.target === spiderBug || dragging) return;
-    const { viewH } = scrollInfo();
-    scrollToRatio((ev.clientY - 20) / Math.max(1, viewH - BUG_H - 24), true);
+    const { top, height } = spiderMetrics();
+    const localY = ev.clientY - top;
+    scrollToRatio((localY - 20) / Math.max(1, height - BUG_H - 24), true);
   });
   var raf = window.requestAnimationFrame?.bind(window) || ((f) => setTimeout(f, 16));
   kickSpider();
@@ -35391,6 +35412,7 @@
     if (!dragging) kickSpider();
   });
   window.addEventListener("resize", () => {
+    syncSpiderTrack();
     targetY = computeTargetY();
     shownY = targetY;
     renderSpider();

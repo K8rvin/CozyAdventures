@@ -129,6 +129,7 @@ const { renderFateDeck } = await import('../src/ui/fateDeckView.js');
 const { renderStory } = await import('../src/ui/storyView.js');
 const { renderSandbox } = await import('../src/ui/sandboxView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
+const { header, resetTopbarHeader, DEFAULT_TOPBAR_TITLE } = await import('../src/ui/common.js');
 const { ITEM_BY_ID } = await import('../src/data/items.js');
 
 function makeUiCtx(state) {
@@ -164,6 +165,36 @@ function tapFateCard(root, cardId) {
   assert.ok((listeners.pointerup?.length || 0) > upsBefore, 'тап должен установить pointerup');
   listeners.pointerup.at(-1)({ clientX: 0, clientY: 0 });
 }
+
+test('заголовок и возврат показываются в общем topbar', () => {
+  const titleEl = new El('div');
+  const backEl = new El('button');
+  const originalGetById = documentStub.getElementById;
+  documentStub.getElementById = (id) => {
+    if (id === 'topbar-title') return titleEl;
+    if (id === 'topbar-back') return backEl;
+    return originalGetById(id);
+  };
+  try {
+    const visits = [];
+    const ctx = { go: (...args) => visits.push(args) };
+    const subtitle = header(ctx, 'Головоломки лавки', 'Выбери полку с загадками',
+      ['puzzles', { mech: 'mirror' }]);
+    assert.equal(titleEl.textContent, 'Головоломки лавки');
+    assert.equal(backEl.hidden, false);
+    assert.equal(subtitle.className, 'app-header');
+    assert.equal(subtitle.children[0].textContent, 'Выбери полку с загадками');
+    backEl.onclick();
+    assert.deepEqual(visits, [['puzzles', { mech: 'mirror' }]]);
+
+    resetTopbarHeader();
+    assert.equal(titleEl.textContent, DEFAULT_TOPBAR_TITLE);
+    assert.equal(backEl.hidden, true);
+    assert.equal(backEl.onclick, null);
+  } finally {
+    documentStub.getElementById = originalGetById;
+  }
+});
 
 test('все экраны рендерятся без ошибок', () => {
   const state = newGame();

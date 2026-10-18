@@ -9,7 +9,7 @@ import {
 import { COSMETICS, SEASON_LABEL } from '../data/cosmetics.js';
 import { SHOPS, itemsForShop } from '../data/shop.js';
 import { startTutorial } from './tutorial.js';
-import { quickNav } from './common.js';
+import { header, quickNav } from './common.js';
 
 // --- Список товаров (общий строитель). Возвращает карту itemId -> кнопка «Купить» ---
 function buildBuyList(container, ctx, items, newIds) {
@@ -75,17 +75,7 @@ export function renderMarket(container, ctx, shopKey) {
   const shop = SHOPS[shopKey];
   if (!shop) { ctx.go('hub', { scene: 'square' }); return; }
 
-  const head = document.createElement('div');
-  head.className = 'panel';
-  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">${shop.icon} ${shop.name}</h2></div>
-    <div class="muted">${shop.desc}</div>`;
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← В квартал';
-  back.addEventListener('click', () => ctx.go('hub', { scene: 'market' }));
-  head.firstElementChild.appendChild(back);
-  container.appendChild(head);
+  container.appendChild(header(ctx, `${shop.icon} ${shop.name}`, shop.desc, ['hub', { scene: 'market' }]));
   container.appendChild(quickNav(ctx, [
     { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
     { icon: '🏬', label: 'В торговый квартал', screen: 'hub', params: { scene: 'market' } },
@@ -131,17 +121,8 @@ export function renderMarket(container, ctx, shopKey) {
 export function renderShop(container, ctx) {
   const { state } = ctx;
 
-  const head = document.createElement('div');
-  head.className = 'panel';
-  head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
-    <h2 style="margin:0">Прилавок лавки</h2></div>
-    <div class="muted">Украшения для дома и скупка твоих находок. Снаряжение — в лавках площади.</div>`;
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← Назад';
-  back.addEventListener('click', () => ctx.go('hub'));
-  head.firstElementChild.appendChild(back);
-  container.appendChild(head);
+  container.appendChild(header(ctx, 'Прилавок лавки',
+    'Украшения для дома и скупка твоих находок. Снаряжение — в лавках площади.', 'hub'));
   container.appendChild(quickNav(ctx, [
     { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
     { icon: '🗡️', label: 'Оружейник', screen: 'shopArmory' },

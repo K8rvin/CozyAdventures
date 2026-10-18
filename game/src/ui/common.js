@@ -30,25 +30,38 @@ export function backToPuzzleType(ctx, level) {
   ctx.go('puzzles', { mech: level?.mechanic || 'mirror' });
 }
 
+export const DEFAULT_TOPBAR_TITLE = '🏮 Лавка на перекрёстке миров';
+
+export function resetTopbarHeader() {
+  const titleEl = document.getElementById('topbar-title');
+  const back = document.getElementById('topbar-back');
+  if (titleEl) {
+    titleEl.textContent = DEFAULT_TOPBAR_TITLE;
+    titleEl.title = DEFAULT_TOPBAR_TITLE;
+  }
+  if (back) {
+    back.hidden = true;
+    back.onclick = null;
+  }
+}
+
+// Заголовок и возврат живут в закреплённом topbar, подзаголовок — в потоке страницы.
 export function header(ctx, title, subtitle, backTo = 'hub') {
+  const titleEl = document.getElementById('topbar-title');
+  const back = document.getElementById('topbar-back');
+  if (titleEl) {
+    titleEl.textContent = title;
+    titleEl.title = title;
+  }
+  if (back) {
+    back.hidden = false;
+    back.onclick = () => {
+      if (Array.isArray(backTo)) ctx.go(backTo[0], backTo[1]);
+      else ctx.go(backTo);
+    };
+  }
   const box = document.createElement('div');
-  box.className = 'panel app-header';
-  const top = document.createElement('div');
-  top.style.display = 'flex';
-  top.style.justifyContent = 'space-between';
-  top.style.alignItems = 'center';
-  const h = document.createElement('h2');
-  h.textContent = title;
-  h.style.margin = '0';
-  const back = document.createElement('button');
-  back.className = 'ghost small';
-  back.textContent = '← Назад';
-  back.addEventListener('click', () => {
-    if (Array.isArray(backTo)) ctx.go(backTo[0], backTo[1]);
-    else ctx.go(backTo);
-  });
-  top.append(h, back);
-  box.appendChild(top);
+  box.className = 'app-header';
   if (subtitle) {
     const s = document.createElement('div');
     s.className = 'muted';
