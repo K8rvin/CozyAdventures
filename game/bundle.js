@@ -31418,13 +31418,56 @@
   }
 
   // src/ui/battleView.js
+  var WORLD_META = {
+    meadow: { label: "\u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430", icon: "\u{1F33F}" },
+    town: { label: "\u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A", icon: "\u{1F3F0}" },
+    attic: { label: "\u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A", icon: "\u{1F4D6}" },
+    crossroads: { label: "\u042D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430", icon: "\u{1F31F}" },
+    nm: { label: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A", icon: "\u{1F303}" },
+    sw: { label: "\u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438", icon: "\u{1F438}" },
+    sf: { label: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430", icon: "\u{1F3AA}" },
+    cr: { label: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B", icon: "\u{1F48E}" },
+    ash: { label: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438", icon: "\u{1F525}" },
+    jade: { label: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434", icon: "\u{1F38B}" },
+    deep: { label: "\u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442", icon: "\u{1F41A}" },
+    mist: { label: "\u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B", icon: "\u23F3" }
+  };
+  function battleWorlds(state2) {
+    const order = [];
+    const byWorld = /* @__PURE__ */ new Map();
+    for (const b of BATTLES) {
+      if (b.wanted) continue;
+      if (!byWorld.has(b.world)) {
+        byWorld.set(b.world, []);
+        order.push(b.world);
+      }
+      byWorld.get(b.world).push(b);
+    }
+    return order.map((id) => {
+      const battles = byWorld.get(id);
+      const done = battles.filter((b) => state2.battlesDone[b.id]).length;
+      const trophy = TROPHIES.find((t) => BATTLE_BY_ID[t.battleId]?.world === id);
+      return {
+        id,
+        battles,
+        done,
+        total: battles.length,
+        open: battleAvailable(state2, battles[0].id),
+        trophy: trophy || null,
+        meta: WORLD_META[id] || { label: id, icon: "\u{1F5FA}\uFE0F" },
+        art: `assets/battle/battle_bg_${id}_web.jpg`
+      };
+    });
+  }
+  var selectedWorld = null;
+  var seenFirstUnbeaten = null;
   function renderBattleList(container, ctx2) {
     const { state: state2 } = ctx2;
     const head = document.createElement("div");
     head.className = "panel";
     head.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
     <h2 style="margin:0">\u041F\u043E\u0445\u043E\u0434\u044B \u0440\u044B\u0446\u0430\u0440\u044F</h2></div>
-    <div class="muted">\u0420\u044B\u0446\u0430\u0440\u044C \u0441\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C \u2014 \u0442\u0432\u043E\u044F \u0440\u0430\u0431\u043E\u0442\u0430: \u0441\u043D\u0430\u0440\u044F\u0434\u0438\u0442\u044C \u0435\u0433\u043E \u0441 \u0437\u0430\u0431\u043E\u0442\u043E\u0439. \u0422\u0440\u0438 \u043C\u0438\u0440\u0430 \u0436\u0434\u0443\u0442.</div>`;
+    <div class="muted">\u0420\u044B\u0446\u0430\u0440\u044C \u0441\u0440\u0430\u0436\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C \u2014 \u0442\u0432\u043E\u044F \u0440\u0430\u0431\u043E\u0442\u0430: \u0441\u043D\u0430\u0440\u044F\u0434\u0438\u0442\u044C \u0435\u0433\u043E \u0441 \u0437\u0430\u0431\u043E\u0442\u043E\u0439. \u0412\u044B\u0431\u0435\u0440\u0438 \u043C\u0438\u0440 \u0438 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0439\u0441\u044F \u0432 \u043F\u0443\u0442\u044C.</div>`;
     const back = document.createElement("button");
     back.className = "ghost small";
     back.textContent = "\u2190 \u041D\u0430\u0437\u0430\u0434";
@@ -31435,38 +31478,55 @@
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
-    const list = document.createElement("div");
-    list.className = "list";
+    const worlds = battleWorlds(state2);
     const won = Object.keys(state2.battlesDone).length;
     const firstUnbeaten = firstUnbeatenBattle(state2);
-    const WORLD_LABEL = {
-      meadow: "\u{1F33F} \u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430",
-      town: "\u{1F3F0} \u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A",
-      attic: "\u{1F4D6} \u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A",
-      crossroads: "\u{1F31F} \u042D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
-      nm: "\u{1F303} \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
-      sw: "\u{1F438} \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438",
-      sf: "\u{1F3AA} \u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
-      cr: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B",
-      ash: "\u{1F525} \u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438",
-      jade: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434",
-      deep: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442",
-      mist: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B"
-    };
-    let lastWorld = null;
-    for (const b of BATTLES) {
-      if (b.wanted) continue;
-      if (b.world !== lastWorld) {
-        lastWorld = b.world;
-        const wh = document.createElement("h3");
-        wh.textContent = WORLD_LABEL[b.world] || b.world;
-        list.appendChild(wh);
-      }
+    const cur = worlds.find((w) => w.id === selectedWorld);
+    const fuId = firstUnbeaten ? firstUnbeaten.id : null;
+    if (!cur || !cur.open || cur.done === cur.total && firstUnbeaten && fuId !== seenFirstUnbeaten) {
+      selectedWorld = firstUnbeaten && firstUnbeaten.world || worlds[worlds.length - 1].id;
+    }
+    seenFirstUnbeaten = fuId;
+    const grid = document.createElement("div");
+    grid.className = "world-grid";
+    for (const w of worlds) {
+      if (!w.open) continue;
+      const tile = document.createElement("button");
+      tile.className = "world-tile" + (w.id === selectedWorld ? " current" : "") + (w.done === w.total ? " cleared" : "");
+      tile.dataset.world = w.id;
+      const pct = w.total ? Math.round(w.done / w.total * 100) : 0;
+      const isNext = firstUnbeaten && firstUnbeaten.world === w.id;
+      tile.innerHTML = `
+      <span class="wt-bg" style="background-image:url('${w.art}')"></span>
+      <span class="wt-shade"></span>
+      ${isNext ? '<span class="wt-tag next">\u2694\uFE0F \u0441\u044E\u0434\u0430</span>' : ""}
+      ${w.done === w.total && w.trophy ? `<span class="wt-tag trophy">${w.trophy.icon}</span>` : ""}
+      <span class="wt-body">
+        <span class="wt-name">${w.meta.icon} ${w.meta.label}</span>
+        <span class="wt-sub">${w.done === w.total ? `\u041F\u0440\u043E\u0439\u0434\u0435\u043D \xB7 ${w.total}/${w.total}` : `${w.done}/${w.total} \u043F\u043E\u0445\u043E\u0434\u043E\u0432`}</span>
+        <span class="wt-bar"><i style="width:${pct}%"></i></span>
+      </span>`;
+      tile.addEventListener("click", () => {
+        selectedWorld = w.id;
+        container.innerHTML = "";
+        renderBattleList(container, ctx2);
+      });
+      grid.appendChild(tile);
+    }
+    container.appendChild(grid);
+    const world = worlds.find((w) => w.id === selectedWorld) || worlds[0];
+    const listHead = document.createElement("h3");
+    listHead.dataset.listHead = "1";
+    listHead.textContent = `${world.meta.icon} ${world.meta.label} \xB7 ${world.done}/${world.total}`;
+    container.appendChild(listHead);
+    const list = document.createElement("div");
+    list.className = "list";
+    let scrollTarget = null;
+    for (const b of world.battles) {
       const available = battleAvailable(state2, b.id);
       const done = !!state2.battlesDone[b.id];
       const row = document.createElement("div");
       row.className = "row" + (available ? "" : " locked") + (done ? " done" : "");
-      if (firstUnbeaten && b.id === firstUnbeaten.id) row.dataset.scrollTarget = "1";
       const icons = b.enemies.map((e) => ENEMY_BY_ID[typeof e === "string" ? e : e.id].icon).join(" ");
       row.innerHTML = `
       <span class="icon">${available ? done ? "\u{1F3C6}" : "\u2694\uFE0F" : "\u{1F512}"}</span>
@@ -31481,15 +31541,15 @@
         btn.addEventListener("click", () => ctx2.go("battle", { id: b.id }));
         row.appendChild(btn);
       }
+      if (!scrollTarget && available && !done) scrollTarget = row;
       list.appendChild(row);
     }
     container.appendChild(list);
-    const targetRow = list.querySelector?.('[data-scroll-target="1"]');
-    if (targetRow && targetRow.scrollIntoView) {
-      setTimeout(() => targetRow.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
+    if (scrollTarget && scrollTarget.scrollIntoView) {
+      setTimeout(() => scrollTarget.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
     if (won === 0) {
-      const firstBtn = list.querySelector?.(".row:not(.locked) button");
+      const firstBtn = list.children[0]?.querySelector?.("button");
       if (firstBtn) {
         startTutorial(ctx2, "first_battle", [
           {

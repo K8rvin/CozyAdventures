@@ -252,6 +252,46 @@ test('все экраны рендерятся без ошибок', () => {
   assert.ok(true);
 });
 
+test('походы рыцаря: плитки миров и фильтр списка боёв', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const root = new El('main');
+  renderBattleList(root, ctx);
+  const all = flatElements(root);
+  const tiles = all.filter((el) => (el.className || '').split(' ').includes('world-tile'));
+  assert.equal(tiles.length, 1, 'на новой игре видна плитка только открытого мира');
+  const rows = all.filter((el) => (el.className || '').split(' ').includes('row'));
+  assert.equal(rows.length, 9, 'по умолчанию показаны бои только первого мира');
+  const hasCls = (el, c) => (el.className || '').split(' ').includes(c);
+  const current = tiles.filter((el) => hasCls(el, 'current'));
+  assert.equal(current.length, 1, 'выбрана ровно одна плитка');
+  assert.equal(current[0].dataset.world, 'meadow', 'на новой игре открыта опушка');
+
+  // Мир пройден целиком → экран сам перескакивает к следующему рубежу
+  const state2 = newGame();
+  for (const b of ['bt_slimes', 'bt_bees', 'bt_moths', 'bt_spirits', 'bt_golem', 'bt_fireflies', 'bt_overgrowth', 'bt_hunt_trail', 'bt_boss_willow']) {
+    state2.battlesDone[b] = { victories: 1 };
+  }
+  const root2 = new El('main');
+  renderBattleList(root2, makeUiCtx(state2));
+  const tiles2 = flatElements(root2).filter((el) => (el.className || '').split(' ').includes('world-tile'));
+  assert.equal(tiles2.length, 2, 'после босса опушки видны два открытых мира');
+  const current2 = tiles2.find((el) => (el.className || '').split(' ').includes('current'));
+  assert.equal(current2.dataset.world, 'town', 'после босса опушки выбран дворик');
+  const rows2 = flatElements(root2).filter((el) => (el.className || '').split(' ').includes('row'));
+  assert.equal(rows2.length, 9, 'список показывает бои дворика');
+
+  // Ручной выбор пройденного мира не сбрасывается обратно к рубежу
+  const meadowTile = tiles2.find((el) => el.dataset.world === 'meadow');
+  meadowTile.click();
+  const tiles3 = flatElements(root2).filter((el) => (el.className || '').split(' ').includes('world-tile'));
+  const current3 = tiles3.find((el) => (el.className || '').split(' ').includes('current'));
+  assert.equal(current3.dataset.world, 'meadow', 'клик по пройденному миру держит выбор');
+  const rows3 = flatElements(root2).filter((el) => (el.className || '').split(' ').includes('row'));
+  assert.equal(rows3.length, 9, 'список показывает бои опушки');
+  assert.ok(rows3.every((el) => (el.className || '').includes('done')), 'все бои опушки пройдены');
+});
+
 test('каталог головоломок: четыре режима и общий переключатель в настройках', () => {
   const state = newGame();
   const ctx = makeUiCtx(state);
