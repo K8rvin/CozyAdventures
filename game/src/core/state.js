@@ -13,6 +13,7 @@ import { FLOW_PUZZLES } from '../data/puzzlesFlow.js';
 import { BREW_PUZZLES } from '../data/puzzlesBrew.js';
 import { FATE_PUZZLES } from '../data/puzzlesFate.js';
 import { GLASS_PUZZLES } from '../data/puzzlesGlass.js';
+import { SPIN_PUZZLES } from '../data/puzzlesSpin.js';
 import { GIFT_PUZZLES } from '../data/puzzlesGift.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
@@ -430,7 +431,7 @@ export function toggleCosmetic(state, id) {
 const PUZZLE_POOL = new Map(
   [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES,
     ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES, ...FATE_PUZZLES, ...GLASS_PUZZLES,
-    ...GIFT_PUZZLES]
+    ...SPIN_PUZZLES, ...GIFT_PUZZLES]
     .map((p) => [p.id, p]),
 );
 const CAMPAIGN_ORDER = [
@@ -504,6 +505,27 @@ const CAMPAIGN_ORDER = [
   // Пятая серия витражей: посвящённые арты assets/glass/
   'gl_47', 'gl_48', 'gl_49', 'gl_50', 'gl_51', 'gl_52',
   'gl_53', 'gl_54', 'gl_55', 'gl_56', 'gl_57', 'gl_58',
+  // Гобелены ветров: сквозняк повернул лоскуты — крути каждый по часовой.
+  // Глава 1: первые сквозняки (якоря — с sp_05, слепые — с sp_09)
+  'sp_01', 'sp_02', 'sp_03', 'sp_04', 'sp_05', 'sp_06', 'sp_07', 'sp_08', 'sp_09', 'sp_10',
+  // Глава 2: по миру за ветром (панорамы двенадцати миров)
+  'sp_11', 'sp_12', 'sp_13', 'sp_14', 'sp_15', 'sp_16', 'sp_17', 'sp_18', 'sp_19', 'sp_20',
+  // Глава 3: сторис-искалки (сцены поиска предметов)
+  'sp_21', 'sp_22', 'sp_23', 'sp_24', 'sp_25', 'sp_26', 'sp_27', 'sp_28', 'sp_29', 'sp_30',
+  // Глава 4: лавка и чайный стол
+  'sp_31', 'sp_32', 'sp_33', 'sp_34', 'sp_35', 'sp_36', 'sp_37', 'sp_38', 'sp_39', 'sp_40',
+  // Глава 5: вторая вышивка (витражные сцены в новой раскройке)
+  'sp_41', 'sp_42', 'sp_43', 'sp_44', 'sp_45', 'sp_46', 'sp_47', 'sp_48', 'sp_49', 'sp_50',
+  // Глава 6: тёмная половина (слепые через одного)
+  'sp_51', 'sp_52', 'sp_53', 'sp_54', 'sp_55', 'sp_56', 'sp_57', 'sp_58', 'sp_59', 'sp_60',
+  // Глава 7: панорамы (дебют 8×5)
+  'sp_61', 'sp_62', 'sp_63', 'sp_64', 'sp_65', 'sp_66', 'sp_67', 'sp_68', 'sp_69', 'sp_70',
+  // Глава 8: гвоздики и ветер
+  'sp_71', 'sp_72', 'sp_73', 'sp_74', 'sp_75', 'sp_76', 'sp_77', 'sp_78', 'sp_79', 'sp_80',
+  // Глава 9: восемь на пять
+  'sp_81', 'sp_82', 'sp_83', 'sp_84', 'sp_85', 'sp_86', 'sp_87', 'sp_88', 'sp_89', 'sp_90',
+  // Глава 10: все ветра (финал — слепой гобелен на четырёх гвоздиках)
+  'sp_91', 'sp_92', 'sp_93', 'sp_94', 'sp_95', 'sp_96', 'sp_97', 'sp_98', 'sp_99', 'sp_100',
   // Карты судьбы: вторая дюжина гостей (мельник, швея, пчеловод… хозяин лавки)
   'fate_13', 'fate_14', 'fate_15', 'fate_16', 'fate_17', 'fate_18',
   'fate_19', 'fate_20', 'fate_21', 'fate_22', 'fate_23', 'fate_24',

@@ -133,6 +133,17 @@ game/
 - glass «Витраж миров»: `glassPuzzle.js` + `puzzlesGlass.js`; пазл-перестановка
   сетки cols×rows, перемешка seeded-ГСЧ (гарантированно не собран на старте);
   арты `assets/glass/`, промты в `art-src/PROMPTS.md`.
+- spin «Гобелены ветров»: `spinPuzzle.js` + `puzzlesSpin.js` + `spinView.js`;
+  лоскуты стоят в своих клетках, но повёрнуты на 0/90/180/270°, тап крутит
+  на 90° по часовой (плавная rAF-анимация с клипом в клетку). `rot[cell] ∈ 0..3`,
+  эталон `parMoves` = Σ (4−rot)%4, медаль «Точная сборка» при moves ≤ par.
+  100 уровней в 10 главах, сетки 2×2 → 8×5 (≤40 клеток — валидатор), звёзды
+  сложности не убывают (тест следит), имена/интро/комбо image+grid уникальны.
+  Арты переиспользованы из assets/ (glass, battle, seek, hub, tea, brew, fate);
+  повтор картинки — только с другой раскройкой. Дебюты: якоря `anchors`
+  (📌, не крутятся) — sp_05; «слепые» уровни `goldRim: false` — sp_09;
+  8×5 — sp_62. Подсказка — первый неверный лоскут + стрелка ↻; цепочка
+  решает (тест следит).
 - gift «Подарок для гостя»: `giftPuzzle.js` + `puzzlesGift.js` (SOUVENIRS —
   66 сувениров с русскими тегами + 100 уровней: гость из «Карт судьбы»,
   история с зашитыми need/avoid-условиями, витрина 6–9, ровно один
@@ -140,14 +151,14 @@ game/
   неудача — гость уходит, `restartGift` без штрафа; намёк = первое
   нарушенное условие (avoid раньше need). Подсказка прячет обманку,
   ближайшую к ответу по тегам. Арт `assets/gift/` (gift_counter + souv_*),
-  промты р.20 PROMPTS.md, фолбэки — эмодзи. В STORY_RING 14-м типом.
+  промты р.20 PROMPTS.md, фолбэки — эмодзи. В STORY_RING 15-м типом.
 - Оверлеи победы: Enter/Пробел нажимает основную кнопку («Следующая →») —
   `showOverlay` в `common.js` + локальный `showVictory` в `puzzleView.js`.
 
 ## Режим истории (story)
 
 - Движок `core/storyEngine.js` (чистая логика, тесты `tests/story.test.mjs`), контент —
-  `data/story.js`: STORY_RING (кольцо 13 типов), STORY_GUESTS (круг из 35 гостей;
+  `data/story.js`: STORY_RING (кольцо 15 типов), STORY_GUESTS (круг из 35 гостей;
   keeper и spirit НЕ в круге), STORY_PROLOG, STORY_BEATS (37/74/100 — дух),
   STORY_CAT_BEATS (кот каждые 10 шагов: `step % 10 === 8`), STORY_EPILOG, TASK_LINES
   (2 фразы-задания на тип), GUEST_SCRIPT (voice + visits[1..3 и «свой человек»] +

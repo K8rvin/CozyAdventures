@@ -10539,6 +10539,1186 @@
   ];
   var GLASS_PUZZLE_BY_ID = Object.fromEntries(GLASS_PUZZLES.map((p) => [p.id, p]));
 
+  // src/data/puzzlesSpin.js
+  var SPIN_PUZZLES = [
+    // --- Глава 1. Первые сквозняки (2×2 → 5×4) ---
+    {
+      id: "sp_01",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u0420\u0430\u0441\u0441\u0432\u0435\u0442\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 1,
+      grid: [2, 2],
+      image: "assets/glass/glass_dawn_web.jpg",
+      rewards: [{ type: "coins", amount: 60 }],
+      intro: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0441\u043A\u0432\u043E\u0437\u043D\u044F\u043A \u043F\u0440\u043E\u0448\u0451\u043B\u0441\u044F \u043F\u043E \u043B\u0430\u0432\u043A\u0435 \u0438 \u043F\u043E\u043A\u0440\u0443\u0442\u0438\u043B \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u0440\u0430\u0441\u0441\u0432\u0435\u0442\u043D\u043E\u0433\u043E \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0430. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u0438\u0445 \u043E\u0431\u0440\u0430\u0442\u043D\u043E \u2014 \u043F\u0443\u0441\u0442\u044C \u0441\u043E\u043B\u043D\u0446\u0435 \u0432\u0441\u0442\u0430\u043D\u0435\u0442 \u0433\u0434\u0435 \u043D\u0430\u0434\u043E."
+    },
+    {
+      id: "sp_02",
+      world: "town",
+      mechanic: "spin",
+      name: "\u041D\u043E\u0447\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 1,
+      grid: [3, 2],
+      image: "assets/glass/glass_night_web.jpg",
+      rewards: [{ type: "coins", amount: 65 }],
+      intro: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0441 \u043D\u043E\u0447\u043D\u044B\u043C \u043D\u0435\u0431\u043E\u043C \u0432\u0438\u0441\u0438\u0442 \u0443 \u0441\u0430\u043C\u043E\u0439 \u0434\u0432\u0435\u0440\u0438 \u2014 \u0435\u0433\u043E \u0432\u0435\u0442\u0435\u0440 \u0437\u0430\u0434\u0435\u0432\u0430\u0435\u0442 \u043F\u0435\u0440\u0432\u044B\u043C. \u0412\u0435\u0440\u043D\u0438 \u0437\u0432\u0451\u0437\u0434\u0430\u043C \u043F\u0440\u0438\u0432\u044B\u0447\u043D\u044B\u0439 \u043F\u043E\u0440\u044F\u0434\u043E\u043A."
+    },
+    {
+      id: "sp_03",
+      world: "sw",
+      mechanic: "spin",
+      name: "\u0422\u043E\u043F\u044F\u043D\u043E\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 2,
+      grid: [3, 3],
+      image: "assets/glass/glass_bog_web.jpg",
+      rewards: [{ type: "coins", amount: 70 }],
+      intro: "\u041A\u043E\u0447\u043A\u0438 \u0438 \u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0438 \u043D\u0430 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u043F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u043B\u0438\u0441\u044C \u0432\u0432\u0435\u0440\u0445 \u043D\u043E\u0433\u0430\u043C\u0438. \u041F\u043E\u043A\u0440\u0443\u0442\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B, \u043F\u043E\u043A\u0430 \u0442\u043E\u043F\u044C \u0441\u043D\u043E\u0432\u0430 \u043D\u0435 \u0441\u0442\u0430\u043D\u0435\u0442 \u0442\u043E\u043F\u044C\u044E."
+    },
+    {
+      id: "sp_04",
+      world: "town",
+      mechanic: "spin",
+      name: "\u041F\u043B\u043E\u0449\u0430\u0434\u044C \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 2,
+      grid: [3, 3],
+      image: "assets/glass/glass_market_sq_web.jpg",
+      rewards: [{ type: "coins", amount: 75 }],
+      intro: "\u041A\u043E\u0442 \u0433\u043E\u043D\u044F\u043B\u0441\u044F \u0437\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u043C \u0438 \u0437\u0430\u0446\u0435\u043F\u0438\u043B \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0441 \u043F\u043B\u043E\u0449\u0430\u0434\u044C\u044E. \u041B\u043E\u0441\u043A\u0443\u0442\u044B \u0441\u044A\u0435\u0445\u0430\u043B\u0438 \u043D\u0430\u0431\u043E\u043A \u2014 \u0432\u044B\u043F\u0440\u0430\u0432\u044C \u043A\u0430\u0436\u0434\u044B\u0439."
+    },
+    {
+      id: "sp_05",
+      world: "deep",
+      mechanic: "spin",
+      name: "\u0420\u0438\u0444\u043E\u0432\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 2,
+      grid: [4, 3],
+      image: "assets/glass/glass_reef_web.jpg",
+      anchors: [0, 11],
+      rewards: [{ type: "coins", amount: 80 }],
+      intro: "\u0414\u0432\u0430 \u043B\u043E\u0441\u043A\u0443\u0442\u0430 \u0445\u043E\u0437\u044F\u0439\u043A\u0430 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u043B\u0430 \u0433\u0432\u043E\u0437\u0434\u0438\u043A\u0430\u043C\u0438 \u2014 \u043E\u043D\u0438 \u043D\u0435 \u043A\u0440\u0443\u0442\u044F\u0442\u0441\u044F. \u041E\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0432\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043A\u043E\u0441\u0438\u043B \u043A\u0430\u043A \u0445\u043E\u0442\u0435\u043B. \u0421\u043E\u0431\u0435\u0440\u0438 \u0440\u0438\u0444 \u0437\u0430\u043D\u043E\u0432\u043E."
+    },
+    {
+      id: "sp_06",
+      world: "cr",
+      mechanic: "spin",
+      name: "\u0413\u043E\u0440\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 3,
+      grid: [4, 3],
+      image: "assets/glass/glass_mountains_web.jpg",
+      rewards: [{ type: "coins", amount: 90 }, { type: "item", id: "pot_heal" }],
+      intro: "\u0413\u043E\u0440\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0442\u044F\u0436\u0435\u043B\u0435\u0435 \u043F\u0440\u043E\u0447\u0438\u0445, \u043D\u043E \u0438 \u0435\u0433\u043E \u0432\u0435\u0442\u0435\u0440 \u043F\u043E\u043A\u0440\u0443\u0442\u0438\u043B. \u0412\u0435\u0440\u0448\u0438\u043D\u044B \u0434\u043E\u043B\u0436\u043D\u044B \u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0432\u0432\u0435\u0440\u0445 \u2014 \u0442\u0430\u043A \u0437\u0430\u0432\u0435\u0434\u0435\u043D\u043E."
+    },
+    {
+      id: "sp_07",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0430\u043B\u0445\u0438\u043C\u0438\u043A\u0430",
+      difficulty: 3,
+      grid: [5, 3],
+      image: "assets/glass/glass_alchemist_web.jpg",
+      anchors: [0, 14],
+      rewards: [{ type: "coins", amount: 95 }],
+      intro: "\u0410\u043B\u0445\u0438\u043C\u0438\u043A \u043F\u043E\u0434\u0430\u0440\u0438\u043B \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0441\u043E \u0441\u0432\u043E\u0438\u043C \u0441\u0442\u043E\u043B\u043E\u043C \u0438 \u043F\u043E\u043F\u0440\u043E\u0441\u0438\u043B \u0431\u0435\u0440\u0435\u0447\u044C \u0443\u0433\u043B\u044B \u2014 \u043E\u043D\u0438 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B. \u0421\u0435\u0440\u0435\u0434\u0438\u043D\u0430 \u0436\u0435 \u043A\u0440\u0443\u0442\u0438\u0442\u0441\u044F \u043D\u0430 \u0432\u0441\u0435 \u0441\u0442\u043E\u0440\u043E\u043D\u044B."
+    },
+    {
+      id: "sp_08",
+      world: "mist",
+      mechanic: "spin",
+      name: "\u0427\u0430\u0441\u044B \u043D\u0430\u0434 \u0442\u0443\u043C\u0430\u043D\u043E\u043C",
+      difficulty: 3,
+      grid: [5, 3],
+      image: "assets/glass/glass_mistclock_web.jpg",
+      rewards: [{ type: "coins", amount: 100 }],
+      intro: "\u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B \u043D\u0430 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u044E\u0442 \u0441\u0440\u0430\u0437\u0443 \u0432\u0441\u0435 \u0432\u0440\u0435\u043C\u0435\u043D\u0430. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u0442\u0430\u043A, \u0447\u0442\u043E\u0431\u044B \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0441\u043E\u0448\u043B\u0438\u0441\u044C \u0432\u043E\u0435\u0434\u0438\u043D\u043E."
+    },
+    {
+      id: "sp_09",
+      world: "jade",
+      mechanic: "spin",
+      name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 3,
+      grid: [5, 4],
+      image: "assets/glass/glass_jade2_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 110 }],
+      intro: "\u042D\u0442\u043E\u0442 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0441\u0442\u0430\u0440\u044B\u0439: \u043A\u0430\u0439\u043C\u0430 \u043D\u0430 \u043D\u0451\u043C \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F. \u0421\u043C\u043E\u0442\u0440\u0438 \u0442\u043E\u043B\u044C\u043A\u043E \u043D\u0430 \u0443\u0437\u043E\u0440 \u2014 \u043D\u0435\u0444\u0440\u0438\u0442 \u0441\u0430\u043C \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u0442, \u0433\u0434\u0435 \u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sp_10",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u041B\u0430\u0432\u043A\u0430 \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 3,
+      grid: [5, 4],
+      image: "assets/glass/glass_shop_web.jpg",
+      rewards: [{ type: "coins", amount: 120 }],
+      intro: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0441 \u0432\u0438\u0434\u043E\u043C \u0441\u0430\u043C\u043E\u0439 \u043B\u0430\u0432\u043A\u0438 \u2014 \u0433\u043E\u0441\u0442\u0438 \u043B\u044E\u0431\u0443\u044E\u0442\u0441\u044F \u0438\u043C \u0447\u0430\u0449\u0435 \u0432\u0441\u0435\u0433\u043E. \u041D\u0435 \u0433\u043E\u0434\u0438\u0442\u0441\u044F, \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u043B\u043A\u0438 \u0432\u0438\u0441\u0435\u043B\u0438 \u0431\u043E\u043A\u043E\u043C. \u041F\u043E\u043F\u0440\u0430\u0432\u044C \u043A\u0430\u0436\u0434\u044B\u0439 \u043B\u043E\u0441\u043A\u0443\u0442."
+    },
+    // --- Глава 2. По миру за ветром (битвенные панорамы двенадцати миров) ---
+    {
+      id: "sp_11",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u041B\u0443\u0433\u0430 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 3,
+      grid: [5, 4],
+      image: "assets/battle/battle_bg_meadow_web.jpg",
+      rewards: [{ type: "coins", amount: 130 }],
+      intro: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0441 \u043B\u0443\u0433\u0430\u043C\u0438 \u0432\u044B\u0448\u0438\u0432\u0430\u043B\u0430 \u0441\u0442\u0430\u0440\u0430\u044F \u0442\u043A\u0430\u0447\u0438\u0445\u0430 \u0438\u0437 \u0413\u043E\u0440\u043E\u0434\u043A\u0430. \u0412\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043A\u0440\u0443\u0442\u0438\u043B \u0442\u0440\u0430\u0432\u044B \u2014 \u0432\u0435\u0440\u043D\u0438 \u0438\u043C \u043F\u0440\u0438\u0432\u044B\u0447\u043D\u0443\u044E \u043B\u0438\u043D\u0438\u044E \u0433\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430."
+    },
+    {
+      id: "sp_12",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0413\u043E\u0440\u043E\u0434\u043E\u043A \u043D\u0430 \u0442\u043A\u0430\u043D\u0438",
+      difficulty: 3,
+      grid: [5, 4],
+      image: "assets/battle/battle_bg_town_web.jpg",
+      rewards: [{ type: "coins", amount: 145 }],
+      intro: "\u041A\u0440\u044B\u0448\u0438 \u0413\u043E\u0440\u043E\u0434\u043A\u0430 \u043D\u0430 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u0441\u043C\u043E\u0442\u0440\u044F\u0442 \u043A\u0442\u043E \u043A\u0443\u0434\u0430. \u0421\u043E\u0431\u0435\u0440\u0438 \u0438\u0445 \u043E\u0431\u0440\u0430\u0442\u043D\u043E \u2014 \u043F\u0443\u0441\u0442\u044C \u0434\u043E\u043C\u0430 \u0432\u0441\u0442\u0430\u043D\u0443\u0442 \u0440\u043E\u0432\u043D\u043E, \u043A\u0430\u043A \u043D\u0430 \u0443\u043B\u0438\u0446\u0435."
+    },
+    {
+      id: "sp_13",
+      world: "nm",
+      mechanic: "spin",
+      name: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
+      difficulty: 3,
+      grid: [5, 4],
+      image: "assets/battle/battle_bg_nm_web.jpg",
+      rewards: [{ type: "coins", amount: 160 }],
+      intro: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A \u043F\u043E\u043B\u043E\u043D \u0444\u043E\u043D\u0430\u0440\u0435\u0439 \u2014 \u043D\u0430 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u043E\u043D\u0438 \u0440\u0430\u0437\u043B\u0435\u0442\u0435\u043B\u0438\u0441\u044C \u043F\u043E \u0441\u0442\u043E\u0440\u043E\u043D\u0430\u043C. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B, \u043F\u043E\u043A\u0430 \u043E\u0433\u043D\u0438 \u043D\u0435 \u0432\u044B\u0441\u0442\u0440\u043E\u0438\u043B\u0438\u0441\u044C."
+    },
+    {
+      id: "sp_14",
+      world: "sw",
+      mechanic: "spin",
+      name: "\u0422\u043E\u043F\u0438 \u043F\u043E\u0434 \u043B\u0443\u043D\u043E\u0439",
+      difficulty: 3,
+      grid: [5, 4],
+      image: "assets/battle/battle_bg_sw_web.jpg",
+      anchors: [0, 19],
+      rewards: [{ type: "coins", amount: 175 }],
+      intro: "\u0423\u0433\u043B\u044B \u044D\u0442\u043E\u0433\u043E \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0430 \u043F\u0440\u0438\u0431\u0438\u0442\u044B \u2014 \u0442\u043A\u0430\u0447\u0438\u0445\u0430 \u0437\u043D\u0430\u043B\u0430 \u043F\u0440\u043E \u0441\u043A\u0432\u043E\u0437\u043D\u044F\u043A\u0438. \u0410 \u0432\u043E\u0442 \u0441\u0435\u0440\u0435\u0434\u0438\u043D\u0430 \u0441 \u0442\u043E\u043F\u044F\u043C\u0438 \u043A\u0440\u0443\u0442\u0438\u0442\u0441\u044F \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u043E."
+    },
+    {
+      id: "sp_15",
+      world: "sf",
+      mechanic: "spin",
+      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 3,
+      grid: [6, 4],
+      image: "assets/battle/battle_bg_sf_web.jpg",
+      rewards: [{ type: "coins", amount: 190 }],
+      intro: "\u042F\u0440\u043C\u0430\u0440\u043A\u0430 \u043F\u043E\u0434 \u0437\u0432\u0451\u0437\u0434\u0430\u043C\u0438 \u0448\u0438\u0440\u043E\u043A\u0430\u044F \u2014 \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u0441\u0442\u0430\u043B\u043E \u0431\u043E\u043B\u044C\u0448\u0435. \u0412\u0435\u0442\u0435\u0440 \u0442\u0443\u0442 \u0433\u0443\u043B\u044F\u043B \u0434\u043E\u043B\u0433\u043E: \u043A\u0440\u0443\u0442\u0438\u043B \u043A\u0430\u0436\u0434\u044B\u0439 \u043B\u043E\u0441\u043A\u0443\u0442 \u0432 \u0441\u0432\u043E\u0451 \u0443\u0434\u043E\u0432\u043E\u043B\u044C\u0441\u0442\u0432\u0438\u0435."
+    },
+    {
+      id: "sp_16",
+      world: "ash",
+      mechanic: "spin",
+      name: "\u041F\u0435\u043F\u0435\u043B \u0432 \u0443\u0437\u043E\u0440\u0435",
+      difficulty: 3,
+      grid: [6, 4],
+      image: "assets/battle/battle_bg_ash_web.jpg",
+      rewards: [{ type: "coins", amount: 205 }],
+      intro: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u043F\u043E\u0441\u0435\u0440\u0435\u043B\u0438 \u043E\u0442 \u0432\u0435\u0442\u0440\u0430 \u0441 \u043F\u044B\u043B\u044C\u044E. \u0412\u044B\u043F\u0440\u0430\u0432\u044C \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u2014 \u043F\u0443\u0441\u0442\u044C \u0441\u0442\u0435\u043F\u044C \u0441\u043D\u043E\u0432\u0430 \u043B\u044F\u0436\u0435\u0442 \u0440\u043E\u0432\u043D\u043E."
+    },
+    {
+      id: "sp_17",
+      world: "cr",
+      mechanic: "spin",
+      name: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 3,
+      grid: [5, 4],
+      image: "assets/battle/battle_bg_cr_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 220 }],
+      intro: "\u041A\u0430\u0439\u043C\u0430 \u044D\u0442\u043E\u0433\u043E \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0430 \u043F\u043E\u0442\u0443\u0441\u043A\u043B\u0430 \u043E\u0442 \u0433\u043E\u0440\u043D\u043E\u0439 \u0432\u043B\u0430\u0433\u0438. \u0421\u043C\u043E\u0442\u0440\u0438 \u043D\u0430 \u0433\u0440\u0430\u043D\u0438 \u043A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u043E\u0432 \u2014 \u043E\u043D\u0438 \u0447\u0435\u0441\u0442\u043D\u043E \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u044E\u0442, \u0433\u0434\u0435 \u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sp_18",
+      world: "jade",
+      mechanic: "spin",
+      name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0435 \u043D\u0438\u0442\u0438",
+      difficulty: 3,
+      grid: [6, 4],
+      image: "assets/battle/battle_bg_jade_web.jpg",
+      anchors: [0, 23],
+      rewards: [{ type: "coins", amount: 235 }],
+      intro: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434 \u0432\u044B\u0448\u0438\u0442 \u0442\u0443\u0433\u0438\u043C\u0438 \u043D\u0438\u0442\u044F\u043C\u0438, \u0443\u0433\u043B\u044B \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B \u043D\u0430 \u0432\u0435\u043A\u0430. \u041E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435 \u0432\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043A\u0440\u0443\u0442\u0438\u043B \u0437\u0430 \u043E\u0434\u043D\u0443 \u043D\u043E\u0447\u044C."
+    },
+    {
+      id: "sp_19",
+      world: "deep",
+      mechanic: "spin",
+      name: "\u0413\u043B\u0443\u0431\u0438\u043D\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 3,
+      grid: [6, 4],
+      image: "assets/battle/battle_bg_deep_web.jpg",
+      rewards: [{ type: "coins", amount: 250 }],
+      intro: "\u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u0431\u0443\u0434\u0442\u043E \u0441\u0430\u043C \u0442\u0435\u0447\u0451\u0442. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u0442\u0430\u043A, \u0447\u0442\u043E\u0431\u044B \u0432\u043E\u0434\u0430 \u0441\u043D\u043E\u0432\u0430 \u0442\u0435\u043A\u043B\u0430 \u0441\u0432\u0435\u0440\u0445\u0443 \u0432\u043D\u0438\u0437."
+    },
+    {
+      id: "sp_20",
+      world: "mist",
+      mechanic: "spin",
+      name: "\u0422\u0443\u043C\u0430\u043D\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 4,
+      grid: [6, 4],
+      image: "assets/battle/battle_bg_mist_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 270 }, { type: "item", id: "pot_vigor" }],
+      intro: "\u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0439 \u043C\u0438\u0440 \u0438 \u0431\u0435\u0437 \u0432\u0435\u0442\u0440\u0430 \u043B\u044E\u0431\u0438\u0442 \u043F\u0443\u0442\u0430\u0442\u044C. \u041A\u0430\u0439\u043C\u0430 \u043D\u0435 \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u2014 \u0434\u043E\u0432\u0435\u0440\u044F\u0439 \u0442\u043E\u043B\u044C\u043A\u043E \u0443\u0437\u043E\u0440\u0443. \u0417\u0430 \u0440\u0430\u0431\u043E\u0442\u0443, \u0433\u043E\u0432\u043E\u0440\u044F\u0442, \u043F\u043E\u043B\u0430\u0433\u0430\u0435\u0442\u0441\u044F \u043D\u0430\u0441\u0442\u043E\u0439\u043A\u0430."
+    },
+    // --- Глава 3. Сторис-искалки (сцены поиска предметов: много ориентиров) ---
+    {
+      id: "sp_21",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u041F\u0443\u0442\u0435\u0432\u043E\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 4,
+      grid: [6, 4],
+      image: "assets/seek/seek_meadow_web.jpg",
+      rewards: [{ type: "coins", amount: 285 }],
+      intro: "\u041D\u0430 \u044D\u0442\u043E\u043C \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u043B\u0443\u0433, \u0433\u0434\u0435 \u0438\u0441\u043A\u0430\u0442\u0435\u043B\u0438 \u0442\u0435\u0440\u044F\u043B\u0438 \u043F\u0443\u0433\u043E\u0432\u0438\u0446\u044B. \u041B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u043C\u043D\u043E\u0433\u043E, \u0437\u0430\u0442\u043E \u043F\u0440\u0438\u043C\u0435\u0442 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u2014 \u0434\u0435\u0440\u0435\u0432\u043E \u0442\u0443\u0442, \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u0442\u0430\u043C."
+    },
+    {
+      id: "sp_22",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 4,
+      grid: [6, 4],
+      image: "assets/seek/seek_town_web.jpg",
+      rewards: [{ type: "coins", amount: 300 }],
+      intro: "\u0423\u043B\u0438\u0446\u044B \u0413\u043E\u0440\u043E\u0434\u043A\u0430 \u0432\u044B\u0448\u0438\u0442\u044B \u0441 \u043B\u044E\u0431\u043E\u0432\u044C\u044E: \u043E\u043A\u043D\u0430, \u0432\u044B\u0432\u0435\u0441\u043A\u0438, \u0442\u0440\u0443\u0431\u044B. \u0412\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043F\u0443\u0442\u0430\u043B \u043A\u0432\u0430\u0440\u0442\u0430\u043B\u044B \u2014 \u0432\u0435\u0440\u043D\u0438 \u0434\u043E\u043C\u0430 \u043D\u0430 \u043C\u0435\u0441\u0442\u0430."
+    },
+    {
+      id: "sp_23",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0420\u044B\u043D\u043E\u0447\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 4,
+      grid: [6, 4],
+      image: "assets/seek/seek_market_web.jpg",
+      anchors: [0, 23],
+      rewards: [{ type: "coins", amount: 315 }],
+      intro: "\u0420\u044B\u043D\u043E\u043A \u0448\u0443\u043C\u0438\u0442 \u0434\u0430\u0436\u0435 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438. \u0423\u0433\u043B\u044B \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B, \u0430 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0438 \u0432\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u0441\u0442\u0430\u0432\u0438\u043B \u2014 \u0440\u0430\u0441\u0441\u0443\u0434\u0438 \u0438\u0445 \u043F\u043E \u043F\u043E\u0440\u044F\u0434\u043A\u0443."
+    },
+    {
+      id: "sp_24",
+      world: "sw",
+      mechanic: "spin",
+      name: "\u0411\u043E\u043B\u043E\u0442\u043D\u0430\u044F \u0434\u044B\u043C\u043A\u0430",
+      difficulty: 4,
+      grid: [6, 4],
+      image: "assets/seek/seek_swamp_web.jpg",
+      rewards: [{ type: "coins", amount: 330 }],
+      intro: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0432\u0438\u0441\u0435\u043B \u0443 \u043E\u043A\u043D\u0430, \u0447\u0442\u043E \u0432\u044B\u0445\u043E\u0434\u0438\u0442 \u043D\u0430 \u0441\u044B\u0440\u043E\u0441\u0442\u044C. \u0414\u044B\u043C\u043A\u0430 \u043D\u0430 \u043D\u0451\u043C \u043F\u043E\u043A\u0440\u0443\u0442\u0438\u043B\u0430\u0441\u044C \u2014 \u0432\u044B\u043F\u0440\u0430\u0432\u044C, \u043F\u043E\u043A\u0430 \u043A\u0443\u0432\u0448\u0438\u043D\u043A\u0438 \u043D\u0435 \u0443\u0448\u043B\u0438 \u043F\u043E\u0434 \u0432\u043E\u0434\u0443."
+    },
+    {
+      id: "sp_25",
+      world: "fair",
+      mechanic: "spin",
+      name: "\u042F\u0440\u043C\u0430\u0440\u043A\u0430 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 4,
+      grid: [6, 4],
+      image: "assets/seek/seek_fair_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 350 }, { type: "seals", amount: 1 }],
+      intro: "\u042F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u2014 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u0441\u0430\u043C\u043E\u0433\u043E \u0431\u0430\u043B\u0430\u0433\u0443\u0440\u0430. \u041A\u0430\u0439\u043C\u0430 \u043D\u0435 \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F, \u0437\u0430\u0442\u043E \u0444\u043B\u0430\u0433\u0438 \u043D\u0430 \u043D\u0451\u043C \u2014 \u0447\u0435\u0441\u0442\u043D\u044B\u0435 \u043E\u0440\u0438\u0435\u043D\u0442\u0438\u0440\u044B. \u0417\u0430 \u043D\u0435\u0433\u043E \u0434\u0430\u044E\u0442 \u043F\u0435\u0447\u0430\u0442\u044C."
+    },
+    {
+      id: "sp_26",
+      world: "forge",
+      mechanic: "spin",
+      name: "\u041A\u0443\u0437\u043D\u0435\u0447\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/seek/seek_forge_web.jpg",
+      rewards: [{ type: "coins", amount: 365 }],
+      intro: "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u0448\u0438\u0440\u0435 \u043F\u0440\u0435\u0436\u043D\u0438\u0445 \u2014 \u0441\u0435\u043C\u044C \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u0432 \u0440\u044F\u0434. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u0438\u0445 \u0442\u0430\u043A, \u0447\u0442\u043E\u0431\u044B \u0433\u043E\u0440\u043D \u0441\u043D\u043E\u0432\u0430 \u0434\u044B\u0448\u0430\u043B \u0432\u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sp_27",
+      world: "crystal",
+      mechanic: "spin",
+      name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/seek/seek_crystal_web.jpg",
+      rewards: [{ type: "coins", amount: 380 }],
+      intro: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B\u044B \u043D\u0430 \u044D\u0442\u043E\u043C \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u0431\u043B\u0435\u0441\u0442\u044F\u0442 \u0434\u0430\u0436\u0435 \u0432 \u043F\u043E\u043B\u0443\u0442\u044C\u043C\u0435. \u0421\u043E\u0431\u0435\u0440\u0438 \u0438\u0445 \u0433\u0440\u0430\u043D\u0438 \u2014 \u0441\u0432\u0435\u0442 \u043B\u044E\u0431\u0438\u0442 \u043F\u043E\u0440\u044F\u0434\u043E\u043A."
+    },
+    {
+      id: "sp_28",
+      world: "jade",
+      mechanic: "spin",
+      name: "\u0421\u0430\u0434 \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/seek/seek_jade_web.jpg",
+      anchors: [0, 27],
+      rewards: [{ type: "coins", amount: 395 }],
+      intro: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434 \u0432\u044B\u0448\u0438\u0442 \u0434\u043B\u0438\u043D\u043D\u044B\u043C \u0440\u044F\u0434\u043E\u043C. \u0423\u0433\u043B\u044B \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B, \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435 \u2014 \u0437\u0430 \u0442\u043E\u0431\u043E\u0439: \u0434\u0435\u0440\u0435\u0432\u044C\u044F \u0434\u043E\u043B\u0436\u043D\u044B \u0441\u0442\u043E\u044F\u0442\u044C, \u043F\u0440\u0443\u0434\u044B \u2014 \u043B\u0435\u0436\u0430\u0442\u044C."
+    },
+    {
+      id: "sp_29",
+      world: "grotto",
+      mechanic: "spin",
+      name: "\u0413\u0440\u043E\u0442 \u0438\u0437 \u043D\u0438\u0442\u043E\u043A",
+      difficulty: 4,
+      grid: [6, 4],
+      image: "assets/seek/seek_grotto_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 410 }],
+      intro: "\u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442 \u2014 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u041E\u0440\u0438\u0435\u043D\u0442\u0438\u0440\u0443\u0439\u0441\u044F \u043F\u043E \u043F\u0443\u0437\u044B\u0440\u044C\u043A\u0430\u043C: \u043E\u043D\u0438 \u0432\u0441\u0435\u0433\u0434\u0430 \u0432\u0441\u043F\u043B\u044B\u0432\u0430\u044E\u0442 \u0432\u0432\u0435\u0440\u0445, \u0434\u0430\u0436\u0435 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438."
+    },
+    {
+      id: "sp_30",
+      world: "clockwork",
+      mechanic: "spin",
+      name: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/seek/seek_clockwork_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 430 }, { type: "item", id: "scr_frost" }],
+      intro: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u2014 \u0433\u043E\u0440\u0434\u043E\u0441\u0442\u044C \u043C\u0430\u0441\u0442\u0435\u0440\u043E\u0432\u043E\u0439. \u0411\u0435\u0437 \u043A\u0430\u0439\u043C\u044B, \u043D\u043E \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0438 \u0438 \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0441\u043A\u0430\u0436\u0443\u0442 \u0432\u0435\u0440\u043D\u043E\u0435 \u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u0435. \u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u2014 \u0441\u0432\u0438\u0442\u043E\u043A."
+    },
+    // --- Глава 4. Лавка и чайный стол (сцены хаба, чая и варки) ---
+    {
+      id: "sp_31",
+      world: "crossroads",
+      mechanic: "spin",
+      name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/hub/hub_banner_web.jpg",
+      rewards: [{ type: "coins", amount: 445 }],
+      intro: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0441 \u0432\u0438\u0434\u043E\u043C \u0441\u0430\u043C\u043E\u0439 \u043B\u0430\u0432\u043A\u0438 \u0432\u0438\u0441\u0438\u0442 \u043D\u0430\u0434 \u043E\u0447\u0430\u0433\u043E\u043C. \u0421\u043A\u0432\u043E\u0437\u043D\u044F\u043A \u0438\u0437 \u043F\u0440\u0438\u043E\u0442\u043A\u0440\u044B\u0442\u043E\u0439 \u0434\u0432\u0435\u0440\u0438 \u043F\u043E\u043A\u0440\u0443\u0442\u0438\u043B \u0435\u0433\u043E \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u2014 \u0432\u0435\u0440\u043D\u0438 \u0434\u043E\u043C\u0443 \u0432\u0438\u0434."
+    },
+    {
+      id: "sp_32",
+      world: "town",
+      mechanic: "spin",
+      name: "\u041F\u043B\u043E\u0449\u0430\u0434\u044C \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/hub/town_square_web.jpg",
+      anchors: [0, 27],
+      rewards: [{ type: "coins", amount: 460 }],
+      intro: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u2014 \u0441 \u0444\u043E\u043D\u0430\u0440\u044F\u043C\u0438 \u0438 \u043B\u0430\u0432\u043A\u0430\u043C\u0438. \u041A\u0440\u0430\u044F \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B, \u0441\u0435\u0440\u0435\u0434\u0438\u043D\u0430 \u043D\u0430 \u0432\u0435\u0442\u0440\u0443. \u0421\u043E\u0431\u0435\u0440\u0438 \u043F\u043B\u043E\u0449\u0430\u0434\u044C \u0437\u0430\u043D\u043E\u0432\u043E."
+    },
+    {
+      id: "sp_33",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u0440\u044F\u0434 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/hub/town_market_web.jpg",
+      rewards: [{ type: "coins", amount: 475 }],
+      intro: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B \u0432\u044B\u0448\u0438\u0442 \u0434\u043E \u043C\u0435\u043B\u043E\u0447\u0435\u0439: \u0432\u044B\u0432\u0435\u0441\u043A\u0438, \u0437\u043E\u043D\u0442\u044B, \u043A\u043E\u0440\u0437\u0438\u043D\u044B. \u0412\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043F\u0443\u0442\u0430\u043B \u0440\u044F\u0434\u044B \u2014 \u0440\u0430\u0441\u0441\u0443\u0434\u0438, \u0433\u0434\u0435 \u0447\u044C\u044F \u043B\u0430\u0432\u043A\u0430."
+    },
+    {
+      id: "sp_34",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0432 \u0432\u044B\u0448\u0438\u0432\u043A\u0435",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/hub/trophy_room_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 490 }],
+      intro: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432 \u2014 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0431\u0435\u0437 \u0441\u0432\u0435\u0442\u044F\u0449\u0435\u0439\u0441\u044F \u043A\u0430\u0439\u043C\u044B. \u041D\u043E \u0442\u0440\u043E\u0444\u0435\u0438 \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445 \u0441\u0442\u043E\u044F\u0442 \u0440\u043E\u0432\u043D\u043E \u0438\u043B\u0438 \u043D\u0435 \u0441\u0442\u043E\u044F\u0442 \u0432\u043E\u0432\u0441\u0435: \u0441\u043C\u043E\u0442\u0440\u0438 \u0432\u043D\u0438\u043C\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+    },
+    {
+      id: "sp_35",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0441\u0442\u0435\u0436\u043E\u043A",
+      difficulty: 4,
+      grid: [6, 5],
+      image: "assets/hub/intro_web.jpg",
+      rewards: [{ type: "coins", amount: 505 }],
+      intro: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0441 \u043F\u0435\u0440\u0432\u044B\u043C \u0434\u043D\u0451\u043C \u043B\u0430\u0432\u043A\u0438 \u2014 \u0432\u044B\u0441\u043E\u043A\u0438\u0439, \u0432 \u043F\u044F\u0442\u044C \u0440\u044F\u0434\u043E\u0432. \u0412\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u044B\u0435 \u0432\u0435\u0442\u0440\u0430 \u0442\u0443\u0442 \u0440\u0435\u0434\u043A\u0438, \u043D\u043E \u0438 \u043E\u043D\u0438 \u0441\u043F\u0440\u0430\u0432\u0438\u043B\u0438\u0441\u044C. \u0412\u044B\u043F\u0440\u0430\u0432\u044C \u0432\u0441\u0435 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432."
+    },
+    {
+      id: "sp_36",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u0421\u0442\u043E\u043B\u0438\u043A \u0443 \u043E\u0447\u0430\u0433\u0430",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/tea/tea_table_fire_0_web.jpg",
+      rewards: [{ type: "coins", amount: 520 }],
+      intro: "\u0427\u0430\u0439\u043D\u044B\u0439 \u0441\u0442\u043E\u043B\u0438\u043A \u043D\u0430 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u043E\u0441\u0442\u044B\u0432\u0430\u0435\u0442 \u2014 \u0447\u0430\u0448\u043A\u0438 \u043B\u0435\u0436\u0430\u0442 \u0431\u043E\u043A\u043E\u043C. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B, \u043F\u043E\u043A\u0430 \u043E\u0442\u0432\u0430\u0440 \u043D\u0435 \u043F\u0435\u0440\u0435\u0441\u0442\u0430\u043B \u0431\u044B\u0442\u044C \u0442\u0451\u043F\u043B\u044B\u043C."
+    },
+    {
+      id: "sp_37",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u0427\u0430\u0439 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 4,
+      grid: [6, 5],
+      image: "assets/tea/tea_table_fire_1_web.jpg",
+      anchors: [0, 29],
+      rewards: [{ type: "coins", amount: 535 }],
+      intro: "\u041E\u0433\u043E\u043D\u044C \u043F\u043E\u0434 \u0447\u0430\u0439\u043D\u0438\u043A\u043E\u043C \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D \u043F\u043E \u0443\u0433\u043B\u0430\u043C. \u0412\u0441\u0451 \u043C\u0435\u0436\u0434\u0443 \u043D\u0438\u043C\u0438 \u0432\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043A\u0440\u0443\u0442\u0438\u043B \u2014 \u043F\u0443\u0441\u0442\u044C \u043F\u0430\u0440 \u0441\u043D\u043E\u0432\u0430 \u0438\u0434\u0451\u0442 \u0432\u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sp_38",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u0412\u0435\u0447\u0435\u0440\u043D\u0438\u0439 \u0447\u0430\u0439",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/tea/tea_table_fire_2_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 550 }],
+      intro: "\u0412\u0435\u0447\u0435\u0440\u043D\u0438\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u0442\u043E\u043B\u044C\u043A\u043E \u0431\u043B\u0438\u043A\u0438 \u0447\u0430\u0448\u0435\u043A \u0438 \u0443\u0433\u043B\u0438 \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0443\u0442, \u0433\u0434\u0435 \u0432\u0435\u0440\u0445. \u0423\u044E\u0442 \u043B\u044E\u0431\u0438\u0442 \u0442\u043E\u0447\u043D\u043E\u0441\u0442\u044C."
+    },
+    {
+      id: "sp_39",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u041F\u043E\u043B\u043D\u043E\u0447\u043D\u044B\u0439 \u0447\u0430\u0439",
+      difficulty: 4,
+      grid: [6, 5],
+      image: "assets/tea/tea_table_fire_3_web.jpg",
+      rewards: [{ type: "coins", amount: 565 }],
+      intro: "\u041F\u043E\u043B\u043D\u043E\u0447\u043D\u044B\u0439 \u0447\u0430\u0439\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0432\u044B\u0441\u043E\u043A\u0438\u0439 \u0438 \u0442\u0451\u043C\u043D\u044B\u0439. \u041F\u043B\u0430\u043C\u044F \u043E\u0447\u0430\u0433\u0430 \u043D\u0430 \u043D\u0451\u043C \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u043E\u0440\u0438\u0435\u043D\u0442\u0438\u0440: \u043E\u043D\u043E \u0432\u0441\u0435\u0433\u0434\u0430 \u0442\u044F\u043D\u0435\u0442\u0441\u044F \u0432\u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sp_40",
+      world: "brew",
+      mechanic: "spin",
+      name: "\u0421\u0442\u043E\u043B \u0437\u0435\u043B\u0438\u0439",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/brew/brew_table_web.jpg",
+      rewards: [{ type: "coins", amount: 585 }, { type: "seals", amount: 1 }],
+      intro: "\u0410\u043B\u0445\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0441\u0442\u043E\u043B \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u0448\u0438\u0440\u043E\u0447\u0435\u043D\u043D\u044B\u0439 \u2014 \u0432\u043E\u0441\u0435\u043C\u044C \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u0432 \u0440\u044F\u0434. \u041A\u043E\u043B\u0431\u044B \u0438 \u0442\u0440\u0430\u0432\u044B \u043F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u043B\u0438\u0441\u044C; \u0437\u0430 \u0441\u0431\u043E\u0440\u043A\u0443 \u043F\u043E\u043B\u0430\u0433\u0430\u0435\u0442\u0441\u044F \u043F\u0435\u0447\u0430\u0442\u044C."
+    },
+    // --- Глава 5. Вторая вышивка (витражные сцены в новой раскройке) ---
+    {
+      id: "sp_41",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u041A\u043D\u0438\u0433\u0430 \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/brew/recipe_book_web.jpg",
+      rewards: [{ type: "coins", amount: 600 }],
+      intro: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432 \u0432\u044B\u0448\u0438\u0442\u0430 \u0440\u0430\u0441\u043A\u0440\u044B\u0442\u043E\u0439 \u2014 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u043A\u0440\u0443\u0442\u044F\u0442\u0441\u044F \u043F\u043E \u043E\u0434\u043D\u043E\u0439. \u0412\u0435\u0440\u043D\u0438 \u0441\u0442\u0440\u043E\u0447\u043A\u0430\u043C \u0433\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C."
+    },
+    {
+      id: "sp_42",
+      world: "fate",
+      mechanic: "spin",
+      name: "\u0413\u0430\u0434\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 4,
+      grid: [7, 4],
+      image: "assets/fate/fate_table_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 615 }],
+      intro: "\u0421\u0442\u043E\u043B \u0441\u0443\u0434\u044C\u0431\u044B \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u2014 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u041A\u0430\u0440\u0442\u044B \u0438 \u0441\u0432\u0435\u0447\u0438 \u0441\u043A\u0430\u0436\u0443\u0442 \u0432\u0435\u0440\u043D\u043E\u0435 \u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u0435: \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u043D\u0435 \u0442\u0435\u0440\u043F\u0438\u0442 \u043F\u0435\u0440\u0435\u0432\u0451\u0440\u043D\u0443\u0442\u044B\u0445 \u0437\u043D\u0430\u043A\u043E\u0432."
+    },
+    {
+      id: "sp_43",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u0423\u0442\u0440\u0435\u043D\u043D\u0438\u0439 \u043B\u0443\u0433",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_meadow_web.jpg",
+      anchors: [0, 31],
+      rewards: [{ type: "coins", amount: 630 }],
+      intro: "\u0417\u043D\u0430\u043A\u043E\u043C\u044B\u0439 \u043B\u0443\u0433, \u043D\u043E \u0440\u0430\u0441\u043A\u0440\u043E\u0435\u043D \u0448\u0438\u0440\u0435 \u2014 \u0432\u043E\u0441\u0435\u043C\u044C \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u0432 \u0440\u044F\u0434. \u041A\u0440\u0430\u044F \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B, \u0441\u0435\u0440\u0435\u0434\u0438\u043D\u0430 \u0434\u044B\u0448\u0438\u0442 \u043D\u0430 \u0432\u0435\u0442\u0440\u0443."
+    },
+    {
+      id: "sp_44",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0423\u043B\u043E\u0447\u043A\u0438 \u0433\u043E\u0440\u043E\u0434\u043A\u0430",
+      difficulty: 4,
+      grid: [6, 5],
+      image: "assets/glass/glass_town_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 645 }],
+      intro: "\u041F\u0435\u0440\u0435\u0443\u043B\u043A\u0438 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u043E\u043A\u043D\u0430 \u0438 \u043A\u0440\u044B\u0448\u0438 \u2014 \u0442\u0432\u043E\u0438 \u043E\u0440\u0438\u0435\u043D\u0442\u0438\u0440\u044B. \u0412\u0435\u0442\u0435\u0440 \u0442\u0443\u0442 \u043F\u0435\u0442\u043B\u044F\u043B, \u043A\u0430\u043A \u0431\u0435\u0437\u0434\u043E\u043C\u043D\u044B\u0439 \u043A\u043E\u0442."
+    },
+    {
+      id: "sp_45",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0427\u0435\u0440\u0434\u0430\u043A \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_attic_web.jpg",
+      rewards: [{ type: "coins", amount: 660 }],
+      intro: "\u0427\u0435\u0440\u0434\u0430\u0447\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u043F\u0430\u0445\u043D\u0435\u0442 \u043F\u044B\u043B\u044C\u044E \u0438 \u0441\u0442\u0430\u0440\u044B\u043C\u0438 \u0441\u0443\u043D\u0434\u0443\u043A\u0430\u043C\u0438. \u041B\u043E\u0441\u043A\u0443\u0442\u044B \u043F\u043E\u043A\u0440\u0443\u0442\u0438\u043B\u0438\u0441\u044C \u043E\u0442 \u0441\u043A\u0432\u043E\u0437\u043D\u044F\u043A\u0430 \u043F\u043E\u0434 \u043A\u0440\u044B\u0448\u0435\u0439."
+    },
+    {
+      id: "sp_46",
+      world: "market",
+      mechanic: "spin",
+      name: "\u0411\u0430\u0437\u0430\u0440\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_market_web.jpg",
+      anchors: [0, 7, 24, 31],
+      rewards: [{ type: "coins", amount: 675 }],
+      intro: "\u0411\u0430\u0437\u0430\u0440 \u0448\u0438\u0440\u043E\u043A\u0438\u0439 \u2014 \u0447\u0435\u0442\u044B\u0440\u0435 \u0443\u0433\u043B\u0430 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B, \u0447\u0442\u043E\u0431\u044B \u043D\u0435 \u0441\u044A\u0435\u0445\u0430\u043B. \u0412\u0441\u0451 \u043C\u0435\u0436\u0434\u0443 \u0443\u0433\u043B\u0430\u043C\u0438 \u043A\u0440\u0443\u0442\u0438\u0442\u0441\u044F: \u043B\u0430\u0432\u043A\u0438, \u0437\u043E\u043D\u0442\u044B, \u0444\u043B\u0430\u0433\u0438."
+    },
+    {
+      id: "sp_47",
+      world: "swamp",
+      mechanic: "spin",
+      name: "\u0418\u0432\u0430 \u043D\u0430\u0434 \u0442\u043E\u043F\u044C\u044E",
+      difficulty: 4,
+      grid: [6, 5],
+      image: "assets/glass/glass_swamp_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 690 }],
+      intro: "\u0418\u0432\u043E\u0432\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0412\u0435\u0442\u0432\u0438 \u0438\u0432\u044B \u043D\u0430 \u043D\u0451\u043C \u0432\u0441\u0435\u0433\u0434\u0430 \u0442\u044F\u043D\u0443\u0442\u0441\u044F \u0432\u043D\u0438\u0437 \u2014 \u044D\u0442\u043E \u043B\u0443\u0447\u0448\u0430\u044F \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 \u043D\u0430 \u0431\u043E\u043B\u043E\u0442\u0435."
+    },
+    {
+      id: "sp_48",
+      world: "fair",
+      mechanic: "spin",
+      name: "\u041F\u0440\u0430\u0437\u0434\u043D\u0438\u0447\u043D\u044B\u0435 \u043D\u0438\u0442\u0438",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_fair_web.jpg",
+      rewards: [{ type: "coins", amount: 705 }],
+      intro: "\u0424\u043E\u043D\u0430\u0440\u0438 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0430 \u0432\u044B\u0448\u0438\u0442\u044B \u044F\u0440\u043A\u043E \u0438 \u0432\u0435\u0441\u0435\u043B\u043E. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u2014 \u043F\u0443\u0441\u0442\u044C \u0433\u0438\u0440\u043B\u044F\u043D\u0434\u044B \u0441\u043D\u043E\u0432\u0430 \u0432\u0438\u0441\u044F\u0442, \u0430 \u043D\u0435 \u0441\u0442\u043E\u044F\u0442."
+    },
+    {
+      id: "sp_49",
+      world: "forge",
+      mechanic: "spin",
+      name: "\u0413\u043E\u0440\u043D \u0432 \u0432\u044B\u0448\u0438\u0432\u043A\u0435",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_forge_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 720 }],
+      intro: "\u041A\u0443\u0437\u043D\u0435\u0447\u043D\u044B\u0439 \u0443\u0437\u043E\u0440 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0418\u0441\u043A\u0440\u044B \u0433\u043E\u0440\u043D\u0430 \u043B\u0435\u0442\u044F\u0442 \u0432\u0432\u0435\u0440\u0445 \u0434\u0430\u0436\u0435 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u2014 \u0441\u043B\u0435\u0434\u0438 \u0437\u0430 \u043D\u0438\u043C\u0438."
+    },
+    {
+      id: "sp_50",
+      world: "crystal",
+      mechanic: "spin",
+      name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_crystal_web.jpg",
+      anchors: [0, 31],
+      rewards: [{ type: "coins", amount: 740 }, { type: "seals", amount: 1 }],
+      intro: "\u041F\u043E\u043B\u0443\u0441\u043E\u0442\u043D\u044F \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432 \u043F\u043E\u0437\u0430\u0434\u0438. \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0437\u043E\u0440 \u0441 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u043C\u0438 \u043A\u0440\u0430\u044F\u043C\u0438 \u2014 \u0438 \u043F\u0435\u0447\u0430\u0442\u044C \u0437\u0430 \u0441\u0431\u043E\u0440\u043A\u0443."
+    },
+    // --- Глава 6. Тёмная половина (слепые уровни через одного) ---
+    {
+      id: "sp_51",
+      world: "jade",
+      mechanic: "spin",
+      name: "\u0412\u043E\u0441\u0442\u043E\u0447\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_jade_web.jpg",
+      rewards: [{ type: "coins", amount: 755 }],
+      intro: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430 \u0441 \u0434\u0432\u043E\u0440\u0446\u043E\u043C \u0438 \u0441\u0430\u0434\u043E\u043C. \u0414\u0432\u043E\u0440\u0435\u0446 \u0434\u043E\u043B\u0436\u0435\u043D \u0441\u0442\u043E\u044F\u0442\u044C \u043D\u0430 \u0437\u0435\u043C\u043B\u0435 \u2014 \u0432\u0435\u0442\u0435\u0440 \u043E\u0431 \u044D\u0442\u043E\u043C \u043D\u0435 \u0437\u043D\u0430\u043B."
+    },
+    {
+      id: "sp_52",
+      world: "grotto",
+      mechanic: "spin",
+      name: "\u041F\u043E\u044E\u0449\u0438\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 4,
+      grid: [6, 5],
+      image: "assets/glass/glass_grotto_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 770 }],
+      intro: "\u0413\u0440\u043E\u0442, \u0433\u0434\u0435 \u043F\u043E\u044E\u0442 \u0441\u0442\u0440\u0443\u0438, \u2014 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0421\u043B\u0443\u0448\u0430\u0439 \u0433\u043B\u0430\u0437\u0430\u043C\u0438: \u0441\u0442\u0430\u043B\u0430\u043A\u0442\u0438\u0442\u044B \u0441\u0432\u0438\u0441\u0430\u044E\u0442, \u0441\u0442\u0430\u043B\u0430\u0433\u043C\u0438\u0442\u044B \u0440\u0430\u0441\u0442\u0443\u0442 \u0432\u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sp_53",
+      world: "clockwork",
+      mechanic: "spin",
+      name: "\u041C\u0435\u0445\u0430\u043D\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_clockwork_web.jpg",
+      anchors: [0, 31],
+      rewards: [{ type: "coins", amount: 785 }],
+      intro: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u043C\u0438\u0440 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438: \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0443\u0442\u0438\u043B\u0438\u0441\u044C, \u043A\u0430\u043A \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0438. \u041A\u0440\u0430\u044F \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B \u2014 \u043A\u0440\u0443\u0442\u0438 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435."
+    },
+    {
+      id: "sp_54",
+      world: "crossroads",
+      mechanic: "spin",
+      name: "\u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 4,
+      grid: [8, 4],
+      image: "assets/glass/glass_crossroads_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 800 }],
+      intro: "\u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A \u043C\u0438\u0440\u043E\u0432 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B \u2014 \u0432\u0441\u0435 \u0434\u043E\u0440\u043E\u0433\u0438 \u043F\u0435\u0440\u0435\u043F\u0443\u0442\u0430\u043B\u0438\u0441\u044C. \u0412\u0435\u0440\u043D\u0438 \u043A\u0430\u0436\u0434\u043E\u0439 \u0434\u043E\u0440\u043E\u0433\u0435 \u0435\u0451 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435."
+    },
+    {
+      id: "sp_55",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0417\u0438\u043C\u043D\u0438\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_winter_web.jpg",
+      rewards: [{ type: "coins", amount: 815 }],
+      intro: "\u0417\u0438\u043C\u043D\u0438\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0438 \u0445\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u2014 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432. \u0421\u043D\u0435\u0433 \u043D\u0430 \u043D\u0451\u043C \u043B\u0435\u0436\u0438\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u0432\u0435\u0440\u0445\u0443, \u0437\u0430\u043F\u043E\u043C\u043D\u0438 \u044D\u0442\u043E."
+    },
+    {
+      id: "sp_56",
+      world: "harbor",
+      mechanic: "spin",
+      name: "\u0413\u0430\u0432\u0430\u043D\u044C \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [8, 4],
+      image: "assets/glass/glass_harbor_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 830 }],
+      intro: "\u0413\u0430\u0432\u0430\u043D\u044C \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u043A\u043E\u0440\u0430\u0431\u043B\u0438 \u043A\u0430\u0447\u0430\u044E\u0442\u0441\u044F, \u043C\u0430\u044F\u043A \u0441\u0442\u043E\u0438\u0442. \u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B, \u043F\u043E\u043A\u0430 \u043C\u0430\u0447\u0442\u044B \u043D\u0435 \u0441\u043C\u043E\u0442\u0440\u044F\u0442 \u0432 \u043D\u0435\u0431\u043E."
+    },
+    {
+      id: "sp_57",
+      world: "mill",
+      mechanic: "spin",
+      name: "\u041C\u0435\u043B\u044C\u043D\u0438\u0447\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_mill_web.jpg",
+      anchors: [0, 34],
+      rewards: [{ type: "coins", amount: 845 }],
+      intro: "\u041C\u0435\u043B\u044C\u043D\u0438\u0446\u0430 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u0441 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u043C\u0438 \u0443\u0433\u043B\u0430\u043C\u0438. \u041A\u0440\u044B\u043B\u044C\u044F \u043C\u0435\u043B\u044C\u043D\u0438\u0446\u044B \u043B\u044E\u0431\u044F\u0442 \u0432\u0435\u0442\u0435\u0440, \u043D\u043E \u043D\u0435 \u043F\u0435\u0440\u0435\u0432\u0451\u0440\u043D\u0443\u0442\u044B\u0439."
+    },
+    {
+      id: "sp_58",
+      world: "mist",
+      mechanic: "spin",
+      name: "\u041E\u0431\u0441\u0435\u0440\u0432\u0430\u0442\u043E\u0440\u0438\u044F \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 4],
+      image: "assets/glass/glass_observatory_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 860 }],
+      intro: "\u041E\u0431\u0441\u0435\u0440\u0432\u0430\u0442\u043E\u0440\u0438\u044F \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u0442\u0435\u043B\u0435\u0441\u043A\u043E\u043F \u0441\u043C\u043E\u0442\u0440\u0438\u0442 \u0432\u0432\u0435\u0440\u0445 \u0434\u0430\u0436\u0435 \u043F\u0435\u0440\u0435\u043A\u0440\u0443\u0447\u0435\u043D\u043D\u044B\u0439. \u041D\u0430\u0439\u0434\u0438 \u0435\u043C\u0443 \u0432\u0435\u0440\u043D\u043E\u0435 \u043D\u0435\u0431\u043E."
+    },
+    {
+      id: "sp_59",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0411\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u0447\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_library_web.jpg",
+      rewards: [{ type: "coins", amount: 875 }],
+      intro: "\u041F\u043E\u0434\u0437\u0435\u043C\u043D\u0430\u044F \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430 \u0432\u044B\u0448\u0438\u0442\u0430 \u0434\u043B\u0438\u043D\u043D\u044B\u043C\u0438 \u043F\u043E\u043B\u043A\u0430\u043C\u0438. \u041A\u043D\u0438\u0433\u0438 \u043D\u0430 \u043D\u0438\u0445 \u0441\u0442\u043E\u044F\u0442 \u0438\u043B\u0438 \u043B\u0435\u0436\u0430\u0442 \u2014 \u0432\u0435\u0442\u0435\u0440 \u0432\u044B\u0431\u0440\u0430\u043B \u0432\u0442\u043E\u0440\u043E\u0435."
+    },
+    {
+      id: "sp_60",
+      world: "jade",
+      mechanic: "spin",
+      name: "\u041A\u043B\u0451\u043D \u0432 \u0432\u044B\u0448\u0438\u0432\u043A\u0435",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_maple_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 900 }, { type: "item", id: "rng_crit" }],
+      intro: "\u041A\u043B\u0435\u043D\u043E\u0432\u044B\u0439 \u043B\u0435\u0441 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u043B\u0438\u0441\u0442\u044C\u044F \u043F\u0430\u0434\u0430\u044E\u0442 \u0432\u043D\u0438\u0437, \u0441\u0442\u0432\u043E\u043B\u044B \u0440\u0430\u0441\u0442\u0443\u0442 \u0432\u0432\u0435\u0440\u0445. \u0417\u0430 \u0441\u0431\u043E\u0440\u043A\u0443 \u2014 \u043A\u043E\u043B\u044C\u0446\u043E \u0443\u0434\u0430\u0447\u0438."
+    },
+    // --- Глава 7. Панорамы (дебют 8×5, якоря по углам) ---
+    {
+      id: "sp_61",
+      world: "ash",
+      mechanic: "spin",
+      name: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438 \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_springs_web.jpg",
+      rewards: [{ type: "coins", amount: 915 }],
+      intro: "\u0413\u043E\u0440\u044F\u0447\u0438\u0435 \u0438\u0441\u0442\u043E\u0447\u043D\u0438\u043A\u0438 \u043F\u0430\u0440\u044F\u0442 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438. \u041F\u0430\u0440 \u2014 \u0447\u0435\u0441\u0442\u043D\u044B\u0439 \u043E\u0440\u0438\u0435\u043D\u0442\u0438\u0440: \u043E\u043D \u0432\u0441\u0435\u0433\u0434\u0430 \u043F\u043E\u0434\u043D\u0438\u043C\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "sp_62",
+      world: "cr",
+      mechanic: "spin",
+      name: "\u041B\u0435\u0434\u044F\u043D\u043E\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_icepalace_web.jpg",
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 930 }],
+      intro: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0432\u043E\u0441\u0435\u043C\u044C \u043D\u0430 \u043F\u044F\u0442\u044C \u2014 \u0441\u043E\u0440\u043E\u043A \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432. \u0423\u0433\u043B\u044B \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B \u043B\u0435\u0434\u044F\u043D\u044B\u043C\u0438 \u0433\u0432\u043E\u0437\u0434\u044F\u043C\u0438, \u0441\u0435\u0440\u0435\u0434\u0438\u043D\u0430 \u2014 \u0437\u0430 \u0442\u043E\u0431\u043E\u0439."
+    },
+    {
+      id: "sp_63",
+      world: "nm",
+      mechanic: "spin",
+      name: "\u041B\u0443\u043D\u043D\u0430\u044F \u0440\u043E\u0449\u0430 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_moongrove_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 945 }],
+      intro: "\u041B\u0443\u043D\u043D\u0430\u044F \u0440\u043E\u0449\u0430 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u041B\u0443\u043D\u0430 \u043D\u0430 \u043D\u0451\u043C \u0432\u0441\u0435\u0433\u0434\u0430 \u0432\u044B\u0448\u0435 \u0442\u0440\u0430\u0432\u044B \u2014 \u0434\u0430\u0436\u0435 \u043A\u043E\u0433\u0434\u0430 \u0432\u0435\u0442\u0435\u0440 \u0434\u0443\u043C\u0430\u0435\u0442 \u0438\u043D\u0430\u0447\u0435."
+    },
+    {
+      id: "sp_64",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u041F\u0447\u0435\u043B\u0438\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_apiary_web.jpg",
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 960 }],
+      intro: "\u0423\u043B\u0435\u0439 \u043D\u0430 \u043B\u0443\u0433\u0443 \u2014 \u0441\u043E\u0440\u043E\u043A \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432, \u0447\u0435\u0442\u044B\u0440\u0435 \u0433\u0432\u043E\u0437\u0434\u0438\u043A\u0430. \u041F\u0447\u0451\u043B\u044B \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u043B\u0435\u0442\u0430\u044E\u0442 \u0432\u0432\u0435\u0440\u0445, \u0441\u043E\u0442\u044B \u0442\u044F\u043D\u0443\u0442\u0441\u044F \u0432\u043D\u0438\u0437."
+    },
+    {
+      id: "sp_65",
+      world: "deep",
+      mechanic: "spin",
+      name: "\u041C\u0430\u044F\u043A \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_lighthouse_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 975 }],
+      intro: "\u041C\u0430\u044F\u043A \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u041B\u0443\u0447 \u0435\u0433\u043E \u0438 \u043F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u0442\u044B\u0439 \u0441\u0432\u0435\u0442\u0438\u0442, \u043D\u043E \u043A\u043E\u0440\u0430\u0431\u043B\u0438 \u0436\u0434\u0443\u0442 \u0432\u0435\u0440\u043D\u043E\u0433\u043E \u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u044F."
+    },
+    {
+      id: "sp_66",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u041E\u0447\u0430\u0433 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_hearth_web.jpg",
+      rewards: [{ type: "coins", amount: 990 }],
+      intro: "\u0414\u043E\u043C \u0443 \u043A\u0430\u043C\u0438\u043D\u0430 \u2014 \u0441\u0430\u043C\u044B\u0439 \u0443\u044E\u0442\u043D\u044B\u0439 \u0438\u0437 \u0431\u043E\u043B\u044C\u0448\u0438\u0445 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432. \u0414\u044B\u043C \u0438\u0437 \u0442\u0440\u0443\u0431\u044B \u043F\u043E\u0434\u0441\u043A\u0430\u0436\u0435\u0442 \u0432\u0435\u0440\u0445."
+    },
+    {
+      id: "sp_67",
+      world: "town",
+      mechanic: "spin",
+      name: "\u041F\u0435\u043A\u0430\u0440\u0441\u043A\u0438\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_bakery_web.jpg",
+      goldRim: false,
+      anchors: [0, 34],
+      rewards: [{ type: "coins", amount: 1005 }],
+      intro: "\u041F\u0435\u043A\u0430\u0440\u043D\u044F \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B, \u0441 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u043C\u0438 \u0443\u0433\u043B\u0430\u043C\u0438. \u0417\u0430\u043F\u0430\u0445\u0430 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u043D\u0435\u0442 \u2014 \u0434\u0435\u0440\u0436\u0438\u0441\u044C \u0437\u0430 \u0444\u043E\u0440\u043C\u0443 \u0445\u043B\u0435\u0431\u043E\u0432."
+    },
+    {
+      id: "sp_68",
+      world: "sw",
+      mechanic: "spin",
+      name: "\u0413\u0440\u0438\u0431\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_mushrooms_web.jpg",
+      rewards: [{ type: "coins", amount: 1020 }],
+      intro: "\u0413\u0440\u0438\u0431\u043D\u0430\u044F \u043F\u043E\u043B\u044F\u043D\u0430: \u0448\u043B\u044F\u043F\u043A\u0438 \u0432\u0432\u0435\u0440\u0445, \u043D\u043E\u0436\u043A\u0438 \u0432\u043D\u0438\u0437. \u0412\u0435\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043F\u0443\u0442\u0430\u043B \u0434\u0430\u0436\u0435 \u0442\u0435 \u0433\u0440\u0438\u0431\u044B, \u0447\u0442\u043E \u043D\u0435 \u0440\u0430\u0441\u0442\u0443\u0442."
+    },
+    {
+      id: "sp_69",
+      world: "jade",
+      mechanic: "spin",
+      name: "\u041E\u0440\u0430\u043D\u0436\u0435\u0440\u0435\u0439\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 5,
+      grid: [7, 5],
+      image: "assets/glass/glass_greenhouse_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1035 }],
+      intro: "\u041E\u0440\u0430\u043D\u0436\u0435\u0440\u0435\u044F \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u0440\u0430\u0441\u0442\u0435\u043D\u0438\u044F \u0442\u044F\u043D\u0443\u0442\u0441\u044F \u043A \u0441\u0442\u0435\u043A\u043B\u0443 \u043A\u0440\u044B\u0448\u0438. \u0412\u0435\u0440\u043D\u0438 \u0438\u043C \u0441\u043E\u043B\u043D\u0446\u0435."
+    },
+    {
+      id: "sp_70",
+      world: "cr",
+      mechanic: "spin",
+      name: "\u0412\u043E\u0434\u043E\u043F\u0430\u0434 \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_waterfall_web.jpg",
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1055 }, { type: "item", id: "pot_stone" }],
+      intro: "\u0412\u043E\u0434\u043E\u043F\u0430\u0434 \u2014 \u0441\u0430\u043C\u044B\u0439 \u0447\u0435\u0441\u0442\u043D\u044B\u0439 \u043E\u0440\u0438\u0435\u043D\u0442\u0438\u0440: \u0432\u043E\u0434\u0430 \u043F\u0430\u0434\u0430\u0435\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u0432\u043D\u0438\u0437. \u041F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u0435 \u0443\u0433\u043B\u044B \u043F\u043E\u043C\u043E\u0433\u0443\u0442. \u041D\u0430\u0433\u0440\u0430\u0434\u0430 \u2014 \u043D\u0430\u0441\u0442\u043E\u0439\u043A\u0430."
+    },
+    // --- Глава 8. Гвоздики и ветер (большие сетки, якоря и слепота вперемешку) ---
+    {
+      id: "sp_71",
+      world: "ash",
+      mechanic: "spin",
+      name: "\u0422\u044B\u043A\u0432\u0435\u043D\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_pumpkins_web.jpg",
+      rewards: [{ type: "coins", amount: 1070 }],
+      intro: "\u0422\u044B\u043A\u0432\u0435\u043D\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u043A \u043E\u0441\u0435\u043D\u043D\u0435\u043C\u0443 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0443. \u0422\u044B\u043A\u0432\u044B \u043B\u0435\u0436\u0430\u0442 \u043D\u0430 \u0437\u0435\u043C\u043B\u0435 \u2014 \u0442\u0430\u043A \u0437\u0430\u0434\u0443\u043C\u0430\u043D\u043E, \u0432\u0441\u0451 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435 \u2014 \u0432\u0435\u0442\u0435\u0440."
+    },
+    {
+      id: "sp_72",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u041F\u043E\u0434\u0441\u043D\u0435\u0436\u043D\u0438\u043A\u0438 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_snowdrops_web.jpg",
+      goldRim: false,
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 1085 }],
+      intro: "\u041F\u043E\u0434\u0441\u043D\u0435\u0436\u043D\u0438\u043A\u0438 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B, \u0443\u0433\u043B\u044B \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B. \u0426\u0432\u0435\u0442\u044B \u043A\u043B\u0430\u043D\u044F\u044E\u0442\u0441\u044F, \u043D\u043E \u043D\u0435 \u043F\u0430\u0434\u0430\u044E\u0442 \u2014 \u043D\u0430\u0439\u0434\u0438 \u0438\u043C \u0432\u0435\u0440\u043D\u043E\u0435 \u043F\u043E\u043B\u043E\u0436\u0435\u043D\u0438\u0435."
+    },
+    {
+      id: "sp_73",
+      world: "sf",
+      mechanic: "spin",
+      name: "\u041A\u043E\u0440\u0430\u0431\u043B\u044C \u0432 \u043E\u0431\u043B\u0430\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_skyship_web.jpg",
+      rewards: [{ type: "coins", amount: 1100 }],
+      intro: "\u041D\u0435\u0431\u0435\u0441\u043D\u044B\u0439 \u043A\u043E\u0440\u0430\u0431\u043B\u044C \u043D\u0430 \u0442\u043A\u0430\u043D\u0438. \u041E\u0431\u043B\u0430\u043A\u0430 \u0441\u043D\u0438\u0437\u0443, \u0437\u0432\u0451\u0437\u0434\u044B \u0441\u0432\u0435\u0440\u0445\u0443 \u2014 \u0438 \u0441\u043E\u0440\u043E\u043A \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u043C\u0435\u0436\u0434\u0443 \u043D\u0438\u043C\u0438."
+    },
+    {
+      id: "sp_74",
+      world: "clockwork",
+      mechanic: "spin",
+      name: "\u0421\u0442\u0430\u043D\u0446\u0438\u044F \u0432 \u0432\u044B\u0448\u0438\u0432\u043A\u0435",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_station_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1115 }],
+      intro: "\u0427\u0430\u0441\u043E\u0432\u0430\u044F \u0441\u0442\u0430\u043D\u0446\u0438\u044F \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0421\u0442\u0440\u0435\u043B\u043A\u0438, \u0442\u0440\u0443\u0431\u044B \u0438 \u043F\u0435\u0440\u0440\u043E\u043D\u044B \u2014 \u0432\u0441\u0435 \u043F\u043E\u0434\u0430\u044E\u0442 \u0437\u043D\u0430\u043A\u0438. \u0427\u0438\u0442\u0430\u0439 \u0438\u0445 \u0432\u043D\u0438\u043C\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+    },
+    {
+      id: "sp_75",
+      world: "nm",
+      mechanic: "spin",
+      name: "\u0421\u043F\u0435\u0446\u0438\u0438 \u0432 \u0443\u0437\u043E\u0440\u0435",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_spices_web.jpg",
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 1135 }, { type: "seals", amount: 1 }],
+      intro: "\u041B\u0430\u0432\u043A\u0430 \u0441\u043F\u0435\u0446\u0438\u0439 \u0432\u044B\u0448\u0438\u0442\u0430 \u044F\u0440\u043A\u043E: \u0433\u043E\u0440\u043A\u0438 \u043A\u043E\u0440\u0438\u0446\u044B \u0438 \u0448\u0430\u0444\u0440\u0430\u043D\u0430 \u043B\u0435\u0436\u0430\u0442 \u0433\u043E\u0440\u043A\u043E\u0439 \u0432\u0432\u0435\u0440\u0445. \u041F\u0435\u0447\u0430\u0442\u044C \u0437\u0430 \u0441\u0431\u043E\u0440\u043A\u0443 \u2014 \u043A\u0430\u043A \u043F\u043E\u043B\u043E\u0436\u0435\u043D\u043E \u043D\u0430 \u044E\u0431\u0438\u043B\u0435\u0435."
+    },
+    {
+      id: "sp_76",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0413\u043D\u0435\u0437\u0434\u043E \u0441\u043E\u0432\u044B \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_owlnest_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1150 }],
+      intro: "\u0421\u043E\u0432\u0438\u043D\u043E\u0435 \u0433\u043D\u0435\u0437\u0434\u043E \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0421\u043E\u0432\u0430 \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u0441\u0438\u0434\u0438\u0442 \u0432\u0435\u0440\u0442\u0438\u043A\u0430\u043B\u044C\u043D\u043E, \u0434\u0430\u0436\u0435 \u0435\u0441\u043B\u0438 \u0432\u0435\u0442\u0435\u0440 \u0441\u0447\u0438\u0442\u0430\u0435\u0442 \u0438\u043D\u0430\u0447\u0435."
+    },
+    {
+      id: "sp_77",
+      world: "deep",
+      mechanic: "spin",
+      name: "\u041A\u043E\u0440\u0430\u043B\u043B\u044B \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_coral_web.jpg",
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1165 }],
+      intro: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0440\u0438\u0444 \u0441 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u043C\u0438 \u043A\u0440\u0430\u044F\u043C\u0438. \u041A\u043E\u0440\u0430\u043B\u043B\u044B \u0440\u0430\u0441\u0442\u0443\u0442 \u0438\u0437 \u0434\u043D\u0430 \u2014 \u0434\u0430\u0436\u0435 \u0432\u044B\u0448\u0438\u0442\u044B\u0435."
+    },
+    {
+      id: "sp_78",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u0423\u0440\u043E\u0436\u0430\u0439\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_harvest_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1180 }],
+      intro: "\u0416\u0430\u0442\u0432\u0430 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u0441\u043D\u043E\u043F\u044B \u0441\u0442\u043E\u044F\u0442, \u043A\u043E\u043B\u043E\u0441\u044C\u044F \u043A\u043B\u043E\u043D\u044F\u0442\u0441\u044F. \u0421\u043E\u0431\u0435\u0440\u0438 \u043F\u043E\u043B\u0435 \u0434\u043E \u0434\u043E\u0436\u0434\u044F."
+    },
+    {
+      id: "sp_79",
+      world: "ash",
+      mechanic: "spin",
+      name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_ashes_web.jpg",
+      rewards: [{ type: "coins", amount: 1195 }],
+      intro: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u0441\u0443\u0440\u043E\u0432: \u0443\u0433\u043B\u0438 \u0442\u043B\u0435\u044E\u0442 \u0432\u043D\u0438\u0437\u0443, \u0434\u044B\u043C \u0443\u0445\u043E\u0434\u0438\u0442 \u0432\u0432\u0435\u0440\u0445. \u0421\u043E\u0440\u043E\u043A \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u043F\u043E\u0440\u044F\u0434\u043A\u0430."
+    },
+    {
+      id: "sp_80",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_attic2_web.jpg",
+      goldRim: false,
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1215 }, { type: "item", id: "scr_storm" }],
+      intro: "\u0412\u0442\u043E\u0440\u043E\u0439 \u0447\u0435\u0440\u0434\u0430\u043A \u043B\u0430\u0432\u043A\u0438 \u2014 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B, \u0441 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u043C\u0438 \u0443\u0433\u043B\u0430\u043C\u0438. \u0412\u043E\u0441\u0435\u043C\u044C\u0434\u0435\u0441\u044F\u0442 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432 \u043F\u043E\u0437\u0430\u0434\u0438: \u043D\u0430\u0433\u0440\u0430\u0434\u0430 \u2014 \u0441\u0432\u0438\u0442\u043E\u043A \u0431\u0443\u0440\u0438."
+    },
+    // --- Глава 9. Восемь на пять (все сетки максимальные, 40 лоскутов) ---
+    {
+      id: "sp_81",
+      world: "fate",
+      mechanic: "spin",
+      name: "\u0421\u0442\u043E\u043B \u0433\u0430\u0434\u0430\u043B\u043A\u0438",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/fate/fate_table_web.jpg",
+      rewards: [{ type: "coins", amount: 1230 }],
+      intro: "\u0413\u0430\u0434\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u043E\u043B \u0432 \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0440\u0430\u0441\u043A\u0440\u043E\u0439\u043A\u0435. \u041A\u0430\u0440\u0442\u044B \u043B\u0435\u0436\u0430\u0442 \u0440\u0443\u0431\u0430\u0448\u043A\u043E\u0439 \u0432\u0432\u0435\u0440\u0445 \u2014 \u0432\u0441\u0435, \u0440\u0430\u0437\u043E\u043C, \u043F\u043E \u0447\u0430\u0441\u043E\u0432\u043E\u0439."
+    },
+    {
+      id: "sp_82",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0434\u0435\u043D\u044C \u0432 \u0432\u044B\u0448\u0438\u0432\u043A\u0435",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_firstday_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1245 }],
+      intro: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0434\u0435\u043D\u044C \u043B\u0430\u0432\u043A\u0438 \u2014 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0423\u0442\u0440\u043E \u043D\u0430 \u0442\u043A\u0430\u043D\u0438 \u0441\u0432\u0435\u0442\u043B\u0435\u0435\u0442 \u0441\u0432\u0435\u0440\u0445\u0443; \u043F\u0443\u0441\u0442\u044C \u0442\u0430\u043A \u0438 \u043E\u0441\u0442\u0430\u043D\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "sp_83",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0420\u044F\u0434 \u0442\u043E\u0440\u0433\u043E\u0432\u0446\u0430 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_row_web.jpg",
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 1260 }],
+      intro: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u0440\u044F\u0434 \u0441 \u0447\u0435\u0442\u044B\u0440\u044C\u043C\u044F \u0433\u0432\u043E\u0437\u0434\u0438\u043A\u0430\u043C\u0438. \u041B\u043E\u0442\u043A\u0438 \u0441\u0442\u043E\u044F\u0442 \u043D\u0430 \u0437\u0435\u043C\u043B\u0435, \u0444\u043B\u0430\u0433\u0438 \u0440\u0435\u044E\u0442 \u0441\u0432\u0435\u0440\u0445\u0443 \u2014 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435 \u043A\u0440\u0443\u0442\u0438."
+    },
+    {
+      id: "sp_84",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u0422\u0440\u043E\u0444\u0435\u0438 \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_trophies_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1275 }],
+      intro: "\u0412\u0441\u0435 \u0442\u0440\u043E\u0444\u0435\u0438 \u043D\u0430 \u043E\u0434\u043D\u043E\u043C \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0435 \u2014 \u0438 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u041F\u043E\u043B\u043A\u0438 \u0433\u043E\u0440\u0438\u0437\u043E\u043D\u0442\u0430\u043B\u044C\u043D\u044B, \u043A\u0443\u0431\u043A\u0438 \u0441\u0442\u043E\u044F\u0442. \u041F\u043E\u0440\u044F\u0434\u043E\u043A, \u043A\u0430\u043A \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435."
+    },
+    {
+      id: "sp_85",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u0427\u0430\u0439 \u043D\u0430 \u0437\u0430\u0440\u0435",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_tea_dawn_web.jpg",
+      rewards: [{ type: "coins", amount: 1290 }],
+      intro: "\u0417\u0430\u0440\u0435\u0432\u043E\u0439 \u0447\u0430\u0439\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D: \u043D\u0435\u0431\u043E \u0440\u043E\u0437\u043E\u0432\u0435\u0435\u0442 \u0441\u0432\u0435\u0440\u0445\u0443, \u0441\u0442\u043E\u043B \u0441\u0442\u043E\u0438\u0442 \u0441\u043D\u0438\u0437\u0443. \u0421\u043E\u0440\u043E\u043A \u043B\u043E\u0441\u043A\u0443\u0442\u043E\u0432 \u0442\u0438\u0448\u0438\u043D\u044B."
+    },
+    {
+      id: "sp_86",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u041F\u043E\u043B\u0434\u043D\u0438\u043A \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_tea_noon_web.jpg",
+      goldRim: false,
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1305 }],
+      intro: "\u041F\u043E\u043B\u0434\u043D\u0438\u043A \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B, \u043A\u0440\u0430\u044F \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B. \u0421\u043E\u043B\u043D\u0446\u0435 \u0432 \u0437\u0435\u043D\u0438\u0442\u0435 \u2014 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u043E\u0435 \u043D\u0430\u0439\u0434\u0451\u0442\u0441\u044F \u043F\u043E \u0442\u0435\u043D\u044F\u043C."
+    },
+    {
+      id: "sp_87",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0447\u0430\u0439",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_tea_night_web.jpg",
+      rewards: [{ type: "coins", amount: 1320 }],
+      intro: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0447\u0430\u0439\u043D\u044B\u0439 \u0441\u0442\u043E\u043B \u0432\u044B\u0448\u0438\u0442 \u0442\u0451\u043C\u043D\u044B\u043C\u0438 \u043D\u0438\u0442\u044F\u043C\u0438. \u0421\u0432\u0435\u0447\u0430 \u043D\u0430 \u043D\u0451\u043C \u0433\u043E\u0440\u0438\u0442 \u0432\u0432\u0435\u0440\u0445, \u0434\u0430\u0436\u0435 \u043A\u043E\u0433\u0434\u0430 \u0432\u0441\u0451 \u043F\u0435\u0440\u0435\u043A\u0440\u0443\u0447\u0435\u043D\u043E."
+    },
+    {
+      id: "sp_88",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0427\u0435\u0440\u0434\u0430\u0447\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/battle/battle_bg_attic_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1335 }],
+      intro: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A \u0438\u0437 \u0431\u043E\u0435\u0432\u044B\u0445 \u0445\u0440\u043E\u043D\u0438\u043A \u2014 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0421\u0443\u043D\u0434\u0443\u043A\u0438 \u0441\u0442\u043E\u044F\u0442 \u043D\u0430 \u043F\u043E\u043B\u0443, \u043F\u0430\u0443\u0442\u0438\u043D\u0430 \u0432\u0438\u0441\u0438\u0442 \u0441\u0432\u0435\u0440\u0445\u0443."
+    },
+    {
+      id: "sp_89",
+      world: "crossroads",
+      mechanic: "spin",
+      name: "\u041F\u0435\u0440\u0435\u043F\u0443\u0442\u044C\u0435 \u0432 \u0441\u0442\u0435\u0436\u043A\u0430\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/battle/battle_bg_crossroads_web.jpg",
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1350 }],
+      intro: "\u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A \u0432\u0441\u0435\u0445 \u0434\u043E\u0440\u043E\u0433 \u0441 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u043C\u0438 \u043A\u0440\u0430\u044F\u043C\u0438. \u0423\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u0438 \u0441\u043C\u043E\u0442\u0440\u044F\u0442 \u0432 \u0441\u0432\u043E\u0438 \u0441\u0442\u043E\u0440\u043E\u043D\u044B \u2014 \u0432\u0435\u0440\u043D\u0438 \u0438\u043C \u0441\u043C\u044B\u0441\u043B."
+    },
+    {
+      id: "sp_90",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0417\u0430\u0431\u044B\u0442\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/seek/seek_attic_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1370 }, { type: "seals", amount: 1 }],
+      intro: "\u0427\u0435\u0440\u0434\u0430\u043A \u0438\u0441\u043A\u0430\u043B\u043E\u043A \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B: \u0442\u0443\u0442 \u043A\u0430\u0436\u0434\u0430\u044F \u0432\u0435\u0449\u044C \u2014 \u043E\u0440\u0438\u0435\u043D\u0442\u0438\u0440. \u0414\u0435\u0432\u044F\u0442\u0430\u044F \u0433\u043B\u0430\u0432\u0430 \u0437\u0430\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u0435\u0447\u0430\u0442\u044C\u044E."
+    },
+    // --- Глава 10. Все ветра (финал: слепые 8×5, якоря, лучшие сцены) ---
+    {
+      id: "sp_91",
+      world: "attic",
+      mechanic: "spin",
+      name: "\u0421\u0443\u043D\u0434\u0443\u0447\u043D\u044B\u0439 \u0443\u0437\u043E\u0440",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/seek/seek_attic2_web.jpg",
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1385 }],
+      intro: "\u0421\u0443\u043D\u0434\u0443\u043A\u0438 \u0438 \u0440\u0430\u043C\u044B \u0434\u0430\u043B\u044C\u043D\u0435\u0433\u043E \u0447\u0435\u0440\u0434\u0430\u043A\u0430. \u041A\u0440\u0430\u044F \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B \u2014 \u043A\u0440\u044B\u0448\u043A\u0438 \u0441\u0443\u043D\u0434\u0443\u043A\u043E\u0432 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u044E\u0442\u0441\u044F \u0432\u0432\u0435\u0440\u0445, \u0437\u0430\u043F\u043E\u043C\u043D\u0438."
+    },
+    {
+      id: "sp_92",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u041B\u0430\u0432\u043A\u0430 \u0432 \u043D\u043E\u0432\u044B\u0445 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_shop_web.jpg",
+      rewards: [{ type: "coins", amount: 1400 }],
+      intro: "\u0421\u0435\u0440\u0434\u0446\u0435 \u043B\u0430\u0432\u043A\u0438 \u0432 \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0440\u0430\u0441\u043A\u0440\u043E\u0439\u043A\u0435 \u2014 \u0442\u043E\u0442 \u0441\u0430\u043C\u044B\u0439 \u0432\u0438\u0434, \u043D\u043E \u0448\u0438\u0440\u0435. \u041F\u043E\u043B\u043A\u0438 \u0441\u0442\u043E\u044F\u0442, \u0444\u043E\u043D\u0430\u0440\u0438 \u0432\u0438\u0441\u044F\u0442, \u043A\u043E\u0442 \u0434\u043E\u0432\u043E\u043B\u0435\u043D."
+    },
+    {
+      id: "sp_93",
+      world: "brew",
+      mechanic: "spin",
+      name: "\u0420\u0435\u0446\u0435\u043F\u0442\u044B \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_recipes_web.jpg",
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 1415 }],
+      intro: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432 \u0432 \u0432\u044B\u0448\u0438\u0432\u043A\u0435, \u0447\u0435\u0442\u044B\u0440\u0435 \u0433\u0432\u043E\u0437\u0434\u0438\u043A\u0430 \u043F\u043E \u0443\u0433\u043B\u0430\u043C. \u0421\u0442\u0440\u043E\u043A\u0438 \u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F \u0441\u043B\u0435\u0432\u0430 \u043D\u0430\u043F\u0440\u0430\u0432\u043E \u0438 \u0441\u0432\u0435\u0440\u0445\u0443 \u0432\u043D\u0438\u0437."
+    },
+    {
+      id: "sp_94",
+      world: "sf",
+      mechanic: "spin",
+      name: "\u042F\u0440\u043C\u0430\u0440\u043A\u0430 \u043F\u043E\u0434 \u0437\u0432\u0451\u0437\u0434\u0430\u043C\u0438",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_starfair_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1430 }],
+      intro: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u041A\u043E\u043C\u0435\u0442\u044B \u043F\u0430\u0434\u0430\u044E\u0442 \u0432\u043D\u0438\u0437, \u0444\u043B\u0430\u0433\u0438 \u0442\u044F\u043D\u0443\u0442\u0441\u044F \u0432\u0432\u0435\u0440\u0445 \u2014 \u0432\u043E\u0442 \u0438 \u0432\u0441\u044F \u043D\u0430\u0443\u043A\u0430."
+    },
+    {
+      id: "sp_95",
+      world: "town",
+      mechanic: "spin",
+      name: "\u0411\u0435\u043B\u0430\u044F \u0432\u044B\u0448\u0438\u0432\u043A\u0430",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_winter_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1445 }],
+      intro: "\u0417\u0438\u043C\u0430 \u0432 \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0440\u0430\u0441\u043A\u0440\u043E\u0439\u043A\u0435 \u2014 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u0421\u0443\u0433\u0440\u043E\u0431\u044B \u043B\u0435\u0436\u0430\u0442, \u0451\u043B\u043A\u0438 \u0441\u0442\u043E\u044F\u0442, \u0434\u044B\u043C\u043E\u043A \u0438\u0437 \u0442\u0440\u0443\u0431\u044B \u043F\u043E\u0434\u043D\u0438\u043C\u0430\u0435\u0442\u0441\u044F."
+    },
+    {
+      id: "sp_96",
+      world: "tea",
+      mechanic: "spin",
+      name: "\u0427\u0430\u0439\u043D\u044B\u0439 \u043F\u0440\u0438\u0451\u043C",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_teatable_web.jpg",
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1460 }],
+      intro: "\u0411\u043E\u043B\u044C\u0448\u043E\u0439 \u0447\u0430\u0439\u043D\u044B\u0439 \u0441\u0442\u043E\u043B \u0441 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u043D\u044B\u043C\u0438 \u043A\u0440\u0430\u044F\u043C\u0438. \u0427\u0430\u0448\u043A\u0438 \u043D\u0430 \u0431\u043B\u044E\u0434\u0446\u0430\u0445, \u043F\u0430\u0440 \u043D\u0430\u0434 \u043D\u0438\u043C\u0438 \u2014 \u0432\u0435\u0440\u043D\u0438 \u0437\u0430\u0441\u0442\u043E\u043B\u044C\u044E \u043F\u043E\u0440\u044F\u0434\u043E\u043A."
+    },
+    {
+      id: "sp_97",
+      world: "meadow",
+      mechanic: "spin",
+      name: "\u0416\u0430\u0442\u0432\u0430 \u0432 \u043D\u0438\u0442\u044F\u0445",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_harvest_web.jpg",
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 1475 }],
+      intro: "\u0423\u0440\u043E\u0436\u0430\u0439\u043D\u043E\u0435 \u043F\u043E\u043B\u0435 \u0441 \u0447\u0435\u0442\u044B\u0440\u044C\u043C\u044F \u0433\u0432\u043E\u0437\u0434\u0438\u043A\u0430\u043C\u0438. \u0421\u043D\u043E\u043F\u044B \u0441\u0442\u043E\u044F\u0442 \u0440\u043E\u0432\u043D\u043E, \u043D\u0435\u0431\u043E \u0441\u0432\u0435\u0440\u0445\u0443 \u2014 \u043A\u0430\u043A \u0438 \u043F\u043E\u043B\u043E\u0436\u0435\u043D\u043E \u043F\u0435\u0440\u0435\u0434 \u0434\u043E\u0436\u0434\u0451\u043C."
+    },
+    {
+      id: "sp_98",
+      world: "nm",
+      mechanic: "spin",
+      name: "\u041F\u043E\u043B\u043D\u0430\u044F \u043B\u0443\u043D\u043D\u0430\u044F \u0440\u043E\u0449\u0430",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_moongrove_web.jpg",
+      goldRim: false,
+      rewards: [{ type: "coins", amount: 1490 }],
+      intro: "\u041B\u0443\u043D\u043D\u0430\u044F \u0440\u043E\u0449\u0430 \u0432 \u043F\u043E\u043B\u043D\u043E\u043C \u0440\u0430\u0437\u043C\u0435\u0440\u0435 \u2014 \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B. \u041B\u0443\u043D\u0430 \u0432\u044B\u0441\u043E\u043A\u043E, \u0442\u0440\u0430\u0432\u044B \u043D\u0438\u0437\u043A\u043E, \u0432\u0441\u0451 \u043C\u0435\u0436\u0434\u0443 \u043D\u0438\u043C\u0438 \u2014 \u0442\u0432\u043E\u044F \u0440\u0430\u0431\u043E\u0442\u0430."
+    },
+    {
+      id: "sp_99",
+      world: "shop",
+      mechanic: "spin",
+      name: "\u0412\u0441\u0435 \u0442\u0440\u043E\u0444\u0435\u0438",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/hub/trophy_room_web.jpg",
+      goldRim: false,
+      anchors: [0, 39],
+      rewards: [{ type: "coins", amount: 1505 }],
+      intro: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432 \u0432 \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u0440\u0430\u0441\u043A\u0440\u043E\u0439\u043A\u0435: \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B, \u043A\u0440\u0430\u044F \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D\u044B. \u041F\u043E\u0447\u0442\u0438 \u0444\u0438\u043D\u0430\u043B \u2014 \u043A\u043E\u0442 \u0443\u0436\u0435 \u043C\u0443\u0440\u043B\u044B\u0447\u0435\u0442."
+    },
+    {
+      id: "sp_100",
+      world: "crossroads",
+      mechanic: "spin",
+      name: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0432\u0441\u0435\u0445 \u0432\u0435\u0442\u0440\u043E\u0432",
+      difficulty: 5,
+      grid: [8, 5],
+      image: "assets/glass/glass_crossroads_web.jpg",
+      goldRim: false,
+      anchors: [0, 7, 32, 39],
+      rewards: [{ type: "coins", amount: 1550 }, { type: "seals", amount: 3 }, { type: "item", id: "amu_hearth" }],
+      intro: "\u0413\u043B\u0430\u0432\u043D\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u043B\u0430\u0432\u043A\u0438: \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A \u0432\u0441\u0435\u0445 \u043C\u0438\u0440\u043E\u0432 \u0432 \u0441\u043E\u0440\u043E\u043A\u0430 \u043B\u043E\u0441\u043A\u0443\u0442\u0430\u0445, \u0431\u0435\u0437 \u043A\u0430\u0439\u043C\u044B, \u043D\u0430 \u0447\u0435\u0442\u044B\u0440\u0451\u0445 \u0433\u0432\u043E\u0437\u0434\u0438\u043A\u0430\u0445. \u0412\u0435\u0442\u0440\u0430 \u043A\u0440\u0443\u0442\u0438\u043B\u0438 \u0435\u0433\u043E \u0433\u043E\u0434\u0430\u043C\u0438 \u2014 \u0432\u0435\u0440\u043D\u0438 \u0435\u043C\u0443 \u043F\u043E\u043A\u043E\u0439. \u0421\u043E\u0442\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D."
+    }
+  ];
+
   // src/data/puzzlesGift.js
   var SOUVENIRS = {
     souv_scarf: { id: "souv_scarf", name: "\u0428\u0430\u0440\u0444 \u043C\u0451\u0434\u043E\u0432\u043E\u0439 \u0448\u0435\u0440\u0441\u0442\u0438", icon: "\u{1F9E3}", tags: ["\u0442\u0451\u043F\u043B\u044B\u0439", "\u0442\u043A\u0430\u043D\u044C", "\u0434\u043E\u043C\u0430\u0448\u043D\u0438\u0439"], desc: "\u041C\u044F\u0433\u043A\u0438\u0439 \u0448\u0430\u0440\u0444 \u0446\u0432\u0435\u0442\u0430 \u043C\u0451\u0434\u0430. \u041F\u0430\u0445\u043D\u0435\u0442 \u0443\u043B\u044C\u0435\u043C \u0438 \u0447\u044C\u0435\u0439-\u0442\u043E \u0437\u0430\u0431\u043E\u0442\u043E\u0439." },
@@ -17719,6 +18899,7 @@
     "brew",
     "fate",
     "glass",
+    "spin",
     "gift"
   ];
   var STORY_GUESTS = [
@@ -17853,6 +19034,10 @@
     glass: [
       "\u0412\u0438\u0442\u0440\u0430\u0436 \u0440\u0430\u0437\u0431\u0438\u043B\u0441\u044F \u043D\u0430 \u043E\u0441\u043A\u043E\u043B\u043A\u0438. \u0421\u043E\u0431\u0435\u0440\u0438 \u043A\u0430\u0440\u0442\u0438\u043D\u0443 \u043C\u0438\u0440\u0430 \u0437\u0430\u043D\u043E\u0432\u043E \u2014 \u043A\u0443\u0441\u043E\u0447\u0435\u043A \u043A \u043A\u0443\u0441\u043E\u0447\u043A\u0443.",
       "\u041E\u043A\u043D\u043E \u043C\u0438\u0440\u0430 \u0440\u0430\u0437\u043B\u0435\u0442\u0435\u043B\u043E\u0441\u044C \u043E\u0441\u043A\u043E\u043B\u043A\u0430\u043C\u0438. \u0421\u043B\u043E\u0436\u0438 \u0435\u0433\u043E, \u043A\u0430\u043A \u0431\u044B\u043B\u043E, \u2014 \u0438\u043B\u0438 \u0435\u0449\u0451 \u043A\u0440\u0430\u0441\u0438\u0432\u0435\u0435."
+    ],
+    spin: [
+      "\u0421\u043A\u0432\u043E\u0437\u043D\u044F\u043A \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u043B \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0430. \u041F\u043E\u043A\u0440\u0443\u0442\u0438 \u043A\u0430\u0436\u0434\u044B\u0439 \u043F\u043E \u0447\u0430\u0441\u043E\u0432\u043E\u0439, \u043F\u043E\u043A\u0430 \u0443\u0437\u043E\u0440 \u043D\u0435 \u0441\u043E\u0439\u0434\u0451\u0442\u0441\u044F.",
+      "\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u043D\u0430 \u0441\u0442\u0435\u043D\u0435 \u043F\u0435\u0440\u0435\u043A\u043E\u0441\u0438\u043B\u043E \u0432\u0435\u0442\u0440\u043E\u043C. \u0412\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u043D\u0430 \u043C\u0435\u0441\u0442\u043E \u2014 \u043E\u043D \u0441\u043D\u043E\u0432\u0430 \u0437\u0430\u0434\u044B\u0448\u0438\u0442."
     ],
     gift: [
       "\u0418\u0449\u0443 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u0434\u043E\u0440\u043E\u0433\u043E\u043C\u0443 \u0447\u0435\u043B\u043E\u0432\u0435\u043A\u0443. \u0421\u043B\u0443\u0448\u0430\u0439 \u043C\u043E\u044E \u0438\u0441\u0442\u043E\u0440\u0438\u044E \u2014 \u0443\u0441\u043B\u043E\u0432\u0438\u044F \u0441\u043F\u0440\u044F\u0442\u0430\u043D\u044B \u0432 \u043D\u0435\u0439.",
@@ -18798,6 +19983,7 @@
       ...BREW_PUZZLES,
       ...FATE_PUZZLES,
       ...GLASS_PUZZLES,
+      ...SPIN_PUZZLES,
       ...GIFT_PUZZLES
     ].map((p) => [p.id, p])
   );
@@ -19272,6 +20458,117 @@
     "gl_56",
     "gl_57",
     "gl_58",
+    // Гобелены ветров: сквозняк повернул лоскуты — крути каждый по часовой.
+    // Глава 1: первые сквозняки (якоря — с sp_05, слепые — с sp_09)
+    "sp_01",
+    "sp_02",
+    "sp_03",
+    "sp_04",
+    "sp_05",
+    "sp_06",
+    "sp_07",
+    "sp_08",
+    "sp_09",
+    "sp_10",
+    // Глава 2: по миру за ветром (панорамы двенадцати миров)
+    "sp_11",
+    "sp_12",
+    "sp_13",
+    "sp_14",
+    "sp_15",
+    "sp_16",
+    "sp_17",
+    "sp_18",
+    "sp_19",
+    "sp_20",
+    // Глава 3: сторис-искалки (сцены поиска предметов)
+    "sp_21",
+    "sp_22",
+    "sp_23",
+    "sp_24",
+    "sp_25",
+    "sp_26",
+    "sp_27",
+    "sp_28",
+    "sp_29",
+    "sp_30",
+    // Глава 4: лавка и чайный стол
+    "sp_31",
+    "sp_32",
+    "sp_33",
+    "sp_34",
+    "sp_35",
+    "sp_36",
+    "sp_37",
+    "sp_38",
+    "sp_39",
+    "sp_40",
+    // Глава 5: вторая вышивка (витражные сцены в новой раскройке)
+    "sp_41",
+    "sp_42",
+    "sp_43",
+    "sp_44",
+    "sp_45",
+    "sp_46",
+    "sp_47",
+    "sp_48",
+    "sp_49",
+    "sp_50",
+    // Глава 6: тёмная половина (слепые через одного)
+    "sp_51",
+    "sp_52",
+    "sp_53",
+    "sp_54",
+    "sp_55",
+    "sp_56",
+    "sp_57",
+    "sp_58",
+    "sp_59",
+    "sp_60",
+    // Глава 7: панорамы (дебют 8×5)
+    "sp_61",
+    "sp_62",
+    "sp_63",
+    "sp_64",
+    "sp_65",
+    "sp_66",
+    "sp_67",
+    "sp_68",
+    "sp_69",
+    "sp_70",
+    // Глава 8: гвоздики и ветер
+    "sp_71",
+    "sp_72",
+    "sp_73",
+    "sp_74",
+    "sp_75",
+    "sp_76",
+    "sp_77",
+    "sp_78",
+    "sp_79",
+    "sp_80",
+    // Глава 9: восемь на пять
+    "sp_81",
+    "sp_82",
+    "sp_83",
+    "sp_84",
+    "sp_85",
+    "sp_86",
+    "sp_87",
+    "sp_88",
+    "sp_89",
+    "sp_90",
+    // Глава 10: все ветра (финал — слепой гобелен на четырёх гвоздиках)
+    "sp_91",
+    "sp_92",
+    "sp_93",
+    "sp_94",
+    "sp_95",
+    "sp_96",
+    "sp_97",
+    "sp_98",
+    "sp_99",
+    "sp_100",
     // Карты судьбы: вторая дюжина гостей (мельник, швея, пчеловод… хозяин лавки)
     "fate_13",
     "fate_14",
@@ -20097,6 +21394,7 @@
     brew: { hotspot: [16, 4], name: "\u041A\u043E\u043B\u0431\u0430", icon: "\u2697\uFE0F" },
     fate: { hotspot: [6, 4], name: "\u041A\u0430\u0440\u0442\u0430 \u0441\u0443\u0434\u044C\u0431\u044B", icon: "\u{1F52E}" },
     glass: { hotspot: [16, 4], name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0432\u0438\u0442\u0440\u0430\u0436\u0430", icon: "\u{1FA9F}" },
+    spin: { hotspot: [10, 6], name: "\u041B\u043E\u0441\u043A\u0443\u0442 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0430", icon: "\u{1F5BC}\uFE0F" },
     gift: { hotspot: [8, 8], name: "\u041F\u043E\u0434\u0430\u0440\u043E\u0447\u043D\u044B\u0439 \u0441\u0432\u0451\u0440\u0442\u043E\u043A", icon: "\u{1F381}" },
     battle: { hotspot: [4, 4], name: "\u041C\u0435\u0447 \u0440\u044B\u0446\u0430\u0440\u044F", icon: "\u2694\uFE0F" },
     equip: { hotspot: [16, 6], name: "\u0428\u043B\u0435\u043C \u0440\u044B\u0446\u0430\u0440\u044F", icon: "\u{1FA96}" },
@@ -26776,6 +28074,467 @@
     };
   }
 
+  // src/core/spinPuzzle.js
+  function shuffledRots(total, anchors, seed) {
+    const rng = makeRng(seed);
+    const free = [];
+    for (let cell = 0; cell < total; cell++) if (!anchors.has(cell)) free.push(cell);
+    for (let attempt = 0; attempt < 30; attempt++) {
+      const rot = Array.from({ length: total }, () => 0);
+      for (const cell of free) rot[cell] = rng.int(0, 3);
+      const twisted = free.filter((c) => rot[c] !== 0).length;
+      if (twisted >= Math.max(1, Math.ceil(free.length * 0.6))) return rot;
+    }
+    return Array.from({ length: total }, (_, cell) => anchors.has(cell) ? 0 : 1);
+  }
+  function createSpinPuzzle(level) {
+    const [cols, rows] = level.grid;
+    const total = cols * rows;
+    const anchors = new Set(level.anchors || []);
+    const initial = shuffledRots(total, anchors, level.seed ?? hashSeed(level.id));
+    return {
+      level,
+      anchors,
+      initial,
+      rot: [...initial],
+      history: [],
+      // стек ходов (индексы клеток) для отмены
+      moves: 0
+    };
+  }
+  function rotatePiece(state2, cell) {
+    const total = state2.level.grid[0] * state2.level.grid[1];
+    if (cell < 0 || cell >= total || state2.anchors.has(cell)) return false;
+    state2.history.push(cell);
+    state2.rot[cell] = (state2.rot[cell] + 1) % 4;
+    state2.moves += 1;
+    return true;
+  }
+  function undoSpin(state2) {
+    const last = state2.history.pop();
+    if (last === void 0) return false;
+    state2.rot[last] = (state2.rot[last] + 3) % 4;
+    state2.moves += 1;
+    return true;
+  }
+  function resetSpin(state2) {
+    state2.rot = [...state2.initial];
+    state2.history = [];
+    state2.moves += 1;
+  }
+  function isSpinSolved(state2) {
+    return state2.rot.every((r) => r === 0);
+  }
+  function spinStatus(state2) {
+    const total = state2.level.grid[0] * state2.level.grid[1];
+    const placed = state2.rot.filter((r) => r === 0).length;
+    return { placed, total, solved: placed === total };
+  }
+  function parMoves(state2) {
+    return state2.initial.reduce((sum, r) => sum + (4 - r) % 4, 0);
+  }
+  function spinHint(state2) {
+    const cell = state2.rot.findIndex((r) => r !== 0);
+    if (cell < 0) return { type: "already" };
+    return { type: "rotate", cell, left: (4 - state2.rot[cell]) % 4 };
+  }
+
+  // src/ui/spinView.js
+  var ANIM_MS = 130;
+  function renderSpinPuzzle(container, ctx2, level) {
+    const puzzle = createSpinPuzzle(level);
+    let hintsUsed = 0;
+    let hintCell = -1;
+    let finished = false;
+    const [cols, rows] = level.grid;
+    const total = cols * rows;
+    const par = parMoves(puzzle);
+    const goldRim = level.goldRim !== false;
+    const CELL7 = Math.min(240, Math.floor(720 / cols), Math.floor(560 / rows));
+    container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: "spin" }]));
+    const wrap = document.createElement("div");
+    wrap.className = "puzzle-wrap";
+    const canvasBox = document.createElement("div");
+    canvasBox.className = "puzzle-canvas-box";
+    const canvas = document.createElement("canvas");
+    canvas.className = "game";
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = cols * CELL7 * dpr;
+    canvas.height = rows * CELL7 * dpr;
+    canvas.style.width = `${cols * CELL7}px`;
+    canvas.style.height = `${rows * CELL7}px`;
+    canvas.style.maxWidth = "100%";
+    canvasBox.appendChild(canvas);
+    wrap.appendChild(canvasBox);
+    const side = document.createElement("div");
+    side.className = "puzzle-side";
+    const intro = document.createElement("div");
+    intro.className = "intro-text";
+    intro.textContent = level.intro;
+    side.appendChild(intro);
+    const statusEl = document.createElement("div");
+    statusEl.className = "puzzle-status";
+    side.appendChild(statusEl);
+    const legendLines = ["\u0422\u0430\u043F\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442 \u2014 \u043E\u043D \u043F\u043E\u0432\u0435\u0440\u043D\u0451\u0442\u0441\u044F \u043F\u043E \u0447\u0430\u0441\u043E\u0432\u043E\u0439"];
+    legendLines.push(goldRim ? "\u0417\u043E\u043B\u043E\u0442\u0430\u044F \u043A\u0430\u0439\u043C\u0430 \u2014 \u043B\u043E\u0441\u043A\u0443\u0442 \u0443\u0436\u0435 \u043B\u0435\u0436\u0438\u0442 \u0432\u0435\u0440\u043D\u043E" : "\u041A\u0430\u0439\u043C\u0430 \u043D\u0435 \u0441\u0432\u0435\u0442\u0438\u0442\u0441\u044F \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u043D\u0430 \u0443\u0437\u043E\u0440");
+    if (puzzle.anchors.size) legendLines.push("\u{1F4CC} \u2014 \u043B\u043E\u0441\u043A\u0443\u0442 \u043F\u0440\u0438\u043A\u043E\u043B\u043E\u0447\u0435\u043D \u0438 \u043D\u0435 \u043A\u0440\u0443\u0442\u0438\u0442\u0441\u044F");
+    const legend = document.createElement("div");
+    legend.className = "panel mt";
+    legend.innerHTML = `<div class="desc" style="line-height:1.9">${legendLines.join("<br>")}</div>`;
+    side.appendChild(legend);
+    const controls = document.createElement("div");
+    controls.className = "puzzle-controls";
+    const btnUndo = mkBtn("\u21A9\uFE0F \u041E\u0442\u043C\u0435\u043D\u0430 (Z)", doUndo);
+    const btnHint = mkBtn("\u{1F4A1} \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 (H)", doHint);
+    const btnReset = mkBtn("\u{1F504} \u0421\u0431\u0440\u043E\u0441 (R)", doReset);
+    controls.append(btnUndo, btnHint, btnReset);
+    controls.appendChild(puzzleSkipButton(ctx2, level, () => backToPuzzleType(ctx2, level)));
+    side.appendChild(controls);
+    wrap.appendChild(side);
+    container.appendChild(wrap);
+    function mkBtn(label, fn) {
+      const b = document.createElement("button");
+      b.innerHTML = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    let art = null;
+    let artW = 0;
+    let artH = 0;
+    function makeFallbackArt() {
+      const c = document.createElement("canvas");
+      c.width = cols * 160;
+      c.height = rows * 160;
+      const g2 = c.getContext("2d");
+      const rng = makeRng(hashSeed(level.id) ^ 2654435769);
+      const baseHue = rng.int(0, 359);
+      const grad = g2.createLinearGradient(0, 0, 0, c.height);
+      grad.addColorStop(0, `hsl(${baseHue}, 45%, 62%)`);
+      grad.addColorStop(1, `hsl(${(baseHue + 70) % 360}, 50%, 30%)`);
+      g2.fillStyle = grad;
+      g2.fillRect(0, 0, c.width, c.height);
+      g2.fillStyle = `hsl(${(baseHue + 40) % 360}, 90%, 78%)`;
+      g2.beginPath();
+      g2.arc(rng.range(c.width * 0.15, c.width * 0.85), rng.range(c.height * 0.12, c.height * 0.4), c.height * 0.14, 0, Math.PI * 2);
+      g2.fill();
+      for (let layer = 0; layer < 3; layer++) {
+        g2.fillStyle = `hsla(${(baseHue + 30 + layer * 20) % 360}, 40%, ${34 - layer * 8}%, 0.9)`;
+        g2.beginPath();
+        const baseY = c.height * (0.55 + layer * 0.15);
+        g2.moveTo(0, c.height);
+        for (let x = 0; x <= c.width; x += 8) {
+          g2.lineTo(x, baseY + Math.sin(x / 60 + layer * 2.1) * c.height * 0.08);
+        }
+        g2.lineTo(c.width, c.height);
+        g2.closePath();
+        g2.fill();
+      }
+      const glyphs = ["\u2726", "\u274B", "\u263E", "\u2605", "\u2746", "\u{1F343}", "\u{1F56F}\uFE0F", "\u2699\uFE0F", "\u{1F344}", "\u{1F408}", "\u{1F33F}", "\u{1F52E}", "\u{1FAD6}", "\u{1F3EE}", "\u{1F5DD}\uFE0F", "\u{1F989}"];
+      for (let i = 0; i < total + 4; i++) {
+        g2.font = `${Math.floor(c.height / rows * 0.5)}px "Segoe UI Emoji", sans-serif`;
+        g2.textAlign = "center";
+        g2.textBaseline = "middle";
+        g2.fillText(glyphs[rng.int(0, glyphs.length - 1)], rng.range(20, c.width - 20), rng.range(20, c.height - 20));
+      }
+      return c;
+    }
+    if (typeof Image !== "undefined") {
+      const img = new Image();
+      img.onload = () => {
+        art = img;
+        artW = img.naturalWidth;
+        artH = img.naturalHeight;
+        draw();
+      };
+      img.onerror = () => {
+        art = makeFallbackArt();
+        artW = art.width;
+        artH = art.height;
+        draw();
+      };
+      img.src = level.image;
+    } else {
+      art = makeFallbackArt();
+      artW = art.width;
+      artH = art.height;
+    }
+    function cropRect() {
+      const boardAspect = cols / rows;
+      const imgAspect = artW / artH;
+      if (imgAspect > boardAspect) {
+        const sw = artH * boardAspect;
+        return { sx: (artW - sw) / 2, sy: 0, sw, sh: artH };
+      }
+      const sh = artW / boardAspect;
+      return { sx: 0, sy: (artH - sh) / 2, sw: artW, sh };
+    }
+    const canAnimate = typeof requestAnimationFrame !== "undefined" && typeof performance !== "undefined";
+    const vis = Array.from({ length: total }, (_, i) => puzzle.rot[i]);
+    const anims = /* @__PURE__ */ new Map();
+    let rafId = 0;
+    function displayedAngle(cell) {
+      const a = anims.get(cell);
+      if (!a) return vis[cell];
+      const t = Math.min(1, (performance.now() - a.t0) / ANIM_MS);
+      const eased = 1 - (1 - t) * (1 - t);
+      return a.from + (a.to - a.from) * eased;
+    }
+    function ensureLoop() {
+      if (!canAnimate || rafId) return;
+      const step = () => {
+        const now = performance.now();
+        for (const [cell, a] of [...anims]) {
+          if (now - a.t0 >= ANIM_MS) {
+            vis[cell] = (a.to % 4 + 4) % 4;
+            anims.delete(cell);
+          }
+        }
+        draw();
+        if (celebration && !celebration.shown && now - celebration.t0 >= 2500) {
+          celebration.shown = true;
+          showWin(celebration.rewards);
+        }
+        if (anims.size || celebration && !celebration.shown) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          rafId = 0;
+          if (!finished && isSpinSolved(puzzle)) finish();
+        }
+      };
+      rafId = requestAnimationFrame(step);
+    }
+    function spinCell(cell) {
+      if (finished || puzzle.anchors.has(cell)) return;
+      if (!rotatePiece(puzzle, cell)) return;
+      hintCell = -1;
+      ctx2.sfx?.("rotate");
+      if (canAnimate) {
+        const from = displayedAngle(cell);
+        anims.set(cell, { from, to: from + 1, t0: performance.now() });
+        ensureLoop();
+        draw();
+      } else {
+        vis[cell] = puzzle.rot[cell];
+        draw();
+        if (isSpinSolved(puzzle)) finish();
+      }
+    }
+    function doUndo() {
+      if (finished) return;
+      const cell = puzzle.history.length ? puzzle.history[puzzle.history.length - 1] : -1;
+      if (undoSpin(puzzle)) {
+        hintCell = -1;
+        ctx2.sfx?.("tap");
+        if (canAnimate && cell >= 0) {
+          const from = displayedAngle(cell);
+          anims.set(cell, { from, to: from - 1, t0: performance.now() });
+          ensureLoop();
+        } else {
+          for (let i = 0; i < total; i++) vis[i] = puzzle.rot[i];
+        }
+        draw();
+      }
+    }
+    function doReset() {
+      if (finished) return;
+      resetSpin(puzzle);
+      hintCell = -1;
+      ctx2.sfx?.("tap");
+      anims.clear();
+      for (let i = 0; i < total; i++) vis[i] = puzzle.rot[i];
+      draw();
+    }
+    function doHint() {
+      if (finished) return;
+      const h = spinHint(puzzle);
+      ctx2.sfx?.("hint");
+      if (h.type === "rotate") {
+        hintsUsed += 1;
+        hintCell = h.cell;
+        ctx2.toast("\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u043A\u0440\u0443\u0442\u0438\u043B \u043B\u0430\u043F\u043E\u0439: \u044D\u0442\u043E\u0442 \u043B\u043E\u0441\u043A\u0443\u0442 \u043F\u0440\u043E\u0441\u0438\u0442\u0441\u044F \u043F\u043E \u0447\u0430\u0441\u043E\u0432\u043E\u0439\u2026");
+        draw();
+      } else {
+        ctx2.toast("\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0443\u0436\u0435 \u0440\u043E\u0432\u0435\u043D!");
+      }
+    }
+    function eventPos(ev) {
+      const rect = canvas.getBoundingClientRect();
+      const scale = canvas.width / dpr / rect.width;
+      return { x: (ev.clientX - rect.left) * scale, y: (ev.clientY - rect.top) * scale };
+    }
+    function cellAt(pos) {
+      const cx = Math.floor(pos.x / CELL7);
+      const cy = Math.floor(pos.y / CELL7);
+      if (cx < 0 || cy < 0 || cx >= cols || cy >= rows) return -1;
+      return cy * cols + cx;
+    }
+    function onPointerDown(ev) {
+      if (finished) return;
+      const c = cellAt(eventPos(ev));
+      if (c < 0) return;
+      spinCell(c);
+    }
+    canvas.addEventListener("pointerdown", onPointerDown);
+    function onKey(ev) {
+      if (ev.key === "z" || ev.key === "Z" || ev.ctrlKey && ev.key === "z") {
+        ev.preventDefault();
+        doUndo();
+      }
+      if (ev.key === "h" || ev.key === "H" || ev.key === "\u0440" || ev.key === "\u0420") doHint();
+      if (ev.key === "r" || ev.key === "R" || ev.key === "\u043A" || ev.key === "\u041A") doReset();
+      if (ev.key === "Escape") backToPuzzleType(ctx2, level);
+    }
+    window.addEventListener("keydown", onKey);
+    function finish() {
+      if (finished) return;
+      finished = true;
+      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      ctx2.save();
+      startCelebration(rewards);
+    }
+    let celebration = null;
+    function startCelebration(rewards) {
+      ctx2.sfx?.("fanfare");
+      if (!canAnimate) {
+        draw();
+        setTimeout(() => showWin(rewards), 400);
+        return;
+      }
+      const bursts = [0.45, 0.85, 1.2, 1.55, 1.9].map((at) => ({
+        at,
+        x: (0.15 + Math.random() * 0.7) * cols * CELL7,
+        y: (0.12 + Math.random() * 0.55) * rows * CELL7,
+        hue: Math.floor(Math.random() * 360),
+        sparks: Array.from({ length: 18 }, (_, i) => {
+          const ang = i / 18 * Math.PI * 2 + Math.random() * 0.4;
+          const spd = 60 + Math.random() * 110;
+          return { vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd };
+        })
+      }));
+      celebration = { t0: performance.now(), bursts, rewards, shown: false };
+      ensureLoop();
+    }
+    function showWin(rewards) {
+      const next = nextPuzzle(level.id);
+      const medal = puzzle.moves <= par ? " \xB7 \u{1F3C5} \u0422\u043E\u0447\u043D\u0430\u044F \u0441\u0431\u043E\u0440\u043A\u0430!" : "";
+      showOverlay(ctx2, {
+        title: "\u{1F5BC}\uFE0F \u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0440\u043E\u0432\u0435\u043D!",
+        subtitle: `\xAB${level.name}\xBB \u2014 \u0441\u043E\u0431\u0440\u0430\u043D \u0437\u0430 ${puzzle.moves} \u0445\u043E\u0434\u043E\u0432${medal}`,
+        rewards,
+        buttons: [
+          ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
+          { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
+          { label: "\u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("puzzle", { id: level.id }) },
+          { label: "\u0412 \u043B\u0430\u0432\u043A\u0443", onClick: () => ctx2.go("hub") },
+          { label: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C", onClick: () => {
+          } }
+          // остаться полюбоваться гобеленом
+        ]
+      });
+    }
+    function drawPiece(cell, { borderAlpha = 0.85 } = {}) {
+      if (!art) return;
+      const x = cell % cols * CELL7;
+      const y = Math.floor(cell / cols) * CELL7;
+      const crop = cropRect();
+      const pw = crop.sw / cols;
+      const ph = crop.sh / rows;
+      const sx = crop.sx + cell % cols * pw;
+      const sy = crop.sy + Math.floor(cell / cols) * ph;
+      const angle = displayedAngle(cell) * Math.PI / 2;
+      g.save();
+      g.beginPath();
+      g.rect(x + 1, y + 1, CELL7 - 2, CELL7 - 2);
+      g.clip();
+      g.translate(x + CELL7 / 2, y + CELL7 / 2);
+      g.rotate(angle);
+      g.drawImage(art, sx, sy, pw, ph, -CELL7 / 2, -CELL7 / 2, CELL7, CELL7);
+      g.restore();
+      if (borderAlpha > 0.01) {
+        g.strokeStyle = `rgba(26, 20, 16, ${borderAlpha})`;
+        g.lineWidth = 2;
+        g.strokeRect(x + 1, y + 1, CELL7 - 2, CELL7 - 2);
+      }
+    }
+    function drawSeamless(alpha) {
+      if (!art || alpha <= 0.01) return;
+      const crop = cropRect();
+      g.save();
+      g.globalAlpha = alpha;
+      g.drawImage(art, crop.sx, crop.sy, crop.sw, crop.sh, 0, 0, cols * CELL7, rows * CELL7);
+      g.restore();
+    }
+    function drawFireworks(t) {
+      for (const b of celebration.bursts) {
+        const bt = t - b.at;
+        if (bt < 0 || bt > 0.9) continue;
+        const fade = 1 - bt / 0.9;
+        for (const s of b.sparks) {
+          const px = b.x + s.vx * bt;
+          const py = b.y + s.vy * bt + 140 * bt * bt;
+          g.fillStyle = `hsla(${b.hue}, 95%, ${65 + fade * 20}%, ${fade})`;
+          g.beginPath();
+          g.arc(px, py, 2.2 + fade * 1.8, 0, Math.PI * 2);
+          g.fill();
+        }
+        if (bt < 0.15) {
+          g.fillStyle = `hsla(${b.hue}, 100%, 85%, ${0.5 * (1 - bt / 0.15)})`;
+          g.beginPath();
+          g.arc(b.x, b.y, 18 + bt * 120, 0, Math.PI * 2);
+          g.fill();
+        }
+      }
+    }
+    function draw() {
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, cols * CELL7, rows * CELL7);
+      g.fillStyle = "#241b14";
+      g.fillRect(0, 0, cols * CELL7, rows * CELL7);
+      let t = 0;
+      if (celebration) t = (performance.now() - celebration.t0) / 1e3;
+      const borderAlpha = celebration ? 0.85 * (1 - Math.min(1, t / 0.9)) : 0.85;
+      const seamlessAlpha = celebration ? Math.min(1, Math.max(0, (t - 0.7) / 0.7)) : 0;
+      for (let cell = 0; cell < total; cell++) {
+        drawPiece(cell, { borderAlpha });
+        if (!celebration) {
+          const x = cell % cols * CELL7;
+          const y = Math.floor(cell / cols) * CELL7;
+          if (goldRim && puzzle.rot[cell] === 0 && !puzzle.anchors.has(cell)) {
+            g.strokeStyle = "rgba(255, 202, 122, 0.7)";
+            g.lineWidth = 3;
+            g.strokeRect(x + 3.5, y + 3.5, CELL7 - 7, CELL7 - 7);
+          }
+          if (hintCell === cell) {
+            g.fillStyle = "rgba(255, 202, 122, 0.30)";
+            g.fillRect(x, y, CELL7, CELL7);
+            g.fillStyle = "#ffe28a";
+            g.font = `${Math.floor(CELL7 * 0.4)}px "Segoe UI Emoji", sans-serif`;
+            g.textAlign = "center";
+            g.textBaseline = "middle";
+            g.fillText("\u21BB", x + CELL7 / 2, y + CELL7 / 2);
+          }
+          if (puzzle.anchors.has(cell)) {
+            g.font = `${Math.floor(CELL7 * 0.22)}px "Segoe UI Emoji", sans-serif`;
+            g.textAlign = "left";
+            g.textBaseline = "top";
+            g.fillText("\u{1F4CC}", x + CELL7 * 0.06, y + CELL7 * 0.04);
+          }
+        }
+      }
+      drawSeamless(seamlessAlpha);
+      if (celebration) drawFireworks(t);
+      const st = spinStatus(puzzle);
+      statusEl.innerHTML = (st.solved ? "\u2705 <b>\u0413\u043E\u0431\u0435\u043B\u0435\u043D \u0440\u043E\u0432\u0435\u043D!</b>" : `\u{1F5BC}\uFE0F \u0420\u043E\u0432\u043D\u043E: <b>${st.placed}</b> \u0438\u0437 ${st.total}`) + `<div class="muted" style="font-size:13px">\u0425\u043E\u0434\u044B: ${puzzle.moves} \xB7 \u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438: ${hintsUsed} \xB7 \u042D\u0442\u0430\u043B\u043E\u043D: ${par}</div>`;
+    }
+    const g = canvas.getContext("2d");
+    draw();
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      if (rafId && typeof cancelAnimationFrame !== "undefined") cancelAnimationFrame(rafId);
+    };
+  }
+
   // src/core/giftPuzzle.js
   var GIFT_MAX_TRIES = 3;
   var GIFT_FACTORS = [1, 0.75, 0.5];
@@ -27748,6 +29507,7 @@
     { mech: "brew", name: "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439", icon: "\u2697\uFE0F", desc: "\u041F\u043E\u0432\u0442\u043E\u0440\u0438 \u0440\u0435\u0446\u0435\u043F\u0442 \u0431\u0435\u0437 \u043E\u0448\u0438\u0431\u043E\u043A" },
     { mech: "fate", name: "\u041A\u0430\u0440\u0442\u044B \u0441\u0443\u0434\u044C\u0431\u044B", icon: "\u{1F52E}", desc: "\u0420\u0430\u0441\u043A\u043B\u0430\u0434 \u0434\u043B\u044F \u0433\u043E\u0441\u0442\u0435\u0439 \u043B\u0430\u0432\u043A\u0438" },
     { mech: "glass", name: "\u0412\u0438\u0442\u0440\u0430\u0436 \u043C\u0438\u0440\u043E\u0432", icon: "\u{1FA9F}", desc: "\u0421\u043E\u0431\u0435\u0440\u0438 \u0440\u0430\u0437\u0431\u0438\u0442\u0443\u044E \u043A\u0430\u0440\u0442\u0438\u043D\u0443 \u043C\u0438\u0440\u0430" },
+    { mech: "spin", name: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D\u044B \u0432\u0435\u0442\u0440\u043E\u0432", icon: "\u{1F5BC}\uFE0F", desc: "\u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u043B\u043E\u0441\u043A\u0443\u0442\u044B \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0430 \u043F\u043E \u0447\u0430\u0441\u043E\u0432\u043E\u0439" },
     { mech: "gift", name: "\u041F\u043E\u0434\u0430\u0440\u043E\u043A \u0434\u043B\u044F \u0433\u043E\u0441\u0442\u044F", icon: "\u{1F381}", desc: "\u0423\u0433\u0430\u0434\u0430\u0439 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u043F\u043E \u0438\u0441\u0442\u043E\u0440\u0438\u0438 \u0433\u043E\u0441\u0442\u044F" }
   ];
   function typeOf2(p) {
@@ -27873,6 +29633,9 @@
     }
     if (level.mechanic === "glass") {
       return renderGlassPuzzle(container, ctx2, level);
+    }
+    if (level.mechanic === "spin") {
+      return renderSpinPuzzle(container, ctx2, level);
     }
     if (level.mechanic === "gift") {
       return renderGiftPuzzle(container, ctx2, level);
