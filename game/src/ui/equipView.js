@@ -55,6 +55,35 @@ function slotMatchesFilter(item, f) {
   return item.slot === f;
 }
 
+// Тень-силуэт типа предмета на пустом слоте (вместо плюсика).
+// Арт assets/slots/<kind>_web.png поверх затемнённого эмодзи-фолбэка.
+const SLOT_GHOST_EMOJI = {
+  weapon: '🗡️', shield: '🛡️', helmet: '🪖', armor: '🧥', gloves: '🧤',
+  boots: '🥾', amulet: '📿', ring1: '💍', ring2: '💍', potion: '🧪',
+};
+const SLOT_GHOST_ART = { ring1: 'ring', ring2: 'ring' };
+
+function slotGhostEl(slot) {
+  const span = document.createElement('span');
+  span.className = 'slot-ghost';
+  if (!slot) { // щит, занятый двуручным — просто прочерк
+    span.textContent = '—';
+    return span;
+  }
+  const emo = document.createElement('span');
+  emo.className = 'slot-ghost-emoji';
+  emo.textContent = SLOT_GHOST_EMOJI[slot] || '＋';
+  span.appendChild(emo);
+  const img = document.createElement('img');
+  img.className = 'slot-ghost-art';
+  img.alt = '';
+  img.addEventListener('error', () => img.remove());
+  img.addEventListener('load', () => { emo.remove(); span.classList.add('on'); });
+  img.src = `assets/slots/${SLOT_GHOST_ART[slot] || slot}_web.png`;
+  span.appendChild(img);
+  return span;
+}
+
 export function renderEquip(container, ctx) {
   const { state } = ctx;
 
@@ -149,19 +178,22 @@ export function renderEquip(container, ctx) {
     cell.className = 'slot' + (item ? '' : ' empty') +
       (slot === 'shield' && shieldBlocked && !item ? ' blocked' : '') +
       (slot === targetSlot ? ' targeting' : '');
-    cell.innerHTML = `
-      <div class="slot-name">${SLOT_LABEL[slot]}${slot === 'shield' && shieldBlocked ? ' (занято двуручным)' : ''}</div>
-      <div class="slot-item"></div>
-      <div class="item-name">${item ? item.name : '—'}</div>`;
-    const icoBox = cell.querySelector('.slot-item');
+    const icoBox = document.createElement('div');
+    icoBox.className = 'slot-item';
+    cell.appendChild(icoBox);
     if (item) icoBox.appendChild(itemIconEl(item, 'slot-ico'));
-    else icoBox.textContent = '＋';
+    else icoBox.appendChild(slotGhostEl(slot === 'shield' && shieldBlocked ? null : slot));
+    if (slot === 'shield' && shieldBlocked && !item) cell.title = 'Занято двуручным оружием';
     slotEls[slot] = cell;
     if (item) {
       bindItemTip(cell, item, { state });
       cell.addEventListener('click', () => {
         if (suppressClick) return;
         unequipToInventory(state, slot);
+        // Слот освободился — сундук сразу фильтруется под него (режим выбора)
+        targetSlot = slot;
+        filterSlot = filterForTarget(slot);
+        activeTab = 'chest';
         ctx.sfx?.('tap');
         ctx.save();
         rerender();
@@ -200,20 +232,23 @@ export function renderEquip(container, ctx) {
     const item = id ? ITEM_BY_ID[id] : null;
     const cell = document.createElement('div');
     cell.className = 'slot' + (item ? '' : ' empty') + (targetSlot === 'belt' && !item ? ' targeting' : '');
-    cell.style.flex = '1';
-    cell.innerHTML = `
-      <div class="slot-name">Кармашек ${i + 1}</div>
-      <div class="slot-item"></div>
-      <div class="item-name">${item ? item.name : '—'}</div>`;
-    const icoBox = cell.querySelector('.slot-item');
+    // Кармашек той же ширины, что и слоты сетки (3 колонки, gap 10px)
+    cell.style.flex = '0 0 calc((100% - 20px) / 3)';
+    const icoBox = document.createElement('div');
+    icoBox.className = 'slot-item';
+    cell.appendChild(icoBox);
     if (item) icoBox.appendChild(itemIconEl(item, 'slot-ico'));
-    else icoBox.textContent = '＋';
+    else icoBox.appendChild(slotGhostEl('potion'));
     beltEls[i] = cell;
     if (item) {
       bindItemTip(cell, item, { state });
       cell.addEventListener('click', () => {
         if (suppressClick) return;
         removeFromBelt(state, i);
+        // Кармашек освободился — сундук фильтруется под расходники
+        targetSlot = 'belt';
+        filterSlot = 'consumable';
+        activeTab = 'chest';
         ctx.sfx?.('tap');
         ctx.save();
         rerender();
@@ -293,6 +328,9 @@ export function renderEquip(container, ctx) {
       if (!it) return null;
       return it.slot === 'ring' ? 'ring' : it.slot;
     }).filter(Boolean));
+    // Если отфильтрованный тип кончился (надели последний) — фильтр сбрасываем,
+    // иначе список пуст при «живых» вещах, а селект вводит в заблуждение
+    if (filterSlot !== 'all' && !present.has(filterSlot)) filterSlot = 'all';
     const mkOpt = (sel, val, label, cur) => {
       const o = document.createElement('option');
       o.value = val;
@@ -315,6 +353,7 @@ export function renderEquip(container, ctx) {
     filters.appendChild(typeSel);
 
     const presentR = new Set(state.inventory.map((id) => ITEM_BY_ID[id]?.rarity).filter(Boolean));
+    if (filterRarity !== 'all' && !presentR.has(filterRarity)) filterRarity = 'all';
     const rarSel = document.createElement('select');
     rarSel.className = 'chest-filter';
     rarSel.title = 'Фильтр по редкости';

@@ -1,6 +1,6 @@
 // Лавка на перекрёстке (украшения + скупка) и тематические лавки площади.
 import { ITEM_BY_ID, RARITY_LABEL } from '../data/items.js';
-import { itemEmoji } from './equipView.js';
+import { itemIconEl, itemIconHtml } from './itemTip.js';
 import { describeItem, SLOTS, SLOT_LABEL } from '../core/items.js';
 import {
   shopStock, buyItem, buyCosmetic, toggleCosmetic,
@@ -26,12 +26,12 @@ function buildBuyList(container, ctx, items, newIds) {
     const priceLabel = item.sealPrice ? `🔰 ${item.sealPrice}` : `🪙 ${item.price}`;
     const afford = item.sealPrice ? state.seals >= item.sealPrice : state.coins >= item.price;
     row.innerHTML = `
-      <span class="icon">${itemEmoji(item)}</span>
       <span class="grow">
         <div class="name">${item.name}${newIds.has(item.id) ? ' <span class="badge new-badge">новинка</span>' : ''} <span class="badge ${item.rarity}">${RARITY_LABEL[item.rarity]}</span></div>
         <div class="desc">${describeItem(item) || item.description}</div>
       </span>
       <span class="price">${priceLabel}</span>`;
+    row.prepend(itemIconEl(item));
     const btn = document.createElement('button');
     btn.className = 'small';
     btn.textContent = 'Купить';
@@ -217,7 +217,7 @@ function showCompareTip(state, item, anchor) {
       const id = state.equipped[s];
       if (!id) return `<div class="ct-empty">${SLOT_LABEL[s]}: свободен</div>`;
       const cur = ITEM_BY_ID[id];
-      return `<div class="ct-item">${itemEmoji(cur)} ${cur.name}</div>` +
+      return `<div class="ct-item">${itemIconHtml(cur, 'ct-ico')} ${cur.name}</div>` +
         `<div class="ct-stats">${describeItem(cur) || cur.description}</div>`;
     }).join('');
     const diff = quickDiff(state, item, slotsToShow);

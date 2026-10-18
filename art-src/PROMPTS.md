@@ -1509,6 +1509,32 @@ other objects, no text, no watermark --ar 1:1
 Все предметы из `game/src/data/items.js` покрыты. Новые предметы — тем же
 шаблоном, фон строго по редкости, имя файла = id предмета.
 
+## 19. Тени-силуэты пустых слотов — assets/slots/<kind>_web.png (9 штук)
+
+Пустой слот экипировки показывает тёмный силуэт того типа вещи, который
+туда надевается (`slotGhostEl` в `equipView.js`; без файла — затемнённый
+эмодзи-фолбэк). Оригиналы — в `art-src/slots/`, в рантайм — PNG 128–256 px
+с ПРОЗРАЧНЫМ фоном (генерируем на белом и вырезаем скриптом, как питомцев).
+
+Шаблон (подставить SUBJECT):
+
+```
+Flat vector silhouette icon for an empty inventory slot, solid dark brown
+shape of exact hex color #241b12, {SUBJECT}, pure silhouette with no
+internal details, centered on a plain solid white background, clean smooth
+edges, no text, no watermark --ar 1:1
+```
+
+- **weapon_web.png** — `a knight's shortsword pointing diagonally up-left`
+- **shield_web.png** — `a classic kite shield`
+- **helmet_web.png** — `a kettle hat helmet`
+- **armor_web.png** — `a quilted gambeson torso`
+- **gloves_web.png** — `a pair of gloves side by side`
+- **boots_web.png** — `a pair of boots side by side`
+- **amulet_web.png** — `a round pendant hanging on a cord loop`
+- **ring_web.png** — `a ring with a small gem on top`
+- **potion_web.png** — `a round-bottom potion flask with a cork`
+
 ## 19. Курсоры — assets/cursors/<key>.png + <key>_hover.png (25 тем × 2)
 
 Тематические курсоры мыши для ПК-версии: у каждого режима игры (типы

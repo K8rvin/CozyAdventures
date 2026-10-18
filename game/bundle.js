@@ -28224,6 +28224,9 @@
     span.appendChild(img);
     return span;
   }
+  function itemIconHtml(item2, cls = "icon") {
+    return `<span class="${cls} item-ico ${item2.rarity || "common"}">${itemEmoji(item2)}<img class="item-art" alt="" src="assets/items/${item2.id}_web.jpg" onerror="this.remove()"></span>`;
+  }
   var STAT_META = {
     hp: ["\u2764\uFE0F", "\u0417\u0434\u043E\u0440\u043E\u0432\u044C\u0435", "flat"],
     attack: ["\u{1F5E1}\uFE0F", "\u0410\u0442\u0430\u043A\u0430", "flat"],
@@ -28455,6 +28458,42 @@
     if (f === "consumable") return item2.slot === "consumable";
     return item2.slot === f;
   }
+  var SLOT_GHOST_EMOJI = {
+    weapon: "\u{1F5E1}\uFE0F",
+    shield: "\u{1F6E1}\uFE0F",
+    helmet: "\u{1FA96}",
+    armor: "\u{1F9E5}",
+    gloves: "\u{1F9E4}",
+    boots: "\u{1F97E}",
+    amulet: "\u{1F4FF}",
+    ring1: "\u{1F48D}",
+    ring2: "\u{1F48D}",
+    potion: "\u{1F9EA}"
+  };
+  var SLOT_GHOST_ART = { ring1: "ring", ring2: "ring" };
+  function slotGhostEl(slot) {
+    const span = document.createElement("span");
+    span.className = "slot-ghost";
+    if (!slot) {
+      span.textContent = "\u2014";
+      return span;
+    }
+    const emo = document.createElement("span");
+    emo.className = "slot-ghost-emoji";
+    emo.textContent = SLOT_GHOST_EMOJI[slot] || "\uFF0B";
+    span.appendChild(emo);
+    const img = document.createElement("img");
+    img.className = "slot-ghost-art";
+    img.alt = "";
+    img.addEventListener("error", () => img.remove());
+    img.addEventListener("load", () => {
+      emo.remove();
+      span.classList.add("on");
+    });
+    img.src = `assets/slots/${SLOT_GHOST_ART[slot] || slot}_web.png`;
+    span.appendChild(img);
+    return span;
+  }
   function renderEquip(container, ctx2) {
     const { state: state2 } = ctx2;
     if (newIds === null) {
@@ -28534,19 +28573,21 @@
       const item2 = id ? ITEM_BY_ID[id] : null;
       const cell = document.createElement("div");
       cell.className = "slot" + (item2 ? "" : " empty") + (slot === "shield" && shieldBlocked && !item2 ? " blocked" : "") + (slot === targetSlot ? " targeting" : "");
-      cell.innerHTML = `
-      <div class="slot-name">${SLOT_LABEL[slot]}${slot === "shield" && shieldBlocked ? " (\u0437\u0430\u043D\u044F\u0442\u043E \u0434\u0432\u0443\u0440\u0443\u0447\u043D\u044B\u043C)" : ""}</div>
-      <div class="slot-item"></div>
-      <div class="item-name">${item2 ? item2.name : "\u2014"}</div>`;
-      const icoBox = cell.querySelector(".slot-item");
+      const icoBox = document.createElement("div");
+      icoBox.className = "slot-item";
+      cell.appendChild(icoBox);
       if (item2) icoBox.appendChild(itemIconEl(item2, "slot-ico"));
-      else icoBox.textContent = "\uFF0B";
+      else icoBox.appendChild(slotGhostEl(slot === "shield" && shieldBlocked ? null : slot));
+      if (slot === "shield" && shieldBlocked && !item2) cell.title = "\u0417\u0430\u043D\u044F\u0442\u043E \u0434\u0432\u0443\u0440\u0443\u0447\u043D\u044B\u043C \u043E\u0440\u0443\u0436\u0438\u0435\u043C";
       slotEls[slot] = cell;
       if (item2) {
         bindItemTip(cell, item2, { state: state2 });
         cell.addEventListener("click", () => {
           if (suppressClick) return;
           unequipToInventory(state2, slot);
+          targetSlot = slot;
+          filterSlot = filterForTarget(slot);
+          activeTab = "chest";
           ctx2.sfx?.("tap");
           ctx2.save();
           rerender();
@@ -28582,20 +28623,21 @@
       const item2 = id ? ITEM_BY_ID[id] : null;
       const cell = document.createElement("div");
       cell.className = "slot" + (item2 ? "" : " empty") + (targetSlot === "belt" && !item2 ? " targeting" : "");
-      cell.style.flex = "1";
-      cell.innerHTML = `
-      <div class="slot-name">\u041A\u0430\u0440\u043C\u0430\u0448\u0435\u043A ${i + 1}</div>
-      <div class="slot-item"></div>
-      <div class="item-name">${item2 ? item2.name : "\u2014"}</div>`;
-      const icoBox = cell.querySelector(".slot-item");
+      cell.style.flex = "0 0 calc((100% - 20px) / 3)";
+      const icoBox = document.createElement("div");
+      icoBox.className = "slot-item";
+      cell.appendChild(icoBox);
       if (item2) icoBox.appendChild(itemIconEl(item2, "slot-ico"));
-      else icoBox.textContent = "\uFF0B";
+      else icoBox.appendChild(slotGhostEl("potion"));
       beltEls[i] = cell;
       if (item2) {
         bindItemTip(cell, item2, { state: state2 });
         cell.addEventListener("click", () => {
           if (suppressClick) return;
           removeFromBelt(state2, i);
+          targetSlot = "belt";
+          filterSlot = "consumable";
+          activeTab = "chest";
           ctx2.sfx?.("tap");
           ctx2.save();
           rerender();
@@ -28672,6 +28714,7 @@
         if (!it) return null;
         return it.slot === "ring" ? "ring" : it.slot;
       }).filter(Boolean));
+      if (filterSlot !== "all" && !present.has(filterSlot)) filterSlot = "all";
       const mkOpt = (sel, val, label, cur) => {
         const o = document.createElement("option");
         o.value = val;
@@ -28693,6 +28736,7 @@
       });
       filters.appendChild(typeSel);
       const presentR = new Set(state2.inventory.map((id) => ITEM_BY_ID[id]?.rarity).filter(Boolean));
+      if (filterRarity !== "all" && !presentR.has(filterRarity)) filterRarity = "all";
       const rarSel = document.createElement("select");
       rarSel.className = "chest-filter";
       rarSel.title = "\u0424\u0438\u043B\u044C\u0442\u0440 \u043F\u043E \u0440\u0435\u0434\u043A\u043E\u0441\u0442\u0438";
@@ -29399,12 +29443,12 @@
       const priceLabel = item2.sealPrice ? `\u{1F530} ${item2.sealPrice}` : `\u{1FA99} ${item2.price}`;
       const afford = item2.sealPrice ? state2.seals >= item2.sealPrice : state2.coins >= item2.price;
       row.innerHTML = `
-      <span class="icon">${itemEmoji(item2)}</span>
       <span class="grow">
         <div class="name">${item2.name}${newIds2.has(item2.id) ? ' <span class="badge new-badge">\u043D\u043E\u0432\u0438\u043D\u043A\u0430</span>' : ""} <span class="badge ${item2.rarity}">${RARITY_LABEL[item2.rarity]}</span></div>
         <div class="desc">${describeItem(item2) || item2.description}</div>
       </span>
       <span class="price">${priceLabel}</span>`;
+      row.prepend(itemIconEl(item2));
       const btn = document.createElement("button");
       btn.className = "small";
       btn.textContent = "\u041A\u0443\u043F\u0438\u0442\u044C";
@@ -29578,7 +29622,7 @@
         const id = state2.equipped[s];
         if (!id) return `<div class="ct-empty">${SLOT_LABEL[s]}: \u0441\u0432\u043E\u0431\u043E\u0434\u0435\u043D</div>`;
         const cur = ITEM_BY_ID[id];
-        return `<div class="ct-item">${itemEmoji(cur)} ${cur.name}</div><div class="ct-stats">${describeItem(cur) || cur.description}</div>`;
+        return `<div class="ct-item">${itemIconHtml(cur, "ct-ico")} ${cur.name}</div><div class="ct-stats">${describeItem(cur) || cur.description}</div>`;
       }).join("");
       const diff = quickDiff(state2, item2, slotsToShow);
       if (diff) html += `<div class="ct-stats" style="margin-top:4px">${diff}</div>`;
@@ -30216,12 +30260,12 @@
       }).join(" \xB7 ");
       const coinCost = r.coins ? ` \xB7 \u{1FA99} ${r.coins}` : "";
       row.innerHTML = `
-      <span class="icon">${itemEmoji(item2)}</span>
       <span class="grow">
         <div class="name">${r.name}</div>
         <div class="desc">${describeItem(item2) || item2.description}</div>
         <div class="desc">${costs}${coinCost}</div>
       </span>`;
+      row.prepend(itemIconEl(item2));
       const btn = document.createElement("button");
       btn.className = "small" + (r.canCraft ? " primary" : "");
       btn.textContent = "\u0421\u0434\u0435\u043B\u0430\u0442\u044C";

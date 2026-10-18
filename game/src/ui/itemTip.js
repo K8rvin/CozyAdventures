@@ -27,6 +27,12 @@ export function itemIconEl(item, cls = 'icon') {
   return span;
 }
 
+// Строковый вариант для innerHTML-контекстов (тултипы сравнения и пр.)
+export function itemIconHtml(item, cls = 'icon') {
+  return `<span class="${cls} item-ico ${item.rarity || 'common'}">${itemEmoji(item)}` +
+    `<img class="item-art" alt="" src="assets/items/${item.id}_web.jpg" onerror="this.remove()"></span>`;
+}
+
 const STAT_META = {
   hp: ['❤️', 'Здоровье', 'flat'], attack: ['🗡️', 'Атака', 'flat'],
   armor: ['🛡️', 'Броня', 'flat'], speed: ['⚡', 'Скорость', 'flat'],

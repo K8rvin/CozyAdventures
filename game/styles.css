@@ -1783,20 +1783,59 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
   gap: 10px;
 }
 .slot {
+  position: relative;
+  aspect-ratio: 1;
   background: var(--panel-2);
   border: 2px solid #6b553a;
   border-radius: 12px;
-  padding: 10px;
-  min-height: 78px;
+  padding: 0;
   cursor: pointer;
-  text-align: center;
+  overflow: hidden;
 }
 .slot:hover { border-color: var(--accent); }
-.slot .slot-name { font-size: 12px; color: var(--muted); }
-.slot .slot-item { font-size: 22px; margin: 4px 0 2px; }
-.slot .item-name { font-size: 13px; font-weight: 600; }
+.slot .slot-item {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .slot.blocked { opacity: 0.5; border-style: dashed; }
-.slot.empty .slot-item { opacity: 0.3; }
+
+/* Иконка предмета заполняет слот целиком (как плитка сундука).
+   Специфичность выше .item-ico, иначе размеры 40px побеждают. */
+.slot .item-ico.slot-ico {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+  font-size: 44px;
+  margin: 0;
+}
+
+/* Тень-силуэт типа предмета на пустом слоте */
+.slot-ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 42px;
+  color: var(--muted);
+  opacity: 0.4;
+}
+.slot-ghost .slot-ghost-emoji { filter: grayscale(1) brightness(0.4); }
+.slot-ghost .slot-ghost-art {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
+}
+.slot-ghost.on { filter: none; opacity: 0.55; }
+.slot.blocked .slot-ghost { font-size: 26px; }
 
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 6px; font-size: 14px; }
 .stats-grid div { background: var(--panel-2); border-radius: 8px; padding: 6px 10px; }
@@ -1863,19 +1902,27 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 .chest-cell {
   position: relative;
   aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: var(--panel-2);
   border: 2px solid #6b553a;
   border-radius: 12px;
   cursor: pointer;
   touch-action: pan-y;
+  overflow: hidden;
 }
 .chest-cell:hover { box-shadow: 0 0 10px rgba(255, 202, 122, 0.35); }
 .chest-cell.rare { border-color: #4a7fb5; }
 .chest-cell.epic { border-color: #8a5ac8; }
 .chest-cell.legendary { border-color: #d9a832; }
+/* Иконка заполняет ячейку целиком: подложка редкости = фон плитки */
+.chest-cell .item-ico {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 9px;
+  font-size: 44px;
+}
+.chest-cell .new-star, .chest-cell .set-dot { z-index: 1; }
 
 /* Иконка предмета: подложка в цвет редкости + будущий арт поверх эмодзи */
 .item-ico {
@@ -1901,7 +1948,7 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
   object-fit: cover;
   border-radius: inherit;
 }
-.slot-ico { width: 34px; height: 34px; font-size: 22px; margin: 4px auto 2px; }
+.slot-ico { width: 64px; height: 64px; font-size: 40px; margin: 0 auto; }
 .tile-ico { width: 56px; height: 56px; font-size: 34px; }
 
 /* Точка сета в углу плитки сундука */
@@ -2251,6 +2298,14 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
   box-shadow: 0 6px 20px rgba(0,0,0,0.5);
   pointer-events: none;
   animation: bubble-in 0.15s ease;
+}
+.compare-tip .item-ico {
+  width: 24px;
+  height: 24px;
+  font-size: 15px;
+  border-radius: 6px;
+  vertical-align: -5px;
+  margin-right: 4px;
 }
 .compare-tip .ct-title { color: var(--accent); font-weight: 700; font-size: 12px; margin-bottom: 2px; }
 .compare-tip .ct-item { font-weight: 600; }

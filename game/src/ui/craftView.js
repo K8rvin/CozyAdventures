@@ -4,7 +4,7 @@ import { MATERIALS, materialLabel } from '../data/materials.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { describeItem } from '../core/items.js';
 import { header , quickNav } from './common.js';
-import { itemEmoji } from './equipView.js';
+import { itemIconEl } from './itemTip.js';
 
 export function renderCraft(container, ctx) {
   const { state } = ctx;
@@ -64,12 +64,12 @@ export function renderCraft(container, ctx) {
     }).join(' · ');
     const coinCost = r.coins ? ` · 🪙 ${r.coins}` : '';
     row.innerHTML = `
-      <span class="icon">${itemEmoji(item)}</span>
       <span class="grow">
         <div class="name">${r.name}</div>
         <div class="desc">${describeItem(item) || item.description}</div>
         <div class="desc">${costs}${coinCost}</div>
       </span>`;
+    row.prepend(itemIconEl(item));
     const btn = document.createElement('button');
     btn.className = 'small' + (r.canCraft ? ' primary' : '');
     btn.textContent = 'Сделать';
