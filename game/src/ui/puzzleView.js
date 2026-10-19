@@ -22,6 +22,7 @@ import { renderFatePuzzle } from './fateView.js';
 import { renderGlassPuzzle } from './glassView.js';
 import { renderSpinPuzzle } from './spinView.js';
 import { renderGiftPuzzle } from './giftView.js';
+import { renderSeatingPuzzle } from './seatingView.js';
 import { startTutorial } from './tutorial.js';
 import { quickNav, puzzleSkipButton, header, backToPuzzleType } from './common.js';
 import { createPuzzleCatalogModePicker, renderPuzzleCatalog } from './puzzleCatalogView.js';
@@ -44,6 +45,7 @@ const PUZZLE_TYPES = [
   { mech: 'glass', name: 'Витраж миров', icon: '🪟', desc: 'Собери разбитую картину мира' },
   { mech: 'spin', name: 'Гобелены ветров', icon: '🖼️', desc: 'Поверни лоскуты гобелена по часовой' },
   { mech: 'gift', name: 'Подарок для гостя', icon: '🎁', desc: 'Угадай подарок по истории гостя' },
+  { mech: 'seating', name: 'Гости за чайным столом', icon: '🪑', desc: 'Рассади знакомых по их пожеланиям' },
 ];
 
 function typeOf(p) { return p.mechanic || 'mirror'; }
@@ -96,7 +98,7 @@ export function renderPuzzleTypeList(container, ctx, mech) {
     const row = document.createElement('div');
     row.className = 'row' + (available ? '' : ' locked') + (done ? ' done' : '');
     if (firstUnsolved && p.id === firstUnsolved.id) row.dataset.scrollTarget = '1';
-    const stars = '★'.repeat(p.difficulty) + '☆'.repeat(5 - p.difficulty);
+    const stars = '★'.repeat(p.difficulty) + '☆'.repeat(Math.max(0, 5 - p.difficulty));
     // «Заказ дня ×2» виден только пока бонус не забран сегодня
     const dailyClaimed = state.lastDailyBonus === todayKey();
     const isDaily = available && !done && !dailyClaimed && isDailyPuzzle(state, p.id);
@@ -184,6 +186,9 @@ export function renderPuzzle(container, ctx, params) {
   }
   if (level.mechanic === 'gift') {
     return renderGiftPuzzle(container, ctx, level);
+  }
+  if (level.mechanic === 'seating') {
+    return renderSeatingPuzzle(container, ctx, level);
   }
   const puzzle = createPuzzle(level);
   let hintsUsed = 0;

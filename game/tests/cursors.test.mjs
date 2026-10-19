@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import { CURSOR_THEMES, cursorForRoute, applyCursor } from '../src/ui/cursors.js';
 import { ALL_PUZZLES } from '../src/core/state.js';
 
-const PUZZLE_MECHS = ['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate', 'glass', 'spin', 'gift'];
+const PUZZLE_MECHS = ['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate', 'glass', 'spin', 'gift', 'seating'];
 
 test('у каждой механики головоломки своя тема курсора', () => {
   for (const mech of PUZZLE_MECHS) {
@@ -104,7 +104,7 @@ test('режим themed: прежнее поведение по режимам �
 test('styles.css содержит оба правила на каждую тему с тем же хотспотом', () => {
   const css = fs.readFileSync(new URL('../styles.css', import.meta.url), 'utf8');
   const keys = Object.keys(CURSOR_THEMES);
-  assert.equal(keys.length, 26, 'ожидалось 26 тем курсоров');
+  assert.equal(keys.length, 27, 'ожидалось 27 тем курсоров');
   for (const [key, t] of Object.entries(CURSOR_THEMES)) {
     const [x, y] = t.hotspot;
     assert.ok(x >= 0 && x < 32 && y >= 0 && y < 32, `${key}: хотспот вне сетки 32×32`);

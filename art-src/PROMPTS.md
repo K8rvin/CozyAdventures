@@ -976,7 +976,7 @@ honey and deep brown, no text, no letters, no watermark --ar 16:9
 
 ---
 
-## 15. Карточки типов головоломок — assets/puzzle_cards/pc_<mech>.png (13 шт)
+## 15. Карточки типов головоломок — assets/puzzle_cards/pc_<mech>.png
 
 Обложки для экрана выбора типа головоломки. Яркая тематическая виньетка
 на каждую: крупно, читаемо в маленьком размере, без текста. Имя файла =
@@ -1003,6 +1003,7 @@ fantasy game card art, no text, no letters, no watermark --ar 3:2
 - **pc_brew.png** — `an alchemist workbench with a bubbling glowing cauldron, open recipe book, hanging herbs and potion bottles, + хвост`
 - **pc_fate.png** — `a fan of hand-painted fortune-teller cards on dark velvet, one card face-up glowing softly, a candle flame reflected in a crystal ball nearby, + хвост`
 - **pc_gift.png** — `a small gift box wrapped in craft paper with a red-gold ribbon on a cozy shop counter, tiny souvenirs blurred on shelves behind, warm candlelight, + хвост`
+- **pc_seating.png** — `a cozy tea room seen from a high top-down angle with a round wooden table, four empty chairs and steaming cups waiting for guests, one empty chair invitingly pulled out, warm candlelight, + хвост`
 
 ---
 
@@ -1658,6 +1659,7 @@ fate, battle, equip, shop. Волна 2 — остальные.
 | craft | a blacksmith's hammer, head up-left | левый верх (6,6) |
 | workshop | a small wrench or awl, tip up-left | левый верх (6,6) |
 | gift | a tiny gift box in craft paper with a red ribbon bow | бант, левый верх (8,8) |
+| seating | a tiny wooden chair with a steaming teacup on its seat, chair back pointing up-left | левый верх (8,6) |
 
 ---
 
@@ -1777,4 +1779,178 @@ no text, no watermark --ar 1:1
 
 - Карточка типа **pc_gift.png** — в разделе 15 (добавлена в список).
 - Курсор **gift.png / gift_hover.png** — в разделе 19 (строка в таблице).
+
+---
+
+## 21. «Гости за чайным столом» — assets/seating/ (10 комнат)
+
+Новая механика: рассадить знакомых гостей по местам согласно их пожеланиям.
+Комнаты должны выглядеть монолитно: стол, стулья, окно, камин, дверь, самовар
+и особенности мест — части одного арта. Поверх код кладёт только портреты
+гостей и временные подсветки. Людей и животных в комнатах НЕ рисуем.
+
+### 21.0 seat_room_base.png — опорный референс комнаты
+
+Сначала генерируем базовую комнату без стола: она фиксирует архитектуру,
+ракурс, свет и постоянные якоря. Дальше каждую главу делаем image-to-image
+или edit от этого референса, чтобы комната ощущалась одной и той же.
+
+```
+A cozy magical tea room inside a fantasy crossroads shop, high-angle
+top-down view at about 70 degrees, storybook watercolor illustration with
+gentle ink outlines, warm candlelit palette of amber, honey and deep brown,
+dark wooden beams and plank floor, monolithic finished game background.
+
+Persistent room anchors:
+- LEFT wall: a large multi-paned window with a moonlit crossroads and cool
+  blue evening light;
+- RIGHT wall: a low stone fireplace with warm embers and a small rug in front;
+- FAR RIGHT: a sturdy wooden door with a woven draft mat and a faint cold
+  draft line near the floor;
+- BACK RIGHT: a sideboard with a copper samovar, teacups and covered treats;
+- BACK LEFT: a quiet reading nook with a low bookshelf, folded blanket and
+  a small shaded lamp;
+- CENTER: a clear open floor area reserved for a tea table in later edits.
+
+All feature areas are visually distinct but empty and calm, no table yet,
+no chairs, no people, no animals, no readable text, no watermark --ar 16:10
+```
+
+Размер: ≥1600×1000. Оригинал — `art-src/seating/seat_room_base.png`.
+
+### Общий хвост для всех игровых комнат
+
+```
+Use the reference tea room image. Preserve the same architecture, camera
+angle, warm candlelit palette, window, fireplace, door, samovar sideboard,
+quiet reading nook and overall cozy storybook watercolor style. Keep every
+seat cushion completely clear and readable: the game will place circular
+character portraits on them. Monolithic finished game background, no people,
+no animals, no readable text, no watermark --ar 16:10
+```
+
+### 21.1 seat_ch01.png — глава 1, первая чайная комната
+
+```
+Add a small round dark-oak tea table in the center with exactly FOUR wooden
+chairs around it. Simple first-evening atmosphere: a modest teapot, four
+plain cups and a small plate of biscuits on the table. Make the four seats
+visibly distinct through colored cushions and the room itself: the upper-left
+chair has a BLUE cushion beside the quiet bookshelf nook, with the window
+behind the seated guest; the lower-left chair has a VIOLET cushion and gives
+the seated guest a clear side view of the window; the upper-right chair has
+a RED cushion near the warm fireplace rug; the lower-right chair has a GREEN
+cushion nearer the drafty door. Both left chairs are window-adjacent, but only
+the lower-left one faces the view sideways. + общий хвост
+```
+
+### 21.2 seat_ch02.png — глава 2, места у огня
+
+```
+Change the center to a slightly larger round table with exactly FIVE chairs.
+Make the fireplace brighter and more important: a warm braided rug, copper
+fire tools and soft firelight. Give the five chairs distinct baked-in cues:
+green cushion on the upper-left chair by the quiet reading nook and window
+behind it, blue cushion on the lower-left chair with a side view of the
+window, warm red cushion by the fireplace, violet cushion nearer the door
+draft, and yellow cushion near the samovar sideboard. Both left chairs are
+window-adjacent, but only the lower-left one faces the view sideways. Winter
+evening outside the window. + общий хвост
+```
+
+### 21.3 seat_ch03.png — глава 3, старые знакомые
+
+```
+Keep a round table with exactly FIVE chairs, but make the room feel lived-in:
+small framed keepsakes, dried flowers, a guest-made ribbon and a few familiar
+travel trinkets on the walls. One chair is slightly turned from the table
+with a blank unreadable place card, suggesting a reserved seat. The table is
+set for a reunion of old friends, warm and personal. + общий хвост
+```
+
+### 21.4 seat_ch04.png — глава 4, свободный стул
+
+```
+Replace the table with a comfortable oval tea table with exactly SEVEN
+chairs. One chair is pulled slightly farther out than the others, clearly
+free and waiting, while all seats remain usable. Rainy evening outside the
+window, reflections on the glass, a folded umbrella near the door. The room
+should quietly teach the idea of spare chairs without any UI markers.
++ общий хвост
+```
+
+### 21.5 seat_ch05.png — глава 5, характеры за столом
+
+```
+Use a round table with exactly SIX chairs. Enrich the room with hobby corners
+around the walls while preserving the central table area: a small instrument
+stand with a flute, a craft and repair tray, a shelf with travel maps, potted
+herbs from the gardener, and the existing quiet bookshelf. These corners are
+decorative and baked into the room art, not separate objects for the game.
++ общий хвост
+```
+
+### 21.6 seat_ch06.png — глава 6, два столика
+
+```
+Replace the central table with TWO separate small round tea tables: one with
+exactly THREE chairs and one with exactly FOUR chairs, clearly divided by a
+strip of open floor and a narrow tea trolley between them. Summer herbs and
+fresh flowers decorate the room. It must be visually obvious which chairs
+belong to each table. + общий хвост
+```
+
+### 21.7 seat_ch07.png — глава 7, своей компанией
+
+```
+Arrange a friendly company layout with TWO nearby tables and exactly SEVEN
+chairs total: a round table for four and a smaller oval table for three.
+Add subtle festive details for a small gathering: cloth bunting without
+letters, a covered cake stand, extra cups and warm garlands. Keep enough
+open floor to read the groups clearly. + общий хвост
+```
+
+### 21.8 seat_ch08.png — глава 8, большой стол
+
+```
+Replace the center with one long polished oak banquet table with exactly
+EIGHT chairs, four on each long side, so opposite pairs are easy to read.
+Late-evening mood, long shadows, a row of small candles down the middle and
+space at both ends kept clear. The room remains the same tea room, only
+rearranged for a larger gathering. + общий хвост
+```
+
+### 21.9 seat_ch09.png — глава 9, вечер перекрёстка
+
+```
+Create a complex but readable two-table layout with exactly TEN chairs:
+one table for five near the window side and one table for five near the
+fireplace side. Two chairs should feel naturally spare and slightly apart,
+but still belong to the layout. Add maps, travel lanterns and small souvenirs
+from many worlds on the walls; deep night outside, crossroads lights visible.
++ общий хвост
+```
+
+### 21.10 seat_ch10.png — глава 10, праздник ста чашек
+
+```
+Create the final festive version of the same tea room: one long celebratory
+table with exactly EIGHT chairs, rich garlands of dried herbs and ribbons,
+many tiny decorative teacup motifs without letters, wrapped small gifts at
+the sideboard, extra candles and a joyful golden glow. The table is set for
+a warm celebration, but no people or animals are present. + общий хвост
+```
+
+Сохранение:
+
+- оригиналы — `art-src/seating/seat_chXX.png`;
+- рантайм — `game/assets/seating/seat_chXX_web.jpg`;
+- размер ≥1600×1000, формат 16:10;
+- для консистентности генерировать последовательно от базового референса
+  или от ближайшей удачной комнаты с теми же якорями.
+
+### 21.11 Карточка типа и курсор
+
+- Карточка типа **pc_seating.png** — в разделе 15 (добавлена в список).
+- Курсор **seating.png / seating_hover.png** — в разделе 19 (строка в таблице).
 

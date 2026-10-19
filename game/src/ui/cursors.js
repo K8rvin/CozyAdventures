@@ -25,6 +25,7 @@ export const CURSOR_THEMES = {
   glass: { hotspot: [16, 4], name: 'Осколок витража', icon: '🪟' },
   spin: { hotspot: [10, 6], name: 'Лоскут гобелена', icon: '🖼️' },
   gift: { hotspot: [8, 8], name: 'Подарочный свёрток', icon: '🎁' },
+  seating: { hotspot: [8, 6], name: 'Стул у чайного стола', icon: '🪑' },
   battle: { hotspot: [4, 4], name: 'Меч рыцаря', icon: '⚔️' },
   equip: { hotspot: [16, 6], name: 'Шлем рыцаря', icon: '🪖' },
   shop: { hotspot: [16, 16], name: 'Монета', icon: '🪙' },

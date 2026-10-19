@@ -3972,6 +3972,166 @@ body::-webkit-scrollbar { display: none; }
   .deck-profile { animation: none; }
 }
 
+/* --- «Гости за чайным столом»: монолитная комната + поднос карточек --- */
+/* Комната — единый арт 16:10; особенности мест нарисованы в нём самом,
+   поверх только полупрозрачные зоны, кружки портретов и временные подсветки */
+.seat-scene {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(160deg, #33261a 0%, #241a10 60%, #1a1209 100%);
+}
+.seat-room-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.seat-scene.shake { animation: riddle-shake 0.45s ease; }
+/* Интерактивная зона места: почти невидимая, проявляется при наведении/драге */
+.seat-zone {
+  position: absolute;
+  z-index: 1;
+  width: 11%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px dashed rgba(243, 230, 207, 0.22);
+  background: rgba(30, 22, 14, 0.10);
+}
+.seat-zone:hover { border-color: rgba(255, 202, 122, 0.8); background: rgba(255, 202, 122, 0.12); }
+.seat-zone.drop-ok {
+  border-style: solid;
+  border-color: #ffca7a;
+  background: rgba(255, 202, 122, 0.25);
+}
+.seat-zone.seat-hint {
+  border-style: solid;
+  border-color: #ffd97a;
+  box-shadow: 0 0 18px rgba(255, 202, 122, 0.65);
+}
+/* Кружок посаженного гостя: компактный портрет на стуле */
+.seat-circle {
+  position: absolute;
+  z-index: 2;
+  width: 9.5%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #4d4231;
+  border: 2px solid rgba(255, 202, 122, 0.55);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
+  touch-action: none;
+}
+.seat-circle-portrait {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seat-circle-icon { font-size: 26px; }
+.seat-circle-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.seat-circle.seat-fixed { border-style: double; cursor: default; }
+.seat-circle.seat-hint { box-shadow: 0 0 18px rgba(255, 202, 122, 0.75); border-color: #ffd97a; }
+/* Призрак при перетаскивании и приглушённый источник */
+.seat-ghost { position: fixed; z-index: 50; pointer-events: none; opacity: 0.85; margin: 0; }
+.seat-ghost.seat-card { width: 120px; }
+.seat-ghost.seat-circle { width: 64px; }
+.seat-drag-src { opacity: 0.35; }
+/* Поднос с карточками гостей под сценой */
+.seat-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 12px;
+}
+.seat-card {
+  width: 148px;
+  border-radius: 12px;
+  background: rgba(30, 22, 14, 0.85);
+  border: 2px solid rgba(255, 202, 122, 0.35);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  text-align: center;
+  touch-action: none;
+}
+.seat-card.selected { border-color: #ffca7a; box-shadow: 0 0 14px rgba(255, 202, 122, 0.5); }
+.seat-card.seat-hint { border-color: #ffd97a; box-shadow: 0 0 14px rgba(255, 202, 122, 0.65); }
+.seat-card-portrait {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #4d4231;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seat-card-icon { font-size: 36px; }
+.seat-card-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.seat-card-name { color: #f3e6cf; font-weight: 700; font-size: 14px; }
+.seat-card-traits { color: #ffca7a; font-size: 12px; }
+.seat-card-wishes { font-size: 12px; color: rgba(243, 230, 207, 0.85); line-height: 1.45; text-align: left; }
+.seat-card-wish { margin-top: 3px; }
+/* Пустое гнездо: карточка уехала на стул */
+.seat-hole {
+  width: 148px;
+  min-height: 120px;
+  border-radius: 12px;
+  border: 2px dashed rgba(243, 230, 207, 0.22);
+}
+.seat-serve { display: block; margin: 12px auto 0; }
+/* Превью гостя/места в боковой панели */
+.seat-panel { min-height: 120px; }
+.seat-preview { display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+.seat-preview-frame {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #4d4231;
+  border: 2px solid rgba(255, 202, 122, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seat-preview-icon { font-size: 56px; }
+.seat-preview-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.seat-preview-name { color: #f3e6cf; font-weight: 700; font-size: 16px; }
+.seat-preview-traits { color: #ffca7a; font-size: 13px; }
+.seat-preview-desc { font-size: 13px; color: rgba(243, 230, 207, 0.9); line-height: 1.5; }
+.seat-preview-line { font-size: 13px; font-style: italic; color: #f3e6cf; }
+.seat-preview-wishes { font-size: 13px; text-align: left; line-height: 1.5; color: rgba(243, 230, 207, 0.92); align-self: stretch; }
+
 /* === Тематические курсоры: body[data-cursor] ставит роутер (src/ui/cursors.js).
    PNG 32x32 в assets/cursors/ генерируются по art-src/PROMPTS.md; пока файла нет —
    браузер молча откатывается на auto/pointer. Хотспоты синхронны с CURSOR_THEMES. === */
@@ -4015,6 +4175,8 @@ body[data-cursor="spin"] { cursor: url("assets/cursors/spin.png") 10 6, auto; } 
 body[data-cursor="spin"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/spin_hover.png") 10 6, pointer; }
 body[data-cursor="gift"] { cursor: url("assets/cursors/gift.png") 8 8, auto; } /* Подарочный свёрток */
 body[data-cursor="gift"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/gift_hover.png") 8 8, pointer; }
+body[data-cursor="seating"] { cursor: url("assets/cursors/seating.png") 8 6, auto; } /* Стул у чайного стола */
+body[data-cursor="seating"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/seating_hover.png") 8 6, pointer; }
 body[data-cursor="battle"] { cursor: url("assets/cursors/battle.png") 4 4, auto; } /* Меч рыцаря */
 body[data-cursor="battle"] :is(button:not(:disabled), summary, .cipher-cell, .riddle-slot, .hang-key, .tea-ing-spot, .tea-serve, .slot, .equip-tab, .chest-cell, .form-slot:not(.enemy), .hub-pet, .hub-trophy, .paper-note, .story-portrait, .story-bubble, .fate-card, .clickable, .brand) { cursor: url("assets/cursors/battle_hover.png") 4 4, pointer; }
 body[data-cursor="equip"] { cursor: url("assets/cursors/equip.png") 16 6, auto; } /* Шлем рыцаря */

@@ -15,6 +15,7 @@ import { FATE_PUZZLES } from '../data/puzzlesFate.js';
 import { GLASS_PUZZLES } from '../data/puzzlesGlass.js';
 import { SPIN_PUZZLES } from '../data/puzzlesSpin.js';
 import { GIFT_PUZZLES } from '../data/puzzlesGift.js';
+import { SEATING_PUZZLES } from '../data/puzzlesSeating.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
@@ -431,7 +432,7 @@ export function toggleCosmetic(state, id) {
 const PUZZLE_POOL = new Map(
   [...PUZZLES, ...SHELF_PUZZLES, ...BOOK_PUZZLES, ...SEEK_PUZZLES, ...PATH_PUZZLES, ...TEA_PUZZLES,
     ...MECH_PUZZLES, ...CANDLE_PUZZLES, ...FLOW_PUZZLES, ...BREW_PUZZLES, ...FATE_PUZZLES, ...GLASS_PUZZLES,
-    ...SPIN_PUZZLES, ...GIFT_PUZZLES]
+    ...SPIN_PUZZLES, ...GIFT_PUZZLES, ...SEATING_PUZZLES]
     .map((p) => [p.id, p]),
 );
 const CAMPAIGN_ORDER = [
@@ -573,6 +574,17 @@ const CAMPAIGN_ORDER = [
   'gift_91', 'gift_92', 'gift_93', 'gift_94', 'gift_95', 'gift_96',
   // Финал витрины: от кассира до праздника ста подарков
   'gift_97', 'gift_98', 'gift_99', 'gift_100',
+  // Гости за чайным столом: 10 глав по 10 рассадок (seat_01–seat_100)
+  'seat_01', 'seat_02', 'seat_03', 'seat_04', 'seat_05', 'seat_06', 'seat_07', 'seat_08', 'seat_09', 'seat_10',
+  'seat_11', 'seat_12', 'seat_13', 'seat_14', 'seat_15', 'seat_16', 'seat_17', 'seat_18', 'seat_19', 'seat_20',
+  'seat_21', 'seat_22', 'seat_23', 'seat_24', 'seat_25', 'seat_26', 'seat_27', 'seat_28', 'seat_29', 'seat_30',
+  'seat_31', 'seat_32', 'seat_33', 'seat_34', 'seat_35', 'seat_36', 'seat_37', 'seat_38', 'seat_39', 'seat_40',
+  'seat_41', 'seat_42', 'seat_43', 'seat_44', 'seat_45', 'seat_46', 'seat_47', 'seat_48', 'seat_49', 'seat_50',
+  'seat_51', 'seat_52', 'seat_53', 'seat_54', 'seat_55', 'seat_56', 'seat_57', 'seat_58', 'seat_59', 'seat_60',
+  'seat_61', 'seat_62', 'seat_63', 'seat_64', 'seat_65', 'seat_66', 'seat_67', 'seat_68', 'seat_69', 'seat_70',
+  'seat_71', 'seat_72', 'seat_73', 'seat_74', 'seat_75', 'seat_76', 'seat_77', 'seat_78', 'seat_79', 'seat_80',
+  'seat_81', 'seat_82', 'seat_83', 'seat_84', 'seat_85', 'seat_86', 'seat_87', 'seat_88', 'seat_89', 'seat_90',
+  'seat_91', 'seat_92', 'seat_93', 'seat_94', 'seat_95', 'seat_96', 'seat_97', 'seat_98', 'seat_99', 'seat_100',
 ];
 export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
 

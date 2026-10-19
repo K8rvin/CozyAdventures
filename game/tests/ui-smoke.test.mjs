@@ -208,8 +208,8 @@ test('все экраны рендерятся без ошибок', () => {
       return renderHub(new El('main'), ctx, { scene: 'cabinet' });
     },
     () => renderPuzzleList(new El('main'), ctx),
-    // Списки по типам головоломок (15 карточек → свой список)
-    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate', 'glass', 'spin', 'gift']
+    // Списки по типам головоломок (16 карточек → свой список)
+    ...['mirror', 'shelf', 'riddle', 'hang', 'seek', 'path', 'tea', 'mech', 'candle', 'flow', 'brew', 'fate', 'glass', 'spin', 'gift', 'seating']
       .map((mech) => () => renderPuzzleTypeList(new El('main'), ctx, mech)),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_01' }),
     () => renderPuzzle(new El('main'), ctx, { id: 'md_12' }),
@@ -246,6 +246,11 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'sp_100' }), // финал: слепой 8×5 с якорями
     () => renderPuzzle(new El('main'), ctx, { id: 'gift_01' }), // подарок для гостя
     () => renderPuzzle(new El('main'), ctx, { id: 'gift_12' }), // подарок от кота (9 сувениров)
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_01' }), // гости за чайным столом
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_25' }), // «напротив» и «между»
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_45' }), // черты характера
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_72' }), // большой стол
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_100' }), // праздник ста чашек
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
     () => renderGuestBook(new El('main'), ctx), // гостевая книга
     () => renderFateDeck(new El('main'), ctx), // колода судьбы
@@ -374,16 +379,16 @@ test('каталог головоломок: полка зацикливаетс
   const prev = all.find((el) => el.className === 'small ghost pc-shelf-prev');
   const next = all.find((el) => el.className === 'small ghost pc-shelf-next');
   const counter = all.find((el) => el.className === 'pc-shelf-counter');
-  assert.equal(cards.length, 17, 'по краям добавлены две стыковочные карточки');
-  assert.equal(cards[0].dataset.entryIndex, '14', 'слева от первой находится последняя');
+  assert.equal(cards.length, 18, 'по краям добавлены две стыковочные карточки');
+  assert.equal(cards[0].dataset.entryIndex, '15', 'слева от первой находится последняя');
   assert.equal(cards.at(-1).dataset.entryIndex, '0', 'справа от последней находится первая');
   assert.equal(cards[0].dataset.loopClone, 'true');
   assert.equal(cards.at(-1).dataset.loopClone, 'true');
 
   prev.click();
-  assert.equal(counter.textContent, '15 / 15', 'стрелка назад ведёт с первой к последней');
+  assert.equal(counter.textContent, '16 / 16', 'стрелка назад ведёт с первой к последней');
   next.click();
-  assert.equal(counter.textContent, '1 / 15', 'стрелка вперёд возвращает к первой');
+  assert.equal(counter.textContent, '1 / 16', 'стрелка вперёд возвращает к первой');
   assert.equal(prev.disabled, false, 'у бесконечной ленты нет заблокированного края');
   assert.equal(next.disabled, false);
 
@@ -392,15 +397,15 @@ test('каталог головоломок: полка зацикливаетс
     card.offsetWidth = 300;
   });
   track.clientWidth = 500;
-  track.scrollWidth = 5540;
+  track.scrollWidth = 5860;
   track.scrollLeft = 0;
   for (const fn of track._listeners.scroll || []) fn();
-  assert.equal(track.scrollLeft, 4800, 'левый клон незаметно заменяется настоящей последней карточкой');
-  assert.equal(counter.textContent, '15 / 15');
-  track.scrollLeft = 5040;
+  assert.equal(track.scrollLeft, 5120, 'левый клон незаметно заменяется настоящей последней карточкой');
+  assert.equal(counter.textContent, '16 / 16');
+  track.scrollLeft = 5360;
   for (const fn of track._listeners.scroll || []) fn();
   assert.equal(track.scrollLeft, 320, 'правый клон незаметно заменяется настоящей первой карточкой');
-  assert.equal(counter.textContent, '1 / 15');
+  assert.equal(counter.textContent, '1 / 16');
 });
 
 test('каталог головоломок: превью, простой список и фильтры мозаики реагируют на выбор', () => {
@@ -411,7 +416,7 @@ test('каталог головоломок: превью, простой спи
   const previewRoot = new El('main');
   renderPuzzleList(previewRoot, ctx);
   const previewItems = flatElements(previewRoot).filter((el) => el.className === 'pc-preview-item');
-  assert.equal(previewItems.length, 15);
+  assert.equal(previewItems.length, 16);
   previewItems[1].click();
   assert.ok(previewItems[1].classList.contains('is-active'), 'пункт обновляет живое превью');
 
@@ -420,7 +425,7 @@ test('каталог головоломок: превью, простой спи
   renderPuzzleList(listRoot, ctx);
   const listAll = flatElements(listRoot);
   const simpleItems = listAll.filter((el) => (el.className || '').startsWith('pc-simple-item'));
-  assert.equal(simpleItems.length, 15);
+  assert.equal(simpleItems.length, 16);
   assert.ok(!listAll.some((el) => (el.className || '').includes('pc-accordion')), 'раскрывающихся панелей больше нет');
   assert.ok(!listAll.some((el) => el.textContent === 'К уровням →'), 'отдельной кнопки перехода нет');
   simpleItems[1].click();
@@ -441,7 +446,7 @@ test('каталог головоломок: превью, простой спи
   assert.equal(cards.filter((card) => !card.hidden).length, 0, 'пустая выборка поддерживается');
   assert.equal(bentoAll.find((el) => el.className === 'muted pc-bento-empty').hidden, false);
   filters.find((el) => el.dataset.filter === 'all').click();
-  assert.equal(cards.filter((card) => !card.hidden).length, 15, 'фильтр «Все» возвращает карточки');
+  assert.equal(cards.filter((card) => !card.hidden).length, 16, 'фильтр «Все» возвращает карточки');
 });
 
 test('гостевая книга: четыре режима и сохранение выбранного вида', () => {
@@ -1106,3 +1111,85 @@ function riddleDrafts(root) {
 function riddleKeeperText(root) {
   return flatElements(root).find((el) => el.className === 'intro-text riddle-keeper-text')?.textContent || '';
 }
+
+// --- «Гости за чайным столом»: помощники ---
+function seatCards(root) {
+  return flatElements(root).filter((el) => (el.className || '').split(' ').includes('seat-card'));
+}
+function seatCircles(root) {
+  return flatElements(root).filter((el) => (el.className || '').split(' ').includes('seat-circle'));
+}
+function seatZonesOf(root) {
+  return flatElements(root).filter((el) => (el.className || '').split(' ').includes('seat-zone'));
+}
+function seatHoles(root) {
+  return flatElements(root).filter((el) => (el.className || '').split(' ').includes('seat-hole'));
+}
+// Тап по карточке/кружку: pointerdown + pointerup без сдвига (порог 7px не пройден)
+function tapSeatEl(el) {
+  const upsBefore = listeners.pointerup?.length || 0;
+  for (const fn of el._listeners.pointerdown || []) {
+    fn({ clientX: 0, clientY: 0, preventDefault: () => {} });
+  }
+  assert.ok((listeners.pointerup?.length || 0) > upsBefore, 'тап должен установить pointerup');
+  listeners.pointerup.at(-1)({ clientX: 0, clientY: 0 });
+}
+
+test('«Гости за чайным столом»: тапы сажают и поднимают, чай без штрафа, победа', async () => {
+  const { solveSeating } = await import('../src/core/seatingPuzzle.js');
+  const { SEATING_PUZZLES, SEATING_ROOMS } = await import('../src/data/puzzlesSeating.js');
+  const level = SEATING_PUZZLES.find((l) => l.id === 'seat_01');
+  const room = SEATING_ROOMS[level.room];
+  const state = newGame();
+  const toasts = [];
+  const ctx = makeUiCtx(state);
+  ctx.toast = (m) => toasts.push(m);
+  const root = new El('main');
+  const cleanup = renderPuzzle(root, ctx, { id: 'seat_01' });
+
+  // Старт: все гости карточками на подносе, места — зонами на сцене
+  assert.equal(seatCards(root).length, level.guests.length, 'все гости на подносе');
+  assert.equal(seatZonesOf(root).length, room.seats.length, 'зоны всех мест на сцене');
+  assert.equal(seatCircles(root).length, 0, 'никто не сидит');
+
+  // «Подать чай» раньше времени — честный счёт без штрафа
+  const serveBtn = () => flatElements(root).find((el) => el.tagName === 'button'
+    && (el.innerHTML || '').includes('Подать чай'));
+  serveBtn().click();
+  assert.ok(toasts.at(-1).includes('осталось посадить'), 'ранний чай: подсказка про непосаженных');
+  assert.ok(!state.puzzlesDone.seat_01, 'ранний чай не засчитывает уровень');
+
+  // Тап по карточке выбирает гостя, тап по месту сажает
+  const [g1] = level.guests;
+  tapSeatEl(seatCards(root).find((el) => el.dataset.guest === g1));
+  assert.ok((seatCards(root).find((el) => el.dataset.guest === g1).className || '').includes('selected'),
+    'карточка выделяется после тапа');
+  seatZonesOf(root)[0].click();
+  assert.equal(seatCircles(root).length, 1, 'на месте появился кружок');
+  assert.equal(seatCards(root).length, level.guests.length - 1, 'карточек стало меньше');
+  assert.equal(seatHoles(root).length, 1, 'на подносе осталось пустое гнездо');
+
+  // Тап по кружку поднимает гостя обратно на поднос
+  tapSeatEl(seatCircles(root)[0]);
+  assert.equal(seatCircles(root).length, 0, 'гость поднят');
+  assert.equal(seatCards(root).length, level.guests.length, 'карточка вернулась на поднос');
+
+  // Подсказка кота реально сажает гостя из решения
+  flatElements(root).find((el) => el.tagName === 'button'
+    && (el.innerHTML || '').includes('Подсказка')).click();
+  assert.equal(seatCircles(root).length, 1, 'подсказка посадила первого гостя');
+
+  // Досаживаем по единственному решению и подаём чай — победа
+  const sol = solveSeating(level, SEATING_ROOMS).placement;
+  for (const [g, seatId] of Object.entries(sol)) {
+    const card = seatCards(root).find((el) => el.dataset.guest === g);
+    if (!card) continue; // уже посажен подсказкой
+    tapSeatEl(card);
+    seatZonesOf(root)[room.seats.findIndex((s) => s.id === seatId)].click();
+  }
+  assert.equal(seatCircles(root).length, level.guests.length, 'все гости за столом');
+  serveBtn().click();
+  assert.ok(state.puzzlesDone.seat_01, 'верная рассадка засчитана');
+  assert.ok(!toasts.at(-1)?.includes('не сбылось'), 'нарушений при верной рассадке нет');
+  cleanup();
+});
