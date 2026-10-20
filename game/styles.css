@@ -2671,7 +2671,6 @@ body::-webkit-scrollbar { display: none; }
 .form-slot.enemy { border-color: rgba(232, 138, 122, 0.4); cursor: default; }
 .form-slot.selected { border-color: var(--accent); background: rgba(122, 92, 51, 0.6); box-shadow: 0 0 16px rgba(255, 202, 122, 0.4); }
 .form-slot .fs-icon { font-size: 32px; }
-.form-slot .fs-name { font-size: 10px; color: var(--muted); }
 
 .unit-figure {
   position: absolute;
@@ -2701,6 +2700,8 @@ body::-webkit-scrollbar { display: none; }
   transition: opacity 0.15s ease;
 }
 .uf-icon.mini img.unit-sprite { width: 54px; margin: -8px 0 -6px; }
+.unit-figure.enemy .uf-icon img.unit-sprite { transform: scaleX(-1); }
+.form-slot.enemy .uf-icon img.unit-sprite { transform: scaleX(-1); }
 .unit-figure.dead .uf-icon.has-art { transform: none; }
 .unit-figure.enemy.dead .uf-icon.has-art { transform: scaleX(-1); }
 .unit-figure .uf-badges {
@@ -2714,9 +2715,28 @@ body::-webkit-scrollbar { display: none; }
 }
 .unit-figure.anim-status { animation: glow-status 0.5s ease; }
 .unit-figure.anim-poison { animation: flash-poison 0.32s ease; }
-.unit-figure.anim-heal { animation: glow-heal 0.7s ease; }
-.unit-figure.anim-hit { animation: shake-hit 0.3s ease, flash-damage 0.45s ease; }
-.unit-figure.anim-crit { animation: shake-hit 0.3s ease, flash-crit 0.5s ease; }
+.unit-figure.anim-heal { animation: glow-heal-fig 0.7s ease; }
+.unit-figure.anim-hit { animation: shake-hit-fig 0.3s ease, flash-damage-fig 0.45s ease; }
+.unit-figure.anim-crit { animation: shake-hit-fig 0.3s ease, flash-crit-fig 0.5s ease; }
+@keyframes shake-hit-fig {
+  0%, 100% { transform: translate(-50%, -50%); }
+  20% { transform: translate(calc(-50% - 6px), -50%); }
+  40% { transform: translate(calc(-50% + 6px), -50%); }
+  60% { transform: translate(calc(-50% - 4px), -50%); }
+  80% { transform: translate(calc(-50% + 4px), -50%); }
+}
+@keyframes flash-damage-fig {
+  0% { filter: drop-shadow(0 0 14px rgba(232, 90, 60, 0.9)); }
+  100% { filter: none; }
+}
+@keyframes flash-crit-fig {
+  0% { filter: drop-shadow(0 0 22px rgba(255, 180, 60, 0.95)); }
+  100% { filter: none; }
+}
+@keyframes glow-heal-fig {
+  0%, 100% { filter: none; }
+  30% { filter: drop-shadow(0 0 14px rgba(143, 209, 139, 0.9)); }
+}
 @keyframes glow-status {
   0%, 100% { filter: none; }
   50% { filter: drop-shadow(0 0 12px rgba(200, 140, 255, 0.9)); }

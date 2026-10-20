@@ -215,10 +215,6 @@ export function renderFormation(container, ctx, params) {
     host.classList.add('occupied');
     host.innerHTML = '';
     host.appendChild(unitSpriteEl(u.art, u.icon, true));
-    const nm = document.createElement('span');
-    nm.className = 'fs-name';
-    nm.textContent = u.name;
-    host.appendChild(nm);
     host.style.touchAction = 'none';
     host.addEventListener('pointerdown', (ev) => {
       unitDrag = { key: u.key, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hoverSlot: null };
@@ -470,7 +466,7 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
         const dx = (def.x - atk.x) * 0.5;
         const dy = (def.y - atk.y) * 0.5;
         atk.el.style.transition = 'transform 0.14s ease';
-        atk.el.style.transform = `translate(${dx * field2.offsetWidth / 100}px, ${dy * field2.offsetHeight / 100}px)`;
+        atk.el.style.transform = `translate(-50%, -50%) translate(${dx * field2.offsetWidth / 100}px, ${dy * field2.offsetHeight / 100}px)`;
         setTimeout(() => {
           atk.el.style.transform = '';
           hitLand(def, e);
