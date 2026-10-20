@@ -9,6 +9,44 @@ import { header, showOverlay, rewardText } from './common.js';
 
 const FRONT = [0, 1, 2];
 
+// Спрайт бойца: арт assets/battle/units/<art>_<pose>_web.png поверх эмодзи.
+// Нет файла — молча остаётся эмодзи; нет конкретной позы — откат на стойку (idle).
+// mini=true — маленький размер для слотов расстановки.
+export function unitSpriteEl(art, icon, mini = false) {
+  const span = document.createElement('span');
+  span.className = 'uf-icon unit-art' + (mini ? ' mini' : '');
+  span.textContent = icon;
+  if (!art) return span;
+  const img = document.createElement('img');
+  img.className = 'unit-sprite';
+  img.alt = '';
+  img.draggable = false;
+  let gone = false;
+  const setPose = (pose) => {
+    if (gone) return;
+    img.dataset.wantPose = pose;
+    img.style.opacity = '0.4';
+    img.src = `assets/battle/units/${art}_${pose}_web.png`;
+  };
+  img.addEventListener('error', () => {
+    if (img.dataset.wantPose && img.dataset.wantPose !== 'idle') setPose('idle');
+    else { gone = true; img.remove(); span.classList.remove('has-art'); }
+  });
+  img.addEventListener('load', () => { span.classList.add('has-art'); img.style.opacity = '1'; });
+  span.setPose = setPose;
+  span.appendChild(img);
+  setPose('idle');
+  // Спрайт уже в кэше — показываем сразу, без кадра с эмодзи
+  if (img.complete && img.naturalWidth > 0) { span.classList.add('has-art'); img.style.opacity = '1'; }
+  return span;
+}
+
+// Смена позы на фигурке боя (нет спрайта — тихо ничего не делает)
+function setFigPose(figEl, pose) {
+  const s = figEl?.querySelector('.uf-icon');
+  s?.setPose?.(pose);
+}
+
 // Клетка поля [col, row] → позиция в процентах (8 колонок × 3 ряда)
 function cellPos(c, r) {
   return [5 + c * 12.5, 18 + r * 32];
@@ -71,9 +109,9 @@ export function renderFormation(container, ctx, params) {
   prepPanel.appendChild(field);
 
   const units = [
-    { key: 'knight', icon: '🛡️', name: 'Рыцарь' },
+    { key: 'knight', icon: '🛡️', name: 'Рыцарь', art: 'knight' },
     ...state.squadMercs.map((id, i) => ({
-      key: `merc${i}`, icon: MERC_BY_ID[id].icon, name: MERC_BY_ID[id].name,
+      key: `merc${i}`, icon: MERC_BY_ID[id].icon, name: MERC_BY_ID[id].name, art: id,
     })),
   ];
   let selectedUnit = null;
@@ -109,7 +147,7 @@ export function renderFormation(container, ctx, params) {
   enemySlots.forEach((slot, i) => {
     const def = ENEMY_BY_ID[enemyEntries[i].id];
     const el = slotEl(slot, 'enemy');
-    el.innerHTML = `<span class="fs-icon">${def.icon}</span>`;
+    el.appendChild(unitSpriteEl(enemyEntries[i].id, def.icon, true));
     el.classList.add('occupied', 'enemy');
     field.appendChild(el);
   });
@@ -136,14 +174,14 @@ export function renderFormation(container, ctx, params) {
       if (!u) return;
       const ghost = document.createElement('div');
       ghost.className = 'drag-ghost';
-      ghost.textContent = u.icon;
+      ghost.appendChild(unitSpriteEl(u.art, u.icon));
       document.body.appendChild(ghost);
       unitDrag.ghost = ghost;
       unitDrag.active = true;
       selectedUnit = null;
       ctx.sfx?.('tap');
     }
-    unitDrag.ghost.style.transform = `translate(${ev.clientX - 22}px, ${ev.clientY - 22}px)`;
+    unitDrag.ghost.style.transform = `translate(${ev.clientX}px, ${ev.clientY}px)`;
     const slot = findSlotAt(ev.clientX, ev.clientY);
     if (slot !== unitDrag.hoverSlot) {
       hoverSlotEl?.classList.remove('selected');
@@ -175,7 +213,12 @@ export function renderFormation(container, ctx, params) {
     const host = slotEls[`ally${slot}`];
     if (!host) continue;
     host.classList.add('occupied');
-    host.innerHTML = `<span class="fs-icon">${u.icon}</span><span class="fs-name">${u.name}</span>`;
+    host.innerHTML = '';
+    host.appendChild(unitSpriteEl(u.art, u.icon, true));
+    const nm = document.createElement('span');
+    nm.className = 'fs-name';
+    nm.textContent = u.name;
+    host.appendChild(nm);
     host.style.touchAction = 'none';
     host.addEventListener('pointerdown', (ev) => {
       unitDrag = { key: u.key, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hoverSlot: null };
@@ -256,14 +299,14 @@ export function renderFormation(container, ctx, params) {
   function playBattle(result) {
     // Имена/иконки фигурок из состояния и состава битвы
     const unitDefs = new Map();
-    unitDefs.set('a0', { name: 'Рыцарь лавки', icon: '🛡️', hp: result.report.knightHpMax });
+    unitDefs.set('a0', { name: 'Рыцарь лавки', icon: '🛡️', hp: result.report.knightHpMax, art: 'knight' });
     state.squadMercs.forEach((id, i) => {
       const d = MERC_BY_ID[id];
-      unitDefs.set(`a${i + 1}`, { name: d.name, icon: d.icon, hp: d.hp });
+      unitDefs.set(`a${i + 1}`, { name: d.name, icon: d.icon, hp: d.hp, art: id });
     });
     enemyEntries.forEach((e, i) => {
       const d = ENEMY_BY_ID[e.id];
-      unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)) });
+      unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)), art: e.id });
     });
     playBattleReplay(container, ctx, {
       title: battle.name, backTo: 'battles', world: battle.world, result, unitDefs,
@@ -338,11 +381,20 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
       el.className = 'unit-figure ' + (isAlly ? 'ally' : 'enemy');
       el.style.left = `${x}%`;
       el.style.top = `${y}%`;
-      el.innerHTML = `
-        <div class="uf-icon">${def.icon}</div>
-        <div class="uf-name">${def.name}</div>
-        <div class="uf-badges"></div>
-        <div class="hpbar"><div style="width:100%"></div></div>`;
+      el.appendChild(unitSpriteEl(def.art, def.icon));
+      const nameEl = document.createElement('div');
+      nameEl.className = 'uf-name';
+      nameEl.textContent = def.name;
+      el.appendChild(nameEl);
+      const badgesEl = document.createElement('div');
+      badgesEl.className = 'uf-badges';
+      el.appendChild(badgesEl);
+      const hpbar = document.createElement('div');
+      hpbar.className = 'hpbar';
+      const hpfill = document.createElement('div');
+      hpfill.style.width = '100%';
+      hpbar.appendChild(hpfill);
+      el.appendChild(hpbar);
       field2.appendChild(el);
       const unit = { hp: def.hp, maxHp: def.hp, badges: new Set() };
       figures.set(uid, { el, unit, side: isAlly ? 'ally' : 'enemy', x, y });
@@ -396,6 +448,8 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
       const atk = figOf(e.fromUid);
       const def = figOf(e.toUid);
       if (!atk || !def) return;
+      setFigPose(atk.el, 'atk');
+      setTimeout(() => { if (atk.unit.hp > 0) setFigPose(atk.el, 'idle'); }, 420);
       if (e.ranged || e.magic) {
         // Снаряд летит от атакующего к цели: магический болт, стихия или стрела
         const proj = document.createElement('div');
@@ -428,7 +482,13 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
       defFig.unit.hp = Math.max(0, defFig.unit.hp - e.dmg);
       setHp(e.toUid);
       pulse(defFig.el, e.crit ? 'anim-crit' : 'anim-hit', 480);
-      if (defFig.unit.hp <= 0) pulse(defFig.el, 'anim-death', 650);
+      if (defFig.unit.hp <= 0) {
+        setFigPose(defFig.el, 'down');
+        pulse(defFig.el, 'anim-death', 650);
+      } else {
+        setFigPose(defFig.el, 'hurt');
+        setTimeout(() => { if (defFig.unit.hp > 0) setFigPose(defFig.el, 'idle'); }, 480);
+      }
     }
 
     function applyEvent(e) {
@@ -476,6 +536,8 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
             f.y = ny;
             f.el.style.left = `${nx}%`;
             f.el.style.top = `${ny}%`;
+            setFigPose(f.el, 'walk');
+            setTimeout(() => { if (f.unit.hp > 0) setFigPose(f.el, 'idle'); }, 300);
           }
           break;
         }
@@ -492,7 +554,15 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
           if (f) {
             f.unit.hp = Math.max(0, Math.min(f.unit.maxHp, f.unit.hp - e.dmg));
             setHp(e.uid);
-            pulse(f.el, e.kind === 'poison' || e.kind === 'thorns' ? 'anim-poison' : 'anim-heal', 320);
+            const isHarm = e.kind === 'poison' || e.kind === 'thorns';
+            pulse(f.el, isHarm ? 'anim-poison' : 'anim-heal', 320);
+            if (isHarm) {
+              if (f.unit.hp <= 0) setFigPose(f.el, 'down');
+              else {
+                setFigPose(f.el, 'hurt');
+                setTimeout(() => { if (f.unit.hp > 0) setFigPose(f.el, 'idle'); }, 320);
+              }
+            }
           }
           break;
         }

@@ -2363,6 +2363,8 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
   will-change: transform;
 }
+.drag-ghost > .uf-icon { display: inline-block; transform: translate(-50%, -50%); }
+.drag-ghost .uf-icon img.unit-sprite { width: 60px; margin: 0; }
 
 /* Подсказка-сравнение «Сейчас надето» в прилавке */
 .compare-tip {
@@ -2688,6 +2690,19 @@ body::-webkit-scrollbar { display: none; }
 .unit-figure.enemy .uf-icon { transform: scaleX(-1); }
 .unit-figure.dead { opacity: 0.3; filter: grayscale(1); }
 .unit-figure.dead .uf-icon { transform: rotate(-70deg); transition: transform 0.4s ease; }
+/* Спрайт бойца (арт поверх эмодзи-фолбэка) */
+.form-slot .uf-icon { font-size: 30px; line-height: 1; }
+.uf-icon.has-art { font-size: 0; }
+.uf-icon img.unit-sprite {
+  width: 76px;
+  margin: -16px 0 -10px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+.uf-icon.mini img.unit-sprite { width: 54px; margin: -8px 0 -6px; }
+.unit-figure.dead .uf-icon.has-art { transform: none; }
+.unit-figure.enemy.dead .uf-icon.has-art { transform: scaleX(-1); }
 .unit-figure .uf-badges {
   position: absolute;
   top: -8px;

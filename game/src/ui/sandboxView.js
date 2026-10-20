@@ -148,10 +148,10 @@ export function renderSandbox(container, ctx) {
     const sorted = [...picked.allies]
       .map((id) => MERC_BY_ID[id])
       .sort((a, b) => (b.armor + b.hp / 20) - (a.armor + a.hp / 20));
-    sorted.forEach((d, i) => unitDefs.set(`a${i}`, { name: d.name, icon: d.icon, hp: d.hp }));
+    sorted.forEach((d, i) => unitDefs.set(`a${i}`, { name: d.name, icon: d.icon, hp: d.hp, art: d.id }));
     picked.foes.forEach((id, i) => {
       const d = ENEMY_BY_ID[id];
-      unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: d.hp });
+      unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: d.hp, art: id });
     });
     return unitDefs;
   }

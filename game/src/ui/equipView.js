@@ -118,7 +118,8 @@ export function renderEquip(container, ctx) {
   head.prepend(kIcon);
   container.appendChild(head);
   container.appendChild(quickNav(ctx, [
-    { icon: '🏪', label: 'Прилавок', screen: 'shop', primary: true },
+    { icon: '⚔️', label: 'Походы рыцаря', screen: 'battles', primary: true },
+    { icon: '🏪', label: 'Прилавок', screen: 'shop' },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },
   ]));
 
