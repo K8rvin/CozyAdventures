@@ -31,6 +31,7 @@
 - Волна 4: 37–43 (Звёздная ярмарка) · Волна 5: 44–50 (Пепельные степи)
 - Волна 6: 51–57 (Хрустальные горы) · Волна 7: 58–63 (Нефритовый сад)
 - Волна 8: 64–70 (Подводный грот) · Волна 9: 71–77 (Туманные часы)
+- Волна 10: 78–80 (наборы оружия рыцаря: двуручное, лук, посох)
 
 ---
 
@@ -1930,4 +1931,87 @@ Same character as the reference image, identical design, colors and cozy waterco
 **Д. Шаг:**
 ```
 Same character as the reference image, identical design, colors and cozy watercolor style, new pose: flowing forward like a slow sand tide, rings orbiting steadily, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+
+---
+
+## Наборы оружия рыцаря (78–80)
+
+Тот же рыцарь из секции 1 (латунь, вязаный шарф), но с другим оружием — код
+подставляет набор по типу надетого оружия: двуручное → `knight_twohanded`,
+лук → `knight_bow`, посох → `knight_staff`. Пока файлов набора нет, в бою
+показывается базовый набор `knight` (меч и щит), игра не ломается.
+Поза А каждого набора — референс для его Б–Д; дизайн доспеха и шарфа держим
+по референсу секции 1 (можно приложить её стойку вторым референсом).
+
+### 78. `knight_twohanded` — Рыцарь с двуручным оружием (союзник)
+Файлы: `assets/battle/units/knight_twohanded_{idle,atk,hurt,down,walk}_web.png`
+
+**А. Стойка** (генерируется первой — референс для Б–Д):
+```
+Cozy storybook watercolor battle sprite for a fantasy shop game, a small brave knight in slightly oversized warm brass-and-leather armor, a cozy knitted scarf, gripping a large two-handed greatsword with both gauntlets, no shield, the heavy blade held low and ready, standing in a ready battle stance, alert, weight slightly forward, side view, full body, facing right, bold readable silhouette, soft dark warm-brown ink outlines, warm muted palette, plain solid white background, no drop shadow, no text, no watermark --ar 1:1
+```
+**Б. Атака** (по референсу А):
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: a heavy two-handed overhead swing with the greatsword, body twisting with momentum, dynamic action, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+**В. Урон:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: recoiling from a hit, flinching backward, eyes squeezed shut, greatsword lowered and braced against the ground, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+**Г. Падение:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: lying defeated on the ground, eyes peacefully closed, the greatsword slipped from relaxed hands beside him, side view, full body, plain solid white background, no text --ar 1:1
+```
+**Д. Шаг:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: mid-step walking forward, one boot lifted, the greatsword resting on his shoulder, body leaning ahead, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+
+### 79. `knight_bow` — Рыцарь с луком (союзник)
+Файлы: `assets/battle/units/knight_bow_{idle,atk,hurt,down,walk}_web.png`
+
+**А. Стойка** (генерируется первой — референс для Б–Д):
+```
+Cozy storybook watercolor battle sprite for a fantasy shop game, a small brave knight in slightly oversized warm brass-and-leather armor, a cozy knitted scarf, holding a long wooden bow lowered in one hand, a quiver of arrows on his back, no shield, standing in a ready battle stance, alert, weight slightly forward, side view, full body, facing right, bold readable silhouette, soft dark warm-brown ink outlines, warm muted palette, plain solid white background, no drop shadow, no text, no watermark --ar 1:1
+```
+**Б. Атака** (по референсу А):
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: drawing the bowstring to his cheek, aiming an arrow forward, dynamic action, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+**В. Урон:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: recoiling from a hit, flinching backward, eyes squeezed shut, bow arm dropping low, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+**Г. Падение:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: lying defeated on the ground, eyes peacefully closed, the bow slipped from a relaxed hand beside him, a few arrows spilled from the quiver, side view, full body, plain solid white background, no text --ar 1:1
+```
+**Д. Шаг:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: mid-step walking forward, one boot lifted, bow held ready in the leading hand, body leaning ahead, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+
+### 80. `knight_staff` — Рыцарь с посохом (союзник)
+Файлы: `assets/battle/units/knight_staff_{idle,atk,hurt,down,walk}_web.png`
+
+**А. Стойка** (генерируется первой — референс для Б–Д):
+```
+Cozy storybook watercolor battle sprite for a fantasy shop game, a small brave knight in slightly oversized warm brass-and-leather armor, a cozy knitted scarf, holding a tall carved wooden staff topped with a warm glowing lantern crystal, no shield, standing in a ready battle stance, alert, weight slightly forward, side view, full body, facing right, bold readable silhouette, soft dark warm-brown ink outlines, warm muted palette, plain solid white background, no drop shadow, no text, no watermark --ar 1:1
+```
+**Б. Атака** (по референсу А):
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: raising the staff high, its lantern crystal flaring with warm magical light, a gentle spark swirl, dynamic action, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+**В. Урон:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: recoiling from a hit, flinching backward, eyes squeezed shut, staff held up defensively, its crystal flickering, side view, full body, facing right, plain solid white background, no text --ar 1:1
+```
+**Г. Падение:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: lying defeated on the ground, eyes peacefully closed, the staff rolled beside him with its crystal dimmed, side view, full body, plain solid white background, no text --ar 1:1
+```
+**Д. Шаг:**
+```
+Same character as the reference image, identical design, colors and cozy watercolor style, new pose: mid-step walking forward, one boot lifted, the staff planted like a walking stick, body leaning ahead, side view, full body, facing right, plain solid white background, no text --ar 1:1
 ```

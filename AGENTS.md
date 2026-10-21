@@ -69,7 +69,16 @@ game/
 - `result.formation` — НАЧАЛЬНЫЕ клетки (снимок до прогона, не после!).
 - Кастеры-капканы прошлого: не делай скилами врагов тег ranged — станут стационарной
   артиллерией и расстреляют заднюю линию (уже чинили). Дальность 2 + заслон.
+- Боссы (`boss: true` в данных, 12 шт) — блок 2×2: `unit.size`, якорь `unit.cell` =
+  левая верхняя клетка, `unitCells`/`unitDist` вместо точечного cellDist. Авторасстановка
+  клеточная: босс первым якорем [6,0], прислужников ≤2 (свободны лишь 2 клетки —
+  следит тест). В UI — `.unit-figure.big`/`.form-slot.boss`, центр = якорь +
+  (6.25%, 16%); снимок `result.formation` хранит `size`.
 - playBattleReplay — общий проигрыватель реплея (бой и Конструктор в Мастерской).
+- Арт рыцаря в бою зависит от оружия: `knightArtId(equipped)` в core/items.js →
+  knight / knight_twohanded / knight_bow / knight_staff; unitSpriteEl с
+  fallbackArt откатывается на базовый набор, пока файлов нет. Промты наборов —
+  art-src/PROMPTS_BATTLE.md, секции 78–80 (следит battleArt.test.mjs, счёт 80).
 
 ## Головоломки: механики (puzzleView.js — PUZZLE_TYPES + dispatch)
 

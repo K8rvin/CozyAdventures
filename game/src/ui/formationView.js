@@ -4,19 +4,23 @@ import { ENEMY_BY_ID } from '../data/enemies.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { MERC_BY_ID } from '../data/crew.js';
 import { runBattle, moveFormationSlot, nextBattle, battleAvailable } from '../core/state.js';
+import { knightArtId } from '../core/items.js';
 import { enemyFormationSlots, slotToCell } from '../core/formBattle.js';
 import { header, showOverlay, rewardText } from './common.js';
 
 const FRONT = [0, 1, 2];
 
 // Спрайт бойца: арт assets/battle/units/<art>_<pose>_web.png поверх эмодзи.
-// Нет файла — молча остаётся эмодзи; нет конкретной позы — откат на стойку (idle).
-// mini=true — маленький размер для слотов расстановки.
-export function unitSpriteEl(art, icon, mini = false) {
+// Нет файла позы — откат на стойку (idle) того же набора; нет и её — следующий
+// набор из fallbackArt (например, наборы оружия рыцаря → базовый 'knight');
+// совсем нет — молча остаётся эмодзи. mini=true — маленький размер для слотов.
+export function unitSpriteEl(art, icon, mini = false, fallbackArt = null) {
   const span = document.createElement('span');
   span.className = 'uf-icon unit-art' + (mini ? ' mini' : '');
   span.textContent = icon;
   if (!art) return span;
+  const arts = [...new Set([art, fallbackArt].filter(Boolean))];
+  let artIdx = 0;
   const img = document.createElement('img');
   img.className = 'unit-sprite';
   img.alt = '';
@@ -26,10 +30,11 @@ export function unitSpriteEl(art, icon, mini = false) {
     if (gone) return;
     img.dataset.wantPose = pose;
     img.style.opacity = '0.4';
-    img.src = `assets/battle/units/${art}_${pose}_web.png`;
+    img.src = `assets/battle/units/${arts[artIdx]}_${pose}_web.png`;
   };
   img.addEventListener('error', () => {
     if (img.dataset.wantPose && img.dataset.wantPose !== 'idle') setPose('idle');
+    else if (artIdx + 1 < arts.length) { artIdx += 1; setPose('idle'); }
     else { gone = true; img.remove(); span.classList.remove('has-art'); }
   });
   img.addEventListener('load', () => { span.classList.add('has-art'); img.style.opacity = '1'; });
@@ -52,10 +57,21 @@ function cellPos(c, r) {
   return [5 + c * 12.5, 18 + r * 32];
 }
 
+// Центр тела юнита в процентах: босс 2×2 — середина блока, якорь — левая верхняя клетка
+function bodyCenter(cell, size = 1) {
+  const [x, y] = cellPos(cell[0], cell[1]);
+  return [x + (size - 1) * 6.25, y + (size - 1) * 16];
+}
+
 // Слот расстановки (0–5) → позиция на экране расстановки
 function slotPos(slot, side) {
   return cellPos(...slotToCell(slot, side));
 }
+
+// Снаряд вылетает из верхней половины спрайта, а не из подписи/ног:
+// подъём стартовой точки над центром фигурки (у босса 2×2 спрайт вдвое крупнее)
+const PROJECTILE_LIFT = 36;
+const PROJECTILE_LIFT_BIG = 72;
 
 // Фон поля боя по миру битвы (фолбэк — без фона)
 function addFieldBg(fieldEl, world) {
@@ -109,7 +125,8 @@ export function renderFormation(container, ctx, params) {
   prepPanel.appendChild(field);
 
   const units = [
-    { key: 'knight', icon: '🛡️', name: 'Рыцарь', art: 'knight' },
+    // Арт рыцаря — по типу экипированного оружия (фолбэк — базовый меч+щит)
+    { key: 'knight', icon: '🛡️', name: 'Рыцарь', art: knightArtId(state.equipped) },
     ...state.squadMercs.map((id, i) => ({
       key: `merc${i}`, icon: MERC_BY_ID[id].icon, name: MERC_BY_ID[id].name, art: id,
     })),
@@ -147,7 +164,16 @@ export function renderFormation(container, ctx, params) {
   enemySlots.forEach((slot, i) => {
     const def = ENEMY_BY_ID[enemyEntries[i].id];
     const el = slotEl(slot, 'enemy');
-    el.appendChild(unitSpriteEl(enemyEntries[i].id, def.icon, true));
+    if (def.boss) {
+      // Босс 2×2: крупный маркер по центру блока, спрайт побольше
+      el.classList.add('boss');
+      const [bx, by] = bodyCenter(slotToCell(slot, 'enemy'), 2);
+      el.style.left = `${bx}%`;
+      el.style.top = `${by}%`;
+      el.appendChild(unitSpriteEl(enemyEntries[i].id, def.icon));
+    } else {
+      el.appendChild(unitSpriteEl(enemyEntries[i].id, def.icon, true));
+    }
     el.classList.add('occupied', 'enemy');
     field.appendChild(el);
   });
@@ -174,7 +200,7 @@ export function renderFormation(container, ctx, params) {
       if (!u) return;
       const ghost = document.createElement('div');
       ghost.className = 'drag-ghost';
-      ghost.appendChild(unitSpriteEl(u.art, u.icon));
+      ghost.appendChild(unitSpriteEl(u.art, u.icon, false, u.key === 'knight' ? 'knight' : null));
       document.body.appendChild(ghost);
       unitDrag.ghost = ghost;
       unitDrag.active = true;
@@ -214,7 +240,7 @@ export function renderFormation(container, ctx, params) {
     if (!host) continue;
     host.classList.add('occupied');
     host.innerHTML = '';
-    host.appendChild(unitSpriteEl(u.art, u.icon, true));
+    host.appendChild(unitSpriteEl(u.art, u.icon, true, u.key === 'knight' ? 'knight' : null));
     host.style.touchAction = 'none';
     host.addEventListener('pointerdown', (ev) => {
       unitDrag = { key: u.key, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hoverSlot: null };
@@ -295,7 +321,7 @@ export function renderFormation(container, ctx, params) {
   function playBattle(result) {
     // Имена/иконки фигурок из состояния и состава битвы
     const unitDefs = new Map();
-    unitDefs.set('a0', { name: 'Рыцарь лавки', icon: '🛡️', hp: result.report.knightHpMax, art: 'knight' });
+    unitDefs.set('a0', { name: 'Рыцарь лавки', icon: '🛡️', hp: result.report.knightHpMax, art: knightArtId(state.equipped), fallbackArt: 'knight' });
     state.squadMercs.forEach((id, i) => {
       const d = MERC_BY_ID[id];
       unitDefs.set(`a${i + 1}`, { name: d.name, icon: d.icon, hp: d.hp, art: id });
@@ -363,21 +389,22 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
     container.appendChild(logBox);
 
     // Фигурки по uid
-    const figures = new Map(); // uid -> {el, unit, side}
+    const figures = new Map(); // uid -> {el, unit, side, x, y, size}
     const unitsByUid = new Map();
-    const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a.cell]));
-    const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f.cell]));
+    const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a]));
+    const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f]));
 
     for (const [uid, def] of unitDefs) {
       const isAlly = uid.startsWith('a');
-      const cell = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
-      if (!cell) continue;
-      const [x, y] = cellPos(cell[0], cell[1]);
+      const info = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
+      if (!info) continue;
+      const size = info.size || 1;
+      const [x, y] = bodyCenter(info.cell, size);
       const el = document.createElement('div');
-      el.className = 'unit-figure ' + (isAlly ? 'ally' : 'enemy');
+      el.className = 'unit-figure ' + (isAlly ? 'ally' : 'enemy') + (size > 1 ? ' big' : '');
       el.style.left = `${x}%`;
       el.style.top = `${y}%`;
-      el.appendChild(unitSpriteEl(def.art, def.icon));
+      el.appendChild(unitSpriteEl(def.art, def.icon, false, def.fallbackArt || null));
       const nameEl = document.createElement('div');
       nameEl.className = 'uf-name';
       nameEl.textContent = def.name;
@@ -393,7 +420,7 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
       el.appendChild(hpbar);
       field2.appendChild(el);
       const unit = { hp: def.hp, maxHp: def.hp, badges: new Set() };
-      figures.set(uid, { el, unit, side: isAlly ? 'ally' : 'enemy', x, y });
+      figures.set(uid, { el, unit, side: isAlly ? 'ally' : 'enemy', x, y, size });
       unitsByUid.set(uid, unit);
     }
 
@@ -453,8 +480,10 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
         proj.textContent = e.magic
           ? (e.elem === 'fire' ? '🔥' : e.elem === 'storm' ? '⚡' : '✨')
           : (e.elem === 'fire' ? '🔥' : e.elem === 'storm' ? '⚡' : '➹');
+        // Старт — из верхней половины спрайта (центр фигурки — это ноги/подпись)
+        const lift = (atk.size || 1) > 1 ? PROJECTILE_LIFT_BIG : PROJECTILE_LIFT;
         proj.style.left = `${atk.x}%`;
-        proj.style.top = `${atk.y}%`;
+        proj.style.top = `calc(${atk.y}% - ${lift}px)`;
         field2.appendChild(proj);
         requestAnimationFrame(() => {
           proj.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
@@ -525,9 +554,10 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
         }
         case 'move': {
           // Шаг по полю: фигурка плавно переезжает на новую клетку
+          // (to — якорь тела; у босса 2×2 центр смещён на полклетки)
           const f = figOf(e.uid);
           if (f) {
-            const [nx, ny] = cellPos(e.to[0], e.to[1]);
+            const [nx, ny] = bodyCenter(e.to, f.size || 1);
             f.x = nx;
             f.y = ny;
             f.el.style.left = `${nx}%`;

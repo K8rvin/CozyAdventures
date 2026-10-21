@@ -137,6 +137,18 @@ export function itemScore(item) {
   return (RARITY_RANK[item.rarity] ?? 0) * 100 + sum;
 }
 
+// Арт рыцаря в бою по типу экипированного оружия:
+// лук → knight_bow, посох → knight_staff, двуручное холодное → knight_twohanded,
+// всё одноручное и пустой слот → базовый набор меч+щит (knight).
+export function knightArtId(equipment) {
+  const w = equipment?.weapon && ITEM_BY_ID[equipment.weapon];
+  if (!w) return 'knight';
+  if (w.type === 'bow') return 'knight_bow';
+  if (w.type === 'staff') return 'knight_staff';
+  if (w.hand === 'two') return 'knight_twohanded';
+  return 'knight';
+}
+
 // Краткое текстовое описание характеристик предмета для UI.
 export function describeItem(item) {
   const parts = [];

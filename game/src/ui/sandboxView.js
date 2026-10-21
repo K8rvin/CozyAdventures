@@ -158,8 +158,8 @@ export function renderSandbox(container, ctx) {
 
   function formationOf(allies, foes) {
     return {
-      allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
-      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] })),
+      allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell], size: a.size || 1 })),
+      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell], size: f.size || 1 })),
     };
   }
 

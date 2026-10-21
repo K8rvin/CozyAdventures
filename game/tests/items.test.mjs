@@ -4,7 +4,29 @@ import { ITEMS, ITEM_BY_ID } from '../src/data/items.js';
 import { SHOP_STOCK } from '../src/data/shop.js';
 import {
   emptyEquipment, equip, unequip, collectStats, isShieldBlocked, KNIGHT_BASE, SLOTS, describeItem,
+  knightArtId,
 } from '../src/core/items.js';
+
+test('арт рыцаря в бою выбирается по типу оружия', () => {
+  const eq = emptyEquipment();
+  assert.equal(knightArtId(eq), 'knight', 'пустой слот — базовый набор');
+  eq.weapon = 'wpn_rusty_sword';
+  assert.equal(knightArtId(eq), 'knight', 'меч — базовый набор');
+  eq.weapon = 'wpn_oak_mace';
+  assert.equal(knightArtId(eq), 'knight', 'одноручная булава — базовый набор');
+  eq.weapon = 'wpn_dagger_firefly';
+  assert.equal(knightArtId(eq), 'knight', 'кинжал — базовый набор');
+  eq.weapon = 'wpn_greatsword_oak';
+  assert.equal(knightArtId(eq), 'knight_twohanded', 'двуручный меч — свой набор');
+  eq.weapon = 'wpn_lumberaxe';
+  assert.equal(knightArtId(eq), 'knight_twohanded', 'двуручный топор — свой набор');
+  eq.weapon = 'wpn_hunter_bow';
+  assert.equal(knightArtId(eq), 'knight_bow', 'лук — свой набор');
+  eq.weapon = 'wpn_candle_staff';
+  assert.equal(knightArtId(eq), 'knight_staff', 'посох — свой набор');
+  eq.weapon = 'no_such_item';
+  assert.equal(knightArtId(eq), 'knight', 'битый id — тихий откат на базовый набор');
+});
 
 test('у всех предметов уникальный id и корректный слот', () => {
   const ids = new Set();

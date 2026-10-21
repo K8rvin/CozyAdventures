@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   makeFormationKnight, makeFormationMerc, makeFormationEnemy,
   simulateFormationBattle, enemyFormationSlots, isRanged,
+  unitCells, unitDist, slotToCell,
 } from '../src/core/formBattle.js';
 import { MERC_BY_ID } from '../src/data/crew.js';
 import { newGame, runBattle, moveFormationSlot } from '../src/core/state.js';
@@ -62,11 +63,11 @@ test('рассечение бьёт весь передний ряд', () => {
   assert.ok(targets.has('e0') && targets.has('e1'), 'передний ряд задет полностью');
 });
 
-test('авторасстановка врагов: ближние вперёд, стрелки назад, босс в центр', () => {
+test('авторасстановка врагов: ближние вперёд, стрелки назад, босс 2×2 первым якорем', () => {
   const slots = enemyFormationSlots(['golem_moss', 'moth_night', 'boss_willow']);
-  assert.equal(slots[0], 0); // голем — передний
-  assert.equal(slots[1], 3); // моль — задний
-  assert.equal(slots[2], 1); // босс — центр
+  assert.equal(slots[2], 0); // босс — якорь [6,0], блок на ряды 0–1
+  assert.equal(slots[0], 2); // голем — передний ряд, ниже блока босса
+  assert.equal(slots[1], 5); // моль — задний ряд, ниже блока босса
 });
 
 test('авторасстановка врагов: слоты не повторяются даже у 4 одинаковых крыс', () => {
@@ -81,6 +82,96 @@ test('авторасстановка врагов: во всех боях кам
     const slots = enemyFormationSlots(b.enemies);
     assert.equal(new Set(slots).size, slots.length, `${b.id}: слоты наслоились: ${slots}`);
   }
+});
+
+test('авторасстановка врагов: во всех боях кампании клетки тел не наслаиваются', async () => {
+  const { BATTLES } = await import('../src/data/battles.js');
+  const { ENEMY_BY_ID } = await import('../src/data/enemies.js');
+  for (const b of BATTLES) {
+    const slots = enemyFormationSlots(b.enemies);
+    const taken = new Set();
+    slots.forEach((s, i) => {
+      const id = typeof b.enemies[i] === 'string' ? b.enemies[i] : b.enemies[i].id;
+      const size = ENEMY_BY_ID[id].boss ? 2 : 1;
+      const [cx, cy] = slotToCell(s, 'enemy');
+      assert.ok(cy + size <= 3, `${b.id}: тело ${id} вылезает за низ поля`);
+      for (let dx = 0; dx < size; dx++) {
+        for (let dy = 0; dy < size; dy++) {
+          const key = `${cx + dx},${cy + dy}`;
+          assert.ok(!taken.has(key), `${b.id}: клетка ${key} занята дважды`);
+          taken.add(key);
+        }
+      }
+    });
+  }
+});
+
+test('босс — один на бой, прислужников не больше двух (блок 2×2 должен влезать)', async () => {
+  const { BATTLES } = await import('../src/data/battles.js');
+  const { ENEMY_BY_ID } = await import('../src/data/enemies.js');
+  for (const b of BATTLES) {
+    const ids = b.enemies.map((e) => (typeof e === 'string' ? e : e.id));
+    const bosses = ids.filter((id) => ENEMY_BY_ID[id]?.boss);
+    assert.ok(bosses.length <= 1, `${b.id}: два босса 2×2 не помещаются в колонки 6–7`);
+    if (bosses.length) {
+      assert.ok(ids.length <= 3, `${b.id}: при боссе 2×2 свободны только две клетки`);
+    }
+  }
+});
+
+test('босс занимает блок 2×2: якорь — левая верхняя клетка', () => {
+  const boss = makeFormationEnemy('boss_willow', 1, 0, 0);
+  assert.equal(boss.boss, true);
+  assert.equal(boss.size, 2);
+  assert.deepEqual(boss.cell, [6, 0]);
+  assert.deepEqual(unitCells(boss), [[6, 0], [7, 0], [6, 1], [7, 1]]);
+  const slime = makeFormationEnemy('slime_meadow', 1, 0, 0);
+  assert.deepEqual(unitCells(slime), [[6, 0]], 'обычный враг — одна клетка');
+});
+
+test('босса бьют, стоя рядом с любой клеткой его тела', () => {
+  // Рыцарь у НИЖНЕЙ клетки блока (якорь [6,0] на ряд выше) — удар всё равно достаёт
+  const knight = makeFormationKnight({ ...KSTATS, attack: 60 }, [], [], 1);
+  knight.cell = [5, 2];
+  const boss = makeFormationEnemy('boss_willow', 1, 0, 0);
+  assert.equal(unitDist(knight, boss), 1);
+  const r = simulateFormationBattle([knight], [boss], 9);
+  const firstHit = r.log.findIndex((e) => e.t === 'hit' && e.fromUid === 'a0' && e.toUid === 'e0');
+  assert.ok(firstHit > 0, 'рыцарь бьёт босса');
+  const movedBefore = r.log.slice(0, firstHit).some((e) => e.t === 'move' && e.uid === 'a0');
+  assert.equal(movedBefore, false, 'подходить не пришлось — нижняя клетка тела уже в дальности');
+});
+
+test('босс двигается и его якорь не выходит за границы блока 2×2', () => {
+  const knight = makeFormationKnight({ ...KSTATS, hp: 900 }, [], [], 3); // задний ряд
+  const boss = makeFormationEnemy('boss_willow', 1, 0, 0);
+  const r = simulateFormationBattle([knight], [boss], 9);
+  const moves = r.log.filter((e) => e.t === 'move' && e.uid === 'e0');
+  assert.ok(moves.length > 0, 'босс идёт через поле к рыцарю');
+  for (const m of moves) {
+    assert.ok(m.to[0] >= 0 && m.to[0] <= 6, `якорь босса вне колонок: [${m.to}]`);
+    assert.ok(m.to[1] >= 0 && m.to[1] <= 1, `якорь босса вне рядов: [${m.to}]`);
+  }
+});
+
+test('тактика Защита против босса не встаёт в тупик', () => {
+  const knight = makeFormationKnight({ ...KSTATS, attack: 80, hp: 900 }, [], [], 1);
+  const boss = makeFormationEnemy('boss_willow', 1, 0, 0);
+  const r = simulateFormationBattle([knight], [boss], 21, 'defense');
+  assert.equal(r.report.timedOut, false, 'босс сам наступает — строй не ждёт вечно');
+  assert.equal(r.victory, true);
+});
+
+test('снимок расстановки хранит размер босса', async () => {
+  const { BATTLES } = await import('../src/data/battles.js');
+  const s = newGame();
+  for (const b of BATTLES) s.battlesDone[b.id] = { victories: 1 };
+  const r = runBattle(s, 'bt_boss_willow', 1);
+  const boss = r.formation.foes.find((f) => f.size === 2);
+  assert.ok(boss, 'у босса в снимке size 2');
+  assert.ok(boss.cell[0] === 6 && boss.cell[1] <= 1, `якорь босса: [${boss.cell}]`);
+  for (const f of r.formation.foes) assert.ok(f.size >= 1, 'у всех врагов есть size');
+  for (const a of r.formation.allies) assert.equal(a.size, 1, 'союзники — обычный размер');
 });
 
 test('runBattle проходит бой и даёт награду', () => {

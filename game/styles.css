@@ -2669,6 +2669,18 @@ body::-webkit-scrollbar { display: none; }
 .form-slot.front { border-color: rgba(255, 202, 122, 0.45); }
 .form-slot.occupied { border-style: solid; background: rgba(61, 47, 34, 0.55); }
 .form-slot.enemy { border-color: rgba(232, 138, 122, 0.4); cursor: default; }
+/* Босс 2×2 на превью расстановки: крупный маркер на блок из четырёх клеток */
+.form-slot.boss {
+  width: 158px;
+  height: 178px;
+  border-style: solid;
+  border-color: rgba(232, 138, 122, 0.75);
+  background: rgba(61, 34, 28, 0.55);
+  box-shadow: 0 0 18px rgba(232, 90, 60, 0.35), inset 0 0 24px rgba(0,0,0,0.4);
+  z-index: 2;
+}
+.form-slot.boss .uf-icon { font-size: 56px; }
+.form-slot.boss .uf-icon img.unit-sprite { width: 120px; margin: -18px 0 -12px; }
 .form-slot.selected { border-color: var(--accent); background: rgba(122, 92, 51, 0.6); box-shadow: 0 0 16px rgba(255, 202, 122, 0.4); }
 .form-slot .fs-icon { font-size: 32px; }
 
@@ -2687,6 +2699,15 @@ body::-webkit-scrollbar { display: none; }
 .unit-figure .uf-name { font-size: 10px; color: var(--text); text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
 .unit-figure .hpbar { margin-top: 3px; height: 8px; }
 .unit-figure.enemy .uf-icon { transform: scaleX(-1); }
+/* Босс 2×2 в бою: фигурка в два раза крупнее, поверх обычных */
+.unit-figure.big { width: 168px; z-index: 4; }
+.unit-figure.big .uf-icon { font-size: 76px; }
+.unit-figure.big .uf-icon img.unit-sprite { width: 148px; margin: -26px 0 -18px; }
+.unit-figure.big .uf-name { font-size: 12px; font-weight: 700; }
+.unit-figure.big .hpbar { height: 10px; }
+/* У босса с артом эмодзи-фолбэк гасим явно: правила .big/.boss выше по специфичности */
+.form-slot.boss .uf-icon.has-art,
+.unit-figure.big .uf-icon.has-art { font-size: 0; }
 .unit-figure.dead { opacity: 0.3; filter: grayscale(1); }
 .unit-figure.dead .uf-icon { transform: rotate(-70deg); transition: transform 0.4s ease; }
 /* Спрайт бойца (арт поверх эмодзи-фолбэка) */

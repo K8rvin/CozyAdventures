@@ -19985,6 +19985,14 @@
     sum += (item2.traits?.length || 0) * 8;
     return (RARITY_RANK[item2.rarity] ?? 0) * 100 + sum;
   }
+  function knightArtId(equipment) {
+    const w = equipment?.weapon && ITEM_BY_ID[equipment.weapon];
+    if (!w) return "knight";
+    if (w.type === "bow") return "knight_bow";
+    if (w.type === "staff") return "knight_staff";
+    if (w.hand === "two") return "knight_twohanded";
+    return "knight";
+  }
   function describeItem(item2) {
     const parts = [];
     const L = {
@@ -20316,6 +20324,38 @@
   function cellDist(a, b) {
     return Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]));
   }
+  function unitCells(u) {
+    const s = u.size || 1;
+    if (s === 1) return [u.cell];
+    const cells = [];
+    for (let dy = 0; dy < s; dy++) {
+      for (let dx = 0; dx < s; dx++) cells.push([u.cell[0] + dx, u.cell[1] + dy]);
+    }
+    return cells;
+  }
+  function unitDist(a, b) {
+    let best = Infinity;
+    for (const ca of unitCells(a)) {
+      for (const cb of unitCells(b)) {
+        const d = cellDist(ca, cb);
+        if (d < best) best = d;
+      }
+    }
+    return best;
+  }
+  function anchorDist(cell, size, goal) {
+    let best = Infinity;
+    for (let dx = 0; dx < size; dx++) {
+      for (let dy = 0; dy < size; dy++) {
+        const a = [cell[0] + dx, cell[1] + dy];
+        for (const cb of unitCells(goal)) {
+          const d = cellDist(a, cb);
+          if (d < best) best = d;
+        }
+      }
+    }
+    return best;
+  }
   function makeFormationKnight(knightStats, traits, consumables, slot) {
     const statuses = [];
     if ((traits || []).includes("regen_ally")) statuses.push({ kind: "regen", ticks: 9999, dmg: 1 });
@@ -20396,6 +20436,7 @@
       slot,
       cell: slotToCell(slot, "enemy"),
       boss: !!def.boss,
+      size: def.boss ? 2 : 1,
       tags: [...def.tags || []],
       caster,
       hp,
@@ -20499,31 +20540,43 @@
     return false;
   }
   function pickTarget(attacker, foes, rng, range) {
-    const inRange = foes.filter((f) => f.hp > 0 && cellDist(attacker.cell, f.cell) <= range);
+    const inRange = foes.filter((f) => f.hp > 0 && unitDist(attacker, f) <= range);
     if (inRange.length === 0) return null;
     return inRange.reduce((a, b) => a.hp < b.hp ? a : b);
   }
   function nearestEnemy(unit, foes) {
     const alive = foes.filter((f) => f.hp > 0);
     if (alive.length === 0) return null;
-    return alive.reduce((a, b) => cellDist(unit.cell, a.cell) < cellDist(unit.cell, b.cell) ? a : b);
+    return alive.reduce((a, b) => unitDist(unit, a) < unitDist(unit, b) ? a : b);
   }
   function stepToward(unit, goal, allUnits, log, obstacles = []) {
+    const size = unit.size || 1;
     const startKey = unit.cell.join(",");
     const blocked = new Set(obstacles.map((o) => o.cell.join(",")));
-    const occupied = new Set(
-      allUnits.filter((u) => u !== unit && u.hp > 0).map((u) => u.cell.join(","))
-    );
-    const free = (x, y) => x >= 0 && x < COLS && y >= 0 && y < ROWS && !blocked.has(`${x},${y}`) && !occupied.has(`${x},${y}`);
+    const occupied = /* @__PURE__ */ new Set();
+    for (const u of allUnits) {
+      if (u === unit || u.hp <= 0) continue;
+      for (const c of unitCells(u)) occupied.add(c.join(","));
+    }
+    const free = (x, y) => {
+      if (x < 0 || y < 0 || x + size > COLS || y + size > ROWS) return false;
+      for (let dx = 0; dx < size; dx++) {
+        for (let dy = 0; dy < size; dy++) {
+          const key = `${x + dx},${y + dy}`;
+          if (blocked.has(key) || occupied.has(key)) return false;
+        }
+      }
+      return true;
+    };
     const prev = /* @__PURE__ */ new Map([[startKey, null]]);
     const depth = /* @__PURE__ */ new Map([[startKey, 0]]);
     const queue = [unit.cell];
-    const curDist = cellDist(unit.cell, goal.cell);
+    const curDist = anchorDist(unit.cell, size, goal);
     let best = null;
     for (let qi = 0; qi < queue.length; qi++) {
       const [cx, cy] = queue[qi];
       const steps = depth.get(`${cx},${cy}`);
-      const d = cellDist([cx, cy], goal.cell);
+      const d = anchorDist([cx, cy], size, goal);
       if (steps > 0 && d < curDist && (!best || d < best.d || d === best.d && steps < best.steps)) {
         best = { cell: [cx, cy], d, steps };
       }
@@ -20533,7 +20586,7 @@
           if (dx || dy) dirs.push([dx, dy]);
         }
       }
-      dirs.sort((a, b) => cellDist([cx + a[0], cy + a[1]], goal.cell) - cellDist([cx + b[0], cy + b[1]], goal.cell));
+      dirs.sort((a, b) => anchorDist([cx + a[0], cy + a[1]], size, goal) - anchorDist([cx + b[0], cy + b[1]], size, goal));
       for (const [dx, dy] of dirs) {
         const nx = cx + dx;
         const ny = cy + dy;
@@ -20714,7 +20767,7 @@
       default: {
         if (unit.traits?.includes("cleave_small")) {
           const range2 = unitRange(unit);
-          const others = foes.filter((f) => f !== target && f.hp > 0 && cellDist(unit.cell, f.cell) <= range2);
+          const others = foes.filter((f) => f !== target && f.hp > 0 && unitDist(unit, f) <= range2);
           computeDamage(unit, target, rng, log);
           for (const other of others) computeDamage(unit, other, rng, log, { skillMult: 0.4 });
         } else {
@@ -20852,19 +20905,44 @@
     return "\u041D\u0435 \u0445\u0432\u0430\u0442\u0438\u043B\u043E \u043C\u043E\u0449\u0438. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0443, \u0437\u0435\u043B\u044C\u044F \u0438 \u0440\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0443: \u0442\u0430\u043D\u043A\u0438 \u0432\u043F\u0435\u0440\u0451\u0434, \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u043D\u0430\u0437\u0430\u0434.";
   }
   function enemyFormationSlots(enemyEntries) {
-    const used = /* @__PURE__ */ new Set();
-    const take = (prefs) => {
-      const slot = prefs.find((s) => !used.has(s)) ?? prefs[0];
-      used.add(slot);
-      return slot;
+    const usedCells = /* @__PURE__ */ new Set();
+    const slots = new Array(enemyEntries.length);
+    const fits = (cell, size) => {
+      if (cell[0] + size > COLS || cell[1] + size > ROWS) return false;
+      for (let dx = 0; dx < size; dx++) {
+        for (let dy = 0; dy < size; dy++) {
+          if (usedCells.has(`${cell[0] + dx},${cell[1] + dy}`)) return false;
+        }
+      }
+      return true;
     };
-    return enemyEntries.map((entry) => {
+    const occupy = (cell, size) => {
+      for (let dx = 0; dx < size; dx++) {
+        for (let dy = 0; dy < size; dy++) usedCells.add(`${cell[0] + dx},${cell[1] + dy}`);
+      }
+    };
+    const take = (index, prefs, size) => {
+      const slot = prefs.find((s) => fits(slotToCell(s, "enemy"), size)) ?? prefs[0];
+      occupy(slotToCell(slot, "enemy"), size);
+      slots[index] = slot;
+    };
+    const order = enemyEntries.map((_, i) => i).sort((a, b) => {
+      const ab = ENEMY_BY_ID[typeof enemyEntries[a] === "string" ? enemyEntries[a] : enemyEntries[a].id].boss ? 0 : 1;
+      const bb = ENEMY_BY_ID[typeof enemyEntries[b] === "string" ? enemyEntries[b] : enemyEntries[b].id].boss ? 0 : 1;
+      return ab - bb;
+    });
+    for (const i of order) {
+      const entry = enemyEntries[i];
       const id = typeof entry === "string" ? entry : entry.id;
       const def = ENEMY_BY_ID[id];
-      if (def.boss) return take([1, 0, 2, 4, 3, 5]);
+      if (def.boss) {
+        take(i, [0, 1], 2);
+        continue;
+      }
       const melee = !def.skills.some((s) => s === "pollen_sleep" || s === "fear_chill");
-      return melee ? take([0, 1, 2, 3, 4, 5]) : take([3, 4, 5, 0, 1, 2]);
-    });
+      take(i, melee ? [0, 1, 2, 3, 4, 5] : [3, 4, 5, 0, 1, 2], 1);
+    }
+    return slots;
   }
 
   // src/core/storyEngine.js
@@ -22612,8 +22690,8 @@
     const foes = entries2.map((e, i) => makeFormationEnemy(e.id, e.scale, slots[i], i));
     const obstacles = battle.obstacles || [];
     const initialFormation = {
-      allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
-      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] })),
+      allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell], size: a.size || 1 })),
+      foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell], size: f.size || 1 })),
       obstacles
     };
     const result = simulateFormationBattle(allies, foes, seed, state2.settings.tactic || "balance", obstacles);
@@ -34773,11 +34851,13 @@
 
   // src/ui/formationView.js
   var FRONT2 = [0, 1, 2];
-  function unitSpriteEl(art, icon, mini = false) {
+  function unitSpriteEl(art, icon, mini = false, fallbackArt = null) {
     const span = document.createElement("span");
     span.className = "uf-icon unit-art" + (mini ? " mini" : "");
     span.textContent = icon;
     if (!art) return span;
+    const arts = [...new Set([art, fallbackArt].filter(Boolean))];
+    let artIdx = 0;
     const img = document.createElement("img");
     img.className = "unit-sprite";
     img.alt = "";
@@ -34787,11 +34867,14 @@
       if (gone) return;
       img.dataset.wantPose = pose;
       img.style.opacity = "0.4";
-      img.src = `assets/battle/units/${art}_${pose}_web.png`;
+      img.src = `assets/battle/units/${arts[artIdx]}_${pose}_web.png`;
     };
     img.addEventListener("error", () => {
       if (img.dataset.wantPose && img.dataset.wantPose !== "idle") setPose("idle");
-      else {
+      else if (artIdx + 1 < arts.length) {
+        artIdx += 1;
+        setPose("idle");
+      } else {
         gone = true;
         img.remove();
         span.classList.remove("has-art");
@@ -34817,9 +34900,15 @@
   function cellPos(c, r) {
     return [5 + c * 12.5, 18 + r * 32];
   }
+  function bodyCenter(cell, size = 1) {
+    const [x, y] = cellPos(cell[0], cell[1]);
+    return [x + (size - 1) * 6.25, y + (size - 1) * 16];
+  }
   function slotPos(slot, side) {
     return cellPos(...slotToCell(slot, side));
   }
+  var PROJECTILE_LIFT = 36;
+  var PROJECTILE_LIFT_BIG = 72;
   function addFieldBg(fieldEl, world) {
     const bg = document.createElement("img");
     bg.className = "form-field-bg";
@@ -34866,7 +34955,8 @@
     addObstacles(field, battle.obstacles);
     prepPanel.appendChild(field);
     const units = [
-      { key: "knight", icon: "\u{1F6E1}\uFE0F", name: "\u0420\u044B\u0446\u0430\u0440\u044C", art: "knight" },
+      // Арт рыцаря — по типу экипированного оружия (фолбэк — базовый меч+щит)
+      { key: "knight", icon: "\u{1F6E1}\uFE0F", name: "\u0420\u044B\u0446\u0430\u0440\u044C", art: knightArtId(state2.equipped) },
       ...state2.squadMercs.map((id, i) => ({
         key: `merc${i}`,
         icon: MERC_BY_ID[id].icon,
@@ -34903,7 +34993,15 @@
     enemySlots.forEach((slot, i) => {
       const def = ENEMY_BY_ID[enemyEntries[i].id];
       const el = slotEl(slot, "enemy");
-      el.appendChild(unitSpriteEl(enemyEntries[i].id, def.icon, true));
+      if (def.boss) {
+        el.classList.add("boss");
+        const [bx, by] = bodyCenter(slotToCell(slot, "enemy"), 2);
+        el.style.left = `${bx}%`;
+        el.style.top = `${by}%`;
+        el.appendChild(unitSpriteEl(enemyEntries[i].id, def.icon));
+      } else {
+        el.appendChild(unitSpriteEl(enemyEntries[i].id, def.icon, true));
+      }
       el.classList.add("occupied", "enemy");
       field.appendChild(el);
     });
@@ -34926,7 +35024,7 @@
         if (!u) return;
         const ghost = document.createElement("div");
         ghost.className = "drag-ghost";
-        ghost.appendChild(unitSpriteEl(u.art, u.icon));
+        ghost.appendChild(unitSpriteEl(u.art, u.icon, false, u.key === "knight" ? "knight" : null));
         document.body.appendChild(ghost);
         unitDrag.ghost = ghost;
         unitDrag.active = true;
@@ -34962,7 +35060,7 @@
       if (!host) continue;
       host.classList.add("occupied");
       host.innerHTML = "";
-      host.appendChild(unitSpriteEl(u.art, u.icon, true));
+      host.appendChild(unitSpriteEl(u.art, u.icon, true, u.key === "knight" ? "knight" : null));
       host.style.touchAction = "none";
       host.addEventListener("pointerdown", (ev) => {
         unitDrag = { key: u.key, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hoverSlot: null };
@@ -35038,7 +35136,7 @@
     }
     function playBattle(result) {
       const unitDefs = /* @__PURE__ */ new Map();
-      unitDefs.set("a0", { name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438", icon: "\u{1F6E1}\uFE0F", hp: result.report.knightHpMax, art: "knight" });
+      unitDefs.set("a0", { name: "\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438", icon: "\u{1F6E1}\uFE0F", hp: result.report.knightHpMax, art: knightArtId(state2.equipped), fallbackArt: "knight" });
       state2.squadMercs.forEach((id, i) => {
         const d = MERC_BY_ID[id];
         unitDefs.set(`a${i + 1}`, { name: d.name, icon: d.icon, hp: d.hp, art: id });
@@ -35106,18 +35204,19 @@
     container.appendChild(logBox);
     const figures = /* @__PURE__ */ new Map();
     const unitsByUid = /* @__PURE__ */ new Map();
-    const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a.cell]));
-    const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f.cell]));
+    const allyInfo = new Map(result.formation.allies.map((a) => [a.uid, a]));
+    const foeInfo = new Map(result.formation.foes.map((f) => [f.uid, f]));
     for (const [uid, def] of unitDefs) {
       const isAlly = uid.startsWith("a");
-      const cell = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
-      if (!cell) continue;
-      const [x, y] = cellPos(cell[0], cell[1]);
+      const info = isAlly ? allyInfo.get(uid) : foeInfo.get(uid);
+      if (!info) continue;
+      const size = info.size || 1;
+      const [x, y] = bodyCenter(info.cell, size);
       const el = document.createElement("div");
-      el.className = "unit-figure " + (isAlly ? "ally" : "enemy");
+      el.className = "unit-figure " + (isAlly ? "ally" : "enemy") + (size > 1 ? " big" : "");
       el.style.left = `${x}%`;
       el.style.top = `${y}%`;
-      el.appendChild(unitSpriteEl(def.art, def.icon));
+      el.appendChild(unitSpriteEl(def.art, def.icon, false, def.fallbackArt || null));
       const nameEl = document.createElement("div");
       nameEl.className = "uf-name";
       nameEl.textContent = def.name;
@@ -35133,7 +35232,7 @@
       el.appendChild(hpbar);
       field2.appendChild(el);
       const unit = { hp: def.hp, maxHp: def.hp, badges: /* @__PURE__ */ new Set() };
-      figures.set(uid, { el, unit, side: isAlly ? "ally" : "enemy", x, y });
+      figures.set(uid, { el, unit, side: isAlly ? "ally" : "enemy", x, y, size });
       unitsByUid.set(uid, unit);
     }
     let speed = 500;
@@ -35189,8 +35288,9 @@
         const proj = document.createElement("div");
         proj.className = "projectile" + (e.magic ? " magic" : "");
         proj.textContent = e.magic ? e.elem === "fire" ? "\u{1F525}" : e.elem === "storm" ? "\u26A1" : "\u2728" : e.elem === "fire" ? "\u{1F525}" : e.elem === "storm" ? "\u26A1" : "\u27B9";
+        const lift = (atk.size || 1) > 1 ? PROJECTILE_LIFT_BIG : PROJECTILE_LIFT;
         proj.style.left = `${atk.x}%`;
-        proj.style.top = `${atk.y}%`;
+        proj.style.top = `calc(${atk.y}% - ${lift}px)`;
         field2.appendChild(proj);
         requestAnimationFrame(() => {
           proj.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
@@ -35263,7 +35363,7 @@
         case "move": {
           const f = figOf(e.uid);
           if (f) {
-            const [nx, ny] = cellPos(e.to[0], e.to[1]);
+            const [nx, ny] = bodyCenter(e.to, f.size || 1);
             f.x = nx;
             f.y = ny;
             f.el.style.left = `${nx}%`;
@@ -36048,8 +36148,8 @@
     }
     function formationOf(allies, foes) {
       return {
-        allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
-        foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] }))
+        allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell], size: a.size || 1 })),
+        foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell], size: f.size || 1 }))
       };
     }
     function runOne() {

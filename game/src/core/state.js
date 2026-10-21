@@ -978,8 +978,8 @@ function runFormationBattle(state, battle, seed) {
   // Начальные клетки для расстановки фигурок — ДО прогона боя
   const obstacles = battle.obstacles || [];
   const initialFormation = {
-    allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell] })),
-    foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell] })),
+    allies: allies.map((a) => ({ uid: a.uid, slot: a.slot, cell: [...a.cell], size: a.size || 1 })),
+    foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell], size: f.size || 1 })),
     obstacles,
   };
 

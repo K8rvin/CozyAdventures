@@ -6,22 +6,24 @@ import { ENEMY_BY_ID } from '../src/data/enemies.js';
 import { MERC_BY_ID } from '../src/data/crew.js';
 
 const MD = fs.readFileSync(new URL('../../art-src/PROMPTS_BATTLE.md', import.meta.url), 'utf8');
-const EXPECTED_IDS = ['knight', ...Object.keys(MERC_BY_ID), ...Object.keys(ENEMY_BY_ID)];
+// knight + наборы оружия рыцаря (двуручное/лук/посох) + наёмники + враги
+const EXPECTED_IDS = ['knight', 'knight_twohanded', 'knight_bow', 'knight_staff',
+  ...Object.keys(MERC_BY_ID), ...Object.keys(ENEMY_BY_ID)];
 const POSES = ['А. Стойка', 'Б. Атака', 'В. Урон', 'Г. Падение', 'Д. Шаг'];
 
 function sections() {
   return [...MD.matchAll(/^### (\d+)\.\s+`([a-z0-9_]+)`/gm)].map((m) => ({ n: +m[1], id: m[2], at: m.index }));
 }
 
-test('в файле промтов ровно 77 секций юнитов с нумерацией 1–77 без дыр', () => {
+test('в файле промтов ровно 80 секций юнитов с нумерацией 1–80 без дыр', () => {
   const secs = sections();
-  assert.equal(secs.length, 77, `секций: ${secs.length}`);
+  assert.equal(secs.length, 80, `секций: ${secs.length}`);
   const nums = secs.map((s) => s.n).sort((a, b) => a - b);
   nums.forEach((n, i) => assert.equal(n, i + 1, `дыра или дубль в нумерации: позиция ${i + 1}, номер ${n}`));
 });
 
 test('каждый боец из данных игры имеет секцию в PROMPTS_BATTLE.md и лишних нет', () => {
-  assert.equal(EXPECTED_IDS.length, 77, `юнитов в данных: ${EXPECTED_IDS.length}`);
+  assert.equal(EXPECTED_IDS.length, 80, `юнитов в данных: ${EXPECTED_IDS.length}`);
   const inFile = new Set(sections().map((s) => s.id));
   for (const id of EXPECTED_IDS) assert.ok(inFile.has(id), `нет секции для ${id}`);
   for (const id of inFile) assert.ok(EXPECTED_IDS.includes(id), `лишняя секция ${id}`);

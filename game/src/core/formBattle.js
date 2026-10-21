@@ -52,6 +52,46 @@ function cellDist(a, b) {
   return Math.max(Math.abs(a[0] - b[0]), Math.abs(a[1] - b[1]));
 }
 
+// Клетки тела юнита: обычный — одна клетка, босс (size 2) — блок 2×2,
+// unit.cell — якорь (левая верхняя клетка блока)
+export function unitCells(u) {
+  const s = u.size || 1;
+  if (s === 1) return [u.cell];
+  const cells = [];
+  for (let dy = 0; dy < s; dy++) {
+    for (let dx = 0; dx < s; dx++) cells.push([u.cell[0] + dx, u.cell[1] + dy]);
+  }
+  return cells;
+}
+
+// Дистанция между юнитами — минимальный Чебышёв по клеткам их тел:
+// босса 2×2 можно бить, стоя рядом с любой из его четырёх клеток
+export function unitDist(a, b) {
+  let best = Infinity;
+  for (const ca of unitCells(a)) {
+    for (const cb of unitCells(b)) {
+      const d = cellDist(ca, cb);
+      if (d < best) best = d;
+    }
+  }
+  return best;
+}
+
+// Дистанция от гипотетического якоря (клетка + размер) до тела цели
+function anchorDist(cell, size, goal) {
+  let best = Infinity;
+  for (let dx = 0; dx < size; dx++) {
+    for (let dy = 0; dy < size; dy++) {
+      const a = [cell[0] + dx, cell[1] + dy];
+      for (const cb of unitCells(goal)) {
+        const d = cellDist(a, cb);
+        if (d < best) best = d;
+      }
+    }
+  }
+  return best;
+}
+
 export function makeFormationKnight(knightStats, traits, consumables, slot) {
   const statuses = [];
   if ((traits || []).includes('regen_ally')) statuses.push({ kind: 'regen', ticks: 9999, dmg: 1 });
@@ -102,7 +142,7 @@ export function makeFormationEnemy(id, scale, slot, index) {
   return {
     uid: `e${index}`, side: 'enemy', name: def.name, icon: def.icon, slot,
     cell: slotToCell(slot, 'enemy'),
-    boss: !!def.boss, tags: [...(def.tags || [])], caster,
+    boss: !!def.boss, size: def.boss ? 2 : 1, tags: [...(def.tags || [])], caster,
     hp, maxHp: hp,
     attack: Math.round(def.attack * (scale || 1)),
     armor: Math.round(def.armor * (scale || 1)),
@@ -197,7 +237,7 @@ function tryApplyStatus(attacker, defender, kind, chance, status, rng, log) {
 // Цель по правилам дальности: холодное оружие — только соседняя клетка,
 // стрелок — любая, предпочитая хрупких.
 function pickTarget(attacker, foes, rng, range) {
-  const inRange = foes.filter((f) => f.hp > 0 && cellDist(attacker.cell, f.cell) <= range);
+  const inRange = foes.filter((f) => f.hp > 0 && unitDist(attacker, f) <= range);
   if (inRange.length === 0) return null;
   return inRange.reduce((a, b) => (a.hp < b.hp ? a : b));
 }
@@ -207,7 +247,7 @@ function nearestEnemy(unit, foes) {
   const alive = foes.filter((f) => f.hp > 0);
   if (alive.length === 0) return null;
   return alive.reduce((a, b) => (
-    cellDist(unit.cell, a.cell) < cellDist(unit.cell, b.cell) ? a : b));
+    unitDist(unit, a) < unitDist(unit, b) ? a : b));
 }
 
 // Шаг на одну клетку к цели: BFS по свободным клеткам (препятствия и занятые
@@ -215,23 +255,35 @@ function nearestEnemy(unit, foes) {
 // клетке. Возвращает true, если шаг совершён. Тупик (все пути закрыты) —
 // стоим на месте; такой бой решит лимит ходов.
 function stepToward(unit, goal, allUnits, log, obstacles = []) {
+  const size = unit.size || 1;
   const startKey = unit.cell.join(',');
   const blocked = new Set(obstacles.map((o) => o.cell.join(',')));
-  const occupied = new Set(
-    allUnits.filter((u) => u !== unit && u.hp > 0).map((u) => u.cell.join(',')),
-  );
-  const free = (x, y) => x >= 0 && x < COLS && y >= 0 && y < ROWS
-    && !blocked.has(`${x},${y}`) && !occupied.has(`${x},${y}`);
+  const occupied = new Set();
+  for (const u of allUnits) {
+    if (u === unit || u.hp <= 0) continue;
+    for (const c of unitCells(u)) occupied.add(c.join(','));
+  }
+  // Якорь свободен, если ВЕСЬ футпринт (size×size) в границах и без наездов
+  const free = (x, y) => {
+    if (x < 0 || y < 0 || x + size > COLS || y + size > ROWS) return false;
+    for (let dx = 0; dx < size; dx++) {
+      for (let dy = 0; dy < size; dy++) {
+        const key = `${x + dx},${y + dy}`;
+        if (blocked.has(key) || occupied.has(key)) return false;
+      }
+    }
+    return true;
+  };
 
   const prev = new Map([[startKey, null]]);
   const depth = new Map([[startKey, 0]]);
   const queue = [unit.cell];
-  const curDist = cellDist(unit.cell, goal.cell);
+  const curDist = anchorDist(unit.cell, size, goal);
   let best = null; // {cell, d, steps} — лучшая достижимая клетка
   for (let qi = 0; qi < queue.length; qi++) {
     const [cx, cy] = queue[qi];
     const steps = depth.get(`${cx},${cy}`);
-    const d = cellDist([cx, cy], goal.cell);
+    const d = anchorDist([cx, cy], size, goal);
     if (steps > 0 && d < curDist
       && (!best || d < best.d || (d === best.d && steps < best.steps))) {
       best = { cell: [cx, cy], d, steps };
@@ -243,8 +295,8 @@ function stepToward(unit, goal, allUnits, log, obstacles = []) {
         if (dx || dy) dirs.push([dx, dy]);
       }
     }
-    dirs.sort((a, b) => cellDist([cx + a[0], cy + a[1]], goal.cell)
-      - cellDist([cx + b[0], cy + b[1]], goal.cell));
+    dirs.sort((a, b) => anchorDist([cx + a[0], cy + a[1]], size, goal)
+      - anchorDist([cx + b[0], cy + b[1]], size, goal));
     for (const [dx, dy] of dirs) {
       const nx = cx + dx;
       const ny = cy + dy;
@@ -443,7 +495,7 @@ const SKILL_NAMES = {
         // Рассечение: по всем врагам в дальности
         const range = unitRange(unit);
         const others = foes.filter((f) => f !== target && f.hp > 0
-          && cellDist(unit.cell, f.cell) <= range);
+          && unitDist(unit, f) <= range);
         computeDamage(unit, target, rng, log);
         for (const other of others) computeDamage(unit, other, rng, log, { skillMult: 0.4 });
       } else {
@@ -602,20 +654,49 @@ function adviceFor(knight, allies, foes, cause) {
   return 'Не хватило мощи. Проверь экипировку, зелья и расстановку: танки вперёд, стрелки назад.';
 }
 
-// Авторасстановка врагов: каждый занимает СВОЙ слот — ближние вперёд,
-// стрелки назад, босс предпочитает центр переднего ряда.
+// Авторасстановка врагов: каждый занимает СВОБОДНЫЕ клетки — ближние вперёд,
+// стрелки назад, босс 2×2 садится первым якорем в верхний/средний ряд
+// передней колонки. Учёт занятости — по клеткам тел, а не слотам.
 export function enemyFormationSlots(enemyEntries) {
-  const used = new Set();
-  const take = (prefs) => {
-    const slot = prefs.find((s) => !used.has(s)) ?? prefs[0];
-    used.add(slot);
-    return slot;
+  const usedCells = new Set(); // 'x,y' всех уже занятых клеток
+  const slots = new Array(enemyEntries.length);
+  const fits = (cell, size) => {
+    if (cell[0] + size > COLS || cell[1] + size > ROWS) return false;
+    for (let dx = 0; dx < size; dx++) {
+      for (let dy = 0; dy < size; dy++) {
+        if (usedCells.has(`${cell[0] + dx},${cell[1] + dy}`)) return false;
+      }
+    }
+    return true;
   };
-  return enemyEntries.map((entry) => {
+  const occupy = (cell, size) => {
+    for (let dx = 0; dx < size; dx++) {
+      for (let dy = 0; dy < size; dy++) usedCells.add(`${cell[0] + dx},${cell[1] + dy}`);
+    }
+  };
+  const take = (index, prefs, size) => {
+    const slot = prefs.find((s) => fits(slotToCell(s, 'enemy'), size)) ?? prefs[0];
+    occupy(slotToCell(slot, 'enemy'), size);
+    slots[index] = slot;
+  };
+  // Сначала боссы (им нужен блок 2×2), потом все прочие — в исходном порядке
+  const order = enemyEntries.map((_, i) => i)
+    .sort((a, b) => {
+      const ab = ENEMY_BY_ID[typeof enemyEntries[a] === 'string' ? enemyEntries[a] : enemyEntries[a].id].boss ? 0 : 1;
+      const bb = ENEMY_BY_ID[typeof enemyEntries[b] === 'string' ? enemyEntries[b] : enemyEntries[b].id].boss ? 0 : 1;
+      return ab - bb;
+    });
+  for (const i of order) {
+    const entry = enemyEntries[i];
     const id = typeof entry === 'string' ? entry : entry.id;
     const def = ENEMY_BY_ID[id];
-    if (def.boss) return take([1, 0, 2, 4, 3, 5]); // босс в центр переднего ряда
+    if (def.boss) {
+      // Якорь босса — слоты 0 и 1 переднего ряда: [6,0] либо [6,1]
+      take(i, [0, 1], 2);
+      continue;
+    }
     const melee = !def.skills.some((s) => s === 'pollen_sleep' || s === 'fear_chill');
-    return melee ? take([0, 1, 2, 3, 4, 5]) : take([3, 4, 5, 0, 1, 2]);
-  });
+    take(i, melee ? [0, 1, 2, 3, 4, 5] : [3, 4, 5, 0, 1, 2], 1);
+  }
+  return slots;
 }
