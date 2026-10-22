@@ -142,6 +142,10 @@ export function sfx(name, step = 0) {
     case 'coin': tone(990, 0.07, { type: 'square', gain: 0.03 }); tone(1320, 0.1, { delay: 0.06, type: 'square', gain: 0.025 }); break;
     case 'hit': tone(180, 0.08, { type: 'sawtooth', gain: 0.04, slide: -60 }); break;
     case 'crit': tone(240, 0.12, { type: 'sawtooth', gain: 0.06, slide: -120 }); break;
+    case 'dodge': // уворот: тихий короткий свист вниз
+      tone(880, 0.09, { type: 'sine', gain: 0.03, slide: -340 }); break;
+    case 'resist': // статус не привился: глухой короткий стук
+      tone(220, 0.07, { type: 'triangle', gain: 0.035, slide: -40 }); break;
     case 'potion': tone(392, 0.12, { gain: 0.05 }); tone(523, 0.15, { delay: 0.08, gain: 0.05 }); break;
     case 'fail':
       [392, 330, 262].forEach((f, i) => tone(f, 0.3, { delay: i * 0.14, gain: 0.05 }));

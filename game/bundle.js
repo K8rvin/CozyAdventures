@@ -34387,6 +34387,12 @@
       case "crit":
         tone(240, 0.12, { type: "sawtooth", gain: 0.06, slide: -120 });
         break;
+      case "dodge":
+        tone(880, 0.09, { type: "sine", gain: 0.03, slide: -340 });
+        break;
+      case "resist":
+        tone(220, 0.07, { type: "triangle", gain: 0.035, slide: -40 });
+        break;
       case "potion":
         tone(392, 0.12, { gain: 0.05 });
         tone(523, 0.15, { delay: 0.08, gain: 0.05 });
@@ -34907,8 +34913,8 @@
   function slotPos(slot, side) {
     return cellPos(...slotToCell(slot, side));
   }
-  var PROJECTILE_LIFT = 36;
-  var PROJECTILE_LIFT_BIG = 72;
+  var PROJECTILE_LIFT_RATIO = 36 / 320;
+  var PROJECTILE_LIFT_RATIO_BIG = 72 / 320;
   function addFieldBg(fieldEl, world) {
     const bg = document.createElement("img");
     bg.className = "form-field-bg";
@@ -34943,17 +34949,14 @@
       return;
     }
     const { state: state2 } = ctx2;
-    container.appendChild(header(ctx2, `${battle.name} \u2014 \u0440\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0430`, battle.tip, "battles"));
-    const prepPanel = document.createElement("div");
-    prepPanel.className = "panel";
-    prepPanel.innerHTML = `<h3>\u0422\u0432\u043E\u0439 \u0441\u0442\u0440\u043E\u0439</h3>
-    <div class="muted" style="font-size:13px;margin-bottom:10px">
-    \u0422\u0430\u043F\u043D\u0438 \u0431\u043E\u0439\u0446\u0430, \u0437\u0430\u0442\u0435\u043C \u0441\u043B\u043E\u0442. \u041F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434 \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0440, \u0437\u0430\u0434\u043D\u0438\u0439 \u2014 \u0441\u0442\u0440\u0435\u043B\u043A\u0438 \u0438 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430.</div>`;
+    container.appendChild(header(ctx2, battle.name, battle.tip, "battles"));
     const field = document.createElement("div");
     field.className = "form-field";
     addFieldBg(field, battle.world);
     addObstacles(field, battle.obstacles);
-    prepPanel.appendChild(field);
+    container.appendChild(field);
+    const prepPanel = document.createElement("div");
+    prepPanel.className = "panel form-toolbar";
     const units = [
       // Арт рыцаря — по типу экипированного оружия (фолбэк — базовый меч+щит)
       { key: "knight", icon: "\u{1F6E1}\uFE0F", name: "\u0420\u044B\u0446\u0430\u0440\u044C", art: knightArtId(state2.equipped) },
@@ -35074,11 +35077,12 @@
         ctx2.sfx?.("tap");
       });
     }
-    const tacticBox = document.createElement("div");
-    tacticBox.style.cssText = "display:flex;gap:6px;align-items:center;margin-top:12px;flex-wrap:wrap";
     const tacticTitle = document.createElement("span");
+    tacticTitle.className = "muted";
     tacticTitle.textContent = "\u0422\u0430\u043A\u0442\u0438\u043A\u0430:";
-    tacticBox.appendChild(tacticTitle);
+    prepPanel.appendChild(tacticTitle);
+    const seg = document.createElement("div");
+    seg.className = "form-seg";
     const TACTICS = [
       ["defense", "\u{1F6E1} \u0417\u0430\u0449\u0438\u0442\u0430", "\u0414\u0435\u0440\u0436\u0438\u043C \u0441\u0442\u0440\u043E\u0439: \u0431\u0440\u043E\u043D\u044F \xD71.25 \u0438 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 +12%, \u0430\u0442\u0430\u043A\u0430 \xD70.85"],
       ["balance", "\u2696 \u0411\u0430\u043B\u0430\u043D\u0441", "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u0431\u043E\u0439 \u0431\u0435\u0437 \u043C\u043E\u0434\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440\u043E\u0432"],
@@ -35095,11 +35099,11 @@
         ctx2.save();
         rerender();
       });
-      tacticBox.appendChild(b);
+      seg.appendChild(b);
     }
+    prepPanel.appendChild(seg);
     const beltLabel = document.createElement("label");
-    beltLabel.style.cssText = "display:flex;gap:6px;align-items:center;margin-left:8px;font-size:14px";
-    beltLabel.classList.add("clickable");
+    beltLabel.className = "belt-chip clickable";
     const beltCheck = document.createElement("input");
     beltCheck.type = "checkbox";
     beltCheck.checked = state2.settings.useBeltItems !== false;
@@ -35110,19 +35114,18 @@
     });
     beltLabel.append(beltCheck, (() => {
       const s = document.createElement("span");
-      s.textContent = "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u0441 \u043F\u043E\u044F\u0441\u0430";
+      s.textContent = "\u041F\u0440\u0435\u0434\u043C\u0435\u0442\u044B \u0441 \u043F\u043E\u044F\u0441\u0430";
       return s;
     })());
-    tacticBox.appendChild(beltLabel);
-    prepPanel.appendChild(tacticBox);
-    const actions = document.createElement("div");
-    actions.style.cssText = "display:flex;gap:10px;margin-top:12px;flex-wrap:wrap";
+    prepPanel.appendChild(beltLabel);
+    const spacer = document.createElement("span");
+    spacer.className = "form-toolbar-spacer";
+    prepPanel.appendChild(spacer);
     const goBtn = document.createElement("button");
-    goBtn.className = "primary";
+    goBtn.className = "small primary form-go";
     goBtn.textContent = "\u2694\uFE0F \u0412 \u0431\u043E\u0439!";
     goBtn.addEventListener("click", () => startBattle());
-    actions.appendChild(goBtn);
-    prepPanel.appendChild(actions);
+    prepPanel.appendChild(goBtn);
     container.appendChild(prepPanel);
     function rerender() {
       container.innerHTML = "";
@@ -35147,6 +35150,7 @@
       });
       playBattleReplay(container, ctx2, {
         title: battle.name,
+        subtitle: battle.tip,
         backTo: "battles",
         world: battle.world,
         result,
@@ -35172,9 +35176,9 @@
       if (unitDrag?.ghost) unitDrag.ghost.remove();
     };
   }
-  function playBattleReplay(container, ctx2, { title, backTo = "battles", world, result, unitDefs, overlayButtons }) {
+  function playBattleReplay(container, ctx2, { title, subtitle, backTo = "battles", world, result, unitDefs, overlayButtons }) {
     container.innerHTML = "";
-    container.appendChild(header(ctx2, title, "\u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u0438 \u0443\u0447\u0438\u0441\u044C", backTo));
+    container.appendChild(header(ctx2, title, subtitle ?? "\u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u0438 \u0443\u0447\u0438\u0441\u044C", backTo));
     const field2 = document.createElement("div");
     field2.className = "form-field battle";
     addFieldBg(field2, world);
@@ -35183,13 +35187,20 @@
     const controls = document.createElement("div");
     controls.className = "panel";
     controls.style.cssText = "display:flex;gap:8px;align-items:center;margin-top:10px";
+    let speed = ctx2.state?.settings?.battleSpeed || 500;
     controls.append(document.createTextNode("\u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C: "));
-    for (const [label, ms] of [["1x", 500], ["2x", 250], ["4x", 120]]) {
+    for (const [label, ms] of [["0.5x", 1e3], ["1x", 500], ["2x", 250], ["4x", 120]]) {
       const b = document.createElement("button");
-      b.className = "small";
+      b.className = "small" + (speed === ms ? " primary" : "");
       b.textContent = label;
       b.addEventListener("click", () => {
         speed = ms;
+        if (ctx2.state?.settings) {
+          ctx2.state.settings.battleSpeed = ms;
+          ctx2.save?.();
+        }
+        controls.querySelectorAll("button.small").forEach((x) => x.classList.remove("primary"));
+        b.classList.add("primary");
       });
       controls.appendChild(b);
     }
@@ -35235,7 +35246,6 @@
       figures.set(uid, { el, unit, side: isAlly ? "ally" : "enemy", x, y, size });
       unitsByUid.set(uid, unit);
     }
-    let speed = 500;
     let timer = null;
     let i = 0;
     let done = false;
@@ -35276,6 +35286,17 @@
       el.classList.add(cls);
       setTimeout(() => el.classList.remove(cls), ms);
     }
+    function floatText(fig, text, cls) {
+      if (!fig) return;
+      const el = document.createElement("div");
+      el.className = "float-text " + cls;
+      el.textContent = text;
+      const lift = (field2.offsetHeight || 320) * (34 / 320);
+      el.style.left = `${fig.x}%`;
+      el.style.top = `calc(${fig.y}% - ${lift}px)`;
+      field2.appendChild(el);
+      setTimeout(() => el.remove(), 900);
+    }
     function animateHit(e) {
       const atk = figOf(e.fromUid);
       const def = figOf(e.toUid);
@@ -35288,7 +35309,8 @@
         const proj = document.createElement("div");
         proj.className = "projectile" + (e.magic ? " magic" : "");
         proj.textContent = e.magic ? e.elem === "fire" ? "\u{1F525}" : e.elem === "storm" ? "\u26A1" : "\u2728" : e.elem === "fire" ? "\u{1F525}" : e.elem === "storm" ? "\u26A1" : "\u27B9";
-        const lift = (atk.size || 1) > 1 ? PROJECTILE_LIFT_BIG : PROJECTILE_LIFT;
+        const liftRatio = (atk.size || 1) > 1 ? PROJECTILE_LIFT_RATIO_BIG : PROJECTILE_LIFT_RATIO;
+        const lift = (field2.offsetHeight || 320) * liftRatio;
         proj.style.left = `${atk.x}%`;
         proj.style.top = `calc(${atk.y}% - ${lift}px)`;
         field2.appendChild(proj);
@@ -35335,13 +35357,26 @@
           );
           ctx2.sfx?.(e.crit ? "crit" : "hit");
           break;
-        case "status_fail":
+        case "status_fail": {
           logLine("sys", `${e.who}: ${{ poison: "\u044F\u0434 \u043D\u0435 \u043F\u0440\u0438\u0432\u0438\u043B\u0441\u044F", sleep: "\u0441\u043E\u043D \u043D\u0435 \u043F\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u043E\u0432\u0430\u043B", slow: "\u0441\u043F\u043E\u0440\u044B \u043D\u0435 \u043F\u0440\u0438\u0432\u0438\u043B\u0438\u0441\u044C", fear: "\u0441\u0442\u0440\u0430\u0445 \u043D\u0435 \u043F\u043E\u0434\u0435\u0439\u0441\u0442\u0432\u043E\u0432\u0430\u043B" }[e.kind] || "\u0441\u0442\u0430\u0442\u0443\u0441 \u043D\u0435 \u043F\u0440\u043E\u0448\u0451\u043B"}`);
+          const f = figOf(e.uid);
+          if (f) {
+            pulse(f.el, "anim-resist", 400);
+            floatText(f, { poison: "\u044F\u0434 \u2014 \u043C\u0438\u043C\u043E", sleep: "\u0441\u043E\u043D \u2014 \u043C\u0438\u043C\u043E", slow: "\u0441\u043F\u043E\u0440\u044B \u2014 \u043C\u0438\u043C\u043E", fear: "\u0441\u0442\u0440\u0430\u0445 \u2014 \u043C\u0438\u043C\u043E" }[e.kind] || "\u043C\u0438\u043C\u043E", "resist");
+            ctx2.sfx?.("resist");
+          }
           break;
-        case "dodge":
+        }
+        case "dodge": {
           logLine("sys", `${e.who} \u0443\u043A\u043B\u043E\u043D\u044F\u0435\u0442\u0441\u044F!`);
-          if (figOf(e.uid)) pulse(figOf(e.uid).el, "anim-dodge", 380);
+          const f = figOf(e.uid);
+          if (f) {
+            pulse(f.el, "anim-dodge", 380);
+            floatText(f, "\u0423\u0432\u043E\u0440\u043E\u0442!", "dodge");
+            ctx2.sfx?.("dodge");
+          }
           break;
+        }
         case "status": {
           const f = figOf(e.uid);
           if (f) {

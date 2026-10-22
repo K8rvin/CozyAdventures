@@ -69,9 +69,9 @@ function slotPos(slot, side) {
 }
 
 // Снаряд вылетает из верхней половины спрайта, а не из подписи/ног:
-// подъём стартовой точки над центром фигурки (у босса 2×2 спрайт вдвое крупнее)
-const PROJECTILE_LIFT = 36;
-const PROJECTILE_LIFT_BIG = 72;
+// подъём стартовой точки — доля от высоты поля (36px при 320px; босс 2×2 — 72px)
+const PROJECTILE_LIFT_RATIO = 36 / 320;
+const PROJECTILE_LIFT_RATIO_BIG = 72 / 320;
 
 // Фон поля боя по миру битвы (фолбэк — без фона)
 function addFieldBg(fieldEl, world) {
@@ -109,20 +109,20 @@ export function renderFormation(container, ctx, params) {
   if (!battle || !battleAvailable(ctx.state, battle.id)) { ctx.go('battles'); return; }
   const { state } = ctx;
 
-  container.appendChild(header(ctx, `${battle.name} — расстановка`, battle.tip, 'battles'));
+  container.appendChild(header(ctx, battle.name, battle.tip, 'battles'));
 
   // --- Экран расстановки ---
-  const prepPanel = document.createElement('div');
-  prepPanel.className = 'panel';
-  prepPanel.innerHTML = `<h3>Твой строй</h3>
-    <div class="muted" style="font-size:13px;margin-bottom:10px">
-    Тапни бойца, затем слот. Передний ряд держит удар, задний — стрелки и поддержка.</div>`;
-
+  // Поле — прямой ребёнок контейнера сразу после шапки, как на экране боя:
+  // верхняя кромка поля на одной высоте, переход расстановка → бой без скачка
   const field = document.createElement('div');
   field.className = 'form-field';
   addFieldBg(field, battle.world);
   addObstacles(field, battle.obstacles);
-  prepPanel.appendChild(field);
+  container.appendChild(field);
+
+  // Панель под полем — один компактный тулбар: тактика, пояс, кнопка «В бой!»
+  const prepPanel = document.createElement('div');
+  prepPanel.className = 'panel form-toolbar';
 
   const units = [
     // Арт рыцаря — по типу экипированного оружия (фолбэк — базовый меч+щит)
@@ -255,12 +255,13 @@ export function renderFormation(container, ctx, params) {
     });
   }
 
-  // --- Тактика команды и тумблер пояса ---
-  const tacticBox = document.createElement('div');
-  tacticBox.style.cssText = 'display:flex;gap:6px;align-items:center;margin-top:12px;flex-wrap:wrap';
+  // --- Тактика команды (сегмент-группа), чип пояса, кнопка «В бой!» ---
   const tacticTitle = document.createElement('span');
+  tacticTitle.className = 'muted';
   tacticTitle.textContent = 'Тактика:';
-  tacticBox.appendChild(tacticTitle);
+  prepPanel.appendChild(tacticTitle);
+  const seg = document.createElement('div');
+  seg.className = 'form-seg';
   const TACTICS = [
     ['defense', '🛡 Защита', 'Держим строй: броня ×1.25 и уклонение +12%, атака ×0.85'],
     ['balance', '⚖ Баланс', 'Обычный бой без модификаторов'],
@@ -277,11 +278,12 @@ export function renderFormation(container, ctx, params) {
       ctx.save();
       rerender();
     });
-    tacticBox.appendChild(b);
+    seg.appendChild(b);
   }
+  prepPanel.appendChild(seg);
+
   const beltLabel = document.createElement('label');
-  beltLabel.style.cssText = 'display:flex;gap:6px;align-items:center;margin-left:8px;font-size:14px';
-  beltLabel.classList.add('clickable');
+  beltLabel.className = 'belt-chip clickable';
   const beltCheck = document.createElement('input');
   beltCheck.type = 'checkbox';
   beltCheck.checked = state.settings.useBeltItems !== false;
@@ -290,19 +292,18 @@ export function renderFormation(container, ctx, params) {
     ctx.sfx?.('tap');
     ctx.save();
   });
-  beltLabel.append(beltCheck, (() => { const s = document.createElement('span'); s.textContent = 'Использовать предметы с пояса'; return s; })());
-  tacticBox.appendChild(beltLabel);
-  prepPanel.appendChild(tacticBox);
+  beltLabel.append(beltCheck, (() => { const s = document.createElement('span'); s.textContent = 'Предметы с пояса'; return s; })());
+  prepPanel.appendChild(beltLabel);
 
-  // Кнопка «В бой!»
-  const actions = document.createElement('div');
-  actions.style.cssText = 'display:flex;gap:10px;margin-top:12px;flex-wrap:wrap';
+  const spacer = document.createElement('span');
+  spacer.className = 'form-toolbar-spacer';
+  prepPanel.appendChild(spacer);
+
   const goBtn = document.createElement('button');
-  goBtn.className = 'primary';
+  goBtn.className = 'small primary form-go';
   goBtn.textContent = '⚔️ В бой!';
   goBtn.addEventListener('click', () => startBattle());
-  actions.appendChild(goBtn);
-  prepPanel.appendChild(actions);
+  prepPanel.appendChild(goBtn);
   container.appendChild(prepPanel);
 
   function rerender() {
@@ -331,7 +332,7 @@ export function renderFormation(container, ctx, params) {
       unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)), art: e.id });
     });
     playBattleReplay(container, ctx, {
-      title: battle.name, backTo: 'battles', world: battle.world, result, unitDefs,
+      title: battle.name, subtitle: battle.tip, backTo: 'battles', world: battle.world, result, unitDefs,
       overlayButtons: (rep) => {
         const nextB = rep.victory ? nextBattle(battle.id) : null;
         return [
@@ -356,9 +357,10 @@ export function renderFormation(container, ctx, params) {
   };
 }
 
-export function playBattleReplay(container, ctx, { title, backTo = 'battles', world, result, unitDefs, overlayButtons }) {
+export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'battles', world, result, unitDefs, overlayButtons }) {
   container.innerHTML = '';
-  container.appendChild(header(ctx, title, 'Бой идёт сам — смотри и учись', backTo));
+  // Шапка повторяет экран расстановки (заголовок/подзаголовок боя) — поле не прыгает
+  container.appendChild(header(ctx, title, subtitle ?? 'Бой идёт сам — смотри и учись', backTo));
 
     const field2 = document.createElement('div');
     field2.className = 'form-field battle';
@@ -369,12 +371,22 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
     const controls = document.createElement('div');
     controls.className = 'panel';
     controls.style.cssText = 'display:flex;gap:8px;align-items:center;margin-top:10px';
+    // Скорость боя запоминается (как тактика): 0.5x — полюбоваться анимацией
+    let speed = ctx.state?.settings?.battleSpeed || 500;
     controls.append(document.createTextNode('Скорость: '));
-    for (const [label, ms] of [['1x', 500], ['2x', 250], ['4x', 120]]) {
+    for (const [label, ms] of [['0.5x', 1000], ['1x', 500], ['2x', 250], ['4x', 120]]) {
       const b = document.createElement('button');
-      b.className = 'small';
+      b.className = 'small' + (speed === ms ? ' primary' : '');
       b.textContent = label;
-      b.addEventListener('click', () => { speed = ms; });
+      b.addEventListener('click', () => {
+        speed = ms;
+        if (ctx.state?.settings) {
+          ctx.state.settings.battleSpeed = ms;
+          ctx.save?.();
+        }
+        controls.querySelectorAll('button.small').forEach((x) => x.classList.remove('primary'));
+        b.classList.add('primary');
+      });
       controls.appendChild(b);
     }
     const skip = document.createElement('button');
@@ -424,7 +436,6 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
       unitsByUid.set(uid, unit);
     }
 
-    let speed = 500;
     let timer = null;
     let i = 0;
     let done = false;
@@ -467,6 +478,20 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
       setTimeout(() => el.classList.remove(cls), ms);
     }
 
+    // Всплывающий боевой текст над головой фигурки («Уворот!», «яд — мимо»):
+    // поднимается и растворяется (CSS float-rise), сам удаляется
+    function floatText(fig, text, cls) {
+      if (!fig) return;
+      const el = document.createElement('div');
+      el.className = 'float-text ' + cls;
+      el.textContent = text;
+      const lift = (field2.offsetHeight || 320) * (34 / 320);
+      el.style.left = `${fig.x}%`;
+      el.style.top = `calc(${fig.y}% - ${lift}px)`;
+      field2.appendChild(el);
+      setTimeout(() => el.remove(), 900);
+    }
+
     function animateHit(e) {
       const atk = figOf(e.fromUid);
       const def = figOf(e.toUid);
@@ -481,7 +506,8 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
           ? (e.elem === 'fire' ? '🔥' : e.elem === 'storm' ? '⚡' : '✨')
           : (e.elem === 'fire' ? '🔥' : e.elem === 'storm' ? '⚡' : '➹');
         // Старт — из верхней половины спрайта (центр фигурки — это ноги/подпись)
-        const lift = (atk.size || 1) > 1 ? PROJECTILE_LIFT_BIG : PROJECTILE_LIFT;
+        const liftRatio = (atk.size || 1) > 1 ? PROJECTILE_LIFT_RATIO_BIG : PROJECTILE_LIFT_RATIO;
+        const lift = (field2.offsetHeight || 320) * liftRatio;
         proj.style.left = `${atk.x}%`;
         proj.style.top = `calc(${atk.y}% - ${lift}px)`;
         field2.appendChild(proj);
@@ -527,13 +553,27 @@ export function playBattleReplay(container, ctx, { title, backTo = 'battles', wo
             `${e.from} → ${e.to}${e.skillName ? ` (${e.skillName})` : ''}: −${e.dmg}${e.crit ? ' КРИТ!' : ''}`);
           ctx.sfx?.(e.crit ? 'crit' : 'hit');
           break;
-        case 'status_fail':
+        case 'status_fail': {
           logLine('sys', `${e.who}: ${{ poison: 'яд не привился', sleep: 'сон не подействовал', slow: 'споры не привились', fear: 'страх не подействовал' }[e.kind] || 'статус не прошёл'}`);
+          // Визуальный отклик: серая вспышка и всплывающий «мимо» над целью
+          const f = figOf(e.uid);
+          if (f) {
+            pulse(f.el, 'anim-resist', 400);
+            floatText(f, { poison: 'яд — мимо', sleep: 'сон — мимо', slow: 'споры — мимо', fear: 'страх — мимо' }[e.kind] || 'мимо', 'resist');
+            ctx.sfx?.('resist');
+          }
           break;
-        case 'dodge':
+        }
+        case 'dodge': {
           logLine('sys', `${e.who} уклоняется!`);
-          if (figOf(e.uid)) pulse(figOf(e.uid).el, 'anim-dodge', 380);
+          const f = figOf(e.uid);
+          if (f) {
+            pulse(f.el, 'anim-dodge', 380);
+            floatText(f, 'Уворот!', 'dodge');
+            ctx.sfx?.('dodge');
+          }
           break;
+        }
         case 'status': {
           const f = figOf(e.uid);
           if (f) {

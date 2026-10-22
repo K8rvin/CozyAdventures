@@ -57,6 +57,14 @@ html, body {
 body[data-route="hub"] #screen { max-width: min(1800px, 96vw); }
 body[data-route="hub"] #screen > .panel:not(.hub-picture),
 body[data-route="hub"] #screen > .muted { max-width: 1060px; margin-left: auto; margin-right: auto; }
+/* Походы рыцаря: расстановка и бой на всю ширину, как сцены хаба */
+body[data-route="battle"] #screen { max-width: min(1800px, 96vw); }
+body[data-route="battle"] #screen > .panel,
+body[data-route="battle"] #screen > .battle-log { max-width: 1060px; margin-left: auto; margin-right: auto; }
+/* На широком экране поле боя растёт в высоту пропорционально ширине */
+@media (min-width: 1300px) {
+  body[data-route="battle"] .form-field { height: auto; aspect-ratio: 3.2 / 1; }
+}
 
 /* Подзаголовок прокручивается вместе с содержимым; заголовок и «Назад» — в topbar. */
 .app-header { margin: 0 2px 14px; line-height: 1.45; }
@@ -2630,6 +2638,8 @@ body::-webkit-scrollbar { display: none; }
   position: relative;
   width: 100%;
   height: 320px;
+  /* cqw = % ширины поля: размеры фишек растут вместе с полем боя */
+  container-type: inline-size;
   background: linear-gradient(180deg, #46523a 0%, #3a462f 55%, #333d2a 100%);
   border-radius: 14px;
   overflow: hidden;
@@ -2647,15 +2657,15 @@ body::-webkit-scrollbar { display: none; }
 .form-obstacle {
   position: absolute;
   transform: translate(-50%, -50%);
-  font-size: 34px;
+  font-size: max(34px, 3.3cqw);
   line-height: 1;
   filter: drop-shadow(0 2px 3px rgba(0,0,0,0.55));
   z-index: 1;
 }
 .form-slot {
   position: absolute;
-  width: 76px;
-  height: 76px;
+  width: max(76px, 7.4cqw);
+  height: max(76px, 7.4cqw);
   transform: translate(-50%, -50%);
   border: 2px dashed rgba(243, 230, 207, 0.3);
   border-radius: 14px;
@@ -2671,56 +2681,95 @@ body::-webkit-scrollbar { display: none; }
 .form-slot.enemy { border-color: rgba(232, 138, 122, 0.4); cursor: default; }
 /* Босс 2×2 на превью расстановки: крупный маркер на блок из четырёх клеток */
 .form-slot.boss {
-  width: 158px;
-  height: 178px;
+  width: max(158px, 15.4cqw);
+  height: max(178px, 17.3cqw);
   border-style: solid;
   border-color: rgba(232, 138, 122, 0.75);
   background: rgba(61, 34, 28, 0.55);
   box-shadow: 0 0 18px rgba(232, 90, 60, 0.35), inset 0 0 24px rgba(0,0,0,0.4);
   z-index: 2;
 }
-.form-slot.boss .uf-icon { font-size: 56px; }
-.form-slot.boss .uf-icon img.unit-sprite { width: 120px; margin: -18px 0 -12px; }
+.form-slot.boss .uf-icon { font-size: max(56px, 5.4cqw); }
+.form-slot.boss .uf-icon img.unit-sprite { width: max(120px, 11.7cqw); margin: min(-18px, -1.75cqw) 0 min(-12px, -1.2cqw); }
 .form-slot.selected { border-color: var(--accent); background: rgba(122, 92, 51, 0.6); box-shadow: 0 0 16px rgba(255, 202, 122, 0.4); }
-.form-slot .fs-icon { font-size: 32px; }
+.form-slot .fs-icon { font-size: max(32px, 3.1cqw); }
+
+/* Панель расстановки: компактный тулбар (тактика, пояс, «В бой!») */
+.form-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  margin-top: 12px;
+}
+.form-toolbar > .muted { font-size: 14px; }
+.form-toolbar-spacer { flex: 1; }
+/* Сегмент-группа тактики: кнопки слипшись, активная поверх соседей */
+.form-seg { display: inline-flex; }
+.form-seg button { border-radius: 0; margin-left: -2px; position: relative; }
+.form-seg button:first-child { border-top-left-radius: 12px; border-bottom-left-radius: 12px; margin-left: 0; }
+.form-seg button:last-child { border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+.form-seg button.primary { z-index: 1; }
+/* Чип-переключатель пояса в виде small-кнопки */
+.belt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--panel-2);
+  border: 2px solid #6b553a;
+  border-radius: 12px;
+  user-select: none;
+}
+.belt-chip:hover { background: #5a4732; }
+.belt-chip:has(input:checked) { border-color: var(--accent); background: rgba(122, 92, 51, 0.55); }
+.form-go { min-width: 116px; }
+@media (max-width: 640px) {
+  .form-toolbar-spacer { display: none; }
+  .form-go { width: 100%; }
+}
 
 .unit-figure {
   position: absolute;
-  width: 84px;
+  width: max(84px, 8.2cqw);
   transform: translate(-50%, -50%);
   text-align: center;
   transition: transform 0.18s ease, left 0.28s ease, top 0.28s ease;
   z-index: 3;
 }
 .unit-figure .uf-icon {
-  font-size: 40px;
+  font-size: max(40px, 3.9cqw);
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
 }
-.unit-figure .uf-name { font-size: 10px; color: var(--text); text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-.unit-figure .hpbar { margin-top: 3px; height: 8px; }
+.unit-figure .uf-name { font-size: max(10px, 1cqw); color: var(--text); text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+.unit-figure .hpbar { margin-top: 3px; height: max(8px, 0.8cqw); }
 .unit-figure.enemy .uf-icon { transform: scaleX(-1); }
 /* Босс 2×2 в бою: фигурка в два раза крупнее, поверх обычных */
-.unit-figure.big { width: 168px; z-index: 4; }
-.unit-figure.big .uf-icon { font-size: 76px; }
-.unit-figure.big .uf-icon img.unit-sprite { width: 148px; margin: -26px 0 -18px; }
-.unit-figure.big .uf-name { font-size: 12px; font-weight: 700; }
-.unit-figure.big .hpbar { height: 10px; }
+.unit-figure.big { width: max(168px, 16.4cqw); z-index: 4; }
+.unit-figure.big .uf-icon { font-size: max(76px, 7.4cqw); }
+.unit-figure.big .uf-icon img.unit-sprite { width: max(148px, 14.4cqw); margin: min(-26px, -2.5cqw) 0 min(-18px, -1.75cqw); }
+.unit-figure.big .uf-name { font-size: max(12px, 1.2cqw); font-weight: 700; }
+.unit-figure.big .hpbar { height: max(10px, 1cqw); }
 /* У босса с артом эмодзи-фолбэк гасим явно: правила .big/.boss выше по специфичности */
 .form-slot.boss .uf-icon.has-art,
 .unit-figure.big .uf-icon.has-art { font-size: 0; }
 .unit-figure.dead { opacity: 0.3; filter: grayscale(1); }
 .unit-figure.dead .uf-icon { transform: rotate(-70deg); transition: transform 0.4s ease; }
 /* Спрайт бойца (арт поверх эмодзи-фолбэка) */
-.form-slot .uf-icon { font-size: 30px; line-height: 1; }
+.form-slot .uf-icon { font-size: max(30px, 2.9cqw); line-height: 1; }
 .uf-icon.has-art { font-size: 0; }
 .uf-icon img.unit-sprite {
-  width: 76px;
-  margin: -16px 0 -10px;
+  width: max(76px, 7.4cqw);
+  margin: min(-16px, -1.6cqw) 0 min(-10px, -1cqw);
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
   pointer-events: none;
   transition: opacity 0.15s ease;
 }
-.uf-icon.mini img.unit-sprite { width: 54px; margin: -8px 0 -6px; }
+.uf-icon.mini img.unit-sprite { width: max(54px, 5.3cqw); margin: min(-8px, -0.8cqw) 0 min(-6px, -0.6cqw); }
 .unit-figure.enemy .uf-icon img.unit-sprite { transform: scaleX(-1); }
 .form-slot.enemy .uf-icon img.unit-sprite { transform: scaleX(-1); }
 .unit-figure.dead .uf-icon.has-art { transform: none; }
@@ -2729,7 +2778,7 @@ body::-webkit-scrollbar { display: none; }
   position: absolute;
   top: -8px;
   right: -6px;
-  font-size: 14px;
+  font-size: max(14px, 1.4cqw);
   letter-spacing: -2px;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
   pointer-events: none;
@@ -2739,6 +2788,38 @@ body::-webkit-scrollbar { display: none; }
 .unit-figure.anim-heal { animation: glow-heal-fig 0.7s ease; }
 .unit-figure.anim-hit { animation: shake-hit-fig 0.3s ease, flash-damage-fig 0.45s ease; }
 .unit-figure.anim-crit { animation: shake-hit-fig 0.3s ease, flash-crit-fig 0.5s ease; }
+/* Уворот: резкий шаг в сторону с возвратом (translate(-50%,-50%) сохраняется) */
+.unit-figure.anim-dodge { animation: juke-dodge-fig 0.38s ease; }
+@keyframes juke-dodge-fig {
+  0%, 100% { transform: translate(-50%, -50%); }
+  30% { transform: translate(calc(-50% - 22px), calc(-50% - 6px)); }
+  60% { transform: translate(calc(-50% + 8px), -50%); }
+}
+/* Сопротивление статусу: серая вспышка-отблеск */
+.unit-figure.anim-resist { animation: flash-resist-fig 0.4s ease; }
+@keyframes flash-resist-fig {
+  0%, 100% { filter: none; }
+  40% { filter: drop-shadow(0 0 12px rgba(190, 180, 160, 0.85)) grayscale(0.4); }
+}
+/* Всплывающий боевой текст над фигуркой («Уворот!», «яд — мимо») */
+.float-text {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: max(13px, 1.4cqw);
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 6;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85);
+  animation: float-rise 0.85s ease-out forwards;
+}
+.float-text.dodge { color: #bcd8ff; }
+.float-text.resist { color: #d9c9a8; }
+@keyframes float-rise {
+  0% { opacity: 0; transform: translate(-50%, -50%) translateY(6px); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) translateY(-26px); }
+}
 @keyframes shake-hit-fig {
   0%, 100% { transform: translate(-50%, -50%); }
   20% { transform: translate(calc(-50% - 6px), -50%); }
@@ -2769,7 +2850,7 @@ body::-webkit-scrollbar { display: none; }
 
 .projectile {
   position: absolute;
-  font-size: 24px;
+  font-size: max(24px, 2.3cqw);
   z-index: 5;
   pointer-events: none;
   transition: transform 0.32s linear;
@@ -2777,7 +2858,7 @@ body::-webkit-scrollbar { display: none; }
 }
 /* Магический болт: фиолетовое свечение и пульсация */
 .projectile.magic {
-  font-size: 27px;
+  font-size: max(27px, 2.6cqw);
   filter: drop-shadow(0 0 7px rgba(186, 132, 255, 0.95)) drop-shadow(0 2px 4px rgba(0,0,0,0.5));
   animation: magic-pulse 0.32s ease-in-out infinite alternate;
 }
