@@ -4268,6 +4268,11 @@ body::-webkit-scrollbar { display: none; }
 .seat-preview-desc { font-size: 13px; color: rgba(243, 230, 207, 0.9); line-height: 1.5; }
 .seat-preview-line { font-size: 13px; font-style: italic; color: #f3e6cf; }
 .seat-preview-wishes { font-size: 13px; text-align: left; line-height: 1.5; color: rgba(243, 230, 207, 0.92); align-self: stretch; }
+.seat-preview-wish + .seat-preview-wish { margin-top: 8px; }
+.seat-preview-about { align-self: stretch; border-top: 1px solid rgba(255, 202, 122, 0.2); padding-top: 8px; font-size: 13px; }
+.seat-preview-about summary { color: #ffca7a; cursor: pointer; text-align: left; }
+.seat-preview-about[open] summary { margin-bottom: 8px; }
+.seat-preview-about .seat-preview-line { margin-top: 8px; }
 
 /* === Тематические курсоры: body[data-cursor] ставит роутер (src/ui/cursors.js).
    PNG 32x32 в assets/cursors/ генерируются по art-src/PROMPTS.md; пока файла нет —

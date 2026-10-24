@@ -1789,156 +1789,246 @@ no text, no watermark --ar 1:1
 и особенности мест — части одного арта. Поверх код кладёт только портреты
 гостей и временные подсветки. Людей и животных в комнатах НЕ рисуем.
 
-### 21.0 seat_room_base.png — опорный референс комнаты
-
-Сначала генерируем базовую комнату без стола: она фиксирует архитектуру,
-ракурс, свет и постоянные якоря. Дальше каждую главу делаем image-to-image
-или edit от этого референса, чтобы комната ощущалась одной и той же.
-
-```
-A cozy magical tea room inside a fantasy crossroads shop, high-angle
-top-down view at about 70 degrees, storybook watercolor illustration with
-gentle ink outlines, warm candlelit palette of amber, honey and deep brown,
-dark wooden beams and plank floor, monolithic finished game background.
-
-Persistent room anchors:
-- LEFT wall: a large multi-paned window with a moonlit crossroads and cool
-  blue evening light;
-- RIGHT wall: a low stone fireplace with warm embers and a small rug in front;
-- FAR RIGHT: a sturdy wooden door with a woven draft mat and a faint cold
-  draft line near the floor;
-- BACK RIGHT: a sideboard with a copper samovar, teacups and covered treats;
-- BACK LEFT: a quiet reading nook with a low bookshelf, folded blanket and
-  a small shaded lamp;
-- CENTER: a clear open floor area reserved for a tea table in later edits.
-
-All feature areas are visually distinct but empty and calm, no table yet,
-no chairs, no people, no animals, no readable text, no watermark --ar 16:10
-```
-
-Размер: ≥1600×1000. Оригинал — `art-src/seating/seat_room_base.png`.
-
-### Общий хвост для всех игровых комнат
-
-```
-Use the reference tea room image. Preserve the same architecture, camera
-angle, warm candlelit palette, window, fireplace, door, samovar sideboard,
-quiet reading nook and overall cozy storybook watercolor style. Keep every
-seat cushion completely clear and readable: the game will place circular
-character portraits on them. Monolithic finished game background, no people,
-no animals, no readable text, no watermark --ar 16:10
-```
+Каждый промт ниже самодостаточен: его можно использовать отдельно, в text-to-image,
+без базового изображения, референсов и дополнительных инструкций. Ракурс и планировка
+повторяются в каждом промте намеренно — так комнаты останутся визуально связаны.
 
 ### 21.1 seat_ch01.png — глава 1, первая чайная комната
 
 ```
-Add a small round dark-oak tea table in the center with exactly FOUR wooden
-chairs around it. Simple first-evening atmosphere: a modest teapot, four
-plain cups and a small plate of biscuits on the table. Make the four seats
-visibly distinct through colored cushions and the room itself: the upper-left
-chair has a BLUE cushion beside the quiet bookshelf nook, with the window
-behind the seated guest; the lower-left chair has a VIOLET cushion and gives
-the seated guest a clear side view of the window; the upper-right chair has
-a RED cushion near the warm fireplace rug; the lower-right chair has a GREEN
-cushion nearer the drafty door. Both left chairs are window-adjacent, but only
-the lower-left one faces the view sideways. + общий хвост
+Create a finished 16:10 game background of an empty cozy magical tea room inside
+a fantasy crossroads shop. Storybook watercolor, gentle ink outlines, amber and
+honey light, dark wooden beams and plank floor. High-angle view at about 70
+degrees, all furniture and chair cushions clearly visible. Large multi-paned
+window on the LEFT wall, low stone fireplace on the RIGHT wall, wooden door at
+the FAR RIGHT, copper samovar on a BACK-RIGHT sideboard, quiet bookshelf nook
+at the BACK LEFT.
+
+In the CENTER place one small round dark-oak tea table with exactly FOUR wooden
+chairs and no other seating. Arrange the chairs at upper left, upper right,
+lower right and lower left. Upper-left chair: BLUE cushion, beside the quiet
+bookshelf, window behind it. Upper-right chair: RED cushion, beside the warm
+fireplace rug. Lower-right chair: GREEN cushion, closer to the drafty door.
+Lower-left chair: VIOLET cushion, with a clear side view of the window. Put a
+modest teapot, four plain cups and biscuits on the table.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.2 seat_ch02.png — глава 2, места у огня
 
 ```
-Change the center to a slightly larger round table with exactly FIVE chairs.
-Make the fireplace brighter and more important: a warm braided rug, copper
-fire tools and soft firelight. Give the five chairs distinct baked-in cues:
-green cushion on the upper-left chair by the quiet reading nook and window
-behind it, blue cushion on the lower-left chair with a side view of the
-window, warm red cushion by the fireplace, violet cushion nearer the door
-draft, and yellow cushion near the samovar sideboard. Both left chairs are
-window-adjacent, but only the lower-left one faces the view sideways. Winter
-evening outside the window. + общий хвост
+Create a finished 16:10 game background of an empty cozy magical tea room inside
+a fantasy crossroads shop on a winter evening. Storybook watercolor, gentle ink
+outlines, amber firelight, dark wooden beams and plank floor. High-angle view at
+about 70 degrees, all furniture and chair cushions clearly visible. Large snowy
+multi-paned window on the LEFT wall, bright low stone fireplace with a braided
+rug and copper fire tools on the RIGHT wall, wooden door at the FAR RIGHT,
+copper samovar on a BACK-RIGHT sideboard, quiet bookshelf nook at the BACK LEFT.
+
+In the CENTER place one round dark-oak tea table with exactly FIVE wooden chairs
+and no other seating. Upper-left chair: GREEN cushion, beside the quiet reading
+nook, window behind it. Upper-right chair: YELLOW cushion, beside the samovar.
+Middle-right chair: RED cushion, beside the fireplace. Bottom-center chair:
+VIOLET cushion, nearer the door draft. Lower-left chair: BLUE cushion, with a
+clear side view of the window. Set five cups and a small covered treat dish.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.3 seat_ch03.png — глава 3, старые знакомые
 
 ```
-Keep a round table with exactly FIVE chairs, but make the room feel lived-in:
-small framed keepsakes, dried flowers, a guest-made ribbon and a few familiar
-travel trinkets on the walls. One chair is slightly turned from the table
-with a blank unreadable place card, suggesting a reserved seat. The table is
-set for a reunion of old friends, warm and personal. + общий хвост
+Create a finished 16:10 game background of an empty, lived-in magical tea room
+inside a fantasy crossroads shop. Storybook watercolor, gentle ink outlines,
+warm amber and honey palette, dark beams and plank floor. High-angle view at
+about 70 degrees, all furniture and chair cushions clearly visible. Large
+multi-paned evening window on the LEFT wall, low stone fireplace on the RIGHT
+wall, wooden door at the FAR RIGHT, copper samovar on a BACK-RIGHT sideboard,
+quiet bookshelf nook at the BACK LEFT. Decorate the walls with small framed
+keepsakes without writing, dried flowers, ribbons and travel trinkets.
+
+In the CENTER place one round oak tea table with exactly FIVE wooden chairs and
+no other seating: upper-left chair in the quiet nook, upper-right chair beside
+the samovar, middle-right chair beside the fireplace, bottom-center chair near
+the door, lower-left chair beside the window. Turn the bottom-center chair
+slightly outward and place a completely blank place card before it. Set the
+table warmly for a reunion of old friends.
+
+Every plain cushion must be fully visible, flat, empty and unobstructed for a
+circular portrait overlay. No people, no animals, no extra chairs or stools, no
+readable text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.4 seat_ch04.png — глава 4, свободный стул
 
 ```
-Replace the table with a comfortable oval tea table with exactly SEVEN
-chairs. One chair is pulled slightly farther out than the others, clearly
-free and waiting, while all seats remain usable. Rainy evening outside the
-window, reflections on the glass, a folded umbrella near the door. The room
-should quietly teach the idea of spare chairs without any UI markers.
-+ общий хвост
+Create a finished 16:10 game background of an empty cozy magical tea room inside
+a fantasy crossroads shop on a rainy evening. Storybook watercolor, gentle ink
+outlines, warm amber interior against cool rain, dark beams and plank floor.
+High-angle view at about 70 degrees, all furniture and chair cushions clearly
+visible. Large rain-streaked window on the LEFT wall, low stone fireplace on the
+RIGHT wall, wooden door with a folded umbrella at the FAR RIGHT, copper samovar
+on a BACK-RIGHT sideboard, quiet bookshelf nook at the BACK LEFT.
+
+In the CENTER place one comfortable oval oak tea table with exactly SEVEN wooden
+chairs and no other seating. Place chairs at upper left by the quiet nook, upper
+right by the samovar, middle right by the fireplace, lower right near the door,
+bottom center, lower left by the window, and middle left near the open aisle.
+Pull the bottom-center chair noticeably farther from the table so it reads as a
+spare seat; keep all seven chairs usable and clearly associated with the table.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.5 seat_ch05.png — глава 5, характеры за столом
 
 ```
-Use a round table with exactly SIX chairs. Enrich the room with hobby corners
-around the walls while preserving the central table area: a small instrument
-stand with a flute, a craft and repair tray, a shelf with travel maps, potted
-herbs from the gardener, and the existing quiet bookshelf. These corners are
-decorative and baked into the room art, not separate objects for the game.
-+ общий хвост
+Create a finished 16:10 game background of an empty cozy magical tea room inside
+a fantasy crossroads shop. Storybook watercolor, gentle ink outlines, amber and
+honey light, dark wooden beams and plank floor. High-angle view at about 70
+degrees, all furniture and chair cushions clearly visible. Large multi-paned
+window on the LEFT wall, low stone fireplace on the RIGHT wall, wooden door at
+the FAR RIGHT, copper samovar on a BACK-RIGHT sideboard, quiet bookshelf nook at
+the BACK LEFT. Along the walls add a flute on a small stand, a craft repair tray,
+a shelf of rolled maps without writing, and potted culinary herbs.
+
+In the CENTER place one round oak tea table with exactly SIX wooden chairs and
+no other seating: upper-left chair in the quiet nook, upper-right chair beside
+the samovar, middle-right chair beside the fireplace, bottom-right chair near
+the door, lower-left chair beside the window, and middle-left chair in the open
+space between window and nook. Keep decorative hobby objects away from seats.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.6 seat_ch06.png — глава 6, два столика
 
 ```
-Replace the central table with TWO separate small round tea tables: one with
-exactly THREE chairs and one with exactly FOUR chairs, clearly divided by a
-strip of open floor and a narrow tea trolley between them. Summer herbs and
-fresh flowers decorate the room. It must be visually obvious which chairs
-belong to each table. + общий хвост
+Create a finished 16:10 game background of an empty cozy magical tea room inside
+a fantasy crossroads shop on a summer evening. Storybook watercolor, gentle ink
+outlines, amber and honey light, dark wooden beams and plank floor. High-angle
+view at about 70 degrees, all furniture and chair cushions clearly visible.
+Large flower-decorated window on the LEFT wall, low stone fireplace on the RIGHT
+wall, wooden door at the FAR RIGHT, copper samovar on a BACK-RIGHT sideboard,
+quiet bookshelf nook at the BACK LEFT, fresh herbs and flowers along the walls.
+
+Place TWO clearly separate small round tea tables with exactly SEVEN wooden
+chairs total and no other seating. LEFT table: exactly THREE chairs, one at the
+upper-right edge by the quiet nook, one at the lower-right edge, one at the left
+edge by the window. RIGHT table: exactly FOUR chairs, upper-right by the samovar,
+middle-right by the fireplace, lower-right near the door, lower-left beside a
+narrow tea trolley. Separate the groups with open floor and the trolley; make
+chair ownership of each table immediately obvious.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.7 seat_ch07.png — глава 7, своей компанией
 
 ```
-Arrange a friendly company layout with TWO nearby tables and exactly SEVEN
-chairs total: a round table for four and a smaller oval table for three.
-Add subtle festive details for a small gathering: cloth bunting without
-letters, a covered cake stand, extra cups and warm garlands. Keep enough
-open floor to read the groups clearly. + общий хвост
+Create a finished 16:10 game background of an empty cozy magical tea room inside
+a fantasy crossroads shop, prepared for a small friendly celebration. Storybook
+watercolor, gentle ink outlines, warm golden candlelight, dark beams and plank
+floor. High-angle view at about 70 degrees, all furniture and chair cushions
+clearly visible. Large multi-paned window on the LEFT wall, low stone fireplace
+on the RIGHT wall, wooden door at the FAR RIGHT, copper samovar on a BACK-RIGHT
+sideboard, quiet bookshelf nook at the BACK LEFT. Add letter-free cloth bunting,
+a covered cake stand, extra cups and warm garlands.
+
+Place TWO separate tables with exactly SEVEN wooden chairs total and no other
+seating. LEFT ROUND table: exactly FOUR chairs at top by the quiet nook, right
+edge, bottom by the window, and left edge by the window. RIGHT OVAL table:
+exactly THREE chairs at top by the samovar, lower-right by the fireplace, and
+lower-left near the door. Leave open floor between the groups and make every
+chair's table immediately obvious.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.8 seat_ch08.png — глава 8, большой стол
 
 ```
-Replace the center with one long polished oak banquet table with exactly
-EIGHT chairs, four on each long side, so opposite pairs are easy to read.
-Late-evening mood, long shadows, a row of small candles down the middle and
-space at both ends kept clear. The room remains the same tea room, only
-rearranged for a larger gathering. + общий хвост
+Create a finished 16:10 game background of an empty cozy magical tea room inside
+a fantasy crossroads shop late in the evening. Storybook watercolor, gentle ink
+outlines, amber candlelight and long soft shadows, dark beams and plank floor.
+High-angle view at about 70 degrees, all furniture and chair cushions clearly
+visible. Large multi-paned night window on the LEFT wall, low stone fireplace on
+the RIGHT wall, wooden door at the FAR RIGHT, copper samovar on a BACK-RIGHT
+sideboard, quiet bookshelf nook at the BACK LEFT.
+
+In the CENTER place ONE long polished oak banquet table, horizontally oriented,
+with exactly EIGHT wooden chairs and no other seating. Place FOUR chairs in an
+evenly spaced row along the FAR long side and FOUR directly opposite them along
+the NEAR long side, forming four obvious opposite pairs. Keep both short ends
+empty. The far-left chair belongs to the quiet window nook, far-right to the
+samovar, near-right to the door and fireplace, near-left to the window. Put a
+row of small candles along the table center without hiding any chair.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.9 seat_ch09.png — глава 9, вечер перекрёстка
 
 ```
-Create a complex but readable two-table layout with exactly TEN chairs:
-one table for five near the window side and one table for five near the
-fireplace side. Two chairs should feel naturally spare and slightly apart,
-but still belong to the layout. Add maps, travel lanterns and small souvenirs
-from many worlds on the walls; deep night outside, crossroads lights visible.
-+ общий хвост
+Create a finished 16:10 game background of an empty magical tea room inside a
+fantasy crossroads shop deep at night. Storybook watercolor, gentle ink outlines,
+warm interior light against blue night, dark beams and plank floor. High-angle
+view at about 70 degrees, all furniture and chair cushions clearly visible.
+Large window on the LEFT wall showing a moonlit crossroads and distant lights,
+low stone fireplace on the RIGHT wall, wooden door at the FAR RIGHT, copper
+samovar on a BACK-RIGHT sideboard, quiet bookshelf nook at the BACK LEFT. Add
+rolled maps without writing, travel lanterns and small world souvenirs on walls.
+
+Place TWO separate round tables with exactly TEN wooden chairs total and no
+other seating. LEFT table by the window: FIVE chairs evenly around it, including
+one beside the quiet nook and four distinctly window-side positions. RIGHT table
+by the fireplace: FIVE chairs evenly around it, including positions beside the
+samovar, fireplace, door and open middle floor. Pull one chair at each table
+slightly outward as a spare, while preserving clear membership in its group.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 ### 21.10 seat_ch10.png — глава 10, праздник ста чашек
 
 ```
-Create the final festive version of the same tea room: one long celebratory
-table with exactly EIGHT chairs, rich garlands of dried herbs and ribbons,
-many tiny decorative teacup motifs without letters, wrapped small gifts at
-the sideboard, extra candles and a joyful golden glow. The table is set for
-a warm celebration, but no people or animals are present. + общий хвост
+Create a finished 16:10 game background of an empty magical tea room inside a
+fantasy crossroads shop, decorated for a joyful hundred-cup celebration.
+Storybook watercolor, gentle ink outlines, radiant golden candlelight, dark
+wooden beams and plank floor. High-angle view at about 70 degrees, all furniture
+and chair cushions clearly visible. Large multi-paned window on the LEFT wall,
+low stone fireplace on the RIGHT wall, wooden door at the FAR RIGHT, copper
+samovar on a BACK-RIGHT sideboard, quiet bookshelf nook at the BACK LEFT. Add
+garlands of dried herbs, ribbons, letter-free teacup motifs, wrapped gifts on
+the sideboard and many small candles.
+
+In the CENTER place ONE long festive oak table, horizontally oriented, with
+exactly EIGHT wooden chairs and no other seating. Place FOUR evenly spaced
+chairs along the FAR long side and FOUR directly opposite along the NEAR long
+side, forming four clear opposite pairs; keep both short ends empty. Far-left
+chair belongs to the quiet nook, far-right to the fireplace, near-right to the
+door, near-left to the window. Keep decorations away from all sitting surfaces.
+
+Every cushion must be fully visible, flat, empty and unobstructed for a circular
+portrait overlay. No people, no animals, no extra chairs or stools, no readable
+text, no letters, no numbers, no UI, no watermark. --ar 16:10
 ```
 
 Сохранение:
@@ -1946,8 +2036,7 @@ a warm celebration, but no people or animals are present. + общий хвос�
 - оригиналы — `art-src/seating/seat_chXX.png`;
 - рантайм — `game/assets/seating/seat_chXX_web.jpg`;
 - размер ≥1600×1000, формат 16:10;
-- для консистентности генерировать последовательно от базового референса
-  или от ближайшей удачной комнаты с теми же якорями.
+- каждый промт используется независимо, без референсов и image-to-image.
 
 ### 21.11 Карточка типа и курсор
 

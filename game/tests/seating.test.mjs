@@ -1,8 +1,9 @@
 // Тесты механики «Гости за чайным столом».
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { existsSync } from 'node:fs';
 import { SEATING_PUZZLES, SEATING_ROOMS } from '../src/data/puzzlesSeating.js';
-import { SEATING_GUESTS, TRAIT_LABEL, TRAIT_TEXT } from '../src/data/seatingGuests.js';
+import { SEATING_GUESTS, SEATING_RELATIONS, TRAIT_LABEL, TRAIT_TEXT } from '../src/data/seatingGuests.js';
 import { GUEST_BY_ID } from '../src/data/guests.js';
 import { STORY_GUESTS } from '../src/data/story.js';
 import {
@@ -37,6 +38,17 @@ const miniLevel = (over) => ({
   guestNames: { owl: 'Сова', cat: 'Кот', smith: 'Кузнец', piper: 'Музыкант' },
   rewards: [{ type: 'coins', amount: 100 }], intro: 'Пробная рассадка.',
   ...over,
+});
+
+test('все комнаты имеют рантайм-арт, а интерактивные места остаются внутри сцены', () => {
+  for (const room of Object.values(SEATING_ROOMS)) {
+    assert.ok(existsSync(new URL(`../${room.image}`, import.meta.url)), `${room.id}: нет ${room.image}`);
+    assert.equal(new Set(room.seats.map((s) => s.id)).size, room.seats.length, `${room.id}: дубли мест`);
+    for (const seat of room.seats) {
+      assert.ok(Number.isFinite(seat.x) && seat.x >= 6 && seat.x <= 94, `${room.id}/${seat.id}: x=${seat.x}`);
+      assert.ok(Number.isFinite(seat.y) && seat.y >= 10 && seat.y <= 90, `${room.id}/${seat.id}: y=${seat.y}`);
+    }
+  }
 });
 
 test('каталог: 100 уровней seat_01–seat_100, сложность не убывает, комнаты по главам', () => {
@@ -146,6 +158,44 @@ test('дебюты механик по главам и полное покрыт
   for (const t of SEATING_RULE_TYPES) assert.ok(used.has(t), `тип ${t} нигде не встречается`);
 });
 
+test('характерные пары получают сюжетные просьбы в гарантированных сценах', () => {
+  const relationTypes = new Set(['near', 'notNear', 'opposite', 'sameTable', 'differentTable']);
+  for (const [key, byType] of Object.entries(SEATING_RELATIONS)) {
+    const [guest, other] = key.split(':');
+    assert.ok(SEATING_GUESTS[guest] && SEATING_GUESTS[other], `${key}: неизвестная пара`);
+    for (const [type, lines] of Object.entries(byType)) {
+      assert.ok(relationTypes.has(type), `${key}: неподходящий тип ${type}`);
+      assert.ok(lines.length > 0, `${key}/${type}: нет реплик`);
+      for (const text of lines) assert.ok(!LATIN.test(text), `${key}/${type}: латиница`);
+    }
+  }
+  const scenes = [
+    ['seat_25', 'opposite', 'apprentice', 'daughter'],
+    ['seat_35', 'notNear', 'cook', 'baker'],
+    ['seat_65', 'notNear', 'knight', 'piper'],
+    ['seat_85', 'near', 'shipwright', 'sailor'],
+    ['seat_95', 'notNear', 'clockmaker', 'postman'],
+  ];
+  for (const [id, type, guest, other] of scenes) {
+    const level = byId(id);
+    assert.ok(level.guests.includes(guest) && level.guests.includes(other), `${id}: пары нет в гостях`);
+    const rule = level.rules.find((r) => r.type === type && r.guest === guest && r.other === other);
+    assert.ok(rule, `${id}: сюжетное правило потеряно`);
+    assert.ok(SEATING_RELATIONS[`${guest}:${other}`][type].includes(rule.text), `${id}: чужая реплика`);
+  }
+});
+
+test('поздние главы гарантированно содержат двойные и тройные пожелания', () => {
+  for (let ch = 6; ch < 10; ch++) {
+    for (const level of SEATING_PUZZLES.slice(ch * 10, ch * 10 + 10)) {
+      const counts = level.guests.map((g) => level.rules.filter((r) => r.guest === g).length);
+      assert.ok(counts.some((n) => n >= 2), `${level.id}: нет двойного пожелания`);
+      assert.ok(Math.max(...counts) <= 3, `${level.id}: слишком много пожеланий`);
+      if (ch >= 8) assert.ok(counts.some((n) => n === 3), `${level.id}: нет тройного пожелания`);
+    }
+  }
+});
+
 test('цветные подушечки различают два стула у окна без прямой инструкции', () => {
   const seats = Object.fromEntries(SEATING_ROOMS.ch01.seats.map((s) => [s.id, s]));
   assert.deepEqual(seats.quiet.features, ['quiet', 'window', 'blueSeat']);
@@ -157,7 +207,7 @@ test('цветные подушечки различают два стула у 
 
   const level = byId('seat_01');
   const texts = level.rules.map((r) => r.text);
-  assert.ok(texts.includes('Лесничий любит фиалки'), 'предпочтение должно быть предметным');
+  assert.ok(texts.includes('Обожаю фиалки. Посадите меня на фиолетовую подушечку.'), 'предпочтение должно быть предметным');
   assert.ok(texts.some((t) => t.includes('паучьей почты')), 'у двери должна быть паучья причина');
   for (const banned of ['нужен стул', 'ищет стул', 'выбирает подушечку', 'просит стул', 'место у окна']) {
     assert.ok(!texts.some((t) => t.includes(banned)), `прямая подсказка: ${banned}`);
@@ -167,7 +217,7 @@ test('цветные подушечки различают два стула у 
   const allTexts = SEATING_PUZZLES.flatMap((l) => l.rules.map((r) => r.text));
   assert.ok(!allTexts.some((t) => t.includes('виноград')), 'виноград неоднозначен по цвету');
   assert.ok(!allTexts.some((t) => t.includes('кровь')), 'неуютная ассоциация');
-  assert.ok(allTexts.some((t) => t.includes('подушкой') || t.includes('нагадала') || t.includes('везло в картах')),
+  assert.ok(allTexts.some((t) => t.includes('подушеч') || t.includes('нагадали') || t.includes('везёт в картах')),
     'нужна хотя бы одна тематическая цветная шутка');
   for (const l of SEATING_PUZZLES) {
     for (const r of l.rules) {

@@ -17,7 +17,7 @@
 import { makeRng } from '../core/rng.js';
 import { GUEST_BY_ID } from './guests.js';
 import { STORY_GUESTS } from './story.js';
-import { SEATING_GUESTS, TRAIT_TEXT } from './seatingGuests.js';
+import { SEATING_GUESTS, SEATING_RELATIONS, TRAIT_TEXT } from './seatingGuests.js';
 import { solveSeating, seatingModel } from '../core/seatingPuzzle.js';
 
 // Русские подписи особенностей мест (для текстов пожеланий)
@@ -45,62 +45,60 @@ export const SEAT_COLOR_FEATURE = {
   violetSeat: 'фиолетовый',
 };
 
-// Гендерно-нейтральные мини-шутки. Цвет называем прямо, иначе подсказка
-// рассыпается (виноград, например, бывает и белым, и тёмным — не используем).
+// Цвет называем прямо: это крайний, но однозначный признак места.
 const COLOR_JOKES = {
   blueSeat: [
-    'ищет голубику под синей подушкой',
-    'считает синий своим цветом',
-    'гадалка нагадала: синий — к спокойствию',
-    'в прошлый раз на синем стуле тоже везло в картах',
+    'Мне место с синей подушечкой. Вдруг там снова найдётся голубика?',
+    'Хозяин, мне синий: гадалка обещала в нём спокойствие.',
+    'На синем стуле мне всегда везёт в картах. Оставите его мне?',
   ],
   redSeat: [
-    'ищет клубнику под красной подушкой',
-    'считает красный своим счастливым цветом',
-    'гадалка нагадала: красный — к славе',
-    'в прошлый раз на красном стуле тоже везло в картах',
+    'Прошу место с красной подушечкой — проверю, не клубника ли там спрятана.',
+    'Хозяин, красный приносит мне удачу. Посадите на красное?',
+    'Красный стул сегодня выглядит обнадёживающе. Он мне подходит.',
   ],
   greenSeat: [
-    'ищет лягушку под зелёной подушкой',
-    'считает зелёный своим цветом',
-    'гадалка нагадала: зелёный — к доброму урожаю',
-    'в прошлый раз на зелёном стуле тоже везло в картах',
+    'Мне место с зелёной подушечкой. Кажется, там кто-то квакнул.',
+    'Хозяин, зелёный — к доброму урожаю. Выбираю его.',
+    'Зелёный стул пахнет свежей травой. Можно мне его?',
   ],
   yellowSeat: [
-    'ищет лимон под жёлтой подушкой',
-    'считает жёлтый своим цветом',
-    'гадалка нагадала: жёлтый — к богатству',
-    'в прошлый раз на жёлтом стуле тоже везло в картах',
+    'Мне место с жёлтой подушечкой. Вдруг под ней лимон?',
+    'Хозяин, жёлтый сегодня мой счастливый цвет.',
+    'Жёлтый стул выглядит как солнечный зайчик. Оставьте его мне.',
   ],
   violetSeat: [
-    'держит пару тузов под фиолетовой подушкой',
-    'считает фиолетовый своим цветом',
-    'гадалка нагадала: фиолетовый — к удаче',
-    'в прошлый раз на фиолетовом стуле тоже везло в картах',
+    'Прошу место с фиолетовой подушечкой. Говорят, она прячет удачу.',
+    'Хозяин, мне фиолетовый: именно его мне нагадали.',
+    'На фиолетовом стуле мне всегда думается лучше.',
   ],
 };
 
-// Персональные шутки: у животных — то, что они действительно едят, у людей —
-// суеверия и характерные мелочи. Приоритет выше общего списка.
 const GUEST_COLOR_JOKES = {
-  forester: { violetSeat: ['любит фиалки'] },
-  spider: { greenSeat: ['припрятал муху под зелёной подушкой'] },
-  owl: { blueSeat: ['припрятала мышку под синей подушкой'] },
-  cat: { redSeat: ['припрятал рыбку под красной подушкой'] },
-  beekeeper: { yellowSeat: ['припрятал банку мёда под жёлтой подушкой'] },
-  mushroomer: { greenSeat: ['припрятал гриб под зелёной подушкой'] },
-  gardener: { greenSeat: ['спрятал семена под зелёной подушкой'] },
-  daughter: { yellowSeat: ['спрятала подсолнух под жёлтой подушкой'], violetSeat: ['спрятала фиалки под фиолетовой подушкой'] },
-  cook: { yellowSeat: ['припрятал лимон под жёлтой подушкой'] },
-  baker: { yellowSeat: ['припрятала булочку под жёлтой подушкой'] },
-  merchant: { yellowSeat: ['гадалка нагадала: жёлтый — к богатству'] },
-  knight: { redSeat: ['гадалка нагадала: красный — к славе'] },
-  piper: { redSeat: ['гадалка нагадала: красный — к аплодисментам'] },
-  dancer: { redSeat: ['гадалка нагадала: красный — к аплодисментам'] },
-  smith: { violetSeat: ['спрятал пару тузов под фиолетовой подушкой'], blueSeat: ['держит сапфир под синей подушкой'] },
-  shipwright: { blueSeat: ['считает синий цветом счастливой волны'] },
-  sailor: { blueSeat: ['считает синий цветом счастливой волны'] },
-  scribe: { blueSeat: ['считает синий подходящим к чернилам'] },
+  forester: { violetSeat: ['Обожаю фиалки. Посадите меня на фиолетовую подушечку.'] },
+  spider: { greenSeat: ['Мне зелёную подушечку: я спрятал под ней муху на чай.'] },
+  owl: { blueSeat: ['Мне синюю подушечку. Под ней припрятана мышка для позднего чтения.'] },
+  cat: { redSeat: ['Красную подушечку, хозяин. Там моя рыбка. Мур.'] },
+  beekeeper: { yellowSeat: ['Мне жёлтую подушечку: под ней банка мёда для общего чая.'] },
+  mushroomer: { greenSeat: ['Мне зелёную подушечку. Под ней один гриб... уже почти находка.'] },
+  gardener: { greenSeat: ['Хозяин, мне зелёную: под ней семена для вашего сада.'] },
+  daughter: {
+    yellowSeat: ['Можно мне жёлтую подушечку? Я спрятала под ней подсолнух.'],
+    violetSeat: ['Хозяин, мне фиолетовую: я спрятала под ней фиалки.'],
+  },
+  cook: { yellowSeat: ['Мне жёлтую подушечку: под ней лимон для чая.'] },
+  baker: { yellowSeat: ['Можно мне жёлтую? Под ней остывает моя булочка.'] },
+  merchant: { yellowSeat: ['Хозяин, жёлтый — к богатству. Проверим на вашем стуле?'] },
+  knight: { redSeat: ['Мне красный, хозяин. Гадалка обещала в нём славу.'] },
+  piper: { redSeat: ['Мне красный — слышу в нём будущие аплодисменты.'] },
+  dancer: { redSeat: ['Хозяин, красный! Под него так и хочется танцевать.'] },
+  smith: {
+    violetSeat: ['Мне фиолетовую подушечку. Под ней пара тузов — для честной игры.'],
+    blueSeat: ['Мне синюю: под ней сапфир, который я собираюсь огранить.'],
+  },
+  shipwright: { blueSeat: ['Мне синий, хозяин. Цвет счастливой волны.'] },
+  sailor: { blueSeat: ['Оставьте мне синий — цвет попутной воды.'] },
+  scribe: { blueSeat: ['Мне синий, пожалуйста. Он идёт моим чернилам.'] },
 };
 
 // --- Комнаты: 10 глав, по одной на главу. x/y — проценты от арта. ---
@@ -110,97 +108,98 @@ export const SEATING_ROOMS = {
   ch01: {
     id: 'ch01', name: 'Первая чайная комната', image: 'assets/seating/seat_ch01_web.jpg',
     seats: [
-      { id: 'quiet', x: 36.8, y: 45.2, label: 'стул у книжного уголка с синей подушечкой', features: ['quiet', 'window', 'blueSeat'] },
-      { id: 'hearth', x: 62.0, y: 45.5, label: 'стул у огня с красной подушечкой', features: ['hearth', 'redSeat'] },
-      { id: 'door', x: 61.0, y: 68.0, label: 'стул у двери с зелёной подушечкой', features: ['door', 'greenSeat'] },
-      { id: 'window', x: 36.8, y: 67.0, label: 'стул у окна с фиолетовой подушечкой', features: ['window', 'violetSeat'] },
+      { id: 'quiet', x: 38.1, y: 46.4, label: 'стул у книжного уголка с синей подушечкой', features: ['quiet', 'window', 'blueSeat'] },
+      { id: 'hearth', x: 61.0, y: 46.4, label: 'стул у огня с красной подушечкой', features: ['hearth', 'redSeat'] },
+      { id: 'door', x: 59.5, y: 68.3, label: 'стул у двери с зелёной подушечкой', features: ['door', 'greenSeat'] },
+      { id: 'window', x: 37.5, y: 67.3, label: 'стул у окна с фиолетовой подушечкой', features: ['window', 'violetSeat'] },
     ],
     tables: [['quiet', 'hearth', 'door', 'window']],
   },
   ch02: {
     id: 'ch02', name: 'Места у огня', image: 'assets/seating/seat_ch02_web.jpg',
     seats: [
-      { id: 'quiet', x: 36.5, y: 43.0, label: 'стул у книжного уголка с зелёной подушечкой', features: ['quiet', 'window', 'greenSeat'] },
-      { id: 'samovar', x: 57.2, y: 39.5, label: 'стул у самовара с жёлтой подушечкой', features: ['samovar', 'yellowSeat'] },
-      { id: 'fire', x: 61.0, y: 61.5, label: 'стул у огня с красной подушечкой', features: ['hearth', 'redSeat'] },
-      { id: 'door', x: 52.0, y: 75.5, label: 'стул у двери с фиолетовой подушечкой', features: ['door', 'violetSeat'] },
-      { id: 'window', x: 35.0, y: 62.0, label: 'стул у окна с синей подушечкой', features: ['window', 'blueSeat'] },
+      { id: 'quiet', x: 31.4, y: 39.3, label: 'стул у книжного уголка с зелёной подушечкой', features: ['quiet', 'window', 'greenSeat'] },
+      { id: 'samovar', x: 52.6, y: 35.1, label: 'стул у самовара с жёлтой подушечкой', features: ['samovar', 'yellowSeat'] },
+      { id: 'fire', x: 60.4, y: 53.6, label: 'стул у огня с красной подушечкой', features: ['hearth', 'redSeat'] },
+      { id: 'door', x: 51.6, y: 72.5, label: 'стул у двери с фиолетовой подушечкой', features: ['door', 'violetSeat'] },
+      { id: 'window', x: 30.6, y: 65.2, label: 'стул у окна с синей подушечкой', features: ['window', 'blueSeat'] },
     ],
     tables: [['quiet', 'samovar', 'fire', 'door', 'window']],
   },
   ch03: {
     id: 'ch03', name: 'Старые знакомые', image: 'assets/seating/seat_ch03_web.jpg',
     seats: [
-      { id: 'quiet', x: 37.0, y: 41.0, label: 'место в тихом уголке', features: ['quiet'] },
-      { id: 'samovar', x: 58.0, y: 38.5, label: 'место у самовара', features: ['samovar'] },
-      { id: 'hearth', x: 62.5, y: 59.0, label: 'место у огня', features: ['hearth'] },
-      { id: 'door', x: 53.0, y: 74.0, label: 'стул с карточкой', features: ['door'] },
-      { id: 'window', x: 34.5, y: 60.0, label: 'место у окна', features: ['window'] },
+      { id: 'quiet', x: 34.9, y: 32.7, label: 'место в тихом книжном уголке', features: ['quiet'] },
+      { id: 'samovar', x: 59.0, y: 33.3, label: 'место у самовара', features: ['samovar'] },
+      { id: 'hearth', x: 66.8, y: 56.0, label: 'место между камином и дверью', features: ['hearth', 'door'] },
+      { id: 'door', x: 49.4, y: 79.2, label: 'отодвинутый стул с карточкой', features: [] },
+      { id: 'window', x: 30.0, y: 64.7, label: 'место у окна', features: ['window'] },
     ],
     tables: [['quiet', 'samovar', 'hearth', 'door', 'window']],
   },
   ch04: {
     id: 'ch04', name: 'Свободный стул', image: 'assets/seating/seat_ch04_web.jpg',
     seats: [
-      { id: 'quiet', x: 36.0, y: 40.0, label: 'место в тихом уголке', features: ['quiet'] },
-      { id: 'samovar', x: 58.0, y: 38.5, label: 'место у самовара', features: ['samovar'] },
-      { id: 'hearth', x: 63.5, y: 53.0, label: 'место у огня', features: ['hearth'] },
-      { id: 'door', x: 59.0, y: 70.5, label: 'стул у двери', features: ['door'] },
-      { id: 'spare', x: 48.5, y: 74.0, label: 'отодвинутый стул', features: [] },
-      { id: 'window', x: 34.5, y: 63.0, label: 'место у окна', features: ['window'] },
-      { id: 'aisle', x: 32.5, y: 49.5, label: 'стул у прохода', features: [] },
+      { id: 'quiet', x: 36.6, y: 27.6, label: 'место в тихом книжном уголке', features: ['quiet'] },
+      { id: 'samovar', x: 58.3, y: 31.5, label: 'место у самовара', features: ['samovar'] },
+      { id: 'hearth', x: 65.3, y: 48.9, label: 'место у огня', features: ['hearth'] },
+      { id: 'door', x: 63.8, y: 68.7, label: 'стул у двери', features: ['door'] },
+      { id: 'spare', x: 47.9, y: 79.0, label: 'отодвинутый свободный стул', features: [] },
+      { id: 'window', x: 33.1, y: 67.2, label: 'место у окна', features: ['window'] },
+      { id: 'aisle', x: 32.0, y: 48.0, label: 'стул у прохода рядом с окном', features: ['window'] },
     ],
     tables: [['quiet', 'samovar', 'hearth', 'door', 'spare', 'window', 'aisle']],
   },
   ch05: {
     id: 'ch05', name: 'Характеры за столом', image: 'assets/seating/seat_ch05_web.jpg',
     seats: [
-      { id: 'quiet', x: 36.0, y: 41.0, label: 'место в тихом уголке', features: ['quiet'] },
-      { id: 'samovar', x: 58.0, y: 39.0, label: 'место у самовара', features: ['samovar'] },
-      { id: 'hearth', x: 63.0, y: 56.0, label: 'место у огня', features: ['hearth'] },
-      { id: 'door', x: 55.0, y: 73.0, label: 'стул у двери', features: ['door'] },
-      { id: 'window', x: 34.0, y: 63.0, label: 'место у окна', features: ['window'] },
-      { id: 'mid', x: 31.5, y: 49.0, label: 'среднее место', features: [] },
+      { id: 'quiet', x: 36.9, y: 35.0, label: 'место в тихом книжном уголке', features: ['quiet'] },
+      { id: 'samovar', x: 58.4, y: 35.0, label: 'место у самовара', features: ['samovar'] },
+      { id: 'hearth', x: 69.7, y: 52.6, label: 'место между камином и дверью', features: ['hearth', 'door'] },
+      { id: 'door', x: 62.9, y: 72.9, label: 'ближний стул с синей подушечкой', features: [] },
+      { id: 'window', x: 36.6, y: 72.9, label: 'место у окна', features: ['window'] },
+      { id: 'mid', x: 27.5, y: 53.0, label: 'боковое место у окна', features: ['window'] },
     ],
     tables: [['quiet', 'samovar', 'hearth', 'door', 'window', 'mid']],
   },
   ch06: {
     id: 'ch06', name: 'Два столика', image: 'assets/seating/seat_ch06_web.jpg',
     seats: [
-      { id: 'aq', x: 36.5, y: 41.0, label: 'место в тихом уголке', features: ['quiet'] },
-      { id: 'am', x: 37.5, y: 61.0, label: 'стул у малого стола', features: [] },
-      { id: 'aw', x: 30.0, y: 51.0, label: 'место у окна', features: ['window'] },
-      { id: 'bs', x: 57.0, y: 39.5, label: 'место у самовара', features: ['samovar'] },
-      { id: 'bh', x: 64.0, y: 51.0, label: 'место у огня', features: ['hearth'] },
-      { id: 'bd', x: 59.5, y: 66.5, label: 'стул у двери', features: ['door'] },
-      { id: 'bm', x: 51.5, y: 62.0, label: 'стул у тележки', features: [] },
+      { id: 'aq', x: 30.8, y: 38.3, label: 'место в тихом книжном уголке', features: ['quiet'] },
+      { id: 'am', x: 32.5, y: 55.2, label: 'ближний стул у малого стола', features: [] },
+      { id: 'aw', x: 15.6, y: 51.2, label: 'место у самого окна', features: ['window'] },
+      { id: 'bs', x: 68.1, y: 43.3, label: 'место у самовара', features: ['samovar'] },
+      { id: 'bh', x: 83.1, y: 56.0, label: 'место между камином и дверью', features: ['hearth', 'door'] },
+      { id: 'bd', x: 77.8, y: 69.5, label: 'ближний стул с жёлтой подушечкой', features: [] },
+      { id: 'bm', x: 61.9, y: 61.0, label: 'стул у чайной тележки', features: [] },
     ],
     tables: [['aq', 'am', 'aw'], ['bs', 'bh', 'bd', 'bm']],
   },
   ch07: {
     id: 'ch07', name: 'Своей компанией', image: 'assets/seating/seat_ch07_web.jpg',
     seats: [
-      { id: 'at', x: 36.0, y: 40.5, label: 'место в тихом уголке', features: ['quiet'] },
-      { id: 'ar', x: 43.0, y: 52.0, label: 'стул с краю', features: [] },
-      { id: 'ab', x: 36.5, y: 63.0, label: 'место у окна', features: ['window'] },
-      { id: 'al', x: 28.5, y: 52.5, label: 'крайний стул у окна', features: ['window'] },
-      { id: 'bs', x: 59.0, y: 40.0, label: 'место у самовара', features: ['samovar'] },
-      { id: 'bh', x: 66.0, y: 61.0, label: 'место у огня', features: ['hearth'] },
-      { id: 'bd', x: 54.5, y: 62.5, label: 'стул у двери', features: ['door'] },
+      { id: 'at', x: 28.1, y: 32.6, label: 'место в тихом книжном уголке', features: ['quiet'] },
+      { id: 'ar', x: 38.6, y: 44.6, label: 'стул с краю круглого стола', features: [] },
+      { id: 'ab', x: 29.4, y: 65.2, label: 'ближнее место у окна', features: ['window'] },
+      { id: 'al', x: 17.6, y: 49.0, label: 'крайний стул у самого окна', features: ['window'] },
+      { id: 'bs', x: 60.6, y: 38.1, label: 'место у самовара', features: ['samovar'] },
+      { id: 'bh', x: 69.7, y: 39.2, label: 'место у огня', features: ['hearth'] },
+      { id: 'bd', x: 76.6, y: 67.5, label: 'стул у двери', features: ['door'] },
+      { id: 'bm', x: 57.4, y: 65.4, label: 'свободный стул с синей подушечкой', features: [] },
     ],
-    tables: [['at', 'ar', 'ab', 'al'], ['bs', 'bh', 'bd']],
+    tables: [['at', 'ar', 'ab', 'al'], ['bs', 'bh', 'bd', 'bm']],
   },
   ch08: {
     id: 'ch08', name: 'Большой стол', image: 'assets/seating/seat_ch08_web.jpg',
     seats: [
-      { id: 't1', x: 34.0, y: 44.0, label: 'угловое место у окна', features: ['quiet', 'window'] },
-      { id: 't2', x: 44.0, y: 44.0, label: 'место с краю', features: [] },
-      { id: 't3', x: 54.0, y: 44.0, label: 'место у середины', features: [] },
-      { id: 't4', x: 64.0, y: 44.0, label: 'место у самовара', features: ['samovar'] },
-      { id: 'b4', x: 64.0, y: 66.0, label: 'место у двери', features: ['door', 'hearth'] },
-      { id: 'b3', x: 54.0, y: 66.0, label: 'место у свечей', features: [] },
-      { id: 'b2', x: 44.0, y: 66.0, label: 'место у полки', features: [] },
-      { id: 'b1', x: 34.0, y: 66.0, label: 'место у окна', features: ['window'] },
+      { id: 't1', x: 34.5, y: 40.0, label: 'угловое место у окна', features: ['quiet', 'window'] },
+      { id: 't2', x: 44.9, y: 40.0, label: 'дальнее место с краю', features: [] },
+      { id: 't3', x: 55.0, y: 40.0, label: 'дальнее место у середины', features: [] },
+      { id: 't4', x: 65.0, y: 40.0, label: 'место у самовара и двери', features: ['samovar', 'door'] },
+      { id: 'b4', x: 66.9, y: 77.0, label: 'ближнее место у камина', features: ['hearth'] },
+      { id: 'b3', x: 55.3, y: 77.0, label: 'место у свечей', features: [] },
+      { id: 'b2', x: 44.4, y: 77.0, label: 'ближнее место у полки', features: [] },
+      { id: 'b1', x: 32.5, y: 77.0, label: 'ближнее место у окна', features: ['window'] },
     ],
     tables: [['t1', 't2', 't3', 't4', 'b4', 'b3', 'b2', 'b1']],
     opposite: { t2: 'b2', b2: 't2', t3: 'b3', b3: 't3' },
@@ -208,30 +207,30 @@ export const SEATING_ROOMS = {
   ch09: {
     id: 'ch09', name: 'Вечер перекрёстка', image: 'assets/seating/seat_ch09_web.jpg',
     seats: [
-      { id: 'wq', x: 36.0, y: 38.0, label: 'место в тихом уголке', features: ['quiet'] },
-      { id: 'wm', x: 44.0, y: 48.0, label: 'стул у окна', features: ['window'] },
-      { id: 'ww', x: 40.0, y: 64.0, label: 'место у окна', features: ['window'] },
-      { id: 'wv', x: 28.0, y: 64.0, label: 'угловой стул у окна', features: ['window'] },
-      { id: 'wl', x: 28.0, y: 46.0, label: 'стул у стекла', features: ['window'] },
-      { id: 'fs', x: 58.0, y: 38.0, label: 'место у самовара', features: ['samovar'] },
-      { id: 'fh', x: 68.0, y: 46.0, label: 'место у огня', features: ['hearth'] },
-      { id: 'fe', x: 66.0, y: 64.0, label: 'стул у камина', features: ['hearth'] },
-      { id: 'fd', x: 56.0, y: 66.0, label: 'стул у двери', features: ['door'] },
-      { id: 'fm', x: 52.0, y: 48.0, label: 'средний стул', features: [] },
+      { id: 'wq', x: 32.8, y: 36.0, label: 'место в тихом книжном уголке', features: ['quiet'] },
+      { id: 'wm', x: 34.4, y: 46.2, label: 'дальний стул у окна', features: ['window'] },
+      { id: 'ww', x: 35.3, y: 60.5, label: 'ближний стул у окна', features: ['window'] },
+      { id: 'wv', x: 21.3, y: 67.2, label: 'угловой стул у окна', features: ['window'] },
+      { id: 'wl', x: 18.4, y: 49.0, label: 'стул у самого стекла', features: ['window'] },
+      { id: 'fs', x: 63.1, y: 46.8, label: 'место у самовара', features: ['samovar'] },
+      { id: 'fh', x: 77.2, y: 50.0, label: 'место у огня', features: ['hearth'] },
+      { id: 'fd', x: 78.4, y: 64.0, label: 'стул между камином и дверью', features: ['hearth', 'door'] },
+      { id: 'fm', x: 60.6, y: 77.0, label: 'отодвинутый свободный стул', features: [] },
+      { id: 'fe', x: 61.3, y: 66.0, label: 'ближний стул с синей подушечкой', features: [] },
     ],
-    tables: [['wq', 'wm', 'ww', 'wv', 'wl'], ['fs', 'fh', 'fe', 'fd', 'fm']],
+    tables: [['wq', 'wm', 'ww', 'wv', 'wl'], ['fs', 'fh', 'fd', 'fm', 'fe']],
   },
   ch10: {
     id: 'ch10', name: 'Праздник ста чашек', image: 'assets/seating/seat_ch10_web.jpg',
     seats: [
-      { id: 't1', x: 33.0, y: 42.0, label: 'место в тихом уголке', features: ['quiet'] },
-      { id: 't2', x: 43.0, y: 42.0, label: 'место у гирлянд', features: [] },
-      { id: 't3', x: 53.0, y: 42.0, label: 'место у самовара', features: ['samovar'] },
-      { id: 't4', x: 63.0, y: 42.0, label: 'место у огня', features: ['hearth'] },
-      { id: 'b4', x: 63.0, y: 64.0, label: 'место у двери', features: ['door'] },
-      { id: 'b3', x: 53.0, y: 64.0, label: 'место у свечей', features: [] },
-      { id: 'b2', x: 43.0, y: 64.0, label: 'место у лент', features: [] },
-      { id: 'b1', x: 33.0, y: 64.0, label: 'место у окна', features: ['window'] },
+      { id: 't1', x: 32.5, y: 40.5, label: 'место в тихом книжном уголке', features: ['quiet'] },
+      { id: 't2', x: 44.1, y: 40.5, label: 'дальнее место у гирлянд', features: [] },
+      { id: 't3', x: 55.3, y: 40.5, label: 'дальнее место у свечей', features: [] },
+      { id: 't4', x: 66.6, y: 40.5, label: 'место у самовара и камина', features: ['samovar', 'hearth'] },
+      { id: 'b4', x: 68.8, y: 75.5, label: 'ближнее место у двери', features: ['door'] },
+      { id: 'b3', x: 55.6, y: 75.5, label: 'ближнее место у свечей', features: [] },
+      { id: 'b2', x: 42.8, y: 75.5, label: 'ближнее место у лент', features: [] },
+      { id: 'b1', x: 29.7, y: 75.5, label: 'ближнее место у окна', features: ['window'] },
     ],
     tables: [['t1', 't2', 't3', 't4', 'b4', 'b3', 'b2', 'b1']],
     opposite: { t2: 'b2', b2: 't2', t3: 'b3', b3: 't3' },
@@ -256,14 +255,14 @@ const CHAPTER_CFG = [
   { room: 'ch05', from: 6, to: 6, maxWishes: 1, focus: ['traitNear', 'notTraitNear'], types: { seat: 1, near: 2, notNear: 1, feature: 1, notFeature: 1, opposite: 1, between: 1, traitNear: 4, notTraitNear: 3 } },
   // 6. Два столика: за одним / за разными столами
   { room: 'ch06', from: 6, to: 7, maxWishes: 1, focus: ['sameTable', 'differentTable'], types: { seat: 1, near: 2, notNear: 1, feature: 1, notFeature: 1, opposite: 1, between: 1, traitNear: 1, sameTable: 4, differentTable: 3 } },
-  // 7. Своей компанией: трое подряд, до двух желаний на гостя
-  { room: 'ch07', from: 7, to: 7, maxWishes: 2, focus: ['runWith'], types: { seat: 1, near: 2, notNear: 1, feature: 1, opposite: 1, between: 2, traitNear: 1, notTraitNear: 1, sameTable: 2, differentTable: 1, runWith: 4 } },
+  // 7. Своей компанией: трое подряд, первые составные просьбы
+  { room: 'ch07', from: 7, to: 7, maxWishes: 2, multiTwo: 2, focus: ['runWith'], types: { seat: 1, near: 2, notNear: 1, feature: 1, opposite: 1, between: 2, traitNear: 1, notTraitNear: 1, sameTable: 2, differentTable: 1, runWith: 4 } },
   // 8. Большой стол: длинная раскладка без новых видов правил
-  { room: 'ch08', from: 7, to: 8, maxWishes: 2, focus: ['opposite', 'between'], types: { seat: 1, near: 2, notNear: 1, feature: 2, notFeature: 1, opposite: 3, between: 3, emptyNear: 2, traitNear: 1, notTraitNear: 1 } },
-  // 9. Вечер перекрёстка: два стола, 8 гостей, 1–2 лишних стула
-  { room: 'ch09', from: 8, to: 8, maxWishes: 2, focus: ['sameTable', 'differentTable', 'emptyNear'], types: { seat: 2, near: 2, notNear: 1, feature: 2, notFeature: 1, opposite: 2, between: 2, emptyNear: 2, traitNear: 2, notTraitNear: 1, sameTable: 3, differentTable: 2, runWith: 2 } },
+  { room: 'ch08', from: 7, to: 8, maxWishes: 2, multiTwo: 2, focus: ['opposite', 'between'], types: { seat: 1, near: 2, notNear: 1, feature: 2, notFeature: 1, opposite: 3, between: 3, emptyNear: 2, traitNear: 1, notTraitNear: 1 } },
+  // 9. Вечер перекрёстка: двойные и тройные пожелания
+  { room: 'ch09', from: 8, to: 8, maxWishes: 3, multiTwo: 2, multiThree: 1, focus: ['sameTable', 'differentTable', 'emptyNear'], types: { seat: 2, near: 2, notNear: 1, feature: 2, notFeature: 1, opposite: 2, between: 2, emptyNear: 2, traitNear: 2, notTraitNear: 1, sameTable: 3, differentTable: 2, runWith: 2 } },
   // 10. Праздник ста чашек: всё вместе, финал без новых правил
-  { room: 'ch10', from: 8, to: 8, maxWishes: 2, focus: ['runWith', 'opposite', 'between'], types: { seat: 1, near: 2, notNear: 1, feature: 1, notFeature: 1, opposite: 2, between: 2, traitNear: 2, notTraitNear: 1, runWith: 2 } },
+  { room: 'ch10', from: 8, to: 8, maxWishes: 3, multiTwo: 2, multiThree: 1, focus: ['runWith', 'opposite', 'between'], types: { seat: 1, near: 2, notNear: 1, feature: 1, notFeature: 1, opposite: 2, between: 2, traitNear: 2, notTraitNear: 1, runWith: 2 } },
 ];
 
 // --- Имена и интро: по 10 на главу, уникальные (тест следит) ---
@@ -429,6 +428,15 @@ function buildCasts() {
 
 const CASTS = buildCasts();
 
+// Отдельные вечера гарантированно собирают знакомых и дают им характерную сцену.
+const SPECIAL_SCENES = {
+  '2:4': { guests: ['apprentice', 'daughter'], rule: ['opposite', 'apprentice', 'daughter'] },
+  '3:4': { guests: ['cook', 'baker'], rule: ['notNear', 'cook', 'baker'] },
+  '6:4': { guests: ['knight', 'piper'], rule: ['notNear', 'knight', 'piper'] },
+  '8:4': { guests: ['shipwright', 'sailor'], rule: ['near', 'shipwright', 'sailor'] },
+  '9:4': { guests: ['clockmaker', 'postman'], rule: ['notNear', 'clockmaker', 'postman'] },
+};
+
 function seatLabelOf(room, seatId) {
   return room.seats.find((s) => s.id === seatId).label;
 }
@@ -438,72 +446,71 @@ function seatLabelOf(room, seatId) {
 // затем фраза по черте характера, затем нейтральный вариант.
 const SEAT_REASONS = {
   quiet: {
-    default: ['хочет поближе к книгам', 'любит почитать за чаем', 'после чая хочет прилечь'],
-    books: ['хочет поближе к книгам', 'любит почитать за чаем'],
-    quiet: ['после чая хочет прилечь', 'хочет поближе к книгам'],
-    hearth: ['после чая хочет прилечь'],
-    road: ['после дороги хочет прилечь'],
-    tales: ['хочет поближе к книгам'],
+    default: ['Хочу поближе к книгам.', 'Почитаю за чаем, если найдётся тихий уголок.', 'Хозяин, мне бы тихое место.'],
+    books: ['Мне поближе к книгам: одна страница ждёт уже неделю.', 'Хозяин, тихий уголок и чашку — больше ничего не нужно.'],
+    quiet: ['Мне бы тихий уголок: сегодня даже мысли просятся отдохнуть.', 'Хочу сесть потише и никому не мешать.'],
+    hearth: ['После чая я прилягу, так что посадите меня в тихом уголке.'],
+    road: ['После дороги хочется тишины. Мне в тихий уголок, пожалуйста.'],
+    tales: ['Мне поближе к книгам: вдруг в них найдётся новая история.'],
   },
   hearth: {
-    default: ['мёрзнет после дороги и хочет погреться', 'любит слушать, как потрескивают дрова'],
-    road: ['мёрзнет после дороги и хочет погреться'],
-    hearth: ['любит быть ближе к очагу'],
-    craft: ['любит жар и запах дров'],
-    quiet: ['хочет согреться в тишине'],
-    magic: ['любит смотреть на тёплые искры'],
-    nature: ['любит запах сухих трав у огня'],
+    default: ['Посадите меня у огня: я слегка продрог.', 'Хочу к очагу — послушать, как потрескивают дрова.'],
+    road: ['Мне к огню: дорога сегодня была холодной.'],
+    hearth: ['Моё место у очага. Там и чай вкуснее.'],
+    craft: ['Хочу поближе к жару и запаху дров.'],
+    quiet: ['Мне бы погреться у огня в тишине.'],
+    magic: ['Посадите у камина: искры сегодня что-то мне нашёптывают.'],
+    nature: ['Хочу к огню: там пахнет сухими травами.'],
   },
   door: {
-    default: ['скоро уходит — нужен короткий путь к двери', 'ждёт позднего гостя и хочет видеть вход', 'слушает, не стучат ли снаружи'],
-    road: ['скоро снова в путь — нужен короткий путь к двери'],
-    quiet: ['ждёт тихого стука в дверь'],
-    books: ['ждёт письмо и хочет видеть вход'],
-    craft: ['держит дверь и петли под контролем'],
-    tales: ['ждёт позднего гостя с историей'],
-    magic: ['ждёт знак у порога'],
+    default: ['Мне ближе к двери — скоро снова в путь.', 'Хочу видеть вход: жду позднего гостя.', 'Посадите у двери: я слушаю, не стучат ли.'],
+    road: ['Хозяин, мне короткий путь к двери. Скоро уходить.'],
+    quiet: ['Я подожду тихого стука у двери.'],
+    books: ['Хочу видеть вход: для меня должно быть письмо.'],
+    craft: ['Мне к двери: присмотрю за замком и петлями.'],
+    tales: ['Посадите у входа: поздний гость обещал историю.'],
+    magic: ['Мне к порогу: сегодня там должен появиться знак.'],
   },
   window: {
-    default: ['хочет смотреть на дорогу', 'следит за луной', 'любит дождь за стеклом'],
-    road: ['хочет смотреть на дорогу'],
-    nature: ['смотрит, не собирается ли дождь'],
-    quiet: ['следит за луной'],
-    books: ['любит дождь за стеклом'],
-    magic: ['следит за луной'],
-    tales: ['смотрит, кто идёт к лавке'],
+    default: ['Хочу к окну — смотреть на дорогу.', 'Посадите у окна: я следую за луной.', 'Мне у стекла: дождь сегодня интереснее разговора.'],
+    road: ['Мне к окну: оттуда видно мою дорогу.'],
+    nature: ['Хочу к окну — проверить, не собирается ли дождь.'],
+    quiet: ['Посадите у окна: луна сегодня хорошая компания.'],
+    books: ['Мне к стеклу: под дождь так хорошо читается.'],
+    magic: ['Мне к окну. Луна обещала знак — не хочу пропустить.'],
+    tales: ['Хочу видеть, кто идёт к лавке. Вдруг придёт история.'],
   },
   samovar: {
-    default: ['любит наливать чай', 'хочет быть ближе к угощению', 'следит за пирогами'],
-    hearth: ['хочет быть ближе к угощению'],
-    nature: ['следит за травяным сбором'],
-    books: ['любит наливать чай не отрываясь от разговора'],
-    craft: ['присматривает за самоваром'],
-    tales: ['хочет быть ближе к угощению'],
-    quiet: ['любит тихий гул самовара'],
+    default: ['Мне поближе к самовару: я всем налью.', 'Хочу к угощению поближе.', 'Посадите у самовара — присмотрю за пирогами.'],
+    hearth: ['Мне к угощению поближе, пожалуйста.'],
+    nature: ['Посадите у самовара: проверю мой травяной сбор.'],
+    books: ['Хочу наливать чай, не отрываясь от разговора.'],
+    craft: ['Мне к самовару: у него сегодня подозрительный гул.'],
+    tales: ['Поближе к угощению: истории лучше идут под пирог.'],
+    quiet: ['Хочу рядом с тихим гулом самовара.'],
   },
 };
 
 const GUEST_SEAT_REASONS = {
-  spider: { door: ['ждёт весточку от паучьей почты — ему ближе к двери'] },
-  owl: { quiet: ['хочет поближе к книгам'], window: ['следит за луной'] },
-  cat: { hearth: ['знает, что лучшее тепло у очага'], window: ['смотрит, кто идёт к лавке'] },
-  watchman: { door: ['держит вход под контролем'] },
-  cook: { samovar: ['хочет быть ближе к угощению'] },
-  baker: { samovar: ['следит за пирогами'] },
-  gardener: { window: ['смотрит, не собирается ли дождь'], quiet: ['после чая хочет прилечь'] },
-  daughter: { window: ['хочет смотреть на дорогу'], quiet: ['хочет поближе к книгам'] },
-  sailor: { window: ['хочет смотреть на дорогу'] },
-  shipwright: { window: ['хочет смотреть на дорогу'] },
-  scribe: { quiet: ['любит почитать за чаем'] },
+  spider: { door: ['Мне к двери: жду весточку от паучьей почты.'] },
+  owl: { quiet: ['Хочу поближе к книгам и подальше от шума.'], window: ['Мне к окну: луна помогает читать.'] },
+  cat: { hearth: ['Моё место у очага. Тепло — закон. Мур.'], window: ['Посадите у окна: посмотрю, кто идёт к лавке.'] },
+  watchman: { door: ['Мне к двери: вход должен быть под контролем.'] },
+  cook: { samovar: ['Мне поближе к угощению. Вам же удобнее!'] },
+  baker: { samovar: ['Посадите у самовара: присмотрю за пирогами.'] },
+  gardener: { window: ['Мне к окну: проверю, не собирается ли дождь.'], quiet: ['Хозяин, тихий уголок. После чая я прилягу.'] },
+  daughter: { window: ['Хочу смотреть на дорогу: вдруг кто-нибудь принесёт редкое семечко.'], quiet: ['Мне поближе к книгам: ищу имена для новых цветов.'] },
+  sailor: { window: ['Мне к окну: дорога — это тоже своего рода волна.'] },
+  shipwright: { window: ['Хочу к окну: у дороги тоже есть течение.'] },
+  scribe: { quiet: ['Мне тихий уголок: допишу одну страницу за чаем.'] },
 };
 
-// Отказ тоже называет причину, а не координату.
 const SEAT_REJECTS = {
-  quiet: ['не хочет засыпать над книгой', 'боится прилечь прямо за чаем'],
-  hearth: ['не любит яркий огонь — глаза устают', 'у огня слишком жарко'],
-  door: ['не любит сквозняк', 'не хочет вскакивать при каждом стуке'],
-  window: ['не любит лунный свет — он мешает дремать', 'у окна слишком холодно для старых костей'],
-  samovar: ['не выносит шум самовара рядом', 'не хочет следить за кипятком'],
+  quiet: ['Только не в тихий уголок: я там засну над книгой.', 'Не хочу в тихий уголок — сегодня мне нужна компания.'],
+  hearth: ['Лучше подальше от огня: глаза устают.', 'Не у камина, прошу. Там мне слишком жарко.'],
+  door: ['Только не у двери: я не люблю сквозняк.', 'Не хочу у входа и вскакивать при каждом стуке.'],
+  window: ['Подальше от окна: луна мешает мне дремать.', 'Не у окна, хозяин. Там слишком холодно.'],
+  samovar: ['Не рядом с самоваром: его гул мне мешает.', 'Подальше от кипятка, пожалуйста.'],
 };
 
 function uniqueSpatialFeature(room, seat) {
@@ -519,51 +526,48 @@ function colorJokeFor(level, guest, feature, variant) {
   return variant(COLOR_JOKES[feature]);
 }
 
-// Позитивное пожелание по особенности: сначала персональная фраза гостя,
-// потом фраза по черте, потом нейтральная причина.
 function featureWishText(guest, level, feature, variant) {
-  const g = level.guestNames[guest];
   const own = GUEST_SEAT_REASONS[guest]?.[feature];
-  if (own?.length) return `${g} ${variant(own)}`;
+  if (own?.length) return variant(own);
   const spec = SEAT_REASONS[feature];
-  if (!spec) return `${g} просит ${SEAT_FEATURE_TEXT[feature]}`;
+  if (!spec) return `Хозяин, прошу место ${SEAT_FEATURE_TEXT[feature]}.`;
   const lines = [];
   for (const trait of level.traits[guest] || []) {
     if (spec[trait]) lines.push(...spec[trait]);
   }
   lines.push(...spec.default);
-  return `${g} ${variant(lines)}`;
+  return variant(lines);
 }
 
 function rejectWishText(guest, level, feature, variant) {
-  const g = level.guestNames[guest];
   const lines = SEAT_REJECTS[feature];
-  return lines?.length ? `${g} ${variant(lines)}` : `${g} просит любое место, но не ${SEAT_FEATURE_TEXT[feature]}`;
+  return lines?.length ? variant(lines) : `Хозяин, любое место, но не ${SEAT_FEATURE_TEXT[feature]}.`;
 }
 
 // Текст точечной посадки: по возможности причина/симпатия. Цвет — только
-// когда нет уникального пространственного признака (два стула у окна и т.п.),
-// а совсем пустые поздние места используют свою конкретную подпись.
+// когда нет уникального пространственного признака (два стула у окна и т.п.).
 function seatWishText(guest, level, room, seat, variant) {
-  const g = level.guestNames[guest];
   const feature = uniqueSpatialFeature(room, seat);
   if (feature) return featureWishText(guest, level, feature, variant);
   const color = (seat.features || []).find((f) => SEAT_COLOR_FEATURE[f]);
-  if (color) return `${g} ${colorJokeFor(level, guest, color, variant)}`;
-  return `${g} просит ${seat.label}`;
+  if (color) return colorJokeFor(level, guest, color, variant);
+  return `Хозяин, прошу ${seat.label}.`;
 }
 
 // Строит правило, истинное в рассадке sol (guestId -> seatId), или null.
-function buildRule(type, guest, level, room, sol, rng, model) {
+function buildRule(type, guest, level, room, sol, rng, model, forcedOther = null) {
   const g = level.guestNames[guest];
-  const forms = SEATING_GUESTS[guest];
   const seat = sol[guest];
-  const gIdx = model.guestIndex.get(guest);
+  if (!model.seatIndex.has(seat)) return null;
   const sIdx = model.seatIndex.get(seat);
   const adjSeats = model.adj[sIdx].map((i) => model.seats[i].id);
   const guestsAt = (sid) => level.guests.find((x) => sol[x] === sid);
   const pick = (arr) => arr[Math.floor(rng.next() * arr.length)];
   const variant = (list) => pick(list);
+  const pairText = (other, fallback) => {
+    const own = SEATING_RELATIONS[`${guest}:${other}`]?.[type];
+    return own?.length ? variant(own) : variant(fallback);
+  };
 
   switch (type) {
     case 'seat': {
@@ -591,27 +595,43 @@ function buildRule(type, guest, level, room, sol, rng, model) {
     case 'near': {
       const others = level.guests.filter((x) => x !== guest && adjSeats.includes(sol[x]));
       if (!others.length) return null;
-      const o = pick(others);
+      const o = forcedOther ? (others.includes(forcedOther) ? forcedOther : null) : pick(others);
+      if (!o) return null;
       const w = SEATING_GUESTS[o].with;
-      const text = variant([`${g} хочет сидеть рядом ${w}`, `${g} просит место рядом ${w}`, `${g} охотно сядет рядом ${w}`]);
+      const text = pairText(o, [
+        `Хочу сидеть рядом ${w}.`,
+        `Хозяин, можно мне рядом ${w}?`,
+        `Посади меня рядом ${w}, пожалуйста.`,
+        `Мне нужно оказаться рядом ${w}. Потом расскажу зачем.`,
+      ]);
       return { type, guest, other: o, text };
     }
     case 'notNear': {
       const others = level.guests.filter((x) => x !== guest && !adjSeats.includes(sol[x]));
       if (!others.length) return null;
-      const o = pick(others);
+      const o = forcedOther ? (others.includes(forcedOther) ? forcedOther : null) : pick(others);
+      if (!o) return null;
       const w = SEATING_GUESTS[o].with;
       const of = SEATING_GUESTS[o].of;
-      const text = variant([`${g} не хочет сидеть рядом ${w}`, `${g} просит место подальше от ${of}`]);
+      const text = pairText(o, [
+        `Только не рядом ${w}, прошу.`,
+        `Хозяин, посади меня подальше от ${of}.`,
+        `Мне лучше не сидеть рядом ${w}. Мы сегодня не в ладу.`,
+      ]);
       return { type, guest, other: o, text };
     }
     case 'opposite': {
       const oppSeats = model.opp[sIdx].map((i) => model.seats[i].id);
       const others = level.guests.filter((x) => x !== guest && oppSeats.includes(sol[x]));
       if (!others.length) return null;
-      const o = pick(others);
+      const o = forcedOther ? (others.includes(forcedOther) ? forcedOther : null) : pick(others);
+      if (!o) return null;
       const of = SEATING_GUESTS[o].of;
-      const text = variant([`${g} хочет сесть напротив ${of}`, `${g} просит место напротив ${of}`]);
+      const text = pairText(o, [
+        `Хочу сесть напротив ${of}.`,
+        `Хозяин, оставь мне место напротив ${of}.`,
+        `Мне напротив ${of}: так разговор пойдёт легче.`,
+      ]);
       return { type, guest, other: o, text };
     }
     case 'between': {
@@ -621,13 +641,21 @@ function buildRule(type, guest, level, room, sol, rng, model) {
       if (!a || !b) return null;
       const ia = SEATING_GUESTS[a].inst;
       const ib = SEATING_GUESTS[b].inst;
-      const text = variant([`${g} хочет сесть между ${ia} и ${ib}`, `${g} просит место между ${ia} и ${ib}`]);
+      const text = variant([
+        `Хочу сесть между ${ia} и ${ib}.`,
+        `Хозяин, посади меня между ${ia} и ${ib}.`,
+        `Мне место между ${ia} и ${ib}: не хочу пропустить ни слова.`,
+      ]);
       return { type, guest, others: [a, b], text };
     }
     case 'emptyNear': {
       const hasEmpty = adjSeats.some((sid) => !guestsAt(sid));
       if (!hasEmpty) return null;
-      const text = variant([`${g} просит оставить рядом пустой стул`, `${g} хочет, чтобы рядом осталось свободное место`]);
+      const text = variant([
+        'Оставь рядом со мной пустой стул, пожалуйста.',
+        'Хозяин, мне нужно свободное место рядом. Для одной сумки. Почти для сумки.',
+        'Прошу пустой стул по соседству: мне понадобится простор.',
+      ]);
       return { type, guest, text };
     }
     case 'traitNear': {
@@ -638,7 +666,11 @@ function buildRule(type, guest, level, room, sol, rng, model) {
       }
       if (!here.size) return null;
       const t = pick([...here]);
-      const text = variant([`${g} хочет сидеть рядом ${TRAIT_TEXT[t].with}`, `${g} просит в соседи ${TRAIT_TEXT[t].of}`]);
+      const text = variant([
+        `Хочу сидеть рядом ${TRAIT_TEXT[t].with}.`,
+        `Хозяин, посади рядом ${TRAIT_TEXT[t].with}.`,
+        `Мне нужен сосед — ${TRAIT_TEXT[t].of} как раз подойдёт.`,
+      ]);
       return { type, guest, trait: t, text };
     }
     case 'notTraitNear': {
@@ -651,26 +683,40 @@ function buildRule(type, guest, level, room, sol, rng, model) {
       const rest = [...present].filter((t) => !bad.has(t));
       if (!rest.length) return null;
       const t = pick(rest);
-      const text = variant([`${g} не хочет сидеть рядом ${TRAIT_TEXT[t].with}`, `${g} держится подальше от ${TRAIT_TEXT[t].of}`]);
+      const text = variant([
+        `Только не рядом ${TRAIT_TEXT[t].with}, прошу.`,
+        `Мне лучше держаться подальше от ${TRAIT_TEXT[t].of}.`,
+        `Хозяин, не сажай меня рядом ${TRAIT_TEXT[t].with}. Сегодня не выдержу.`,
+      ]);
       return { type, guest, trait: t, text };
     }
     case 'sameTable': {
       const myTable = model.seats[sIdx].table;
       const others = level.guests.filter((x) => x !== guest && model.seats[model.seatIndex.get(sol[x])].table === myTable);
       if (!others.length) return null;
-      const o = pick(others);
+      const o = forcedOther ? (others.includes(forcedOther) ? forcedOther : null) : pick(others);
+      if (!o) return null;
       const w = SEATING_GUESTS[o].with;
-      const text = variant([`${g} хочет сесть за один стол ${w}`, `${g} просится за общий стол ${w}`]);
+      const text = pairText(o, [
+        `Хочу за один стол ${w}.`,
+        `Хозяин, посади нас ${w} за общий стол.`,
+        `Мне за один стол ${w}: у нас разговор не окончен.`,
+      ]);
       return { type, guest, other: o, text };
     }
     case 'differentTable': {
       const myTable = model.seats[sIdx].table;
       const others = level.guests.filter((x) => x !== guest && model.seats[model.seatIndex.get(sol[x])].table !== myTable);
       if (!others.length) return null;
-      const o = pick(others);
+      const o = forcedOther ? (others.includes(forcedOther) ? forcedOther : null) : pick(others);
+      if (!o) return null;
       const w = SEATING_GUESTS[o].with;
       const of = SEATING_GUESTS[o].of;
-      const text = variant([`${g} не хочет сидеть за одним столом ${w}`, `${g} просит стол отдельно от ${of}`]);
+      const text = pairText(o, [
+        `Только не за один стол ${w}, прошу.`,
+        `Хозяин, мне стол подальше от ${of}.`,
+        `Нам лучше сесть за разными столами: я имею в виду ${of}.`,
+      ]);
       return { type, guest, other: o, text };
     }
     case 'runWith': {
@@ -690,8 +736,8 @@ function buildRule(type, guest, level, room, sol, rng, model) {
       if (!triples.length) return null;
       const [a, b] = pick(triples);
       const text = variant([
-        `${g}, ${level.guestNames[a]} и ${level.guestNames[b]} хотят сидеть подряд`,
-        `${g}, ${level.guestNames[a]} и ${level.guestNames[b]} просят три места подряд`,
+        `Хозяин, посади нас троих подряд: ${g}, ${level.guestNames[a]} и ${level.guestNames[b]}.`,
+        `Нам ${SEATING_GUESTS[a].with} и ${SEATING_GUESTS[b].with} нужны три места подряд.`,
       ]);
       return { type, guest, others: [a, b], text };
     }
@@ -726,6 +772,7 @@ function genLevel(ch, idx) {
   const guestCount = cfg.from + Math.round((cfg.to - cfg.from) * (idx / 9));
   const fixedCount = ch === 0 ? 0 : (idx % 4 === 3 ? 0 : 1);
   const types = Object.entries(cfg.types);
+  const special = SPECIAL_SCENES[`${ch}:${idx}`];
 
   // Состав: вращающийся срез труппы главы — лица повторяются, все играют
   const cast = CASTS[ch];
@@ -734,6 +781,12 @@ function genLevel(ch, idx) {
   for (let k = 0; guests.length < guestCount && k < cast.length * 3; k++) {
     const cand = cast[(start + k) % cast.length];
     if (!guests.includes(cand)) guests.push(cand);
+  }
+  for (const g of special?.guests || []) {
+    if (!guests.includes(g)) {
+      const replaceAt = guests.findIndex((x) => !special.guests.includes(x));
+      guests[replaceAt] = g;
+    }
   }
   // Перемешаем порядок карточек
   for (let i = guests.length - 1; i > 0; i--) {
@@ -776,6 +829,11 @@ function genLevel(ch, idx) {
     const fixed = {};
     fixedGuests.slice(0, fixedCount).forEach((g) => { fixed[g] = sol[g]; });
     const fixedSet = new Set(Object.keys(fixed));
+    const wishTargets = Object.fromEntries(guests.map((g) => [g, 1]));
+    const wishfulGuests = fixedGuests.filter((g) => !fixedSet.has(g));
+    let multiAt = 0;
+    for (let i = 0; i < (cfg.multiThree || 0); i++) wishTargets[wishfulGuests[multiAt++]] = 3;
+    for (let i = 0; i < (cfg.multiTwo || 0); i++) wishTargets[wishfulGuests[multiAt++]] = 2;
 
     // Черновик пересобирается заново при каждом добавленном правиле —
     // модель/домены в core кэшируются по объекту уровня.
@@ -803,11 +861,23 @@ function genLevel(ch, idx) {
       draft = { ...draft, rules: [f] };
     }
 
+    if (special) {
+      const [type, guest, other] = special.rule;
+      const model = seatingModel(draft, SEATING_ROOMS);
+      const r = buildRule(type, guest, draft, room, sol, rng, model, other);
+      if (!r) continue;
+      if (!keys.has(ruleKey(r))) {
+        keys.add(ruleKey(r));
+        wishes[guest] = (wishes[guest] || 0) + 1;
+        draft = { ...draft, rules: [...draft.rules, r] };
+      }
+    }
+
     for (let step = 0; step < 90; step++) {
       // Считаем с запасом до 6: count<6 — точное число решений, 6 — «много».
       const res = solveSeating(draft, SEATING_ROOMS, 6);
       if (res.truncated) break;
-      const missing = guests.filter((g) => !fixedSet.has(g) && !(wishes[g] > 0));
+      const missing = guests.filter((g) => !fixedSet.has(g) && (wishes[g] || 0) < wishTargets[g]);
       if (res.count === 1 && missing.length === 0) { ok = true; break; }
 
       // Кандидаты: истинные в sol правила разрешённых типов. Если решение уже

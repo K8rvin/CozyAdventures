@@ -246,10 +246,15 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderPuzzle(new El('main'), ctx, { id: 'sp_100' }), // финал: слепой 8×5 с якорями
     () => renderPuzzle(new El('main'), ctx, { id: 'gift_01' }), // подарок для гостя
     () => renderPuzzle(new El('main'), ctx, { id: 'gift_12' }), // подарок от кота (9 сувениров)
-    () => renderPuzzle(new El('main'), ctx, { id: 'seat_01' }), // гости за чайным столом
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_01' }), // первая чайная комната
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_15' }), // места у огня
     () => renderPuzzle(new El('main'), ctx, { id: 'seat_25' }), // «напротив» и «между»
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_35' }), // свободный стул
     () => renderPuzzle(new El('main'), ctx, { id: 'seat_45' }), // черты характера
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_55' }), // два столика
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_65' }), // своей компанией
     () => renderPuzzle(new El('main'), ctx, { id: 'seat_72' }), // большой стол
+    () => renderPuzzle(new El('main'), ctx, { id: 'seat_85' }), // вечер перекрёстка
     () => renderPuzzle(new El('main'), ctx, { id: 'seat_100' }), // праздник ста чашек
     () => renderBrewBook(new El('main'), ctx), // книга рецептов
     () => renderGuestBook(new El('main'), ctx), // гостевая книга
@@ -1164,6 +1169,14 @@ test('«Гости за чайным столом»: тапы сажают и п
   tapSeatEl(seatCards(root).find((el) => el.dataset.guest === g1));
   assert.ok((seatCards(root).find((el) => el.dataset.guest === g1).className || '').includes('selected'),
     'карточка выделяется после тапа');
+  const guestPreview = flatElements(root).find((el) => (el.className || '').includes('seat-preview')
+    && el.children.some((c) => (c.className || '').includes('seat-preview-wishes')));
+  const previewWishes = guestPreview.children.find((el) => (el.className || '').includes('seat-preview-wishes'));
+  const previewAbout = guestPreview.children.find((el) => (el.className || '').includes('seat-preview-about'));
+  assert.ok(guestPreview.children.indexOf(previewWishes) < guestPreview.children.indexOf(previewAbout),
+    'пожелания идут раньше необязательной биографии');
+  assert.equal(previewAbout.tagName, 'details');
+  assert.ok(!previewAbout.open, 'биография и реплика свёрнуты по умолчанию');
   seatZonesOf(root)[0].click();
   assert.equal(seatCircles(root).length, 1, 'на месте появился кружок');
   assert.equal(seatCards(root).length, level.guests.length - 1, 'карточек стало меньше');

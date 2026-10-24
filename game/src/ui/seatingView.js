@@ -147,19 +147,6 @@ export function renderSeatingPuzzle(container, ctx, level) {
     traits.className = 'seat-preview-traits';
     traits.textContent = (level.traits?.[guestId] || []).map((t) => TRAIT_LABEL[t] || t).join(' · ');
     box.appendChild(traits);
-    if (g.description) {
-      const desc = document.createElement('div');
-      desc.className = 'seat-preview-desc';
-      desc.textContent = g.description;
-      box.appendChild(desc);
-    }
-    const line = SEATING_GUESTS[guestId]?.line;
-    if (line) {
-      const quote = document.createElement('div');
-      quote.className = 'seat-preview-line';
-      quote.textContent = `«${line}»`;
-      box.appendChild(quote);
-    }
     const wishes = wishesOf(guestId);
     const wishBox = document.createElement('div');
     wishBox.className = 'seat-preview-wishes';
@@ -174,6 +161,27 @@ export function renderSeatingPuzzle(container, ctx, level) {
       wishBox.textContent = 'Особых пожеланий нет.';
     }
     box.appendChild(wishBox);
+    const line = SEATING_GUESTS[guestId]?.line;
+    if (g.description || line) {
+      const details = document.createElement('details');
+      details.className = 'seat-preview-about';
+      const summary = document.createElement('summary');
+      summary.textContent = 'О госте';
+      details.appendChild(summary);
+      if (g.description) {
+        const desc = document.createElement('div');
+        desc.className = 'seat-preview-desc';
+        desc.textContent = g.description;
+        details.appendChild(desc);
+      }
+      if (line) {
+        const quote = document.createElement('div');
+        quote.className = 'seat-preview-line';
+        quote.textContent = `«${line}»`;
+        details.appendChild(quote);
+      }
+      box.appendChild(details);
+    }
     preview.appendChild(box);
   }
 

@@ -483,7 +483,7 @@ export function validateSeatingLevel(level, rooms, guestsDict) {
     if (!SEATING_RULE_TYPES.includes(r.type)) { problems.push(`неизвестный тип правила ${r.type}`); continue; }
     if (!guestSet.has(r.guest)) { problems.push(`правило ${r.type}: нет гостя ${r.guest}`); continue; }
     wishes[r.guest] = (wishes[r.guest] || 0) + 1;
-    if (wishes[r.guest] > 2) problems.push(`у ${r.guest} больше двух желаний`);
+    if (wishes[r.guest] > 3) problems.push(`у ${r.guest} больше трёх желаний`);
     if (!r.text || latin.test(r.text)) problems.push(`правило ${r.type} без русского текста`);
     const key = JSON.stringify([r.type, r.guest, r.seat, r.feature, r.other, r.others, r.trait]);
     if (ruleKeys.has(key)) problems.push(`дубль правила: ${r.text}`);
