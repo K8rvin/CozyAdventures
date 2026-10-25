@@ -3,8 +3,8 @@
 Проект: **«Лавка на перекрёстке миров»** — уютная браузерная игра (хозяин волшебной
 лавки: головоломки, обустройство, найм команды, автобои рыцаря). Весь код на русском,
 все пользовательские тексты СТРОГО по-русски. Дизайн-документ: `Второй анализ после
-ответов.txt` в корне. План/история: `PLAN.md`, `game/README.md` (местами устарели —
-истина в коде и тестах).
+ответов.txt` в корне. План/история: `PLAN.md`; игрокам и разработчикам — актуальный
+обзор `game/README.md`. При расхождении истина в коде и тестах.
 
 ## Стек и запуск
 
@@ -17,8 +17,14 @@
     игра грузит `bundle.js`, не исходники.
   - `npm test` — `node --test "tests/*.test.mjs"`. После правок всегда
     `npm run build && npm test`.
-  - `node tools/sim-world.mjs <worldId> 40` — баланс мира (винрейт эндгейм-билдом).
+  - `node tools/sim-world.mjs <worldId> [minWinrate] [profile]` — винрейт мира;
+    по умолчанию порог 60 и профиль `endgame`. Профили: `endgame` (готовый
+    эндгейм-билд), `available` (верхняя граница открытого снаряжения, не путь
+    игрока), `reasonable` (консервативные покупки на первые монетные награды),
+    `upgrade` (reasonable + одно следующее усиление), `all` (все четыре).
     Миры: nm, sw, sf, ash, cr, jade, deep, mist.
+  - `node tools/sim-economy.mjs all` — все нормативные сценарии дохода и покупок;
+    `node tools/sim-economy.mjs shopping` — только бюджет и разовые стоки.
 - CI (GitHub Actions, `.github/workflows/deploy.yml`): пуш в main → тесты → сборка →
   деплой на GitHub Pages (https://k8rvin.github.io/CozyAdventures/). Node 22
   (test-runner с glob не работает на Node 20 — не понижать).
@@ -28,9 +34,13 @@
 ```
 game/
   index.html, styles.css, bundle.js (собранный), manifest.webmanifest, sw.js (PWA/офлайн)
-  src/core/   — чистая логика БЕЗ DOM (state.js, formBattle.js, *Puzzle.js, items.js, rng.js)
-  src/data/   — контент как данные (items, enemies, battles, puzzles*, crew, shop, sets…)
-  src/ui/     — экраны (app.js — роутер и ctx; hub.js — сцены-хабы; *View.js);
+  src/core/   — чистая логика БЕЗ DOM: state.js, formBattle.js, *Puzzle.js, items.js,
+                rng.js, economy.js, onboarding.js, energy.js, bossDrops.js,
+                materialExchange.js, goals.js, hubGeometry.js, cosmetics.js
+  src/data/   — контент как данные: items, enemies, battles, puzzles*, crew, shop,
+                sets, economy, energy, onboarding, bossDrops, cosmetics…
+  src/ui/     — экраны (app.js — роутер и ctx; hub.js — сцены-хабы; *View.js,
+                onboardingView.js, goalView.js);
                 cursors.js — тематические курсоры: роутер ставит body[data-cursor],
                 правила и хотспоты в styles.css (хвост файла), PNG 32×32 в
                 assets/cursors/<key>.png (+_hover) — промты р.19, без файла —
@@ -41,8 +51,9 @@ game/
   tests/      — node --test; ui-smoke.test.mjs рендерит все экраны на DOM-стабе
   assets/     — только рантайм-картинки по тематическим папкам;
                 исходники и PROMPTS.md — в ../art-src/ (пользователь генерирует сам)
-  tools/      — sim-world.mjs (баланс), generate-assets.mjs (API-генерация),
-                fate-deck.mjs (пересборка уровней и рук «Карт судьбы»)
+  tools/      — sim-world.mjs (винрейт по профилям), sim-economy.mjs (нормативная
+                экономика), generate-assets.mjs (API-генерация), fate-deck.mjs
+                (пересборка уровней и рук «Карт судьбы»)
 ```
 
 ## Архитектурные правила
@@ -54,6 +65,77 @@ game/
   ОТДЕЛЬНЫЙ ключ `cozy_seek_overrides_v1` (не стирать, переживает новую игру).
 - Все новые пользовательские строки — на русском. Есть регрессионные тесты на
   английские ключи (материалы, бонусы, тексты скиллов) — не ломать.
+
+## Первая дуга и цели
+
+- Дуга: `core/onboarding.js` + `data/onboarding.js` + `ui/onboardingView.js`.
+  Статусы `active/paused/skipped/done`; restart и миграции не выдают прогресс заново.
+- Маршрут: `prologOnly` → md_01 → md_02 → выбор tw_01 / sk_md_01 / pp_01 →
+  bt_slimes → площадь и торговый квартал → bt_path → честные bt_bees. Первая
+  неудача включает safe-пояс; далее rng_health + пояс, честный повтор,
+  rcp_pot_heal и финал. CTA ТОЛЬКО маршрутизирует, не отмечает действие сделанным.
+- Необязательный guide после финала ведёт по 8 разделам; на старых сейвах сам не
+  запускается. Цель накопления `core/goals.js`: item/crew/recipe, карточка в hub,
+  кнопки в магазинах/таверне/кузнице и прогресс в оверлеях наград.
+
+## Экономика
+
+- `core/economy.js` + `data/economy.js`: `expectedFirst/RepeatSeconds` — нормативный
+  объём контента, НЕ таймер игрока. Ярусы 0..5, скорость `v = 20 + 4t` монет/мин;
+  `derivePuzzleCatalog/derivePuzzle` формирует rewards для ALL_PUZZLES по tier/order/
+  finale. Повтор головоломки ≈25%, боя ≈20%. Печати — только финалы 16 типов и
+  первые победы над боссами. Daily ×2 работает и после кампании; пропуск честно
+  отличается от честного решения. `economyVersion` фиксирует модель без пересчёта
+  старых денег; фактические и отчётные награды обязаны совпадать.
+- Покупка/продажа использует эффективную цену `pricedShopItem` (tier/order/override),
+  НЕ сырой `ITEM_BY_ID.price`. Не обходить этот слой в UI, симуляциях и целях.
+- `sim-economy.mjs`: доход 72 305 монет, разовые стоки 55 320 (косметика
+  1 310), отношение ≈1,31. Печатные стоки 45, печати 62/45 ≈1,38. Это измерение
+  модели на текущий контент, не обещание игроку и не фактический темп прохождения.
+- `sim-world` по умолчанию использует endgame. Текущий nm_17: scales 1,64,
+  endgame 42%, reasonable 79%, upgrade 100%; остальные endgame-миры выше 40%.
+  Это не значит «баланс идеален»: reasonable выявил слабые nm_06 13%, nm_07 8%,
+  nm_08 0%, nm_boss 38% — они остаются открытой работой.
+
+## Энергия и босс-находки
+
+- `core/energy.js` + `data/energy.js`: cap 36, +1 каждые 2 часа. Первое прохождение
+  и поражение бесплатны; наградный repeat стоит 1, босс 3 после победы. Нехватка —
+  честный `blocked`. Practice не даёт наград, прогресса, pity и не меняет пояс/сейв.
+- `core/bossDrops.js` + `data/bossDrops.js`: 12 внесетовых rare предметов, шанс
+  5% +2 п.п. за сухую наградную победу, гарантия на 12-й, itemFind ограничен +5 п.п.
+  Отдельные RNG, pity и anti-dup; дроп не входит в магазин или рецепты сам по себе.
+
+## Хаб и косметика
+
+- `core/hubGeometry.js` + `LAVKA_HOTSPOT_SHAPES`: 7 полигонов лавки, native buttons
+  + clip-path, bbox-fallback, labels/dots вне обрезки, mobile nav и доступные
+  спрайты. Старой lens и дополнительной intro-заставки нет. Сцена 3:1, reduced-motion.
+- V2 уже интегрированы и проверены в Chrome: `town_square_v2_web.jpg`,
+  `town_market_v2_web.jpg`, `trophy_room_v2_web.jpg` (2400×800) с layoutId
+  `square_v2_3x1` / `market_v2_3x1` / `cabinet_v2_3x1`. У них свои полигоны и
+  12+4 места кабинета; error возвращает старый файл и legacy circles/центры.
+  Координаты не перезаписывать без новой визуальной разметки.
+- `COSMETIC_PACKS`: шесть pack id, `COSMETICS_VERSION=2`, aliases старых покупок
+  (carpet+crest → hearth и т.д.) без повторной оплаты. Один активный pack;
+  resolver выбирает variant по `scenes[scene]`, scene-specific base и `src + layoutId`.
+  Полных `lavka_pack_<id>_web.jpg` пока нет: missing → база + прежние overlays,
+  successful load → legacy-слой скрывается. Неизвестный layout → base src/layout.
+- Будущие темы сначала получают промт и реальные файлы, затем проходят приёмку.
+  Не добавлять их в данные или магазин заранее. Актуальные промты — р.22.
+
+## Крафт и обмен
+
+- 25 рецептов выводятся в progression-порядке. `core/materialExchange.js` различает
+  45 обычных и 12 боссовских материалов (57 всего): обычный 3→1 в любой обычный,
+  боссовский 1→2 в обычный. Боссовский output и обмен «сам в себя» запрещены;
+  нехватка и невалидный обмен не меняют склад.
+
+## Монетизация
+
+- Допустимы только косметика и добровольный донат. Энергию, бустеры и силу за
+  деньги НЕ продаём. Донат-кнопки пока нет: сначала нужны реальный URL и выбранная
+  платформа. Не добавлять заглушки, выдуманные ссылки или client-only «оплату».
 
 ## Бой (src/core/formBattle.js + src/ui/formationView.js)
 
@@ -219,10 +301,15 @@ game/
 
 - Загадка: данные в `src/data/puzzles*.js` (новая механика = core + view + routing в
   `puzzleView.js` + id в `CAMPAIGN_ORDER` в `state.js` + тесты + строка в ui-smoke).
-- Предмет: `items.js` + `shop.js` SHOP_STOCK (unlockAfter) + тип в SHOPS лавки
-  (тип 'scroll' → лавка Мага, 'potion' → Алхимик); сеты — `sets.js`. Иконка:
+- Предмет: `items.js` + `shop.js` SHOP_STOCK (unlockAfter/tier) + тип в SHOPS лавки
+  (тип 'scroll' → лавка Мага, 'potion' → Алхимик); сеты — `sets.js`. Цену при
+  покупке/продаже вычисляет `pricedShopItem`, не ручной raw price. Иконка:
   `assets/items/<id>_web.jpg` поверх эмодзи (`itemIconEl` в `ui/itemTip.js`,
   фолбэк сам), промты и фоны по редкости — `art-src/PROMPTS.md`, р.18.
+- Внесетовая босс-находка: rare item в `items.js` + связь battleId → itemId в
+  `data/bossDrops.js` + проверки в `tests/bossDrops.test.mjs` (и предметных тестах).
+  Не добавлять её в магазин/рецепт без отдельного решения. Готовый промт иконки —
+  `art-src/PROMPTS.md`, р.23; без файла работает эмодзи.
 - Бой/враг: `enemies.js` (или `data/worlds/*.js`) + `battles.js`.
 - Искалка: `puzzlesSeek.js`; координаты точек правятся через встроенный редактор
   (Мастерская → Редактор искалок), экспорт JSON → вшить в данные.
@@ -242,7 +329,18 @@ game/
 ## Известные грабли (не наступай повторно)
 
 - **`hub.js` правит сам пользователь** (координаты хотспотов, питомцев, внешек):
-  перед правкой файла читай его заново и сохраняй его цифры.
+  перед правкой файла читай его заново и сохраняй его цифры. Текущие силуэты —
+  `LAVKA_HOTSPOT_SHAPES`, не исторические координаты из PROMPTS.
+- Монетные rewards и печати — derived-слой `core/economy.js`: не добавляй вторую
+  ручную таблицу поверх него. Цены только через `pricedShopItem`; expectedSeconds —
+  норматив модели, не обещанное время игрока.
+- Practice не должен начислять монеты, материалы, прогресс или pity и не меняет
+  пояс/сейв; наградный repeat без энергии заканчивается blocked до симуляции.
+- Lifecycle: tutorial — singleton с destroy; реплей и его таймеры/оверлеи требуют
+  cleanup при уходе. Достижения учитывают уникальные честные уровни, не повторы и
+  пропуски; награда в отчёте не должна расходиться с фактической.
+- Миграции только в `state.js` и идемпотентны. Не затирай `legacyCosmeticsActive`:
+  он нужен до загрузки полного фона, после load legacy-слой скрывается.
 - Pillow: маска из numpy в `Image.fromarray()` readonly → `.copy()`, иначе floodfill
   молча не работает. Ресайз RGBA — только с премультиплицированной альфой (иначе
   цветной ореол). Модели рисуют «прозрачный фон» как шахматку — просить
@@ -255,7 +353,8 @@ game/
   подними версию CACHE.
 - Пользователь генерирует ассеты сам по `art-src/PROMPTS.md`; большие оригиналы
   (jfif/png) хранятся в `art-src/<тема>/`, в рантайм идут сжатые `*_web.jpg` / `*.webp`
-  из тематических папок `game/assets/`.
+  из тематических папок `game/assets/`. V2 уже есть, а полных `lavka_pack` пока нет:
+  не выдавай metadata/prompt за готовый файл и не убирай прежний fallback.
 
 ## Git и секреты
 

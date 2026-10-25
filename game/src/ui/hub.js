@@ -15,6 +15,10 @@ import { GUEST_BY_ID } from '../data/guests.js';
 import { showOverlay } from './common.js';
 import { startTutorial } from './tutorial.js';
 import { applyCursor } from './cursors.js';
+import { onboardingBlocksStory, onboardingBlocksLegacyTutorials } from '../core/onboarding.js';
+import { createSavingsGoalCard } from './goalView.js';
+import { scenePolygonGeometry } from '../core/hubGeometry.js';
+import { resolveCosmeticBackground, BASE_LAVKA_BACKGROUND, LAVKA_LAYOUT_ID } from '../core/cosmetics.js';
 
 // Реплики спутников и питомцев для дневника (случайная при визите)
 const CHATTER = {
@@ -42,6 +46,88 @@ function pickChatter(state) {
 // на широких экранах — пропорционально сцене (cqw = % ширины .hub-picture)
 const spr = (px) => `max(${px}px, ${(px / 10.28).toFixed(2)}cqw)`;
 
+// Силуэты лавки размечены по hub_banner_web.jpg (2172×724), в процентах сцены.
+// Это рабочие пользовательские координаты; прилавок имеет выемку вокруг аналоя.
+export const LAVKA_HOTSPOT_SHAPES = {
+  puzzles: [
+    [3.5, 0], [16.3, 0], [17.4, 8], [17.4, 68], [16.3, 72],
+    [16.3, 82], [13.8, 86], [8.5, 86], [7.5, 80], [3.4, 77],
+  ],
+  shop: [
+    [24.2, 52.8], [51.2, 52.8], [52.4, 55.5], [51.7, 75.5],
+    [50.5, 77], [48.7, 77], [48.7, 55.5], [39.5, 55.5],
+    [39.5, 77], [25.2, 77], [24.3, 74.5], [23.5, 56],
+  ],
+  guests: [
+    [46.8, 55.5], [48.2, 57], [47.8, 62], [48.5, 64.5],
+    [47.5, 68.5], [45.8, 69.5], [45.8, 87], [47.5, 89],
+    [47.2, 92.5], [41, 92.5], [40.5, 90], [42.2, 87],
+    [42.2, 70], [40, 68.5], [39.6, 64], [41.3, 60.5],
+    [45.8, 60], [46.2, 57.5],
+  ],
+  equip: [
+    [53.8, 26.5], [55.2, 26.5], [56, 29], [55.8, 33.5],
+    [57.2, 35], [58, 40], [57.5, 47], [56.6, 52.5],
+    [52.4, 52.5], [51.5, 47], [51.2, 40], [52, 36],
+    [53.2, 33.5], [53.2, 29],
+  ],
+  '@square': [
+    [75.2, 30], [76.2, 25], [78, 22], [80.5, 21], [82.5, 24],
+    [84, 29], [84.8, 36], [84.8, 78], [83.5, 82], [76.5, 82],
+    [75.2, 78], [74.8, 38],
+  ],
+  battles: [
+    [88.2, 0], [100, 0], [100, 65.5], [98, 68], [89, 66], [87.2, 62], [87.2, 14],
+  ],
+  '@cabinet': [
+    [65.2, 62], [65.8, 58], [67.2, 55.5], [69.2, 55], [70.8, 57.5],
+    [71.6, 61], [71.6, 75.5], [65, 75.5], [64.8, 68],
+  ],
+};
+
+// Единственная разрешённая сейчас карта лавки; будущий custom layout добавляется
+// сюда отдельно, без подмены базовых координат.
+export const LAVKA_LAYOUT_SHAPES = {
+  [LAVKA_LAYOUT_ID]: LAVKA_HOTSPOT_SHAPES,
+};
+
+// V2 размечены по фактическим runtime-изображениям 2400×800. Координаты не
+// наследуются от старых сцен: при error включается отдельный legacy-layout.
+export const SQUARE_V2_HOTSPOT_SHAPES = {
+  board: [[1.5, 35], [5, 31], [10, 36], [11.5, 42], [11, 75], [8, 78], [1, 77], [0.5, 55]],
+  '@lavka': [[12, 28], [18, 18], [22, 9], [26, 15], [31, 16], [34, 28], [34, 62], [31, 66], [15, 66], [12, 58]],
+  craft: [[35, 27], [39, 20], [44, 17], [45.5, 8], [48.5, 8], [49.2, 31], [51, 35], [49.5, 53], [43, 53], [43, 63], [35, 63]],
+  workshop: [[52.5, 28], [57, 21], [63, 24], [67, 30], [69, 39], [69, 63], [60, 63], [60, 55], [55, 55], [55, 52], [52, 52]],
+  '@market': [[70.5, 32], [74, 28], [80, 28], [83, 33], [83.5, 61], [81, 64], [71, 63], [69.5, 47]],
+  tavern: [[88, 0], [100, 0], [100, 68], [84, 68], [84, 54], [84, 36]],
+};
+
+export const MARKET_V2_HOTSPOT_SHAPES = {
+  shopArmory: [[0, 0], [10, 0], [18, 7], [24.5, 18], [24.5, 78], [22, 88], [0, 88]],
+  shopArmorer: [[24.5, 0], [34, 0], [41, 8], [44, 20], [44, 82], [41, 87], [27, 87], [24.5, 70]],
+  shopMagic: [[58, 9], [64, 0], [73, 0], [78, 12], [78, 82], [75, 88], [59, 88], [57, 70]],
+  shopAlchemy: [[81, 0], [100, 0], [100, 90], [79, 90], [78, 74], [78, 20]],
+  '@square': [
+    [44, 68], [44, 45], [45, 30], [44, 20], [46, 15], [46, 5],
+    [50, 1], [55, 1], [57, 8], [56, 18], [57, 35], [57, 68], [57, 100], [44, 100],
+  ],
+};
+
+export const CABINET_V2_HOTSPOT_SHAPES = {
+  achievements: [[2.5, 74], [8, 70], [14, 72], [20, 70], [24, 76], [23, 85], [18, 90], [8, 92], [2, 86]],
+  battles: [[10.7, 16.5], [22.4, 16.5], [22.4, 44.5], [10.7, 44.5]],
+  deck: [[87, 76], [93, 73], [98, 76], [97.5, 85], [94, 89], [87, 87]],
+  '@lavka': [[80.5, 12], [84, 6], [90, 5], [94, 11], [95, 24], [95, 70], [92, 73], [81, 73], [80, 58]],
+};
+
+const CABINET_V2_COLUMNS = [28, 36.7, 45.4, 54.2, 62.9, 71.7];
+export const CABINET_V2_TROPHY_SPOTS = [
+  ...CABINET_V2_COLUMNS.map((x) => ({ x, y: 35, size: 52 })),
+  ...CABINET_V2_COLUMNS.map((x) => ({ x, y: 64, size: 52 })),
+];
+export const CABINET_V2_MINI_SPOTS = [41.7, 46.9, 52.3, 57.6]
+  .map((x) => ({ x, y: 79, size: 30 }));
+
 export function renderHub(container, ctx, params = {}) {
   const { state } = ctx;
 
@@ -53,15 +139,17 @@ export function renderHub(container, ctx, params = {}) {
     ctx.setHubScene?.(scene);
     container.innerHTML = '';
     renderHub(container, ctx, { scene });
+    ctx.syncOnboarding?.();
   }
 
   // --- Сцены хаба: уютная лавка и городская площадь ---
   const SCENES = {
     lavka: {
       candidates: ['assets/hub/hub_banner_web.jpg'],
-      lens: true,
+      layoutId: 'lavka_base_3x1',
+      shapes: LAVKA_HOTSPOT_SHAPES,
       alt: 'Лавка на перекрёстке миров',
-      // Хотспоты: [icon, label, screen, x%, y%, showDot]
+      // [icon, label, screen, x%, y%, showDot]; x/y — только legacy-круги.
       hotspots: [
         ['📚', 'Головоломки', 'puzzles', 10, 42, () => solved === 0],
         ['🪙', 'Прилавок', 'shop', 37, 60, () => false],
@@ -73,30 +161,39 @@ export function renderHub(container, ctx, params = {}) {
       ],
     },
     square: {
-      candidates: ['assets/hub/town_square_web.jpg'],
+      candidates: ['assets/hub/town_square_v2_web.jpg', 'assets/hub/town_square_web.jpg'],
+      layoutId: 'square_v2_3x1',
+      legacyLayoutId: 'square_legacy_3x1',
+      shapes: SQUARE_V2_HOTSPOT_SHAPES,
       alt: 'Городская площадь',
       hotspots: [
-        ['🍺', 'Таверна', 'tavern', 79, 60, () => false],
-        ['⚒️', 'Кузница и котёл', 'craft', 39, 58, () => false],
-        ['🛠️', 'Мастерская', 'workshop', 53, 68, () => false],
         ['📌', 'Доска объявлений', 'board', 7, 59, () => false],
         ['🏮', 'В лавку', '@lavka', 17, 50, () => false],
+        ['⚒️', 'Кузница и котёл', 'craft', 39, 58, () => false],
+        ['🛠️', 'Мастерская', 'workshop', 53, 68, () => false],
         ['🏬', 'Торговый квартал', '@market', 58, 38, () => ['armory', 'armorer', 'magic', 'alchemy'].some((k) => hasUnseenIn(state, k))],
+        ['🍺', 'Таверна', 'tavern', 79, 60, () => false],
       ],
     },
     market: {
-      candidates: ['assets/hub/town_market_web.jpg'],
+      candidates: ['assets/hub/town_market_v2_web.jpg', 'assets/hub/town_market_web.jpg'],
+      layoutId: 'market_v2_3x1',
+      legacyLayoutId: 'market_legacy_3x1',
+      shapes: MARKET_V2_HOTSPOT_SHAPES,
       alt: 'Торговый квартал',
       hotspots: [
         ['🗡️', 'Оружейник', 'shopArmory', 7, 60, () => hasUnseenIn(state, 'armory')],
         ['🛡️', 'Бронник', 'shopArmorer', 35, 60, () => hasUnseenIn(state, 'armorer')],
+        ['🌇', 'На площадь', '@square', 52, 60, () => false],
         ['🔮', 'Маг', 'shopMagic', 63, 62, () => hasUnseenIn(state, 'magic')],
         ['🧪', 'Алхимик', 'shopAlchemy', 80, 60, () => hasUnseenIn(state, 'alchemy')],
-        ['🌇', 'На площадь', '@square', 52, 60, () => false],
       ],
     },
     cabinet: {
-      candidates: ['assets/hub/trophy_room_web.jpg'],
+      candidates: ['assets/hub/trophy_room_v2_web.jpg', 'assets/hub/trophy_room_web.jpg'],
+      layoutId: 'cabinet_v2_3x1',
+      legacyLayoutId: 'cabinet_legacy_3x1',
+      shapes: CABINET_V2_HOTSPOT_SHAPES,
       alt: 'Кабинет трофеев',
       hotspots: [
         ['📖', 'Книга рекордов', 'achievements', 87.5, 64, () => false],
@@ -113,73 +210,232 @@ export function renderHub(container, ctx, params = {}) {
 
   const scenePanel = document.createElement('div');
   scenePanel.className = 'panel hub-picture';
+  scenePanel.dataset.scene = sceneId;
+  scenePanel.dataset.layoutId = scene.layoutId;
+  scenePanel.dataset.layoutMode = 'primary';
   scenePanel.style.padding = '0';
   scenePanel.style.overflow = 'hidden';
+  scenePanel.style.aspectRatio = '3 / 1';
+  let cosmeticBackground = null;
+  if (sceneId === 'lavka') {
+    const resolved = resolveCosmeticBackground(state, { scene: 'lavka' });
+    const knownLayout = !!LAVKA_LAYOUT_SHAPES[resolved.layoutId];
+    cosmeticBackground = knownLayout ? resolved : {
+      ...resolved,
+      src: BASE_LAVKA_BACKGROUND,
+      layoutId: LAVKA_LAYOUT_ID,
+      full: false,
+      id: null,
+    };
+    scenePanel.dataset.layoutId = cosmeticBackground.layoutId;
+  }
+  const legacyLayer = cosmeticBackground?.legacyIds.length ? document.createElement('div') : null;
+  if (legacyLayer) {
+    legacyLayer.className = 'hub-legacy-cosmetics';
+    legacyLayer.dataset.legacyCosmetics = cosmeticBackground.legacyIds.join(' ');
+  }
   const picture = document.createElement('img');
   picture.className = 'hub-scene';
   picture.alt = scene.alt;
+  const candidates = [cosmeticBackground?.src || scene.candidates[0], ...scene.candidates.slice(1)];
   let candidateIdx = 0;
-  picture.addEventListener('error', () => {
-    candidateIdx += 1;
-    if (candidateIdx < scene.candidates.length) picture.src = scene.candidates[candidateIdx];
-    else picture.remove();
+  const trophyEls = [];
+  const sceneSpriteEls = [];
+  const smokeEls = [];
+  const usingLegacyLayout = () => Boolean(scene.legacyLayoutId && candidateIdx > 0);
+  function applySceneLayout() {
+    const legacy = usingLegacyLayout();
+    scenePanel.dataset.layoutId = legacy ? scene.legacyLayoutId
+      : (sceneId === 'lavka' ? cosmeticBackground.layoutId : scene.layoutId);
+    scenePanel.dataset.layoutMode = legacy ? 'legacy' : 'primary';
+    renderHotspots();
+    layoutTrophies();
+    layoutSceneSprites();
+    layoutAtmosphere();
+  }
+  let currentSrc = candidates[0];
+  const setPictureSrc = (src) => {
+    currentSrc = src;
+    picture.src = src;
+  };
+  const legacyMode = () => cosmeticBackground?.legacyIds.length ? 'legacy' : 'base';
+  if (cosmeticBackground) scenePanel.dataset.cosmeticMode = cosmeticBackground.full ? 'pending' : legacyMode();
+  picture.addEventListener('load', () => {
+    if (!cosmeticBackground) return;
+    if (cosmeticBackground.full && currentSrc === cosmeticBackground.src) {
+      legacyLayer?.remove();
+      scenePanel.dataset.cosmeticMode = 'full';
+    } else {
+      scenePanel.dataset.cosmeticMode = legacyMode();
+    }
   });
-  picture.src = scene.candidates[0];
+  picture.addEventListener('error', () => {
+    if (cosmeticBackground && currentSrc !== BASE_LAVKA_BACKGROUND) {
+      scenePanel.dataset.cosmeticMode = legacyMode();
+      setPictureSrc(BASE_LAVKA_BACKGROUND);
+      return;
+    }
+    const wasLegacy = usingLegacyLayout();
+    candidateIdx += 1;
+    if (candidateIdx < candidates.length) {
+      setPictureSrc(candidates[candidateIdx]);
+      if (wasLegacy !== usingLegacyLayout()) {
+        applySceneLayout();
+        ctx.syncOnboarding?.();
+      }
+    } else {
+      picture.remove();
+      scenePanel.classList.add('hub-scene-missing');
+    }
+  });
+  setPictureSrc(candidates[0]);
   scenePanel.appendChild(picture);
+  if (legacyLayer) scenePanel.appendChild(legacyLayer);
   container.appendChild(scenePanel);
 
+  const hotspotRoot = document.createElement('div');
+  hotspotRoot.className = 'hub-hotspot-layout';
+  scenePanel.appendChild(hotspotRoot);
   const hotspotEls = {};
-  // Линза (сцены с lens: true): кнопка прозрачная, при наведении показывает
-  // увеличенный в LENS_Z раз кусок арта в точке хотспота. Позиция фона —
-  // константа из % координат (измерять ничего не нужно), аспект баннера 3:1.
-  const LENS_Z = 14;
-  const lensBgPos = (hx, hy) => {
-    const ih = LENS_Z / 3;
-    const bx = ((hx * LENS_Z - 0.5) / (LENS_Z - 1)) * 100;
-    const by = ((hy * ih - 0.5) / (ih - 1)) * 100;
-    return `${bx.toFixed(2)}% ${by.toFixed(2)}%`;
+  const activateHotspot = (screen, source) => {
+    ctx.sfx?.('tap');
+    (hotspotEls[screen] || source).classList.add('zap');
+    setTimeout(() => {
+      if (screen === '@square') rerender('square');
+      else if (screen === '@lavka') rerender('lavka');
+      else if (screen === '@market') rerender('market');
+      else if (screen === '@cabinet') rerender('cabinet');
+      else ctx.go(screen);
+    }, 150);
   };
-  let hsIndex = 0;
-  for (const [icon, label, screen, x, y, dot] of scene.hotspots) {
-    const b = document.createElement('button');
-    b.className = scene.lens ? 'hotspot lens' : 'hotspot';
-    b.style.left = `${x}%`;
-    b.style.top = `${y}%`;
-    b.setAttribute('aria-label', label);
-    if (scene.lens) {
-      b.style.backgroundImage = `url("${scene.candidates[0]}")`;
-      b.style.backgroundSize = `${LENS_Z * 100}% auto`;
-      b.style.backgroundPosition = lensBgPos(x / 100, y / 100);
-      b.innerHTML = `<span class="hs-glint" style="animation-delay:${(hsIndex * 0.35).toFixed(2)}s"></span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ''}`;
-    } else {
-      b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ''}`;
-    }
-    hsIndex += 1;
-    b.addEventListener('click', () => {
-      ctx.sfx?.('tap');
-      b.classList.add('zap');
-      setTimeout(() => {
-        if (screen === '@square') rerender('square');
-        else if (screen === '@lavka') rerender('lavka');
-        else if (screen === '@market') rerender('market');
-        else if (screen === '@cabinet') rerender('cabinet');
-        else ctx.go(screen);
-      }, 150);
-    });
-    scenePanel.appendChild(b);
-    hotspotEls[screen] = b;
-  }
+  const span = (className, text) => {
+    const el = document.createElement('span');
+    el.className = className;
+    el.textContent = text;
+    return el;
+  };
+  function renderHotspots() {
+    hotspotRoot.innerHTML = '';
+    for (const key of Object.keys(hotspotEls)) delete hotspotEls[key];
+    const shapes = usingLegacyLayout() ? null
+      : (sceneId === 'lavka' ? LAVKA_LAYOUT_SHAPES[cosmeticBackground.layoutId] : scene.shapes);
+    for (const [, label, screen, x, y, dot] of scene.hotspots) {
+      const geometry = shapes?.[screen] ? scenePolygonGeometry(shapes[screen]) : null;
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = geometry ? 'hotspot hub-shape' : 'hotspot';
+      b.dataset.hotspot = screen;
+      b.setAttribute('aria-label', label);
+      b.addEventListener('click', () => activateHotspot(screen, b));
+      hotspotEls[screen] = b;
 
-  // Прогресс-подпись под картинкой (+ сезон и активные украшения)
+      const labelEl = span('hs-label', label);
+      const dotEl = dot() ? span('hs-dot', '') : null;
+      if (geometry) {
+        const holder = document.createElement('div');
+        holder.className = 'hub-shape-hotspot';
+        b.style.left = `${geometry.left}%`;
+        b.style.top = `${geometry.top}%`;
+        b.style.width = `${geometry.width}%`;
+        b.style.height = `${geometry.height}%`;
+        b.style.clipPath = geometry.polygon;
+        b.style.webkitClipPath = geometry.polygon;
+        labelEl.style.left = `${geometry.labelAnchor.x}%`;
+        labelEl.style.top = `${geometry.labelAnchor.y}%`;
+        holder.append(b, labelEl);
+        if (dotEl) {
+          dotEl.classList.add('hub-shape-dot');
+          dotEl.style.left = `${geometry.center.x}%`;
+          dotEl.style.top = `${geometry.top}%`;
+          holder.appendChild(dotEl);
+        }
+        hotspotRoot.appendChild(holder);
+      } else {
+        b.style.left = `${x}%`;
+        b.style.top = `${y}%`;
+        b.appendChild(labelEl);
+        if (dotEl) b.appendChild(dotEl);
+        hotspotRoot.appendChild(b);
+      }
+    }
+  }
+  function currentTrophySpots() {
+    if (sceneId !== 'cabinet') return [];
+    if (usingLegacyLayout()) {
+      // Старая формула сохраняется только для legacy-файла.
+      const trophies = TROPHIES.map((t, i) => ({
+        t, x: 29.7 + (i % 6) * 8.4, y: i < 6 ? 35 : 61.5, size: 52,
+      }));
+      const minis = MINI_TROPHIES.map((t, i) => ({ t, x: 42 + i * 5.5, y: 76.5, size: 30 }));
+      return [...trophies, ...minis];
+    }
+    return [
+      ...TROPHIES.map((t, i) => ({ t, ...CABINET_V2_TROPHY_SPOTS[i] })),
+      ...MINI_TROPHIES.map((t, i) => ({ t, ...CABINET_V2_MINI_SPOTS[i] })),
+    ];
+  }
+  function layoutTrophies() {
+    const spots = currentTrophySpots();
+    for (let i = 0; i < trophyEls.length; i += 1) {
+      trophyEls[i].style.left = `${spots[i].x}%`;
+      trophyEls[i].style.top = `${spots[i].y}%`;
+    }
+  }
+  function positionedSpot(spot) {
+    return !usingLegacyLayout() && spot.v2 ? { ...spot, ...spot.v2 } : spot;
+  }
+  function layoutSceneSprites() {
+    for (const { el, spot } of sceneSpriteEls) {
+      const position = positionedSpot(spot);
+      el.style.left = `${position.x}%`;
+      el.style.top = `${position.y}%`;
+    }
+  }
+  function layoutAtmosphere() {
+    for (let i = 0; i < smokeEls.length; i += 1) {
+      smokeEls[i].style.left = `${usingLegacyLayout() ? 33 + i : 46.3 + i * 0.9}%`;
+      smokeEls[i].style.top = `${usingLegacyLayout() ? 16 : 11 - i * 1.5}%`;
+    }
+  }
+  renderHotspots();
+
+  // Текстовые маршруты доступны без наведения и остаются крупными на тач-экранах.
+  const textNav = document.createElement('nav');
+  textNav.className = 'hub-text-nav';
+  textNav.setAttribute('aria-label', `Разделы: ${scene.alt}`);
+  const highlightHotspot = (screen, active) => {
+    const hotspot = hotspotEls[screen];
+    if (hotspot) hotspot.classList[active ? 'add' : 'remove']('nav-highlight');
+  };
+  for (const [icon, label, screen] of scene.hotspots) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'ghost';
+    b.dataset.hubRoute = screen;
+    b.textContent = `${icon} ${label}`;
+    b.addEventListener('pointerenter', () => highlightHotspot(screen, true));
+    b.addEventListener('pointerleave', () => highlightHotspot(screen, false));
+    b.addEventListener('focus', () => highlightHotspot(screen, true));
+    b.addEventListener('blur', () => highlightHotspot(screen, false));
+    b.addEventListener('click', () => activateHotspot(screen, b));
+    textNav.appendChild(b);
+  }
+  container.appendChild(textNav);
+
+  // Прогресс-подпись под картинкой (+ сезон и выбранное оформление)
   const progress = document.createElement('div');
   progress.className = 'muted center mt';
   progress.style.fontSize = '14px';
   const season = SEASON_LABEL[currentSeason()];
   const cosIcons = (state.cosmeticsActive || []).length
-    ? ` · Украшения: ${(state.cosmeticsActive || []).map((id) => ({ cos_carpet: '🟥', cos_crest: '🪧', cos_flowers: '🌸', cos_fireflies: '✨', cos_garland: '🎏', cos_snow: '❄️' })[id] || '🎀').join(' ')}`
+    ? ` · Оформление: ${(state.cosmeticsActive || []).map((id) => ({ cos_carpet: '🟥', cos_crest: '🪧', cos_flowers: '🌸', cos_fireflies: '✨', cos_garland: '🎏', cos_snow: '❄️' })[id] || '🎀').join(' ')}`
     : '';
   progress.innerHTML = `🧩 Загадок решено: <b>${solved}/${ALL_PUZZLES.length}</b> · ⚔️ Походов пройдено: <b>${won}/${BATTLES.length}</b> · 🐾 Команда: <b>${(state.crew || []).length}</b> · ${season}${cosIcons}`;
   container.appendChild(progress);
+
+  // Необязательная цель живёт под сценой и не меняет её координаты или спрайты.
+  const goalCard = createSavingsGoalCard(ctx, { onChange: () => rerender(sceneId) });
+  if (goalCard) container.appendChild(goalCard);
 
   // Погладить кота: сердечки, мурлыкание, дневник, ежедневный подарок
   function petCat(btn) {
@@ -206,30 +462,34 @@ export function renderHub(container, ctx, params = {}) {
   // Питомцы — все купленные, каждый на своём месте в своей сцене.
   // Картинка assets/pets/<id>.webp; если её нет — иконка-фолбэк.
   const PET_SPOTS = {
-    pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 50 },
+    pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 50, v2: { x: 50, y: 84 } },
     pet_fox: { scene: 'square', x: 9, y: 97, size: 60 },
     pet_puppy: { scene: 'lavka', x: 88, y: 92, size: 92, flip: true },
-    pet_owl: { scene: 'square', x: 7, y: 44, size: 64 },
+    pet_owl: { scene: 'square', x: 7, y: 44, size: 64, v2: { x: 7.5, y: 35, size: 52 } },
     pet_horse: { scene: 'square', x: 90, y: 90, size: 130 },
   };
   for (const [petId, spot] of Object.entries(PET_SPOTS)) {
     if (spot.scene !== sceneId || !(state.crew || []).includes(petId) || !PET_BY_ID[petId]) continue;
     const def = PET_BY_ID[petId];
     const isActive = state.pet === petId;
-    const el = document.createElement('div');
+    const el = document.createElement('button');
+    sceneSpriteEls.push({ el, spot });
+    const position = positionedSpot(spot);
+    el.type = 'button';
     el.className = `hub-pet${isActive ? ' active' : ''}`;
-    el.style.left = `${spot.x}%`;
-    el.style.top = `${spot.y}%`;
+    el.style.left = `${position.x}%`;
+    el.style.top = `${position.y}%`;
     el.title = isActive ? `${def.name} — идёт с тобой в походы` : def.name;
+    el.setAttribute('aria-label', el.title);
     const img = document.createElement('img');
     img.src = `assets/pets/${petId}.webp`;
     img.alt = def.name;
-    img.style.width = spr(spot.size);
+    img.style.width = spr(position.size);
     if (spot.flip) img.style.transform = 'scaleX(-1)';
     img.addEventListener('error', () => {
       img.remove();
       el.textContent = def.icon;
-      el.style.fontSize = spr(Math.round(spot.size * 0.7));
+      el.style.fontSize = spr(Math.round(position.size * 0.7));
     });
     el.appendChild(img);
     el.addEventListener('click', () => {
@@ -247,7 +507,7 @@ export function renderHub(container, ctx, params = {}) {
     { id: 'cmp_cat', icon: '🐈', name: 'Кот-хранитель — погладить', scene: 'lavka', x: 26, y: 89, size: 85, pet: true },
     { id: 'cmp_firefly', scene: 'lavka', x: 47, y: 13, size: 26 },
     { id: 'cmp_herbalist', scene: 'square', x: 21, y: 97, size: 85 },
-    { id: 'cmp_smith', scene: 'square', x: 45, y: 86, size: 50 },
+    { id: 'cmp_smith', scene: 'square', x: 45, y: 86, size: 50, v2: { x: 36, y: 88 } },
   ];
   for (const spot of CREW_SPOTS) {
     const owned = spot.always || (state.crew || []).includes(spot.id);
@@ -255,11 +515,15 @@ export function renderHub(container, ctx, params = {}) {
     const def = COMPANION_BY_ID[spot.id];
     const name = spot.name || def?.name || spot.id;
     const icon = spot.icon || def?.icon || '🐾';
-    const el = document.createElement('div');
+    const el = document.createElement('button');
+    sceneSpriteEls.push({ el, spot });
+    const position = positionedSpot(spot);
+    el.type = 'button';
     el.className = 'hub-pet';
-    el.style.left = `${spot.x}%`;
-    el.style.top = `${spot.y}%`;
+    el.style.left = `${position.x}%`;
+    el.style.top = `${position.y}%`;
     el.title = name;
+    el.setAttribute('aria-label', name);
     const img = document.createElement('img');
     img.src = `assets/crew/${spot.id}.webp`;
     img.alt = name;
@@ -283,15 +547,17 @@ export function renderHub(container, ctx, params = {}) {
   // --- Гость режима истории: ждёт в лавке с заданием, клик = сцена-монолог.
   // Портрет — арт из assets/fate/, фолбэк — эмодзи (как у питомцев выше).
   const STORY_GUEST_SPOT = { scene: 'lavka', x: 57, y: 90, size: 110 };
-  const storyGuestId = storyHubGuest(state);
+  const storyGuestId = onboardingBlocksStory(state) ? null : storyHubGuest(state);
   if (storyGuestId && STORY_GUEST_SPOT.scene === sceneId) {
     const g = GUEST_BY_ID[storyGuestId];
     if (g) {
-      const el = document.createElement('div');
+      const el = document.createElement('button');
+      el.type = 'button';
       el.className = 'hub-pet hub-guest';
       el.style.left = `${STORY_GUEST_SPOT.x}%`;
       el.style.top = `${STORY_GUEST_SPOT.y}%`;
       el.title = `${g.name} — ждёт с заданием`;
+      el.setAttribute('aria-label', el.title);
       if (g.art) {
         const img = document.createElement('img');
         img.src = g.art;
@@ -324,21 +590,17 @@ export function renderHub(container, ctx, params = {}) {
       state.trophiesSeen = [...(state.trophiesSeen || []), ...unseen];
       ctx.save();
     }
-    // Координаты подогнаны под арт: 2 ряда ниш по 6 (пьедесталы внизу ниш)
-    // + центральная низкая полка с 4 подставками под жетоны розыска
-    const TROPHY_SPOTS = TROPHIES.map((t, i) => ({
-      t, x: 29.7 + (i % 6) * 8.4, y: i < 6 ? 35 : 61.5, size: 52,
-    }));
-    const MINI_SPOTS = MINI_TROPHIES.map((t, i) => ({
-      t, x: 42 + i * 5.5, y: 76.5, size: 30,
-    }));
-    for (const spot of [...TROPHY_SPOTS, ...MINI_SPOTS]) {
+    // Активный layout выбирает ниши по v2-арту либо прежнюю формулу для legacy.
+    const spots = currentTrophySpots();
+    for (const spot of spots) {
       const owned = (state.trophies || []).includes(spot.t.id);
-      const el = document.createElement('div');
+      const el = document.createElement('button');
+      el.type = 'button';
       el.className = `hub-trophy${owned ? '' : ' locked'}`;
       el.style.left = `${spot.x}%`;
       el.style.top = `${spot.y}%`;
       el.title = owned ? spot.t.name : '???';
+      el.setAttribute('aria-label', owned ? spot.t.name : 'Пустое место для трофея — узнать условие');
       if (owned) {
         const img = document.createElement('img');
         img.src = `assets/trophies/tro_${spot.t.id}.png`;
@@ -369,21 +631,24 @@ export function renderHub(container, ctx, params = {}) {
         });
       });
       scenePanel.appendChild(el);
+      trophyEls.push(el);
     }
   }
 
-  // --- Украшения лавки и живая атмосфера на сценах ---
-  const fx = (cls, style, content) => {
+  // --- Прежние спрайты оформления (только fallback) и атмосфера сцен ---
+  const fx = (cls, style, content, root = scenePanel) => {
     const e = document.createElement('div');
     e.className = `cos-fx ${cls}`;
     e.style.cssText = style;
     if (content) e.innerHTML = content;
-    scenePanel.appendChild(e);
+    root.appendChild(e);
+    return e;
   };
-  // Арт-оверлей: assets/cosmetics/<id>.webp → фолбэк исходный .png → CSS-заглушка.
-  // Настройка под сцену: style — позиция (left/top/width), 4-й аргумент —
-  // поворот в градусах (положительный — по часовой стрелке).
+  const legacyFx = (cls, style, content) => fx(cls, style, content, legacyLayer);
+  // Старый арт остаётся до готовности полного фона: .webp → исходный .png → CSS-заглушка.
+  // load выбранного фона удаляет весь legacyLayer, поэтому старые предметы не дублируются.
   const fxImg = (id, style, stub, rot) => {
+    if (!legacyLayer) return null;
     const img = document.createElement('img');
     img.className = 'cos-fx cos-img';
     img.style.cssText = style + (rot ? `;transform:rotate(${rot}deg)` : '');
@@ -394,23 +659,23 @@ export function renderHub(container, ctx, params = {}) {
       stub?.();
     });
     img.src = `assets/cosmetics/${id}.webp`;
-    scenePanel.appendChild(img);
+    legacyLayer.appendChild(img);
     return img;
   };
   if (sceneId === 'lavka') {
-    const cos = new Set(state.cosmeticsActive || []);
+    const cos = new Set(cosmeticBackground.legacyIds);
     if (cos.has('cos_carpet')) {
-      fxImg('cos_carpet', 'left:52%;top:74%;width:30%', () => fx('cos-carpet', 'left:36%;top:78%;width:26%;height:16%'), 10);
+      fxImg('cos_carpet', 'left:52%;top:74%;width:30%', () => legacyFx('cos-carpet', 'left:36%;top:78%;width:26%;height:16%'), 10);
     }
     if (cos.has('cos_crest')) {
       // Текст зашит в картинку (генерация), подложки больше нет
-      fxImg('cos_crest', 'left:71%;top:9%;width:max(85px, 8.27cqw)', () => fx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров'),-4);
+      fxImg('cos_crest', 'left:71%;top:9%;width:max(85px, 8.27cqw)', () => legacyFx('cos-crest', 'left:38%;top:4%', 'Лавка на перекрёстке миров'),-4);
     }
     if (cos.has('cos_flowers')) {
       const spots = [
-        //['left:24%;top:20%;width:60px', () => fx('sway', 'left:11%;top:33%;font-size:26px', '🌸')],
-        ['left:50%;top:76%;width:max(74px, 7.2cqw)', () => fx('sway', 'left:22%;top:60%;font-size:22px;animation-delay:.5s', '🌷')],
-        //['left:60%;top:41%;width:60px', () => fx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼')],
+        //['left:24%;top:20%;width:60px', () => legacyFx('sway', 'left:11%;top:33%;font-size:26px', '🌸')],
+        ['left:50%;top:76%;width:max(74px, 7.2cqw)', () => legacyFx('sway', 'left:22%;top:60%;font-size:22px;animation-delay:.5s', '🌷')],
+        //['left:60%;top:41%;width:60px', () => legacyFx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼')],
       ];
       for (const [style, stub] of spots) {
         fxImg('cos_flowers', style + ';animation:fx-sway 3.6s ease-in-out infinite alternate', stub);
@@ -418,23 +683,26 @@ export function renderHub(container, ctx, params = {}) {
     }
     if (cos.has('cos_fireflies')) {
       fxImg('cos_fireflies', 'left:22%;top:22%;width:max(80px, 7.78cqw);animation:fx-float 5s ease-in-out infinite alternate', () => {
-        for (let i = 0; i < 5; i++) fx('firefly', `left:${35 + i * 7}%;top:${38 + (i % 3) * 8}%;animation-delay:${i * 0.7}s`);
+        for (let i = 0; i < 5; i++) legacyFx('firefly', `left:${35 + i * 7}%;top:${38 + (i % 3) * 8}%;animation-delay:${i * 0.7}s`);
       });
     }
     if (cos.has('cos_garland')) {
-      fxImg('cos_garland', 'left:60%;top:20%;width:32%;animation:fx-sway 4s ease-in-out infinite alternate;transform-origin:top center', () => fx('sway', 'left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px', '🎏🍂🎏🍂🎏🍂🎏'));
+      fxImg('cos_garland', 'left:60%;top:20%;width:32%;animation:fx-sway 4s ease-in-out infinite alternate;transform-origin:top center', () => legacyFx('sway', 'left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px', '🎏🍂🎏🍂🎏🍂🎏'));
     }
     if (cos.has('cos_snow')) {
       fxImg('cos_snow', 'left:89%;top:30%;width:8%', () => {
-        for (let i = 0; i < 8; i++) fx('snowflake', `left:${86 + (i % 4) * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, '❄');
+        for (let i = 0; i < 8; i++) legacyFx('snowflake', `left:${86 + (i % 4) * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, '❄');
       });
     }
-    // Пыльинки в лучах света — всегда
+    // Пыльинки в лучах света — атмосфера, не предметный legacy-оверлей.
     for (let i = 0; i < 6; i++) fx('dust', `left:${20 + i * 12}%;top:${22 + (i % 3) * 14}%;animation-delay:${i * 0.9}s`);
   }
   if (sceneId === 'square') {
-    // Дымок из трубы кузницы
-    for (let i = 0; i < 3; i++) fx('smokepuff', `left:${33 + i}%;top:16%;animation-delay:${i * 1.3}s`);
+    // V2: высокая труба у x47%; legacy-координаты восстанавливает layoutAtmosphere.
+    for (let i = 0; i < 3; i++) {
+      smokeEls.push(fx('smokepuff', `left:${33 + i}%;top:16%;animation-delay:${i * 1.3}s`));
+    }
+    layoutAtmosphere();
   }
 
   // --- Дневник кота и реплики команды ---
@@ -462,22 +730,8 @@ export function renderHub(container, ctx, params = {}) {
     container.appendChild(catPanel);
   }
 
-  // Заставка: реалистичная картинка
-  const anim = document.createElement('img');
-  anim.alt = '';
-  anim.style.cssText = 'width:100%;border-radius:14px;margin-top:14px;opacity:0.9';
-  const animCandidates = ['assets/hub/intro_web.jpg'];
-  let animIdx = 0;
-  anim.addEventListener('error', () => {
-    animIdx += 1;
-    if (animIdx < animCandidates.length) anim.src = animCandidates[animIdx];
-    else anim.remove();
-  });
-  anim.src = animCandidates[0];
-  container.appendChild(anim);
-
-  // --- Первое обучение: знакомство с лавкой (только в сцене лавки) ---
-  if (sceneId === 'lavka') {
+  // Прежнее знакомство не дублирует проводник первой дуги.
+  if (sceneId === 'lavka' && !onboardingBlocksLegacyTutorials(state)) {
     startTutorial(ctx, 'welcome', [
       {
         target: picture,

@@ -173,7 +173,7 @@ export const WORLD = {
     {
       id: 'nm_17', name: 'Сказки после полуночи', world: 'nm',
       obstacles: [{ cell: [3, 2], kind: 'crate' }],
-      enemies: [{ id: 'nm_teller', scale: 1.7 }, { id: 'nm_teller', scale: 1.7 }, { id: 'nm_moth', scale: 1.7 }],
+      enemies: [{ id: 'nm_teller', scale: 1.64 }, { id: 'nm_teller', scale: 1.64 }, { id: 'nm_moth', scale: 1.64 }],
       unlockAfter: 'nm_16',
       tip: 'Два сказителя лечат друг друга. Бей одного до конца.',
     },

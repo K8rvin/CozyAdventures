@@ -131,6 +131,8 @@ const { renderSandbox } = await import('../src/ui/sandboxView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
 const { header, resetTopbarHeader, DEFAULT_TOPBAR_TITLE } = await import('../src/ui/common.js');
 const { ITEM_BY_ID } = await import('../src/data/items.js');
+const { syncOnboardingDock, destroyOnboardingDock } = await import('../src/ui/onboardingView.js');
+const { setSavingsGoal } = await import('../src/core/goals.js');
 
 function makeUiCtx(state) {
   return {
@@ -196,12 +198,116 @@ test('заголовок и возврат показываются в обще�
   }
 });
 
+test('onboarding dock рендерится один раз, имеет финал и скрывается после skip', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  syncOnboardingDock(ctx, { name: 'hub', params: { scene: 'lavka' } });
+  syncOnboardingDock(ctx, { name: 'hub', params: { scene: 'lavka' } });
+  const all = () => flatElements(documentStub.body);
+  assert.equal(all().filter((el) => (el.className || '').includes('onboarding-dock')).length, 1);
+
+  state.onboarding.status = 'done';
+  state.onboarding.step = 'done';
+  syncOnboardingDock(ctx, { name: 'craft', params: {} });
+  const choices = all().filter((el) => ['puzzles', 'story', 'battles'].includes(el.dataset?.onboardingRoute));
+  assert.equal(choices.length, 3, 'финальные маршруты доступны и в минимальном DOM');
+
+  state.onboarding.status = 'skipped';
+  syncOnboardingDock(ctx, { name: 'hub', params: {} });
+  assert.equal(all().filter((el) => (el.className || '').includes('onboarding-dock')).length, 0);
+  destroyOnboardingDock();
+});
+
+test('savings goal: карточка в hub и установка из лавки, таверны и кузницы', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  setSavingsGoal(state, 'item', 'rng_health');
+  state.coins = 9;
+  const hubRoot = new El('main');
+  renderHub(hubRoot, ctx);
+  const status = flatElements(hubRoot).find((el) => el.className === 'savings-goal-status');
+  assert.match(status.textContent, /71 монета/);
+  flatElements(hubRoot).find((el) => el.dataset.goalClear === '1').click();
+  assert.equal(state.savingsGoal, null);
+  assert.ok(!flatElements(hubRoot).some((el) => (el.className || '').includes('savings-goal')));
+
+  state.coins = 0;
+  const shopRoot = new El('main');
+  renderMarket(shopRoot, ctx, 'magic');
+  const buy = flatElements(shopRoot).find((el) => el.dataset.itemId === 'rng_health');
+  const itemGoal = flatElements(shopRoot).find((el) => el.dataset.goalKind === 'item' && el.dataset.goalId === 'rng_health');
+  assert.equal(buy.disabled, true);
+  assert.equal(itemGoal.disabled, false, 'цель доступна без монет');
+  itemGoal.click();
+  assert.deepEqual(state.savingsGoal, { kind: 'item', id: 'rng_health' });
+  const selectedItemGoal = flatElements(shopRoot).find((el) => el.dataset.goalKind === 'item' && el.dataset.goalId === 'rng_health');
+  assert.equal(selectedItemGoal.textContent, 'Цель ✓');
+  assert.equal(selectedItemGoal._listeners.click.length, 1, 'rerender не дублирует обработчик');
+
+  state.battlesDone.bt_slimes = { victories: 1 };
+  const tavernRoot = new El('main');
+  renderTavern(tavernRoot, ctx);
+  const crewGoal = flatElements(tavernRoot).find((el) => el.dataset.goalKind === 'crew' && el.dataset.goalId === 'cmp_firefly');
+  assert.equal(crewGoal.disabled, false);
+  crewGoal.click();
+  assert.deepEqual(state.savingsGoal, { kind: 'crew', id: 'cmp_firefly' });
+
+  state.battlesDone.bt_bees = { victories: 1 };
+  const craftRoot = new El('main');
+  renderCraft(craftRoot, ctx);
+  const recipeGoal = flatElements(craftRoot).find((el) => el.dataset.goalKind === 'recipe' && el.dataset.goalId === 'rcp_pot_heal');
+  assert.equal(recipeGoal.disabled, false, 'цель доступна без материалов');
+  recipeGoal.click();
+  assert.deepEqual(state.savingsGoal, { kind: 'recipe', id: 'rcp_pot_heal' });
+
+  const recipeHub = new El('main');
+  renderHub(recipeHub, ctx);
+  assert.equal(flatElements(recipeHub).find((el) => el.className === 'savings-goal-status').textContent,
+    'Пока не хватает:', 'статус рецепта честный до готовности');
+  const missingText = flatElements(recipeHub)
+    .filter((el) => el.parent && (el.parent.className || '').includes('savings-goal-missing'))
+    .map((el) => el.textContent)
+    .join(' · ');
+  assert.match(missingText, /Слизь лужайника/);
+  assert.match(missingText, /Дикий мёд/);
+});
+
+test('настройки: reopen путеводителя отдельно от повторного обучения и без сброса seen', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  ctx.visits = [];
+  ctx.go = (...args) => ctx.visits.push(args);
+  const emptyRoot = new El('main');
+  renderSettings(emptyRoot, ctx);
+  assert.ok(!flatElements(emptyRoot).some((el) => el.textContent === '🗺️ Показать путеводитель'),
+    'до запуска guide отдельной кнопки нет');
+
+  state.onboarding.status = 'done';
+  state.onboarding.step = 'done';
+  state.onboarding.flags.finalSeen = true;
+  state.onboarding.guide = { started: true, seen: ['tavern'], closed: true };
+  const root = new El('main');
+  renderSettings(root, ctx);
+  const reopen = flatElements(root).find((el) => el.textContent === '🗺️ Показать путеводитель');
+  assert.ok(reopen);
+  assert.ok(flatElements(root).some((el) => el.textContent === '🐈 Показать обучение снова'),
+    'прежний перезапуск обучения остаётся отдельным действием');
+  reopen.click();
+  assert.equal(state.onboarding.guide.closed, false);
+  assert.deepEqual(state.onboarding.guide.seen, ['tavern']);
+  assert.deepEqual(ctx.visits.at(-1), ['hub', { scene: 'cabinet' }]);
+  assert.equal(state.onboarding.status, 'done');
+  assert.equal(state.onboarding.step, 'done');
+});
+
 test('все экраны рендерятся без ошибок', () => {
   const state = newGame();
   const ctx = makeUiCtx(state);
 
   const screens = [
     () => renderHub(new El('main'), ctx),
+    () => renderHub(new El('main'), ctx, { scene: 'square' }),
+    () => renderHub(new El('main'), ctx, { scene: 'market' }),
     () => renderHub(new El('main'), ctx, { scene: 'cabinet' }), // кабинет трофеев (пустой)
     () => { // кабинет с трофеями: открытые и закрытые места
       state.trophies = ['willow_branch', 'mini_bee'];
@@ -260,8 +366,10 @@ test('все экраны рендерятся без ошибок', () => {
     () => renderGuestBook(new El('main'), ctx), // гостевая книга
     () => renderFateDeck(new El('main'), ctx), // колода судьбы
     () => renderStory(new El('main'), ctx), // режим истории: пролог
-    () => { // режим истории: обычный визит гостя (пролог пройден)
+    () => { // режим истории: обычный визит гостя (пролог пройден, дуга завершена)
       state.story.prologSeen = true;
+      state.onboarding.status = 'done';
+      state.onboarding.step = 'done';
       return renderStory(new El('main'), ctx);
     },
     () => { // хаб с гостем истории в лавке
@@ -746,8 +854,10 @@ test('подсказка «Сейчас надето» показывает те
   hideCompareTip();
 });
 
-test('тап по зеркалу на md_02 решает уровень и даёт награду', () => {
+test('тап по зеркалу на md_02 решает уровень и даёт награду', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
   const state = newGame();
+  state.savingsGoal = { kind: 'item', id: 'rng_health' };
   const ctx = makeUiCtx(state);
   const root = new El('main');
   const cleanup = renderPuzzle(root, ctx, { id: 'md_02' });
@@ -764,6 +874,12 @@ test('тап по зеркалу на md_02 решает уровень и да�
   const CELL = 64;
   canvas._listeners.pointerdown.forEach((f) => f({ clientX: 2 * CELL + 5, clientY: 2 * CELL + 5 }));
   assert.ok(state.puzzlesDone.md_02, 'уровень должен быть решён после правильного поворота');
+  t.mock.timers.tick(450);
+  const victory = documentStub.body.children.find((el) => (el.className || '').includes('overlay'));
+  assert.ok(victory, 'победный оверлей показан');
+  assert.match(victory.innerHTML, /goal-progress/);
+  assert.match(victory.innerHTML, /Кольцо здоровья/, 'строка цели внутри локального showVictory');
+  victory.remove();
   if (typeof cleanup === 'function') cleanup();
 });
 

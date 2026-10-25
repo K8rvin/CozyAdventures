@@ -1,10 +1,100 @@
-// Кузница и котёл: крафт из материалов, склад материалов.
-import { recipeList, craft } from '../core/state.js';
+// Кузница и котёл: крафт, склад и потерьчатый обмен материалов между мирами.
+import { recipeList, craft, exchangeMaterial } from '../core/state.js';
 import { MATERIALS, materialLabel } from '../data/materials.js';
+import {
+  REGULAR_MATERIALS, materialExchangeInputs, materialExchangeTerms, isBossMaterial,
+} from '../core/materialExchange.js';
 import { ITEM_BY_ID } from '../data/items.js';
 import { describeItem } from '../core/items.js';
 import { header , quickNav } from './common.js';
 import { itemIconEl } from './itemTip.js';
+import { setSavingsGoal } from '../core/goals.js';
+
+function preferredExchangeOutput(state, inputId) {
+  for (const recipe of recipeList(state)) {
+    for (const [matId, need] of Object.entries(recipe.materials)) {
+      if (matId === inputId || isBossMaterial(matId)) continue;
+      if ((state.materials[matId] || 0) < need) return matId;
+    }
+  }
+  return REGULAR_MATERIALS.find((material) => material.id !== inputId)?.id || null;
+}
+
+function appendMaterialExchange(container, state, ctx, rerender) {
+  const inputs = materialExchangeInputs(state);
+  if (inputs.length === 0) return;
+
+  const panel = document.createElement('div');
+  panel.className = 'panel material-exchange';
+  panel.innerHTML = '<h3>Обменник перекрёстка</h3>';
+  const description = document.createElement('div');
+  description.className = 'muted';
+  description.textContent = 'Обычный материал: 3 → 1 · боссовский: 1 → 2. Менять можно между любыми мирами; получить боссовский материал нельзя.';
+  panel.appendChild(description);
+
+  const controls = document.createElement('div');
+  controls.className = 'material-exchange-controls';
+  const inputLabel = document.createElement('label');
+  inputLabel.textContent = 'Отдать';
+  const inputSelect = document.createElement('select');
+  inputSelect.dataset.exchangeInput = '1';
+  for (const material of inputs) {
+    const option = document.createElement('option');
+    option.value = material.id;
+    option.textContent = `${material.icon} ${material.name} ×${state.materials[material.id]}${isBossMaterial(material.id) ? ' · боссовский' : ''}`;
+    inputSelect.appendChild(option);
+  }
+  inputSelect.value = inputs[0].id;
+  inputLabel.appendChild(inputSelect);
+
+  const outputLabel = document.createElement('label');
+  outputLabel.textContent = 'Получить';
+  const outputSelect = document.createElement('select');
+  outputSelect.dataset.exchangeOutput = '1';
+  for (const material of REGULAR_MATERIALS) {
+    const option = document.createElement('option');
+    option.value = material.id;
+    option.textContent = `${material.icon} ${material.name}`;
+    outputSelect.appendChild(option);
+  }
+  outputSelect.value = preferredExchangeOutput(state, inputSelect.value);
+  outputLabel.appendChild(outputSelect);
+
+  const button = document.createElement('button');
+  button.className = 'small primary';
+  button.dataset.materialExchange = '1';
+  button.textContent = 'Обменять';
+  const rate = document.createElement('div');
+  rate.className = 'muted material-exchange-rate';
+
+  function syncTerms() {
+    for (const option of outputSelect.children) option.disabled = option.value === inputSelect.value;
+    if (outputSelect.value === inputSelect.value) {
+      outputSelect.value = preferredExchangeOutput(state, inputSelect.value);
+    }
+    const terms = materialExchangeTerms(inputSelect.value, outputSelect.value);
+    button.disabled = !terms || (state.materials[inputSelect.value] || 0) < terms.cost;
+    rate.textContent = terms
+      ? `Курс: ${terms.cost} × ${materialLabel(terms.input)} → ${terms.received} × ${materialLabel(terms.output)}.`
+      : 'Выбери разные материалы. Боссовский материал доступен только как вход.';
+  }
+
+  inputSelect.addEventListener('change', syncTerms);
+  outputSelect.addEventListener('change', syncTerms);
+  button.addEventListener('click', () => {
+    const result = exchangeMaterial(state, inputSelect.value, outputSelect.value);
+    if (!result.ok) { ctx.toast(result.error); return; }
+    ctx.toast(`Обмен состоялся: ${materialLabel(result.output)} ×${result.received}.`);
+    ctx.sfx?.('success');
+    ctx.save();
+    rerender();
+  });
+
+  controls.append(inputLabel, outputLabel, button);
+  panel.append(controls, rate);
+  container.appendChild(panel);
+  syncTerms();
+}
 
 export function renderCraft(container, ctx) {
   const { state } = ctx;
@@ -72,6 +162,7 @@ export function renderCraft(container, ctx) {
     row.prepend(itemIconEl(item));
     const btn = document.createElement('button');
     btn.className = 'small' + (r.canCraft ? ' primary' : '');
+    btn.dataset.recipeId = r.id;
     btn.textContent = 'Сделать';
     btn.disabled = !r.canCraft;
     btn.title = r.note;
@@ -87,11 +178,27 @@ export function renderCraft(container, ctx) {
       }
     });
     row.appendChild(btn);
+    const goalBtn = document.createElement('button');
+    const selected = state.savingsGoal?.kind === 'recipe' && state.savingsGoal.id === r.id;
+    goalBtn.className = 'small ghost goal-set';
+    goalBtn.dataset.goalKind = 'recipe';
+    goalBtn.dataset.goalId = r.id;
+    goalBtn.textContent = selected ? 'Цель ✓' : 'Цель';
+    goalBtn.title = 'Сделать целью накопления';
+    goalBtn.addEventListener('click', () => {
+      const result = setSavingsGoal(state, 'recipe', r.id);
+      if (!result.ok) { ctx.toast(result.error); return; }
+      ctx.sfx?.('tap');
+      ctx.save();
+      rerender();
+    });
+    row.appendChild(goalBtn);
     rcpList.appendChild(row);
   }
   rcpPanel.appendChild(rcpList);
   layout.appendChild(rcpPanel);
   container.appendChild(layout);
+  appendMaterialExchange(container, state, ctx, rerender);
 
   function rerender() {
     container.innerHTML = '';

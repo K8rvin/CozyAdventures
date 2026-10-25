@@ -1,29 +1,39 @@
 // Достижения лавки: определения и проверка. Чистые данные + логика без DOM.
+function solvedPuzzleCount(state, ctx = {}) {
+  const ids = ctx.puzzleIds || Object.keys(state.puzzlesDone || {});
+  return ids.filter((id) => puzzleSolved(state, id)).length;
+}
+
+function puzzleSolved(state, id) {
+  const entry = state.puzzlesDone?.[id];
+  return !!entry && !entry.skipped;
+}
+
 export const ACHIEVEMENTS = [
   {
     id: 'first_puzzle', icon: '🧩', name: 'Первая загадка',
     desc: 'Решить первую головоломку.',
-    check: (s) => s.stats.puzzlesSolved >= 1,
+    check: (s, ctx) => solvedPuzzleCount(s, ctx) >= 1,
   },
   {
     id: 'ten_puzzles', icon: '🏮', name: 'Десятка фонарей',
     desc: 'Решить 10 головоломок.',
-    check: (s) => s.stats.puzzlesSolved >= 10,
+    check: (s, ctx) => solvedPuzzleCount(s, ctx) >= 10,
   },
   {
     id: 'meadow_master', icon: '🌿', name: 'Хозяин опушки',
     desc: 'Решить все загадки Тихой опушки.',
-    check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, '0')}`).every((id) => s.puzzlesDone[id]),
+    check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, '0')}`).every((id) => puzzleSolved(s, id)),
   },
   {
     id: 'half_campaign', icon: '📖', name: 'Половина пути',
     desc: 'Решить половину всех загадок кампании.',
-    check: (s, ctx) => s.stats.puzzlesSolved >= Math.ceil(ctx.puzzlesTotal / 2),
+    check: (s, ctx) => solvedPuzzleCount(s, ctx) >= Math.ceil(ctx.puzzlesTotal / 2),
   },
   {
     id: 'all_puzzles', icon: '🌟', name: 'Мастер загадок',
     desc: 'Решить все загадки кампании.',
-    check: (s, ctx) => s.stats.puzzlesSolved >= ctx.puzzlesTotal,
+    check: (s, ctx) => solvedPuzzleCount(s, ctx) >= ctx.puzzlesTotal,
   },
   {
     id: 'first_battle', icon: '⚔️', name: 'Первый поход',
@@ -83,7 +93,7 @@ export const ACHIEVEMENTS = [
   {
     id: 'seek_master', icon: '🔍', name: 'Орлиный глаз',
     desc: 'Пройти все искалки кампании.',
-    check: (s, ctx) => ctx.seekIds.every((id) => s.puzzlesDone[id]),
+    check: (s, ctx) => ctx.seekIds.every((id) => puzzleSolved(s, id)),
   },
   {
     id: 'cat_friend', icon: '🐈', name: 'Мурлыкало',

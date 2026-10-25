@@ -1,23 +1,91 @@
-// Косметика лавки и сезонные наборы. Никакого влияния на силу —
-// только красота (раздел 18 документа). Покупается за игровые монеты/печати.
-export const COSMETICS = [
-  // Круглый год
-  { id: 'cos_carpet', name: 'Ковёр хранителя', icon: '🟥', price: 200, season: null,
-    description: 'Глубокий бордовый ковёр в центре лавки.' },
-  { id: 'cos_crest', name: 'Фирменная вывеска', icon: '🪧', sealPrice: 2, season: null,
-    description: 'Резная вывеска «Лавка на перекрёстке миров».' },
-  // Сезонные наборы
-  { id: 'cos_flowers', name: 'Весенняя ярмарка: цветы', icon: '🌸', price: 120, season: 'spring',
-    description: 'Полки в цветах. Пахнет первым дождём.' },
-  { id: 'cos_fireflies', name: 'Летний фестиваль: светлячки', icon: '✨', price: 120, season: 'summer',
-    description: 'Маленькие огоньки кружат над прилавком.' },
-  { id: 'cos_garland', name: 'Осенний рынок: гирлянда', icon: '🎏', price: 120, season: 'autumn',
-    description: 'Флажки и жёлуди под потолком.' },
-  { id: 'cos_snow', name: 'Зимний очаг: снег за окном', icon: '❄️', price: 150, season: 'winter',
-    description: 'За окном тихо падает снег. Внутри — тепло.' },
+// Первая волна полных тем лавки. Пакет меняет целую сцену, а не добавляет
+// отдельный предмет; файлы появляются в runtime только после генерации пользователем.
+export const COSMETICS_VERSION = 2;
+
+const lavkaScene = (id) => ({
+  src: `assets/cosmetics/lavka_pack_${id}_web.jpg`,
+  preview: `assets/cosmetics/lavka_pack_${id}_web.jpg`,
+  layoutId: 'lavka_base_3x1',
+});
+
+export const COSMETIC_PACKS = [
+  {
+    id: 'hearth', name: 'Домашний очаг', icon: '🏮', price: 200, season: null, kind: 'background',
+    changes: [
+      'Бордовый ковёр и мягкий текстиль объединяют пространство перед прилавком.',
+      'Латунная фурнитура и резная вывеска связывают полки в единый домашний образ.',
+      'Полки наполняются любимыми книгами, керамикой и предметами обихода.',
+      'Свечи и лампы дают более мягкий тёплый свет при прежней планировке.',
+      'За окном остаётся спокойная вечерняя дорога в привычном лесу.',
+    ],
+    scenes: { lavka: lavkaScene('hearth') },
+  },
+  {
+    id: 'spring', name: 'Весеннее пробуждение', icon: '🌸', price: 120, season: 'spring', kind: 'background',
+    changes: [
+      'Пастельные ленты и лёгкий текстиль освежают прилавок и уголок для гостей.',
+      'На полках появляются весенние цветы, керамические вазы и пучки трав.',
+      'Фурнитура получает светлые медные и медовые оттенки.',
+      'Утренний свет становится прозрачнее, а за окном цветёт дорога в гору.',
+    ],
+    scenes: { lavka: lavkaScene('spring') },
+  },
+  {
+    id: 'summer', name: 'Летний фестиваль огоньков', icon: '✨', price: 120, season: 'summer', kind: 'background',
+    changes: [
+      'Лёгкие гирлянды и праздничные ткани украшают балки, не меняя архитектуру.',
+      'На полках соседствуют летние травы, стеклянные колбы и гладкая медь.',
+      'Золотые огоньки собираются над прилавком и вдоль книжного шкафа.',
+      'Тёплый вечер за окном сменяется ясным летним сумеречным лесом.',
+    ],
+    scenes: { lavka: lavkaScene('summer') },
+  },
+  {
+    id: 'autumn', name: 'Осенняя ярмарка', icon: '🎏', price: 120, season: 'autumn', kind: 'background',
+    changes: [
+      'Тканые флажки, жёлуди и охристый текстиль собирают ярмарочную композицию.',
+      'Полки пополняются тыквами, сухими травами и резными деревянными шкатулками.',
+      'Состаренная латунь и медные лампы подчёркивают тёплую фурнитуру.',
+      'Янтарный свет и листопад за окном сохраняют уют прежней лавки.',
+    ],
+    scenes: { lavka: lavkaScene('autumn') },
+  },
+  {
+    id: 'winter', name: 'Зимний очаг', icon: '❄️', price: 150, season: 'winter', kind: 'background',
+    changes: [
+      'Шерстяные дорожки и плотные занавеси согревают каменный пол и окна.',
+      'На полках появляются вязаные вещи, свечи и запасы для долгих вечеров.',
+      'Матовая фурнитура и приглушённые огни усиливают ощущение домашнего тепла.',
+      'За прежним окном лежит снежный лес, а внутри горит тёплый очаг.',
+    ],
+    scenes: { lavka: lavkaScene('winter') },
+  },
+  {
+    id: 'halloween', name: 'Хэллоуин «Тени и тыквы»', icon: '🎃', price: 600, season: 'autumn', kind: 'background',
+    changes: [
+      'Пурпурный и угольный текстиль обозначает праздничную ночную сцену.',
+      'Тыквенные лампы и кованая фурнитура заменяют часть привычных украшений.',
+      'Полки наполняются свечами, сухими ветками и банками с пурпурными зельями.',
+      'Фиолетовые тени контрастируют с тёплыми огнями на старом дереве.',
+      'За окном стелется туман, виднеются тыквы и высокая осенняя луна.',
+    ],
+    scenes: { lavka: lavkaScene('halloween') },
+  },
 ];
 
-export const COSMETIC_BY_ID = Object.fromEntries(COSMETICS.map((c) => [c.id, c]));
+export const COSMETICS = COSMETIC_PACKS;
+export const COSMETIC_PACK_BY_ID = Object.fromEntries(COSMETIC_PACKS.map((pack) => [pack.id, pack]));
+export const COSMETIC_BY_ID = COSMETIC_PACK_BY_ID;
+
+// Только для миграции покупок и временного sprite-fallback, не для каталога.
+export const LEGACY_COSMETIC_ALIASES = {
+  cos_carpet: 'hearth',
+  cos_crest: 'hearth',
+  cos_flowers: 'spring',
+  cos_fireflies: 'summer',
+  cos_garland: 'autumn',
+  cos_snow: 'winter',
+};
 
 export const SEASON_LABEL = {
   spring: 'Весна', summer: 'Лето', autumn: 'Осень', winter: 'Зима',

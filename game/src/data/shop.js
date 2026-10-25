@@ -1,5 +1,9 @@
 // Ассортимент лавки. unlockAfter: id боя, после которого товар появляется.
-export const SHOP_STOCK = [
+import { ITEM_BY_ID } from './items.js';
+import { BATTLE_BY_ID } from './battles.js';
+import { battleEconomy, itemPrice, shopUnlockOrder } from '../core/economy.js';
+
+const SHOP_STOCK_ROWS = [
   // Стартовая полка
   { itemId: 'wpn_rusty_sword', unlockAfter: null },
   { itemId: 'shd_wooden', unlockAfter: null },
@@ -117,6 +121,30 @@ export const SHOP_STOCK = [
   { itemId: 'rng_time_loop', unlockAfter: 'mist_boss' }, // легендарка за печати
 ];
 
+function shopProgress(entry) {
+  const battle = entry.unlockAfter ? BATTLE_BY_ID[entry.unlockAfter] : null;
+  return {
+    tier: entry.tier ?? (battle ? battleEconomy(battle).tier : 0),
+    order: entry.order ?? shopUnlockOrder(entry.unlockAfter),
+  };
+}
+
+// Явные tier/order и эффективная цена доступны всем операциям, а не только витрине.
+export const SHOP_STOCK = SHOP_STOCK_ROWS.map((entry) => ({ ...entry, ...shopProgress(entry) }));
+
+export function pricedShopItem(entry) {
+  const item = ITEM_BY_ID[entry.itemId];
+  const progress = shopProgress(entry);
+  return { ...item, ...progress, price: itemPrice(item, { tier: progress.tier }) };
+}
+
+export function compareShopItems(a, b) {
+  return (a.tier ?? 0) - (b.tier ?? 0)
+    || (a.order ?? 0) - (b.order ?? 0)
+    || (a.price ?? 0) - (b.price ?? 0)
+    || a.id.localeCompare(b.id, 'ru');
+}
+
 // Тематические лавки города (площадь): ассортимент выводится из SHOP_STOCK
 // по типу предмета. Лавка на перекрёстке продаёт украшения и скупает товары.
 export const SHOPS = {
@@ -145,7 +173,7 @@ export const SHOPS = {
 export function itemsForShop(state, shopKey, allItems) {
   const shop = SHOPS[shopKey];
   if (!shop) return [];
-  return allItems.filter((i) => shop.types.includes(i.type));
+  return allItems.filter((i) => shop.types.includes(i.type)).sort(compareShopItems);
 }
 
 // Таверна и конюшня: найм спутников, питомцев и наёмников.

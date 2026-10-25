@@ -2,6 +2,9 @@
 import { ITEM_BY_ID } from '../data/items.js';
 import { materialLabel } from '../data/materials.js';
 import { skipPuzzle, skipPuzzlePrice } from '../core/state.js';
+import { onboardingBlocksStory, onboardingCtaForResult } from '../core/onboarding.js';
+import { destroyTutorial } from './tutorial.js';
+import { savingsGoalSummary } from './goalView.js';
 
 // Кнопка «Пропустить загадку за монеты» для экранов головоломок.
 export function puzzleSkipButton(ctx, level, onSkipped) {
@@ -95,24 +98,42 @@ export function rewardText(r) {
   return '';
 }
 
-// Оверлей результата: showOverlay(ctx, { title, subtitle, rewardsHtml, advice, buttons: [{label, primary, onClick}] })
-export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons, art }) {
+// Оверлей результата: showOverlay(ctx, { title, subtitle, rewards, advice, buttons, onboardingResult })
+export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons = [], art, onboardingResult = null }) {
+  destroyTutorial();
   const overlay = document.createElement('div');
   overlay.className = 'overlay';
   const rewardHtml = (rewards || []).map(rewardText).filter(Boolean).join('<br>');
+  const goalHtml = onboardingResult || rewardHtml || advice
+    ? savingsGoalSummary(ctx.state)
+    : '';
   overlay.innerHTML = `
     <div class="card">
       ${art ? `<div class="overlay-art">${art}</div>` : ''}
       <h2>${title}</h2>
       ${subtitle ? `<div class="muted">${subtitle}</div>` : ''}
       ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ''}
+      ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ''}
       ${advice ? `<div class="advice">💡 ${advice}</div>` : ''}
       <div class="actions"></div>
     </div>`;
   const actions = overlay.querySelector('.actions');
-  // Режим истории: только что закрыто задание гостя — ведём к следующему
+  const tutorialCta = onboardingCtaForResult(ctx.state, onboardingResult);
+  if (tutorialCta) {
+    const btn = document.createElement('button');
+    btn.className = 'primary';
+    btn.textContent = tutorialCta.label;
+    btn.dataset.onboardingCta = onboardingResult.id;
+    btn.addEventListener('click', () => {
+      overlay.remove();
+      ctx.go(tutorialCta.route.name, tutorialCta.route.params);
+    });
+    actions.appendChild(btn);
+  }
+  // История не перехватывает первую дугу; её обычный переход возвращается после неё.
   const story = ctx.state?.story;
-  if (ctx.state?.settings?.storyMode !== false && story?.justCompleted) {
+  if (!tutorialCta && !onboardingBlocksStory(ctx.state)
+    && ctx.state?.settings?.storyMode !== false && story?.justCompleted) {
     story.justCompleted = null;
     const storyBtn = document.createElement('button');
     storyBtn.className = 'primary';
@@ -123,7 +144,7 @@ export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons, ar
   for (const b of buttons) {
     const btn = document.createElement('button');
     btn.textContent = b.label;
-    if (b.primary) btn.className = 'primary';
+    if (b.primary && !tutorialCta) btn.className = 'primary';
     btn.addEventListener('click', () => { overlay.remove(); b.onClick(); });
     actions.appendChild(btn);
   }

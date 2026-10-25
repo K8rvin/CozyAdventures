@@ -145,17 +145,20 @@ test('все 100 загадок решаются экранным алфавит
   }
 });
 
-test('штраф доезжает до награды: coinFactor уменьшает монеты', () => {
+test('штраф доезжает до награды: coinFactor уменьшает монеты', async () => {
+  const { findPuzzle } = await import('../src/core/state.js');
+  const { puzzleCoinReward } = await import('../src/core/economy.js');
   // Заказ дня ×2 зависит от даты и состава кампании: гасим его,
   // чтобы тест был детерминированным
   const st = newGame();
   st.lastDailyBonus = todayKey();
+  const base = puzzleCoinReward(findPuzzle(st, 'bk_01'));
   const full = completePuzzle(st, 'bk_01', {});
-  assert.equal(full.find((r) => r.type === 'coins').amount, 90);
+  assert.equal(full.find((r) => r.type === 'coins').amount, base);
   const st2 = newGame();
   st2.lastDailyBonus = todayKey();
   const cut = completePuzzle(st2, 'bk_01', { coinFactor: 0.8 });
-  assert.equal(cut.find((r) => r.type === 'coins').amount, 72);
+  assert.equal(cut.find((r) => r.type === 'coins').amount, Math.round(base * 0.8));
 });
 
 test('тексты уровней — по-русски, ответы без самоназвания в имени', () => {

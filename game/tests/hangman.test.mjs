@@ -93,7 +93,9 @@ test('сброс скрывает строку, но помнит ошибки �
   assert.notEqual(rewardFactor(s), PERFECT_FACTOR);
 });
 
-test('решение без ошибок даёт ×1,5 и фактически начисляет 195 монет за bk_06', () => {
+test('решение без ошибок даёт ×1,5 и фактически начисляет новую базовую награду', async () => {
+  const { findPuzzle } = await import('../src/core/state.js');
+  const { puzzleCoinReward } = await import('../src/core/economy.js');
   const puzzle = createHangmanPuzzle(byId('bk_06'));
   let guard = 40;
   while (!isHangmanSolved(puzzle) && guard-- > 0) applyHangmanHint(puzzle);
@@ -104,8 +106,9 @@ test('решение без ошибок даёт ×1,5 и фактически 
 
   const state = newGame();
   state.lastDailyBonus = todayKey(); // детерминированный тест без дневного ×2
+  const expected = puzzleCoinReward(findPuzzle(state, 'bk_06'), { factor: PERFECT_FACTOR });
   const rewards = completePuzzle(state, 'bk_06', { coinFactor: factor });
-  assert.equal(rewards.find((r) => r.type === 'coins').amount, 195, '130 × 1,5 = 195');
+  assert.equal(rewards.find((r) => r.type === 'coins').amount, expected, 'нормативная база × 1,5');
 });
 
 test('подсказки решают каждый уровень «Строки»', () => {

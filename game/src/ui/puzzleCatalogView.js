@@ -57,8 +57,8 @@ function typeOf(p) { return p.mechanic || 'mirror'; }
 function catalogEntries(types, state) {
   return types.map((t) => {
     const items = ALL_PUZZLES.filter((p) => typeOf(p) === t.mech);
-    const done = items.filter((p) => state.puzzlesDone[p.id]).length;
-    const hasFresh = items.some((p) => !state.puzzlesDone[p.id]
+    const done = items.filter((p) => state.puzzlesDone[p.id] && !state.puzzlesDone[p.id].skipped).length;
+    const hasFresh = items.some((p) => (!state.puzzlesDone[p.id] || state.puzzlesDone[p.id].skipped)
       && puzzleAvailable(state, ALL_PUZZLES.indexOf(p)));
     return {
       ...t,

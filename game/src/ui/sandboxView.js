@@ -11,17 +11,29 @@ import { header } from './common.js';
 const MAX_TEAM = 6;
 
 export function renderSandbox(container, ctx) {
+  let currentCleanup = null;
+  let disposed = false;
+  const rerender = (action = null) => {
+    currentCleanup?.();
+    if (disposed) return;
+    container.innerHTML = '';
+    currentCleanup = renderSandboxScreen(container, ctx, rerender, action) || null;
+  };
+  rerender();
+  return () => {
+    disposed = true;
+    currentCleanup?.();
+    currentCleanup = null;
+  };
+}
+
+function renderSandboxScreen(container, ctx, rerender, action) {
   const { state } = ctx;
   // Выбранные команды (храним между перерисовками на объекте состояния экрана)
   const picked = renderSandbox._picked ||= { allies: ['merc_guard', 'merc_archer'], foes: ['slime_meadow', 'slime_meadow'] };
 
   container.appendChild(header(ctx, '⚔️ Конструктор боя',
     'Собери обе команды и проверь симуляцию: один бой смотреть или серия на статистику', 'workshop'));
-
-  function rerender() {
-    container.innerHTML = '';
-    renderSandbox(container, ctx);
-  }
 
   // --- Панель выбора команды ---
   function teamPanel(title, pool, list, getDef) {
@@ -164,6 +176,7 @@ export function renderSandbox(container, ctx) {
   }
 
   // --- Один бой с просмотром ---
+  let replayCleanup = null;
   function runOne() {
     const { allies, foes } = buildUnits();
     const formation = formationOf(allies, foes);
@@ -171,13 +184,13 @@ export function renderSandbox(container, ctx) {
     const result = simulateFormationBattle(allies, foes, seed, state.settings.tactic || 'balance');
     result.formation = formation;
     result.rewards = [];
-    playBattleReplay(container, ctx, {
+    replayCleanup = playBattleReplay(container, ctx, {
       title: 'Тренировочный бой', backTo: 'sandbox', world: 'meadow',
       result, unitDefs: buildUnitDefs(),
       overlayButtons: () => [
-        { label: '🔁 Ещё раз', onClick: () => { container.innerHTML = ''; renderSandbox(container, ctx); runOne(); } },
-        { label: '📊 Серия ×30', onClick: () => { container.innerHTML = ''; renderSandbox(container, ctx); runSeries(); } },
-        { label: '🧪 К конструктору', primary: true, onClick: () => { container.innerHTML = ''; renderSandbox(container, ctx); } },
+        { label: '🔁 Ещё раз', onClick: () => rerender('one') },
+        { label: '📊 Серия ×30', onClick: () => rerender('series') },
+        { label: '🧪 К конструктору', primary: true, onClick: () => rerender() },
       ],
     });
   }
@@ -201,4 +214,12 @@ export function renderSandbox(container, ctx) {
       <div class="muted">Средняя длина боя: ${Math.round(ticksSum / N)} тиков · тактика: ${{ defense: '🛡 Защита', balance: '⚖ Баланс', offense: '⚔ Нападение' }[state.settings.tactic || 'balance']}</div>`;
     seriesOut.appendChild(panel);
   }
+
+  if (action === 'one') runOne();
+  if (action === 'series') runSeries();
+
+  return () => {
+    replayCleanup?.();
+    replayCleanup = null;
+  };
 }

@@ -26,18 +26,42 @@ import { SEEK_PUZZLES } from '../data/puzzlesSeek.js';
 import { initSound, sfx, startMusic } from './sound.js';
 import { applyCursor } from './cursors.js';
 import { resetTopbarHeader } from './common.js';
+import { destroyTutorial } from './tutorial.js';
+import {
+  reconcileOnboarding, onboardingScene, onboardingPuzzleChoice, onboardingVisit,
+} from '../core/onboarding.js';
+import { syncOnboardingDock } from './onboardingView.js';
 
 const screenEl = document.getElementById('screen');
 const toastEl = document.getElementById('toast');
 
 let state = loadGame() || newGame();
+let currentRoute = 'hub';
+let currentParams = {};
+let dockSyncQueued = false;
+
+function syncDock() {
+  syncOnboardingDock(ctx, { name: currentRoute, params: currentParams });
+}
+
+function syncDockSoon() {
+  if (dockSyncQueued) return;
+  dockSyncQueued = true;
+  // Внутренние rerender экранов завершатся до обновления внешнего dock.
+  queueMicrotask(() => {
+    dockSyncQueued = false;
+    syncDock();
+  });
+}
 
 function save() {
+  reconcileOnboarding(state);
   saveGame(state);
   updateWallet();
   // Достижения: тосты о свежих разблокировках
   const fresh = checkAchievements(state, {
     puzzlesTotal: ALL_PUZZLES.length,
+    puzzleIds: ALL_PUZZLES.map((p) => p.id),
     battlesTotal: BATTLES.length,
     seekIds: SEEK_PUZZLES.map((p) => p.id),
   });
@@ -45,6 +69,7 @@ function save() {
     setTimeout(() => { toast(`🏆 Достижение: ${a.name}!`); sfx('success'); }, 600);
     saveGame(state);
   }
+  syncDockSoon();
 }
 
 function updateWallet() {
@@ -92,6 +117,23 @@ const routes = {
 let currentCleanup = null;
 
 function go(name, params = {}) {
+  destroyTutorial();
+  currentRoute = routes[name] ? name : 'hub';
+  if (currentRoute === 'hub') {
+    lastHubScene = params.scene || lastHubScene;
+    currentParams = { ...params, scene: lastHubScene };
+  } else {
+    currentParams = params;
+  }
+  let navigationChanged = currentRoute === 'hub'
+    ? onboardingScene(state, currentParams.scene)
+    : reconcileOnboarding(state);
+  if (currentRoute === 'puzzle') {
+    navigationChanged = onboardingPuzzleChoice(state, currentParams.id) || navigationChanged;
+  }
+  navigationChanged = onboardingVisit(state, currentRoute, currentParams) || navigationChanged;
+  if (navigationChanged) saveGame(state);
+
   if (currentCleanup) { currentCleanup(); currentCleanup = null; }
   resetTopbarHeader();
   screenEl.innerHTML = '';
@@ -99,18 +141,28 @@ function go(name, params = {}) {
   screenEl.classList.remove('screen-enter');
   void screenEl.offsetWidth;
   screenEl.classList.add('screen-enter');
-  const route = routes[name] || routes.hub;
-  document.body.dataset.route = routes[name] ? name : 'hub';
-  currentCleanup = route(screenEl, params) || null;
-  applyCursor(name, params, state);
+  const route = routes[currentRoute];
+  document.body.dataset.route = currentRoute;
+  currentCleanup = route(screenEl, currentParams) || null;
+  applyCursor(currentRoute, currentParams, state);
   window.scrollTo(0, 0);
+  syncDock();
+}
+
+function initialRoute() {
+  if (state.onboarding?.status === 'active' && state.onboarding.step === 'prolog'
+    && !state.story?.prologSeen) {
+    return { name: 'story', params: { prologOnly: true } };
+  }
+  return { name: 'hub', params: {} };
 }
 
 function newGameConfirm() {
   if (confirm('Начать новую игру? Прогресс текущей лавки будет стёрт.')) {
     state = newGame();
+    const start = initialRoute();
     save();
-    go('hub');
+    go(start.name, start.params);
     toast('Новая лавка открыта. Добро пожаловать, хозяин!');
   }
 }
@@ -119,7 +171,15 @@ const ctx = {
   get state() { return state; },
   save, go, toast, newGameConfirm,
   sfx,
-  setHubScene(scene) { lastHubScene = scene; },
+  setHubScene(scene) {
+    lastHubScene = scene;
+    currentRoute = 'hub';
+    currentParams = { scene };
+    const sceneChanged = onboardingScene(state, scene);
+    const guideChanged = onboardingVisit(state, 'hub', currentParams);
+    if (sceneChanged || guideChanged) saveGame(state);
+  },
+  syncOnboarding: syncDock,
 };
 
 // Звук инициализируется по первому взаимодействию (требование браузеров).
@@ -309,4 +369,5 @@ function showAbout() {
 }
 
 updateWallet();
-go('hub');
+const startRoute = initialRoute();
+go(startRoute.name, startRoute.params);

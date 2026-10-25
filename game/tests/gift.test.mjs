@@ -186,7 +186,8 @@ test('уровни «Подарка для гостя» включены в ка
   for (const l of GIFT_PUZZLES) assert.ok(ids.includes(l.id), `${l.id} не в кампании`);
 });
 
-test('полный цикл: подарок через движок засчитывается в состоянии игры', () => {
+test('полный цикл: подарок через движок засчитывается в состоянии игры', async () => {
+  const { puzzleCoinReward } = await import('../src/core/economy.js');
   const s = newGame();
   const level = findPuzzle(s, 'gift_01');
   assert.ok(level, 'gift_01 доступна в состоянии игры');
@@ -197,10 +198,12 @@ test('полный цикл: подарок через движок засчит
   selectGift(p, level.answer);
   assert.equal(giveGift(p).result, 'win');
   const coinsBefore = s.coins;
-  const rewards = completePuzzle(s, 'gift_01', { moves: p.moves, hintsUsed: 0, coinFactor: rewardFactor(p) });
+  const factor = rewardFactor(p);
+  const rewards = completePuzzle(s, 'gift_01', { moves: p.moves, hintsUsed: 0, coinFactor: factor });
   assert.ok(s.puzzlesDone.gift_01, 'уровень засчитан');
   assert.ok(s.coins > coinsBefore, 'монеты начислены');
   assert.ok(rewards.length > 0);
   const coins = rewards.find((r) => r.type === 'coins');
-  assert.equal(coins.amount, Math.round(250 * 0.75), 'награда урезана тающим фактором');
+  assert.equal(factor, 0.75);
+  assert.equal(coins.amount, puzzleCoinReward(level, { factor }), 'награда урезана тающим фактором');
 });

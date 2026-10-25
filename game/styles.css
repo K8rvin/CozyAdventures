@@ -102,6 +102,13 @@ button.primary:hover { background: #8d6d3e; }
 button.small { min-height: 36px; padding: 6px 10px; font-size: 14px; }
 button.ghost { background: transparent; }
 
+.savings-goal-title { color: var(--accent); font-weight: 700; }
+.savings-goal-status { margin-top: 6px; line-height: 1.45; }
+.savings-goal-missing { margin-top: 6px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.savings-goal-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.goal-set { white-space: nowrap; }
+.goal-progress { margin-top: 10px; color: var(--accent-2); font-size: 14px; line-height: 1.45; }
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -2265,7 +2272,11 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 
 /* Лавка-хаб */
 .hub-scene {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 14px;
   display: block;
   box-shadow: 0 4px 14px var(--shadow);
@@ -2359,6 +2370,21 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 }
 .quick-nav button:hover .qn-label,
 .quick-nav button:focus-visible .qn-label { opacity: 1; }
+
+@media (max-width: 720px), (pointer: coarse) {
+  .quick-nav {
+    position: static;
+    right: auto;
+    bottom: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+    margin: 8px auto 16px;
+  }
+  .quick-nav button { width: 52px; height: 52px; flex: 0 0 52px; }
+  .quick-nav button .qn-label { display: none; }
+}
 
 /* Перетаскиваемый предмет (полки) */
 .drag-ghost {
@@ -2480,15 +2506,26 @@ body::-webkit-scrollbar { display: none; }
   100% { transform: translate(-50%, -50%) scale(1.1); }
 }
 .hotspot.zap { animation: hs-zap 0.22s ease; }
+@keyframes hs-shape-zap {
+  0%, 100% { filter: brightness(1); }
+  60% { filter: brightness(1.65); }
+}
+.hotspot.hub-shape.zap { animation: hs-shape-zap 0.22s ease; }
 
 /* --- Хаб: интерактивные объекты на большой картинке --- */
 /* cqw = % ширины самой сцены (container): размеры растут вместе с картинкой, */
 /* max() сохраняет прежний вид на узких экранах (база ~1028px) */
-.hub-picture { position: relative; container-type: inline-size; }
+.hub-picture {
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 3 / 1;
+  background: radial-gradient(ellipse at 50% 35%, #59452f, #261c13 78%);
+}
+.hub-picture.hub-scene-missing { background: radial-gradient(ellipse at 50% 35%, #6b553a, #2b2118 82%); }
 .hotspot {
   position: absolute;
   transform: translate(-50%, -50%);
-  background: rgba(61, 47, 34, 0.35);
+  background: transparent;
   border: 2px solid transparent;
   border-radius: 50%;
   width: max(58px, 7.4cqw);
@@ -2502,9 +2539,7 @@ body::-webkit-scrollbar { display: none; }
   justify-content: center;
   gap: 0;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-  backdrop-filter: blur(1px);
 }
-.hotspot .hs-icon { font-size: max(24px, 2.9cqw); line-height: 1.1; }
 .hotspot .hs-label {
   font-size: max(10px, 1cqw);
   font-weight: 700;
@@ -2513,13 +2548,14 @@ body::-webkit-scrollbar { display: none; }
   transition: opacity 0.2s ease;
   text-shadow: 0 1px 3px rgba(0,0,0,0.7);
 }
-.hotspot:hover, .hotspot:focus-visible {
+.hotspot:hover, .hotspot:focus-visible, .hotspot.nav-highlight {
   background: rgba(122, 92, 51, 0.75);
   border-color: var(--accent);
   transform: translate(-50%, -50%) scale(1.12);
   z-index: 6;
 }
-.hotspot:hover .hs-label, .hotspot:focus-visible .hs-label { opacity: 1; }
+.hotspot:hover .hs-label, .hotspot:focus-visible .hs-label,
+.hotspot.nav-highlight .hs-label { opacity: 1; }
 .hs-dot {
   position: absolute;
   top: 2px;
@@ -2537,71 +2573,98 @@ body::-webkit-scrollbar { display: none; }
   50% { transform: scale(1.5); opacity: 0.4; }
 }
 
-/* Линза: прозрачная кнопка; при наведении — увеличенный кусок арта из той же */
-/* точки (фон задан инлайном в hub.js, ::before наследует его, чтобы анимировать) */
-.hotspot.lens {
-  background-color: transparent;
-  border-color: transparent;
-  backdrop-filter: none;
-}
-.hotspot.lens::before {
-  content: '';
+/* Активный layout можно заменить после error, не пересоздавая сцену и спрайты. */
+.hub-hotspot-layout { position: absolute; inset: 0; pointer-events: none; }
+.hub-hotspot-layout > .hotspot { pointer-events: auto; }
+
+/* Силуэты хаба: button обрезается локальным polygon, подпись и точка — снаружи. */
+.hub-shape-hotspot {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background: inherit;
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-}
-.hotspot.lens:hover, .hotspot.lens:focus-visible {
-  background-color: transparent;
-  border-color: var(--accent);
-  box-shadow: 0 0 18px rgba(255, 202, 122, 0.35);
-}
-.hotspot.lens:hover::before, .hotspot.lens:focus-visible::before,
-.hotspot.lens:active::before { opacity: 1; transform: scale(1); }
-.hotspot.lens:hover .hs-glint, .hotspot.lens:focus-visible .hs-glint { opacity: 0; }
-
-/* Огонёк-маркер хотспота в покое */
-.hs-glint {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: max(10px, 1.2cqw);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 236, 190, 0.95) 0%, rgba(255, 202, 122, 0.55) 40%, rgba(255, 202, 122, 0) 70%);
-  filter: blur(1px);
+  z-index: 6;
   pointer-events: none;
-  animation: glint-pulse 2.4s ease-in-out infinite;
-  transition: opacity 0.18s ease;
 }
-@keyframes glint-pulse {
-  0%, 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(0.8); }
-  50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.25); }
+.hotspot.hub-shape {
+  display: block;
+  min-height: 0;
+  aspect-ratio: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  transform: none;
+  background: transparent;
+  backdrop-filter: none;
+  pointer-events: auto;
+  transition: background 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.hotspot.hub-shape:hover, .hotspot.hub-shape:focus-visible,
+.hotspot.hub-shape.nav-highlight {
+  transform: none;
+  border-color: transparent;
+  outline: none;
+  background: rgba(255, 202, 122, 0.24);
+  box-shadow: inset 0 0 0 3px rgba(255, 220, 150, 0.92), inset 0 0 24px rgba(255, 202, 122, 0.42);
+}
+@supports not (clip-path: polygon(0 0, 100% 0, 100% 100%)) {
+  .hotspot.hub-shape {
+    clip-path: none;
+    border: 2px solid transparent;
+  }
+  .hotspot.hub-shape:hover, .hotspot.hub-shape:focus-visible,
+  .hotspot.hub-shape.nav-highlight { border-color: rgba(255, 202, 122, 0.65); }
 }
 
-/* Подпись-табличка под линзой */
-.hotspot.lens .hs-label {
+.hub-shape-hotspot > .hs-label {
   position: absolute;
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -100%);
+  margin-top: -8px;
   white-space: nowrap;
-  background: rgba(29, 21, 14, 0.92);
+  background: rgba(29, 21, 14, 0.94);
   border: 1px solid var(--accent);
   border-radius: 8px;
   padding: 3px 10px;
   z-index: 7;
+  font-size: max(10px, 1cqw);
+  font-weight: 700;
+  color: var(--accent);
+  opacity: 0;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.hotspot.hub-shape:hover ~ .hs-label,
+.hotspot.hub-shape:focus-visible ~ .hs-label,
+.hotspot.hub-shape.nav-highlight ~ .hs-label { opacity: 1; }
+.hub-shape-hotspot > .hs-dot {
+  right: auto;
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+.hub-text-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 1060px;
+  margin: 0 auto 14px;
+}
+.hub-text-nav button {
+  min-height: 44px;
+  flex: 1 1 150px;
+  padding: 7px 12px;
+  white-space: normal;
+}
+@media (pointer: coarse), (max-width: 720px) {
+  .hub-text-nav button { min-height: 52px; flex-basis: 132px; }
 }
 
 /* --- Обучение: прожектор и кот-гид --- */
 .tut-overlay {
   position: absolute;
   inset: 0;
-  z-index: 500;
+  /* Ниже итоговых оверлеев (.overlay: 100): победа не прячется под обучением. */
+  z-index: 90;
   pointer-events: none;
 }
 .tut-spot {
@@ -2632,6 +2695,50 @@ body::-webkit-scrollbar { display: none; }
 .tut-title { font-weight: 700; margin-bottom: 4px; color: var(--accent); }
 .tut-text { font-size: 14px; line-height: 1.5; margin-bottom: 10px; }
 .tut-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Первая дуга: внешний спокойный dock; ниже прожектора (90) и оверлеев (100). */
+.onboarding-dock {
+  position: fixed;
+  left: 18px;
+  bottom: 14px;
+  z-index: 80;
+  width: min(390px, calc(100vw - 130px));
+  max-height: 72vh;
+  overflow: auto;
+  padding: 13px 14px;
+  border: 1px solid rgba(255, 202, 122, 0.65);
+  border-radius: 15px;
+  background: rgba(41, 31, 22, 0.96);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.42);
+}
+.onboarding-dock.compact {
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.onboarding-dock.guide {
+  width: min(350px, calc(100vw - 130px));
+  border-color: rgba(143, 209, 139, 0.55);
+}
+.onboarding-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.onboarding-eyebrow { color: var(--muted); font-size: 12px; }
+.onboarding-title { color: var(--accent); font-weight: 700; line-height: 1.35; }
+.onboarding-goal { margin-top: 6px; color: var(--text); font-size: 13px; line-height: 1.45; }
+.onboarding-actions, .onboarding-final-routes { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+.onboarding-actions button, .onboarding-final-routes button, .onboarding-dock.compact button {
+  min-height: 38px;
+  padding: 7px 10px;
+}
+.onboarding-branches { display: grid; grid-template-columns: 1fr; gap: 6px; margin-top: 8px; }
+.onboarding-branches button { min-height: 36px; padding: 6px 9px; text-align: left; }
+.onboarding-final-routes button { flex: 1 1 100px; }
+.onboarding-paused-text { color: var(--muted); font-size: 13px; }
+@media (max-width: 640px) {
+  .onboarding-dock { left: 10px; right: 10px; bottom: 10px; width: auto; max-height: 58vh; }
+  .onboarding-dock.compact { right: auto; max-width: calc(100vw - 20px); }
+  .onboarding-goal { font-size: 12px; }
+}
 
 /* --- Режим «сбор»: поле боя --- */
 .form-field {
@@ -2728,9 +2835,16 @@ body::-webkit-scrollbar { display: none; }
 .belt-chip:hover { background: #5a4732; }
 .belt-chip:has(input:checked) { border-color: var(--accent); background: rgba(122, 92, 51, 0.55); }
 .form-go { min-width: 116px; }
+.form-practice { min-width: 132px; }
+.battle-energy, .boss-drop-preview { margin-top: 8px; padding: 10px 14px; }
+.battle-energy-main, .boss-drop-name { font-weight: 700; margin-bottom: 3px; }
+.battle-energy.is-low { border-color: #b98a58; }
+.battle-energy-timer { margin-top: 3px; }
+.boss-drop-preview { background: linear-gradient(110deg, var(--panel), rgba(122, 92, 51, 0.28)); }
+.overlay .boss-drop-joy { color: #ffd995; text-align: center; }
 @media (max-width: 640px) {
   .form-toolbar-spacer { display: none; }
-  .form-go { width: 100%; }
+  .form-go, .form-practice { width: 100%; }
 }
 
 .unit-figure {
@@ -2890,7 +3004,22 @@ body::-webkit-scrollbar { display: none; }
 .cat-line { font-weight: 600; margin-bottom: 4px; }
 .cat-entry { color: var(--muted); font-size: 13px; line-height: 1.5; }
 
-/* Питомцы — каждый на своём месте на своей сцене (картинка или иконка-фолбэк) */
+/* Питомцы и трофеи — нативные кнопки с прежним позиционированием спрайтов. */
+.hub-pet, .hub-trophy {
+  appearance: none;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+}
+.hub-pet:hover, .hub-trophy:hover,
+.hub-pet:focus-visible, .hub-trophy:focus-visible { background: transparent; }
+.hub-pet:focus-visible, .hub-trophy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
 .hub-pet {
   position: absolute;
   transform: translate(-50%, -100%);
@@ -3402,7 +3531,44 @@ body::-webkit-scrollbar { display: none; }
   font-size: 15px;
 }
 
-/* === Украшения лавки и атмосферные частицы === */
+/* === Оформление лавки: магазин, временные sprite-fallback и атмосфера === */
+.cosmetic-changes {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.cosmetic-notice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 12px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: var(--panel-2);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.cosmetic-notice button { flex: none; }
+.cosmetic-preview {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 84px;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid #6b553a;
+  border-radius: 8px;
+  background: radial-gradient(ellipse at center, #6b553a, #2b2118);
+  font-size: 24px;
+}
+.cosmetic-preview-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hub-legacy-cosmetics { position: absolute; inset: 0; pointer-events: none; }
 .cos-fx { position: absolute; z-index: 4; pointer-events: none; }
 .cos-carpet {
   border-radius: 50%;
@@ -3468,6 +3634,24 @@ body::-webkit-scrollbar { display: none; }
   0% { transform: translateY(0) scale(0.5); opacity: 0; }
   25% { opacity: 0.7; }
   100% { transform: translateY(-46px) scale(1.7); opacity: 0; }
+}
+
+/* Хаб уважает reduced motion: блики, частицы, спрайты и переходы не двигаются. */
+@media (prefers-reduced-motion: reduce) {
+  body[data-route="hub"] #screen.screen-enter,
+  body[data-route="hub"] #screen.screen-exit,
+  body[data-route="hub"] .hub-picture .hotspot,
+  body[data-route="hub"] .hub-picture .hs-dot,
+  body[data-route="hub"] .hub-picture .cos-fx,
+  body[data-route="hub"] .hub-picture .hub-pet,
+  body[data-route="hub"] .hub-picture .hub-trophy,
+  body[data-route="hub"] .cat-heart {
+    animation: none !important;
+    transition: none !important;
+  }
+  body[data-route="hub"] .hub-text-nav button { transition: none; }
+  body[data-route="hub"] .hub-pet:hover { transform: translate(-50%, -100%); }
+  body[data-route="hub"] .hub-trophy:hover { transform: translate(-50%, -100%); }
 }
 
 /* Книга собранных рецептов */
@@ -4273,6 +4457,12 @@ body::-webkit-scrollbar { display: none; }
 .seat-preview-about summary { color: #ffca7a; cursor: pointer; text-align: left; }
 .seat-preview-about[open] summary { margin-bottom: 8px; }
 .seat-preview-about .seat-preview-line { margin-top: 8px; }
+
+.material-exchange { margin-top: 14px; }
+.material-exchange-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin-top: 10px; }
+.material-exchange-controls label { display: grid; gap: 5px; min-width: min(240px, 100%); flex: 1; font-size: 13px; color: var(--muted); }
+.material-exchange-controls select { min-height: 38px; padding: 6px 9px; color: var(--text); background: var(--panel-2); border: 2px solid #6b553a; border-radius: 10px; }
+.material-exchange-rate { margin-top: 9px; }
 
 /* === Тематические курсоры: body[data-cursor] ставит роутер (src/ui/cursors.js).
    PNG 32x32 в assets/cursors/ генерируются по art-src/PROMPTS.md; пока файла нет —

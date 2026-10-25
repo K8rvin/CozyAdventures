@@ -625,7 +625,7 @@ export function simulateFormationBattle(allies, foes, seed = 1, tactic = 'balanc
     advice: victory
       ? null
       : timedOut
-        ? 'Бой затянулся до предела — врагов не удалось добить вовремя. Поднимай атаку: оружие помощнее, крит, пробивание брони — или позови наёмников.'
+        ? 'Бой затянулся до предела — врагов не удалось добить вовремя. Поднимай атаку: оружие помощнее, крит или пробивание брони.'
         : adviceFor(knight, allies, foes, inferCause(knight)),
   };
   return { victory, log, report, ticks: tick };
@@ -639,13 +639,13 @@ function inferCause(knight) {
 
 function adviceFor(knight, allies, foes, cause) {
   if (cause === 'sleep') {
-    return 'Рыцарь уснул на посту. Шлем с сопротивлением сну или зелье бодрости — и порядок.';
+    return 'Рыцарь уснул на посту. Сопротивление сну или зелье бодрости — и порядок.';
   }
   if (cause === 'poison') {
-    return 'Яд подточил рыцаря. Амулет противоядия или чернильный отвар помогут.';
+    return 'Яд подточил рыцаря. Сопротивление яду и крепкая экипировка облегчат бой.';
   }
   if (allies.length === 1) {
-    return 'В одиночку тяжело. Найми в таверне громилу в передний ряд и лучницу за спину.';
+    return 'В одиночку тяжело. Усиль экипировку рыцаря и проверь расстановку.';
   }
   const frontDown = allies.filter((a) => FRONT.includes(a.slot) && a.hp <= 0).length;
   if (frontDown > 0) {

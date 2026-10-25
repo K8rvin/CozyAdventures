@@ -8,6 +8,7 @@ import {
   findPuzzle, applySeekOverrides, saveSeekOverride, resetSeekOverride,
   unseenShopItems, markShopSeen, loadSeekOverrides, autoEquipBest,
   dailyPuzzle, currentSeason, SEASON_LABEL, petTheCat, todayKey, isDailyPuzzle,
+  buyCosmetic, toggleCosmetic, selectCosmetic,
 } from '../src/core/state.js';
 import { PUZZLES } from '../src/data/puzzles.js';
 import { BATTLES } from '../src/data/battles.js';
@@ -107,6 +108,8 @@ test('авто-экипировка щита не срабатывает при 
   assert.equal(s.equipped.shield, null);
   s.battlesDone.bt_bees = { victories: 1 }; // щит есть в продаже всегда
   s.coins = 200;
+  // Отделяем проверку двуручника от нового запрета повторной покупки имеющейся вещи.
+  s.inventory = s.inventory.filter((id) => id !== 'shd_wooden');
   const r = buyItem(s, 'shd_wooden');
   assert.equal(r.autoEquipped, null, 'щит не должен авто-надеваться под двуручник');
   assert.ok(s.inventory.includes('shd_wooden'));
@@ -368,6 +371,63 @@ test('достижения разблокируются по событиям', 
   assert.ok(ACHIEVEMENTS.length >= 15);
 });
 
+test('достижения кампании считают уникальные решения, а не повторы и пропуски', async () => {
+  const { ACHIEVEMENTS } = await import('../src/data/achievements.js');
+  const byId = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]));
+  const ctx = { puzzlesTotal: 4 };
+  const s = newGame();
+  s.coins = 1000;
+
+  completePuzzle(s, 'md_01', {});
+  completePuzzle(s, 'md_01', {});
+  completePuzzle(s, 'md_01', {});
+  assert.equal(s.stats.puzzlesSolved, 3, 'повторы по-прежнему видны в общей статистике');
+  assert.equal(byId.half_campaign.check(s, ctx), false, 'три записи одного уровня — не половина кампании');
+
+  assert.equal(skipPuzzle(s, 'md_02').ok, true);
+  assert.equal(s.stats.puzzlesSolved, 3, 'сам пропуск не увеличивает счётчик честных решений');
+  assert.equal(byId.half_campaign.check(s, ctx), false, 'пропуск не заменяет второе уникальное решение');
+  assert.equal(byId.all_puzzles.check(s, ctx), false, 'завышенный счётчик не открывает награду за всю кампанию');
+
+  completePuzzle(s, 'md_03', {});
+  completePuzzle(s, 'md_04', {});
+  assert.equal(byId.half_campaign.check(s, ctx), true, 'два разных решения засчитаны');
+  assert.equal(byId.all_puzzles.check(s, ctx), false, 'пропущенный уровень не входит в полное прохождение');
+
+  const campaignCtx = { puzzlesTotal: 2, puzzleIds: ['md_01', 'md_02'] };
+  const customState = newGame();
+  customState.puzzlesDone.md_01 = {};
+  customState.puzzlesDone.custom_extra = {};
+  assert.equal(byId.all_puzzles.check(customState, campaignCtx), false, 'уровень Мастерской не заменяет кампанию');
+  customState.puzzlesDone.md_02 = {};
+  assert.equal(byId.all_puzzles.check(customState, campaignCtx), true);
+});
+
+test('десятка и искалки не засчитывают пропуски, выданные достижения сохраняются', async () => {
+  const { ACHIEVEMENTS, checkAchievements } = await import('../src/data/achievements.js');
+  const byId = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]));
+  const s = newGame();
+  s.stats.puzzlesSolved = 100;
+  for (let i = 0; i < 9; i++) s.puzzlesDone[`level_${i}`] = {};
+  s.puzzlesDone.skipped_level = { skipped: true };
+  assert.equal(byId.ten_puzzles.check(s, {}), false, 'девять решений и пропуск — ещё не десять');
+  s.puzzlesDone.level_9 = {};
+  assert.equal(byId.ten_puzzles.check(s, {}), true, 'десятая уникальная запись засчитана');
+
+  const seekCtx = { seekIds: ['seek_1', 'seek_2'] };
+  s.puzzlesDone.seek_1 = { skipped: true };
+  s.puzzlesDone.seek_2 = {};
+  assert.equal(byId.seek_master.check(s, seekCtx), false, 'пропущенная искалка не завершает серию');
+  s.puzzlesDone.seek_1 = {};
+  assert.equal(byId.seek_master.check(s, seekCtx), true);
+
+  s.achievements.seek_master = 12345;
+  s.puzzlesDone.seek_1 = { skipped: true };
+  const fresh = checkAchievements(s, { ...seekCtx, puzzlesTotal: 1000, battlesTotal: 200 });
+  assert.equal(s.achievements.seek_master, 12345, 'ранее выданное достижение не отзывается');
+  assert.ok(!fresh.some((a) => a.id === 'seek_master'), 'и не выдаётся повторно');
+});
+
 test('заказ дня: детерминирован и даёт двойные монеты раз в день', () => {
   const s = newGame();
   const d1 = dailyPuzzle(s);
@@ -489,4 +549,71 @@ test('сохранение и загрузка', () => {
   saveGame(s, storage);
   const loaded = loadGame(storage);
   assert.equal(loaded.coins, 777);
+});
+
+test('миграция оформления: aliases без дублей, active последний, legacy полный и повтор стабилен', () => {
+  const old = newGame(1000);
+  old.cosmeticsVersion = 1;
+  old.coins = 777;
+  old.seals = 9;
+  old.inventory = ['pot_heal', 'custom_keepsake'];
+  old.materials = { slime_jelly: 4 };
+  old.battlesDone = { bt_slimes: { victories: 2 } };
+  old.cosmeticsOwned = ['cos_carpet', 'cos_flowers', 'cos_crest'];
+  old.cosmeticsActive = ['cos_carpet', 'cos_flowers', 'cos_crest'];
+  delete old.legacyCosmeticsActive;
+  const memory = { cozy_adventures_save_v2: JSON.stringify(old) };
+  const storage = {
+    getItem: (k) => memory[k] ?? null,
+    setItem: (k, v) => { memory[k] = String(v); },
+  };
+  const loaded = loadGame(storage, 2000);
+  assert.equal(loaded.cosmeticsVersion, 2);
+  assert.deepEqual(loaded.cosmeticsOwned, ['hearth', 'spring'], 'carpet+crest — одна hearth, остальные покупки сохранены');
+  assert.deepEqual(loaded.cosmeticsActive, ['hearth']);
+  assert.deepEqual(loaded.legacyCosmeticsActive, old.cosmeticsActive, 'исходные cos_* сохранены только для sprite-fallback');
+  for (const key of ['coins', 'seals', 'inventory', 'materials', 'battlesDone', 'equipped']) {
+    assert.deepEqual(loaded[key], old[key], `миграция не трогает ${key}`);
+  }
+
+  saveGame(loaded, storage);
+  const again = loadGame(storage, 2000);
+  assert.deepEqual(again.cosmeticsOwned, loaded.cosmeticsOwned);
+  assert.deepEqual(again.cosmeticsActive, loaded.cosmeticsActive);
+  assert.deepEqual(again.legacyCosmeticsActive, loaded.legacyCosmeticsActive);
+});
+
+test('оформление: покупка и выбор заменяют pack id, повтор снимает, база очищает legacy', () => {
+  const s = newGame();
+  assert.equal(s.cosmeticsVersion, 2);
+  s.coins = 1000;
+  s.seals = 5;
+  const inventory = structuredClone(s.inventory);
+  const battles = structuredClone(s.battlesDone);
+  assert.equal(buyCosmetic(s, 'hearth').ok, true);
+  assert.deepEqual(s.cosmeticsActive, ['hearth']);
+  assert.deepEqual(s.legacyCosmeticsActive, ['hearth']);
+  assert.equal(buyCosmetic(s, 'spring').ok, true);
+  assert.deepEqual(s.cosmeticsOwned, ['hearth', 'spring']);
+  assert.deepEqual(s.cosmeticsActive, ['spring'], 'второй выбор не складывается с первым');
+  assert.deepEqual(s.legacyCosmeticsActive, ['spring']);
+
+  assert.equal(toggleCosmetic(s, 'spring').active, false);
+  assert.deepEqual(s.cosmeticsActive, []);
+  assert.deepEqual(s.legacyCosmeticsActive, []);
+  assert.equal(selectCosmetic(s, 'hearth').active, true);
+  assert.deepEqual(s.legacyCosmeticsActive, ['hearth']);
+  assert.equal(toggleCosmetic(s, 'halloween').ok, false, 'некупленный пакет не выбирается');
+  assert.deepEqual(s.cosmeticsActive, ['hearth']);
+  assert.equal(selectCosmetic(s, null).active, false);
+  assert.deepEqual(s.cosmeticsActive, []);
+  assert.deepEqual(s.legacyCosmeticsActive, []);
+
+  assert.equal(buyCosmetic(s, 'halloween').ok, true);
+  assert.equal(s.coins, 80, '200 + 120 + 600 монет, без печатного SKU');
+  assert.equal(s.seals, 5, 'печати не тратятся');
+  assert.deepEqual(s.cosmeticsActive, ['halloween']);
+  assert.deepEqual(s.legacyCosmeticsActive, ['halloween']);
+  assert.deepEqual(s.inventory, inventory);
+  assert.deepEqual(s.battlesDone, battles);
 });

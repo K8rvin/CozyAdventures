@@ -1266,6 +1266,134 @@
       description: "\u0412\u0440\u0430\u0433\u0438 \u0434\u0432\u0438\u0433\u0430\u044E\u0442\u0441\u044F, \u043A\u0430\u043A \u0432\u043E \u0441\u043D\u0435 \u043F\u0440\u043E \u043F\u043E\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u0438\u043A."
     }
   );
+  ITEMS.push(
+    {
+      id: "shd_willow_vow",
+      name: "\u0429\u0438\u0442 \u0438\u0432\u043E\u0432\u043E\u0439 \u043A\u043B\u044F\u0442\u0432\u044B",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "rare",
+      price: 0,
+      stats: { armor: 10, hp: 6, block: 0.12 },
+      traits: ["first_hit_reduction"],
+      description: "\u0413\u0438\u0431\u043A\u0438\u0435 \u0432\u0435\u0442\u0432\u0438 \u0433\u0430\u0441\u044F\u0442 \u043F\u0435\u0440\u0432\u044B\u0439 \u043D\u0430\u0442\u0438\u0441\u043A, \u043D\u043E \u043D\u0435 \u0437\u0430\u043C\u0435\u043D\u044F\u044E\u0442 \u043A\u0440\u0435\u043F\u043A\u0438\u0439 \u0431\u0430\u0448\u0435\u043D\u043D\u044B\u0439 \u0449\u0438\u0442."
+    },
+    {
+      id: "glv_captain_oath",
+      name: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u043A\u0430\u043F\u0438\u0442\u0430\u043D\u0441\u043A\u043E\u0439 \u043A\u043B\u044F\u0442\u0432\u044B",
+      slot: "gloves",
+      type: "gloves",
+      rarity: "rare",
+      price: 0,
+      stats: { attack: 4, armor: 3 },
+      traits: ["thorns_small"],
+      description: "\u041F\u043E\u0442\u0451\u0440\u0442\u044B\u0435 \u043D\u0430\u0440\u0443\u0447\u0438 \u043E\u0442\u0432\u0435\u0447\u0430\u044E\u0442 \u043E\u0431\u0438\u0434\u0447\u0438\u043A\u0443 \u043B\u0451\u0433\u043A\u0438\u043C \u043E\u0442\u0432\u0435\u0442\u043D\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C."
+    },
+    {
+      id: "rng_keeper_bookmark",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u0436\u0438\u0432\u043E\u0439 \u0437\u0430\u043A\u043B\u0430\u0434\u043A\u0438",
+      slot: "ring",
+      type: "ring",
+      rarity: "rare",
+      price: 0,
+      stats: { hp: 4, speed: 2, itemFind: 0.04 },
+      description: "\u0428\u0435\u043B\u0435\u0441\u0442\u0438\u0442 \u043D\u0430 \u043D\u0443\u0436\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435 \u0438 \u0431\u0435\u0440\u0435\u0436\u0451\u0442 \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0435 \u043D\u0430\u0445\u043E\u0434\u043A\u0438."
+    },
+    {
+      id: "amu_star_compass",
+      name: "\u0410\u043C\u0443\u043B\u0435\u0442 \u0437\u0432\u0451\u0437\u0434\u043D\u043E\u0433\u043E \u043A\u043E\u043C\u043F\u0430\u0441\u0430",
+      slot: "amulet",
+      type: "amulet",
+      rarity: "rare",
+      price: 0,
+      stats: { hp: 12, crit: 0.02, resist: { fire: 0.15 } },
+      description: "\u0421\u0442\u0440\u0435\u043B\u043A\u0430 \u0443\u043A\u0430\u0437\u044B\u0432\u0430\u0435\u0442 \u043D\u0435 \u043D\u0430 \u0441\u0435\u0432\u0435\u0440, \u0430 \u043D\u0430 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u0443\u044E \u0434\u043E\u0440\u043E\u0433\u0443 \u0434\u043E\u043C\u043E\u0439."
+    },
+    {
+      id: "wpn_nm_afterhours",
+      name: "\u041A\u0438\u043D\u0436\u0430\u043B \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043B\u0443\u043D\u043E\u0447\u0438",
+      slot: "weapon",
+      hand: "one",
+      type: "dagger",
+      rarity: "rare",
+      price: 0,
+      stats: { attack: 17, speed: 2, crit: 0.04 },
+      description: "\u041B\u0451\u0433\u043A\u0438\u0439 \u043A\u043B\u0438\u043D\u043E\u043A \u0434\u043B\u044F \u0442\u0438\u0445\u0438\u0445 \u043F\u0435\u0440\u0435\u0443\u043B\u043A\u043E\u0432; \u0443\u0441\u0442\u0443\u043F\u0430\u0435\u0442 \u0440\u044B\u043D\u043E\u0447\u043D\u044B\u043C \u0442\u044F\u0436\u0435\u043B\u043E\u0432\u0435\u0441\u0430\u043C \u0432 \u0443\u0440\u043E\u043D\u0435."
+    },
+    {
+      id: "bt_sw_reed",
+      name: "\u0421\u0430\u043F\u043E\u0433\u0438 \u043A\u0430\u043C\u044B\u0448\u043E\u0432\u043E\u0439 \u0442\u0440\u043E\u043F\u044B",
+      slot: "boots",
+      type: "boots",
+      rarity: "rare",
+      price: 0,
+      stats: { speed: 2, dodge: 0.05, resist: { poison: 0.1 } },
+      description: "\u0421\u0443\u0445\u0438\u0435 \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u0432\u0435\u0440\u0445\u0443, \u0437\u0430\u0442\u043E \u0437\u043D\u0430\u044E\u0442 \u043A\u0430\u0436\u0434\u0443\u044E \u043A\u043E\u0447\u043A\u0443 \u0438 \u043D\u0435 \u0431\u043E\u044F\u0442\u0441\u044F \u0431\u043E\u043B\u043E\u0442\u043D\u043E\u0439 \u043C\u043E\u0448\u043A\u0438."
+    },
+    {
+      id: "rng_sf_encore",
+      name: "\u041A\u043E\u043B\u044C\u0446\u043E \u044F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u043E\u0433\u043E \u0431\u0438\u0441\u0430",
+      slot: "ring",
+      type: "ring",
+      rarity: "rare",
+      price: 0,
+      stats: { crit: 0.04, dodge: 0.03, itemFind: 0.03 },
+      description: "\u0417\u0432\u0435\u043D\u0438\u0442 \u043F\u043E\u0441\u043B\u0435 \u0443\u0434\u0430\u0447\u043D\u043E\u0433\u043E \u0432\u044B\u0441\u0442\u0443\u043F\u043B\u0435\u043D\u0438\u044F \u0438 \u043F\u043E\u0434\u043C\u0438\u0433\u0438\u0432\u0430\u0435\u0442 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439 \u043D\u0430\u0445\u043E\u0434\u043A\u0435."
+    },
+    {
+      id: "hlm_cr_geode",
+      name: "\u0428\u043B\u0435\u043C \u0436\u0435\u043E\u0434\u043E\u0432\u043E\u0433\u043E \u044D\u0445\u0430",
+      slot: "helmet",
+      type: "helmet",
+      rarity: "rare",
+      price: 0,
+      stats: { hp: 16, armor: 5, resist: { slow: 0.15 } },
+      description: "\u041F\u0443\u0441\u0442\u043E\u0439 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u044B\u0439 \u043A\u0443\u043F\u043E\u043B \u0437\u0432\u0435\u043D\u0438\u0442 \u0432 \u0442\u0430\u043A\u0442 \u0448\u0430\u0433\u0430\u043C \u0438 \u043E\u0442\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u043E\u043D\u043D\u0443\u044E \u043C\u0435\u0434\u043B\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0441\u0442\u044C."
+    },
+    {
+      id: "arm_ash_wayfarer",
+      name: "\u0411\u0440\u043E\u043D\u044F \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0443\u0442\u043D\u0438\u043A\u0430",
+      slot: "armor",
+      type: "armor",
+      rarity: "rare",
+      price: 0,
+      stats: { armor: 18, hp: 12, resist: { fire: 0.15 } },
+      description: "\u041B\u0451\u0433\u043A\u0430\u044F \u0434\u043E\u0440\u043E\u0436\u043D\u0430\u044F \u0447\u0435\u0448\u0443\u044F \u0434\u043B\u044F \u0436\u0430\u0440\u043A\u043E\u0433\u043E \u0432\u0435\u0442\u0440\u0430, \u0430 \u043D\u0435 \u043F\u0430\u0440\u0430\u0434\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0445\u0430\u043D\u0430."
+    },
+    {
+      id: "wpn_jade_branch",
+      name: "\u041C\u0435\u0447 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0439 \u0432\u0435\u0442\u0432\u0438",
+      slot: "weapon",
+      hand: "one",
+      type: "sword",
+      rarity: "rare",
+      price: 0,
+      stats: { attack: 22, hp: 5, speed: 2 },
+      description: "\u0420\u043E\u0432\u043D\u044B\u0439 \u043A\u043B\u0438\u043D\u043E\u043A \u0441 \u0436\u0438\u0432\u043E\u0439 \u0440\u0443\u043A\u043E\u044F\u0442\u044C\u044E; \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u0435\u0435 \u0438 \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u0435\u0435 \u0431\u043E\u0435\u0432\u043E\u0433\u043E \u0432\u0435\u0435\u0440\u0430."
+    },
+    {
+      id: "shd_deep_tideglass",
+      name: "\u0429\u0438\u0442 \u043F\u0440\u0438\u043B\u0438\u0432\u043D\u043E\u0433\u043E \u0441\u0442\u0435\u043A\u043B\u0430",
+      slot: "shield",
+      hand: "one",
+      type: "shield",
+      rarity: "rare",
+      price: 0,
+      stats: { armor: 14, hp: 8, block: 0.16, resist: { slow: 0.1 } },
+      description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043F\u043B\u0435\u0449\u0435\u0442\u0441\u044F \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0430\u044F \u0432\u043E\u043B\u043D\u0430; \u043B\u0435\u0433\u0447\u0435 \u0440\u0430\u043A\u043E\u0432\u0438\u043D\u044B, \u043D\u043E \u0438 \u043C\u044F\u0433\u0447\u0435 \u0443\u0434\u0430\u0440."
+    },
+    {
+      id: "glv_mist_minute",
+      name: "\u041F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0438\u0445\u043E\u0439 \u043C\u0438\u043D\u0443\u0442\u044B",
+      slot: "gloves",
+      type: "gloves",
+      rarity: "rare",
+      price: 0,
+      stats: { attack: 4, speed: 1, resist: { slow: 0.15 } },
+      description: "\u0421\u0435\u043A\u0443\u043D\u0434\u043D\u0430\u044F \u0441\u0442\u0440\u0435\u043B\u043A\u0430 \u043D\u0430 \u043C\u0430\u043D\u0436\u0435\u0442\u0435 \u043F\u043E\u043C\u043E\u0433\u0430\u0435\u0442 \u043D\u0435 \u0442\u0435\u0440\u044F\u0442\u044C \u0442\u0435\u043C\u043F \u0432 \u0433\u0443\u0441\u0442\u043E\u043C \u0442\u0443\u043C\u0430\u043D\u0435."
+    }
+  );
   var ITEM_BY_ID = Object.fromEntries(ITEMS.map((i) => [i.id, i]));
   var RARITY_LABEL = {
     common: "\u041E\u0431\u044B\u0447\u043D\u044B\u0439",
@@ -1274,8 +1402,3431 @@
     legendary: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u044B\u0439"
   };
 
+  // src/data/worlds/nm.js
+  var WORLD = {
+    id: "nm",
+    label: "\u{1F303} \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
+    enemies: [
+      {
+        id: "nm_moth",
+        name: "\u042F\u043D\u0442\u0430\u0440\u043D\u044B\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A",
+        icon: "\u{1F98B}",
+        hp: 80,
+        attack: 15,
+        armor: 8,
+        speed: 14,
+        crit: 0.06,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        reward: { coins: [70, 95], materials: ["nm_moth_dust"] }
+      },
+      {
+        id: "nm_mask",
+        name: "\u041E\u0436\u0438\u0432\u0448\u0430\u044F \u043C\u0430\u0441\u043A\u0430",
+        icon: "\u{1F3AD}",
+        hp: 95,
+        attack: 18,
+        armor: 10,
+        speed: 11,
+        crit: 0.07,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [80, 110], materials: ["nm_mask_shard"] }
+      },
+      {
+        id: "nm_shadow",
+        name: "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u0447\u043D\u0430\u044F \u0442\u0435\u043D\u044C",
+        icon: "\u{1F312}",
+        hp: 105,
+        attack: 18,
+        armor: 10,
+        speed: 10,
+        crit: 0.08,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["sting_poison"],
+        tags: ["spirit"],
+        reward: { coins: [90, 120], materials: ["nm_shadow_ash"] }
+      },
+      {
+        id: "nm_lantern",
+        name: "\u0414\u0443\u0445 \u0444\u043E\u043D\u0430\u0440\u044F",
+        icon: "\u{1F3EE}",
+        hp: 90,
+        attack: 19,
+        armor: 10,
+        speed: 9,
+        crit: 0.06,
+        dodge: 0.06,
+        elem: "fire",
+        skills: ["spit_fire"],
+        tags: ["spirit"],
+        reward: { coins: [85, 115], materials: ["nm_ember_oil"] }
+      },
+      {
+        id: "nm_garland",
+        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u043D\u044B\u0439 \u0437\u043C\u0435\u0439",
+        icon: "\u2728",
+        hp: 120,
+        attack: 17,
+        armor: 16,
+        speed: 8,
+        crit: 0.04,
+        dodge: 0.04,
+        elem: "phys",
+        skills: ["slow_spores", "regen_ally_skill"],
+        tags: ["spirit"],
+        reward: { coins: [95, 130], materials: ["nm_moth_dust"] }
+      },
+      {
+        id: "nm_teller",
+        name: "\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446-\u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044C",
+        icon: "\u{1F5E3}\uFE0F",
+        hp: 140,
+        attack: 22,
+        armor: 18,
+        speed: 7,
+        crit: 0.05,
+        dodge: 0.03,
+        elem: "phys",
+        skills: ["heavy_blow", "regen_ally_skill"],
+        reward: { coins: [110, 150], materials: ["nm_shadow_ash"] }
+      },
+      // Босс мира
+      {
+        id: "nm_boss_keeper",
+        name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
+        icon: "\u{1F3AA}",
+        hp: 400,
+        attack: 28,
+        armor: 26,
+        speed: 10,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["heavy_blow", "fear_chill", "spit_fire"],
+        boss: true,
+        tags: ["spirit"],
+        reward: { coins: [700, 950], seals: 5, materials: ["nm_market_crown"] }
+      }
+    ],
+    materials: [
+      {
+        id: "nm_moth_dust",
+        name: "\u041F\u044B\u043B\u044C\u0446\u0430 \u044F\u043D\u0442\u0430\u0440\u043D\u043E\u0433\u043E \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430",
+        icon: "\u{1F31F}",
+        description: "\u041C\u0435\u0440\u0446\u0430\u0435\u0442 \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435 \u0442\u0451\u043F\u043B\u044B\u043C \u044F\u043D\u0442\u0430\u0440\u043D\u044B\u043C \u0441\u0432\u0435\u0442\u043E\u043C."
+      },
+      {
+        id: "nm_mask_shard",
+        name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u043E\u0436\u0438\u0432\u0448\u0435\u0439 \u043C\u0430\u0441\u043A\u0438",
+        icon: "\u{1F3AD}",
+        description: "\u041D\u0430 \u0433\u043B\u0430\u0434\u043A\u043E\u043C \u043B\u0430\u043A\u0435 \u0437\u0430\u0441\u0442\u044B\u043B\u0430 \u0447\u0443\u0436\u0430\u044F \u0443\u043B\u044B\u0431\u043A\u0430."
+      },
+      {
+        id: "nm_shadow_ash",
+        name: "\u041F\u0435\u043F\u0435\u043B \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u0447\u043D\u043E\u0439 \u0442\u0435\u043D\u0438",
+        icon: "\u{1F311}",
+        description: "\u041B\u0451\u0433\u043A\u0438\u0439 \u043F\u0435\u043F\u0435\u043B, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043F\u0440\u044F\u0447\u0435\u0442\u0441\u044F \u043E\u0442 \u0441\u0432\u0435\u0442\u0430."
+      },
+      {
+        id: "nm_ember_oil",
+        name: "\u041C\u0430\u0441\u043B\u043E \u0434\u0443\u0445\u043E\u0432 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+        icon: "\u{1F3EE}",
+        description: "\u0413\u043E\u0440\u0438\u0442 \u0431\u0435\u0437 \u0434\u044B\u043C\u0430 \u0438 \u043D\u0435 \u0433\u0430\u0441\u043D\u0435\u0442 \u043F\u043E\u0434 \u0434\u043E\u0436\u0434\u0451\u043C."
+      },
+      {
+        id: "nm_market_crown",
+        name: "\u041A\u043E\u0440\u043E\u043D\u0430 \u0445\u043E\u0437\u044F\u0438\u043D\u0430 \u0440\u044B\u043D\u043A\u0430",
+        icon: "\u{1F451}",
+        description: "\u0417\u043D\u0430\u043A \u0432\u043B\u0430\u0441\u0442\u0438 \u043D\u0430\u0434 \u0432\u0441\u0435\u043C\u0438 \u043B\u0430\u0432\u043A\u0430\u043C\u0438 \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430."
+      }
+    ],
+    battles: [
+      {
+        id: "nm_01",
+        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C",
+        world: "nm",
+        enemies: [{ id: "nm_moth", scale: 1.5 }],
+        unlockAfter: "ex_boss",
+        tip: "\u041E\u0434\u0438\u043D\u043E\u043A\u0438\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0411\u044B\u0441\u0442\u0440\u044B\u0439 \u0443\u0434\u0430\u0440 \u2014 \u0438 \u043F\u0443\u0442\u044C \u043E\u0442\u043A\u0440\u044B\u0442."
+      },
+      {
+        id: "nm_02",
+        name: "\u0420\u044F\u0434 \u0441 \u043C\u0430\u0441\u043A\u0430\u043C\u0438",
+        world: "nm",
+        enemies: [{ id: "nm_mask", scale: 1.52 }],
+        unlockAfter: "nm_01",
+        tip: "\u041C\u0430\u0441\u043A\u0430 \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0440\u0435\u0448\u0438\u0442 \u0432\u0441\u0451."
+      },
+      {
+        id: "nm_03",
+        name: "\u0422\u0435\u043D\u0438 \u043F\u043E\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C",
+        world: "nm",
+        obstacles: [{ cell: [3, 1], kind: "lantern" }],
+        enemies: [{ id: "nm_shadow", scale: 1.53 }, { id: "nm_moth", scale: 1.53 }],
+        unlockAfter: "nm_02",
+        tip: "\u042F\u0434 \u0438 \u0441\u043E\u043D \u0432 \u043F\u0430\u0440\u0435. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430."
+      },
+      {
+        id: "nm_04",
+        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u044B \u043E\u0436\u0438\u0432\u0430\u044E\u0442",
+        world: "nm",
+        enemies: [{ id: "nm_garland", scale: 1.55 }, { id: "nm_moth", scale: 1.54 }],
+        unlockAfter: "nm_03",
+        tip: "\u0417\u043C\u0435\u0439 \u043B\u0435\u0447\u0438\u0442 \u0441\u0435\u0431\u044F \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442. \u0411\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "nm_05",
+        name: "\u0416\u0430\u0440 \u043C\u0430\u0441\u043B\u044F\u043D\u044B\u0445 \u043B\u0430\u043C\u043F",
+        world: "nm",
+        enemies: [{ id: "nm_lantern", scale: 1.56 }, { id: "nm_lantern", scale: 1.55 }],
+        unlockAfter: "nm_04",
+        tip: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430 \u043E\u0433\u043D\u044F. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0441\u043F\u0430\u0441\u0451\u0442 \u043E\u0442 \u043E\u0436\u043E\u0433\u043E\u0432."
+      },
+      {
+        id: "nm_06",
+        name: "\u0421\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u0438 \u0443 \u0436\u0430\u0440\u043E\u0432\u043D\u0438",
+        world: "nm",
+        enemies: [{ id: "nm_teller", scale: 1.57 }, { id: "nm_garland", scale: 1.56 }],
+        unlockAfter: "nm_05",
+        tip: "\u0421\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044C \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u0437\u043C\u0435\u0439 \u0435\u0433\u043E \u043B\u0435\u0447\u0438\u0442. \u041D\u0435 \u0442\u044F\u043D\u0438 \u0431\u043E\u0439."
+      },
+      {
+        id: "nm_07",
+        name: "\u041C\u0430\u0441\u043A\u0438 \u0441\u043C\u0435\u044E\u0442\u0441\u044F \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435",
+        world: "nm",
+        enemies: [{ id: "nm_mask", scale: 1.58 }, { id: "nm_mask", scale: 1.58 }, { id: "nm_moth", scale: 1.58 }],
+        unlockAfter: "nm_06",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0441 \u0434\u0432\u0443\u0445 \u0441\u0442\u043E\u0440\u043E\u043D \u0438 \u0441\u043E\u043D. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0441\u043D\u043E\u0432\u0430 \u0432 \u0434\u0435\u043B\u0435."
+      },
+      {
+        id: "nm_08",
+        name: "\u042F\u0434\u043E\u0432\u0438\u0442\u044B\u0439 \u0442\u0443\u043C\u0430\u043D \u0430\u0440\u043E\u043C\u0430\u0442\u043E\u0432",
+        world: "nm",
+        obstacles: [{ cell: [2, 0], kind: "crate" }, { cell: [5, 2], kind: "crate" }],
+        enemies: [{ id: "nm_shadow", scale: 1.6 }, { id: "nm_lantern", scale: 1.59 }, { id: "nm_garland", scale: 1.59 }],
+        unlockAfter: "nm_07",
+        tip: "\u042F\u0434, \u043E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u0437\u043C\u0435\u044F."
+      },
+      {
+        id: "nm_09",
+        name: "\u0422\u0430\u043D\u0435\u0446 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+        world: "nm",
+        enemies: [{ id: "nm_lantern", scale: 1.62 }, { id: "nm_mask", scale: 1.61 }, { id: "nm_moth", scale: 1.61 }],
+        unlockAfter: "nm_08",
+        tip: "\u041E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0440\u0430\u0437\u043E\u043C. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "nm_10",
+        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0430\u0443\u043A\u0446\u0438\u043E\u043D",
+        world: "nm",
+        enemies: [{ id: "nm_teller", scale: 1.63 }, { id: "nm_shadow", scale: 1.62 }],
+        unlockAfter: "nm_09",
+        tip: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439 \u0443\u0434\u0430\u0440 \u0438 \u044F\u0434. \u0413\u043B\u0443\u0448\u0438 \u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044F \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "nm_11",
+        name: "\u0420\u043E\u0439 \u0443 \u043B\u0430\u043C\u043F",
+        world: "nm",
+        enemies: [{ id: "nm_moth", scale: 1.64 }, { id: "nm_moth", scale: 1.64 }, { id: "nm_moth", scale: 1.64 }],
+        unlockAfter: "nm_10",
+        tip: "\u0422\u0440\u043E\u0435 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0438\u0445 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432. \u0417\u0430\u0449\u0438\u0442\u0430 \u043E\u0442 \u0441\u043D\u0430 \u0440\u0435\u0448\u0430\u0435\u0442 \u0431\u043E\u0439."
+      },
+      {
+        id: "nm_12",
+        name: "\u0422\u0435\u043D\u0435\u0432\u043E\u0439 \u0440\u044F\u0434",
+        world: "nm",
+        enemies: [{ id: "nm_shadow", scale: 1.66 }, { id: "nm_mask", scale: 1.65 }, { id: "nm_moth", scale: 1.64 }],
+        unlockAfter: "nm_11",
+        tip: "\u042F\u0434, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0448\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430."
+      },
+      {
+        id: "nm_13",
+        name: "\u041C\u0430\u0441\u043B\u044F\u043D\u044B\u0439 \u043F\u043E\u0436\u0430\u0440",
+        world: "nm",
+        obstacles: [{ cell: [4, 1], kind: "lantern" }],
+        enemies: [{ id: "nm_lantern", scale: 1.67 }, { id: "nm_lantern", scale: 1.66 }, { id: "nm_garland", scale: 1.66 }],
+        unlockAfter: "nm_12",
+        tip: "\u041E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0437\u043C\u0435\u0439, \u043F\u043E\u0442\u043E\u043C \u0444\u043E\u043D\u0430\u0440\u0438."
+      },
+      {
+        id: "nm_14",
+        name: "\u0411\u0430\u043B \u043C\u0430\u0441\u043E\u043A",
+        world: "nm",
+        enemies: [{ id: "nm_mask", scale: 1.68 }, { id: "nm_mask", scale: 1.68 }, { id: "nm_mask", scale: 1.68 }],
+        unlockAfter: "nm_13",
+        tip: "\u0422\u0440\u043E\u0439\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u0445. \u0411\u0435\u0437 \u0430\u043C\u0443\u043B\u0435\u0442\u0430 \u043E\u0442\u0432\u0430\u0433\u0438 \u043E\u0442\u0440\u044F\u0434 \u0434\u0440\u043E\u0433\u043D\u0435\u0442."
+      },
+      {
+        id: "nm_15",
+        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u043D\u044B\u0439 \u043A\u043E\u0440\u0438\u0434\u043E\u0440",
+        world: "nm",
+        enemies: [{ id: "nm_garland", scale: 1.7 }, { id: "nm_garland", scale: 1.69 }, { id: "nm_teller", scale: 1.69 }],
+        unlockAfter: "nm_14",
+        tip: "\u0414\u0432\u0430 \u043B\u0435\u043A\u0430\u0440\u044F \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0439 \u043A\u0443\u043B\u0430\u043A. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0441\u0442\u0440\u043E\u0439 \u0431\u044B\u0441\u0442\u0440\u043E."
+      },
+      {
+        id: "nm_16",
+        name: "\u0422\u0435\u043D\u0438 \u0441\u043A\u0443\u043F\u0430\u044E\u0442 \u0441\u0432\u0435\u0442",
+        world: "nm",
+        enemies: [{ id: "nm_shadow", scale: 1.71 }, { id: "nm_lantern", scale: 1.7 }, { id: "nm_moth", scale: 1.7 }],
+        unlockAfter: "nm_15",
+        tip: "\u042F\u0434, \u043E\u0433\u043E\u043D\u044C \u0438 \u0441\u043E\u043D. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0432\u0430\u0436\u043D\u0435\u0435 \u043E\u0433\u043D\u0435\u0443\u043F\u043E\u0440\u0430."
+      },
+      {
+        id: "nm_17",
+        name: "\u0421\u043A\u0430\u0437\u043A\u0438 \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043B\u0443\u043D\u043E\u0447\u0438",
+        world: "nm",
+        obstacles: [{ cell: [3, 2], kind: "crate" }],
+        enemies: [{ id: "nm_teller", scale: 1.64 }, { id: "nm_teller", scale: 1.64 }, { id: "nm_moth", scale: 1.64 }],
+        unlockAfter: "nm_16",
+        tip: "\u0414\u0432\u0430 \u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044F \u043B\u0435\u0447\u0430\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430. \u0411\u0435\u0439 \u043E\u0434\u043D\u043E\u0433\u043E \u0434\u043E \u043A\u043E\u043D\u0446\u0430."
+      },
+      {
+        id: "nm_18",
+        name: "\u042F\u043D\u0442\u0430\u0440\u043D\u0430\u044F \u0431\u0443\u0440\u044F",
+        world: "nm",
+        enemies: [{ id: "nm_lantern", scale: 1.73 }, { id: "nm_lantern", scale: 1.73 }, { id: "nm_mask", scale: 1.72 }],
+        unlockAfter: "nm_17",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u043E\u0433\u043D\u044F \u0438 \u0441\u0442\u0440\u0430\u0445. \u041E\u0433\u043D\u0435\u0443\u043F\u043E\u0440\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u0434\u0440\u0443\u0433."
+      },
+      {
+        id: "nm_19",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u043A",
+        world: "nm",
+        enemies: [{ id: "nm_teller", scale: 1.74 }, { id: "nm_garland", scale: 1.74 }, { id: "nm_lantern", scale: 1.73 }],
+        unlockAfter: "nm_18",
+        tip: "\u0412\u0441\u0451 \u0438 \u0441\u0440\u0430\u0437\u0443: \u043A\u0443\u043B\u0430\u043A, \u043B\u0435\u043A\u0430\u0440\u044C \u0438 \u043E\u0433\u043E\u043D\u044C. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430."
+      },
+      {
+        id: "nm_boss",
+        name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
+        world: "nm",
+        enemies: [{ id: "nm_boss_keeper", scale: 1.75 }],
+        unlockAfter: "nm_19",
+        tip: "\u041E\u043D \u043F\u044B\u0448\u0435\u0442 \u0436\u0430\u0440\u043E\u043C \u0438 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u041E\u0433\u043D\u0435\u0443\u043F\u043E\u0440 \u0438 \u043E\u0442\u0432\u0430\u0433\u0430 \u2014 \u0438 \u043A\u043E\u0440\u043E\u043D\u0430 \u0442\u0432\u043E\u044F."
+      }
+    ]
+  };
+
+  // src/data/worlds/sw.js
+  var WORLD2 = {
+    id: "sw",
+    label: "\u{1F438} \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438",
+    enemies: [
+      {
+        id: "sw_frog_guardian",
+        name: "\u041B\u044F\u0433\u0443\u0448\u043A\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u0438\u0446\u0430",
+        icon: "\u{1F438}",
+        hp: 150,
+        attack: 18,
+        armor: 22,
+        speed: 7,
+        crit: 0.04,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        reward: { coins: [70, 100], materials: ["sw_frog_amulet"] }
+      },
+      {
+        id: "sw_bog_spirit",
+        name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u0434\u0443\u0445",
+        icon: "\u{1F32B}\uFE0F",
+        hp: 95,
+        attack: 17,
+        armor: 10,
+        speed: 10,
+        crit: 0.06,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["fear_chill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [65, 90], materials: ["sw_bog_mist"] }
+      },
+      {
+        id: "sw_witch_cat",
+        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u043A\u043E\u0442",
+        icon: "\u{1F408}\u200D\u2B1B",
+        hp: 85,
+        attack: 16,
+        armor: 8,
+        speed: 11,
+        crit: 0.1,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["aimed_shot", "sting_poison_weak"],
+        reward: { coins: [60, 85], materials: ["sw_witch_thread"] }
+      },
+      {
+        id: "sw_doll_trickster",
+        name: "\u041A\u0443\u043A\u043B\u0430-\u043E\u0431\u043C\u0430\u043D\u0449\u0438\u0446\u0430",
+        icon: "\u{1FA86}",
+        hp: 105,
+        attack: 15,
+        armor: 12,
+        speed: 9,
+        crit: 0.05,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill"],
+        reward: { coins: [65, 90], materials: ["sw_witch_thread"] }
+      },
+      {
+        id: "sw_glow_bush",
+        name: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u043D\u0438\u043A",
+        icon: "\u{1FAD0}",
+        hp: 120,
+        attack: 14,
+        armor: 14,
+        speed: 6,
+        crit: 0.03,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["regen_ally_skill", "slow_spores"],
+        reward: { coins: [70, 95], materials: ["sw_glow_berry"] }
+      },
+      {
+        id: "sw_hut_walker",
+        name: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430-\u043F\u0440\u043E\u0445\u043E\u0436\u0430\u044F",
+        icon: "\u{1F6D6}",
+        hp: 160,
+        attack: 22,
+        armor: 20,
+        speed: 6,
+        crit: 0.05,
+        dodge: 0,
+        elem: "fire",
+        skills: ["spit_fire", "heavy_blow"],
+        reward: { coins: [85, 115], materials: ["sw_glow_berry"] }
+      },
+      // Босс мира
+      {
+        id: "sw_hag_queen",
+        name: "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439",
+        icon: "\u{1F9D9}\u200D\u2640\uFE0F",
+        hp: 350,
+        attack: 26,
+        armor: 24,
+        speed: 10,
+        crit: 0.1,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["sting_poison", "fear_chill", "heavy_blow"],
+        boss: true,
+        reward: { coins: [450, 600], seals: 4, materials: ["sw_hag_crown"] }
+      }
+    ],
+    materials: [
+      { id: "sw_frog_amulet", name: "\u041B\u044F\u0433\u0443\u0448\u0430\u0447\u0438\u0439 \u043E\u0431\u0435\u0440\u0435\u0433", icon: "\u{1F438}", description: "\u0422\u0451\u043F\u043B\u044B\u0439 \u043A\u0430\u043C\u0435\u0448\u0435\u043A, \u0438\u0437\u0440\u0435\u0434\u043A\u0430 \u0442\u0438\u0445\u043E\u043D\u044C\u043A\u043E \u043A\u0432\u0430\u043A\u0430\u0435\u0442." },
+      { id: "sw_bog_mist", name: "\u041A\u043B\u043E\u0447\u043E\u043A \u0442\u043E\u043F\u044F\u043D\u043E\u0433\u043E \u0442\u0443\u043C\u0430\u043D\u0430", icon: "\u{1F32B}\uFE0F", description: "\u041D\u0435 \u0440\u0430\u0441\u0441\u0435\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0434\u0430\u0436\u0435 \u0432 \u043F\u043B\u043E\u0442\u043D\u043E \u0437\u0430\u043A\u0440\u044B\u0442\u043E\u0439 \u0431\u0430\u043D\u043A\u0435." },
+      { id: "sw_witch_thread", name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u043D\u0438\u0442\u044C", icon: "\u{1F9F5}", description: "\u0428\u044C\u0451\u0442 \u0441\u0430\u043C\u0430 \u0438 \u043A\u0443\u0441\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C\u0430." },
+      { id: "sw_glow_berry", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0430\u044F\u0441\u044F \u044F\u0433\u043E\u0434\u0430", icon: "\u{1FAD0}", description: "\u041C\u044F\u0433\u043A\u043E \u0441\u0432\u0435\u0442\u0438\u0442 \u0437\u0435\u043B\u0451\u043D\u044B\u043C, \u0440\u0430\u0441\u0442\u0451\u0442 \u0434\u0430\u0436\u0435 \u043D\u0430 \u043A\u0440\u044B\u0448\u0435 \u0438\u0437\u0431\u0443\u0448\u043A\u0438." },
+      { id: "sw_hag_crown", name: "\u0412\u0435\u043D\u0435\u0446 \u0425\u043E\u0437\u044F\u0439\u043A\u0438 \u0422\u043E\u043F\u0435\u0439", icon: "\u{1F451}", description: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u043F\u0430\u0445\u043D\u0435\u0442 \u043A\u0443\u043F\u0430\u0432\u043E\u0439 \u0438 \u0431\u043E\u043B\u043E\u0442\u043D\u044B\u043C \u0434\u044B\u043C\u043E\u043C." }
+    ],
+    battles: [
+      {
+        id: "sw_01",
+        name: "\u041A\u043E\u0447\u043A\u0438 \u0443 \u0442\u0440\u043E\u043F\u044B",
+        world: "sw",
+        enemies: [{ id: "sw_doll_trickster", scale: 1.6 }],
+        unlockAfter: "nm_boss",
+        tip: "\u041A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442 \u043A\u043E\u043B\u044B\u0431\u0435\u043B\u044C\u043D\u0443\u044E \u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u041F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u044C \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "sw_02",
+        name: "\u041A\u0432\u0430\u043A\u0430\u043D\u044C\u0435 \u0432 \u043A\u0430\u043C\u044B\u0448\u0430\u0445",
+        world: "sw",
+        enemies: [{ id: "sw_frog_guardian", scale: 1.61 }, { id: "sw_frog_guardian", scale: 1.61 }],
+        unlockAfter: "sw_01",
+        tip: "\u041B\u044F\u0433\u0443\u0448\u043A\u0438 \u0431\u044C\u044E\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u043E\u0442\u0432\u0435\u0442."
+      },
+      {
+        id: "sw_03",
+        name: "\u0422\u0443\u043C\u0430\u043D \u043D\u0430\u0434 \u0432\u043E\u0434\u043E\u0439",
+        world: "sw",
+        enemies: [{ id: "sw_bog_spirit", scale: 1.63 }, { id: "sw_bog_spirit", scale: 1.63 }],
+        unlockAfter: "sw_02",
+        tip: "\u0414\u0443\u0445\u0438 \u043D\u0430\u0433\u043E\u043D\u044F\u044E\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "sw_04",
+        name: "\u042F\u0433\u043E\u0434\u043D\u0430\u044F \u043F\u043E\u043B\u044F\u043D\u0430",
+        world: "sw",
+        obstacles: [{ cell: [4, 1], kind: "log" }],
+        enemies: [{ id: "sw_glow_bush", scale: 1.64 }, { id: "sw_witch_cat", scale: 1.64 }],
+        unlockAfter: "sw_03",
+        tip: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u043D\u0438\u043A \u043B\u0435\u0447\u0438\u0442 \u0441\u0432\u043E\u0438\u0445 \u2014 \u0441\u0440\u0443\u0431\u0438 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_05",
+        name: "\u041A\u0443\u0440\u044C\u0438 \u0441\u043B\u0435\u0434\u044B",
+        world: "sw",
+        enemies: [{ id: "sw_hut_walker", scale: 1.66 }],
+        unlockAfter: "sw_04",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u0434\u044B\u0448\u0438\u0442 \u0436\u0430\u0440\u043A\u0438\u043C \u0434\u044B\u043C\u043E\u043C \u0438 \u0442\u043E\u043F\u0430\u0435\u0442 \u0442\u044F\u0436\u0435\u043B\u043E. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043F\u043E\u043C\u043E\u0436\u0435\u0442."
+      },
+      {
+        id: "sw_06",
+        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u0442\u0440\u043E\u043F\u0430",
+        world: "sw",
+        enemies: [{ id: "sw_witch_cat", scale: 1.67 }, { id: "sw_doll_trickster", scale: 1.67 }],
+        unlockAfter: "sw_05",
+        tip: "\u041A\u043E\u0442 \u0446\u0435\u043B\u0438\u0442\u0441\u044F \u043C\u0435\u0442\u043A\u043E, \u043A\u0443\u043A\u043B\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "sw_07",
+        name: "\u0414\u0443\u0445 \u0438 \u043B\u0435\u043A\u0430\u0440\u044C",
+        world: "sw",
+        enemies: [{ id: "sw_bog_spirit", scale: 1.68 }, { id: "sw_glow_bush", scale: 1.68 }],
+        unlockAfter: "sw_06",
+        tip: "\u0414\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C, \u0430 \u043A\u0443\u0441\u0442 \u0435\u0433\u043E \u043B\u0435\u0447\u0438\u0442. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0441\u044C \u0441 \u043B\u0435\u043A\u0430\u0440\u0435\u043C \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_08",
+        name: "\u0425\u043E\u0440\u043E\u0432\u043E\u0434 \u043A\u0443\u043A\u043E\u043B",
+        world: "sw",
+        enemies: [
+          { id: "sw_doll_trickster", scale: 1.7 },
+          { id: "sw_doll_trickster", scale: 1.7 },
+          { id: "sw_witch_cat", scale: 1.7 }
+        ],
+        unlockAfter: "sw_07",
+        tip: "\u0414\u0432\u0435 \u043A\u043E\u043B\u044B\u0431\u0435\u043B\u044C\u043D\u044B\u0435 \u0438 \u043C\u0435\u0442\u043A\u0438\u0439 \u043A\u043E\u0442. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+      },
+      {
+        id: "sw_09",
+        name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
+        world: "sw",
+        obstacles: [{ cell: [3, 0], kind: "mushroom" }, { cell: [3, 2], kind: "mushroom" }],
+        enemies: [{ id: "sw_frog_guardian", scale: 1.71 }, { id: "sw_bog_spirit", scale: 1.71 }],
+        unlockAfter: "sw_08",
+        tip: "\u0422\u043E\u043B\u0441\u0442\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u0441\u043F\u0435\u0440\u0435\u0434\u0438, \u0441\u0442\u0440\u0430\u0445 \u0438\u0437 \u0442\u0443\u043C\u0430\u043D\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "sw_10",
+        name: "\u0414\u044B\u043C\u043D\u0430\u044F \u0438\u0437\u0431\u0443\u0448\u043A\u0430",
+        world: "sw",
+        enemies: [{ id: "sw_hut_walker", scale: 1.73 }, { id: "sw_glow_bush", scale: 1.73 }],
+        unlockAfter: "sw_09",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u043F\u043B\u044E\u0451\u0442\u0441\u044F \u0434\u044B\u043C\u043E\u043C, \u0430 \u044F\u0433\u043E\u0434\u044B \u0435\u0451 \u043B\u0435\u0447\u0430\u0442. \u0413\u0430\u0441\u0438 \u043A\u0443\u0441\u0442 \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_11",
+        name: "\u041A\u043E\u0448\u043A\u0438\u043D\u044B \u0443\u043B\u043E\u0432\u043A\u0438",
+        world: "sw",
+        enemies: [
+          { id: "sw_witch_cat", scale: 1.74 },
+          { id: "sw_witch_cat", scale: 1.74 },
+          { id: "sw_doll_trickster", scale: 1.74 }
+        ],
+        unlockAfter: "sw_10",
+        tip: "\u0414\u0432\u0430 \u043A\u043E\u0442\u0430 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438 \u0441\u043B\u0435\u0433\u043A\u0430 \u0442\u0440\u0430\u0432\u044F\u0442. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "sw_12",
+        name: "\u041C\u0433\u043B\u0430 \u0441\u0433\u0443\u0449\u0430\u0435\u0442\u0441\u044F",
+        world: "sw",
+        enemies: [
+          { id: "sw_bog_spirit", scale: 1.75 },
+          { id: "sw_bog_spirit", scale: 1.75 },
+          { id: "sw_glow_bush", scale: 1.75 }
+        ],
+        unlockAfter: "sw_11",
+        tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u043F\u043E\u0434 \u0437\u0430\u0449\u0438\u0442\u043E\u0439 \u043A\u0443\u0441\u0442\u0430-\u043B\u0435\u043A\u0430\u0440\u044F. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
+      },
+      {
+        id: "sw_13",
+        name: "\u042F\u0433\u043E\u0434\u043D\u044B\u0439 \u0434\u043E\u0437\u043E\u0440",
+        world: "sw",
+        enemies: [
+          { id: "sw_glow_bush", scale: 1.77 },
+          { id: "sw_frog_guardian", scale: 1.77 },
+          { id: "sw_witch_cat", scale: 1.77 }
+        ],
+        unlockAfter: "sw_12",
+        tip: "\u041B\u0435\u043A\u0430\u0440\u044C, \u0442\u0430\u043D\u043A \u0438 \u043C\u0435\u0442\u043A\u0438\u0439 \u0441\u0442\u0440\u0435\u043B\u043E\u043A. \u0420\u0435\u0436\u044C \u043B\u0435\u043A\u0430\u0440\u044F \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "sw_14",
+        name: "\u0421\u043A\u0440\u0438\u043F\u0443\u0447\u0438\u0439 \u0433\u043E\u0441\u0442\u044C",
+        world: "sw",
+        obstacles: [{ cell: [4, 1], kind: "log" }],
+        enemies: [{ id: "sw_hut_walker", scale: 1.78 }, { id: "sw_doll_trickster", scale: 1.78 }],
+        unlockAfter: "sw_13",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u0442\u043E\u043F\u0430\u0435\u0442, \u043A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442. \u0421\u043E\u043D \u0438 \u043E\u0433\u043E\u043D\u044C \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E."
+      },
+      {
+        id: "sw_15",
+        name: "\u0422\u043E\u043F\u044F\u043D\u043E\u0435 \u0442\u0440\u0438\u043E",
+        world: "sw",
+        enemies: [
+          { id: "sw_frog_guardian", scale: 1.65 },
+          { id: "sw_bog_spirit", scale: 1.6 },
+          { id: "sw_witch_cat", scale: 1.6 }
+        ],
+        unlockAfter: "sw_14",
+        tip: "\u041B\u044F\u0433\u0443\u0448\u043A\u0430 \u0434\u0435\u0440\u0436\u0438\u0442 \u0441\u0442\u0440\u043E\u0439, \u0434\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442, \u043A\u043E\u0442 \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442. \u041B\u0435\u043A\u0430\u0440\u044C \u0432 \u043E\u0442\u0440\u044F\u0434\u0435 \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "sw_16",
+        name: "\u041A\u0443\u043A\u043E\u043B\u044C\u043D\u044B\u0439 \u0432\u0435\u0440\u0442\u0435\u043F",
+        world: "sw",
+        enemies: [
+          { id: "sw_doll_trickster", scale: 1.81 },
+          { id: "sw_doll_trickster", scale: 1.81 },
+          { id: "sw_glow_bush", scale: 1.81 }
+        ],
+        unlockAfter: "sw_15",
+        tip: "\u0414\u0432\u0435 \u043A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0430 \u043A\u0443\u0441\u0442 \u043B\u0435\u0447\u0438\u0442. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u2014 \u043D\u0430 \u043F\u0435\u0440\u0432\u044B\u0439 \u043F\u043B\u0430\u043D."
+      },
+      {
+        id: "sw_17",
+        name: "\u0414\u044B\u043C \u043D\u0430\u0434 \u0442\u043E\u043F\u044C\u044E",
+        world: "sw",
+        enemies: [
+          { id: "sw_hut_walker", scale: 1.82 },
+          { id: "sw_bog_spirit", scale: 1.82 },
+          { id: "sw_witch_cat", scale: 1.82 }
+        ],
+        unlockAfter: "sw_16",
+        tip: "\u041E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0442\u043E\u0447\u043D\u044B\u0435 \u0432\u044B\u0441\u0442\u0440\u0435\u043B\u044B. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F."
+      },
+      {
+        id: "sw_18",
+        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u0441\u0431\u043E\u0440",
+        world: "sw",
+        obstacles: [{ cell: [2, 1], kind: "mushroom" }, { cell: [5, 1], kind: "log" }],
+        enemies: [
+          { id: "sw_witch_cat", scale: 1.84 },
+          { id: "sw_doll_trickster", scale: 1.84 },
+          { id: "sw_glow_bush", scale: 1.84 }
+        ],
+        unlockAfter: "sw_17",
+        tip: "\u0412\u0441\u044F \u0432\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u0447\u0435\u043B\u044F\u0434\u044C \u0440\u0430\u0437\u043E\u043C: \u044F\u0434, \u0441\u043E\u043D \u0438 \u0432\u0440\u0430\u0436\u0435\u0441\u043A\u043E\u0435 \u043B\u0435\u0447\u0435\u043D\u0438\u0435."
+      },
+      {
+        id: "sw_19",
+        name: "\u0412\u0441\u0451 \u0431\u043E\u043B\u043E\u0442\u043E \u0440\u0430\u0437\u043E\u043C",
+        world: "sw",
+        enemies: [
+          { id: "sw_hut_walker", scale: 1.85 },
+          { id: "sw_glow_bush", scale: 1.83 },
+          { id: "sw_doll_trickster", scale: 1.8 }
+        ],
+        unlockAfter: "sw_18",
+        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0443 \u043B\u0435\u0447\u0430\u0442 \u044F\u0433\u043E\u0434\u044B, \u043A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442. \u0421\u0440\u0443\u0431\u0438 \u043A\u0443\u0441\u0442 \u0438 \u043D\u0435 \u0443\u0441\u043D\u0438."
+      },
+      {
+        id: "sw_boss",
+        name: "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439",
+        world: "sw",
+        enemies: [{ id: "sw_hag_queen", scale: 1.6 }],
+        unlockAfter: "sw_19",
+        tip: "\u041E\u043D\u0430 \u0442\u0440\u0430\u0432\u0438\u0442, \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0431\u044C\u0451\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C. \u0412\u043E\u0437\u044C\u043C\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0435\u0441\u0442\u044C."
+      }
+    ]
+  };
+
+  // src/data/worlds/sf.js
+  var WORLD3 = {
+    id: "sf",
+    label: "\u{1F3AA} \u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
+    enemies: [
+      {
+        id: "sf_spirit",
+        name: "\u0414\u0443\u0445 \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
+        icon: "\u2728",
+        hp: 75,
+        attack: 14,
+        armor: 8,
+        speed: 13,
+        crit: 0.08,
+        dodge: 0.16,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [70, 100], materials: ["sf_spark"] }
+      },
+      {
+        id: "sf_steed",
+        name: "\u041A\u0430\u0440\u0443\u0441\u0435\u043B\u044C\u043D\u044B\u0439 \u043A\u043E\u043D\u0451\u043A",
+        icon: "\u{1F3A0}",
+        hp: 135,
+        attack: 16,
+        armor: 18,
+        speed: 7,
+        crit: 0.05,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        reward: { coins: [85, 115], materials: ["sf_plank"] }
+      },
+      {
+        id: "sf_guard",
+        name: "\u0421\u0442\u0440\u0430\u0436 \u043F\u043E\u0440\u044F\u0434\u043A\u0430",
+        icon: "\u{1F482}",
+        hp: 105,
+        attack: 17,
+        armor: 15,
+        speed: 9,
+        crit: 0.1,
+        dodge: 0.05,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        reward: { coins: [90, 120], materials: ["sf_ticket"] }
+      },
+      {
+        id: "sf_firefly",
+        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u0436\u043E\u043D\u0433\u043B\u0451\u0440",
+        icon: "\u{1F525}",
+        hp: 75,
+        attack: 18,
+        armor: 8,
+        speed: 12,
+        crit: 0.08,
+        dodge: 0.1,
+        elem: "fire",
+        skills: ["spit_fire"],
+        reward: { coins: [75, 105], materials: ["sf_candy"] }
+      },
+      {
+        id: "sf_doll",
+        name: "\u041A\u0443\u043A\u043B\u0430-\u0437\u0430\u0437\u044B\u0432\u0430\u043B\u0430",
+        icon: "\u{1F38E}",
+        hp: 70,
+        attack: 14,
+        armor: 10,
+        speed: 11,
+        crit: 0.06,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        reward: { coins: [70, 95], materials: ["sf_candy"] }
+      },
+      {
+        id: "sf_wheel",
+        name: "\u041E\u0436\u0438\u0432\u0448\u0435\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
+        icon: "\u{1F3A1}",
+        hp: 150,
+        attack: 18,
+        armor: 20,
+        speed: 6,
+        crit: 0.04,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores"],
+        reward: { coins: [110, 150], materials: ["sf_plank"] }
+      },
+      // Босс мира
+      {
+        id: "sf_boss",
+        name: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u043C\u0438\u0440\u043E\u0432",
+        icon: "\u{1F3C6}",
+        hp: 350,
+        attack: 26,
+        armor: 24,
+        speed: 10,
+        crit: 0.12,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["heavy_blow", "fear_chill", "regen_ally_skill"],
+        boss: true,
+        reward: { coins: [400, 550], seals: 4, materials: ["sf_champion_star"] }
+      }
+    ],
+    materials: [
+      { id: "sf_spark", name: "\u042F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u0430\u044F \u0438\u0441\u043A\u0440\u0430", icon: "\u2728", description: "\u0422\u0451\u043F\u043B\u044B\u0439 \u043E\u0433\u043E\u043D\u0451\u043A \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0430." },
+      { id: "sf_plank", name: "\u0414\u043E\u0449\u0435\u0447\u043A\u0430 \u043A\u0430\u0440\u0443\u0441\u0435\u043B\u0438", icon: "\u{1F3A0}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u043A\u0440\u0430\u0441\u043A\u043E\u0439 \u0438 \u043F\u043E\u043F\u0443\u0442\u043D\u044B\u043C \u0432\u0435\u0442\u0440\u043E\u043C." },
+      { id: "sf_ticket", name: "\u0421\u0447\u0430\u0441\u0442\u043B\u0438\u0432\u044B\u0439 \u0431\u0438\u043B\u0435\u0442\u0438\u043A", icon: "\u{1F39F}\uFE0F", description: "\u041F\u043E\u043B\u0443\u0440\u0430\u0441\u0442\u0451\u0440\u0442\u044B\u0439, \u043D\u043E \u0443\u0434\u0430\u0447\u0430 \u0435\u0449\u0451 \u0432\u043D\u0443\u0442\u0440\u0438." },
+      { id: "sf_candy", name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043A\u0430\u0440\u0430\u043C\u0435\u043B\u044C", icon: "\u{1F36C}", description: "\u0421\u043B\u0430\u0434\u043A\u0430\u044F \u0438 \u0441\u043B\u0435\u0433\u043A\u0430 \u0438\u0441\u043A\u0440\u0438\u0442 \u043D\u0430 \u044F\u0437\u044B\u043A\u0435." },
+      { id: "sf_champion_star", name: "\u0417\u0432\u0435\u0437\u0434\u0430 \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430", icon: "\u{1F3C6}", description: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430, \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u043D\u043E\u0441\u044F\u0442 \u043D\u0430 \u0433\u0440\u0443\u0434\u0438." }
+    ],
+    battles: [
+      {
+        id: "sf_01",
+        name: "\u041E\u0442\u043A\u0440\u044B\u0442\u0438\u0435 \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
+        world: "sf",
+        enemies: [{ id: "sf_doll", scale: 1.7 }, { id: "sf_spirit", scale: 1.7 }],
+        unlockAfter: "sw_boss",
+        tip: "\u041A\u0443\u043A\u043B\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0434\u0443\u0445 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "sf_02",
+        name: "\u041A\u0430\u0440\u0443\u0441\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u044F\u0434",
+        world: "sf",
+        enemies: [{ id: "sf_steed", scale: 1.71 }, { id: "sf_steed", scale: 1.71 }],
+        unlockAfter: "sf_01",
+        tip: "\u041A\u043E\u043D\u044C\u043A\u0438 \u0431\u044C\u044E\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u043D\u043E \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u044B. \u0411\u0440\u043E\u043D\u044F \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0440\u0435\u0448\u0430\u044E\u0442."
+      },
+      {
+        id: "sf_03",
+        name: "\u0416\u043E\u043D\u0433\u043B\u0451\u0440\u044B \u043E\u0433\u043D\u044F",
+        world: "sf",
+        enemies: [{ id: "sf_firefly", scale: 1.72 }, { id: "sf_firefly", scale: 1.72 }],
+        unlockAfter: "sf_02",
+        tip: "\u041F\u043B\u044E\u044E\u0442\u0441\u044F \u043E\u0433\u043D\u0451\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0431\u0438\u0432."
+      },
+      {
+        id: "sf_04",
+        name: "\u041F\u0430\u0442\u0440\u0443\u043B\u044C \u043F\u043E\u0440\u044F\u0434\u043A\u0430",
+        world: "sf",
+        enemies: [{ id: "sf_guard", scale: 1.74 }, { id: "sf_guard", scale: 1.74 }],
+        unlockAfter: "sf_03",
+        tip: "\u0421\u0442\u0440\u0430\u0436\u0438 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u043F\u043E \u0441\u0430\u043C\u043E\u043C\u0443 \u0445\u0440\u0443\u043F\u043A\u043E\u043C\u0443. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0441\u043B\u0430\u0431\u044B\u0445 \u0431\u0440\u043E\u043D\u0451\u0439."
+      },
+      {
+        id: "sf_05",
+        name: "\u0421\u043E\u043D\u043D\u044B\u0435 \u043A\u0430\u0447\u0435\u043B\u0438",
+        world: "sf",
+        obstacles: [{ cell: [3, 1], kind: "star" }],
+        enemies: [
+          { id: "sf_doll", scale: 1.75 },
+          { id: "sf_doll", scale: 1.75 },
+          { id: "sf_doll", scale: 1.75 }
+        ],
+        unlockAfter: "sf_04",
+        tip: "\u0422\u0440\u0438 \u043A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0448\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430."
+      },
+      {
+        id: "sf_06",
+        name: "\u0428\u0430\u0440\u043C\u0430\u043D\u043A\u0430 \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432",
+        world: "sf",
+        enemies: [
+          { id: "sf_spirit", scale: 1.76 },
+          { id: "sf_spirit", scale: 1.76 },
+          { id: "sf_doll", scale: 1.76 }
+        ],
+        unlockAfter: "sf_05",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0432\u043C\u0435\u0441\u0442\u0435. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "sf_07",
+        name: "\u0420\u0430\u0437\u0433\u043E\u043D \u043E\u0447\u0435\u0440\u0435\u0434\u0438",
+        world: "sf",
+        enemies: [{ id: "sf_guard", scale: 1.78 }, { id: "sf_steed", scale: 1.78 }],
+        unlockAfter: "sf_06",
+        tip: "\u041A\u043E\u043D\u0451\u043A \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0441\u0442\u0440\u0430\u0436\u0430. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0443\u0431\u0435\u0440\u0438 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0441\u0442\u0440\u0435\u043B\u043A\u0430."
+      },
+      {
+        id: "sf_08",
+        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u043E\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
+        world: "sf",
+        enemies: [
+          { id: "sf_firefly", scale: 1.79 },
+          { id: "sf_firefly", scale: 1.79 },
+          { id: "sf_steed", scale: 1.79 }
+        ],
+        unlockAfter: "sf_07",
+        tip: "\u041E\u0433\u043E\u043D\u044C \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043F\u043B\u044E\u0441 \u043A\u0440\u0435\u043F\u043A\u0438\u0439 \u0449\u0438\u0442."
+      },
+      {
+        id: "sf_09",
+        name: "\u0411\u043E\u043B\u044C\u0448\u043E\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
+        world: "sf",
+        enemies: [{ id: "sf_wheel", scale: 1.8 }],
+        unlockAfter: "sf_08",
+        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0438 \u0434\u0430\u0432\u0438\u0442 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041E\u0434\u0438\u043D, \u043D\u043E \u043E\u0447\u0435\u043D\u044C \u043A\u0440\u0435\u043F\u043A\u0438\u0439."
+      },
+      {
+        id: "sf_10",
+        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043F\u0430\u0440\u0430\u0434",
+        world: "sf",
+        obstacles: [{ cell: [4, 0], kind: "lantern" }, { cell: [4, 2], kind: "lantern" }],
+        enemies: [
+          { id: "sf_spirit", scale: 1.81 },
+          { id: "sf_firefly", scale: 1.81 },
+          { id: "sf_doll", scale: 1.81 }
+        ],
+        unlockAfter: "sf_09",
+        tip: "\u0421\u0442\u0440\u0430\u0445, \u043E\u0433\u043E\u043D\u044C \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0441\u0442\u0440\u043E\u044E. \u0421\u043E\u0431\u0435\u0440\u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0437\u0430\u0440\u0430\u043D\u0435\u0435."
+      },
+      {
+        id: "sf_11",
+        name: "\u0421\u0442\u0440\u0430\u0436\u0430 \u043D\u0430 \u0432\u0445\u043E\u0434\u0435",
+        world: "sf",
+        enemies: [
+          { id: "sf_guard", scale: 1.83 },
+          { id: "sf_guard", scale: 1.83 }
+        ],
+        unlockAfter: "sf_10",
+        tip: "\u0414\u0432\u0430 \u0441\u0442\u0440\u0430\u0436\u0430 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438 \u043D\u0435 \u043C\u0430\u0436\u0443\u0442. \u0412\u044B\u0441\u043E\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0432\u0441\u0435\u043C\u0443 \u043E\u0442\u0440\u044F\u0434\u0443."
+      },
+      {
+        id: "sf_12",
+        name: "\u0421\u043A\u0430\u0447\u043A\u0438 \u043F\u043E \u043A\u0440\u0443\u0433\u0443",
+        world: "sf",
+        enemies: [
+          { id: "sf_steed", scale: 1.84 },
+          { id: "sf_spirit", scale: 1.84 }
+        ],
+        unlockAfter: "sf_11",
+        tip: "\u041A\u043E\u043D\u0451\u043A \u0434\u0430\u0432\u0438\u0442 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C, \u0434\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "sf_13",
+        name: "\u041A\u0443\u043A\u043E\u043B\u044C\u043D\u044B\u0439 \u0431\u0430\u043B\u0430\u0433\u0430\u043D",
+        world: "sf",
+        enemies: [
+          { id: "sf_doll", scale: 1.85 },
+          { id: "sf_doll", scale: 1.85 },
+          { id: "sf_guard", scale: 1.85 }
+        ],
+        unlockAfter: "sf_12",
+        tip: "\u041A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0441\u0442\u0440\u0430\u0436 \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E. \u041D\u0435 \u0434\u0430\u0439 \u0443\u0441\u043D\u0443\u0442\u044C \u043B\u0435\u043A\u0430\u0440\u044E."
+      },
+      {
+        id: "sf_14",
+        name: "\u041A\u043E\u043B\u0435\u0441\u043E \u0438 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
+        world: "sf",
+        enemies: [{ id: "sf_wheel", scale: 1.86 }, { id: "sf_guard", scale: 1.86 }],
+        unlockAfter: "sf_13",
+        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442, \u0441\u0442\u0440\u0430\u0436 \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0437\u0435\u043B\u044C\u044F\u043C\u0438."
+      },
+      {
+        id: "sf_15",
+        name: "\u0424\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A",
+        world: "sf",
+        obstacles: [{ cell: [4, 1], kind: "star" }],
+        enemies: [
+          { id: "sf_firefly", scale: 1.88 },
+          { id: "sf_firefly", scale: 1.88 },
+          { id: "sf_firefly", scale: 1.88 }
+        ],
+        unlockAfter: "sf_14",
+        tip: "\u0422\u0440\u0438 \u0436\u043E\u043D\u0433\u043B\u0451\u0440\u0430 \u0436\u0433\u0443\u0442 \u043E\u0433\u043D\u0451\u043C. \u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "sf_16",
+        name: "\u041F\u043E\u043B\u043D\u043E\u0447\u043D\u044B\u0439 \u043A\u0430\u0440\u043D\u0430\u0432\u0430\u043B",
+        world: "sf",
+        enemies: [
+          { id: "sf_spirit", scale: 1.78 },
+          { id: "sf_spirit", scale: 1.78 },
+          { id: "sf_wheel", scale: 1.78 }
+        ],
+        unlockAfter: "sf_15",
+        tip: "\u0414\u0443\u0445\u0438 \u0441\u0435\u044E\u0442 \u0441\u0442\u0440\u0430\u0445, \u043A\u043E\u043B\u0435\u0441\u043E \u0434\u0430\u0432\u0438\u0442. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "sf_17",
+        name: "\u0422\u0443\u0440\u043D\u0438\u0440 \u043F\u0440\u0435\u0442\u0435\u043D\u0434\u0435\u043D\u0442\u043E\u0432",
+        world: "sf",
+        enemies: [
+          { id: "sf_steed", scale: 1.9 },
+          { id: "sf_firefly", scale: 1.9 }
+        ],
+        unlockAfter: "sf_16",
+        tip: "\u0418\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u0435 \u0441\u043C\u0435\u043B\u043E\u0441\u0442\u0438 \u0438 \u043B\u043E\u0432\u043A\u043E\u0441\u0442\u0438: \u0442\u0430\u0440\u0430\u043D \u043A\u043E\u043D\u044C\u043A\u0430 \u0438 \u043E\u0433\u043E\u043D\u044C \u0436\u043E\u043D\u0433\u043B\u0451\u0440\u0430."
+      },
+      {
+        id: "sf_18",
+        name: "\u0412\u0441\u0451 \u0441\u0440\u0430\u0437\u0443",
+        world: "sf",
+        enemies: [
+          { id: "sf_wheel", scale: 1.91 },
+          { id: "sf_doll", scale: 1.91 },
+          { id: "sf_spirit", scale: 1.91 }
+        ],
+        unlockAfter: "sf_17",
+        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435, \u0441\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445. \u041F\u043E\u043B\u043D\u044B\u0439 \u043D\u0430\u0431\u043E\u0440 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0439 \u0438 \u0437\u0435\u043B\u0438\u0439."
+      },
+      {
+        id: "sf_19",
+        name: "\u0413\u0440\u0430\u043D\u0434-\u0448\u043E\u0443",
+        world: "sf",
+        obstacles: [{ cell: [3, 0], kind: "star" }, { cell: [3, 2], kind: "lantern" }],
+        enemies: [
+          { id: "sf_wheel", scale: 1.93 },
+          { id: "sf_firefly", scale: 1.93 }
+        ],
+        unlockAfter: "sf_18",
+        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0438 \u0444\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A \u043F\u0435\u0440\u0435\u0434 \u0444\u0438\u043D\u0430\u043B\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "sf_boss",
+        name: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u043C\u0438\u0440\u043E\u0432",
+        world: "sf",
+        enemies: [{ id: "sf_boss", scale: 1.95 }],
+        unlockAfter: "sf_19",
+        tip: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u0431\u044C\u0451\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C, \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u043F\u0435\u0440\u0435\u0432\u043E\u0434\u0438\u0442 \u0434\u0443\u0445. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u043D\u0435 \u0434\u0430\u0432\u0430\u0439 \u0435\u043C\u0443 \u043F\u0435\u0440\u0435\u0434\u044B\u0448\u043A\u0438."
+      }
+    ]
+  };
+
+  // src/data/worlds/cr.js
+  var WORLD4 = {
+    id: "cr",
+    label: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B",
+    enemies: [
+      {
+        id: "cr_owl",
+        name: "\u0421\u043D\u0435\u0436\u043D\u0430\u044F \u0441\u043E\u0432\u0430",
+        icon: "\u{1F989}",
+        hp: 95,
+        attack: 14,
+        armor: 8,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        tags: ["ranged"],
+        reward: { coins: [60, 90], materials: ["cr_owl_feather"] }
+      },
+      {
+        id: "cr_shardling",
+        name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043E\u0441\u043A\u043E\u043B\u043E\u043A",
+        icon: "\u{1F539}",
+        hp: 90,
+        attack: 15,
+        armor: 10,
+        speed: 10,
+        crit: 0.05,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        tags: [],
+        reward: { coins: [55, 80], materials: ["cr_crystal_shard"] }
+      },
+      {
+        id: "cr_icewisp",
+        name: "\u0418\u0441\u043A\u0440\u0430 \u0437\u0432\u0435\u043D\u044F\u0449\u0435\u0433\u043E \u043B\u044C\u0434\u0430",
+        icon: "\u2744\uFE0F",
+        hp: 95,
+        attack: 16,
+        armor: 10,
+        speed: 13,
+        crit: 0.05,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["slow_spores"],
+        tags: [],
+        reward: { coins: [60, 85], materials: ["cr_ice_ring"] }
+      },
+      {
+        id: "cr_echo",
+        name: "\u0413\u043E\u0440\u043D\u044B\u0439 \u044D\u0445\u043E-\u0434\u0443\u0445",
+        icon: "\u{1F3D4}\uFE0F",
+        hp: 105,
+        attack: 17,
+        armor: 10,
+        speed: 10,
+        crit: 0.06,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [65, 95], materials: ["cr_echo_dust"] }
+      },
+      {
+        id: "cr_golem",
+        name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
+        icon: "\u{1F48E}",
+        hp: 155,
+        attack: 18,
+        armor: 22,
+        speed: 6,
+        crit: 0.03,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores"],
+        tags: [],
+        reward: { coins: [80, 110], materials: ["cr_crystal_shard"] }
+      },
+      {
+        id: "cr_dragon_young",
+        name: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u044B\u0439 \u0434\u0440\u0430\u043A\u043E\u043D",
+        icon: "\u{1F409}",
+        hp: 140,
+        attack: 19,
+        armor: 17,
+        speed: 9,
+        crit: 0.08,
+        dodge: 0.04,
+        elem: "phys",
+        skills: ["heavy_blow", "fear_chill"],
+        tags: [],
+        reward: { coins: [90, 120], materials: ["cr_crystal_shard"] }
+      },
+      // Босс мира
+      {
+        id: "cr_dragon_ancient",
+        name: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u043A\u0432\u0430\u0440\u0446\u0430",
+        icon: "\u{1F432}",
+        hp: 380,
+        attack: 26,
+        armor: 24,
+        speed: 8,
+        crit: 0.06,
+        dodge: 0.02,
+        elem: "phys",
+        skills: ["heavy_blow", "fear_chill", "slow_spores"],
+        boss: true,
+        tags: [],
+        reward: { coins: [700, 950], seals: 4, materials: ["cr_quartz_heart"] }
+      }
+    ],
+    materials: [
+      { id: "cr_crystal_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044F", icon: "\u{1F48E}", description: "\u0417\u0432\u0435\u043D\u0438\u0442, \u0435\u0441\u043B\u0438 \u0435\u0433\u043E \u0443\u0440\u043E\u043D\u0438\u0442\u044C." },
+      { id: "cr_owl_feather", name: "\u041F\u0435\u0440\u043E \u0441\u043D\u0435\u0436\u043D\u043E\u0439 \u0441\u043E\u0432\u044B", icon: "\u{1FAB6}", description: "\u0411\u0435\u043B\u043E\u0435 \u0438 \u043F\u043E\u0447\u0442\u0438 \u043D\u0435\u0432\u0435\u0441\u043E\u043C\u043E\u0435." },
+      { id: "cr_ice_ring", name: "\u0417\u0432\u0435\u043D\u044F\u0449\u0438\u0439 \u043B\u0451\u0434", icon: "\u2744\uFE0F", description: "\u041D\u0435 \u0442\u0430\u0435\u0442 \u0434\u0430\u0436\u0435 \u0443 \u043E\u0447\u0430\u0433\u0430." },
+      { id: "cr_echo_dust", name: "\u041F\u044B\u043B\u044C \u044D\u0445\u0430", icon: "\u{1F514}", description: "\u0422\u0438\u0445\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442 \u0441\u043A\u0430\u0437\u0430\u043D\u043D\u043E\u0435 \u0448\u0451\u043F\u043E\u0442\u043E\u043C." },
+      { id: "cr_quartz_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430", icon: "\u{1F4A0}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u0434\u0440\u0435\u043C\u043B\u0435\u0442 \u0434\u0440\u0435\u0432\u043D\u0438\u0439 \u0441\u0432\u0435\u0442." }
+    ],
+    battles: [
+      {
+        id: "cr_01",
+        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0441\u043D\u0435\u0433 \u043F\u0435\u0440\u0435\u0432\u0430\u043B\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.8 }, { id: "cr_shardling", scale: 1.8 }],
+        unlockAfter: "sf_boss",
+        tip: "\u0421\u043E\u0432\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043E\u0441\u043A\u043E\u043B\u043E\u043A \u0431\u044C\u0451\u0442 \u0442\u043E\u0447\u043D\u043E. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "cr_02",
+        name: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u043D\u0430 \u0442\u0440\u043E\u043F\u0435",
+        world: "cr",
+        enemies: [{ id: "cr_shardling", scale: 1.81 }, { id: "cr_shardling", scale: 1.81 }],
+        unlockAfter: "cr_01",
+        tip: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u0431\u044B\u0441\u0442\u0440\u044B \u0438 \u0431\u044C\u044E\u0442 \u0442\u043E\u0447\u043D\u043E. \u0414\u0435\u0440\u0436\u0438 \u0431\u0440\u043E\u043D\u044E \u0432 \u043F\u043E\u0440\u044F\u0434\u043A\u0435."
+      },
+      {
+        id: "cr_03",
+        name: "\u0417\u0432\u043E\u043D \u043B\u0435\u0434\u044F\u043D\u044B\u0445 \u0438\u0441\u043A\u0440",
+        world: "cr",
+        obstacles: [{ cell: [3, 1], kind: "crystal" }],
+        enemies: [{ id: "cr_icewisp", scale: 1.83 }, { id: "cr_icewisp", scale: 1.83 }],
+        unlockAfter: "cr_02",
+        tip: "\u0418\u0441\u043A\u0440\u044B \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442 \u043C\u043E\u0440\u043E\u0437\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u044E. \u0411\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "cr_04",
+        name: "\u042D\u0445\u043E \u0432 \u0443\u0449\u0435\u043B\u044C\u0435",
+        world: "cr",
+        enemies: [{ id: "cr_echo", scale: 1.84 }, { id: "cr_echo", scale: 1.84 }],
+        unlockAfter: "cr_03",
+        tip: "\u042D\u0445\u043E-\u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u043B\u0435\u0434\u0435\u043D\u044F\u0449\u0438\u0439 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438, \u043B\u0443\u043A \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440."
+      },
+      {
+        id: "cr_05",
+        name: "\u0421\u0442\u0440\u0430\u0436 \u0437\u0430\u0441\u0442\u044B\u0432\u0448\u0435\u0439 \u0440\u0435\u043A\u0438",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.85 }],
+        unlockAfter: "cr_04",
+        tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F. \u041D\u0443\u0436\u0435\u043D \u0441\u0435\u0440\u044C\u0451\u0437\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
+      },
+      {
+        id: "cr_06",
+        name: "\u0421\u043E\u0432\u0438\u043D\u0430\u044F \u043E\u0445\u043E\u0442\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.87 }, { id: "cr_icewisp", scale: 1.87 }],
+        unlockAfter: "cr_05",
+        tip: "\u0421\u043E\u043D \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0432\u043C\u0435\u0441\u0442\u0435. \u0420\u0430\u0437\u0431\u0443\u0434\u0438 \u0440\u044B\u0446\u0430\u0440\u044F \u0437\u0435\u043B\u044C\u0435\u043C \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "cr_07",
+        name: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043A\u0430\u0440\u044C\u0435\u0440",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.88 }, { id: "cr_shardling", scale: 1.88 }],
+        unlockAfter: "cr_06",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043E\u0441\u043A\u043E\u043B\u043E\u043A. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u043F\u0435\u0440\u0435\u0431\u0435\u0439 \u043C\u0435\u043B\u043E\u0447\u044C."
+      },
+      {
+        id: "cr_08",
+        name: "\u0414\u0440\u0430\u043A\u043E\u043D\u044C\u0435 \u044D\u0445\u043E",
+        world: "cr",
+        obstacles: [{ cell: [4, 0], kind: "crystal" }, { cell: [4, 2], kind: "crystal" }],
+        enemies: [{ id: "cr_dragon_young", scale: 1.89 }],
+        unlockAfter: "cr_07",
+        tip: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E \u0438 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u043E\u043C\u043E\u0436\u0435\u0442."
+      },
+      {
+        id: "cr_09",
+        name: "\u041C\u043E\u0440\u043E\u0437\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A",
+        world: "cr",
+        enemies: [{ id: "cr_echo", scale: 1.91 }, { id: "cr_icewisp", scale: 1.91 }],
+        unlockAfter: "cr_08",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u043C\u043E\u0440\u043E\u0437\u043D\u0430\u044F \u043F\u044B\u043B\u044C. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "cr_10",
+        name: "\u0413\u043E\u043B\u0435\u043C\u0438\u0439 \u0437\u0430\u0432\u0430\u043B",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.92 }, { id: "cr_owl", scale: 1.92 }],
+        unlockAfter: "cr_09",
+        tip: "\u041A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430, \u0430 \u0437\u0430 \u043D\u0435\u0439 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0430\u044F \u0441\u043E\u0432\u0430. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "cr_11",
+        name: "\u041A\u0440\u0438\u043A \u043D\u0430\u0434 \u043F\u0440\u043E\u043F\u0430\u0441\u0442\u044C\u044E",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.93 }, { id: "cr_owl", scale: 1.93 }],
+        unlockAfter: "cr_10",
+        tip: "\u0414\u0432\u0435 \u0441\u043E\u0432\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u0435\u043D."
+      },
+      {
+        id: "cr_12",
+        name: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430 \u0443\u0449\u0435\u043B\u044C\u044F",
+        world: "cr",
+        enemies: [{ id: "cr_echo", scale: 1.95 }, { id: "cr_echo", scale: 1.95 }],
+        unlockAfter: "cr_11",
+        tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u0441\u043E \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "cr_13",
+        name: "\u041C\u043E\u043B\u043E\u0434\u044B\u0435 \u043A\u043E\u0433\u0442\u0438",
+        world: "cr",
+        obstacles: [{ cell: [4, 1], kind: "rock" }],
+        enemies: [{ id: "cr_dragon_young", scale: 1.96 }, { id: "cr_shardling", scale: 1.96 }],
+        unlockAfter: "cr_12",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441 \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u043C-\u043F\u0440\u0438\u0445\u0432\u043E\u0441\u0442\u043D\u0435\u043C. \u041F\u0435\u0440\u0435\u0431\u0435\u0439 \u043C\u0435\u043B\u043E\u0447\u044C \u0438 \u0441\u043E\u0441\u0440\u0435\u0434\u043E\u0442\u043E\u0447\u044C\u0441\u044F."
+      },
+      {
+        id: "cr_14",
+        name: "\u0417\u0432\u0435\u043D\u044F\u0449\u0430\u044F \u0441\u0442\u0435\u043D\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 1.97 }, { id: "cr_icewisp", scale: 1.97 }],
+        unlockAfter: "cr_13",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0449\u0430\u044F \u0438\u0441\u043A\u0440\u0430. \u041D\u0435 \u0434\u0430\u0439 \u0441\u0435\u0431\u044F \u0437\u0430\u043A\u043E\u043F\u0430\u0442\u044C \u0432 \u0441\u043D\u0435\u0433."
+      },
+      {
+        id: "cr_15",
+        name: "\u0421\u043D\u0435\u0436\u043D\u0430\u044F \u043F\u0443\u0440\u0433\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_owl", scale: 1.85 }, { id: "cr_icewisp", scale: 1.85 }, { id: "cr_echo", scale: 1.85 }],
+        unlockAfter: "cr_14",
+        tip: "\u041F\u0443\u0440\u0433\u0430 \u0438\u0437 \u0441\u043D\u0430, \u0441\u0442\u0440\u0430\u0445\u0430 \u0438 \u043C\u043E\u0440\u043E\u0437\u043D\u043E\u0439 \u043F\u044B\u043B\u0438. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "cr_16",
+        name: "\u041A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0435 \u0433\u043D\u0435\u0437\u0434\u043E\u0432\u044C\u0435",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_young", scale: 2 }, { id: "cr_owl", scale: 2 }],
+        unlockAfter: "cr_15",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441\u0442\u043E\u0440\u043E\u0436\u0438\u0442 \u0433\u043D\u0435\u0437\u0434\u043E, \u0441\u043E\u0432\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u0438 \u043E\u0442\u0432\u0430\u0433\u0430."
+      },
+      {
+        id: "cr_17",
+        name: "\u042D\u0445\u043E \u0434\u0440\u0435\u0432\u043D\u0438\u0445",
+        world: "cr",
+        obstacles: [{ cell: [3, 0], kind: "crystal" }, { cell: [5, 1], kind: "rock" }],
+        enemies: [{ id: "cr_dragon_young", scale: 2.01 }, { id: "cr_echo", scale: 2.01 }],
+        unlockAfter: "cr_16",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0432 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u0434\u0443\u0445\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0443\u0434\u0430\u0440 \u043F\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0443."
+      },
+      {
+        id: "cr_18",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043B\u0435\u0434\u043D\u0438\u043A",
+        world: "cr",
+        enemies: [{ id: "cr_golem", scale: 2.02 }, { id: "cr_golem", scale: 2.02 }],
+        unlockAfter: "cr_17",
+        tip: "\u0414\u0432\u0435 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
+      },
+      {
+        id: "cr_19",
+        name: "\u0421\u0432\u0435\u0440\u043A\u0430\u044E\u0449\u0438\u0439 \u043F\u0438\u043A",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_young", scale: 2.04 }, { id: "cr_golem", scale: 2.04 }],
+        unlockAfter: "cr_18",
+        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0438 \u0435\u0433\u043E \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u043F\u0438\u043A\u043E\u043C."
+      },
+      {
+        id: "cr_boss",
+        name: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u043A\u0432\u0430\u0440\u0446\u0430",
+        world: "cr",
+        enemies: [{ id: "cr_dragon_ancient", scale: 2.05 }],
+        unlockAfter: "cr_19",
+        tip: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0437\u0432\u0435\u043D\u0438\u0442 \u0442\u044B\u0441\u044F\u0447\u0435\u0439 \u0433\u0440\u0430\u043D\u0435\u0439. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
+      }
+    ]
+  };
+
+  // src/data/worlds/ash.js
+  var WORLD5 = {
+    id: "ash",
+    label: "\u{1F525} \u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438",
+    enemies: [
+      {
+        id: "ash_wolf",
+        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u0432\u043E\u043B\u043A",
+        icon: "\u{1F43A}",
+        hp: 75,
+        attack: 14,
+        armor: 8,
+        speed: 10,
+        crit: 0.05,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        tags: [],
+        reward: { coins: [60, 90], materials: ["ash_pelt"] }
+      },
+      {
+        id: "ash_shaman",
+        name: "\u041A\u043E\u0447\u0435\u0432\u043E\u0439 \u0448\u0430\u043C\u0430\u043D \u043E\u0433\u043D\u044F",
+        icon: "\u{1F525}",
+        hp: 80,
+        attack: 16,
+        armor: 8,
+        speed: 9,
+        crit: 0.05,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["spit_fire", "regen_ally_skill"],
+        tags: [],
+        reward: { coins: [70, 100], materials: ["ash_ember"] }
+      },
+      {
+        id: "ash_storm_spirit",
+        name: "\u0414\u0443\u0445 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438",
+        icon: "\u{1F32A}\uFE0F",
+        hp: 75,
+        attack: 15,
+        armor: 8,
+        speed: 12,
+        crit: 0.05,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["fear_chill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [65, 95], materials: ["ash_storm_shard"] }
+      },
+      {
+        id: "ash_scorpion",
+        name: "\u041E\u0431\u0443\u0433\u043B\u0435\u043D\u043D\u044B\u0439 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D",
+        icon: "\u{1F982}",
+        hp: 85,
+        attack: 15,
+        armor: 14,
+        speed: 10,
+        crit: 0.05,
+        dodge: 0.03,
+        elem: "phys",
+        skills: ["sting_poison"],
+        tags: [],
+        reward: { coins: [65, 95], materials: ["ash_scale"] }
+      },
+      {
+        id: "ash_vulture",
+        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A",
+        icon: "\u{1F985}",
+        hp: 70,
+        attack: 14,
+        armor: 8,
+        speed: 9,
+        crit: 0.06,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        tags: [],
+        reward: { coins: [60, 90], materials: ["ash_pelt"] }
+      },
+      {
+        id: "ash_ghoul",
+        name: "\u0422\u0435\u043D\u044C \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0449\u0438\u043A\u0430",
+        icon: "\u{1F47B}",
+        hp: 85,
+        attack: 16,
+        armor: 10,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [70, 100], materials: ["ash_storm_shard"] }
+      },
+      {
+        id: "ash_khan",
+        name: "\u0425\u0430\u043D \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0431\u0443\u0440\u044C",
+        icon: "\u{1F30B}",
+        hp: 400,
+        attack: 26,
+        armor: 24,
+        speed: 12,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["spit_fire", "fear_chill"],
+        tags: [],
+        boss: true,
+        reward: { coins: [220, 300], seals: 4, materials: ["ash_heart"] }
+      }
+    ],
+    materials: [
+      { id: "ash_pelt", name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u0430\u044F \u0448\u043A\u0443\u0440\u0430", icon: "\u{1F43A}", description: "\u0416\u0451\u0441\u0442\u043A\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u0437\u0432\u0435\u0440\u044F \u0432\u044B\u0436\u0436\u0435\u043D\u043D\u044B\u0445 \u0441\u0442\u0435\u043F\u0435\u0439." },
+      { id: "ash_scale", name: "\u041E\u0431\u043E\u0436\u0436\u0451\u043D\u043D\u0430\u044F \u0447\u0435\u0448\u0443\u044F", icon: "\u{1F982}", description: "\u041F\u043B\u0430\u0441\u0442\u0438\u043D\u0430 \u0445\u0438\u0442\u0438\u043D\u0430, \u0437\u0430\u043A\u0430\u043B\u0451\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043F\u043D\u044B\u043C \u043F\u043E\u0436\u0430\u0440\u043E\u043C." },
+      { id: "ash_ember", name: "\u041D\u0435\u0443\u0433\u0430\u0441\u0430\u044E\u0449\u0438\u0439 \u0443\u0433\u043E\u043B\u0451\u043A", icon: "\u{1F525}", description: "\u0422\u043B\u0435\u0435\u0442 \u0432\u0435\u0447\u043D\u043E \u2014 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u043A\u043E\u0447\u0435\u0432\u044B\u0445 \u0448\u0430\u043C\u0430\u043D\u043E\u0432." },
+      { id: "ash_storm_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438", icon: "\u{1F32A}\uFE0F", description: "\u041A\u0443\u0441\u043E\u0447\u0435\u043A \u0432\u0435\u0442\u0440\u0430, \u0437\u0430\u0441\u0442\u044B\u0432\u0448\u0438\u0439 \u0432\u043C\u0435\u0441\u0442\u0435 \u0441 \u043F\u0435\u043F\u043B\u043E\u043C." },
+      { id: "ash_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0425\u0430\u043D\u0430 \u0411\u0443\u0440\u044C", icon: "\u{1F48E}", description: "\u041F\u044B\u043B\u0430\u044E\u0449\u0435\u0435 \u0441\u0435\u0440\u0434\u0446\u0435 \u043F\u043E\u0432\u0435\u043B\u0438\u0442\u0435\u043B\u044F \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0441\u0442\u0435\u043F\u0435\u0439." }
+    ],
+    battles: [
+      {
+        id: "ash_01",
+        name: "\u0412\u044B\u0436\u0436\u0435\u043D\u043D\u0430\u044F \u0433\u0440\u0430\u043D\u0438\u0446\u0430",
+        world: "ash",
+        enemies: [{ id: "ash_wolf", scale: 1.9 }, { id: "ash_wolf", scale: 1.9 }],
+        unlockAfter: "cr_boss",
+        tip: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0432\u043E\u043B\u043A\u0438 \u0431\u044C\u044E\u0442 \u043C\u043E\u0449\u043D\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041D\u0430\u0434\u0451\u0436\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u0441\u043D\u0438\u043C\u0443\u0442 \u043B\u044C\u0432\u0438\u043D\u0443\u044E \u0434\u043E\u043B\u044E \u0443\u0440\u043E\u043D\u0430."
+      },
+      {
+        id: "ash_02",
+        name: "\u0421\u043B\u0435\u0434\u044B \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0430",
+        world: "ash",
+        enemies: [{ id: "ash_vulture", scale: 1.913 }, { id: "ash_wolf", scale: 1.913 }],
+        unlockAfter: "ash_01",
+        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438\u0437\u0434\u0430\u043B\u0435\u043A\u0430. \u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u0438 \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0442\u0435\u043C\u043F \u0431\u043E\u044F \u0440\u0435\u0448\u0430\u044E\u0442."
+      },
+      {
+        id: "ash_03",
+        name: "\u041A\u043E\u0441\u0442\u0451\u0440 \u0448\u0430\u043C\u0430\u043D\u0430",
+        world: "ash",
+        enemies: [{ id: "ash_shaman", scale: 1.926 }, { id: "ash_wolf", scale: 1.926 }],
+        unlockAfter: "ash_02",
+        tip: "\u0428\u0430\u043C\u0430\u043D \u043F\u043B\u044E\u0451\u0442\u0441\u044F \u043E\u0433\u043D\u0451\u043C \u0438 \u043B\u0435\u0447\u0438\u0442 \u0432\u043E\u043B\u043A\u0430. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u0431\u0435\u0439 \u0448\u0430\u043C\u0430\u043D\u0430, \u043F\u043E\u043A\u0430 \u043E\u043D \u043D\u0435 \u0432\u044B\u0442\u044F\u043D\u0443\u043B \u0431\u043E\u0439."
+      },
+      {
+        id: "ash_04",
+        name: "\u0416\u0430\u043B\u0430 \u0432 \u043F\u0435\u043F\u043B\u0435",
+        world: "ash",
+        obstacles: [{ cell: [3, 1], kind: "rock" }],
+        enemies: [{ id: "ash_scorpion", scale: 1.939 }, { id: "ash_scorpion", scale: 1.939 }],
+        unlockAfter: "ash_03",
+        tip: "\u0421\u043A\u043E\u0440\u043F\u0438\u043E\u043D\u044B \u044F\u0434\u043E\u0432\u0438\u0442\u044B \u0438 \u0442\u043E\u043B\u0441\u0442\u043E\u043A\u043E\u0436\u0438. \u0410\u043D\u0442\u0438\u0434\u043E\u0442 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0438\u0445 \u043F\u0430\u043D\u0446\u0438\u0440\u0435\u0439."
+      },
+      {
+        id: "ash_05",
+        name: "\u0428\u0451\u043F\u043E\u0442 \u0431\u0443\u0440\u0438",
+        world: "ash",
+        enemies: [{ id: "ash_storm_spirit", scale: 1.953 }, { id: "ash_storm_spirit", scale: 1.953 }],
+        unlockAfter: "ash_04",
+        tip: "\u0414\u0443\u0445\u0438 \u0431\u0443\u0440\u044C \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+      },
+      {
+        id: "ash_06",
+        name: "\u041F\u043E\u0433\u0438\u0431\u0448\u0438\u0439 \u043A\u0430\u0440\u0430\u0432\u0430\u043D",
+        world: "ash",
+        enemies: [{ id: "ash_ghoul", scale: 1.966 }, { id: "ash_vulture", scale: 1.966 }],
+        unlockAfter: "ash_05",
+        tip: "\u0422\u0435\u043D\u044C \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0449\u0438\u043A\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u0438 \u043F\u0443\u0433\u0430\u0435\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0432 \u043E\u0434\u043D\u043E\u043C \u043F\u043E\u0445\u043E\u0434\u0435."
+      },
+      {
+        id: "ash_07",
+        name: "\u0412\u043E\u043B\u0447\u044C\u044F \u0441\u0442\u0430\u044F",
+        world: "ash",
+        enemies: [{ id: "ash_wolf", scale: 1.979 }, { id: "ash_wolf", scale: 1.979 }],
+        unlockAfter: "ash_06",
+        tip: "\u0412\u043E\u043B\u043A\u0438 \u0431\u044C\u044E\u0442 \u043C\u043E\u0449\u043D\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041F\u043E\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435 \u0441 \u043A\u0440\u0435\u043F\u043A\u0438\u043C \u0440\u044B\u0446\u0430\u0440\u0435\u043C \u0432\u043F\u0435\u0440\u0435\u0434\u0438 \u0441\u043F\u0430\u0441\u0430\u0435\u0442 \u043E\u0442\u0440\u044F\u0434."
+      },
+      {
+        id: "ash_08",
+        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u043E\u0431\u0440\u044F\u0434",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 1.992 },
+          { id: "ash_shaman", scale: 1.992 },
+          { id: "ash_scorpion", scale: 1.992 }
+        ],
+        unlockAfter: "ash_07",
+        tip: "\u0414\u0432\u0430 \u0448\u0430\u043C\u0430\u043D\u0430 \u043B\u0435\u0447\u0430\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430, \u0430 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D \u0442\u0440\u0430\u0432\u0438\u0442. \u0424\u043E\u043A\u0443\u0441\u0438\u0440\u0443\u0439 \u043E\u0433\u043E\u043D\u044C \u043D\u0430 \u043E\u0434\u043D\u043E\u043C \u0448\u0430\u043C\u0430\u043D\u0435."
+      },
+      {
+        id: "ash_09",
+        name: "\u041A\u0440\u044B\u043B\u044C\u044F \u043D\u0430\u0434 \u043F\u0435\u043F\u043B\u043E\u043C",
+        world: "ash",
+        obstacles: [{ cell: [4, 0], kind: "bones" }, { cell: [4, 2], kind: "rock" }],
+        enemies: [
+          { id: "ash_vulture", scale: 2.005 },
+          { id: "ash_ghoul", scale: 2.005 },
+          { id: "ash_scorpion", scale: 2.005 }
+        ],
+        unlockAfter: "ash_08",
+        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u043C\u0435\u0442\u043E\u043A, \u0442\u0435\u043D\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D \u0442\u0440\u0430\u0432\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043D\u0442\u0438\u0434\u043E\u0442."
+      },
+      {
+        id: "ash_10",
+        name: "\u042F\u0434 \u0438 \u043F\u043B\u0430\u043C\u044F",
+        world: "ash",
+        enemies: [{ id: "ash_scorpion", scale: 2.018 }, { id: "ash_shaman", scale: 2.018 }],
+        unlockAfter: "ash_09",
+        tip: "\u042F\u0434 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D\u0430 \u0438 \u043E\u0433\u043E\u043D\u044C \u0448\u0430\u043C\u0430\u043D\u0430 \u0432\u043C\u0435\u0441\u0442\u0435. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u043F\u043B\u044E\u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "ash_11",
+        name: "\u0413\u0440\u043E\u0437\u0430 \u0431\u0435\u0437 \u0434\u043E\u0436\u0434\u044F",
+        world: "ash",
+        enemies: [{ id: "ash_storm_spirit", scale: 2.032 }, { id: "ash_ghoul", scale: 2.032 }],
+        unlockAfter: "ash_10",
+        tip: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430: \u0441\u0442\u0440\u0430\u0445, \u0441\u043E\u043D \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435. \u041E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "ash_12",
+        name: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u0431\u0443\u0440\u0438",
+        world: "ash",
+        enemies: [
+          { id: "ash_storm_spirit", scale: 2.045 },
+          { id: "ash_storm_spirit", scale: 2.045 },
+          { id: "ash_vulture", scale: 2.045 }
+        ],
+        unlockAfter: "ash_11",
+        tip: "\u0414\u0443\u0445\u0438 \u0441\u043A\u043E\u0432\u044B\u0432\u0430\u044E\u0442, \u0441\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u0438\u0437\u0434\u0430\u043B\u0435\u043A\u0430. \u041D\u0435 \u0434\u0430\u0439 \u0441\u0435\u0431\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u044C \u2014 \u0431\u0435\u0440\u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "ash_13",
+        name: "\u041A\u0430\u0440\u0430\u0432\u0430\u043D \u0442\u0435\u043D\u0435\u0439",
+        world: "ash",
+        enemies: [
+          { id: "ash_ghoul", scale: 2.058 },
+          { id: "ash_ghoul", scale: 2.058 },
+          { id: "ash_shaman", scale: 2.058 }
+        ],
+        unlockAfter: "ash_12",
+        tip: "\u0422\u0435\u043D\u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0448\u0430\u043C\u0430\u043D \u0436\u0436\u0451\u0442 \u0438 \u043B\u0435\u0447\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u2014 \u0438\u043D\u0430\u0447\u0435 \u043E\u0442\u0440\u044F\u0434 \u0437\u0430\u0441\u043D\u0451\u0442 \u043F\u043E\u0434 \u043E\u0433\u043D\u0451\u043C."
+      },
+      {
+        id: "ash_14",
+        name: "\u0421\u0442\u0435\u043F\u043D\u0430\u044F \u0437\u0430\u0441\u0430\u0434\u0430",
+        world: "ash",
+        obstacles: [{ cell: [4, 1], kind: "bones" }],
+        enemies: [
+          { id: "ash_vulture", scale: 2.071 },
+          { id: "ash_storm_spirit", scale: 2.071 },
+          { id: "ash_ghoul", scale: 2.071 }
+        ],
+        unlockAfter: "ash_13",
+        tip: "\u041C\u0435\u0442\u043A\u0438\u0435 \u0441\u0442\u0440\u0435\u043B\u044B, \u0441\u043F\u043E\u0440\u044B \u0438 \u0441\u043E\u043D. \u0420\u0430\u0437\u043D\u043E\u0448\u0451\u0440\u0441\u0442\u043D\u0430\u044F \u0437\u0430\u0441\u0430\u0434\u0430 \u2014 \u0434\u0435\u0440\u0436\u0438 \u0431\u0430\u043B\u0430\u043D\u0441 \u0437\u0430\u0449\u0438\u0442."
+      },
+      {
+        id: "ash_15",
+        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u043A\u0440\u0443\u0433",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 2.084 },
+          { id: "ash_storm_spirit", scale: 2.084 },
+          { id: "ash_wolf", scale: 2.084 }
+        ],
+        unlockAfter: "ash_14",
+        tip: "\u0428\u0430\u043C\u0430\u043D \u0437\u0430 \u0441\u043F\u0438\u043D\u043E\u0439 \u0434\u0443\u0445\u0430 \u0438 \u0432\u043E\u043B\u043A\u0430. \u041F\u0440\u043E\u0440\u0432\u0438\u0441\u044C \u0441\u043A\u0432\u043E\u0437\u044C \u0441\u0442\u0440\u043E\u0439 \u0438 \u0441\u0431\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "ash_16",
+        name: "\u0412\u0438\u0445\u0440\u044C \u043D\u0430\u0434 \u0433\u043D\u0435\u0437\u0434\u043E\u043C",
+        world: "ash",
+        enemies: [
+          { id: "ash_vulture", scale: 2.097 },
+          { id: "ash_storm_spirit", scale: 2.097 },
+          { id: "ash_storm_spirit", scale: 2.097 }
+        ],
+        unlockAfter: "ash_15",
+        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u0438\u0437 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0432\u0438\u0445\u0440\u044F. \u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
+      },
+      {
+        id: "ash_17",
+        name: "\u0414\u044B\u0445\u0430\u043D\u0438\u0435 \u043F\u043E\u0436\u0430\u0440\u0430",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 2.111 },
+          { id: "ash_shaman", scale: 2.111 },
+          { id: "ash_storm_spirit", scale: 2.111 }
+        ],
+        unlockAfter: "ash_16",
+        tip: "\u041F\u0430\u0440\u043D\u044B\u0435 \u0448\u0430\u043C\u0430\u043D\u044B \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u0434\u0443\u0445\u0430. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
+      },
+      {
+        id: "ash_18",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043E\u0431\u043E\u0437",
+        world: "ash",
+        obstacles: [{ cell: [2, 0], kind: "rock" }, { cell: [5, 2], kind: "bones" }],
+        enemies: [
+          { id: "ash_ghoul", scale: 2.124 },
+          { id: "ash_wolf", scale: 2.124 },
+          { id: "ash_storm_spirit", scale: 2.124 }
+        ],
+        unlockAfter: "ash_17",
+        tip: "\u0422\u0435\u043D\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0432\u043E\u043B\u043A \u0431\u044C\u0451\u0442 \u043C\u043E\u0449\u043D\u043E, \u0434\u0443\u0445 \u043F\u0443\u0433\u0430\u0435\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "ash_19",
+        name: "\u041F\u0435\u0440\u0435\u0434 \u043B\u0438\u0446\u043E\u043C \u0425\u0430\u043D\u0430",
+        world: "ash",
+        enemies: [
+          { id: "ash_shaman", scale: 2.137 },
+          { id: "ash_storm_spirit", scale: 2.137 },
+          { id: "ash_ghoul", scale: 2.137 }
+        ],
+        unlockAfter: "ash_18",
+        tip: "\u0412\u0441\u044F \u043D\u0435\u0447\u0438\u0441\u0442\u044C \u0441\u0442\u0435\u043F\u0438 \u0440\u0430\u0437\u043E\u043C: \u043E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0425\u0430\u043D\u043E\u043C."
+      },
+      {
+        id: "ash_boss",
+        name: "\u0425\u0430\u043D \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0431\u0443\u0440\u044C",
+        world: "ash",
+        enemies: [{ id: "ash_khan", scale: 1.9 }],
+        unlockAfter: "ash_19",
+        tip: "\u0425\u0430\u043D \u0436\u0436\u0451\u0442 \u043E\u0433\u043D\u0451\u043C \u0438 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0421\u043E\u0431\u0435\u0440\u0438 \u043B\u0443\u0447\u0448\u0435\u0435 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u0438 \u043E\u0442\u0440\u044F\u0434."
+      }
+    ]
+  };
+
+  // src/data/worlds/jade.js
+  var WORLD6 = {
+    id: "jade",
+    label: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434",
+    enemies: [
+      {
+        id: "jade_warrior",
+        name: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0439 \u0432\u043E\u0438\u043D",
+        icon: "\u{1F3B4}",
+        hp: 150,
+        attack: 16,
+        armor: 18,
+        speed: 8,
+        crit: 0.06,
+        dodge: 0.04,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        reward: { coins: [90, 120], materials: ["jade_paper"] }
+      },
+      {
+        id: "jade_crane",
+        name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0436\u0443\u0440\u0430\u0432\u043B\u044C",
+        icon: "\u{1F54A}\uFE0F",
+        hp: 90,
+        attack: 14,
+        armor: 10,
+        speed: 10,
+        crit: 0.09,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        reward: { coins: [85, 115], materials: ["jade_feather"] }
+      },
+      {
+        id: "jade_lantern",
+        name: "\u0424\u043E\u043D\u0430\u0440\u044C \u043D\u0430 \u0432\u043E\u0434\u0435",
+        icon: "\u{1F3EE}",
+        hp: 100,
+        attack: 19,
+        armor: 10,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "fire",
+        skills: ["spit_fire", "sting_poison"],
+        tags: ["spirit"],
+        reward: { coins: [85, 115], materials: ["jade_paper"] }
+      },
+      {
+        id: "jade_kitsune",
+        name: "\u0421\u0430\u0434\u043E\u0432\u0430\u044F \u043A\u0438\u0446\u0443\u043D\u044D",
+        icon: "\u{1F98A}",
+        hp: 110,
+        attack: 17,
+        armor: 12,
+        speed: 12,
+        crit: 0.06,
+        dodge: 0.11,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [90, 120], materials: ["jade_fur"] }
+      },
+      {
+        id: "jade_teamaster",
+        name: "\u0427\u0430\u0439\u043D\u044B\u0439 \u043C\u0430\u0441\u0442\u0435\u0440-\u0434\u0443\u0445",
+        icon: "\u{1F375}",
+        hp: 125,
+        attack: 15,
+        armor: 14,
+        speed: 8,
+        crit: 0.04,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["regen_ally_skill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [95, 130], materials: ["jade_tea"] }
+      },
+      // Босс мира
+      {
+        id: "jade_boss",
+        name: "\u0414\u0440\u0430\u043A\u043E\u043D-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u0430\u0434\u0430",
+        icon: "\u{1F409}",
+        hp: 400,
+        attack: 26,
+        armor: 26,
+        speed: 9,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "fire",
+        skills: ["spit_fire", "heavy_blow", "fear_chill"],
+        boss: true,
+        tags: ["spirit"],
+        reward: { coins: [450, 600], seals: 4, materials: ["jade_pearl"] }
+      }
+    ],
+    materials: [
+      { id: "jade_paper", name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u0430\u044F \u0431\u0443\u043C\u0430\u0433\u0430", icon: "\u{1F3B4}", description: "\u041F\u0440\u043E\u0447\u043D\u0430\u044F, \u043A\u0430\u043A \u0442\u043E\u043D\u043A\u0430\u044F \u043A\u043E\u043B\u044C\u0447\u0443\u0433\u0430." },
+      { id: "jade_feather", name: "\u041F\u0435\u0440\u043E \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0436\u0443\u0440\u0430\u0432\u043B\u044F", icon: "\u{1FAB6}", description: "\u041B\u0451\u0433\u043A\u043E\u0435, \u0441 \u0437\u0435\u043B\u0435\u043D\u043E\u0432\u0430\u0442\u044B\u043C \u043E\u0442\u043B\u0438\u0432\u043E\u043C." },
+      { id: "jade_fur", name: "\u041C\u0435\u0445 \u0441\u0430\u0434\u043E\u0432\u043E\u0439 \u043A\u0438\u0446\u0443\u043D\u044D", icon: "\u{1F98A}", description: "\u041F\u0443\u0448\u0438\u0441\u0442\u044B\u0439 \u0438 \u0447\u0443\u0442\u044C \u0442\u0451\u043F\u043B\u044B\u0439." },
+      { id: "jade_tea", name: "\u041B\u0438\u0441\u0442 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0447\u0430\u044F", icon: "\u{1F375}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0434\u043E\u0436\u0434\u0451\u043C \u0438 \u0441\u0442\u0430\u0440\u044B\u043C \u043A\u0430\u043C\u043D\u0435\u043C." },
+      { id: "jade_pearl", name: "\u0416\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0434\u0440\u0430\u043A\u043E\u043D\u0430", icon: "\u{1F52E}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043A\u043B\u0443\u0431\u0438\u0442\u0441\u044F \u0442\u0443\u043C\u0430\u043D \u0441\u0430\u0434\u0430." }
+    ],
+    battles: [
+      {
+        id: "jade_01",
+        name: "\u0411\u0430\u043C\u0431\u0443\u043A\u043E\u0432\u044B\u0435 \u0432\u043E\u0440\u043E\u0442\u0430",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2 }, { id: "jade_teamaster", scale: 2 }],
+        unlockAfter: "ash_boss",
+        tip: "\u0412\u043E\u0438\u043D \u0431\u044C\u0451\u0442 \u043C\u043E\u0449\u043D\u043E, \u0430 \u043C\u0430\u0441\u0442\u0435\u0440 \u0435\u0433\u043E \u043F\u043E\u0434\u043B\u0435\u0447\u0438\u0432\u0430\u0435\u0442. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0437\u0430\u043F\u0430\u0441 \u0437\u0435\u043B\u0438\u0439."
+      },
+      {
+        id: "jade_02",
+        name: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u043F\u0440\u0443\u0434",
+        world: "jade",
+        enemies: [{ id: "jade_crane", scale: 2.01 }, { id: "jade_kitsune", scale: 2.01 }],
+        unlockAfter: "jade_01",
+        tip: "\u0422\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u0438 \u043B\u0438\u0441\u0438\u0439 \u043C\u043E\u0440\u043E\u043A. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "jade_03",
+        name: "\u0424\u043E\u043D\u0430\u0440\u0438 \u043D\u0430 \u0432\u043E\u0434\u0435",
+        world: "jade",
+        enemies: [{ id: "jade_lantern", scale: 2.03 }, { id: "jade_lantern", scale: 2.03 }],
+        unlockAfter: "jade_02",
+        tip: "\u0424\u043E\u043D\u0430\u0440\u0438 \u0436\u0433\u0443\u0442 \u043E\u0433\u043D\u0451\u043C \u0438 \u0442\u0440\u0430\u0432\u044F\u0442 \u0434\u044B\u043C\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435."
+      },
+      {
+        id: "jade_04",
+        name: "\u041B\u0438\u0441\u044C\u044F \u0442\u0440\u043E\u043F\u0430",
+        world: "jade",
+        obstacles: [{ cell: [3, 1], kind: "bamboo" }],
+        enemies: [{ id: "jade_kitsune", scale: 2.04 }, { id: "jade_kitsune", scale: 2.04 }],
+        unlockAfter: "jade_03",
+        tip: "\u041A\u0438\u0446\u0443\u043D\u044D \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "jade_05",
+        name: "\u041F\u043B\u0430\u043C\u044F \u0438 \u0431\u0443\u043C\u0430\u0433\u0430",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.05 }, { id: "jade_lantern", scale: 2.05 }],
+        unlockAfter: "jade_04",
+        tip: "\u0424\u043E\u043D\u0430\u0440\u044C \u0436\u0436\u0451\u0442, \u0432\u043E\u0438\u043D \u043A\u0440\u0443\u0448\u0438\u0442. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_06",
+        name: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u0442\u0430\u043D\u0435\u0446",
+        world: "jade",
+        enemies: [{ id: "jade_crane", scale: 2.07 }, { id: "jade_crane", scale: 2.07 }],
+        unlockAfter: "jade_05",
+        tip: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u043D\u0435 \u043F\u0440\u043E\u043C\u0430\u0445\u0438\u0432\u0430\u0435\u0442\u0441\u044F. \u0411\u0440\u043E\u043D\u044F \u0432\u0430\u0436\u043D\u0435\u0435 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u044F."
+      },
+      {
+        id: "jade_07",
+        name: "\u041F\u0430\u0440 \u043D\u0430\u0434 \u0447\u0430\u0448\u0435\u0439",
+        world: "jade",
+        enemies: [{ id: "jade_teamaster", scale: 2.08 }, { id: "jade_crane", scale: 2.08 }],
+        unlockAfter: "jade_06",
+        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0436\u0443\u0440\u0430\u0432\u043B\u044F, \u0430 \u0442\u043E\u0442 \u0431\u044C\u0451\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0417\u0430\u043F\u0430\u0441\u0438\u0441\u044C \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435\u043C."
+      },
+      {
+        id: "jade_08",
+        name: "\u041C\u043E\u0440\u043E\u043A \u043D\u0430\u0434 \u0432\u043E\u0434\u043E\u0439",
+        world: "jade",
+        enemies: [{ id: "jade_kitsune", scale: 2.09 }, { id: "jade_lantern", scale: 2.09 }],
+        unlockAfter: "jade_07",
+        tip: "\u0421\u043E\u043D, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0435\u0434\u043A\u0438\u0439 \u0434\u044B\u043C. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435."
+      },
+      {
+        id: "jade_09",
+        name: "\u041B\u0438\u0441\u0438\u0439 \u0433\u0430\u0440\u043D\u0438\u0437\u043E\u043D",
+        world: "jade",
+        obstacles: [{ cell: [4, 0], kind: "bamboo" }, { cell: [4, 2], kind: "bamboo" }],
+        enemies: [{ id: "jade_warrior", scale: 2.11 }, { id: "jade_kitsune", scale: 2.11 }],
+        unlockAfter: "jade_08",
+        tip: "\u0412\u043E\u0438\u043D \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u043A\u0438\u0446\u0443\u043D\u044D. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0442\u044F\u0436\u0451\u043B\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_10",
+        name: "\u041E\u0433\u043E\u043D\u044C\u043A\u0438 \u043D\u0430\u0434 \u043F\u0440\u0443\u0434\u043E\u043C",
+        world: "jade",
+        enemies: [{ id: "jade_lantern", scale: 2.12 }, { id: "jade_crane", scale: 2.12 }],
+        unlockAfter: "jade_09",
+        tip: "\u0424\u043E\u043D\u0430\u0440\u044C \u0436\u0436\u0451\u0442, \u0436\u0443\u0440\u0430\u0432\u043B\u044C \u043D\u0435 \u043C\u0430\u0436\u0435\u0442. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_11",
+        name: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0439 \u0441\u0430\u0434",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.13 }, { id: "jade_crane", scale: 2.13 }],
+        unlockAfter: "jade_10",
+        tip: "\u041C\u043E\u0449\u043D\u044B\u0439 \u0443\u0434\u0430\u0440 \u0438 \u0442\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0440\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "jade_12",
+        name: "\u0427\u0430\u0439 \u0434\u043B\u044F \u043B\u0438\u0441\u0438\u0446\u044B",
+        world: "jade",
+        enemies: [{ id: "jade_teamaster", scale: 2.14 }, { id: "jade_kitsune", scale: 2.14 }],
+        unlockAfter: "jade_11",
+        tip: "\u041B\u0438\u0441\u0438\u0446\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435."
+      },
+      {
+        id: "jade_13",
+        name: "\u0427\u0430\u0439 \u043D\u0430 \u0432\u043E\u0434\u0435",
+        world: "jade",
+        enemies: [{ id: "jade_teamaster", scale: 2.16 }, { id: "jade_lantern", scale: 2.16 }],
+        unlockAfter: "jade_12",
+        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0444\u043E\u043D\u0430\u0440\u044C, \u0430 \u0442\u043E\u0442 \u0436\u0436\u0451\u0442 \u0438 \u0442\u0440\u0430\u0432\u0438\u0442 \u0434\u044B\u043C\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435."
+      },
+      {
+        id: "jade_14",
+        name: "\u0421\u0442\u0440\u0430\u0436\u0438 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+        world: "jade",
+        obstacles: [{ cell: [4, 1], kind: "rock" }],
+        enemies: [{ id: "jade_warrior", scale: 2.17 }, { id: "jade_lantern", scale: 2.17 }],
+        unlockAfter: "jade_13",
+        tip: "\u0412\u043E\u0438\u043D \u0438 \u0444\u043E\u043D\u0430\u0440\u044C. \u0411\u0435\u0437 \u0431\u0440\u043E\u043D\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u043E\u0433\u043D\u044E \u043D\u0435 \u0432\u044B\u0441\u0442\u043E\u044F\u0442\u044C."
+      },
+      {
+        id: "jade_15",
+        name: "\u0414\u0435\u0432\u044F\u0442\u044C \u0445\u0432\u043E\u0441\u0442\u043E\u0432",
+        world: "jade",
+        enemies: [{ id: "jade_kitsune", scale: 2.18 }, { id: "jade_crane", scale: 2.18 }],
+        unlockAfter: "jade_14",
+        tip: "\u041B\u0438\u0441\u0438\u0439 \u043C\u043E\u0440\u043E\u043A \u0438 \u0442\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0445\u043E\u0440\u043E\u0448\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_16",
+        name: "\u041F\u0435\u0441\u043D\u044F \u043A\u0430\u043C\u043D\u0435\u0439",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.2 }, { id: "jade_teamaster", scale: 2.2 }],
+        unlockAfter: "jade_15",
+        tip: "\u0412\u043E\u0438\u043D \u0438 \u043C\u0430\u0441\u0442\u0435\u0440: \u043C\u043E\u0449\u044C \u0438 \u043B\u0435\u0447\u0435\u043D\u0438\u0435. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0431\u0435\u0440\u0438 \u0437\u0435\u043B\u044C\u044F."
+      },
+      {
+        id: "jade_17",
+        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0444\u0435\u0441\u0442\u0438\u0432\u0430\u043B\u044C",
+        world: "jade",
+        enemies: [{ id: "jade_crane", scale: 2.21 }, { id: "jade_lantern", scale: 2.21 }],
+        unlockAfter: "jade_16",
+        tip: "\u0422\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u0438 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0435 \u043F\u043B\u0430\u043C\u044F. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u0440\u043E\u043D\u044F."
+      },
+      {
+        id: "jade_18",
+        name: "\u0422\u0438\u0445\u0430\u044F \u0446\u0435\u0440\u0435\u043C\u043E\u043D\u0438\u044F",
+        world: "jade",
+        obstacles: [{ cell: [3, 2], kind: "bamboo" }, { cell: [5, 0], kind: "rock" }],
+        enemies: [{ id: "jade_teamaster", scale: 2.22 }, { id: "jade_crane", scale: 2.22 }],
+        unlockAfter: "jade_17",
+        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0436\u0443\u0440\u0430\u0432\u043B\u044F, \u0430 \u0442\u043E\u0442 \u0431\u044C\u0451\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0434\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+      },
+      {
+        id: "jade_19",
+        name: "\u0421\u043E\u0432\u0435\u0442 \u0441\u0442\u0430\u0440\u0435\u0439\u0448\u0438\u043D",
+        world: "jade",
+        enemies: [{ id: "jade_warrior", scale: 2.24 }, { id: "jade_kitsune", scale: 2.24 }],
+        unlockAfter: "jade_18",
+        tip: "\u0412\u043E\u0438\u043D \u0438 \u043A\u0438\u0446\u0443\u043D\u044D \u043D\u0430 \u043F\u0438\u043A\u0435 \u0441\u0438\u043B\u044B. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0414\u0440\u0430\u043A\u043E\u043D\u043E\u043C."
+      },
+      {
+        id: "jade_boss",
+        name: "\u0414\u0440\u0430\u043A\u043E\u043D \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0441\u0430\u0434\u0430",
+        world: "jade",
+        enemies: [{ id: "jade_boss", scale: 2 }],
+        unlockAfter: "jade_19",
+        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0434\u044B\u0448\u0438\u0442 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u043C \u043F\u043B\u0430\u043C\u0435\u043D\u0435\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
+      }
+    ]
+  };
+
+  // src/data/worlds/deep.js
+  var WORLD7 = {
+    id: "deep",
+    label: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442",
+    enemies: [
+      {
+        id: "deep_siren",
+        name: "\u0420\u0443\u0441\u0430\u043B\u043A\u0430-\u043F\u0435\u0432\u0443\u043D\u044C\u044F",
+        icon: "\u{1F9DC}\u200D\u2640\uFE0F",
+        hp: 95,
+        attack: 15,
+        armor: 10,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["pollen_sleep", "regen_ally_skill"],
+        reward: { coins: [85, 120], materials: ["deep_siren_scale"] }
+      },
+      {
+        id: "deep_pearl_guard",
+        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+        icon: "\u{1F9AA}",
+        hp: 150,
+        attack: 17,
+        armor: 24,
+        speed: 6,
+        crit: 0.03,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores"],
+        reward: { coins: [100, 140], materials: ["deep_reef_stone"] }
+      },
+      {
+        id: "deep_shadow",
+        name: "\u0413\u043B\u0443\u0431\u043E\u043A\u043E\u0432\u043E\u0434\u043D\u0430\u044F \u0442\u0435\u043D\u044C",
+        icon: "\u{1F311}",
+        hp: 85,
+        attack: 18,
+        armor: 9,
+        speed: 12,
+        crit: 0.08,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [90, 130], materials: ["deep_sea_mist"] }
+      },
+      {
+        id: "deep_coral_golem",
+        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
+        icon: "\u{1FAB8}",
+        hp: 160,
+        attack: 20,
+        armor: 20,
+        speed: 5,
+        crit: 0.02,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow", "sting_poison_weak"],
+        reward: { coins: [110, 150], materials: ["deep_reef_stone"] }
+      },
+      {
+        id: "deep_current_spirit",
+        name: "\u0414\u0443\u0445 \u0442\u0435\u0447\u0435\u043D\u0438\u044F",
+        icon: "\u{1F300}",
+        hp: 75,
+        attack: 15,
+        armor: 8,
+        speed: 13,
+        crit: 0.06,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["slow_spores"],
+        tags: ["spirit", "ranged"],
+        reward: { coins: [85, 125], materials: ["deep_sea_mist"] }
+      },
+      {
+        id: "deep_light_bubble",
+        name: "\u041F\u0443\u0437\u044B\u0440\u0451\u043A \u0441\u0432\u0435\u0442\u0430",
+        icon: "\u{1FAE7}",
+        hp: 68,
+        attack: 13,
+        armor: 8,
+        speed: 12,
+        crit: 0.05,
+        dodge: 0.14,
+        elem: "fire",
+        skills: ["spit_fire"],
+        reward: { coins: [80, 115], materials: ["deep_light_drop"] }
+      },
+      // Босс мира
+      {
+        id: "deep_boss_queen",
+        name: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0433\u0440\u043E\u0442\u0430",
+        icon: "\u{1F451}",
+        hp: 370,
+        attack: 26,
+        armor: 24,
+        speed: 9,
+        crit: 0.08,
+        dodge: 0.05,
+        elem: "phys",
+        skills: ["pollen_sleep", "fear_chill", "slow_spores"],
+        boss: true,
+        reward: { coins: [550, 750], seals: 4, materials: ["deep_abyss_pearl"] }
+      }
+    ],
+    materials: [
+      { id: "deep_siren_scale", name: "\u0427\u0435\u0448\u0443\u044F \u043F\u0435\u0432\u0443\u043D\u044C\u0438", icon: "\u{1F3B6}", description: "\u0425\u0440\u0430\u043D\u0438\u0442 \u043E\u0442\u0437\u0432\u0443\u043A \u043F\u043E\u0434\u0432\u043E\u0434\u043D\u043E\u0439 \u043F\u0435\u0441\u043D\u0438." },
+      { id: "deep_reef_stone", name: "\u041A\u0430\u043C\u0435\u043D\u044C \u0440\u0438\u0444\u0430", icon: "\u{1FAA8}", description: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0434\u0440\u0435\u0432\u043D\u0435\u0433\u043E \u0440\u0438\u0444\u0430, \u0442\u0451\u043F\u043B\u044B\u0439 \u043D\u0430 \u043E\u0449\u0443\u043F\u044C." },
+      { id: "deep_sea_mist", name: "\u041C\u043E\u0440\u0441\u043A\u0430\u044F \u0434\u044B\u043C\u043A\u0430", icon: "\u{1F32B}\uFE0F", description: "\u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u0442\u0443\u043C\u0430\u043D, \u043F\u043E\u0434\u043D\u044F\u0442\u044B\u0439 \u0441\u043E \u0434\u043D\u0430." },
+      { id: "deep_light_drop", name: "\u041A\u0430\u043F\u0435\u043B\u044C\u043A\u0430 \u0441\u0432\u0435\u0442\u0430", icon: "\u{1FAE7}", description: "\u0421\u0432\u0435\u0442\u0438\u0442\u0441\u044F, \u0435\u0441\u043B\u0438 \u0435\u0451 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C." },
+      { id: "deep_abyss_pearl", name: "\u0416\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0431\u0435\u0437\u0434\u043D\u044B", icon: "\u{1F52E}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043F\u043B\u0435\u0449\u0435\u0442\u0441\u044F \u0442\u0451\u043C\u043D\u0430\u044F \u0432\u043E\u0434\u0430." }
+    ],
+    battles: [
+      {
+        id: "deep_01",
+        name: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u0438 \u0443 \u0432\u0445\u043E\u0434\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_light_bubble", scale: 2.1 }, { id: "deep_light_bubble", scale: 2.1 }],
+        unlockAfter: "jade_boss",
+        tip: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u0438 \u0436\u0433\u0443\u0442 \u043E\u0441\u043B\u0435\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C \u0441\u0432\u0435\u0442\u043E\u043C. \u041F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "deep_02",
+        name: "\u041F\u0435\u0441\u043D\u044C \u0437\u0430 \u0441\u043A\u0430\u043B\u043E\u0439",
+        world: "deep",
+        enemies: [{ id: "deep_siren", scale: 2.11 }, { id: "deep_siren", scale: 2.11 }],
+        unlockAfter: "deep_01",
+        tip: "\u041F\u0435\u0441\u043D\u044F \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0428\u043B\u0435\u043C \u0441\u043E\u043D\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "deep_03",
+        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0439 \u043F\u043E\u0441\u0442",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.12 }, { id: "deep_light_bubble", scale: 2.12 }],
+        unlockAfter: "deep_02",
+        tip: "\u0421\u0442\u0440\u0430\u0436 \u043A\u0440\u0435\u043F\u043E\u043A, \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442\u0441\u044F. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0431\u044C\u0451\u0442 \u043F\u0430\u043D\u0446\u0438\u0440\u044C."
+      },
+      {
+        id: "deep_04",
+        name: "\u0422\u0435\u043D\u044C \u0432 \u0440\u0430\u0441\u0449\u0435\u043B\u0438\u043D\u0435",
+        world: "deep",
+        obstacles: [{ cell: [3, 1], kind: "coral" }],
+        enemies: [{ id: "deep_shadow", scale: 2.14 }, { id: "deep_shadow", scale: 2.14 }],
+        unlockAfter: "deep_03",
+        tip: "\u0422\u0435\u043D\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0443\u0436\u0430\u0441. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0432\u0435\u0440\u043D\u0451\u0442 \u0440\u044B\u0446\u0430\u0440\u044E \u0442\u0432\u0451\u0440\u0434\u043E\u0441\u0442\u044C \u0440\u0443\u043A\u0438."
+      },
+      {
+        id: "deep_05",
+        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0437\u0430\u0432\u0430\u043B",
+        world: "deep",
+        enemies: [{ id: "deep_coral_golem", scale: 2.15 }, { id: "deep_light_bubble", scale: 2.15 }],
+        unlockAfter: "deep_04",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u0440\u0435\u0436\u0435\u0442 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u043C\u0438 \u043A\u043E\u0440\u0430\u043B\u043B\u0430\u043C\u0438. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "deep_06",
+        name: "\u0418\u0433\u0440\u044B \u0442\u0435\u0447\u0435\u043D\u0438\u044F",
+        world: "deep",
+        enemies: [{ id: "deep_current_spirit", scale: 2.16 }, { id: "deep_current_spirit", scale: 2.16 }],
+        unlockAfter: "deep_05",
+        tip: "\u0414\u0443\u0445\u0438 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u044E\u0442 \u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C \u0438 \u0431\u044C\u044E\u0442 \u043F\u043E \u0441\u043B\u0430\u0431\u0435\u0439\u0448\u0435\u043C\u0443. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0437\u0430\u0434\u043D\u0438\u0439 \u0440\u044F\u0434."
+      },
+      {
+        id: "deep_07",
+        name: "\u0425\u043E\u0440 \u043D\u0430 \u043E\u0442\u043C\u0435\u043B\u0438",
+        world: "deep",
+        enemies: [
+          { id: "deep_siren", scale: 2.18 },
+          { id: "deep_siren", scale: 2.18 },
+          { id: "deep_light_bubble", scale: 2.18 }
+        ],
+        unlockAfter: "deep_06",
+        tip: "\u0425\u043E\u0440 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0430 \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442\u0441\u044F. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
+      },
+      {
+        id: "deep_08",
+        name: "\u0421\u0442\u0440\u0430\u0436 \u0438 \u0442\u0435\u043D\u044C",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.19 }, { id: "deep_shadow", scale: 2.19 }],
+        unlockAfter: "deep_07",
+        tip: "\u041A\u0440\u0435\u043F\u043A\u0438\u0439 \u0441\u0442\u0440\u0430\u0436 \u0438 \u0436\u0443\u0442\u043A\u0430\u044F \u0442\u0435\u043D\u044C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "deep_09",
+        name: "\u0421\u0430\u0434\u044B \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432",
+        world: "deep",
+        obstacles: [{ cell: [4, 0], kind: "coral" }, { cell: [4, 2], kind: "shell" }],
+        enemies: [{ id: "deep_coral_golem", scale: 2.2 }, { id: "deep_current_spirit", scale: 2.2 }],
+        unlockAfter: "deep_08",
+        tip: "\u042F\u0434 \u043A\u043E\u0440\u0430\u043B\u043B\u0430 \u0438 \u0441\u0442\u044F\u0433\u0443\u044E\u0449\u0435\u0435 \u0442\u0435\u0447\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "deep_10",
+        name: "\u041F\u043E\u044E\u0449\u0438\u0435 \u0440\u0438\u0444\u044B",
+        world: "deep",
+        enemies: [{ id: "deep_siren", scale: 2.21 }, { id: "deep_shadow", scale: 2.21 }],
+        unlockAfter: "deep_09",
+        tip: "\u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u0432 \u043E\u0434\u043D\u043E\u043C \u0445\u043E\u0440\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "deep_11",
+        name: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u043E\u0432\u044B\u0439 \u0440\u043E\u0439",
+        world: "deep",
+        enemies: [
+          { id: "deep_light_bubble", scale: 2.22 },
+          { id: "deep_light_bubble", scale: 2.22 },
+          { id: "deep_light_bubble", scale: 2.22 }
+        ],
+        unlockAfter: "deep_10",
+        tip: "\u0422\u0440\u043E\u0438\u0446\u0430 \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u043E\u0432 \u0436\u0436\u0451\u0442 \u0440\u0430\u0437\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0440\u0435\u0448\u0430\u0435\u0442."
+      },
+      {
+        id: "deep_12",
+        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u0436\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.24 }, { id: "deep_pearl_guard", scale: 2.24 }],
+        unlockAfter: "deep_11",
+        tip: "\u0414\u0432\u0430 \u0436\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0445 \u0441\u0442\u0440\u0430\u0436\u0430 \u2014 \u0441\u043F\u043B\u043E\u0448\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430. \u041D\u0443\u0436\u0435\u043D \u0443\u0440\u043E\u043D \u043F\u043E\u0442\u044F\u0436\u0435\u043B\u0435\u0435."
+      },
+      {
+        id: "deep_13",
+        name: "\u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u0432\u043E\u0434\u043E\u0432\u043E\u0440\u043E\u0442",
+        world: "deep",
+        enemies: [{ id: "deep_current_spirit", scale: 2.25 }, { id: "deep_shadow", scale: 2.25 }],
+        unlockAfter: "deep_12",
+        tip: "\u0422\u0435\u0447\u0435\u043D\u0438\u0435 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442, \u0442\u0435\u043D\u044C \u043B\u0435\u0434\u0435\u043D\u0438\u0442. \u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      },
+      {
+        id: "deep_14",
+        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0445\u043E\u0440",
+        world: "deep",
+        obstacles: [{ cell: [4, 1], kind: "shell" }],
+        enemies: [{ id: "deep_coral_golem", scale: 2.26 }, { id: "deep_siren", scale: 2.26 }],
+        unlockAfter: "deep_13",
+        tip: "\u0413\u043E\u043B\u0435\u043C \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0440, \u043F\u043E\u043A\u0430 \u0440\u0443\u0441\u0430\u043B\u043A\u0430 \u043F\u043E\u0451\u0442. \u0411\u0443\u0434\u0438 \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0431\u044B\u0441\u0442\u0440\u0435\u0435."
+      },
+      {
+        id: "deep_15",
+        name: "\u0421\u0432\u0435\u0442\u043E\u0432\u043E\u0439 \u0432\u043E\u0434\u043E\u0432\u043E\u0440\u043E\u0442",
+        world: "deep",
+        enemies: [{ id: "deep_current_spirit", scale: 2.28 }, { id: "deep_light_bubble", scale: 2.28 }],
+        unlockAfter: "deep_14",
+        tip: "\u0414\u0443\u0445 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442 \u0441\u043B\u0430\u0431\u0435\u0439\u0448\u0438\u0445, \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442 \u0441\u0432\u0435\u0442\u043E\u043C. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0437\u0430\u0434\u043D\u0438\u0439 \u0440\u044F\u0434."
+      },
+      {
+        id: "deep_16",
+        name: "\u041C\u0440\u0430\u043A \u0433\u0440\u043E\u0442\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_shadow", scale: 2.29 }, { id: "deep_pearl_guard", scale: 2.29 }],
+        unlockAfter: "deep_15",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u043F\u0435\u0440\u043B\u0430\u043C\u0443\u0442\u0440\u0430 \u0438 \u043B\u0435\u0434\u0435\u043D\u044F\u0449\u0430\u044F \u0442\u0435\u043D\u044C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+      },
+      {
+        id: "deep_17",
+        name: "\u041F\u0435\u0441\u043D\u044C \u0433\u043B\u0443\u0431\u0438\u043D",
+        world: "deep",
+        enemies: [
+          { id: "deep_siren", scale: 2.15 },
+          { id: "deep_siren", scale: 2.15 },
+          { id: "deep_shadow", scale: 2.15 }
+        ],
+        unlockAfter: "deep_16",
+        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0445\u043E\u0440 \u0438 \u0442\u0435\u043D\u044C. \u0411\u0435\u0437 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0440\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0451\u0442 \u043D\u0430\u0434\u043E\u043B\u0433\u043E."
+      },
+      {
+        id: "deep_18",
+        name: "\u041A\u0440\u0435\u043F\u043E\u0441\u0442\u044C \u043A\u043E\u0440\u0430\u043B\u043B\u0430",
+        world: "deep",
+        obstacles: [{ cell: [2, 2], kind: "coral" }, { cell: [5, 0], kind: "shell" }],
+        enemies: [{ id: "deep_coral_golem", scale: 2.31 }, { id: "deep_coral_golem", scale: 2.31 }],
+        unlockAfter: "deep_17",
+        tip: "\u0414\u0432\u0430 \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0445 \u0433\u043E\u043B\u0435\u043C\u0430: \u044F\u0434 \u0438 \u0442\u043E\u043B\u0441\u0442\u044B\u0435 \u043F\u0430\u043D\u0446\u0438\u0440\u0438. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0432 \u0440\u0443\u043A\u0438."
+      },
+      {
+        id: "deep_19",
+        name: "\u0413\u043E\u043B\u043E\u0441\u0430 \u0433\u0440\u043E\u0442\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_pearl_guard", scale: 2.33 }, { id: "deep_siren", scale: 2.33 }],
+        unlockAfter: "deep_18",
+        tip: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043A\u0430\u0440\u0430\u0443\u043B \u043F\u0435\u0440\u0435\u0434 \u0442\u0440\u043E\u043D\u043E\u043C: \u0441\u0442\u0440\u0430\u0436 \u0438 \u043F\u0435\u0432\u0443\u043D\u044C\u044F. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0438 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u044C."
+      },
+      {
+        id: "deep_boss",
+        name: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0433\u0440\u043E\u0442\u0430",
+        world: "deep",
+        enemies: [{ id: "deep_boss_queen", scale: 2.35 }],
+        unlockAfter: "deep_19",
+        tip: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u043F\u0435\u0441\u043D\u0435\u0439, \u043B\u0435\u0434\u0435\u043D\u0438\u0442 \u0432\u0437\u0433\u043B\u044F\u0434\u043E\u043C \u0438 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442 \u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
+      }
+    ]
+  };
+
+  // src/data/worlds/mist.js
+  var WORLD8 = {
+    id: "mist",
+    label: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+    enemies: [
+      {
+        id: "mist_clock_spirit",
+        name: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u0434\u0443\u0445",
+        icon: "\u{1F570}\uFE0F",
+        hp: 80,
+        attack: 14,
+        armor: 8,
+        speed: 12,
+        crit: 0.06,
+        dodge: 0.1,
+        elem: "phys",
+        skills: ["fear_chill"],
+        tags: ["spirit"],
+        reward: { coins: [95, 130], materials: ["mist_gear_dust"] }
+      },
+      {
+        id: "mist_rust_automaton",
+        name: "\u0420\u0436\u0430\u0432\u044B\u0439 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D",
+        icon: "\u{1F916}",
+        hp: 100,
+        attack: 16,
+        armor: 16,
+        speed: 6,
+        crit: 0.04,
+        dodge: 0,
+        elem: "phys",
+        skills: ["heavy_blow"],
+        tags: [],
+        reward: { coins: [110, 150], materials: ["mist_rust_flake"] }
+      },
+      {
+        id: "mist_echo_keeper",
+        name: "\u042D\u0445\u043E \u043B\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430",
+        icon: "\u{1F56F}\uFE0F",
+        hp: 75,
+        attack: 15,
+        armor: 8,
+        speed: 11,
+        crit: 0.05,
+        dodge: 0.14,
+        elem: "phys",
+        skills: ["pollen_sleep"],
+        tags: ["spirit"],
+        reward: { coins: [100, 135], materials: ["mist_echo_shard"] }
+      },
+      {
+        id: "mist_sand_wisp",
+        name: "\u041F\u0435\u0441\u0447\u0430\u043D\u044B\u0439 \u043E\u0433\u043E\u043D\u0451\u043A",
+        icon: "\u23F3",
+        hp: 85,
+        attack: 14,
+        armor: 10,
+        speed: 13,
+        crit: 0.07,
+        dodge: 0.12,
+        elem: "phys",
+        skills: ["slow_spores"],
+        tags: [],
+        reward: { coins: [95, 130], materials: ["mist_sand_grain"] }
+      },
+      {
+        id: "mist_cog_hound",
+        name: "\u0428\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043D\u0430\u044F \u0433\u043E\u043D\u0447\u0430\u044F",
+        icon: "\u{1F43A}",
+        hp: 80,
+        attack: 12,
+        armor: 10,
+        speed: 11,
+        crit: 0.08,
+        dodge: 0.08,
+        elem: "phys",
+        skills: ["aimed_shot"],
+        tags: [],
+        reward: { coins: [105, 140], materials: ["mist_gear_dust"] }
+      },
+      {
+        id: "mist_time_warden",
+        name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
+        icon: "\u{1F5DD}\uFE0F",
+        hp: 90,
+        attack: 15,
+        armor: 16,
+        speed: 9,
+        crit: 0.05,
+        dodge: 0.05,
+        elem: "phys",
+        skills: ["regen_ally_skill", "slow_spores"],
+        tags: ["spirit"],
+        reward: { coins: [120, 160], materials: ["mist_echo_shard"] }
+      },
+      // Босс мира: кульминация игры — само Время
+      {
+        id: "mist_boss",
+        name: "\u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F",
+        icon: "\u231B",
+        hp: 500,
+        attack: 33,
+        armor: 34,
+        speed: 11,
+        crit: 0.12,
+        dodge: 0.06,
+        elem: "phys",
+        skills: ["heavy_blow", "slow_spores", "fear_chill"],
+        tags: ["spirit"],
+        boss: true,
+        reward: { coins: [900, 1200], seals: 6, materials: ["mist_heart_of_time"] }
+      }
+    ],
+    materials: [
+      { id: "mist_gear_dust", name: "\u0427\u0430\u0441\u043E\u0432\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u2699\uFE0F", description: "\u0422\u0438\u043A\u0430\u0435\u0442, \u0435\u0441\u043B\u0438 \u043F\u0440\u0438\u0441\u043B\u0443\u0448\u0430\u0442\u044C\u0441\u044F." },
+      { id: "mist_rust_flake", name: "\u0420\u0436\u0430\u0432\u0430\u044F \u043E\u043A\u0430\u043B\u0438\u043D\u0430", icon: "\u{1F529}", description: "\u041A\u043E\u0433\u0434\u0430-\u0442\u043E \u0431\u044B\u043B\u0430 \u0447\u044C\u0438\u043C-\u0442\u043E \u0441\u0435\u0440\u0434\u0446\u0435\u043C." },
+      { id: "mist_echo_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u044D\u0445\u0430", icon: "\u{1F52E}", description: "\u041F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0441\u043B\u043E\u0432\u0430 \u043B\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430." },
+      { id: "mist_sand_grain", name: "\u041F\u0435\u0441\u0447\u0438\u043D\u043A\u0430 \u0432\u0435\u0447\u043D\u043E\u0441\u0442\u0438", icon: "\u{1F32B}\uFE0F", description: "\u041F\u0430\u0434\u0430\u0435\u0442 \u0432\u0432\u0435\u0440\u0445, \u0430 \u043D\u0435 \u0432\u043D\u0438\u0437." },
+      { id: "mist_heart_of_time", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0432\u0440\u0435\u043C\u0435\u043D\u0438", icon: "\u{1F4A0}", description: "\u0411\u044C\u0451\u0442\u0441\u044F \u043E\u0434\u0438\u043D \u0440\u0430\u0437 \u0432 \u0441\u0442\u043E\u043B\u0435\u0442\u0438\u0435." }
+    ],
+    battles: [
+      {
+        id: "mist_01",
+        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0437\u0432\u043E\u043D \u0447\u0430\u0441\u043E\u0432",
+        world: "mist",
+        enemies: [{ id: "mist_clock_spirit", scale: 2.2 }, { id: "mist_clock_spirit", scale: 2.2 }],
+        unlockAfter: "deep_boss",
+        tip: "\u0427\u0430\u0441\u043E\u0432\u044B\u0435 \u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
+      },
+      {
+        id: "mist_02",
+        name: "\u0420\u0436\u0430\u0432\u044B\u0439 \u0437\u0430\u0432\u043E\u0434",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.22 }, { id: "mist_sand_wisp", scale: 2.22 }],
+        unlockAfter: "mist_01",
+        tip: "\u0410\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u043E\u0433\u043E\u043D\u0451\u043A \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u0437\u0435\u043B\u044C\u044F."
+      },
+      {
+        id: "mist_03",
+        name: "\u0413\u043E\u043B\u043E\u0441 \u0438\u0437-\u0437\u0430 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430",
+        world: "mist",
+        enemies: [{ id: "mist_echo_keeper", scale: 2.23 }, { id: "mist_echo_keeper", scale: 2.23 }],
+        unlockAfter: "mist_02",
+        tip: "\u042D\u0445\u043E \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u043F\u044B\u043B\u044C\u0446\u043E\u0439. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+      },
+      {
+        id: "mist_04",
+        name: "\u041A\u043B\u044B\u043A \u0438 \u043F\u0435\u0441\u043E\u043A",
+        world: "mist",
+        obstacles: [{ cell: [3, 1], kind: "gear" }],
+        enemies: [{ id: "mist_cog_hound", scale: 2.25 }, { id: "mist_sand_wisp", scale: 2.25 }],
+        unlockAfter: "mist_03",
+        tip: "\u0413\u043E\u043D\u0447\u0430\u044F \u0431\u044C\u0451\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E, \u043E\u0433\u043E\u043D\u0451\u043A \u0442\u044F\u043D\u0435\u0442 \u0432\u0440\u0435\u043C\u044F. \u0423\u0431\u0435\u0439 \u0433\u043E\u043D\u0447\u0443\u044E \u043F\u0435\u0440\u0432\u043E\u0439."
+      },
+      {
+        id: "mist_05",
+        name: "\u041C\u0435\u0445\u0430\u043D\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0434\u043E\u0437\u043E\u0440",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.27 }, { id: "mist_clock_spirit", scale: 2.27 }],
+        unlockAfter: "mist_04",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u0438\u0437 \u0440\u0436\u0430\u0432\u0447\u0438\u043D\u044B \u0438 \u0434\u0443\u0445 \u0437\u0430 \u043D\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0434\u0443\u0445 \u2014 \u043E\u043D \u0445\u0440\u0443\u043F\u0447\u0435."
+      },
+      {
+        id: "mist_06",
+        name: "\u041F\u044B\u043B\u044C \u0432\u0435\u043A\u043E\u0432",
+        world: "mist",
+        enemies: [
+          { id: "mist_sand_wisp", scale: 2.15 },
+          { id: "mist_sand_wisp", scale: 2.15 },
+          { id: "mist_echo_keeper", scale: 2.15 }
+        ],
+        unlockAfter: "mist_05",
+        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0442\u0435\u043C\u043F."
+      },
+      {
+        id: "mist_07",
+        name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0443 \u0441\u0442\u0430\u043D\u043A\u0430",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.3 }, { id: "mist_rust_automaton", scale: 2.3 }],
+        unlockAfter: "mist_06",
+        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0435\u0447\u0438\u0442 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D\u0430. \u0421\u0431\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C, \u043F\u043E\u043A\u0430 \u0442\u0430\u043D\u043A \u0437\u0430\u043D\u044F\u0442."
+      },
+      {
+        id: "mist_08",
+        name: "\u0428\u0451\u043F\u043E\u0442 \u0431\u044B\u043B\u043E\u0439 \u043B\u0430\u0432\u043A\u0438",
+        world: "mist",
+        enemies: [
+          { id: "mist_echo_keeper", scale: 2.32 },
+          { id: "mist_echo_keeper", scale: 2.32 },
+          { id: "mist_clock_spirit", scale: 2.32 }
+        ],
+        unlockAfter: "mist_07",
+        tip: "\u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u0432\u043C\u0435\u0441\u0442\u0435. \u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439 \u043E\u0431\u0430 \u0441\u0442\u0430\u0442\u0443\u0441\u0430 \u0437\u0435\u043B\u044C\u044F\u043C\u0438."
+      },
+      {
+        id: "mist_09",
+        name: "\u041A\u043B\u0435\u0448\u043D\u0438 \u0438 \u043A\u043B\u044B\u043A\u0438",
+        world: "mist",
+        obstacles: [{ cell: [4, 0], kind: "gear" }, { cell: [4, 2], kind: "hourglass" }],
+        enemies: [{ id: "mist_rust_automaton", scale: 2.34 }, { id: "mist_cog_hound", scale: 2.34 }],
+        unlockAfter: "mist_08",
+        tip: "\u0422\u0430\u043D\u043A \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043C\u0435\u0442\u043A\u0443\u044E \u0433\u043E\u043D\u0447\u0443\u044E. \u0421\u0444\u043E\u043A\u0443\u0441\u0438\u0440\u0443\u0439\u0441\u044F \u043D\u0430 \u0433\u043E\u043D\u0447\u0435\u0439."
+      },
+      {
+        id: "mist_10",
+        name: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
+        world: "mist",
+        enemies: [
+          { id: "mist_clock_spirit", scale: 1.85 },
+          { id: "mist_sand_wisp", scale: 1.8 },
+          { id: "mist_rust_automaton", scale: 1.8 }
+        ],
+        unlockAfter: "mist_09",
+        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0441\u043E \u0432\u0441\u0435\u0445 \u0441\u0442\u043E\u0440\u043E\u043D, \u0430 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0430\u0442\u0430\u0435\u0442 \u0440\u0430\u043D\u044B. \u0424\u043E\u043A\u0443\u0441 \u043D\u0430 \u043D\u0451\u043C."
+      },
+      {
+        id: "mist_11",
+        name: "\u041F\u0435\u0440\u0435\u0437\u0432\u043E\u043D \u0438 \u0448\u0451\u043F\u043E\u0442",
+        world: "mist",
+        enemies: [{ id: "mist_clock_spirit", scale: 2.37 }, { id: "mist_echo_keeper", scale: 2.37 }],
+        unlockAfter: "mist_10",
+        tip: "\u0421\u0442\u0440\u0430\u0445 \u0434\u0443\u0445\u0430 \u0438 \u0443\u0441\u044B\u043F\u043B\u0435\u043D\u0438\u0435 \u044D\u0445\u0430. \u041E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432 \u043E\u043A\u0443\u043F\u0438\u0442\u0441\u044F."
+      },
+      {
+        id: "mist_12",
+        name: "\u042D\u0445\u043E \u0432 \u0448\u0435\u0441\u0442\u0435\u0440\u043D\u044F\u0445",
+        world: "mist",
+        enemies: [{ id: "mist_cog_hound", scale: 2.39 }, { id: "mist_echo_keeper", scale: 2.39 }],
+        unlockAfter: "mist_11",
+        tip: "\u041C\u0435\u0442\u043A\u0430\u044F \u0433\u043E\u043D\u0447\u0430\u044F \u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0435\u0435 \u044D\u0445\u043E. \u041D\u0435 \u0434\u0430\u0439 \u0440\u044B\u0446\u0430\u0440\u044E \u0443\u0441\u043D\u0443\u0442\u044C."
+      },
+      {
+        id: "mist_13",
+        name: "\u0414\u0432\u0430 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u0430",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.41 }, { id: "mist_rust_automaton", scale: 2.41 }],
+        unlockAfter: "mist_12",
+        tip: "\u0414\u0432\u0435 \u0440\u0436\u0430\u0432\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0437\u0430 \u0443\u0434\u0430\u0440."
+      },
+      {
+        id: "mist_14",
+        name: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0433\u043E\u043D",
+        world: "mist",
+        obstacles: [{ cell: [4, 1], kind: "hourglass" }],
+        enemies: [{ id: "mist_cog_hound", scale: 2.3 }, { id: "mist_cog_hound", scale: 2.3 }],
+        unlockAfter: "mist_13",
+        tip: "\u0414\u0432\u0435 \u0433\u043E\u043D\u0447\u0438\u0435 \u0431\u044C\u044E\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0411\u0440\u043E\u043D\u044F \u0438 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u2014 \u0442\u0432\u043E\u0438 \u0434\u0440\u0443\u0437\u044C\u044F."
+      },
+      {
+        id: "mist_15",
+        name: "\u041F\u0430\u043A\u0442 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.44 }, { id: "mist_clock_spirit", scale: 2.44 }],
+        unlockAfter: "mist_14",
+        tip: "\u041B\u0435\u0447\u0435\u043D\u0438\u0435 \u0438 \u0441\u0442\u0440\u0430\u0445. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0441\u044C \u0441 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C \u0432 \u043F\u0435\u0440\u0432\u0443\u044E \u043E\u0447\u0435\u0440\u0435\u0434\u044C."
+      },
+      {
+        id: "mist_16",
+        name: "\u041F\u044B\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.46 }, { id: "mist_sand_wisp", scale: 2.46 }],
+        unlockAfter: "mist_15",
+        tip: "\u0422\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B \u043F\u043E\u0434 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435\u043C. \u041D\u0435 \u0440\u0430\u0441\u0442\u044F\u0433\u0438\u0432\u0430\u0439 \u0431\u043E\u0439."
+      },
+      {
+        id: "mist_17",
+        name: "\u0413\u043E\u043D \u043F\u043E \u0440\u0435\u0437\u044C\u0431\u0435",
+        world: "mist",
+        enemies: [{ id: "mist_cog_hound", scale: 2.35 }, { id: "mist_sand_wisp", scale: 2.35 }],
+        unlockAfter: "mist_16",
+        tip: "\u0411\u044B\u0441\u0442\u0440\u0430\u044F \u043F\u0430\u0440\u0430: \u043A\u043B\u044B\u043A\u0438 \u0438 \u043F\u0435\u0441\u043E\u043A. \u0414\u0435\u0440\u0436\u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u0440\u0438 \u0441\u0435\u0431\u0435."
+      },
+      {
+        id: "mist_18",
+        name: "\u0414\u0435\u0436\u0443\u0440\u0441\u0442\u0432\u043E \u044D\u0445\u0430",
+        world: "mist",
+        obstacles: [{ cell: [3, 0], kind: "hourglass" }, { cell: [3, 2], kind: "gear" }],
+        enemies: [
+          { id: "mist_echo_keeper", scale: 2.35 },
+          { id: "mist_echo_keeper", scale: 2.35 },
+          { id: "mist_time_warden", scale: 2.35 }
+        ],
+        unlockAfter: "mist_17",
+        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u043E\u043D \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u043B\u0435\u0447\u0435\u043D\u0438\u044F. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+      },
+      {
+        id: "mist_19",
+        name: "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0432\u0440\u0435\u043C\u0451\u043D",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.51 }, { id: "mist_rust_automaton", scale: 2.51 }],
+        unlockAfter: "mist_18",
+        tip: "\u0414\u0432\u0430 \u0442\u0430\u043D\u043A\u0430. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0437\u0430\u043F\u0430\u0441\u0438\u0441\u044C \u0432\u044B\u043D\u043E\u0441\u043B\u0438\u0432\u043E\u0441\u0442\u044C\u044E."
+      },
+      {
+        id: "mist_20",
+        name: "\u041E\u0445\u043E\u0442\u0430 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.53 }, { id: "mist_cog_hound", scale: 2.53 }],
+        unlockAfter: "mist_19",
+        tip: "\u0413\u043E\u043D\u0447\u0430\u044F \u043F\u043E\u0434\u043B\u0435\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C. \u0412\u044B\u043D\u043E\u0441\u0438 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
+      },
+      {
+        id: "mist_21",
+        name: "\u0411\u0430\u0448\u043D\u044F \u0431\u0435\u0437 \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
+        world: "mist",
+        enemies: [{ id: "mist_clock_spirit", scale: 2.55 }, { id: "mist_clock_spirit", scale: 2.55 }],
+        unlockAfter: "mist_20",
+        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u0445 \u0432 \u0437\u0430\u0434\u043D\u0435\u043C \u0440\u044F\u0434\u0443. \u0421\u0442\u0440\u0435\u043B\u043A\u0438 \u0434\u043E\u0441\u0442\u0430\u043D\u0443\u0442 \u0438\u0445 \u0440\u0430\u043D\u044C\u0448\u0435."
+      },
+      {
+        id: "mist_22",
+        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0437\u0430\u0432\u043E\u0434 \u043F\u0440\u0443\u0436\u0438\u043D\u044B",
+        world: "mist",
+        enemies: [{ id: "mist_rust_automaton", scale: 2.57 }, { id: "mist_echo_keeper", scale: 2.57 }],
+        unlockAfter: "mist_21",
+        tip: "\u0421\u0442\u0435\u043D\u0430 \u0438\u0437 \u0440\u0436\u0430\u0432\u0447\u0438\u043D\u044B \u0438 \u0443\u0441\u044B\u043F\u043B\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0431\u0435\u0439 \u0442\u0430\u043D\u043A\u0430, \u043D\u0435 \u0443\u0441\u043D\u0438."
+      },
+      {
+        id: "mist_23",
+        name: "\u041F\u0440\u0435\u0434\u0434\u0432\u0435\u0440\u0438\u0435 \u0432\u0435\u0447\u043D\u043E\u0441\u0442\u0438",
+        world: "mist",
+        enemies: [{ id: "mist_time_warden", scale: 2.58 }, { id: "mist_rust_automaton", scale: 2.58 }],
+        unlockAfter: "mist_22",
+        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0438 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D \u0432\u043C\u0435\u0441\u0442\u0435. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0412\u0440\u0435\u043C\u0435\u043D\u0435\u043C."
+      },
+      {
+        id: "mist_boss",
+        name: "\u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F",
+        world: "mist",
+        enemies: [{ id: "mist_boss", scale: 1 }],
+        unlockAfter: "mist_23",
+        tip: "\u0412\u0440\u0435\u043C\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0438 \u0434\u0430\u0432\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u043D\u0435 \u0431\u043E\u0439\u0441\u044F \u2014 \u0443 \u043B\u0430\u0432\u043A\u0438 \u0435\u0441\u0442\u044C \u0431\u0443\u0434\u0443\u0449\u0435\u0435."
+      }
+    ]
+  };
+
+  // src/data/worlds/index.js
+  var WORLDS = [WORLD, WORLD2, WORLD3, WORLD4, WORLD5, WORLD6, WORLD7, WORLD8];
+  var WORLD_BY_ID = Object.fromEntries(WORLDS.map((w) => [w.id, w]));
+
+  // src/data/wanted.js
+  var WANTED_BATTLES = [
+    {
+      id: "wnt_bee_queen",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0430 \u0434\u0438\u043A\u0438\u0445 \u043F\u0447\u0451\u043B",
+      world: "meadow",
+      wanted: true,
+      enemies: [{ id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }],
+      unlockAfter: "bt_boss_willow",
+      tip: "\u0420\u043E\u0439 \u0438\u0437 \u0447\u0435\u0442\u044B\u0440\u0451\u0445 \u0443\u0441\u0438\u043B\u0435\u043D\u043D\u044B\u0445 \u043F\u0447\u0451\u043B. \u0410\u043D\u0442\u0438\u0434\u043E\u0442 \u0438 \u0440\u0430\u0441\u0441\u0435\u0447\u0435\u043D\u0438\u0435."
+    },
+    {
+      id: "wnt_rat_king",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u0431\u0430\u0440\u043E\u043D",
+      world: "town",
+      wanted: true,
+      enemies: [{ id: "rat_thief", scale: 2 }, { id: "rat_thief", scale: 2 }, { id: "bandit", scale: 1.9 }],
+      unlockAfter: "bt_boss_captain",
+      tip: "\u0411\u0430\u0440\u043E\u043D \u0438 \u0435\u0433\u043E \u0448\u0430\u0439\u043A\u0430. \u041F\u043E\u0434\u043A\u043E\u0432\u044B \u0432\u0435\u0440\u0451\u0432\u043E\u043A \u043D\u0435 \u0432\u044F\u0436\u0443\u0442 \u2014 \u0431\u0435\u0440\u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435."
+    },
+    {
+      id: "wnt_ink_lord",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041F\u043E\u0432\u0435\u043B\u0438\u0442\u0435\u043B\u044C \u043A\u043B\u044F\u043A\u0441",
+      world: "attic",
+      wanted: true,
+      enemies: [{ id: "ink_blot", scale: 2.1 }, { id: "paper_spirit", scale: 2 }, { id: "ink_blot", scale: 2.1 }],
+      unlockAfter: "bk_boss_keeper",
+      tip: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0442\u0435\u043A\u0443\u0447\u0438 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B. \u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440 \u2014 \u0432 \u043F\u043E\u044F\u0441."
+    },
+    {
+      id: "wnt_lantern_thief",
+      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041F\u043E\u0445\u0438\u0442\u0438\u0442\u0435\u043B\u044C \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
+      world: "nm",
+      wanted: true,
+      enemies: [{ id: "nm_shadow", scale: 2.2 }, { id: "nm_moth", scale: 2.1 }],
+      unlockAfter: "nm_boss",
+      tip: "\u0422\u0435\u043D\u044C \u0438 \u0435\u0451 \u043C\u043E\u0442\u044B\u043B\u0451\u043A \u0432\u043E\u0440\u0443\u044E\u0442 \u0441\u0432\u0435\u0442 \u0441 \u0440\u044B\u043D\u043A\u0430. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u0438 \u043E\u0442\u0432\u0430\u0433\u0430!"
+    }
+  ];
+
+  // src/data/battles.js
+  var OBSTACLE_KINDS = {
+    rock: { icon: "\u{1FAA8}", name: "\u0412\u0430\u043B\u0443\u043D" },
+    log: { icon: "\u{1FAB5}", name: "\u041F\u043E\u0432\u0430\u043B\u0435\u043D\u043D\u043E\u0435 \u0431\u0440\u0435\u0432\u043D\u043E" },
+    mushroom: { icon: "\u{1F344}", name: "\u0413\u0440\u0438\u0431-\u0432\u0435\u043B\u0438\u043A\u0430\u043D" },
+    crate: { icon: "\u{1F4E6}", name: "\u042F\u0449\u0438\u043A" },
+    barrel: { icon: "\u{1F6E2}\uFE0F", name: "\u0411\u043E\u0447\u043A\u0430" },
+    books: { icon: "\u{1F4DA}", name: "\u0421\u0442\u043E\u043F\u043A\u0430 \u043A\u043D\u0438\u0433" },
+    lantern: { icon: "\u{1F3EE}", name: "\u0424\u043E\u043D\u0430\u0440\u044C \u043D\u0430 \u0441\u0442\u043E\u043B\u0431\u0435" },
+    signpost: { icon: "\u{1FAA7}", name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0443\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C" },
+    star: { icon: "\u2B50", name: "\u0423\u043F\u0430\u0432\u0448\u0430\u044F \u0437\u0432\u0435\u0437\u0434\u0430" },
+    bones: { icon: "\u{1F9B4}", name: "\u041A\u043E\u0441\u0442\u0438 \u0433\u0438\u0433\u0430\u043D\u0442\u0430" },
+    crystal: { icon: "\u{1F537}", name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B" },
+    bamboo: { icon: "\u{1F38B}", name: "\u0411\u0430\u043C\u0431\u0443\u043A\u043E\u0432\u0430\u044F \u0440\u043E\u0449\u0438\u0446\u0430" },
+    coral: { icon: "\u{1FAB8}", name: "\u041A\u043E\u0440\u0430\u043B\u043B" },
+    shell: { icon: "\u{1F41A}", name: "\u0413\u0438\u0433\u0430\u043D\u0442\u0441\u043A\u0430\u044F \u0440\u0430\u043A\u043E\u0432\u0438\u043D\u0430" },
+    gear: { icon: "\u2699\uFE0F", name: "\u0428\u0435\u0441\u0442\u0435\u0440\u043D\u044F" },
+    hourglass: { icon: "\u23F3", name: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B" }
+  };
+  var BATTLES = [
+    {
+      id: "bt_slimes",
+      name: "\u041B\u0443\u0436\u0430 \u0443 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0438",
+      world: "meadow",
+      enemies: ["slime_meadow", "slime_meadow"],
+      unlockAfter: null,
+      tip: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0432\u044B\u0445\u043E\u0434 \u0440\u044B\u0446\u0430\u0440\u044F. \u0421\u043B\u0438\u0437\u043D\u0438 \u0441\u043B\u0430\u0431\u043E \u044F\u0434\u043E\u0432\u0438\u0442\u044B."
+    },
+    {
+      id: "bt_bees",
+      name: "\u041F\u0447\u0435\u043B\u0438\u043D\u043E\u0435 \u0434\u0435\u0440\u0435\u0432\u043E",
+      world: "meadow",
+      enemies: ["bee_wild", "bee_wild", "bee_wild"],
+      unlockAfter: "bt_slimes",
+      tip: "\u041F\u0447\u0451\u043B\u044B \u0431\u044B\u0441\u0442\u0440\u044B \u0438 \u0436\u0430\u043B\u044F\u0442 \u044F\u0434\u043E\u043C. \u041F\u043E\u043C\u043E\u0433\u0443\u0442 \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B."
+    },
+    {
+      id: "bt_moths",
+      name: "\u041F\u043E\u043B\u044F\u043D\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432",
+      world: "meadow",
+      enemies: ["moth_night", "moth_night", "slime_meadow"],
+      obstacles: [{ cell: [3, 1], kind: "log" }],
+      unlockAfter: "bt_bees",
+      tip: "\u041F\u044B\u043B\u044C\u0446\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0428\u043B\u0435\u043C \u0441\u043E\u043D\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
+    },
+    {
+      id: "bt_spirits",
+      name: "\u0417\u0430\u0440\u043E\u0441\u0448\u0430\u044F \u0442\u0440\u043E\u043F\u0430",
+      world: "meadow",
+      enemies: ["spirit_forest", "spirit_forest"],
+      unlockAfter: "bt_moths",
+      tip: "\u0414\u0443\u0445\u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442 \u0441\u043F\u043E\u0440\u0430\u043C\u0438. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u043D\u0438\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+    },
+    {
+      id: "bt_golem",
+      name: "\u041C\u0448\u0438\u0441\u0442\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+      world: "meadow",
+      enemies: ["golem_moss", "slime_meadow"],
+      unlockAfter: "bt_spirits",
+      tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u0442\u043E\u043B\u0441\u0442\u0430\u044F \u0448\u043A\u0443\u0440\u0430. \u041D\u0443\u0436\u0435\u043D \u0443\u0440\u043E\u043D \u043F\u043E\u0442\u044F\u0436\u0435\u043B\u0435\u0435."
+    },
+    {
+      id: "bt_fireflies",
+      name: "\u0420\u043E\u0441\u0441\u044B\u043F\u044C \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u043E\u0432",
+      world: "meadow",
+      enemies: ["moth_night", "bee_wild", "moth_night", "bee_wild"],
+      obstacles: [{ cell: [4, 1], kind: "rock" }],
+      unlockAfter: "bt_golem",
+      tip: "\u0420\u043E\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432 \u0438 \u043F\u0447\u0451\u043B: \u0441\u043E\u043D \u0438 \u044F\u0434 \u0432\u043C\u0435\u0441\u0442\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B."
+    },
+    {
+      id: "bt_overgrowth",
+      name: "\u0413\u0440\u0438\u0431\u043D\u0430\u044F \u0437\u0430\u0432\u0430\u043B\u0438\u043D\u043A\u0430",
+      world: "meadow",
+      enemies: ["golem_moss", "spirit_forest", "spirit_forest"],
+      obstacles: [{ cell: [4, 0], kind: "mushroom" }, { cell: [4, 2], kind: "mushroom" }],
+      unlockAfter: "bt_fireflies",
+      tip: "\u0413\u043E\u043B\u0435\u043C \u0438 \u0434\u0432\u0430 \u0434\u0443\u0445\u0430. \u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u043E\u043F\u0430\u0441\u043D\u043E \u2014 \u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
+    },
+    {
+      id: "bt_hunt_trail",
+      name: "\u041E\u0445\u043E\u0442\u043D\u0438\u0447\u044C\u044F \u0442\u0440\u043E\u043F\u0430",
+      world: "meadow",
+      enemies: ["bee_wild", "spirit_forest", "moth_night", "slime_meadow"],
+      unlockAfter: "bt_overgrowth",
+      tip: "\u0412\u0441\u044F \u043E\u043F\u0443\u0448\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0421\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u043E\u0439."
+    },
+    {
+      id: "bt_boss_willow",
+      name: "\u0421\u0442\u0430\u0440\u0430\u044F \u0438\u0432\u0430",
+      world: "meadow",
+      enemies: ["boss_willow"],
+      unlockAfter: "bt_hunt_trail",
+      tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0438\u0432\u044B \u2014 \u0438\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u0435 \u0432\u0441\u0435\u0433\u043E, \u0447\u0435\u043C\u0443 \u0442\u044B \u043D\u0430\u0443\u0447\u0438\u043B\u0441\u044F."
+    }
+  ];
+  BATTLES.push(
+    {
+      id: "bt_rats",
+      name: "\u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u0443\u043B\u043E\u043A",
+      world: "town",
+      enemies: ["rat_thief", "rat_thief", "rat_thief"],
+      unlockAfter: "bt_boss_willow",
+      tip: "\u041A\u0440\u044B\u0441\u044B \u0448\u0443\u0441\u0442\u0440\u044B\u0435 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0435. \u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0438 \u0430\u043D\u0442\u0438\u0434\u043E\u0442 \u0440\u0435\u0448\u0430\u044E\u0442."
+    },
+    {
+      id: "bt_bandits",
+      name: "\u0417\u0430\u0441\u0442\u0430\u0432\u0430 \u0443 \u0441\u043A\u043B\u0430\u0434\u0430",
+      world: "town",
+      enemies: ["bandit", "rat_thief", "bandit"],
+      obstacles: [{ cell: [3, 1], kind: "crate" }],
+      unlockAfter: "bt_rats",
+      tip: "\u0420\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A\u0438 \u0431\u044C\u044E\u0442 \u0441\u0438\u043B\u044C\u043D\u043E. \u0425\u043E\u0440\u043E\u0448\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u2014 \u043A\u0430\u043A \u043D\u0438\u043A\u043E\u0433\u0434\u0430 \u043A\u0441\u0442\u0430\u0442\u0438."
+    },
+    {
+      id: "bt_wander_golem",
+      name: "\u0411\u0440\u043E\u0434\u044F\u0447\u0430\u044F \u043A\u043B\u0430\u0434\u043A\u0430",
+      world: "town",
+      enemies: ["golem_wander", "rat_thief"],
+      unlockAfter: "bt_bandits",
+      tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u043A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u2014 \u0431\u0435\u0440\u0438\u0442\u0435 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
+    },
+    {
+      id: "bt_ghost_watch",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043E\u0431\u0445\u043E\u0434",
+      world: "town",
+      enemies: ["ghost_guard", "ghost_guard"],
+      unlockAfter: "bt_wander_golem",
+      tip: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
+    },
+    {
+      id: "bt_town_mix",
+      name: "\u0421\u0443\u043C\u0430\u0442\u043E\u0445\u0430 \u043D\u0430 \u0440\u044B\u043D\u043A\u0435",
+      world: "town",
+      enemies: ["bandit", "ghost_guard", "rat_thief"],
+      obstacles: [{ cell: [2, 0], kind: "barrel" }, { cell: [5, 2], kind: "crate" }],
+      unlockAfter: "bt_ghost_watch",
+      tip: "\u0421\u043C\u0435\u0448\u0430\u043D\u043D\u0430\u044F \u0441\u0442\u0430\u044F: \u044F\u0434, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B. \u0413\u043E\u0442\u043E\u0432\u044C\u0441\u044F \u043A\u0430\u043A \u0441\u043B\u0435\u0434\u0443\u0435\u0442."
+    },
+    {
+      id: "bt_watchtower",
+      name: "\u0421\u0442\u043E\u0440\u043E\u0436\u0435\u0432\u0430\u044F \u0431\u0430\u0448\u043D\u044F",
+      world: "town",
+      enemies: ["ghost_guard", "ghost_guard", "bandit"],
+      unlockAfter: "bt_town_mix",
+      tip: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438 \u0438 \u0438\u0445 \u0436\u0438\u0432\u043E\u0439 \u0441\u043E\u043E\u0431\u0449\u043D\u0438\u043A. \u0421\u0442\u0440\u0430\u0445 \u0434\u0430\u0432\u0438\u0442\u044C \u0430\u043C\u0443\u043B\u0435\u0442\u043E\u043C \u043E\u0442\u0432\u0430\u0433\u0438."
+    },
+    {
+      id: "bt_cellar",
+      name: "\u041F\u043E\u0434\u0432\u0430\u043B\u044C\u043D\u044B\u0435 \u043A\u0440\u044B\u0441\u044B",
+      world: "town",
+      enemies: ["rat_thief", "rat_thief", "rat_thief", "rat_thief"],
+      unlockAfter: "bt_watchtower",
+      tip: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E \u0448\u0443\u0441\u0442\u0440\u044B\u0445 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u0438 \u0440\u0430\u0441\u0441\u0435\u0447\u0435\u043D\u0438\u0435."
+    },
+    {
+      id: "bt_tourney",
+      name: "\u0422\u0443\u0440\u043D\u0438\u0440\u043D\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
+      world: "town",
+      enemies: ["golem_wander", "bandit", "bandit"],
+      obstacles: [{ cell: [4, 1], kind: "barrel" }],
+      unlockAfter: "bt_cellar",
+      tip: "\u041A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430 \u0438 \u0434\u0432\u0430 \u043A\u043B\u0438\u043D\u043A\u0430 \u0437\u0430 \u043D\u0435\u0439. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0442\u044F\u0436\u0451\u043B\u044B\u043C."
+    },
+    {
+      id: "bt_boss_captain",
+      name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u043A\u0430\u043F\u0438\u0442\u0430\u043D",
+      world: "town",
+      enemies: ["boss_captain"],
+      unlockAfter: "bt_tourney",
+      tip: "\u041A\u0430\u043F\u0438\u0442\u0430\u043D \u0441\u0442\u0440\u0430\u0436\u0438 \u043D\u0435 \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442 \u0432\u0435\u043A\u0430\u043C\u0438. \u041F\u043E\u043A\u0430\u0436\u0438 \u0435\u043C\u0443, \u0447\u0442\u043E \u043B\u0430\u0432\u043A\u0430 \u043F\u043E\u0434 \u0437\u0430\u0449\u0438\u0442\u043E\u0439."
+    }
+  );
+  BATTLES.push(
+    {
+      id: "bk_blots",
+      name: "\u041F\u0440\u043E\u043B\u0438\u0442\u044B\u0435 \u0447\u0435\u0440\u043D\u0438\u043B\u0430",
+      world: "attic",
+      enemies: ["ink_blot", "ink_blot"],
+      unlockAfter: "bt_boss_captain",
+      tip: "\u041A\u043B\u044F\u043A\u0441\u044B \u0442\u0440\u0430\u0432\u044F\u0442 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
+    },
+    {
+      id: "bk_moths",
+      name: "\u041C\u043E\u043B\u044C \u0432 \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u0435",
+      world: "attic",
+      enemies: ["book_moth", "book_moth", "ink_blot"],
+      obstacles: [{ cell: [3, 0], kind: "books" }],
+      unlockAfter: "bk_blots",
+      tip: "\u041A\u043D\u0438\u0436\u043D\u0430\u044F \u043C\u043E\u043B\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043A\u0430\u043A \u0438 \u0435\u0451 \u043B\u0435\u0441\u043D\u044B\u0435 \u0441\u0451\u0441\u0442\u0440\u044B. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0432\u0441\u0451 \u0435\u0449\u0451 \u0432 \u0446\u0435\u043D\u0435."
+    },
+    {
+      id: "bk_spirits",
+      name: "\u0428\u043E\u0440\u043E\u0445\u0438 \u0441\u0442\u0440\u0430\u043D\u0438\u0446",
+      world: "attic",
+      enemies: ["paper_spirit", "paper_spirit"],
+      unlockAfter: "bk_moths",
+      tip: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0435 \u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
+    },
+    {
+      id: "bk_illustration",
+      name: "\u0412\u0438\u0442\u0440\u0430\u0436\u043D\u0430\u044F \u0433\u0440\u0430\u0432\u044E\u0440\u0430",
+      world: "attic",
+      enemies: ["illustration", "book_moth"],
+      unlockAfter: "bk_spirits",
+      tip: "\u041E\u0436\u0438\u0432\u0448\u0430\u044F \u0438\u043B\u043B\u044E\u0441\u0442\u0440\u0430\u0446\u0438\u044F \u0442\u043E\u043B\u0441\u0442\u043E\u043A\u043E\u0436\u0430. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u043E\u0440\u0443\u0436\u0438\u0435\u043C."
+    },
+    {
+      id: "bk_storm",
+      name: "\u0411\u0443\u0440\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0435",
+      world: "attic",
+      enemies: ["paper_spirit", "ink_blot", "book_moth"],
+      unlockAfter: "bk_illustration",
+      tip: "\u0412\u0441\u0435 \u043E\u0431\u0438\u0442\u0430\u0442\u0435\u043B\u0438 \u0447\u0435\u0440\u0434\u0430\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0438 \u0437\u0435\u043B\u044C\u044F."
+    },
+    {
+      id: "bt_reading",
+      name: "\u0427\u0438\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0437\u0430\u043B",
+      world: "attic",
+      enemies: ["book_moth", "paper_spirit", "book_moth"],
+      unlockAfter: "bk_storm",
+      tip: "\u041C\u043E\u043B\u044C \u0438 \u0434\u0443\u0445 \u0441\u0440\u0435\u0434\u0438 \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u043E\u0432. \u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u2014 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439 \u043E\u0431\u0430."
+    },
+    {
+      id: "bt_archive",
+      name: "\u041F\u044B\u043B\u044C\u043D\u044B\u0439 \u0430\u0440\u0445\u0438\u0432",
+      world: "attic",
+      enemies: ["illustration", "ink_blot", "ink_blot"],
+      obstacles: [{ cell: [4, 1], kind: "books" }, { cell: [3, 2], kind: "books" }],
+      unlockAfter: "bt_reading",
+      tip: "\u0413\u0440\u0430\u0432\u044E\u0440\u0430 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430. \u042F\u0434 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u2014 \u0434\u0435\u0440\u0436\u0438 \u043E\u0442\u0432\u0430\u0440 \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+    },
+    {
+      id: "bt_inkwell",
+      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043A\u043E\u043B\u043E\u0434\u0435\u0446",
+      world: "attic",
+      enemies: ["ink_blot", "paper_spirit", "ink_blot", "paper_spirit"],
+      obstacles: [{ cell: [2, 1], kind: "books" }, { cell: [5, 1], kind: "books" }],
+      unlockAfter: "bt_archive",
+      tip: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E \u043E\u0431\u0438\u0442\u0430\u0442\u0435\u043B\u0435\u0439 \u0447\u0435\u0440\u0434\u0430\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C."
+    },
+    {
+      id: "bk_boss_keeper",
+      name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430",
+      world: "attic",
+      enemies: ["boss_keeper"],
+      unlockAfter: "bt_inkwell",
+      tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u043E\u0442\u0434\u0430\u0441\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0431\u0435\u0437 \u0431\u043E\u044F. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
+    }
+  );
+  BATTLES.push(
+    {
+      id: "ex_01",
+      name: "\u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043D\u0430\u044F \u0442\u0440\u043E\u043F\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "slime_meadow", scale: 1.1 },
+        { id: "bandit", scale: 1.1 },
+        { id: "ink_blot", scale: 1.1 }
+      ],
+      unlockAfter: "bk_boss_keeper",
+      tip: "\u041C\u0438\u0440\u044B \u0441\u043C\u0435\u0448\u0430\u043B\u0438\u0441\u044C. \u0421\u043B\u0438\u0437\u043D\u0438, \u0440\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A\u0438 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430 \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E."
+    },
+    {
+      id: "ex_02",
+      name: "\u0421\u043C\u0435\u0448\u0430\u043D\u043D\u044B\u0439 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
+      world: "crossroads",
+      enemies: [
+        { id: "rat_thief", scale: 1.15 },
+        { id: "rat_thief", scale: 1.15 },
+        { id: "book_moth", scale: 1.15 }
+      ],
+      obstacles: [{ cell: [3, 1], kind: "signpost" }],
+      unlockAfter: "ex_01",
+      tip: "\u0411\u044B\u0441\u0442\u0440\u044B\u0435 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0435, \u0430 \u043C\u043E\u043B\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
+    },
+    {
+      id: "ex_03",
+      name: "\u0414\u0443\u0445\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "paper_spirit", scale: 1.2 },
+        { id: "ghost_guard", scale: 1.2 }
+      ],
+      unlockAfter: "ex_02",
+      tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u0441\u043E \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
+    },
+    {
+      id: "ex_04",
+      name: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0439 \u043A\u0430\u0440\u0430\u0432\u0430\u043D",
+      world: "crossroads",
+      enemies: [
+        { id: "golem_wander", scale: 1.25 },
+        { id: "golem_moss", scale: 1.25 }
+      ],
+      unlockAfter: "ex_03",
+      tip: "\u0414\u0432\u0435 \u043A\u0430\u043C\u0435\u043D\u043D\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u0441\u0435\u0440\u044C\u0451\u0437\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
+    },
+    {
+      id: "ex_05",
+      name: "\u042F\u0434\u043E\u0432\u0438\u0442\u044B\u0439 \u0442\u0443\u043C\u0430\u043D",
+      world: "crossroads",
+      enemies: [
+        { id: "ink_blot", scale: 1.3 },
+        { id: "bee_wild", scale: 1.3 },
+        { id: "rat_thief", scale: 1.3 }
+      ],
+      obstacles: [{ cell: [4, 0], kind: "lantern" }, { cell: [4, 2], kind: "lantern" }],
+      unlockAfter: "ex_04",
+      tip: "\u042F\u0434 \u0441\u043E \u0432\u0441\u0435\u0445 \u0441\u0442\u043E\u0440\u043E\u043D. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
+    },
+    {
+      id: "ex_06",
+      name: "\u041D\u043E\u0447\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u0436\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "ghost_guard", scale: 1.3 },
+        { id: "ghost_guard", scale: 1.3 },
+        { id: "moth_night", scale: 1.3 }
+      ],
+      unlockAfter: "ex_05",
+      tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0444\u043B\u0430\u043A\u043E\u043D\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0441\u043D\u043E\u0432\u0430 \u0432 \u0434\u0435\u043B\u0435."
+    },
+    {
+      id: "ex_07",
+      name: "\u0411\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u0447\u043D\u0430\u044F \u043E\u0441\u0430\u0434\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "illustration", scale: 1.35 },
+        { id: "paper_spirit", scale: 1.35 },
+        { id: "paper_spirit", scale: 1.35 }
+      ],
+      unlockAfter: "ex_06",
+      tip: "\u0422\u043E\u043B\u0441\u0442\u0430\u044F \u0433\u0440\u0430\u0432\u044E\u0440\u0430 \u0438 \u0434\u0432\u0430 \u0434\u0443\u0445\u0430. \u041F\u0440\u043E\u0440\u044B\u0432\u0430\u0439\u0441\u044F \u043A \u043D\u0435\u0439 \u0441\u043A\u0432\u043E\u0437\u044C \u0441\u0442\u0440\u043E\u0439."
+    },
+    {
+      id: "ex_08",
+      name: "\u0425\u0430\u043E\u0441 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
+      world: "crossroads",
+      enemies: [
+        { id: "golem_wander", scale: 1.4 },
+        { id: "ink_blot", scale: 1.4 },
+        { id: "book_moth", scale: 1.4 }
+      ],
+      obstacles: [{ cell: [3, 2], kind: "signpost" }],
+      unlockAfter: "ex_07",
+      tip: "\u0412\u0441\u0451 \u0438 \u0441\u0440\u0430\u0437\u0443: \u0441\u0442\u0435\u043D\u0430, \u044F\u0434 \u0438 \u0441\u043E\u043D. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0421\u0442\u0440\u0430\u0436\u0435\u043C."
+    },
+    {
+      id: "ex_boss",
+      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+      world: "crossroads",
+      enemies: [{ id: "boss_star_guardian", scale: 1 }],
+      unlockAfter: "ex_08",
+      tip: "\u041E\u043D \u0433\u043E\u0440\u0438\u0442 \u0437\u0432\u0451\u0437\u0434\u043D\u044B\u043C \u043E\u0433\u043D\u0451\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
+    }
+  );
+  for (const w of WORLDS) {
+    if (w?.battles) BATTLES.push(...w.battles);
+  }
+  BATTLES.push(...WANTED_BATTLES);
+  var BATTLE_BY_ID = Object.fromEntries(BATTLES.map((b) => [b.id, b]));
+
+  // src/data/economy.js
+  var ECONOMY_VERSION = 1;
+  var FIRST_COMPLETION_SECONDS = 20;
+  var PUZZLE_REPEAT_FACTOR = 0.25;
+  var BATTLE_REPEAT_FACTOR = 0.2;
+  var DAILY_COIN_FACTOR = 2;
+  var BOSS_COIN_MULTIPLIER = 1.6;
+  var WANTED_COIN_MULTIPLIER = 1.35;
+  var PUZZLE_TYPE_ECONOMY = {
+    mirror: { first: 40, repeat: 25, difficulty: 8, repeatDifficulty: 4, metric: 2, repeatMetric: 1 },
+    shelf: { first: 45, repeat: 30, difficulty: 8, repeatDifficulty: 4, metric: 3, repeatMetric: 2 },
+    riddle: { first: 35, repeat: 20, difficulty: 6, repeatDifficulty: 3, metric: 1, repeatMetric: 0.5 },
+    hang: { first: 55, repeat: 35, difficulty: 8, repeatDifficulty: 4, metric: 1.5, repeatMetric: 0.8 },
+    seek: { first: 45, repeat: 30, difficulty: 8, repeatDifficulty: 4, metric: 3, repeatMetric: 1.5 },
+    path: { first: 45, repeat: 30, difficulty: 8, repeatDifficulty: 4, metric: 2, repeatMetric: 1 },
+    tea: { first: 50, repeat: 32, difficulty: 8, repeatDifficulty: 4, metric: 3, repeatMetric: 1.5 },
+    mech: { first: 50, repeat: 32, difficulty: 8, repeatDifficulty: 4, metric: 2, repeatMetric: 1 },
+    candle: { first: 45, repeat: 30, difficulty: 8, repeatDifficulty: 4, metric: 2, repeatMetric: 1 },
+    flow: { first: 55, repeat: 35, difficulty: 8, repeatDifficulty: 4, metric: 2, repeatMetric: 1 },
+    brew: { first: 45, repeat: 30, difficulty: 6, repeatDifficulty: 3, metric: 3, repeatMetric: 1.5 },
+    fate: { first: 45, repeat: 30, difficulty: 6, repeatDifficulty: 3, metric: 3, repeatMetric: 1.5 },
+    glass: { first: 40, repeat: 25, difficulty: 5, repeatDifficulty: 3, metric: 1.2, repeatMetric: 0.7 },
+    spin: { first: 40, repeat: 25, difficulty: 5, repeatDifficulty: 3, metric: 1.2, repeatMetric: 0.7 },
+    gift: { first: 45, repeat: 30, difficulty: 6, repeatDifficulty: 3, metric: 3, repeatMetric: 1.5 },
+    seating: { first: 50, repeat: 35, difficulty: 6, repeatDifficulty: 3, metric: 5, repeatMetric: 3 },
+    custom: { first: 45, repeat: 30, difficulty: 6, repeatDifficulty: 3, metric: 1, repeatMetric: 0.5 }
+  };
+  var PUZZLE_ECONOMY_OVERRIDES = {
+    md_01: { expectedFirstSeconds: 120, expectedRepeatSeconds: 60 },
+    md_02: { expectedFirstSeconds: 135, expectedRepeatSeconds: 60 },
+    tw_01: { expectedFirstSeconds: 135, expectedRepeatSeconds: 60 },
+    sk_md_01: { expectedFirstSeconds: 135, expectedRepeatSeconds: 60 },
+    pp_01: { expectedFirstSeconds: 135, expectedRepeatSeconds: 60 }
+  };
+  var WORLD_ECONOMY_TIER = {
+    meadow: 0,
+    town: 1,
+    attic: 2,
+    crossroads: 3,
+    nm: 3,
+    sw: 3,
+    sf: 3,
+    cr: 4,
+    ash: 4,
+    jade: 4,
+    deep: 5,
+    mist: 5
+  };
+  var BATTLE_ECONOMY_OVERRIDES = {
+    bt_slimes: { expectedFirstSeconds: 120, expectedRepeatSeconds: 70 }
+  };
+  var PRICE_TARGET_MINUTES = {
+    consumable: 2,
+    common: 6,
+    rare: 16,
+    epic: 36,
+    legendary: 40
+  };
+  var ITEM_PRICE_OVERRIDES = {
+    wpn_rusty_sword: 60,
+    shd_wooden: 80,
+    hlm_leather: 70,
+    arm_padded: 90,
+    pot_heal: 50,
+    pot_vigor: 50,
+    bt_path: 80,
+    rng_health: 80
+  };
+  var SHOP_UNLOCK_ORDER = [
+    null,
+    "bt_bees",
+    "bt_moths",
+    "bt_spirits",
+    "bt_golem",
+    "bt_rats",
+    "bt_bandits",
+    "bt_wander_golem",
+    "bt_ghost_watch",
+    "bk_blots",
+    "bk_moths",
+    "bk_spirits",
+    "bk_illustration",
+    "nm_05",
+    "nm_07",
+    "nm_10",
+    "sw_05",
+    "sw_06",
+    "sw_07",
+    "sw_08",
+    "sw_09",
+    "sw_boss",
+    "sf_05",
+    "sf_06",
+    "sf_08",
+    "sf_09",
+    "sf_10",
+    "sf_boss",
+    "cr_05",
+    "cr_06",
+    "cr_08",
+    "cr_10",
+    "cr_boss",
+    "ash_05",
+    "ash_06",
+    "ash_08",
+    "ash_10",
+    "ash_11",
+    "jade_05",
+    "jade_06",
+    "jade_09",
+    "deep_05",
+    "deep_06",
+    "deep_07",
+    "deep_08",
+    "mist_06",
+    "mist_08",
+    "mist_10",
+    "mist_12",
+    "mist_boss"
+  ];
+
+  // src/data/enemies.js
+  var ENEMIES = [
+    {
+      id: "slime_meadow",
+      name: "\u041B\u0443\u0436\u0430\u0439\u043D\u044B\u0439 \u0441\u043B\u0438\u0437\u0435\u043D\u044C",
+      icon: "\u{1F7E2}",
+      hp: 30,
+      attack: 5,
+      armor: 4,
+      speed: 6,
+      crit: 0.02,
+      dodge: 0.02,
+      elem: "phys",
+      skills: ["sting_poison_weak"],
+      reward: { coins: [12, 20], materials: ["slime_jelly"] }
+    },
+    {
+      id: "bee_wild",
+      name: "\u0414\u0438\u043A\u0430\u044F \u043F\u0447\u0435\u043B\u0430",
+      icon: "\u{1F41D}",
+      hp: 22,
+      attack: 7,
+      armor: 2,
+      speed: 14,
+      crit: 0.08,
+      dodge: 0.1,
+      elem: "phys",
+      skills: ["sting_poison"],
+      reward: { coins: [15, 25], materials: ["honey"] }
+    },
+    {
+      id: "spirit_forest",
+      name: "\u041B\u0435\u0441\u043D\u043E\u0439 \u0434\u0443\u0445",
+      icon: "\u{1F33F}",
+      hp: 38,
+      attack: 8,
+      armor: 6,
+      speed: 9,
+      crit: 0.05,
+      dodge: 0.08,
+      elem: "phys",
+      skills: ["slow_spores"],
+      tags: ["spirit"],
+      reward: { coins: [20, 32], materials: ["glow_moss"] }
+    },
+    {
+      id: "moth_night",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A",
+      icon: "\u{1F98B}",
+      hp: 26,
+      attack: 6,
+      armor: 3,
+      speed: 11,
+      crit: 0.04,
+      dodge: 0.12,
+      elem: "phys",
+      skills: ["pollen_sleep"],
+      reward: { coins: [18, 28], materials: ["moth_dust"] }
+    },
+    {
+      id: "golem_moss",
+      name: "\u041C\u0448\u0438\u0441\u0442\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
+      icon: "\u{1F5FF}",
+      hp: 90,
+      attack: 14,
+      armor: 18,
+      speed: 5,
+      crit: 0.02,
+      dodge: 0,
+      elem: "phys",
+      skills: ["heavy_blow"],
+      reward: { coins: [35, 50], materials: ["moss_stone"] }
+    },
+    // Босс мира
+    {
+      id: "boss_willow",
+      name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B",
+      icon: "\u{1F333}",
+      hp: 160,
+      attack: 15,
+      armor: 14,
+      speed: 7,
+      crit: 0.06,
+      dodge: 0.03,
+      elem: "phys",
+      skills: ["heavy_blow", "slow_spores", "pollen_sleep"],
+      boss: true,
+      reward: { coins: [150, 200], seals: 1, materials: ["willow_heart"] }
+    }
+  ];
+  ENEMIES.push(
+    {
+      id: "rat_thief",
+      name: "\u041A\u0440\u044B\u0441\u0430-\u0432\u043E\u0440\u0438\u0448\u043A\u0430",
+      icon: "\u{1F400}",
+      hp: 45,
+      attack: 11,
+      armor: 6,
+      speed: 13,
+      crit: 0.1,
+      dodge: 0.14,
+      elem: "phys",
+      skills: ["sting_poison"],
+      reward: { coins: [28, 40], materials: ["rat_tail"] }
+    },
+    {
+      id: "bandit",
+      name: "\u0414\u0432\u043E\u0440\u043E\u0432\u044B\u0439 \u0440\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A",
+      icon: "\u{1F5E1}\uFE0F",
+      hp: 65,
+      attack: 14,
+      armor: 10,
+      speed: 10,
+      crit: 0.08,
+      dodge: 0.05,
+      elem: "phys",
+      skills: ["heavy_blow"],
+      reward: { coins: [35, 55], materials: ["torn_cloth"] }
+    },
+    {
+      id: "golem_wander",
+      name: "\u0411\u0440\u043E\u0434\u044F\u0447\u0438\u0439 \u0433\u043E\u043B\u0435\u043C",
+      icon: "\u{1F9F1}",
+      hp: 110,
+      attack: 16,
+      armor: 22,
+      speed: 5,
+      crit: 0.03,
+      dodge: 0,
+      elem: "phys",
+      skills: ["heavy_blow", "slow_spores"],
+      reward: { coins: [50, 70], materials: ["brick_chunk"] }
+    },
+    {
+      id: "ghost_guard",
+      name: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A \u0441\u0442\u0440\u0430\u0436\u0438",
+      icon: "\u{1F47B}",
+      hp: 70,
+      attack: 15,
+      armor: 8,
+      speed: 11,
+      crit: 0.07,
+      dodge: 0.15,
+      elem: "phys",
+      skills: ["fear_chill"],
+      tags: ["spirit"],
+      reward: { coins: [45, 65], materials: ["ectoplasm"] }
+    },
+    {
+      id: "boss_captain",
+      name: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A \u043A\u0430\u043F\u0438\u0442\u0430\u043D\u0430 \u0441\u0442\u0440\u0430\u0436\u0438",
+      icon: "\u{1F480}",
+      hp: 240,
+      attack: 20,
+      armor: 18,
+      speed: 9,
+      crit: 0.1,
+      dodge: 0.06,
+      elem: "phys",
+      skills: ["heavy_blow", "fear_chill", "pollen_sleep"],
+      boss: true,
+      tags: ["spirit"],
+      reward: { coins: [260, 340], seals: 2, materials: ["captain_badge"] }
+    }
+  );
+  ENEMIES.push(
+    {
+      id: "ink_blot",
+      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u0430\u044F \u043A\u043B\u044F\u043A\u0441\u0430",
+      icon: "\u{1FADF}",
+      hp: 80,
+      attack: 15,
+      armor: 10,
+      speed: 8,
+      crit: 0.05,
+      dodge: 0.04,
+      elem: "phys",
+      skills: ["sting_poison", "slow_spores"],
+      reward: { coins: [55, 75], materials: ["ink_drop"] }
+    },
+    {
+      id: "paper_spirit",
+      name: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0439 \u0434\u0443\u0445",
+      icon: "\u{1F4C4}",
+      hp: 75,
+      attack: 17,
+      armor: 8,
+      speed: 12,
+      crit: 0.08,
+      dodge: 0.16,
+      elem: "phys",
+      skills: ["fear_chill"],
+      tags: ["spirit"],
+      reward: { coins: [60, 85], materials: ["paper_scrap"] }
+    },
+    {
+      id: "book_moth",
+      name: "\u041A\u043D\u0438\u0436\u043D\u0430\u044F \u043C\u043E\u043B\u044C",
+      icon: "\u{1F98B}",
+      hp: 60,
+      attack: 13,
+      armor: 6,
+      speed: 14,
+      crit: 0.06,
+      dodge: 0.14,
+      elem: "phys",
+      skills: ["pollen_sleep"],
+      reward: { coins: [50, 70], materials: ["page_dust"] }
+    },
+    {
+      id: "illustration",
+      name: "\u041E\u0436\u0438\u0432\u0448\u0430\u044F \u0438\u043B\u043B\u044E\u0441\u0442\u0440\u0430\u0446\u0438\u044F",
+      icon: "\u{1F5BC}\uFE0F",
+      hp: 130,
+      attack: 19,
+      armor: 20,
+      speed: 6,
+      crit: 0.06,
+      dodge: 0.02,
+      elem: "phys",
+      skills: ["heavy_blow"],
+      reward: { coins: [70, 95], materials: ["gold_leaf"] }
+    },
+    {
+      id: "boss_keeper",
+      name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B",
+      icon: "\u{1F4D6}",
+      hp: 320,
+      attack: 23,
+      armor: 22,
+      speed: 10,
+      crit: 0.1,
+      dodge: 0.08,
+      elem: "phys",
+      skills: ["fear_chill", "heavy_blow", "pollen_sleep"],
+      boss: true,
+      tags: ["spirit"],
+      reward: { coins: [380, 500], seals: 3, materials: ["last_page"] }
+    }
+  );
+  ENEMIES.push(
+    {
+      id: "boss_star_guardian",
+      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
+      icon: "\u{1F31F}",
+      hp: 420,
+      attack: 27,
+      armor: 26,
+      speed: 11,
+      crit: 0.12,
+      dodge: 0.08,
+      elem: "fire",
+      skills: ["heavy_blow", "fear_chill", "spit_fire"],
+      boss: true,
+      tags: ["spirit"],
+      reward: { coins: [600, 800], seals: 5, materials: ["star_shard"] }
+    }
+  );
+  for (const w of WORLDS) {
+    if (w?.enemies) ENEMIES.push(...w.enemies);
+  }
+  var ENEMY_BY_ID = Object.fromEntries(ENEMIES.map((e) => [e.id, e]));
+
+  // src/core/economy.js
+  function clampTier(tier) {
+    return Math.max(0, Math.min(5, Math.floor(Number(tier) || 0)));
+  }
+  function coinsPerMinute(tier) {
+    return 20 + 4 * clampTier(tier);
+  }
+  function round5(value) {
+    return Math.max(5, Math.round(value / 5) * 5);
+  }
+  function puzzleTypeOf(puzzle) {
+    return puzzle?.mechanic || "mirror";
+  }
+  function gridCells(puzzle) {
+    return Array.isArray(puzzle.grid) ? puzzle.grid[0] * puzzle.grid[1] : 0;
+  }
+  function letterCount(value) {
+    return String(value || "").replaceAll("\u2726", "").replaceAll(" ", "").length;
+  }
+  function recipeLength(recipe) {
+    return (recipe || []).reduce((sum, step) => sum + (step.times || 1), 0);
+  }
+  function puzzleContentMetric(puzzle) {
+    const type = puzzleTypeOf(puzzle);
+    if (type === "riddle" || type === "hang") return letterCount(puzzle.answer);
+    if (type === "seek") {
+      return (puzzle.groups || []).reduce((sum, group) => sum + (group.spots?.length || 0), 0);
+    }
+    if (type === "brew") {
+      return recipeLength(puzzle.recipe) + (puzzle.ingredients?.length || 0) * 0.25;
+    }
+    if (type === "fate") return (puzzle.story?.length || 0) + (puzzle.hand?.length || 0) * 0.5;
+    if (type === "gift") {
+      const showcase = puzzle.shelf || puzzle.showcase || puzzle.display || puzzle.items || [];
+      return (puzzle.story?.length || 0) + showcase.length * 0.5;
+    }
+    if (type === "seating") return (puzzle.guests?.length || 0) + Object.keys(puzzle.fixed || {}).length;
+    if (type === "glass" || type === "spin") return gridCells(puzzle);
+    if (type === "mirror") {
+      const objects = (puzzle.objects || []).filter((o) => ["mirror", "lantern", "moth"].includes(o.type)).length;
+      return objects + gridCells(puzzle) / 8;
+    }
+    if (type === "shelf") {
+      const items = puzzle.items || puzzle.goods || [];
+      return items.length + gridCells(puzzle) / 4;
+    }
+    if (type === "tea") return (puzzle.orders || puzzle.recipe || puzzle.ingredients || []).length;
+    return gridCells(puzzle) / 4 + (puzzle.objects || puzzle.nodes || puzzle.lanterns || puzzle.customers || puzzle.tiles || []).length;
+  }
+  function puzzleEconomy(puzzle, context = {}) {
+    const own = puzzle.economy || {};
+    const override = PUZZLE_ECONOMY_OVERRIDES[puzzle.id] || {};
+    const type = puzzleTypeOf(puzzle);
+    const profile = PUZZLE_TYPE_ECONOMY[type] || PUZZLE_TYPE_ECONOMY.custom;
+    const difficulty = Math.max(1, puzzle.difficulty || 1);
+    const metric = Math.max(0, puzzleContentMetric(puzzle));
+    const computedFirst = FIRST_COMPLETION_SECONDS + profile.first + difficulty * profile.difficulty + metric * profile.metric;
+    const computedRepeat = profile.repeat + difficulty * profile.repeatDifficulty + metric * profile.repeatMetric;
+    const tier = clampTier(own.tier ?? puzzle.economyTier ?? context.tier ?? difficulty - 1);
+    return {
+      tier,
+      order: own.order ?? context.order ?? 0,
+      finale: own.finale ?? context.finale ?? false,
+      expectedFirstSeconds: own.expectedFirstSeconds ?? puzzle.expectedFirstSeconds ?? override.expectedFirstSeconds ?? Math.max(15, Math.round(computedFirst)),
+      expectedRepeatSeconds: own.expectedRepeatSeconds ?? puzzle.expectedRepeatSeconds ?? override.expectedRepeatSeconds ?? Math.max(60, Math.round(computedRepeat))
+    };
+  }
+  function puzzleCoinReward(puzzle, { repeat = false, factor = 1, daily = false } = {}) {
+    const economy = puzzleEconomy(puzzle);
+    const seconds = repeat ? economy.expectedRepeatSeconds : economy.expectedFirstSeconds;
+    const repeatFactor = repeat ? PUZZLE_REPEAT_FACTOR : 1;
+    const playFactor = repeat ? Math.min(1, Math.max(0, factor)) : Math.max(0, factor);
+    const amount = Math.max(1, Math.round(coinsPerMinute(economy.tier) * seconds / 60 * repeatFactor * playFactor));
+    return daily ? amount * DAILY_COIN_FACTOR : amount;
+  }
+  function puzzleRewards(puzzle, options = {}) {
+    const rewards = [{ type: "coins", amount: puzzleCoinReward(puzzle, options) }];
+    if (options.repeat) return rewards;
+    const economy = puzzleEconomy(puzzle);
+    const items = (puzzle.rewards || []).filter((r) => r.type !== "coins" && r.type !== "seals");
+    rewards.push(...items.map((r) => ({ ...r })));
+    if (economy.finale) rewards.push({ type: "seals", amount: 1 });
+    return rewards;
+  }
+  function derivePuzzle(puzzle, context = {}) {
+    const economy = puzzleEconomy(puzzle, context);
+    const derived = { ...puzzle, economy };
+    return { ...derived, rewards: puzzleRewards(derived) };
+  }
+  function derivePuzzleCatalog(levels) {
+    const groups = /* @__PURE__ */ new Map();
+    for (const puzzle of levels) {
+      const type = puzzleTypeOf(puzzle);
+      if (!groups.has(type)) groups.set(type, []);
+      groups.get(type).push(puzzle);
+    }
+    const contextById = /* @__PURE__ */ new Map();
+    for (const group of groups.values()) {
+      group.forEach((puzzle, index) => {
+        contextById.set(puzzle.id, {
+          tier: Math.min(5, Math.floor(index * 6 / group.length)),
+          order: index,
+          finale: index === group.length - 1
+        });
+      });
+    }
+    return levels.map((puzzle) => derivePuzzle(puzzle, contextById.get(puzzle.id)));
+  }
+  function puzzleSkipTerms(puzzle) {
+    const firstCoins = puzzleCoinReward(puzzle);
+    return {
+      price: Math.max(50, Math.ceil(firstCoins * 1.5)),
+      consolation: Math.max(1, Math.floor(firstCoins / 3))
+    };
+  }
+  function battleEntries(battle) {
+    return (battle.enemies || []).map((entry) => typeof entry === "string" ? { id: entry, scale: 1 } : { scale: 1, ...entry });
+  }
+  function battleEconomy(battle) {
+    const own = battle.economy || {};
+    const override = BATTLE_ECONOMY_OVERRIDES[battle.id] || {};
+    const entries2 = battleEntries(battle);
+    let power = 0;
+    let boss = false;
+    for (const entry of entries2) {
+      const def = ENEMY_BY_ID[entry.id];
+      if (!def) continue;
+      const scale = entry.scale || 1;
+      power += (def.hp + def.armor * 3 + def.attack * 4) * scale;
+      boss ||= !!def.boss;
+    }
+    const computedFirst = Math.max(45, Math.round(FIRST_COMPLETION_SECONDS + 45 + power / 6));
+    const expectedFirstSeconds = own.expectedFirstSeconds ?? battle.expectedFirstSeconds ?? override.expectedFirstSeconds ?? computedFirst;
+    return {
+      tier: clampTier(own.tier ?? battle.economyTier ?? WORLD_ECONOMY_TIER[battle.world] ?? 0),
+      expectedFirstSeconds,
+      expectedRepeatSeconds: own.expectedRepeatSeconds ?? battle.expectedRepeatSeconds ?? override.expectedRepeatSeconds ?? Math.max(30, Math.round(expectedFirstSeconds * 0.75)),
+      bossMultiplier: own.bossMultiplier ?? battle.bossMultiplier ?? (boss ? BOSS_COIN_MULTIPLIER : battle.wanted ? WANTED_COIN_MULTIPLIER : 1),
+      power
+    };
+  }
+  function battleCoinReward(battle, { repeat = false, goldFind = 0 } = {}) {
+    const economy = battleEconomy(battle);
+    const base = coinsPerMinute(economy.tier) * economy.expectedFirstSeconds / 60 * economy.bossMultiplier;
+    const repeatFactor = repeat ? BATTLE_REPEAT_FACTOR : 1;
+    return Math.max(1, Math.round(base * repeatFactor * (1 + goldFind)));
+  }
+  function itemPrice(item2, { tier = 0 } = {}) {
+    if (!item2 || item2.sealPrice) return 0;
+    const override = ITEM_PRICE_OVERRIDES[item2.id];
+    if (override !== void 0) return override;
+    const kind = item2.slot === "consumable" ? "consumable" : item2.rarity || "common";
+    const minutes = PRICE_TARGET_MINUTES[kind] || PRICE_TARGET_MINUTES.common;
+    return round5(coinsPerMinute(tier) * minutes);
+  }
+  function shopUnlockOrder(unlockAfter) {
+    const index = SHOP_UNLOCK_ORDER.indexOf(unlockAfter ?? null);
+    return index >= 0 ? index : SHOP_UNLOCK_ORDER.length;
+  }
+
   // src/data/shop.js
-  var SHOP_STOCK = [
+  var SHOP_STOCK_ROWS = [
     // Стартовая полка
     { itemId: "wpn_rusty_sword", unlockAfter: null },
     { itemId: "shd_wooden", unlockAfter: null },
@@ -1392,6 +4943,22 @@
     { itemId: "rng_time_loop", unlockAfter: "mist_boss" }
     // легендарка за печати
   ];
+  function shopProgress(entry) {
+    const battle = entry.unlockAfter ? BATTLE_BY_ID[entry.unlockAfter] : null;
+    return {
+      tier: entry.tier ?? (battle ? battleEconomy(battle).tier : 0),
+      order: entry.order ?? shopUnlockOrder(entry.unlockAfter)
+    };
+  }
+  var SHOP_STOCK = SHOP_STOCK_ROWS.map((entry) => ({ ...entry, ...shopProgress(entry) }));
+  function pricedShopItem(entry) {
+    const item2 = ITEM_BY_ID[entry.itemId];
+    const progress = shopProgress(entry);
+    return { ...item2, ...progress, price: itemPrice(item2, { tier: progress.tier }) };
+  }
+  function compareShopItems(a, b) {
+    return (a.tier ?? 0) - (b.tier ?? 0) || (a.order ?? 0) - (b.order ?? 0) || (a.price ?? 0) - (b.price ?? 0) || a.id.localeCompare(b.id, "ru");
+  }
   var SHOPS = {
     armory: {
       name: "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A \xAB\u0421\u0442\u0430\u043B\u044C \u0438 \u0432\u0435\u0440\u043D\u043E\u0441\u0442\u044C\xBB",
@@ -1421,7 +4988,7 @@
   function itemsForShop(state2, shopKey, allItems) {
     const shop = SHOPS[shopKey];
     if (!shop) return [];
-    return allItems.filter((i) => shop.types.includes(i.type));
+    return allItems.filter((i) => shop.types.includes(i.type)).sort(compareShopItems);
   }
   var CREW_STOCK = [
     { id: "cmp_firefly", kind: "companion", unlockAfter: "bt_slimes" },
@@ -16398,2885 +19965,6 @@
     }
   }
 
-  // src/data/worlds/nm.js
-  var WORLD = {
-    id: "nm",
-    label: "\u{1F303} \u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
-    enemies: [
-      {
-        id: "nm_moth",
-        name: "\u042F\u043D\u0442\u0430\u0440\u043D\u044B\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A",
-        icon: "\u{1F98B}",
-        hp: 80,
-        attack: 15,
-        armor: 8,
-        speed: 14,
-        crit: 0.06,
-        dodge: 0.14,
-        elem: "phys",
-        skills: ["pollen_sleep"],
-        reward: { coins: [70, 95], materials: ["nm_moth_dust"] }
-      },
-      {
-        id: "nm_mask",
-        name: "\u041E\u0436\u0438\u0432\u0448\u0430\u044F \u043C\u0430\u0441\u043A\u0430",
-        icon: "\u{1F3AD}",
-        hp: 95,
-        attack: 18,
-        armor: 10,
-        speed: 11,
-        crit: 0.07,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["fear_chill"],
-        tags: ["spirit"],
-        reward: { coins: [80, 110], materials: ["nm_mask_shard"] }
-      },
-      {
-        id: "nm_shadow",
-        name: "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u0447\u043D\u0430\u044F \u0442\u0435\u043D\u044C",
-        icon: "\u{1F312}",
-        hp: 105,
-        attack: 18,
-        armor: 10,
-        speed: 10,
-        crit: 0.08,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["sting_poison"],
-        tags: ["spirit"],
-        reward: { coins: [90, 120], materials: ["nm_shadow_ash"] }
-      },
-      {
-        id: "nm_lantern",
-        name: "\u0414\u0443\u0445 \u0444\u043E\u043D\u0430\u0440\u044F",
-        icon: "\u{1F3EE}",
-        hp: 90,
-        attack: 19,
-        armor: 10,
-        speed: 9,
-        crit: 0.06,
-        dodge: 0.06,
-        elem: "fire",
-        skills: ["spit_fire"],
-        tags: ["spirit"],
-        reward: { coins: [85, 115], materials: ["nm_ember_oil"] }
-      },
-      {
-        id: "nm_garland",
-        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u043D\u044B\u0439 \u0437\u043C\u0435\u0439",
-        icon: "\u2728",
-        hp: 120,
-        attack: 17,
-        armor: 16,
-        speed: 8,
-        crit: 0.04,
-        dodge: 0.04,
-        elem: "phys",
-        skills: ["slow_spores", "regen_ally_skill"],
-        tags: ["spirit"],
-        reward: { coins: [95, 130], materials: ["nm_moth_dust"] }
-      },
-      {
-        id: "nm_teller",
-        name: "\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446-\u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044C",
-        icon: "\u{1F5E3}\uFE0F",
-        hp: 140,
-        attack: 22,
-        armor: 18,
-        speed: 7,
-        crit: 0.05,
-        dodge: 0.03,
-        elem: "phys",
-        skills: ["heavy_blow", "regen_ally_skill"],
-        reward: { coins: [110, 150], materials: ["nm_shadow_ash"] }
-      },
-      // Босс мира
-      {
-        id: "nm_boss_keeper",
-        name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
-        icon: "\u{1F3AA}",
-        hp: 400,
-        attack: 28,
-        armor: 26,
-        speed: 10,
-        crit: 0.08,
-        dodge: 0.05,
-        elem: "fire",
-        skills: ["heavy_blow", "fear_chill", "spit_fire"],
-        boss: true,
-        tags: ["spirit"],
-        reward: { coins: [700, 950], seals: 5, materials: ["nm_market_crown"] }
-      }
-    ],
-    materials: [
-      {
-        id: "nm_moth_dust",
-        name: "\u041F\u044B\u043B\u044C\u0446\u0430 \u044F\u043D\u0442\u0430\u0440\u043D\u043E\u0433\u043E \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430",
-        icon: "\u{1F31F}",
-        description: "\u041C\u0435\u0440\u0446\u0430\u0435\u0442 \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435 \u0442\u0451\u043F\u043B\u044B\u043C \u044F\u043D\u0442\u0430\u0440\u043D\u044B\u043C \u0441\u0432\u0435\u0442\u043E\u043C."
-      },
-      {
-        id: "nm_mask_shard",
-        name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u043E\u0436\u0438\u0432\u0448\u0435\u0439 \u043C\u0430\u0441\u043A\u0438",
-        icon: "\u{1F3AD}",
-        description: "\u041D\u0430 \u0433\u043B\u0430\u0434\u043A\u043E\u043C \u043B\u0430\u043A\u0435 \u0437\u0430\u0441\u0442\u044B\u043B\u0430 \u0447\u0443\u0436\u0430\u044F \u0443\u043B\u044B\u0431\u043A\u0430."
-      },
-      {
-        id: "nm_shadow_ash",
-        name: "\u041F\u0435\u043F\u0435\u043B \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u0447\u043D\u043E\u0439 \u0442\u0435\u043D\u0438",
-        icon: "\u{1F311}",
-        description: "\u041B\u0451\u0433\u043A\u0438\u0439 \u043F\u0435\u043F\u0435\u043B, \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043F\u0440\u044F\u0447\u0435\u0442\u0441\u044F \u043E\u0442 \u0441\u0432\u0435\u0442\u0430."
-      },
-      {
-        id: "nm_ember_oil",
-        name: "\u041C\u0430\u0441\u043B\u043E \u0434\u0443\u0445\u043E\u0432 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
-        icon: "\u{1F3EE}",
-        description: "\u0413\u043E\u0440\u0438\u0442 \u0431\u0435\u0437 \u0434\u044B\u043C\u0430 \u0438 \u043D\u0435 \u0433\u0430\u0441\u043D\u0435\u0442 \u043F\u043E\u0434 \u0434\u043E\u0436\u0434\u0451\u043C."
-      },
-      {
-        id: "nm_market_crown",
-        name: "\u041A\u043E\u0440\u043E\u043D\u0430 \u0445\u043E\u0437\u044F\u0438\u043D\u0430 \u0440\u044B\u043D\u043A\u0430",
-        icon: "\u{1F451}",
-        description: "\u0417\u043D\u0430\u043A \u0432\u043B\u0430\u0441\u0442\u0438 \u043D\u0430\u0434 \u0432\u0441\u0435\u043C\u0438 \u043B\u0430\u0432\u043A\u0430\u043C\u0438 \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430."
-      }
-    ],
-    battles: [
-      {
-        id: "nm_01",
-        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C",
-        world: "nm",
-        enemies: [{ id: "nm_moth", scale: 1.5 }],
-        unlockAfter: "ex_boss",
-        tip: "\u041E\u0434\u0438\u043D\u043E\u043A\u0438\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0411\u044B\u0441\u0442\u0440\u044B\u0439 \u0443\u0434\u0430\u0440 \u2014 \u0438 \u043F\u0443\u0442\u044C \u043E\u0442\u043A\u0440\u044B\u0442."
-      },
-      {
-        id: "nm_02",
-        name: "\u0420\u044F\u0434 \u0441 \u043C\u0430\u0441\u043A\u0430\u043C\u0438",
-        world: "nm",
-        enemies: [{ id: "nm_mask", scale: 1.52 }],
-        unlockAfter: "nm_01",
-        tip: "\u041C\u0430\u0441\u043A\u0430 \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0440\u0435\u0448\u0438\u0442 \u0432\u0441\u0451."
-      },
-      {
-        id: "nm_03",
-        name: "\u0422\u0435\u043D\u0438 \u043F\u043E\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C",
-        world: "nm",
-        obstacles: [{ cell: [3, 1], kind: "lantern" }],
-        enemies: [{ id: "nm_shadow", scale: 1.53 }, { id: "nm_moth", scale: 1.53 }],
-        unlockAfter: "nm_02",
-        tip: "\u042F\u0434 \u0438 \u0441\u043E\u043D \u0432 \u043F\u0430\u0440\u0435. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u0430."
-      },
-      {
-        id: "nm_04",
-        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u044B \u043E\u0436\u0438\u0432\u0430\u044E\u0442",
-        world: "nm",
-        enemies: [{ id: "nm_garland", scale: 1.55 }, { id: "nm_moth", scale: 1.54 }],
-        unlockAfter: "nm_03",
-        tip: "\u0417\u043C\u0435\u0439 \u043B\u0435\u0447\u0438\u0442 \u0441\u0435\u0431\u044F \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442. \u0411\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "nm_05",
-        name: "\u0416\u0430\u0440 \u043C\u0430\u0441\u043B\u044F\u043D\u044B\u0445 \u043B\u0430\u043C\u043F",
-        world: "nm",
-        enemies: [{ id: "nm_lantern", scale: 1.56 }, { id: "nm_lantern", scale: 1.55 }],
-        unlockAfter: "nm_04",
-        tip: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430 \u043E\u0433\u043D\u044F. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0441\u043F\u0430\u0441\u0451\u0442 \u043E\u0442 \u043E\u0436\u043E\u0433\u043E\u0432."
-      },
-      {
-        id: "nm_06",
-        name: "\u0421\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u0438 \u0443 \u0436\u0430\u0440\u043E\u0432\u043D\u0438",
-        world: "nm",
-        enemies: [{ id: "nm_teller", scale: 1.57 }, { id: "nm_garland", scale: 1.56 }],
-        unlockAfter: "nm_05",
-        tip: "\u0421\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044C \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u0437\u043C\u0435\u0439 \u0435\u0433\u043E \u043B\u0435\u0447\u0438\u0442. \u041D\u0435 \u0442\u044F\u043D\u0438 \u0431\u043E\u0439."
-      },
-      {
-        id: "nm_07",
-        name: "\u041C\u0430\u0441\u043A\u0438 \u0441\u043C\u0435\u044E\u0442\u0441\u044F \u0432 \u0442\u0435\u043C\u043D\u043E\u0442\u0435",
-        world: "nm",
-        enemies: [{ id: "nm_mask", scale: 1.58 }, { id: "nm_mask", scale: 1.58 }, { id: "nm_moth", scale: 1.58 }],
-        unlockAfter: "nm_06",
-        tip: "\u0421\u0442\u0440\u0430\u0445 \u0441 \u0434\u0432\u0443\u0445 \u0441\u0442\u043E\u0440\u043E\u043D \u0438 \u0441\u043E\u043D. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0441\u043D\u043E\u0432\u0430 \u0432 \u0434\u0435\u043B\u0435."
-      },
-      {
-        id: "nm_08",
-        name: "\u042F\u0434\u043E\u0432\u0438\u0442\u044B\u0439 \u0442\u0443\u043C\u0430\u043D \u0430\u0440\u043E\u043C\u0430\u0442\u043E\u0432",
-        world: "nm",
-        obstacles: [{ cell: [2, 0], kind: "crate" }, { cell: [5, 2], kind: "crate" }],
-        enemies: [{ id: "nm_shadow", scale: 1.6 }, { id: "nm_lantern", scale: 1.59 }, { id: "nm_garland", scale: 1.59 }],
-        unlockAfter: "nm_07",
-        tip: "\u042F\u0434, \u043E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0432\u044B\u0431\u0435\u0439 \u0437\u043C\u0435\u044F."
-      },
-      {
-        id: "nm_09",
-        name: "\u0422\u0430\u043D\u0435\u0446 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
-        world: "nm",
-        enemies: [{ id: "nm_lantern", scale: 1.62 }, { id: "nm_mask", scale: 1.61 }, { id: "nm_moth", scale: 1.61 }],
-        unlockAfter: "nm_08",
-        tip: "\u041E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0440\u0430\u0437\u043E\u043C. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
-      },
-      {
-        id: "nm_10",
-        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0430\u0443\u043A\u0446\u0438\u043E\u043D",
-        world: "nm",
-        enemies: [{ id: "nm_teller", scale: 1.63 }, { id: "nm_shadow", scale: 1.62 }],
-        unlockAfter: "nm_09",
-        tip: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439 \u0443\u0434\u0430\u0440 \u0438 \u044F\u0434. \u0413\u043B\u0443\u0448\u0438 \u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044F \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "nm_11",
-        name: "\u0420\u043E\u0439 \u0443 \u043B\u0430\u043C\u043F",
-        world: "nm",
-        enemies: [{ id: "nm_moth", scale: 1.64 }, { id: "nm_moth", scale: 1.64 }, { id: "nm_moth", scale: 1.64 }],
-        unlockAfter: "nm_10",
-        tip: "\u0422\u0440\u043E\u0435 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0438\u0445 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432. \u0417\u0430\u0449\u0438\u0442\u0430 \u043E\u0442 \u0441\u043D\u0430 \u0440\u0435\u0448\u0430\u0435\u0442 \u0431\u043E\u0439."
-      },
-      {
-        id: "nm_12",
-        name: "\u0422\u0435\u043D\u0435\u0432\u043E\u0439 \u0440\u044F\u0434",
-        world: "nm",
-        enemies: [{ id: "nm_shadow", scale: 1.66 }, { id: "nm_mask", scale: 1.65 }, { id: "nm_moth", scale: 1.64 }],
-        unlockAfter: "nm_11",
-        tip: "\u042F\u0434, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0448\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430."
-      },
-      {
-        id: "nm_13",
-        name: "\u041C\u0430\u0441\u043B\u044F\u043D\u044B\u0439 \u043F\u043E\u0436\u0430\u0440",
-        world: "nm",
-        obstacles: [{ cell: [4, 1], kind: "lantern" }],
-        enemies: [{ id: "nm_lantern", scale: 1.67 }, { id: "nm_lantern", scale: 1.66 }, { id: "nm_garland", scale: 1.66 }],
-        unlockAfter: "nm_12",
-        tip: "\u041E\u0433\u043E\u043D\u044C \u0438 \u043B\u0435\u0447\u0430\u0449\u0438\u0439 \u0437\u043C\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0437\u043C\u0435\u0439, \u043F\u043E\u0442\u043E\u043C \u0444\u043E\u043D\u0430\u0440\u0438."
-      },
-      {
-        id: "nm_14",
-        name: "\u0411\u0430\u043B \u043C\u0430\u0441\u043E\u043A",
-        world: "nm",
-        enemies: [{ id: "nm_mask", scale: 1.68 }, { id: "nm_mask", scale: 1.68 }, { id: "nm_mask", scale: 1.68 }],
-        unlockAfter: "nm_13",
-        tip: "\u0422\u0440\u043E\u0439\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u0445. \u0411\u0435\u0437 \u0430\u043C\u0443\u043B\u0435\u0442\u0430 \u043E\u0442\u0432\u0430\u0433\u0438 \u043E\u0442\u0440\u044F\u0434 \u0434\u0440\u043E\u0433\u043D\u0435\u0442."
-      },
-      {
-        id: "nm_15",
-        name: "\u0413\u0438\u0440\u043B\u044F\u043D\u0434\u043D\u044B\u0439 \u043A\u043E\u0440\u0438\u0434\u043E\u0440",
-        world: "nm",
-        enemies: [{ id: "nm_garland", scale: 1.7 }, { id: "nm_garland", scale: 1.69 }, { id: "nm_teller", scale: 1.69 }],
-        unlockAfter: "nm_14",
-        tip: "\u0414\u0432\u0430 \u043B\u0435\u043A\u0430\u0440\u044F \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0439 \u043A\u0443\u043B\u0430\u043A. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0441\u0442\u0440\u043E\u0439 \u0431\u044B\u0441\u0442\u0440\u043E."
-      },
-      {
-        id: "nm_16",
-        name: "\u0422\u0435\u043D\u0438 \u0441\u043A\u0443\u043F\u0430\u044E\u0442 \u0441\u0432\u0435\u0442",
-        world: "nm",
-        enemies: [{ id: "nm_shadow", scale: 1.71 }, { id: "nm_lantern", scale: 1.7 }, { id: "nm_moth", scale: 1.7 }],
-        unlockAfter: "nm_15",
-        tip: "\u042F\u0434, \u043E\u0433\u043E\u043D\u044C \u0438 \u0441\u043E\u043D. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0432\u0430\u0436\u043D\u0435\u0435 \u043E\u0433\u043D\u0435\u0443\u043F\u043E\u0440\u0430."
-      },
-      {
-        id: "nm_17",
-        name: "\u0421\u043A\u0430\u0437\u043A\u0438 \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043B\u0443\u043D\u043E\u0447\u0438",
-        world: "nm",
-        obstacles: [{ cell: [3, 2], kind: "crate" }],
-        enemies: [{ id: "nm_teller", scale: 1.7 }, { id: "nm_teller", scale: 1.7 }, { id: "nm_moth", scale: 1.7 }],
-        unlockAfter: "nm_16",
-        tip: "\u0414\u0432\u0430 \u0441\u043A\u0430\u0437\u0438\u0442\u0435\u043B\u044F \u043B\u0435\u0447\u0430\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430. \u0411\u0435\u0439 \u043E\u0434\u043D\u043E\u0433\u043E \u0434\u043E \u043A\u043E\u043D\u0446\u0430."
-      },
-      {
-        id: "nm_18",
-        name: "\u042F\u043D\u0442\u0430\u0440\u043D\u0430\u044F \u0431\u0443\u0440\u044F",
-        world: "nm",
-        enemies: [{ id: "nm_lantern", scale: 1.73 }, { id: "nm_lantern", scale: 1.73 }, { id: "nm_mask", scale: 1.72 }],
-        unlockAfter: "nm_17",
-        tip: "\u0421\u0442\u0435\u043D\u0430 \u043E\u0433\u043D\u044F \u0438 \u0441\u0442\u0440\u0430\u0445. \u041E\u0433\u043D\u0435\u0443\u043F\u043E\u0440\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u0434\u0440\u0443\u0433."
-      },
-      {
-        id: "nm_19",
-        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u043A",
-        world: "nm",
-        enemies: [{ id: "nm_teller", scale: 1.74 }, { id: "nm_garland", scale: 1.74 }, { id: "nm_lantern", scale: 1.73 }],
-        unlockAfter: "nm_18",
-        tip: "\u0412\u0441\u0451 \u0438 \u0441\u0440\u0430\u0437\u0443: \u043A\u0443\u043B\u0430\u043A, \u043B\u0435\u043A\u0430\u0440\u044C \u0438 \u043E\u0433\u043E\u043D\u044C. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430."
-      },
-      {
-        id: "nm_boss",
-        name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0440\u044B\u043D\u043A\u0430",
-        world: "nm",
-        enemies: [{ id: "nm_boss_keeper", scale: 1.75 }],
-        unlockAfter: "nm_19",
-        tip: "\u041E\u043D \u043F\u044B\u0448\u0435\u0442 \u0436\u0430\u0440\u043E\u043C \u0438 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u041E\u0433\u043D\u0435\u0443\u043F\u043E\u0440 \u0438 \u043E\u0442\u0432\u0430\u0433\u0430 \u2014 \u0438 \u043A\u043E\u0440\u043E\u043D\u0430 \u0442\u0432\u043E\u044F."
-      }
-    ]
-  };
-
-  // src/data/worlds/sw.js
-  var WORLD2 = {
-    id: "sw",
-    label: "\u{1F438} \u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438",
-    enemies: [
-      {
-        id: "sw_frog_guardian",
-        name: "\u041B\u044F\u0433\u0443\u0448\u043A\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u0438\u0446\u0430",
-        icon: "\u{1F438}",
-        hp: 150,
-        attack: 18,
-        armor: 22,
-        speed: 7,
-        crit: 0.04,
-        dodge: 0.02,
-        elem: "phys",
-        skills: ["heavy_blow"],
-        reward: { coins: [70, 100], materials: ["sw_frog_amulet"] }
-      },
-      {
-        id: "sw_bog_spirit",
-        name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u0434\u0443\u0445",
-        icon: "\u{1F32B}\uFE0F",
-        hp: 95,
-        attack: 17,
-        armor: 10,
-        speed: 10,
-        crit: 0.06,
-        dodge: 0.14,
-        elem: "phys",
-        skills: ["fear_chill", "slow_spores"],
-        tags: ["spirit"],
-        reward: { coins: [65, 90], materials: ["sw_bog_mist"] }
-      },
-      {
-        id: "sw_witch_cat",
-        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u043A\u043E\u0442",
-        icon: "\u{1F408}\u200D\u2B1B",
-        hp: 85,
-        attack: 16,
-        armor: 8,
-        speed: 11,
-        crit: 0.1,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["aimed_shot", "sting_poison_weak"],
-        reward: { coins: [60, 85], materials: ["sw_witch_thread"] }
-      },
-      {
-        id: "sw_doll_trickster",
-        name: "\u041A\u0443\u043A\u043B\u0430-\u043E\u0431\u043C\u0430\u043D\u0449\u0438\u0446\u0430",
-        icon: "\u{1FA86}",
-        hp: 105,
-        attack: 15,
-        armor: 12,
-        speed: 9,
-        crit: 0.05,
-        dodge: 0.08,
-        elem: "phys",
-        skills: ["pollen_sleep", "fear_chill"],
-        reward: { coins: [65, 90], materials: ["sw_witch_thread"] }
-      },
-      {
-        id: "sw_glow_bush",
-        name: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u043D\u0438\u043A",
-        icon: "\u{1FAD0}",
-        hp: 120,
-        attack: 14,
-        armor: 14,
-        speed: 6,
-        crit: 0.03,
-        dodge: 0.02,
-        elem: "phys",
-        skills: ["regen_ally_skill", "slow_spores"],
-        reward: { coins: [70, 95], materials: ["sw_glow_berry"] }
-      },
-      {
-        id: "sw_hut_walker",
-        name: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430-\u043F\u0440\u043E\u0445\u043E\u0436\u0430\u044F",
-        icon: "\u{1F6D6}",
-        hp: 160,
-        attack: 22,
-        armor: 20,
-        speed: 6,
-        crit: 0.05,
-        dodge: 0,
-        elem: "fire",
-        skills: ["spit_fire", "heavy_blow"],
-        reward: { coins: [85, 115], materials: ["sw_glow_berry"] }
-      },
-      // Босс мира
-      {
-        id: "sw_hag_queen",
-        name: "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439",
-        icon: "\u{1F9D9}\u200D\u2640\uFE0F",
-        hp: 350,
-        attack: 26,
-        armor: 24,
-        speed: 10,
-        crit: 0.1,
-        dodge: 0.06,
-        elem: "phys",
-        skills: ["sting_poison", "fear_chill", "heavy_blow"],
-        boss: true,
-        reward: { coins: [450, 600], seals: 4, materials: ["sw_hag_crown"] }
-      }
-    ],
-    materials: [
-      { id: "sw_frog_amulet", name: "\u041B\u044F\u0433\u0443\u0448\u0430\u0447\u0438\u0439 \u043E\u0431\u0435\u0440\u0435\u0433", icon: "\u{1F438}", description: "\u0422\u0451\u043F\u043B\u044B\u0439 \u043A\u0430\u043C\u0435\u0448\u0435\u043A, \u0438\u0437\u0440\u0435\u0434\u043A\u0430 \u0442\u0438\u0445\u043E\u043D\u044C\u043A\u043E \u043A\u0432\u0430\u043A\u0430\u0435\u0442." },
-      { id: "sw_bog_mist", name: "\u041A\u043B\u043E\u0447\u043E\u043A \u0442\u043E\u043F\u044F\u043D\u043E\u0433\u043E \u0442\u0443\u043C\u0430\u043D\u0430", icon: "\u{1F32B}\uFE0F", description: "\u041D\u0435 \u0440\u0430\u0441\u0441\u0435\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0434\u0430\u0436\u0435 \u0432 \u043F\u043B\u043E\u0442\u043D\u043E \u0437\u0430\u043A\u0440\u044B\u0442\u043E\u0439 \u0431\u0430\u043D\u043A\u0435." },
-      { id: "sw_witch_thread", name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u043D\u0438\u0442\u044C", icon: "\u{1F9F5}", description: "\u0428\u044C\u0451\u0442 \u0441\u0430\u043C\u0430 \u0438 \u043A\u0443\u0441\u0430\u0435\u0442\u0441\u044F \u0441\u0430\u043C\u0430." },
-      { id: "sw_glow_berry", name: "\u0421\u0432\u0435\u0442\u044F\u0449\u0430\u044F\u0441\u044F \u044F\u0433\u043E\u0434\u0430", icon: "\u{1FAD0}", description: "\u041C\u044F\u0433\u043A\u043E \u0441\u0432\u0435\u0442\u0438\u0442 \u0437\u0435\u043B\u0451\u043D\u044B\u043C, \u0440\u0430\u0441\u0442\u0451\u0442 \u0434\u0430\u0436\u0435 \u043D\u0430 \u043A\u0440\u044B\u0448\u0435 \u0438\u0437\u0431\u0443\u0448\u043A\u0438." },
-      { id: "sw_hag_crown", name: "\u0412\u0435\u043D\u0435\u0446 \u0425\u043E\u0437\u044F\u0439\u043A\u0438 \u0422\u043E\u043F\u0435\u0439", icon: "\u{1F451}", description: "\u0422\u044F\u0436\u0451\u043B\u044B\u0439, \u043F\u0430\u0445\u043D\u0435\u0442 \u043A\u0443\u043F\u0430\u0432\u043E\u0439 \u0438 \u0431\u043E\u043B\u043E\u0442\u043D\u044B\u043C \u0434\u044B\u043C\u043E\u043C." }
-    ],
-    battles: [
-      {
-        id: "sw_01",
-        name: "\u041A\u043E\u0447\u043A\u0438 \u0443 \u0442\u0440\u043E\u043F\u044B",
-        world: "sw",
-        enemies: [{ id: "sw_doll_trickster", scale: 1.6 }],
-        unlockAfter: "nm_boss",
-        tip: "\u041A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442 \u043A\u043E\u043B\u044B\u0431\u0435\u043B\u044C\u043D\u0443\u044E \u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u041F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u044C \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
-      },
-      {
-        id: "sw_02",
-        name: "\u041A\u0432\u0430\u043A\u0430\u043D\u044C\u0435 \u0432 \u043A\u0430\u043C\u044B\u0448\u0430\u0445",
-        world: "sw",
-        enemies: [{ id: "sw_frog_guardian", scale: 1.61 }, { id: "sw_frog_guardian", scale: 1.61 }],
-        unlockAfter: "sw_01",
-        tip: "\u041B\u044F\u0433\u0443\u0448\u043A\u0438 \u0431\u044C\u044E\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u2014 \u043B\u0443\u0447\u0448\u0438\u0439 \u043E\u0442\u0432\u0435\u0442."
-      },
-      {
-        id: "sw_03",
-        name: "\u0422\u0443\u043C\u0430\u043D \u043D\u0430\u0434 \u0432\u043E\u0434\u043E\u0439",
-        world: "sw",
-        enemies: [{ id: "sw_bog_spirit", scale: 1.63 }, { id: "sw_bog_spirit", scale: 1.63 }],
-        unlockAfter: "sw_02",
-        tip: "\u0414\u0443\u0445\u0438 \u043D\u0430\u0433\u043E\u043D\u044F\u044E\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
-      },
-      {
-        id: "sw_04",
-        name: "\u042F\u0433\u043E\u0434\u043D\u0430\u044F \u043F\u043E\u043B\u044F\u043D\u0430",
-        world: "sw",
-        obstacles: [{ cell: [4, 1], kind: "log" }],
-        enemies: [{ id: "sw_glow_bush", scale: 1.64 }, { id: "sw_witch_cat", scale: 1.64 }],
-        unlockAfter: "sw_03",
-        tip: "\u0421\u0432\u0435\u0442\u043E\u044F\u0433\u043E\u0434\u043D\u0438\u043A \u043B\u0435\u0447\u0438\u0442 \u0441\u0432\u043E\u0438\u0445 \u2014 \u0441\u0440\u0443\u0431\u0438 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "sw_05",
-        name: "\u041A\u0443\u0440\u044C\u0438 \u0441\u043B\u0435\u0434\u044B",
-        world: "sw",
-        enemies: [{ id: "sw_hut_walker", scale: 1.66 }],
-        unlockAfter: "sw_04",
-        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u0434\u044B\u0448\u0438\u0442 \u0436\u0430\u0440\u043A\u0438\u043C \u0434\u044B\u043C\u043E\u043C \u0438 \u0442\u043E\u043F\u0430\u0435\u0442 \u0442\u044F\u0436\u0435\u043B\u043E. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043F\u043E\u043C\u043E\u0436\u0435\u0442."
-      },
-      {
-        id: "sw_06",
-        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u0442\u0440\u043E\u043F\u0430",
-        world: "sw",
-        enemies: [{ id: "sw_witch_cat", scale: 1.67 }, { id: "sw_doll_trickster", scale: 1.67 }],
-        unlockAfter: "sw_05",
-        tip: "\u041A\u043E\u0442 \u0446\u0435\u043B\u0438\u0442\u0441\u044F \u043C\u0435\u0442\u043A\u043E, \u043A\u0443\u043A\u043B\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
-      },
-      {
-        id: "sw_07",
-        name: "\u0414\u0443\u0445 \u0438 \u043B\u0435\u043A\u0430\u0440\u044C",
-        world: "sw",
-        enemies: [{ id: "sw_bog_spirit", scale: 1.68 }, { id: "sw_glow_bush", scale: 1.68 }],
-        unlockAfter: "sw_06",
-        tip: "\u0414\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C, \u0430 \u043A\u0443\u0441\u0442 \u0435\u0433\u043E \u043B\u0435\u0447\u0438\u0442. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0441\u044C \u0441 \u043B\u0435\u043A\u0430\u0440\u0435\u043C \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "sw_08",
-        name: "\u0425\u043E\u0440\u043E\u0432\u043E\u0434 \u043A\u0443\u043A\u043E\u043B",
-        world: "sw",
-        enemies: [
-          { id: "sw_doll_trickster", scale: 1.7 },
-          { id: "sw_doll_trickster", scale: 1.7 },
-          { id: "sw_witch_cat", scale: 1.7 }
-        ],
-        unlockAfter: "sw_07",
-        tip: "\u0414\u0432\u0435 \u043A\u043E\u043B\u044B\u0431\u0435\u043B\u044C\u043D\u044B\u0435 \u0438 \u043C\u0435\u0442\u043A\u0438\u0439 \u043A\u043E\u0442. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
-      },
-      {
-        id: "sw_09",
-        name: "\u0411\u043E\u043B\u043E\u0442\u043D\u044B\u0439 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
-        world: "sw",
-        obstacles: [{ cell: [3, 0], kind: "mushroom" }, { cell: [3, 2], kind: "mushroom" }],
-        enemies: [{ id: "sw_frog_guardian", scale: 1.71 }, { id: "sw_bog_spirit", scale: 1.71 }],
-        unlockAfter: "sw_08",
-        tip: "\u0422\u043E\u043B\u0441\u0442\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u0441\u043F\u0435\u0440\u0435\u0434\u0438, \u0441\u0442\u0440\u0430\u0445 \u0438\u0437 \u0442\u0443\u043C\u0430\u043D\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
-      },
-      {
-        id: "sw_10",
-        name: "\u0414\u044B\u043C\u043D\u0430\u044F \u0438\u0437\u0431\u0443\u0448\u043A\u0430",
-        world: "sw",
-        enemies: [{ id: "sw_hut_walker", scale: 1.73 }, { id: "sw_glow_bush", scale: 1.73 }],
-        unlockAfter: "sw_09",
-        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u043F\u043B\u044E\u0451\u0442\u0441\u044F \u0434\u044B\u043C\u043E\u043C, \u0430 \u044F\u0433\u043E\u0434\u044B \u0435\u0451 \u043B\u0435\u0447\u0430\u0442. \u0413\u0430\u0441\u0438 \u043A\u0443\u0441\u0442 \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "sw_11",
-        name: "\u041A\u043E\u0448\u043A\u0438\u043D\u044B \u0443\u043B\u043E\u0432\u043A\u0438",
-        world: "sw",
-        enemies: [
-          { id: "sw_witch_cat", scale: 1.74 },
-          { id: "sw_witch_cat", scale: 1.74 },
-          { id: "sw_doll_trickster", scale: 1.74 }
-        ],
-        unlockAfter: "sw_10",
-        tip: "\u0414\u0432\u0430 \u043A\u043E\u0442\u0430 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438 \u0441\u043B\u0435\u0433\u043A\u0430 \u0442\u0440\u0430\u0432\u044F\u0442. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u044C."
-      },
-      {
-        id: "sw_12",
-        name: "\u041C\u0433\u043B\u0430 \u0441\u0433\u0443\u0449\u0430\u0435\u0442\u0441\u044F",
-        world: "sw",
-        enemies: [
-          { id: "sw_bog_spirit", scale: 1.75 },
-          { id: "sw_bog_spirit", scale: 1.75 },
-          { id: "sw_glow_bush", scale: 1.75 }
-        ],
-        unlockAfter: "sw_11",
-        tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u043F\u043E\u0434 \u0437\u0430\u0449\u0438\u0442\u043E\u0439 \u043A\u0443\u0441\u0442\u0430-\u043B\u0435\u043A\u0430\u0440\u044F. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
-      },
-      {
-        id: "sw_13",
-        name: "\u042F\u0433\u043E\u0434\u043D\u044B\u0439 \u0434\u043E\u0437\u043E\u0440",
-        world: "sw",
-        enemies: [
-          { id: "sw_glow_bush", scale: 1.77 },
-          { id: "sw_frog_guardian", scale: 1.77 },
-          { id: "sw_witch_cat", scale: 1.77 }
-        ],
-        unlockAfter: "sw_12",
-        tip: "\u041B\u0435\u043A\u0430\u0440\u044C, \u0442\u0430\u043D\u043A \u0438 \u043C\u0435\u0442\u043A\u0438\u0439 \u0441\u0442\u0440\u0435\u043B\u043E\u043A. \u0420\u0435\u0436\u044C \u043B\u0435\u043A\u0430\u0440\u044F \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "sw_14",
-        name: "\u0421\u043A\u0440\u0438\u043F\u0443\u0447\u0438\u0439 \u0433\u043E\u0441\u0442\u044C",
-        world: "sw",
-        obstacles: [{ cell: [4, 1], kind: "log" }],
-        enemies: [{ id: "sw_hut_walker", scale: 1.78 }, { id: "sw_doll_trickster", scale: 1.78 }],
-        unlockAfter: "sw_13",
-        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0430 \u0442\u043E\u043F\u0430\u0435\u0442, \u043A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442. \u0421\u043E\u043D \u0438 \u043E\u0433\u043E\u043D\u044C \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E."
-      },
-      {
-        id: "sw_15",
-        name: "\u0422\u043E\u043F\u044F\u043D\u043E\u0435 \u0442\u0440\u0438\u043E",
-        world: "sw",
-        enemies: [
-          { id: "sw_frog_guardian", scale: 1.65 },
-          { id: "sw_bog_spirit", scale: 1.6 },
-          { id: "sw_witch_cat", scale: 1.6 }
-        ],
-        unlockAfter: "sw_14",
-        tip: "\u041B\u044F\u0433\u0443\u0448\u043A\u0430 \u0434\u0435\u0440\u0436\u0438\u0442 \u0441\u0442\u0440\u043E\u0439, \u0434\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442, \u043A\u043E\u0442 \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442. \u041B\u0435\u043A\u0430\u0440\u044C \u0432 \u043E\u0442\u0440\u044F\u0434\u0435 \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
-      },
-      {
-        id: "sw_16",
-        name: "\u041A\u0443\u043A\u043E\u043B\u044C\u043D\u044B\u0439 \u0432\u0435\u0440\u0442\u0435\u043F",
-        world: "sw",
-        enemies: [
-          { id: "sw_doll_trickster", scale: 1.81 },
-          { id: "sw_doll_trickster", scale: 1.81 },
-          { id: "sw_glow_bush", scale: 1.81 }
-        ],
-        unlockAfter: "sw_15",
-        tip: "\u0414\u0432\u0435 \u043A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0430 \u043A\u0443\u0441\u0442 \u043B\u0435\u0447\u0438\u0442. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u2014 \u043D\u0430 \u043F\u0435\u0440\u0432\u044B\u0439 \u043F\u043B\u0430\u043D."
-      },
-      {
-        id: "sw_17",
-        name: "\u0414\u044B\u043C \u043D\u0430\u0434 \u0442\u043E\u043F\u044C\u044E",
-        world: "sw",
-        enemies: [
-          { id: "sw_hut_walker", scale: 1.82 },
-          { id: "sw_bog_spirit", scale: 1.82 },
-          { id: "sw_witch_cat", scale: 1.82 }
-        ],
-        unlockAfter: "sw_16",
-        tip: "\u041E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0442\u043E\u0447\u043D\u044B\u0435 \u0432\u044B\u0441\u0442\u0440\u0435\u043B\u044B. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F."
-      },
-      {
-        id: "sw_18",
-        name: "\u0412\u0435\u0434\u044C\u043C\u0438\u043D \u0441\u0431\u043E\u0440",
-        world: "sw",
-        obstacles: [{ cell: [2, 1], kind: "mushroom" }, { cell: [5, 1], kind: "log" }],
-        enemies: [
-          { id: "sw_witch_cat", scale: 1.84 },
-          { id: "sw_doll_trickster", scale: 1.84 },
-          { id: "sw_glow_bush", scale: 1.84 }
-        ],
-        unlockAfter: "sw_17",
-        tip: "\u0412\u0441\u044F \u0432\u0435\u0434\u044C\u043C\u0438\u043D\u0430 \u0447\u0435\u043B\u044F\u0434\u044C \u0440\u0430\u0437\u043E\u043C: \u044F\u0434, \u0441\u043E\u043D \u0438 \u0432\u0440\u0430\u0436\u0435\u0441\u043A\u043E\u0435 \u043B\u0435\u0447\u0435\u043D\u0438\u0435."
-      },
-      {
-        id: "sw_19",
-        name: "\u0412\u0441\u0451 \u0431\u043E\u043B\u043E\u0442\u043E \u0440\u0430\u0437\u043E\u043C",
-        world: "sw",
-        enemies: [
-          { id: "sw_hut_walker", scale: 1.85 },
-          { id: "sw_glow_bush", scale: 1.83 },
-          { id: "sw_doll_trickster", scale: 1.8 }
-        ],
-        unlockAfter: "sw_18",
-        tip: "\u0418\u0437\u0431\u0443\u0448\u043A\u0443 \u043B\u0435\u0447\u0430\u0442 \u044F\u0433\u043E\u0434\u044B, \u043A\u0443\u043A\u043B\u0430 \u043D\u0430\u043F\u0435\u0432\u0430\u0435\u0442. \u0421\u0440\u0443\u0431\u0438 \u043A\u0443\u0441\u0442 \u0438 \u043D\u0435 \u0443\u0441\u043D\u0438."
-      },
-      {
-        id: "sw_boss",
-        name: "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0422\u043E\u043F\u0435\u0439",
-        world: "sw",
-        enemies: [{ id: "sw_hag_queen", scale: 1.6 }],
-        unlockAfter: "sw_19",
-        tip: "\u041E\u043D\u0430 \u0442\u0440\u0430\u0432\u0438\u0442, \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0431\u044C\u0451\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C. \u0412\u043E\u0437\u044C\u043C\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0435\u0441\u0442\u044C."
-      }
-    ]
-  };
-
-  // src/data/worlds/sf.js
-  var WORLD3 = {
-    id: "sf",
-    label: "\u{1F3AA} \u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
-    enemies: [
-      {
-        id: "sf_spirit",
-        name: "\u0414\u0443\u0445 \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
-        icon: "\u2728",
-        hp: 75,
-        attack: 14,
-        armor: 8,
-        speed: 13,
-        crit: 0.08,
-        dodge: 0.16,
-        elem: "phys",
-        skills: ["fear_chill"],
-        tags: ["spirit"],
-        reward: { coins: [70, 100], materials: ["sf_spark"] }
-      },
-      {
-        id: "sf_steed",
-        name: "\u041A\u0430\u0440\u0443\u0441\u0435\u043B\u044C\u043D\u044B\u0439 \u043A\u043E\u043D\u0451\u043A",
-        icon: "\u{1F3A0}",
-        hp: 135,
-        attack: 16,
-        armor: 18,
-        speed: 7,
-        crit: 0.05,
-        dodge: 0.02,
-        elem: "phys",
-        skills: ["heavy_blow"],
-        reward: { coins: [85, 115], materials: ["sf_plank"] }
-      },
-      {
-        id: "sf_guard",
-        name: "\u0421\u0442\u0440\u0430\u0436 \u043F\u043E\u0440\u044F\u0434\u043A\u0430",
-        icon: "\u{1F482}",
-        hp: 105,
-        attack: 17,
-        armor: 15,
-        speed: 9,
-        crit: 0.1,
-        dodge: 0.05,
-        elem: "phys",
-        skills: ["aimed_shot"],
-        reward: { coins: [90, 120], materials: ["sf_ticket"] }
-      },
-      {
-        id: "sf_firefly",
-        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u0436\u043E\u043D\u0433\u043B\u0451\u0440",
-        icon: "\u{1F525}",
-        hp: 75,
-        attack: 18,
-        armor: 8,
-        speed: 12,
-        crit: 0.08,
-        dodge: 0.1,
-        elem: "fire",
-        skills: ["spit_fire"],
-        reward: { coins: [75, 105], materials: ["sf_candy"] }
-      },
-      {
-        id: "sf_doll",
-        name: "\u041A\u0443\u043A\u043B\u0430-\u0437\u0430\u0437\u044B\u0432\u0430\u043B\u0430",
-        icon: "\u{1F38E}",
-        hp: 70,
-        attack: 14,
-        armor: 10,
-        speed: 11,
-        crit: 0.06,
-        dodge: 0.12,
-        elem: "phys",
-        skills: ["pollen_sleep"],
-        reward: { coins: [70, 95], materials: ["sf_candy"] }
-      },
-      {
-        id: "sf_wheel",
-        name: "\u041E\u0436\u0438\u0432\u0448\u0435\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
-        icon: "\u{1F3A1}",
-        hp: 150,
-        attack: 18,
-        armor: 20,
-        speed: 6,
-        crit: 0.04,
-        dodge: 0,
-        elem: "phys",
-        skills: ["heavy_blow", "slow_spores"],
-        reward: { coins: [110, 150], materials: ["sf_plank"] }
-      },
-      // Босс мира
-      {
-        id: "sf_boss",
-        name: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u043C\u0438\u0440\u043E\u0432",
-        icon: "\u{1F3C6}",
-        hp: 350,
-        attack: 26,
-        armor: 24,
-        speed: 10,
-        crit: 0.12,
-        dodge: 0.06,
-        elem: "phys",
-        skills: ["heavy_blow", "fear_chill", "regen_ally_skill"],
-        boss: true,
-        reward: { coins: [400, 550], seals: 4, materials: ["sf_champion_star"] }
-      }
-    ],
-    materials: [
-      { id: "sf_spark", name: "\u042F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u0430\u044F \u0438\u0441\u043A\u0440\u0430", icon: "\u2728", description: "\u0422\u0451\u043F\u043B\u044B\u0439 \u043E\u0433\u043E\u043D\u0451\u043A \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A\u0430." },
-      { id: "sf_plank", name: "\u0414\u043E\u0449\u0435\u0447\u043A\u0430 \u043A\u0430\u0440\u0443\u0441\u0435\u043B\u0438", icon: "\u{1F3A0}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u043A\u0440\u0430\u0441\u043A\u043E\u0439 \u0438 \u043F\u043E\u043F\u0443\u0442\u043D\u044B\u043C \u0432\u0435\u0442\u0440\u043E\u043C." },
-      { id: "sf_ticket", name: "\u0421\u0447\u0430\u0441\u0442\u043B\u0438\u0432\u044B\u0439 \u0431\u0438\u043B\u0435\u0442\u0438\u043A", icon: "\u{1F39F}\uFE0F", description: "\u041F\u043E\u043B\u0443\u0440\u0430\u0441\u0442\u0451\u0440\u0442\u044B\u0439, \u043D\u043E \u0443\u0434\u0430\u0447\u0430 \u0435\u0449\u0451 \u0432\u043D\u0443\u0442\u0440\u0438." },
-      { id: "sf_candy", name: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u043A\u0430\u0440\u0430\u043C\u0435\u043B\u044C", icon: "\u{1F36C}", description: "\u0421\u043B\u0430\u0434\u043A\u0430\u044F \u0438 \u0441\u043B\u0435\u0433\u043A\u0430 \u0438\u0441\u043A\u0440\u0438\u0442 \u043D\u0430 \u044F\u0437\u044B\u043A\u0435." },
-      { id: "sf_champion_star", name: "\u0417\u0432\u0435\u0437\u0434\u0430 \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430", icon: "\u{1F3C6}", description: "\u041D\u0430\u0433\u0440\u0430\u0434\u0430, \u043A\u043E\u0442\u043E\u0440\u0443\u044E \u043D\u043E\u0441\u044F\u0442 \u043D\u0430 \u0433\u0440\u0443\u0434\u0438." }
-    ],
-    battles: [
-      {
-        id: "sf_01",
-        name: "\u041E\u0442\u043A\u0440\u044B\u0442\u0438\u0435 \u044F\u0440\u043C\u0430\u0440\u043A\u0438",
-        world: "sf",
-        enemies: [{ id: "sf_doll", scale: 1.7 }, { id: "sf_spirit", scale: 1.7 }],
-        unlockAfter: "sw_boss",
-        tip: "\u041A\u0443\u043A\u043B\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0434\u0443\u0445 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
-      },
-      {
-        id: "sf_02",
-        name: "\u041A\u0430\u0440\u0443\u0441\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u044F\u0434",
-        world: "sf",
-        enemies: [{ id: "sf_steed", scale: 1.71 }, { id: "sf_steed", scale: 1.71 }],
-        unlockAfter: "sf_01",
-        tip: "\u041A\u043E\u043D\u044C\u043A\u0438 \u0431\u044C\u044E\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u043D\u043E \u043C\u0435\u0434\u043B\u0435\u043D\u043D\u044B. \u0411\u0440\u043E\u043D\u044F \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0440\u0435\u0448\u0430\u044E\u0442."
-      },
-      {
-        id: "sf_03",
-        name: "\u0416\u043E\u043D\u0433\u043B\u0451\u0440\u044B \u043E\u0433\u043D\u044F",
-        world: "sf",
-        enemies: [{ id: "sf_firefly", scale: 1.72 }, { id: "sf_firefly", scale: 1.72 }],
-        unlockAfter: "sf_02",
-        tip: "\u041F\u043B\u044E\u044E\u0442\u0441\u044F \u043E\u0433\u043D\u0451\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0434\u043E\u0431\u0438\u0432."
-      },
-      {
-        id: "sf_04",
-        name: "\u041F\u0430\u0442\u0440\u0443\u043B\u044C \u043F\u043E\u0440\u044F\u0434\u043A\u0430",
-        world: "sf",
-        enemies: [{ id: "sf_guard", scale: 1.74 }, { id: "sf_guard", scale: 1.74 }],
-        unlockAfter: "sf_03",
-        tip: "\u0421\u0442\u0440\u0430\u0436\u0438 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u043F\u043E \u0441\u0430\u043C\u043E\u043C\u0443 \u0445\u0440\u0443\u043F\u043A\u043E\u043C\u0443. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0441\u043B\u0430\u0431\u044B\u0445 \u0431\u0440\u043E\u043D\u0451\u0439."
-      },
-      {
-        id: "sf_05",
-        name: "\u0421\u043E\u043D\u043D\u044B\u0435 \u043A\u0430\u0447\u0435\u043B\u0438",
-        world: "sf",
-        obstacles: [{ cell: [3, 1], kind: "star" }],
-        enemies: [
-          { id: "sf_doll", scale: 1.75 },
-          { id: "sf_doll", scale: 1.75 },
-          { id: "sf_doll", scale: 1.75 }
-        ],
-        unlockAfter: "sf_04",
-        tip: "\u0422\u0440\u0438 \u043A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0448\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430."
-      },
-      {
-        id: "sf_06",
-        name: "\u0428\u0430\u0440\u043C\u0430\u043D\u043A\u0430 \u043F\u0440\u0438\u0437\u0440\u0430\u043A\u043E\u0432",
-        world: "sf",
-        enemies: [
-          { id: "sf_spirit", scale: 1.76 },
-          { id: "sf_spirit", scale: 1.76 },
-          { id: "sf_doll", scale: 1.76 }
-        ],
-        unlockAfter: "sf_05",
-        tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0432\u043C\u0435\u0441\u0442\u0435. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
-      },
-      {
-        id: "sf_07",
-        name: "\u0420\u0430\u0437\u0433\u043E\u043D \u043E\u0447\u0435\u0440\u0435\u0434\u0438",
-        world: "sf",
-        enemies: [{ id: "sf_guard", scale: 1.78 }, { id: "sf_steed", scale: 1.78 }],
-        unlockAfter: "sf_06",
-        tip: "\u041A\u043E\u043D\u0451\u043A \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0441\u0442\u0440\u0430\u0436\u0430. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0443\u0431\u0435\u0440\u0438 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0441\u0442\u0440\u0435\u043B\u043A\u0430."
-      },
-      {
-        id: "sf_08",
-        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u043E\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
-        world: "sf",
-        enemies: [
-          { id: "sf_firefly", scale: 1.79 },
-          { id: "sf_firefly", scale: 1.79 },
-          { id: "sf_steed", scale: 1.79 }
-        ],
-        unlockAfter: "sf_07",
-        tip: "\u041E\u0433\u043E\u043D\u044C \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043F\u043B\u044E\u0441 \u043A\u0440\u0435\u043F\u043A\u0438\u0439 \u0449\u0438\u0442."
-      },
-      {
-        id: "sf_09",
-        name: "\u0411\u043E\u043B\u044C\u0448\u043E\u0435 \u043A\u043E\u043B\u0435\u0441\u043E",
-        world: "sf",
-        enemies: [{ id: "sf_wheel", scale: 1.8 }],
-        unlockAfter: "sf_08",
-        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0438 \u0434\u0430\u0432\u0438\u0442 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041E\u0434\u0438\u043D, \u043D\u043E \u043E\u0447\u0435\u043D\u044C \u043A\u0440\u0435\u043F\u043A\u0438\u0439."
-      },
-      {
-        id: "sf_10",
-        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043F\u0430\u0440\u0430\u0434",
-        world: "sf",
-        obstacles: [{ cell: [4, 0], kind: "lantern" }, { cell: [4, 2], kind: "lantern" }],
-        enemies: [
-          { id: "sf_spirit", scale: 1.81 },
-          { id: "sf_firefly", scale: 1.81 },
-          { id: "sf_doll", scale: 1.81 }
-        ],
-        unlockAfter: "sf_09",
-        tip: "\u0421\u0442\u0440\u0430\u0445, \u043E\u0433\u043E\u043D\u044C \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0441\u0442\u0440\u043E\u044E. \u0421\u043E\u0431\u0435\u0440\u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0437\u0430\u0440\u0430\u043D\u0435\u0435."
-      },
-      {
-        id: "sf_11",
-        name: "\u0421\u0442\u0440\u0430\u0436\u0430 \u043D\u0430 \u0432\u0445\u043E\u0434\u0435",
-        world: "sf",
-        enemies: [
-          { id: "sf_guard", scale: 1.83 },
-          { id: "sf_guard", scale: 1.83 }
-        ],
-        unlockAfter: "sf_10",
-        tip: "\u0414\u0432\u0430 \u0441\u0442\u0440\u0430\u0436\u0430 \u0431\u044C\u044E\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438 \u043D\u0435 \u043C\u0430\u0436\u0443\u0442. \u0412\u044B\u0441\u043E\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0432\u0441\u0435\u043C\u0443 \u043E\u0442\u0440\u044F\u0434\u0443."
-      },
-      {
-        id: "sf_12",
-        name: "\u0421\u043A\u0430\u0447\u043A\u0438 \u043F\u043E \u043A\u0440\u0443\u0433\u0443",
-        world: "sf",
-        enemies: [
-          { id: "sf_steed", scale: 1.84 },
-          { id: "sf_spirit", scale: 1.84 }
-        ],
-        unlockAfter: "sf_11",
-        tip: "\u041A\u043E\u043D\u0451\u043A \u0434\u0430\u0432\u0438\u0442 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C, \u0434\u0443\u0445 \u043C\u043E\u0440\u043E\u0437\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
-      },
-      {
-        id: "sf_13",
-        name: "\u041A\u0443\u043A\u043E\u043B\u044C\u043D\u044B\u0439 \u0431\u0430\u043B\u0430\u0433\u0430\u043D",
-        world: "sf",
-        enemies: [
-          { id: "sf_doll", scale: 1.85 },
-          { id: "sf_doll", scale: 1.85 },
-          { id: "sf_guard", scale: 1.85 }
-        ],
-        unlockAfter: "sf_12",
-        tip: "\u041A\u0443\u043A\u043B\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0441\u0442\u0440\u0430\u0436 \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E. \u041D\u0435 \u0434\u0430\u0439 \u0443\u0441\u043D\u0443\u0442\u044C \u043B\u0435\u043A\u0430\u0440\u044E."
-      },
-      {
-        id: "sf_14",
-        name: "\u041A\u043E\u043B\u0435\u0441\u043E \u0438 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
-        world: "sf",
-        enemies: [{ id: "sf_wheel", scale: 1.86 }, { id: "sf_guard", scale: 1.86 }],
-        unlockAfter: "sf_13",
-        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442, \u0441\u0442\u0440\u0430\u0436 \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0437\u0435\u043B\u044C\u044F\u043C\u0438."
-      },
-      {
-        id: "sf_15",
-        name: "\u0424\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A",
-        world: "sf",
-        obstacles: [{ cell: [4, 1], kind: "star" }],
-        enemies: [
-          { id: "sf_firefly", scale: 1.88 },
-          { id: "sf_firefly", scale: 1.88 },
-          { id: "sf_firefly", scale: 1.88 }
-        ],
-        unlockAfter: "sf_14",
-        tip: "\u0422\u0440\u0438 \u0436\u043E\u043D\u0433\u043B\u0451\u0440\u0430 \u0436\u0433\u0443\u0442 \u043E\u0433\u043D\u0451\u043C. \u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u043E\u0435 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
-      },
-      {
-        id: "sf_16",
-        name: "\u041F\u043E\u043B\u043D\u043E\u0447\u043D\u044B\u0439 \u043A\u0430\u0440\u043D\u0430\u0432\u0430\u043B",
-        world: "sf",
-        enemies: [
-          { id: "sf_spirit", scale: 1.78 },
-          { id: "sf_spirit", scale: 1.78 },
-          { id: "sf_wheel", scale: 1.78 }
-        ],
-        unlockAfter: "sf_15",
-        tip: "\u0414\u0443\u0445\u0438 \u0441\u0435\u044E\u0442 \u0441\u0442\u0440\u0430\u0445, \u043A\u043E\u043B\u0435\u0441\u043E \u0434\u0430\u0432\u0438\u0442. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
-      },
-      {
-        id: "sf_17",
-        name: "\u0422\u0443\u0440\u043D\u0438\u0440 \u043F\u0440\u0435\u0442\u0435\u043D\u0434\u0435\u043D\u0442\u043E\u0432",
-        world: "sf",
-        enemies: [
-          { id: "sf_steed", scale: 1.9 },
-          { id: "sf_firefly", scale: 1.9 }
-        ],
-        unlockAfter: "sf_16",
-        tip: "\u0418\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u0435 \u0441\u043C\u0435\u043B\u043E\u0441\u0442\u0438 \u0438 \u043B\u043E\u0432\u043A\u043E\u0441\u0442\u0438: \u0442\u0430\u0440\u0430\u043D \u043A\u043E\u043D\u044C\u043A\u0430 \u0438 \u043E\u0433\u043E\u043D\u044C \u0436\u043E\u043D\u0433\u043B\u0451\u0440\u0430."
-      },
-      {
-        id: "sf_18",
-        name: "\u0412\u0441\u0451 \u0441\u0440\u0430\u0437\u0443",
-        world: "sf",
-        enemies: [
-          { id: "sf_wheel", scale: 1.91 },
-          { id: "sf_doll", scale: 1.91 },
-          { id: "sf_spirit", scale: 1.91 }
-        ],
-        unlockAfter: "sf_17",
-        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435, \u0441\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445. \u041F\u043E\u043B\u043D\u044B\u0439 \u043D\u0430\u0431\u043E\u0440 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0439 \u0438 \u0437\u0435\u043B\u0438\u0439."
-      },
-      {
-        id: "sf_19",
-        name: "\u0413\u0440\u0430\u043D\u0434-\u0448\u043E\u0443",
-        world: "sf",
-        obstacles: [{ cell: [3, 0], kind: "star" }, { cell: [3, 2], kind: "lantern" }],
-        enemies: [
-          { id: "sf_wheel", scale: 1.93 },
-          { id: "sf_firefly", scale: 1.93 }
-        ],
-        unlockAfter: "sf_18",
-        tip: "\u041A\u043E\u043B\u0435\u0441\u043E \u0438 \u0444\u0435\u0439\u0435\u0440\u0432\u0435\u0440\u043A \u043F\u0435\u0440\u0435\u0434 \u0444\u0438\u043D\u0430\u043B\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
-      },
-      {
-        id: "sf_boss",
-        name: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u043C\u0438\u0440\u043E\u0432",
-        world: "sf",
-        enemies: [{ id: "sf_boss", scale: 1.95 }],
-        unlockAfter: "sf_19",
-        tip: "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u0431\u044C\u0451\u0442 \u043D\u0430\u043E\u0442\u043C\u0430\u0448\u044C, \u043D\u0430\u0433\u043E\u043D\u044F\u0435\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u043F\u0435\u0440\u0435\u0432\u043E\u0434\u0438\u0442 \u0434\u0443\u0445. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u043D\u0435 \u0434\u0430\u0432\u0430\u0439 \u0435\u043C\u0443 \u043F\u0435\u0440\u0435\u0434\u044B\u0448\u043A\u0438."
-      }
-    ]
-  };
-
-  // src/data/worlds/cr.js
-  var WORLD4 = {
-    id: "cr",
-    label: "\u{1F48E} \u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B",
-    enemies: [
-      {
-        id: "cr_owl",
-        name: "\u0421\u043D\u0435\u0436\u043D\u0430\u044F \u0441\u043E\u0432\u0430",
-        icon: "\u{1F989}",
-        hp: 95,
-        attack: 14,
-        armor: 8,
-        speed: 11,
-        crit: 0.05,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["pollen_sleep"],
-        tags: ["ranged"],
-        reward: { coins: [60, 90], materials: ["cr_owl_feather"] }
-      },
-      {
-        id: "cr_shardling",
-        name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043E\u0441\u043A\u043E\u043B\u043E\u043A",
-        icon: "\u{1F539}",
-        hp: 90,
-        attack: 15,
-        armor: 10,
-        speed: 10,
-        crit: 0.05,
-        dodge: 0.08,
-        elem: "phys",
-        skills: ["aimed_shot"],
-        tags: [],
-        reward: { coins: [55, 80], materials: ["cr_crystal_shard"] }
-      },
-      {
-        id: "cr_icewisp",
-        name: "\u0418\u0441\u043A\u0440\u0430 \u0437\u0432\u0435\u043D\u044F\u0449\u0435\u0433\u043E \u043B\u044C\u0434\u0430",
-        icon: "\u2744\uFE0F",
-        hp: 95,
-        attack: 16,
-        armor: 10,
-        speed: 13,
-        crit: 0.05,
-        dodge: 0.12,
-        elem: "phys",
-        skills: ["slow_spores"],
-        tags: [],
-        reward: { coins: [60, 85], materials: ["cr_ice_ring"] }
-      },
-      {
-        id: "cr_echo",
-        name: "\u0413\u043E\u0440\u043D\u044B\u0439 \u044D\u0445\u043E-\u0434\u0443\u0445",
-        icon: "\u{1F3D4}\uFE0F",
-        hp: 105,
-        attack: 17,
-        armor: 10,
-        speed: 10,
-        crit: 0.06,
-        dodge: 0.12,
-        elem: "phys",
-        skills: ["fear_chill"],
-        tags: ["spirit"],
-        reward: { coins: [65, 95], materials: ["cr_echo_dust"] }
-      },
-      {
-        id: "cr_golem",
-        name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
-        icon: "\u{1F48E}",
-        hp: 155,
-        attack: 18,
-        armor: 22,
-        speed: 6,
-        crit: 0.03,
-        dodge: 0,
-        elem: "phys",
-        skills: ["heavy_blow", "slow_spores"],
-        tags: [],
-        reward: { coins: [80, 110], materials: ["cr_crystal_shard"] }
-      },
-      {
-        id: "cr_dragon_young",
-        name: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u044B\u0439 \u0434\u0440\u0430\u043A\u043E\u043D",
-        icon: "\u{1F409}",
-        hp: 140,
-        attack: 19,
-        armor: 17,
-        speed: 9,
-        crit: 0.08,
-        dodge: 0.04,
-        elem: "phys",
-        skills: ["heavy_blow", "fear_chill"],
-        tags: [],
-        reward: { coins: [90, 120], materials: ["cr_crystal_shard"] }
-      },
-      // Босс мира
-      {
-        id: "cr_dragon_ancient",
-        name: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u043A\u0432\u0430\u0440\u0446\u0430",
-        icon: "\u{1F432}",
-        hp: 380,
-        attack: 26,
-        armor: 24,
-        speed: 8,
-        crit: 0.06,
-        dodge: 0.02,
-        elem: "phys",
-        skills: ["heavy_blow", "fear_chill", "slow_spores"],
-        boss: true,
-        tags: [],
-        reward: { coins: [700, 950], seals: 4, materials: ["cr_quartz_heart"] }
-      }
-    ],
-    materials: [
-      { id: "cr_crystal_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044F", icon: "\u{1F48E}", description: "\u0417\u0432\u0435\u043D\u0438\u0442, \u0435\u0441\u043B\u0438 \u0435\u0433\u043E \u0443\u0440\u043E\u043D\u0438\u0442\u044C." },
-      { id: "cr_owl_feather", name: "\u041F\u0435\u0440\u043E \u0441\u043D\u0435\u0436\u043D\u043E\u0439 \u0441\u043E\u0432\u044B", icon: "\u{1FAB6}", description: "\u0411\u0435\u043B\u043E\u0435 \u0438 \u043F\u043E\u0447\u0442\u0438 \u043D\u0435\u0432\u0435\u0441\u043E\u043C\u043E\u0435." },
-      { id: "cr_ice_ring", name: "\u0417\u0432\u0435\u043D\u044F\u0449\u0438\u0439 \u043B\u0451\u0434", icon: "\u2744\uFE0F", description: "\u041D\u0435 \u0442\u0430\u0435\u0442 \u0434\u0430\u0436\u0435 \u0443 \u043E\u0447\u0430\u0433\u0430." },
-      { id: "cr_echo_dust", name: "\u041F\u044B\u043B\u044C \u044D\u0445\u0430", icon: "\u{1F514}", description: "\u0422\u0438\u0445\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442 \u0441\u043A\u0430\u0437\u0430\u043D\u043D\u043E\u0435 \u0448\u0451\u043F\u043E\u0442\u043E\u043C." },
-      { id: "cr_quartz_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0433\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0430", icon: "\u{1F4A0}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u0434\u0440\u0435\u043C\u043B\u0435\u0442 \u0434\u0440\u0435\u0432\u043D\u0438\u0439 \u0441\u0432\u0435\u0442." }
-    ],
-    battles: [
-      {
-        id: "cr_01",
-        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0441\u043D\u0435\u0433 \u043F\u0435\u0440\u0435\u0432\u0430\u043B\u0430",
-        world: "cr",
-        enemies: [{ id: "cr_owl", scale: 1.8 }, { id: "cr_shardling", scale: 1.8 }],
-        unlockAfter: "sf_boss",
-        tip: "\u0421\u043E\u0432\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043E\u0441\u043A\u043E\u043B\u043E\u043A \u0431\u044C\u0451\u0442 \u0442\u043E\u0447\u043D\u043E. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
-      },
-      {
-        id: "cr_02",
-        name: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u043D\u0430 \u0442\u0440\u043E\u043F\u0435",
-        world: "cr",
-        enemies: [{ id: "cr_shardling", scale: 1.81 }, { id: "cr_shardling", scale: 1.81 }],
-        unlockAfter: "cr_01",
-        tip: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u0431\u044B\u0441\u0442\u0440\u044B \u0438 \u0431\u044C\u044E\u0442 \u0442\u043E\u0447\u043D\u043E. \u0414\u0435\u0440\u0436\u0438 \u0431\u0440\u043E\u043D\u044E \u0432 \u043F\u043E\u0440\u044F\u0434\u043A\u0435."
-      },
-      {
-        id: "cr_03",
-        name: "\u0417\u0432\u043E\u043D \u043B\u0435\u0434\u044F\u043D\u044B\u0445 \u0438\u0441\u043A\u0440",
-        world: "cr",
-        obstacles: [{ cell: [3, 1], kind: "crystal" }],
-        enemies: [{ id: "cr_icewisp", scale: 1.83 }, { id: "cr_icewisp", scale: 1.83 }],
-        unlockAfter: "cr_02",
-        tip: "\u0418\u0441\u043A\u0440\u044B \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442 \u043C\u043E\u0440\u043E\u0437\u043D\u043E\u0439 \u043F\u044B\u043B\u044C\u044E. \u0411\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
-      },
-      {
-        id: "cr_04",
-        name: "\u042D\u0445\u043E \u0432 \u0443\u0449\u0435\u043B\u044C\u0435",
-        world: "cr",
-        enemies: [{ id: "cr_echo", scale: 1.84 }, { id: "cr_echo", scale: 1.84 }],
-        unlockAfter: "cr_03",
-        tip: "\u042D\u0445\u043E-\u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u043B\u0435\u0434\u0435\u043D\u044F\u0449\u0438\u0439 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438, \u043B\u0443\u043A \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440."
-      },
-      {
-        id: "cr_05",
-        name: "\u0421\u0442\u0440\u0430\u0436 \u0437\u0430\u0441\u0442\u044B\u0432\u0448\u0435\u0439 \u0440\u0435\u043A\u0438",
-        world: "cr",
-        enemies: [{ id: "cr_golem", scale: 1.85 }],
-        unlockAfter: "cr_04",
-        tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F. \u041D\u0443\u0436\u0435\u043D \u0441\u0435\u0440\u044C\u0451\u0437\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
-      },
-      {
-        id: "cr_06",
-        name: "\u0421\u043E\u0432\u0438\u043D\u0430\u044F \u043E\u0445\u043E\u0442\u0430",
-        world: "cr",
-        enemies: [{ id: "cr_owl", scale: 1.87 }, { id: "cr_icewisp", scale: 1.87 }],
-        unlockAfter: "cr_05",
-        tip: "\u0421\u043E\u043D \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0432\u043C\u0435\u0441\u0442\u0435. \u0420\u0430\u0437\u0431\u0443\u0434\u0438 \u0440\u044B\u0446\u0430\u0440\u044F \u0437\u0435\u043B\u044C\u0435\u043C \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
-      },
-      {
-        id: "cr_07",
-        name: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043A\u0430\u0440\u044C\u0435\u0440",
-        world: "cr",
-        enemies: [{ id: "cr_golem", scale: 1.88 }, { id: "cr_shardling", scale: 1.88 }],
-        unlockAfter: "cr_06",
-        tip: "\u0413\u043E\u043B\u0435\u043C \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043E\u0441\u043A\u043E\u043B\u043E\u043A. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u043F\u0435\u0440\u0435\u0431\u0435\u0439 \u043C\u0435\u043B\u043E\u0447\u044C."
-      },
-      {
-        id: "cr_08",
-        name: "\u0414\u0440\u0430\u043A\u043E\u043D\u044C\u0435 \u044D\u0445\u043E",
-        world: "cr",
-        obstacles: [{ cell: [4, 0], kind: "crystal" }, { cell: [4, 2], kind: "crystal" }],
-        enemies: [{ id: "cr_dragon_young", scale: 1.89 }],
-        unlockAfter: "cr_07",
-        tip: "\u041C\u043E\u043B\u043E\u0434\u043E\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E \u0438 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u043F\u043E\u043C\u043E\u0436\u0435\u0442."
-      },
-      {
-        id: "cr_09",
-        name: "\u041C\u043E\u0440\u043E\u0437\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A",
-        world: "cr",
-        enemies: [{ id: "cr_echo", scale: 1.91 }, { id: "cr_icewisp", scale: 1.91 }],
-        unlockAfter: "cr_08",
-        tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u043C\u043E\u0440\u043E\u0437\u043D\u0430\u044F \u043F\u044B\u043B\u044C. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
-      },
-      {
-        id: "cr_10",
-        name: "\u0413\u043E\u043B\u0435\u043C\u0438\u0439 \u0437\u0430\u0432\u0430\u043B",
-        world: "cr",
-        enemies: [{ id: "cr_golem", scale: 1.92 }, { id: "cr_owl", scale: 1.92 }],
-        unlockAfter: "cr_09",
-        tip: "\u041A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430, \u0430 \u0437\u0430 \u043D\u0435\u0439 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0430\u044F \u0441\u043E\u0432\u0430. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
-      },
-      {
-        id: "cr_11",
-        name: "\u041A\u0440\u0438\u043A \u043D\u0430\u0434 \u043F\u0440\u043E\u043F\u0430\u0441\u0442\u044C\u044E",
-        world: "cr",
-        enemies: [{ id: "cr_owl", scale: 1.93 }, { id: "cr_owl", scale: 1.93 }],
-        unlockAfter: "cr_10",
-        tip: "\u0414\u0432\u0435 \u0441\u043E\u0432\u044B \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u043F\u043E \u043E\u0447\u0435\u0440\u0435\u0434\u0438. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u0435\u043D."
-      },
-      {
-        id: "cr_12",
-        name: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430 \u0443\u0449\u0435\u043B\u044C\u044F",
-        world: "cr",
-        enemies: [{ id: "cr_echo", scale: 1.95 }, { id: "cr_echo", scale: 1.95 }],
-        unlockAfter: "cr_11",
-        tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u0441\u043E \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
-      },
-      {
-        id: "cr_13",
-        name: "\u041C\u043E\u043B\u043E\u0434\u044B\u0435 \u043A\u043E\u0433\u0442\u0438",
-        world: "cr",
-        obstacles: [{ cell: [4, 1], kind: "rock" }],
-        enemies: [{ id: "cr_dragon_young", scale: 1.96 }, { id: "cr_shardling", scale: 1.96 }],
-        unlockAfter: "cr_12",
-        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441 \u043E\u0441\u043A\u043E\u043B\u043A\u043E\u043C-\u043F\u0440\u0438\u0445\u0432\u043E\u0441\u0442\u043D\u0435\u043C. \u041F\u0435\u0440\u0435\u0431\u0435\u0439 \u043C\u0435\u043B\u043E\u0447\u044C \u0438 \u0441\u043E\u0441\u0440\u0435\u0434\u043E\u0442\u043E\u0447\u044C\u0441\u044F."
-      },
-      {
-        id: "cr_14",
-        name: "\u0417\u0432\u0435\u043D\u044F\u0449\u0430\u044F \u0441\u0442\u0435\u043D\u0430",
-        world: "cr",
-        enemies: [{ id: "cr_golem", scale: 1.97 }, { id: "cr_icewisp", scale: 1.97 }],
-        unlockAfter: "cr_13",
-        tip: "\u0413\u043E\u043B\u0435\u043C \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0449\u0430\u044F \u0438\u0441\u043A\u0440\u0430. \u041D\u0435 \u0434\u0430\u0439 \u0441\u0435\u0431\u044F \u0437\u0430\u043A\u043E\u043F\u0430\u0442\u044C \u0432 \u0441\u043D\u0435\u0433."
-      },
-      {
-        id: "cr_15",
-        name: "\u0421\u043D\u0435\u0436\u043D\u0430\u044F \u043F\u0443\u0440\u0433\u0430",
-        world: "cr",
-        enemies: [{ id: "cr_owl", scale: 1.85 }, { id: "cr_icewisp", scale: 1.85 }, { id: "cr_echo", scale: 1.85 }],
-        unlockAfter: "cr_14",
-        tip: "\u041F\u0443\u0440\u0433\u0430 \u0438\u0437 \u0441\u043D\u0430, \u0441\u0442\u0440\u0430\u0445\u0430 \u0438 \u043C\u043E\u0440\u043E\u0437\u043D\u043E\u0439 \u043F\u044B\u043B\u0438. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
-      },
-      {
-        id: "cr_16",
-        name: "\u041A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0435 \u0433\u043D\u0435\u0437\u0434\u043E\u0432\u044C\u0435",
-        world: "cr",
-        enemies: [{ id: "cr_dragon_young", scale: 2 }, { id: "cr_owl", scale: 2 }],
-        unlockAfter: "cr_15",
-        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0441\u0442\u043E\u0440\u043E\u0436\u0438\u0442 \u0433\u043D\u0435\u0437\u0434\u043E, \u0441\u043E\u0432\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u0438 \u043E\u0442\u0432\u0430\u0433\u0430."
-      },
-      {
-        id: "cr_17",
-        name: "\u042D\u0445\u043E \u0434\u0440\u0435\u0432\u043D\u0438\u0445",
-        world: "cr",
-        obstacles: [{ cell: [3, 0], kind: "crystal" }, { cell: [5, 1], kind: "rock" }],
-        enemies: [{ id: "cr_dragon_young", scale: 2.01 }, { id: "cr_echo", scale: 2.01 }],
-        unlockAfter: "cr_16",
-        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0432 \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u0438 \u0434\u0443\u0445\u0430. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0443\u0434\u0430\u0440 \u043F\u043E \u0434\u0440\u0430\u043A\u043E\u043D\u0443."
-      },
-      {
-        id: "cr_18",
-        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043B\u0435\u0434\u043D\u0438\u043A",
-        world: "cr",
-        enemies: [{ id: "cr_golem", scale: 2.02 }, { id: "cr_golem", scale: 2.02 }],
-        unlockAfter: "cr_17",
-        tip: "\u0414\u0432\u0435 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
-      },
-      {
-        id: "cr_19",
-        name: "\u0421\u0432\u0435\u0440\u043A\u0430\u044E\u0449\u0438\u0439 \u043F\u0438\u043A",
-        world: "cr",
-        enemies: [{ id: "cr_dragon_young", scale: 2.04 }, { id: "cr_golem", scale: 2.04 }],
-        unlockAfter: "cr_18",
-        tip: "\u0414\u0440\u0430\u043A\u043E\u043D \u0438 \u0435\u0433\u043E \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u043F\u0438\u043A\u043E\u043C."
-      },
-      {
-        id: "cr_boss",
-        name: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u043A\u0432\u0430\u0440\u0446\u0430",
-        world: "cr",
-        enemies: [{ id: "cr_dragon_ancient", scale: 2.05 }],
-        unlockAfter: "cr_19",
-        tip: "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0437\u0432\u0435\u043D\u0438\u0442 \u0442\u044B\u0441\u044F\u0447\u0435\u0439 \u0433\u0440\u0430\u043D\u0435\u0439. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
-      }
-    ]
-  };
-
-  // src/data/worlds/ash.js
-  var WORLD5 = {
-    id: "ash",
-    label: "\u{1F525} \u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438",
-    enemies: [
-      {
-        id: "ash_wolf",
-        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u0432\u043E\u043B\u043A",
-        icon: "\u{1F43A}",
-        hp: 75,
-        attack: 14,
-        armor: 8,
-        speed: 10,
-        crit: 0.05,
-        dodge: 0.08,
-        elem: "phys",
-        skills: ["heavy_blow"],
-        tags: [],
-        reward: { coins: [60, 90], materials: ["ash_pelt"] }
-      },
-      {
-        id: "ash_shaman",
-        name: "\u041A\u043E\u0447\u0435\u0432\u043E\u0439 \u0448\u0430\u043C\u0430\u043D \u043E\u0433\u043D\u044F",
-        icon: "\u{1F525}",
-        hp: 80,
-        attack: 16,
-        armor: 8,
-        speed: 9,
-        crit: 0.05,
-        dodge: 0.05,
-        elem: "fire",
-        skills: ["spit_fire", "regen_ally_skill"],
-        tags: [],
-        reward: { coins: [70, 100], materials: ["ash_ember"] }
-      },
-      {
-        id: "ash_storm_spirit",
-        name: "\u0414\u0443\u0445 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438",
-        icon: "\u{1F32A}\uFE0F",
-        hp: 75,
-        attack: 15,
-        armor: 8,
-        speed: 12,
-        crit: 0.05,
-        dodge: 0.12,
-        elem: "phys",
-        skills: ["fear_chill", "slow_spores"],
-        tags: ["spirit"],
-        reward: { coins: [65, 95], materials: ["ash_storm_shard"] }
-      },
-      {
-        id: "ash_scorpion",
-        name: "\u041E\u0431\u0443\u0433\u043B\u0435\u043D\u043D\u044B\u0439 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D",
-        icon: "\u{1F982}",
-        hp: 85,
-        attack: 15,
-        armor: 14,
-        speed: 10,
-        crit: 0.05,
-        dodge: 0.03,
-        elem: "phys",
-        skills: ["sting_poison"],
-        tags: [],
-        reward: { coins: [65, 95], materials: ["ash_scale"] }
-      },
-      {
-        id: "ash_vulture",
-        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A",
-        icon: "\u{1F985}",
-        hp: 70,
-        attack: 14,
-        armor: 8,
-        speed: 9,
-        crit: 0.06,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["aimed_shot"],
-        tags: [],
-        reward: { coins: [60, 90], materials: ["ash_pelt"] }
-      },
-      {
-        id: "ash_ghoul",
-        name: "\u0422\u0435\u043D\u044C \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0449\u0438\u043A\u0430",
-        icon: "\u{1F47B}",
-        hp: 85,
-        attack: 16,
-        armor: 10,
-        speed: 11,
-        crit: 0.05,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["pollen_sleep", "fear_chill"],
-        tags: ["spirit"],
-        reward: { coins: [70, 100], materials: ["ash_storm_shard"] }
-      },
-      {
-        id: "ash_khan",
-        name: "\u0425\u0430\u043D \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0431\u0443\u0440\u044C",
-        icon: "\u{1F30B}",
-        hp: 400,
-        attack: 26,
-        armor: 24,
-        speed: 12,
-        crit: 0.08,
-        dodge: 0.05,
-        elem: "fire",
-        skills: ["spit_fire", "fear_chill"],
-        tags: [],
-        boss: true,
-        reward: { coins: [220, 300], seals: 4, materials: ["ash_heart"] }
-      }
-    ],
-    materials: [
-      { id: "ash_pelt", name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u0430\u044F \u0448\u043A\u0443\u0440\u0430", icon: "\u{1F43A}", description: "\u0416\u0451\u0441\u0442\u043A\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u0437\u0432\u0435\u0440\u044F \u0432\u044B\u0436\u0436\u0435\u043D\u043D\u044B\u0445 \u0441\u0442\u0435\u043F\u0435\u0439." },
-      { id: "ash_scale", name: "\u041E\u0431\u043E\u0436\u0436\u0451\u043D\u043D\u0430\u044F \u0447\u0435\u0448\u0443\u044F", icon: "\u{1F982}", description: "\u041F\u043B\u0430\u0441\u0442\u0438\u043D\u0430 \u0445\u0438\u0442\u0438\u043D\u0430, \u0437\u0430\u043A\u0430\u043B\u0451\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043F\u043D\u044B\u043C \u043F\u043E\u0436\u0430\u0440\u043E\u043C." },
-      { id: "ash_ember", name: "\u041D\u0435\u0443\u0433\u0430\u0441\u0430\u044E\u0449\u0438\u0439 \u0443\u0433\u043E\u043B\u0451\u043A", icon: "\u{1F525}", description: "\u0422\u043B\u0435\u0435\u0442 \u0432\u0435\u0447\u043D\u043E \u2014 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u043A\u043E\u0447\u0435\u0432\u044B\u0445 \u0448\u0430\u043C\u0430\u043D\u043E\u0432." },
-      { id: "ash_storm_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0431\u0443\u0440\u0438", icon: "\u{1F32A}\uFE0F", description: "\u041A\u0443\u0441\u043E\u0447\u0435\u043A \u0432\u0435\u0442\u0440\u0430, \u0437\u0430\u0441\u0442\u044B\u0432\u0448\u0438\u0439 \u0432\u043C\u0435\u0441\u0442\u0435 \u0441 \u043F\u0435\u043F\u043B\u043E\u043C." },
-      { id: "ash_heart", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0425\u0430\u043D\u0430 \u0411\u0443\u0440\u044C", icon: "\u{1F48E}", description: "\u041F\u044B\u043B\u0430\u044E\u0449\u0435\u0435 \u0441\u0435\u0440\u0434\u0446\u0435 \u043F\u043E\u0432\u0435\u043B\u0438\u0442\u0435\u043B\u044F \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0441\u0442\u0435\u043F\u0435\u0439." }
-    ],
-    battles: [
-      {
-        id: "ash_01",
-        name: "\u0412\u044B\u0436\u0436\u0435\u043D\u043D\u0430\u044F \u0433\u0440\u0430\u043D\u0438\u0446\u0430",
-        world: "ash",
-        enemies: [{ id: "ash_wolf", scale: 1.9 }, { id: "ash_wolf", scale: 1.9 }],
-        unlockAfter: "cr_boss",
-        tip: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0432\u043E\u043B\u043A\u0438 \u0431\u044C\u044E\u0442 \u043C\u043E\u0449\u043D\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041D\u0430\u0434\u0451\u0436\u043D\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u0441\u043D\u0438\u043C\u0443\u0442 \u043B\u044C\u0432\u0438\u043D\u0443\u044E \u0434\u043E\u043B\u044E \u0443\u0440\u043E\u043D\u0430."
-      },
-      {
-        id: "ash_02",
-        name: "\u0421\u043B\u0435\u0434\u044B \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0430",
-        world: "ash",
-        enemies: [{ id: "ash_vulture", scale: 1.913 }, { id: "ash_wolf", scale: 1.913 }],
-        unlockAfter: "ash_01",
-        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E \u0438\u0437\u0434\u0430\u043B\u0435\u043A\u0430. \u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u0438 \u0431\u044B\u0441\u0442\u0440\u044B\u0439 \u0442\u0435\u043C\u043F \u0431\u043E\u044F \u0440\u0435\u0448\u0430\u044E\u0442."
-      },
-      {
-        id: "ash_03",
-        name: "\u041A\u043E\u0441\u0442\u0451\u0440 \u0448\u0430\u043C\u0430\u043D\u0430",
-        world: "ash",
-        enemies: [{ id: "ash_shaman", scale: 1.926 }, { id: "ash_wolf", scale: 1.926 }],
-        unlockAfter: "ash_02",
-        tip: "\u0428\u0430\u043C\u0430\u043D \u043F\u043B\u044E\u0451\u0442\u0441\u044F \u043E\u0433\u043D\u0451\u043C \u0438 \u043B\u0435\u0447\u0438\u0442 \u0432\u043E\u043B\u043A\u0430. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0441\u0431\u0435\u0439 \u0448\u0430\u043C\u0430\u043D\u0430, \u043F\u043E\u043A\u0430 \u043E\u043D \u043D\u0435 \u0432\u044B\u0442\u044F\u043D\u0443\u043B \u0431\u043E\u0439."
-      },
-      {
-        id: "ash_04",
-        name: "\u0416\u0430\u043B\u0430 \u0432 \u043F\u0435\u043F\u043B\u0435",
-        world: "ash",
-        obstacles: [{ cell: [3, 1], kind: "rock" }],
-        enemies: [{ id: "ash_scorpion", scale: 1.939 }, { id: "ash_scorpion", scale: 1.939 }],
-        unlockAfter: "ash_03",
-        tip: "\u0421\u043A\u043E\u0440\u043F\u0438\u043E\u043D\u044B \u044F\u0434\u043E\u0432\u0438\u0442\u044B \u0438 \u0442\u043E\u043B\u0441\u0442\u043E\u043A\u043E\u0436\u0438. \u0410\u043D\u0442\u0438\u0434\u043E\u0442 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0438\u0445 \u043F\u0430\u043D\u0446\u0438\u0440\u0435\u0439."
-      },
-      {
-        id: "ash_05",
-        name: "\u0428\u0451\u043F\u043E\u0442 \u0431\u0443\u0440\u0438",
-        world: "ash",
-        enemies: [{ id: "ash_storm_spirit", scale: 1.953 }, { id: "ash_storm_spirit", scale: 1.953 }],
-        unlockAfter: "ash_04",
-        tip: "\u0414\u0443\u0445\u0438 \u0431\u0443\u0440\u044C \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
-      },
-      {
-        id: "ash_06",
-        name: "\u041F\u043E\u0433\u0438\u0431\u0448\u0438\u0439 \u043A\u0430\u0440\u0430\u0432\u0430\u043D",
-        world: "ash",
-        enemies: [{ id: "ash_ghoul", scale: 1.966 }, { id: "ash_vulture", scale: 1.966 }],
-        unlockAfter: "ash_05",
-        tip: "\u0422\u0435\u043D\u044C \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u0449\u0438\u043A\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u0438 \u043F\u0443\u0433\u0430\u0435\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0432 \u043E\u0434\u043D\u043E\u043C \u043F\u043E\u0445\u043E\u0434\u0435."
-      },
-      {
-        id: "ash_07",
-        name: "\u0412\u043E\u043B\u0447\u044C\u044F \u0441\u0442\u0430\u044F",
-        world: "ash",
-        enemies: [{ id: "ash_wolf", scale: 1.979 }, { id: "ash_wolf", scale: 1.979 }],
-        unlockAfter: "ash_06",
-        tip: "\u0412\u043E\u043B\u043A\u0438 \u0431\u044C\u044E\u0442 \u043C\u043E\u0449\u043D\u044B\u043C \u0443\u0434\u0430\u0440\u043E\u043C. \u041F\u043E\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435 \u0441 \u043A\u0440\u0435\u043F\u043A\u0438\u043C \u0440\u044B\u0446\u0430\u0440\u0435\u043C \u0432\u043F\u0435\u0440\u0435\u0434\u0438 \u0441\u043F\u0430\u0441\u0430\u0435\u0442 \u043E\u0442\u0440\u044F\u0434."
-      },
-      {
-        id: "ash_08",
-        name: "\u041E\u0433\u043D\u0435\u043D\u043D\u044B\u0439 \u043E\u0431\u0440\u044F\u0434",
-        world: "ash",
-        enemies: [
-          { id: "ash_shaman", scale: 1.992 },
-          { id: "ash_shaman", scale: 1.992 },
-          { id: "ash_scorpion", scale: 1.992 }
-        ],
-        unlockAfter: "ash_07",
-        tip: "\u0414\u0432\u0430 \u0448\u0430\u043C\u0430\u043D\u0430 \u043B\u0435\u0447\u0430\u0442 \u0434\u0440\u0443\u0433 \u0434\u0440\u0443\u0433\u0430, \u0430 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D \u0442\u0440\u0430\u0432\u0438\u0442. \u0424\u043E\u043A\u0443\u0441\u0438\u0440\u0443\u0439 \u043E\u0433\u043E\u043D\u044C \u043D\u0430 \u043E\u0434\u043D\u043E\u043C \u0448\u0430\u043C\u0430\u043D\u0435."
-      },
-      {
-        id: "ash_09",
-        name: "\u041A\u0440\u044B\u043B\u044C\u044F \u043D\u0430\u0434 \u043F\u0435\u043F\u043B\u043E\u043C",
-        world: "ash",
-        obstacles: [{ cell: [4, 0], kind: "bones" }, { cell: [4, 2], kind: "rock" }],
-        enemies: [
-          { id: "ash_vulture", scale: 2.005 },
-          { id: "ash_ghoul", scale: 2.005 },
-          { id: "ash_scorpion", scale: 2.005 }
-        ],
-        unlockAfter: "ash_08",
-        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u043C\u0435\u0442\u043E\u043A, \u0442\u0435\u043D\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D \u0442\u0440\u0430\u0432\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043D\u0442\u0438\u0434\u043E\u0442."
-      },
-      {
-        id: "ash_10",
-        name: "\u042F\u0434 \u0438 \u043F\u043B\u0430\u043C\u044F",
-        world: "ash",
-        enemies: [{ id: "ash_scorpion", scale: 2.018 }, { id: "ash_shaman", scale: 2.018 }],
-        unlockAfter: "ash_09",
-        tip: "\u042F\u0434 \u0441\u043A\u043E\u0440\u043F\u0438\u043E\u043D\u0430 \u0438 \u043E\u0433\u043E\u043D\u044C \u0448\u0430\u043C\u0430\u043D\u0430 \u0432\u043C\u0435\u0441\u0442\u0435. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u043F\u043B\u044E\u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
-      },
-      {
-        id: "ash_11",
-        name: "\u0413\u0440\u043E\u0437\u0430 \u0431\u0435\u0437 \u0434\u043E\u0436\u0434\u044F",
-        world: "ash",
-        enemies: [{ id: "ash_storm_spirit", scale: 2.032 }, { id: "ash_ghoul", scale: 2.032 }],
-        unlockAfter: "ash_10",
-        tip: "\u0414\u0432\u0430 \u0434\u0443\u0445\u0430: \u0441\u0442\u0440\u0430\u0445, \u0441\u043E\u043D \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435. \u041E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
-      },
-      {
-        id: "ash_12",
-        name: "\u041E\u0441\u043A\u043E\u043B\u043A\u0438 \u0431\u0443\u0440\u0438",
-        world: "ash",
-        enemies: [
-          { id: "ash_storm_spirit", scale: 2.045 },
-          { id: "ash_storm_spirit", scale: 2.045 },
-          { id: "ash_vulture", scale: 2.045 }
-        ],
-        unlockAfter: "ash_11",
-        tip: "\u0414\u0443\u0445\u0438 \u0441\u043A\u043E\u0432\u044B\u0432\u0430\u044E\u0442, \u0441\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0434\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u0438\u0437\u0434\u0430\u043B\u0435\u043A\u0430. \u041D\u0435 \u0434\u0430\u0439 \u0441\u0435\u0431\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u0438\u0442\u044C \u2014 \u0431\u0435\u0440\u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
-      },
-      {
-        id: "ash_13",
-        name: "\u041A\u0430\u0440\u0430\u0432\u0430\u043D \u0442\u0435\u043D\u0435\u0439",
-        world: "ash",
-        enemies: [
-          { id: "ash_ghoul", scale: 2.058 },
-          { id: "ash_ghoul", scale: 2.058 },
-          { id: "ash_shaman", scale: 2.058 }
-        ],
-        unlockAfter: "ash_12",
-        tip: "\u0422\u0435\u043D\u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442, \u0448\u0430\u043C\u0430\u043D \u0436\u0436\u0451\u0442 \u0438 \u043B\u0435\u0447\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u2014 \u0438\u043D\u0430\u0447\u0435 \u043E\u0442\u0440\u044F\u0434 \u0437\u0430\u0441\u043D\u0451\u0442 \u043F\u043E\u0434 \u043E\u0433\u043D\u0451\u043C."
-      },
-      {
-        id: "ash_14",
-        name: "\u0421\u0442\u0435\u043F\u043D\u0430\u044F \u0437\u0430\u0441\u0430\u0434\u0430",
-        world: "ash",
-        obstacles: [{ cell: [4, 1], kind: "bones" }],
-        enemies: [
-          { id: "ash_vulture", scale: 2.071 },
-          { id: "ash_storm_spirit", scale: 2.071 },
-          { id: "ash_ghoul", scale: 2.071 }
-        ],
-        unlockAfter: "ash_13",
-        tip: "\u041C\u0435\u0442\u043A\u0438\u0435 \u0441\u0442\u0440\u0435\u043B\u044B, \u0441\u043F\u043E\u0440\u044B \u0438 \u0441\u043E\u043D. \u0420\u0430\u0437\u043D\u043E\u0448\u0451\u0440\u0441\u0442\u043D\u0430\u044F \u0437\u0430\u0441\u0430\u0434\u0430 \u2014 \u0434\u0435\u0440\u0436\u0438 \u0431\u0430\u043B\u0430\u043D\u0441 \u0437\u0430\u0449\u0438\u0442."
-      },
-      {
-        id: "ash_15",
-        name: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0439 \u043A\u0440\u0443\u0433",
-        world: "ash",
-        enemies: [
-          { id: "ash_shaman", scale: 2.084 },
-          { id: "ash_storm_spirit", scale: 2.084 },
-          { id: "ash_wolf", scale: 2.084 }
-        ],
-        unlockAfter: "ash_14",
-        tip: "\u0428\u0430\u043C\u0430\u043D \u0437\u0430 \u0441\u043F\u0438\u043D\u043E\u0439 \u0434\u0443\u0445\u0430 \u0438 \u0432\u043E\u043B\u043A\u0430. \u041F\u0440\u043E\u0440\u0432\u0438\u0441\u044C \u0441\u043A\u0432\u043E\u0437\u044C \u0441\u0442\u0440\u043E\u0439 \u0438 \u0441\u0431\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "ash_16",
-        name: "\u0412\u0438\u0445\u0440\u044C \u043D\u0430\u0434 \u0433\u043D\u0435\u0437\u0434\u043E\u043C",
-        world: "ash",
-        enemies: [
-          { id: "ash_vulture", scale: 2.097 },
-          { id: "ash_storm_spirit", scale: 2.097 },
-          { id: "ash_storm_spirit", scale: 2.097 }
-        ],
-        unlockAfter: "ash_15",
-        tip: "\u0421\u0442\u0435\u0440\u0432\u044F\u0442\u043D\u0438\u043A \u0441\u0442\u0440\u0435\u043B\u044F\u0435\u0442 \u0438\u0437 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u0432\u0438\u0445\u0440\u044F. \u0423\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
-      },
-      {
-        id: "ash_17",
-        name: "\u0414\u044B\u0445\u0430\u043D\u0438\u0435 \u043F\u043E\u0436\u0430\u0440\u0430",
-        world: "ash",
-        enemies: [
-          { id: "ash_shaman", scale: 2.111 },
-          { id: "ash_shaman", scale: 2.111 },
-          { id: "ash_storm_spirit", scale: 2.111 }
-        ],
-        unlockAfter: "ash_16",
-        tip: "\u041F\u0430\u0440\u043D\u044B\u0435 \u0448\u0430\u043C\u0430\u043D\u044B \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u0434\u0443\u0445\u0430. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
-      },
-      {
-        id: "ash_18",
-        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043E\u0431\u043E\u0437",
-        world: "ash",
-        obstacles: [{ cell: [2, 0], kind: "rock" }, { cell: [5, 2], kind: "bones" }],
-        enemies: [
-          { id: "ash_ghoul", scale: 2.124 },
-          { id: "ash_wolf", scale: 2.124 },
-          { id: "ash_storm_spirit", scale: 2.124 }
-        ],
-        unlockAfter: "ash_17",
-        tip: "\u0422\u0435\u043D\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0432\u043E\u043B\u043A \u0431\u044C\u0451\u0442 \u043C\u043E\u0449\u043D\u043E, \u0434\u0443\u0445 \u043F\u0443\u0433\u0430\u0435\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
-      },
-      {
-        id: "ash_19",
-        name: "\u041F\u0435\u0440\u0435\u0434 \u043B\u0438\u0446\u043E\u043C \u0425\u0430\u043D\u0430",
-        world: "ash",
-        enemies: [
-          { id: "ash_shaman", scale: 2.137 },
-          { id: "ash_storm_spirit", scale: 2.137 },
-          { id: "ash_ghoul", scale: 2.137 }
-        ],
-        unlockAfter: "ash_18",
-        tip: "\u0412\u0441\u044F \u043D\u0435\u0447\u0438\u0441\u0442\u044C \u0441\u0442\u0435\u043F\u0438 \u0440\u0430\u0437\u043E\u043C: \u043E\u0433\u043E\u043D\u044C, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0425\u0430\u043D\u043E\u043C."
-      },
-      {
-        id: "ash_boss",
-        name: "\u0425\u0430\u043D \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0445 \u0431\u0443\u0440\u044C",
-        world: "ash",
-        enemies: [{ id: "ash_khan", scale: 1.9 }],
-        unlockAfter: "ash_19",
-        tip: "\u0425\u0430\u043D \u0436\u0436\u0451\u0442 \u043E\u0433\u043D\u0451\u043C \u0438 \u043D\u0430\u0432\u043E\u0434\u0438\u0442 \u0441\u0442\u0440\u0430\u0445. \u0421\u043E\u0431\u0435\u0440\u0438 \u043B\u0443\u0447\u0448\u0435\u0435 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u0438 \u043E\u0442\u0440\u044F\u0434."
-      }
-    ]
-  };
-
-  // src/data/worlds/jade.js
-  var WORLD6 = {
-    id: "jade",
-    label: "\u{1F38B} \u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434",
-    enemies: [
-      {
-        id: "jade_warrior",
-        name: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0439 \u0432\u043E\u0438\u043D",
-        icon: "\u{1F3B4}",
-        hp: 150,
-        attack: 16,
-        armor: 18,
-        speed: 8,
-        crit: 0.06,
-        dodge: 0.04,
-        elem: "phys",
-        skills: ["heavy_blow"],
-        reward: { coins: [90, 120], materials: ["jade_paper"] }
-      },
-      {
-        id: "jade_crane",
-        name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0436\u0443\u0440\u0430\u0432\u043B\u044C",
-        icon: "\u{1F54A}\uFE0F",
-        hp: 90,
-        attack: 14,
-        armor: 10,
-        speed: 10,
-        crit: 0.09,
-        dodge: 0.12,
-        elem: "phys",
-        skills: ["aimed_shot"],
-        reward: { coins: [85, 115], materials: ["jade_feather"] }
-      },
-      {
-        id: "jade_lantern",
-        name: "\u0424\u043E\u043D\u0430\u0440\u044C \u043D\u0430 \u0432\u043E\u0434\u0435",
-        icon: "\u{1F3EE}",
-        hp: 100,
-        attack: 19,
-        armor: 10,
-        speed: 11,
-        crit: 0.05,
-        dodge: 0.1,
-        elem: "fire",
-        skills: ["spit_fire", "sting_poison"],
-        tags: ["spirit"],
-        reward: { coins: [85, 115], materials: ["jade_paper"] }
-      },
-      {
-        id: "jade_kitsune",
-        name: "\u0421\u0430\u0434\u043E\u0432\u0430\u044F \u043A\u0438\u0446\u0443\u043D\u044D",
-        icon: "\u{1F98A}",
-        hp: 110,
-        attack: 17,
-        armor: 12,
-        speed: 12,
-        crit: 0.06,
-        dodge: 0.11,
-        elem: "phys",
-        skills: ["pollen_sleep", "fear_chill"],
-        tags: ["spirit"],
-        reward: { coins: [90, 120], materials: ["jade_fur"] }
-      },
-      {
-        id: "jade_teamaster",
-        name: "\u0427\u0430\u0439\u043D\u044B\u0439 \u043C\u0430\u0441\u0442\u0435\u0440-\u0434\u0443\u0445",
-        icon: "\u{1F375}",
-        hp: 125,
-        attack: 15,
-        armor: 14,
-        speed: 8,
-        crit: 0.04,
-        dodge: 0.06,
-        elem: "phys",
-        skills: ["regen_ally_skill", "slow_spores"],
-        tags: ["spirit"],
-        reward: { coins: [95, 130], materials: ["jade_tea"] }
-      },
-      // Босс мира
-      {
-        id: "jade_boss",
-        name: "\u0414\u0440\u0430\u043A\u043E\u043D-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u0430\u0434\u0430",
-        icon: "\u{1F409}",
-        hp: 400,
-        attack: 26,
-        armor: 26,
-        speed: 9,
-        crit: 0.08,
-        dodge: 0.05,
-        elem: "fire",
-        skills: ["spit_fire", "heavy_blow", "fear_chill"],
-        boss: true,
-        tags: ["spirit"],
-        reward: { coins: [450, 600], seals: 4, materials: ["jade_pearl"] }
-      }
-    ],
-    materials: [
-      { id: "jade_paper", name: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u0430\u044F \u0431\u0443\u043C\u0430\u0433\u0430", icon: "\u{1F3B4}", description: "\u041F\u0440\u043E\u0447\u043D\u0430\u044F, \u043A\u0430\u043A \u0442\u043E\u043D\u043A\u0430\u044F \u043A\u043E\u043B\u044C\u0447\u0443\u0433\u0430." },
-      { id: "jade_feather", name: "\u041F\u0435\u0440\u043E \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0436\u0443\u0440\u0430\u0432\u043B\u044F", icon: "\u{1FAB6}", description: "\u041B\u0451\u0433\u043A\u043E\u0435, \u0441 \u0437\u0435\u043B\u0435\u043D\u043E\u0432\u0430\u0442\u044B\u043C \u043E\u0442\u043B\u0438\u0432\u043E\u043C." },
-      { id: "jade_fur", name: "\u041C\u0435\u0445 \u0441\u0430\u0434\u043E\u0432\u043E\u0439 \u043A\u0438\u0446\u0443\u043D\u044D", icon: "\u{1F98A}", description: "\u041F\u0443\u0448\u0438\u0441\u0442\u044B\u0439 \u0438 \u0447\u0443\u0442\u044C \u0442\u0451\u043F\u043B\u044B\u0439." },
-      { id: "jade_tea", name: "\u041B\u0438\u0441\u0442 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0447\u0430\u044F", icon: "\u{1F375}", description: "\u041F\u0430\u0445\u043D\u0435\u0442 \u0434\u043E\u0436\u0434\u0451\u043C \u0438 \u0441\u0442\u0430\u0440\u044B\u043C \u043A\u0430\u043C\u043D\u0435\u043C." },
-      { id: "jade_pearl", name: "\u0416\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0434\u0440\u0430\u043A\u043E\u043D\u0430", icon: "\u{1F52E}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043A\u043B\u0443\u0431\u0438\u0442\u0441\u044F \u0442\u0443\u043C\u0430\u043D \u0441\u0430\u0434\u0430." }
-    ],
-    battles: [
-      {
-        id: "jade_01",
-        name: "\u0411\u0430\u043C\u0431\u0443\u043A\u043E\u0432\u044B\u0435 \u0432\u043E\u0440\u043E\u0442\u0430",
-        world: "jade",
-        enemies: [{ id: "jade_warrior", scale: 2 }, { id: "jade_teamaster", scale: 2 }],
-        unlockAfter: "ash_boss",
-        tip: "\u0412\u043E\u0438\u043D \u0431\u044C\u0451\u0442 \u043C\u043E\u0449\u043D\u043E, \u0430 \u043C\u0430\u0441\u0442\u0435\u0440 \u0435\u0433\u043E \u043F\u043E\u0434\u043B\u0435\u0447\u0438\u0432\u0430\u0435\u0442. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0437\u0430\u043F\u0430\u0441 \u0437\u0435\u043B\u0438\u0439."
-      },
-      {
-        id: "jade_02",
-        name: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u043F\u0440\u0443\u0434",
-        world: "jade",
-        enemies: [{ id: "jade_crane", scale: 2.01 }, { id: "jade_kitsune", scale: 2.01 }],
-        unlockAfter: "jade_01",
-        tip: "\u0422\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u0438 \u043B\u0438\u0441\u0438\u0439 \u043C\u043E\u0440\u043E\u043A. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
-      },
-      {
-        id: "jade_03",
-        name: "\u0424\u043E\u043D\u0430\u0440\u0438 \u043D\u0430 \u0432\u043E\u0434\u0435",
-        world: "jade",
-        enemies: [{ id: "jade_lantern", scale: 2.03 }, { id: "jade_lantern", scale: 2.03 }],
-        unlockAfter: "jade_02",
-        tip: "\u0424\u043E\u043D\u0430\u0440\u0438 \u0436\u0433\u0443\u0442 \u043E\u0433\u043D\u0451\u043C \u0438 \u0442\u0440\u0430\u0432\u044F\u0442 \u0434\u044B\u043C\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435."
-      },
-      {
-        id: "jade_04",
-        name: "\u041B\u0438\u0441\u044C\u044F \u0442\u0440\u043E\u043F\u0430",
-        world: "jade",
-        obstacles: [{ cell: [3, 1], kind: "bamboo" }],
-        enemies: [{ id: "jade_kitsune", scale: 2.04 }, { id: "jade_kitsune", scale: 2.04 }],
-        unlockAfter: "jade_03",
-        tip: "\u041A\u0438\u0446\u0443\u043D\u044D \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0442 \u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
-      },
-      {
-        id: "jade_05",
-        name: "\u041F\u043B\u0430\u043C\u044F \u0438 \u0431\u0443\u043C\u0430\u0433\u0430",
-        world: "jade",
-        enemies: [{ id: "jade_warrior", scale: 2.05 }, { id: "jade_lantern", scale: 2.05 }],
-        unlockAfter: "jade_04",
-        tip: "\u0424\u043E\u043D\u0430\u0440\u044C \u0436\u0436\u0451\u0442, \u0432\u043E\u0438\u043D \u043A\u0440\u0443\u0448\u0438\u0442. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
-      },
-      {
-        id: "jade_06",
-        name: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u0442\u0430\u043D\u0435\u0446",
-        world: "jade",
-        enemies: [{ id: "jade_crane", scale: 2.07 }, { id: "jade_crane", scale: 2.07 }],
-        unlockAfter: "jade_05",
-        tip: "\u0416\u0443\u0440\u0430\u0432\u043B\u0438\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u043D\u0435 \u043F\u0440\u043E\u043C\u0430\u0445\u0438\u0432\u0430\u0435\u0442\u0441\u044F. \u0411\u0440\u043E\u043D\u044F \u0432\u0430\u0436\u043D\u0435\u0435 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u044F."
-      },
-      {
-        id: "jade_07",
-        name: "\u041F\u0430\u0440 \u043D\u0430\u0434 \u0447\u0430\u0448\u0435\u0439",
-        world: "jade",
-        enemies: [{ id: "jade_teamaster", scale: 2.08 }, { id: "jade_crane", scale: 2.08 }],
-        unlockAfter: "jade_06",
-        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0436\u0443\u0440\u0430\u0432\u043B\u044F, \u0430 \u0442\u043E\u0442 \u0431\u044C\u0451\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0417\u0430\u043F\u0430\u0441\u0438\u0441\u044C \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435\u043C."
-      },
-      {
-        id: "jade_08",
-        name: "\u041C\u043E\u0440\u043E\u043A \u043D\u0430\u0434 \u0432\u043E\u0434\u043E\u0439",
-        world: "jade",
-        enemies: [{ id: "jade_kitsune", scale: 2.09 }, { id: "jade_lantern", scale: 2.09 }],
-        unlockAfter: "jade_07",
-        tip: "\u0421\u043E\u043D, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0435\u0434\u043A\u0438\u0439 \u0434\u044B\u043C. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435."
-      },
-      {
-        id: "jade_09",
-        name: "\u041B\u0438\u0441\u0438\u0439 \u0433\u0430\u0440\u043D\u0438\u0437\u043E\u043D",
-        world: "jade",
-        obstacles: [{ cell: [4, 0], kind: "bamboo" }, { cell: [4, 2], kind: "bamboo" }],
-        enemies: [{ id: "jade_warrior", scale: 2.11 }, { id: "jade_kitsune", scale: 2.11 }],
-        unlockAfter: "jade_08",
-        tip: "\u0412\u043E\u0438\u043D \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u043A\u0438\u0446\u0443\u043D\u044D. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0442\u044F\u0436\u0451\u043B\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
-      },
-      {
-        id: "jade_10",
-        name: "\u041E\u0433\u043E\u043D\u044C\u043A\u0438 \u043D\u0430\u0434 \u043F\u0440\u0443\u0434\u043E\u043C",
-        world: "jade",
-        enemies: [{ id: "jade_lantern", scale: 2.12 }, { id: "jade_crane", scale: 2.12 }],
-        unlockAfter: "jade_09",
-        tip: "\u0424\u043E\u043D\u0430\u0440\u044C \u0436\u0436\u0451\u0442, \u0436\u0443\u0440\u0430\u0432\u043B\u044C \u043D\u0435 \u043C\u0430\u0436\u0435\u0442. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u0440\u043E\u043D\u044F."
-      },
-      {
-        id: "jade_11",
-        name: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0439 \u0441\u0430\u0434",
-        world: "jade",
-        enemies: [{ id: "jade_warrior", scale: 2.13 }, { id: "jade_crane", scale: 2.13 }],
-        unlockAfter: "jade_10",
-        tip: "\u041C\u043E\u0449\u043D\u044B\u0439 \u0443\u0434\u0430\u0440 \u0438 \u0442\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432. \u041A\u0440\u0435\u043F\u043A\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0440\u0435\u0448\u0430\u0435\u0442."
-      },
-      {
-        id: "jade_12",
-        name: "\u0427\u0430\u0439 \u0434\u043B\u044F \u043B\u0438\u0441\u0438\u0446\u044B",
-        world: "jade",
-        enemies: [{ id: "jade_teamaster", scale: 2.14 }, { id: "jade_kitsune", scale: 2.14 }],
-        unlockAfter: "jade_11",
-        tip: "\u041B\u0438\u0441\u0438\u0446\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435."
-      },
-      {
-        id: "jade_13",
-        name: "\u0427\u0430\u0439 \u043D\u0430 \u0432\u043E\u0434\u0435",
-        world: "jade",
-        enemies: [{ id: "jade_teamaster", scale: 2.16 }, { id: "jade_lantern", scale: 2.16 }],
-        unlockAfter: "jade_12",
-        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0444\u043E\u043D\u0430\u0440\u044C, \u0430 \u0442\u043E\u0442 \u0436\u0436\u0451\u0442 \u0438 \u0442\u0440\u0430\u0432\u0438\u0442 \u0434\u044B\u043C\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0442\u0435\u0440\u043F\u0435\u043D\u0438\u0435."
-      },
-      {
-        id: "jade_14",
-        name: "\u0421\u0442\u0440\u0430\u0436\u0438 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
-        world: "jade",
-        obstacles: [{ cell: [4, 1], kind: "rock" }],
-        enemies: [{ id: "jade_warrior", scale: 2.17 }, { id: "jade_lantern", scale: 2.17 }],
-        unlockAfter: "jade_13",
-        tip: "\u0412\u043E\u0438\u043D \u0438 \u0444\u043E\u043D\u0430\u0440\u044C. \u0411\u0435\u0437 \u0431\u0440\u043E\u043D\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u043E\u0433\u043D\u044E \u043D\u0435 \u0432\u044B\u0441\u0442\u043E\u044F\u0442\u044C."
-      },
-      {
-        id: "jade_15",
-        name: "\u0414\u0435\u0432\u044F\u0442\u044C \u0445\u0432\u043E\u0441\u0442\u043E\u0432",
-        world: "jade",
-        enemies: [{ id: "jade_kitsune", scale: 2.18 }, { id: "jade_crane", scale: 2.18 }],
-        unlockAfter: "jade_14",
-        tip: "\u041B\u0438\u0441\u0438\u0439 \u043C\u043E\u0440\u043E\u043A \u0438 \u0442\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432. \u0428\u043B\u0435\u043C \u043E\u0442 \u0441\u043D\u0430 \u0438 \u0445\u043E\u0440\u043E\u0448\u0430\u044F \u0431\u0440\u043E\u043D\u044F."
-      },
-      {
-        id: "jade_16",
-        name: "\u041F\u0435\u0441\u043D\u044F \u043A\u0430\u043C\u043D\u0435\u0439",
-        world: "jade",
-        enemies: [{ id: "jade_warrior", scale: 2.2 }, { id: "jade_teamaster", scale: 2.2 }],
-        unlockAfter: "jade_15",
-        tip: "\u0412\u043E\u0438\u043D \u0438 \u043C\u0430\u0441\u0442\u0435\u0440: \u043C\u043E\u0449\u044C \u0438 \u043B\u0435\u0447\u0435\u043D\u0438\u0435. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0431\u0435\u0440\u0438 \u0437\u0435\u043B\u044C\u044F."
-      },
-      {
-        id: "jade_17",
-        name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0444\u0435\u0441\u0442\u0438\u0432\u0430\u043B\u044C",
-        world: "jade",
-        enemies: [{ id: "jade_crane", scale: 2.21 }, { id: "jade_lantern", scale: 2.21 }],
-        unlockAfter: "jade_16",
-        tip: "\u0422\u043E\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0432 \u0438 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0435 \u043F\u043B\u0430\u043C\u044F. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0431\u0440\u043E\u043D\u044F."
-      },
-      {
-        id: "jade_18",
-        name: "\u0422\u0438\u0445\u0430\u044F \u0446\u0435\u0440\u0435\u043C\u043E\u043D\u0438\u044F",
-        world: "jade",
-        obstacles: [{ cell: [3, 2], kind: "bamboo" }, { cell: [5, 0], kind: "rock" }],
-        enemies: [{ id: "jade_teamaster", scale: 2.22 }, { id: "jade_crane", scale: 2.22 }],
-        unlockAfter: "jade_17",
-        tip: "\u041C\u0430\u0441\u0442\u0435\u0440 \u043B\u0435\u0447\u0438\u0442 \u0436\u0443\u0440\u0430\u0432\u043B\u044F, \u0430 \u0442\u043E\u0442 \u0431\u044C\u0451\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0434\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
-      },
-      {
-        id: "jade_19",
-        name: "\u0421\u043E\u0432\u0435\u0442 \u0441\u0442\u0430\u0440\u0435\u0439\u0448\u0438\u043D",
-        world: "jade",
-        enemies: [{ id: "jade_warrior", scale: 2.24 }, { id: "jade_kitsune", scale: 2.24 }],
-        unlockAfter: "jade_18",
-        tip: "\u0412\u043E\u0438\u043D \u0438 \u043A\u0438\u0446\u0443\u043D\u044D \u043D\u0430 \u043F\u0438\u043A\u0435 \u0441\u0438\u043B\u044B. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0414\u0440\u0430\u043A\u043E\u043D\u043E\u043C."
-      },
-      {
-        id: "jade_boss",
-        name: "\u0414\u0440\u0430\u043A\u043E\u043D \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0441\u0430\u0434\u0430",
-        world: "jade",
-        enemies: [{ id: "jade_boss", scale: 2 }],
-        unlockAfter: "jade_19",
-        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0434\u044B\u0448\u0438\u0442 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u043C \u043F\u043B\u0430\u043C\u0435\u043D\u0435\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
-      }
-    ]
-  };
-
-  // src/data/worlds/deep.js
-  var WORLD7 = {
-    id: "deep",
-    label: "\u{1F41A} \u041F\u043E\u0434\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442",
-    enemies: [
-      {
-        id: "deep_siren",
-        name: "\u0420\u0443\u0441\u0430\u043B\u043A\u0430-\u043F\u0435\u0432\u0443\u043D\u044C\u044F",
-        icon: "\u{1F9DC}\u200D\u2640\uFE0F",
-        hp: 95,
-        attack: 15,
-        armor: 10,
-        speed: 11,
-        crit: 0.05,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["pollen_sleep", "regen_ally_skill"],
-        reward: { coins: [85, 120], materials: ["deep_siren_scale"] }
-      },
-      {
-        id: "deep_pearl_guard",
-        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
-        icon: "\u{1F9AA}",
-        hp: 150,
-        attack: 17,
-        armor: 24,
-        speed: 6,
-        crit: 0.03,
-        dodge: 0,
-        elem: "phys",
-        skills: ["heavy_blow", "slow_spores"],
-        reward: { coins: [100, 140], materials: ["deep_reef_stone"] }
-      },
-      {
-        id: "deep_shadow",
-        name: "\u0413\u043B\u0443\u0431\u043E\u043A\u043E\u0432\u043E\u0434\u043D\u0430\u044F \u0442\u0435\u043D\u044C",
-        icon: "\u{1F311}",
-        hp: 85,
-        attack: 18,
-        armor: 9,
-        speed: 12,
-        crit: 0.08,
-        dodge: 0.14,
-        elem: "phys",
-        skills: ["fear_chill"],
-        tags: ["spirit"],
-        reward: { coins: [90, 130], materials: ["deep_sea_mist"] }
-      },
-      {
-        id: "deep_coral_golem",
-        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
-        icon: "\u{1FAB8}",
-        hp: 160,
-        attack: 20,
-        armor: 20,
-        speed: 5,
-        crit: 0.02,
-        dodge: 0,
-        elem: "phys",
-        skills: ["heavy_blow", "sting_poison_weak"],
-        reward: { coins: [110, 150], materials: ["deep_reef_stone"] }
-      },
-      {
-        id: "deep_current_spirit",
-        name: "\u0414\u0443\u0445 \u0442\u0435\u0447\u0435\u043D\u0438\u044F",
-        icon: "\u{1F300}",
-        hp: 75,
-        attack: 15,
-        armor: 8,
-        speed: 13,
-        crit: 0.06,
-        dodge: 0.12,
-        elem: "phys",
-        skills: ["slow_spores"],
-        tags: ["spirit", "ranged"],
-        reward: { coins: [85, 125], materials: ["deep_sea_mist"] }
-      },
-      {
-        id: "deep_light_bubble",
-        name: "\u041F\u0443\u0437\u044B\u0440\u0451\u043A \u0441\u0432\u0435\u0442\u0430",
-        icon: "\u{1FAE7}",
-        hp: 68,
-        attack: 13,
-        armor: 8,
-        speed: 12,
-        crit: 0.05,
-        dodge: 0.14,
-        elem: "fire",
-        skills: ["spit_fire"],
-        reward: { coins: [80, 115], materials: ["deep_light_drop"] }
-      },
-      // Босс мира
-      {
-        id: "deep_boss_queen",
-        name: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0433\u0440\u043E\u0442\u0430",
-        icon: "\u{1F451}",
-        hp: 370,
-        attack: 26,
-        armor: 24,
-        speed: 9,
-        crit: 0.08,
-        dodge: 0.05,
-        elem: "phys",
-        skills: ["pollen_sleep", "fear_chill", "slow_spores"],
-        boss: true,
-        reward: { coins: [550, 750], seals: 4, materials: ["deep_abyss_pearl"] }
-      }
-    ],
-    materials: [
-      { id: "deep_siren_scale", name: "\u0427\u0435\u0448\u0443\u044F \u043F\u0435\u0432\u0443\u043D\u044C\u0438", icon: "\u{1F3B6}", description: "\u0425\u0440\u0430\u043D\u0438\u0442 \u043E\u0442\u0437\u0432\u0443\u043A \u043F\u043E\u0434\u0432\u043E\u0434\u043D\u043E\u0439 \u043F\u0435\u0441\u043D\u0438." },
-      { id: "deep_reef_stone", name: "\u041A\u0430\u043C\u0435\u043D\u044C \u0440\u0438\u0444\u0430", icon: "\u{1FAA8}", description: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u0434\u0440\u0435\u0432\u043D\u0435\u0433\u043E \u0440\u0438\u0444\u0430, \u0442\u0451\u043F\u043B\u044B\u0439 \u043D\u0430 \u043E\u0449\u0443\u043F\u044C." },
-      { id: "deep_sea_mist", name: "\u041C\u043E\u0440\u0441\u043A\u0430\u044F \u0434\u044B\u043C\u043A\u0430", icon: "\u{1F32B}\uFE0F", description: "\u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u0442\u0443\u043C\u0430\u043D, \u043F\u043E\u0434\u043D\u044F\u0442\u044B\u0439 \u0441\u043E \u0434\u043D\u0430." },
-      { id: "deep_light_drop", name: "\u041A\u0430\u043F\u0435\u043B\u044C\u043A\u0430 \u0441\u0432\u0435\u0442\u0430", icon: "\u{1FAE7}", description: "\u0421\u0432\u0435\u0442\u0438\u0442\u0441\u044F, \u0435\u0441\u043B\u0438 \u0435\u0451 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C." },
-      { id: "deep_abyss_pearl", name: "\u0416\u0435\u043C\u0447\u0443\u0436\u0438\u043D\u0430 \u0431\u0435\u0437\u0434\u043D\u044B", icon: "\u{1F52E}", description: "\u0412\u043D\u0443\u0442\u0440\u0438 \u043F\u043B\u0435\u0449\u0435\u0442\u0441\u044F \u0442\u0451\u043C\u043D\u0430\u044F \u0432\u043E\u0434\u0430." }
-    ],
-    battles: [
-      {
-        id: "deep_01",
-        name: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u0438 \u0443 \u0432\u0445\u043E\u0434\u0430",
-        world: "deep",
-        enemies: [{ id: "deep_light_bubble", scale: 2.1 }, { id: "deep_light_bubble", scale: 2.1 }],
-        unlockAfter: "jade_boss",
-        tip: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u0438 \u0436\u0433\u0443\u0442 \u043E\u0441\u043B\u0435\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C \u0441\u0432\u0435\u0442\u043E\u043C. \u041F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
-      },
-      {
-        id: "deep_02",
-        name: "\u041F\u0435\u0441\u043D\u044C \u0437\u0430 \u0441\u043A\u0430\u043B\u043E\u0439",
-        world: "deep",
-        enemies: [{ id: "deep_siren", scale: 2.11 }, { id: "deep_siren", scale: 2.11 }],
-        unlockAfter: "deep_01",
-        tip: "\u041F\u0435\u0441\u043D\u044F \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0428\u043B\u0435\u043C \u0441\u043E\u043D\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
-      },
-      {
-        id: "deep_03",
-        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0439 \u043F\u043E\u0441\u0442",
-        world: "deep",
-        enemies: [{ id: "deep_pearl_guard", scale: 2.12 }, { id: "deep_light_bubble", scale: 2.12 }],
-        unlockAfter: "deep_02",
-        tip: "\u0421\u0442\u0440\u0430\u0436 \u043A\u0440\u0435\u043F\u043E\u043A, \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442\u0441\u044F. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0431\u044C\u0451\u0442 \u043F\u0430\u043D\u0446\u0438\u0440\u044C."
-      },
-      {
-        id: "deep_04",
-        name: "\u0422\u0435\u043D\u044C \u0432 \u0440\u0430\u0441\u0449\u0435\u043B\u0438\u043D\u0435",
-        world: "deep",
-        obstacles: [{ cell: [3, 1], kind: "coral" }],
-        enemies: [{ id: "deep_shadow", scale: 2.14 }, { id: "deep_shadow", scale: 2.14 }],
-        unlockAfter: "deep_03",
-        tip: "\u0422\u0435\u043D\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0443\u0436\u0430\u0441. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0432\u0435\u0440\u043D\u0451\u0442 \u0440\u044B\u0446\u0430\u0440\u044E \u0442\u0432\u0451\u0440\u0434\u043E\u0441\u0442\u044C \u0440\u0443\u043A\u0438."
-      },
-      {
-        id: "deep_05",
-        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0437\u0430\u0432\u0430\u043B",
-        world: "deep",
-        enemies: [{ id: "deep_coral_golem", scale: 2.15 }, { id: "deep_light_bubble", scale: 2.15 }],
-        unlockAfter: "deep_04",
-        tip: "\u0413\u043E\u043B\u0435\u043C \u0440\u0435\u0436\u0435\u0442 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u043C\u0438 \u043A\u043E\u0440\u0430\u043B\u043B\u0430\u043C\u0438. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
-      },
-      {
-        id: "deep_06",
-        name: "\u0418\u0433\u0440\u044B \u0442\u0435\u0447\u0435\u043D\u0438\u044F",
-        world: "deep",
-        enemies: [{ id: "deep_current_spirit", scale: 2.16 }, { id: "deep_current_spirit", scale: 2.16 }],
-        unlockAfter: "deep_05",
-        tip: "\u0414\u0443\u0445\u0438 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u044E\u0442 \u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C \u0438 \u0431\u044C\u044E\u0442 \u043F\u043E \u0441\u043B\u0430\u0431\u0435\u0439\u0448\u0435\u043C\u0443. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0437\u0430\u0434\u043D\u0438\u0439 \u0440\u044F\u0434."
-      },
-      {
-        id: "deep_07",
-        name: "\u0425\u043E\u0440 \u043D\u0430 \u043E\u0442\u043C\u0435\u043B\u0438",
-        world: "deep",
-        enemies: [
-          { id: "deep_siren", scale: 2.18 },
-          { id: "deep_siren", scale: 2.18 },
-          { id: "deep_light_bubble", scale: 2.18 }
-        ],
-        unlockAfter: "deep_06",
-        tip: "\u0425\u043E\u0440 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u0430 \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442\u0441\u044F. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E."
-      },
-      {
-        id: "deep_08",
-        name: "\u0421\u0442\u0440\u0430\u0436 \u0438 \u0442\u0435\u043D\u044C",
-        world: "deep",
-        enemies: [{ id: "deep_pearl_guard", scale: 2.19 }, { id: "deep_shadow", scale: 2.19 }],
-        unlockAfter: "deep_07",
-        tip: "\u041A\u0440\u0435\u043F\u043A\u0438\u0439 \u0441\u0442\u0440\u0430\u0436 \u0438 \u0436\u0443\u0442\u043A\u0430\u044F \u0442\u0435\u043D\u044C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
-      },
-      {
-        id: "deep_09",
-        name: "\u0421\u0430\u0434\u044B \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432",
-        world: "deep",
-        obstacles: [{ cell: [4, 0], kind: "coral" }, { cell: [4, 2], kind: "shell" }],
-        enemies: [{ id: "deep_coral_golem", scale: 2.2 }, { id: "deep_current_spirit", scale: 2.2 }],
-        unlockAfter: "deep_08",
-        tip: "\u042F\u0434 \u043A\u043E\u0440\u0430\u043B\u043B\u0430 \u0438 \u0441\u0442\u044F\u0433\u0443\u044E\u0449\u0435\u0435 \u0442\u0435\u0447\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u0435 \u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
-      },
-      {
-        id: "deep_10",
-        name: "\u041F\u043E\u044E\u0449\u0438\u0435 \u0440\u0438\u0444\u044B",
-        world: "deep",
-        enemies: [{ id: "deep_siren", scale: 2.21 }, { id: "deep_shadow", scale: 2.21 }],
-        unlockAfter: "deep_09",
-        tip: "\u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u0432 \u043E\u0434\u043D\u043E\u043C \u0445\u043E\u0440\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
-      },
-      {
-        id: "deep_11",
-        name: "\u041F\u0443\u0437\u044B\u0440\u044C\u043A\u043E\u0432\u044B\u0439 \u0440\u043E\u0439",
-        world: "deep",
-        enemies: [
-          { id: "deep_light_bubble", scale: 2.22 },
-          { id: "deep_light_bubble", scale: 2.22 },
-          { id: "deep_light_bubble", scale: 2.22 }
-        ],
-        unlockAfter: "deep_10",
-        tip: "\u0422\u0440\u043E\u0438\u0446\u0430 \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u043E\u0432 \u0436\u0436\u0451\u0442 \u0440\u0430\u0437\u043E\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u0440\u0435\u0448\u0430\u0435\u0442."
-      },
-      {
-        id: "deep_12",
-        name: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u0436\u0430",
-        world: "deep",
-        enemies: [{ id: "deep_pearl_guard", scale: 2.24 }, { id: "deep_pearl_guard", scale: 2.24 }],
-        unlockAfter: "deep_11",
-        tip: "\u0414\u0432\u0430 \u0436\u0435\u043C\u0447\u0443\u0436\u043D\u044B\u0445 \u0441\u0442\u0440\u0430\u0436\u0430 \u2014 \u0441\u043F\u043B\u043E\u0448\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430. \u041D\u0443\u0436\u0435\u043D \u0443\u0440\u043E\u043D \u043F\u043E\u0442\u044F\u0436\u0435\u043B\u0435\u0435."
-      },
-      {
-        id: "deep_13",
-        name: "\u0425\u043E\u043B\u043E\u0434\u043D\u044B\u0439 \u0432\u043E\u0434\u043E\u0432\u043E\u0440\u043E\u0442",
-        world: "deep",
-        enemies: [{ id: "deep_current_spirit", scale: 2.25 }, { id: "deep_shadow", scale: 2.25 }],
-        unlockAfter: "deep_12",
-        tip: "\u0422\u0435\u0447\u0435\u043D\u0438\u0435 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442, \u0442\u0435\u043D\u044C \u043B\u0435\u0434\u0435\u043D\u0438\u0442. \u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
-      },
-      {
-        id: "deep_14",
-        name: "\u041A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0439 \u0445\u043E\u0440",
-        world: "deep",
-        obstacles: [{ cell: [4, 1], kind: "shell" }],
-        enemies: [{ id: "deep_coral_golem", scale: 2.26 }, { id: "deep_siren", scale: 2.26 }],
-        unlockAfter: "deep_13",
-        tip: "\u0413\u043E\u043B\u0435\u043C \u0434\u0435\u0440\u0436\u0438\u0442 \u0443\u0434\u0430\u0440, \u043F\u043E\u043A\u0430 \u0440\u0443\u0441\u0430\u043B\u043A\u0430 \u043F\u043E\u0451\u0442. \u0411\u0443\u0434\u0438 \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0431\u044B\u0441\u0442\u0440\u0435\u0435."
-      },
-      {
-        id: "deep_15",
-        name: "\u0421\u0432\u0435\u0442\u043E\u0432\u043E\u0439 \u0432\u043E\u0434\u043E\u0432\u043E\u0440\u043E\u0442",
-        world: "deep",
-        enemies: [{ id: "deep_current_spirit", scale: 2.28 }, { id: "deep_light_bubble", scale: 2.28 }],
-        unlockAfter: "deep_14",
-        tip: "\u0414\u0443\u0445 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442 \u0441\u043B\u0430\u0431\u0435\u0439\u0448\u0438\u0445, \u043F\u0443\u0437\u044B\u0440\u0451\u043A \u0436\u0436\u0451\u0442 \u0441\u0432\u0435\u0442\u043E\u043C. \u041F\u0440\u0438\u043A\u0440\u043E\u0439 \u0437\u0430\u0434\u043D\u0438\u0439 \u0440\u044F\u0434."
-      },
-      {
-        id: "deep_16",
-        name: "\u041C\u0440\u0430\u043A \u0433\u0440\u043E\u0442\u0430",
-        world: "deep",
-        enemies: [{ id: "deep_shadow", scale: 2.29 }, { id: "deep_pearl_guard", scale: 2.29 }],
-        unlockAfter: "deep_15",
-        tip: "\u0421\u0442\u0435\u043D\u0430 \u043F\u0435\u0440\u043B\u0430\u043C\u0443\u0442\u0440\u0430 \u0438 \u043B\u0435\u0434\u0435\u043D\u044F\u0449\u0430\u044F \u0442\u0435\u043D\u044C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
-      },
-      {
-        id: "deep_17",
-        name: "\u041F\u0435\u0441\u043D\u044C \u0433\u043B\u0443\u0431\u0438\u043D",
-        world: "deep",
-        enemies: [
-          { id: "deep_siren", scale: 2.15 },
-          { id: "deep_siren", scale: 2.15 },
-          { id: "deep_shadow", scale: 2.15 }
-        ],
-        unlockAfter: "deep_16",
-        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0445\u043E\u0440 \u0438 \u0442\u0435\u043D\u044C. \u0411\u0435\u0437 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0440\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0451\u0442 \u043D\u0430\u0434\u043E\u043B\u0433\u043E."
-      },
-      {
-        id: "deep_18",
-        name: "\u041A\u0440\u0435\u043F\u043E\u0441\u0442\u044C \u043A\u043E\u0440\u0430\u043B\u043B\u0430",
-        world: "deep",
-        obstacles: [{ cell: [2, 2], kind: "coral" }, { cell: [5, 0], kind: "shell" }],
-        enemies: [{ id: "deep_coral_golem", scale: 2.31 }, { id: "deep_coral_golem", scale: 2.31 }],
-        unlockAfter: "deep_17",
-        tip: "\u0414\u0432\u0430 \u043A\u043E\u0440\u0430\u043B\u043B\u043E\u0432\u044B\u0445 \u0433\u043E\u043B\u0435\u043C\u0430: \u044F\u0434 \u0438 \u0442\u043E\u043B\u0441\u0442\u044B\u0435 \u043F\u0430\u043D\u0446\u0438\u0440\u0438. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0432 \u0440\u0443\u043A\u0438."
-      },
-      {
-        id: "deep_19",
-        name: "\u0413\u043E\u043B\u043E\u0441\u0430 \u0433\u0440\u043E\u0442\u0430",
-        world: "deep",
-        enemies: [{ id: "deep_pearl_guard", scale: 2.33 }, { id: "deep_siren", scale: 2.33 }],
-        unlockAfter: "deep_18",
-        tip: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u043A\u0430\u0440\u0430\u0443\u043B \u043F\u0435\u0440\u0435\u0434 \u0442\u0440\u043E\u043D\u043E\u043C: \u0441\u0442\u0440\u0430\u0436 \u0438 \u043F\u0435\u0432\u0443\u043D\u044C\u044F. \u0422\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435 \u0438 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u044C."
-      },
-      {
-        id: "deep_boss",
-        name: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0433\u0440\u043E\u0442\u0430",
-        world: "deep",
-        enemies: [{ id: "deep_boss_queen", scale: 2.35 }],
-        unlockAfter: "deep_19",
-        tip: "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u043F\u0435\u0441\u043D\u0435\u0439, \u043B\u0435\u0434\u0435\u043D\u0438\u0442 \u0432\u0437\u0433\u043B\u044F\u0434\u043E\u043C \u0438 \u0441\u0442\u0430\u0441\u043A\u0438\u0432\u0430\u0435\u0442 \u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u0430\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438."
-      }
-    ]
-  };
-
-  // src/data/worlds/mist.js
-  var WORLD8 = {
-    id: "mist",
-    label: "\u23F3 \u0422\u0443\u043C\u0430\u043D\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
-    enemies: [
-      {
-        id: "mist_clock_spirit",
-        name: "\u0427\u0430\u0441\u043E\u0432\u043E\u0439 \u0434\u0443\u0445",
-        icon: "\u{1F570}\uFE0F",
-        hp: 80,
-        attack: 14,
-        armor: 8,
-        speed: 12,
-        crit: 0.06,
-        dodge: 0.1,
-        elem: "phys",
-        skills: ["fear_chill"],
-        tags: ["spirit"],
-        reward: { coins: [95, 130], materials: ["mist_gear_dust"] }
-      },
-      {
-        id: "mist_rust_automaton",
-        name: "\u0420\u0436\u0430\u0432\u044B\u0439 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D",
-        icon: "\u{1F916}",
-        hp: 100,
-        attack: 16,
-        armor: 16,
-        speed: 6,
-        crit: 0.04,
-        dodge: 0,
-        elem: "phys",
-        skills: ["heavy_blow"],
-        tags: [],
-        reward: { coins: [110, 150], materials: ["mist_rust_flake"] }
-      },
-      {
-        id: "mist_echo_keeper",
-        name: "\u042D\u0445\u043E \u043B\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430",
-        icon: "\u{1F56F}\uFE0F",
-        hp: 75,
-        attack: 15,
-        armor: 8,
-        speed: 11,
-        crit: 0.05,
-        dodge: 0.14,
-        elem: "phys",
-        skills: ["pollen_sleep"],
-        tags: ["spirit"],
-        reward: { coins: [100, 135], materials: ["mist_echo_shard"] }
-      },
-      {
-        id: "mist_sand_wisp",
-        name: "\u041F\u0435\u0441\u0447\u0430\u043D\u044B\u0439 \u043E\u0433\u043E\u043D\u0451\u043A",
-        icon: "\u23F3",
-        hp: 85,
-        attack: 14,
-        armor: 10,
-        speed: 13,
-        crit: 0.07,
-        dodge: 0.12,
-        elem: "phys",
-        skills: ["slow_spores"],
-        tags: [],
-        reward: { coins: [95, 130], materials: ["mist_sand_grain"] }
-      },
-      {
-        id: "mist_cog_hound",
-        name: "\u0428\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043D\u0430\u044F \u0433\u043E\u043D\u0447\u0430\u044F",
-        icon: "\u{1F43A}",
-        hp: 80,
-        attack: 12,
-        armor: 10,
-        speed: 11,
-        crit: 0.08,
-        dodge: 0.08,
-        elem: "phys",
-        skills: ["aimed_shot"],
-        tags: [],
-        reward: { coins: [105, 140], materials: ["mist_gear_dust"] }
-      },
-      {
-        id: "mist_time_warden",
-        name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
-        icon: "\u{1F5DD}\uFE0F",
-        hp: 90,
-        attack: 15,
-        armor: 16,
-        speed: 9,
-        crit: 0.05,
-        dodge: 0.05,
-        elem: "phys",
-        skills: ["regen_ally_skill", "slow_spores"],
-        tags: ["spirit"],
-        reward: { coins: [120, 160], materials: ["mist_echo_shard"] }
-      },
-      // Босс мира: кульминация игры — само Время
-      {
-        id: "mist_boss",
-        name: "\u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F",
-        icon: "\u231B",
-        hp: 500,
-        attack: 33,
-        armor: 34,
-        speed: 11,
-        crit: 0.12,
-        dodge: 0.06,
-        elem: "phys",
-        skills: ["heavy_blow", "slow_spores", "fear_chill"],
-        tags: ["spirit"],
-        boss: true,
-        reward: { coins: [900, 1200], seals: 6, materials: ["mist_heart_of_time"] }
-      }
-    ],
-    materials: [
-      { id: "mist_gear_dust", name: "\u0427\u0430\u0441\u043E\u0432\u0430\u044F \u043F\u044B\u043B\u044C", icon: "\u2699\uFE0F", description: "\u0422\u0438\u043A\u0430\u0435\u0442, \u0435\u0441\u043B\u0438 \u043F\u0440\u0438\u0441\u043B\u0443\u0448\u0430\u0442\u044C\u0441\u044F." },
-      { id: "mist_rust_flake", name: "\u0420\u0436\u0430\u0432\u0430\u044F \u043E\u043A\u0430\u043B\u0438\u043D\u0430", icon: "\u{1F529}", description: "\u041A\u043E\u0433\u0434\u0430-\u0442\u043E \u0431\u044B\u043B\u0430 \u0447\u044C\u0438\u043C-\u0442\u043E \u0441\u0435\u0440\u0434\u0446\u0435\u043C." },
-      { id: "mist_echo_shard", name: "\u041E\u0441\u043A\u043E\u043B\u043E\u043A \u044D\u0445\u0430", icon: "\u{1F52E}", description: "\u041F\u043E\u0432\u0442\u043E\u0440\u044F\u0435\u0442 \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0441\u043B\u043E\u0432\u0430 \u043B\u0430\u0432\u043E\u0447\u043D\u0438\u043A\u0430." },
-      { id: "mist_sand_grain", name: "\u041F\u0435\u0441\u0447\u0438\u043D\u043A\u0430 \u0432\u0435\u0447\u043D\u043E\u0441\u0442\u0438", icon: "\u{1F32B}\uFE0F", description: "\u041F\u0430\u0434\u0430\u0435\u0442 \u0432\u0432\u0435\u0440\u0445, \u0430 \u043D\u0435 \u0432\u043D\u0438\u0437." },
-      { id: "mist_heart_of_time", name: "\u0421\u0435\u0440\u0434\u0446\u0435 \u0432\u0440\u0435\u043C\u0435\u043D\u0438", icon: "\u{1F4A0}", description: "\u0411\u044C\u0451\u0442\u0441\u044F \u043E\u0434\u0438\u043D \u0440\u0430\u0437 \u0432 \u0441\u0442\u043E\u043B\u0435\u0442\u0438\u0435." }
-    ],
-    battles: [
-      {
-        id: "mist_01",
-        name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0437\u0432\u043E\u043D \u0447\u0430\u0441\u043E\u0432",
-        world: "mist",
-        enemies: [{ id: "mist_clock_spirit", scale: 2.2 }, { id: "mist_clock_spirit", scale: 2.2 }],
-        unlockAfter: "deep_boss",
-        tip: "\u0427\u0430\u0441\u043E\u0432\u044B\u0435 \u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438 \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432."
-      },
-      {
-        id: "mist_02",
-        name: "\u0420\u0436\u0430\u0432\u044B\u0439 \u0437\u0430\u0432\u043E\u0434",
-        world: "mist",
-        enemies: [{ id: "mist_rust_automaton", scale: 2.22 }, { id: "mist_sand_wisp", scale: 2.22 }],
-        unlockAfter: "mist_01",
-        tip: "\u0410\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D \u0431\u044C\u0451\u0442 \u0442\u044F\u0436\u0435\u043B\u043E, \u043E\u0433\u043E\u043D\u0451\u043A \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u0437\u0435\u043B\u044C\u044F."
-      },
-      {
-        id: "mist_03",
-        name: "\u0413\u043E\u043B\u043E\u0441 \u0438\u0437-\u0437\u0430 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430",
-        world: "mist",
-        enemies: [{ id: "mist_echo_keeper", scale: 2.23 }, { id: "mist_echo_keeper", scale: 2.23 }],
-        unlockAfter: "mist_02",
-        tip: "\u042D\u0445\u043E \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442 \u043F\u044B\u043B\u044C\u0446\u043E\u0439. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
-      },
-      {
-        id: "mist_04",
-        name: "\u041A\u043B\u044B\u043A \u0438 \u043F\u0435\u0441\u043E\u043A",
-        world: "mist",
-        obstacles: [{ cell: [3, 1], kind: "gear" }],
-        enemies: [{ id: "mist_cog_hound", scale: 2.25 }, { id: "mist_sand_wisp", scale: 2.25 }],
-        unlockAfter: "mist_03",
-        tip: "\u0413\u043E\u043D\u0447\u0430\u044F \u0431\u044C\u0451\u0442 \u043F\u0440\u0438\u0446\u0435\u043B\u044C\u043D\u043E, \u043E\u0433\u043E\u043D\u0451\u043A \u0442\u044F\u043D\u0435\u0442 \u0432\u0440\u0435\u043C\u044F. \u0423\u0431\u0435\u0439 \u0433\u043E\u043D\u0447\u0443\u044E \u043F\u0435\u0440\u0432\u043E\u0439."
-      },
-      {
-        id: "mist_05",
-        name: "\u041C\u0435\u0445\u0430\u043D\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0434\u043E\u0437\u043E\u0440",
-        world: "mist",
-        enemies: [{ id: "mist_rust_automaton", scale: 2.27 }, { id: "mist_clock_spirit", scale: 2.27 }],
-        unlockAfter: "mist_04",
-        tip: "\u0421\u0442\u0435\u043D\u0430 \u0438\u0437 \u0440\u0436\u0430\u0432\u0447\u0438\u043D\u044B \u0438 \u0434\u0443\u0445 \u0437\u0430 \u043D\u0435\u0439. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u0434\u0443\u0445 \u2014 \u043E\u043D \u0445\u0440\u0443\u043F\u0447\u0435."
-      },
-      {
-        id: "mist_06",
-        name: "\u041F\u044B\u043B\u044C \u0432\u0435\u043A\u043E\u0432",
-        world: "mist",
-        enemies: [
-          { id: "mist_sand_wisp", scale: 2.15 },
-          { id: "mist_sand_wisp", scale: 2.15 },
-          { id: "mist_echo_keeper", scale: 2.15 }
-        ],
-        unlockAfter: "mist_05",
-        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u0438 \u0442\u0435\u043C\u043F."
-      },
-      {
-        id: "mist_07",
-        name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0443 \u0441\u0442\u0430\u043D\u043A\u0430",
-        world: "mist",
-        enemies: [{ id: "mist_time_warden", scale: 2.3 }, { id: "mist_rust_automaton", scale: 2.3 }],
-        unlockAfter: "mist_06",
-        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0435\u0447\u0438\u0442 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D\u0430. \u0421\u0431\u0435\u0439 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C, \u043F\u043E\u043A\u0430 \u0442\u0430\u043D\u043A \u0437\u0430\u043D\u044F\u0442."
-      },
-      {
-        id: "mist_08",
-        name: "\u0428\u0451\u043F\u043E\u0442 \u0431\u044B\u043B\u043E\u0439 \u043B\u0430\u0432\u043A\u0438",
-        world: "mist",
-        enemies: [
-          { id: "mist_echo_keeper", scale: 2.32 },
-          { id: "mist_echo_keeper", scale: 2.32 },
-          { id: "mist_clock_spirit", scale: 2.32 }
-        ],
-        unlockAfter: "mist_07",
-        tip: "\u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u0432\u043C\u0435\u0441\u0442\u0435. \u041A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439 \u043E\u0431\u0430 \u0441\u0442\u0430\u0442\u0443\u0441\u0430 \u0437\u0435\u043B\u044C\u044F\u043C\u0438."
-      },
-      {
-        id: "mist_09",
-        name: "\u041A\u043B\u0435\u0448\u043D\u0438 \u0438 \u043A\u043B\u044B\u043A\u0438",
-        world: "mist",
-        obstacles: [{ cell: [4, 0], kind: "gear" }, { cell: [4, 2], kind: "hourglass" }],
-        enemies: [{ id: "mist_rust_automaton", scale: 2.34 }, { id: "mist_cog_hound", scale: 2.34 }],
-        unlockAfter: "mist_08",
-        tip: "\u0422\u0430\u043D\u043A \u043F\u0440\u0438\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043C\u0435\u0442\u043A\u0443\u044E \u0433\u043E\u043D\u0447\u0443\u044E. \u0421\u0444\u043E\u043A\u0443\u0441\u0438\u0440\u0443\u0439\u0441\u044F \u043D\u0430 \u0433\u043E\u043D\u0447\u0435\u0439."
-      },
-      {
-        id: "mist_10",
-        name: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B",
-        world: "mist",
-        enemies: [
-          { id: "mist_clock_spirit", scale: 1.85 },
-          { id: "mist_sand_wisp", scale: 1.8 },
-          { id: "mist_rust_automaton", scale: 1.8 }
-        ],
-        unlockAfter: "mist_09",
-        tip: "\u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u0441\u043E \u0432\u0441\u0435\u0445 \u0441\u0442\u043E\u0440\u043E\u043D, \u0430 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043B\u0430\u0442\u0430\u0435\u0442 \u0440\u0430\u043D\u044B. \u0424\u043E\u043A\u0443\u0441 \u043D\u0430 \u043D\u0451\u043C."
-      },
-      {
-        id: "mist_11",
-        name: "\u041F\u0435\u0440\u0435\u0437\u0432\u043E\u043D \u0438 \u0448\u0451\u043F\u043E\u0442",
-        world: "mist",
-        enemies: [{ id: "mist_clock_spirit", scale: 2.37 }, { id: "mist_echo_keeper", scale: 2.37 }],
-        unlockAfter: "mist_10",
-        tip: "\u0421\u0442\u0440\u0430\u0445 \u0434\u0443\u0445\u0430 \u0438 \u0443\u0441\u044B\u043F\u043B\u0435\u043D\u0438\u0435 \u044D\u0445\u0430. \u041E\u0440\u0443\u0436\u0438\u0435 \u043F\u0440\u043E\u0442\u0438\u0432 \u0434\u0443\u0445\u043E\u0432 \u043E\u043A\u0443\u043F\u0438\u0442\u0441\u044F."
-      },
-      {
-        id: "mist_12",
-        name: "\u042D\u0445\u043E \u0432 \u0448\u0435\u0441\u0442\u0435\u0440\u043D\u044F\u0445",
-        world: "mist",
-        enemies: [{ id: "mist_cog_hound", scale: 2.39 }, { id: "mist_echo_keeper", scale: 2.39 }],
-        unlockAfter: "mist_11",
-        tip: "\u041C\u0435\u0442\u043A\u0430\u044F \u0433\u043E\u043D\u0447\u0430\u044F \u0438 \u0443\u0441\u044B\u043F\u043B\u044F\u044E\u0449\u0435\u0435 \u044D\u0445\u043E. \u041D\u0435 \u0434\u0430\u0439 \u0440\u044B\u0446\u0430\u0440\u044E \u0443\u0441\u043D\u0443\u0442\u044C."
-      },
-      {
-        id: "mist_13",
-        name: "\u0414\u0432\u0430 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u0430",
-        world: "mist",
-        enemies: [{ id: "mist_rust_automaton", scale: 2.41 }, { id: "mist_rust_automaton", scale: 2.41 }],
-        unlockAfter: "mist_12",
-        tip: "\u0414\u0432\u0435 \u0440\u0436\u0430\u0432\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0437\u0430 \u0443\u0434\u0430\u0440."
-      },
-      {
-        id: "mist_14",
-        name: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0433\u043E\u043D",
-        world: "mist",
-        obstacles: [{ cell: [4, 1], kind: "hourglass" }],
-        enemies: [{ id: "mist_cog_hound", scale: 2.3 }, { id: "mist_cog_hound", scale: 2.3 }],
-        unlockAfter: "mist_13",
-        tip: "\u0414\u0432\u0435 \u0433\u043E\u043D\u0447\u0438\u0435 \u0431\u044C\u044E\u0442 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u0430. \u0411\u0440\u043E\u043D\u044F \u0438 \u0443\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435 \u2014 \u0442\u0432\u043E\u0438 \u0434\u0440\u0443\u0437\u044C\u044F."
-      },
-      {
-        id: "mist_15",
-        name: "\u041F\u0430\u043A\u0442 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
-        world: "mist",
-        enemies: [{ id: "mist_time_warden", scale: 2.44 }, { id: "mist_clock_spirit", scale: 2.44 }],
-        unlockAfter: "mist_14",
-        tip: "\u041B\u0435\u0447\u0435\u043D\u0438\u0435 \u0438 \u0441\u0442\u0440\u0430\u0445. \u0420\u0430\u0437\u0431\u0435\u0440\u0438\u0441\u044C \u0441 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C \u0432 \u043F\u0435\u0440\u0432\u0443\u044E \u043E\u0447\u0435\u0440\u0435\u0434\u044C."
-      },
-      {
-        id: "mist_16",
-        name: "\u041F\u044B\u043B\u044C\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
-        world: "mist",
-        enemies: [{ id: "mist_rust_automaton", scale: 2.46 }, { id: "mist_sand_wisp", scale: 2.46 }],
-        unlockAfter: "mist_15",
-        tip: "\u0422\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B \u043F\u043E\u0434 \u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435\u043C. \u041D\u0435 \u0440\u0430\u0441\u0442\u044F\u0433\u0438\u0432\u0430\u0439 \u0431\u043E\u0439."
-      },
-      {
-        id: "mist_17",
-        name: "\u0413\u043E\u043D \u043F\u043E \u0440\u0435\u0437\u044C\u0431\u0435",
-        world: "mist",
-        enemies: [{ id: "mist_cog_hound", scale: 2.35 }, { id: "mist_sand_wisp", scale: 2.35 }],
-        unlockAfter: "mist_16",
-        tip: "\u0411\u044B\u0441\u0442\u0440\u0430\u044F \u043F\u0430\u0440\u0430: \u043A\u043B\u044B\u043A\u0438 \u0438 \u043F\u0435\u0441\u043E\u043A. \u0414\u0435\u0440\u0436\u0438 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u043F\u0440\u0438 \u0441\u0435\u0431\u0435."
-      },
-      {
-        id: "mist_18",
-        name: "\u0414\u0435\u0436\u0443\u0440\u0441\u0442\u0432\u043E \u044D\u0445\u0430",
-        world: "mist",
-        obstacles: [{ cell: [3, 0], kind: "hourglass" }, { cell: [3, 2], kind: "gear" }],
-        enemies: [
-          { id: "mist_echo_keeper", scale: 2.35 },
-          { id: "mist_echo_keeper", scale: 2.35 },
-          { id: "mist_time_warden", scale: 2.35 }
-        ],
-        unlockAfter: "mist_17",
-        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u043E\u043D \u043F\u043E\u0434 \u043F\u0440\u0438\u043A\u0440\u044B\u0442\u0438\u0435\u043C \u043B\u0435\u0447\u0435\u043D\u0438\u044F. \u0417\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
-      },
-      {
-        id: "mist_19",
-        name: "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0432\u0440\u0435\u043C\u0451\u043D",
-        world: "mist",
-        enemies: [{ id: "mist_rust_automaton", scale: 2.51 }, { id: "mist_rust_automaton", scale: 2.51 }],
-        unlockAfter: "mist_18",
-        tip: "\u0414\u0432\u0430 \u0442\u0430\u043D\u043A\u0430. \u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u2014 \u0437\u0430\u043F\u0430\u0441\u0438\u0441\u044C \u0432\u044B\u043D\u043E\u0441\u043B\u0438\u0432\u043E\u0441\u0442\u044C\u044E."
-      },
-      {
-        id: "mist_20",
-        name: "\u041E\u0445\u043E\u0442\u0430 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
-        world: "mist",
-        enemies: [{ id: "mist_time_warden", scale: 2.53 }, { id: "mist_cog_hound", scale: 2.53 }],
-        unlockAfter: "mist_19",
-        tip: "\u0413\u043E\u043D\u0447\u0430\u044F \u043F\u043E\u0434\u043B\u0435\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C. \u0412\u044B\u043D\u043E\u0441\u0438 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u044B\u043C."
-      },
-      {
-        id: "mist_21",
-        name: "\u0411\u0430\u0448\u043D\u044F \u0431\u0435\u0437 \u0432\u0440\u0435\u043C\u0435\u043D\u0438",
-        world: "mist",
-        enemies: [{ id: "mist_clock_spirit", scale: 2.55 }, { id: "mist_clock_spirit", scale: 2.55 }],
-        unlockAfter: "mist_20",
-        tip: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u0442\u0440\u0430\u0445 \u0432 \u0437\u0430\u0434\u043D\u0435\u043C \u0440\u044F\u0434\u0443. \u0421\u0442\u0440\u0435\u043B\u043A\u0438 \u0434\u043E\u0441\u0442\u0430\u043D\u0443\u0442 \u0438\u0445 \u0440\u0430\u043D\u044C\u0448\u0435."
-      },
-      {
-        id: "mist_22",
-        name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0437\u0430\u0432\u043E\u0434 \u043F\u0440\u0443\u0436\u0438\u043D\u044B",
-        world: "mist",
-        enemies: [{ id: "mist_rust_automaton", scale: 2.57 }, { id: "mist_echo_keeper", scale: 2.57 }],
-        unlockAfter: "mist_21",
-        tip: "\u0421\u0442\u0435\u043D\u0430 \u0438\u0437 \u0440\u0436\u0430\u0432\u0447\u0438\u043D\u044B \u0438 \u0443\u0441\u044B\u043F\u043B\u0435\u043D\u0438\u0435. \u041F\u0440\u043E\u0431\u0435\u0439 \u0442\u0430\u043D\u043A\u0430, \u043D\u0435 \u0443\u0441\u043D\u0438."
-      },
-      {
-        id: "mist_23",
-        name: "\u041F\u0440\u0435\u0434\u0434\u0432\u0435\u0440\u0438\u0435 \u0432\u0435\u0447\u043D\u043E\u0441\u0442\u0438",
-        world: "mist",
-        enemies: [{ id: "mist_time_warden", scale: 2.58 }, { id: "mist_rust_automaton", scale: 2.58 }],
-        unlockAfter: "mist_22",
-        tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0438 \u0430\u0432\u0442\u043E\u043C\u0430\u0442\u043E\u043D \u0432\u043C\u0435\u0441\u0442\u0435. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0412\u0440\u0435\u043C\u0435\u043D\u0435\u043C."
-      },
-      {
-        id: "mist_boss",
-        name: "\u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F",
-        world: "mist",
-        enemies: [{ id: "mist_boss", scale: 1 }],
-        unlockAfter: "mist_23",
-        tip: "\u0412\u0440\u0435\u043C\u044F \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u0438 \u0434\u0430\u0432\u0438\u0442 \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0414\u0435\u0440\u0436\u0438 \u0442\u0435\u043C\u043F \u0438 \u043D\u0435 \u0431\u043E\u0439\u0441\u044F \u2014 \u0443 \u043B\u0430\u0432\u043A\u0438 \u0435\u0441\u0442\u044C \u0431\u0443\u0434\u0443\u0449\u0435\u0435."
-      }
-    ]
-  };
-
-  // src/data/worlds/index.js
-  var WORLDS = [WORLD, WORLD2, WORLD3, WORLD4, WORLD5, WORLD6, WORLD7, WORLD8];
-  var WORLD_BY_ID = Object.fromEntries(WORLDS.map((w) => [w.id, w]));
-
-  // src/data/wanted.js
-  var WANTED_BATTLES = [
-    {
-      id: "wnt_bee_queen",
-      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0430 \u0434\u0438\u043A\u0438\u0445 \u043F\u0447\u0451\u043B",
-      world: "meadow",
-      wanted: true,
-      enemies: [{ id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }, { id: "bee_wild", scale: 1.6 }],
-      unlockAfter: "bt_boss_willow",
-      tip: "\u0420\u043E\u0439 \u0438\u0437 \u0447\u0435\u0442\u044B\u0440\u0451\u0445 \u0443\u0441\u0438\u043B\u0435\u043D\u043D\u044B\u0445 \u043F\u0447\u0451\u043B. \u0410\u043D\u0442\u0438\u0434\u043E\u0442 \u0438 \u0440\u0430\u0441\u0441\u0435\u0447\u0435\u043D\u0438\u0435."
-    },
-    {
-      id: "wnt_rat_king",
-      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u0431\u0430\u0440\u043E\u043D",
-      world: "town",
-      wanted: true,
-      enemies: [{ id: "rat_thief", scale: 2 }, { id: "rat_thief", scale: 2 }, { id: "bandit", scale: 1.9 }],
-      unlockAfter: "bt_boss_captain",
-      tip: "\u0411\u0430\u0440\u043E\u043D \u0438 \u0435\u0433\u043E \u0448\u0430\u0439\u043A\u0430. \u041F\u043E\u0434\u043A\u043E\u0432\u044B \u0432\u0435\u0440\u0451\u0432\u043E\u043A \u043D\u0435 \u0432\u044F\u0436\u0443\u0442 \u2014 \u0431\u0435\u0440\u0438 \u0442\u044F\u0436\u0451\u043B\u043E\u0435."
-    },
-    {
-      id: "wnt_ink_lord",
-      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041F\u043E\u0432\u0435\u043B\u0438\u0442\u0435\u043B\u044C \u043A\u043B\u044F\u043A\u0441",
-      world: "attic",
-      wanted: true,
-      enemies: [{ id: "ink_blot", scale: 2.1 }, { id: "paper_spirit", scale: 2 }, { id: "ink_blot", scale: 2.1 }],
-      unlockAfter: "bk_boss_keeper",
-      tip: "\u0427\u0435\u0440\u043D\u0438\u043B\u0430 \u0442\u0435\u043A\u0443\u0447\u0438 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B. \u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440 \u2014 \u0432 \u043F\u043E\u044F\u0441."
-    },
-    {
-      id: "wnt_lantern_thief",
-      name: "\u0420\u043E\u0437\u044B\u0441\u043A: \u041F\u043E\u0445\u0438\u0442\u0438\u0442\u0435\u043B\u044C \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
-      world: "nm",
-      wanted: true,
-      enemies: [{ id: "nm_shadow", scale: 2.2 }, { id: "nm_moth", scale: 2.1 }],
-      unlockAfter: "nm_boss",
-      tip: "\u0422\u0435\u043D\u044C \u0438 \u0435\u0451 \u043C\u043E\u0442\u044B\u043B\u0451\u043A \u0432\u043E\u0440\u0443\u044E\u0442 \u0441\u0432\u0435\u0442 \u0441 \u0440\u044B\u043D\u043A\u0430. \u0411\u043E\u0434\u0440\u043E\u0441\u0442\u044C \u0438 \u043E\u0442\u0432\u0430\u0433\u0430!"
-    }
-  ];
-
-  // src/data/battles.js
-  var OBSTACLE_KINDS = {
-    rock: { icon: "\u{1FAA8}", name: "\u0412\u0430\u043B\u0443\u043D" },
-    log: { icon: "\u{1FAB5}", name: "\u041F\u043E\u0432\u0430\u043B\u0435\u043D\u043D\u043E\u0435 \u0431\u0440\u0435\u0432\u043D\u043E" },
-    mushroom: { icon: "\u{1F344}", name: "\u0413\u0440\u0438\u0431-\u0432\u0435\u043B\u0438\u043A\u0430\u043D" },
-    crate: { icon: "\u{1F4E6}", name: "\u042F\u0449\u0438\u043A" },
-    barrel: { icon: "\u{1F6E2}\uFE0F", name: "\u0411\u043E\u0447\u043A\u0430" },
-    books: { icon: "\u{1F4DA}", name: "\u0421\u0442\u043E\u043F\u043A\u0430 \u043A\u043D\u0438\u0433" },
-    lantern: { icon: "\u{1F3EE}", name: "\u0424\u043E\u043D\u0430\u0440\u044C \u043D\u0430 \u0441\u0442\u043E\u043B\u0431\u0435" },
-    signpost: { icon: "\u{1FAA7}", name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u0443\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C" },
-    star: { icon: "\u2B50", name: "\u0423\u043F\u0430\u0432\u0448\u0430\u044F \u0437\u0432\u0435\u0437\u0434\u0430" },
-    bones: { icon: "\u{1F9B4}", name: "\u041A\u043E\u0441\u0442\u0438 \u0433\u0438\u0433\u0430\u043D\u0442\u0430" },
-    crystal: { icon: "\u{1F537}", name: "\u041A\u0440\u0438\u0441\u0442\u0430\u043B\u043B" },
-    bamboo: { icon: "\u{1F38B}", name: "\u0411\u0430\u043C\u0431\u0443\u043A\u043E\u0432\u0430\u044F \u0440\u043E\u0449\u0438\u0446\u0430" },
-    coral: { icon: "\u{1FAB8}", name: "\u041A\u043E\u0440\u0430\u043B\u043B" },
-    shell: { icon: "\u{1F41A}", name: "\u0413\u0438\u0433\u0430\u043D\u0442\u0441\u043A\u0430\u044F \u0440\u0430\u043A\u043E\u0432\u0438\u043D\u0430" },
-    gear: { icon: "\u2699\uFE0F", name: "\u0428\u0435\u0441\u0442\u0435\u0440\u043D\u044F" },
-    hourglass: { icon: "\u23F3", name: "\u041F\u0435\u0441\u043E\u0447\u043D\u044B\u0435 \u0447\u0430\u0441\u044B" }
-  };
-  var BATTLES = [
-    {
-      id: "bt_slimes",
-      name: "\u041B\u0443\u0436\u0430 \u0443 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0438",
-      world: "meadow",
-      enemies: ["slime_meadow", "slime_meadow"],
-      unlockAfter: null,
-      tip: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0432\u044B\u0445\u043E\u0434 \u0440\u044B\u0446\u0430\u0440\u044F. \u0421\u043B\u0438\u0437\u043D\u0438 \u0441\u043B\u0430\u0431\u043E \u044F\u0434\u043E\u0432\u0438\u0442\u044B."
-    },
-    {
-      id: "bt_bees",
-      name: "\u041F\u0447\u0435\u043B\u0438\u043D\u043E\u0435 \u0434\u0435\u0440\u0435\u0432\u043E",
-      world: "meadow",
-      enemies: ["bee_wild", "bee_wild", "bee_wild"],
-      unlockAfter: "bt_slimes",
-      tip: "\u041F\u0447\u0451\u043B\u044B \u0431\u044B\u0441\u0442\u0440\u044B \u0438 \u0436\u0430\u043B\u044F\u0442 \u044F\u0434\u043E\u043C. \u041F\u043E\u043C\u043E\u0433\u0443\u0442 \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B."
-    },
-    {
-      id: "bt_moths",
-      name: "\u041F\u043E\u043B\u044F\u043D\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432",
-      world: "meadow",
-      enemies: ["moth_night", "moth_night", "slime_meadow"],
-      obstacles: [{ cell: [3, 1], kind: "log" }],
-      unlockAfter: "bt_bees",
-      tip: "\u041F\u044B\u043B\u044C\u0446\u0430 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432 \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0428\u043B\u0435\u043C \u0441\u043E\u043D\u043D\u043E\u0433\u043E \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438."
-    },
-    {
-      id: "bt_spirits",
-      name: "\u0417\u0430\u0440\u043E\u0441\u0448\u0430\u044F \u0442\u0440\u043E\u043F\u0430",
-      world: "meadow",
-      enemies: ["spirit_forest", "spirit_forest"],
-      unlockAfter: "bt_moths",
-      tip: "\u0414\u0443\u0445\u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442 \u0441\u043F\u043E\u0440\u0430\u043C\u0438. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u043D\u0438\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
-    },
-    {
-      id: "bt_golem",
-      name: "\u041C\u0448\u0438\u0441\u0442\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
-      world: "meadow",
-      enemies: ["golem_moss", "slime_meadow"],
-      unlockAfter: "bt_spirits",
-      tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u0442\u043E\u043B\u0441\u0442\u0430\u044F \u0448\u043A\u0443\u0440\u0430. \u041D\u0443\u0436\u0435\u043D \u0443\u0440\u043E\u043D \u043F\u043E\u0442\u044F\u0436\u0435\u043B\u0435\u0435."
-    },
-    {
-      id: "bt_fireflies",
-      name: "\u0420\u043E\u0441\u0441\u044B\u043F\u044C \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u043E\u0432",
-      world: "meadow",
-      enemies: ["moth_night", "bee_wild", "moth_night", "bee_wild"],
-      obstacles: [{ cell: [4, 1], kind: "rock" }],
-      unlockAfter: "bt_golem",
-      tip: "\u0420\u043E\u0439 \u043C\u043E\u0442\u044B\u043B\u044C\u043A\u043E\u0432 \u0438 \u043F\u0447\u0451\u043B: \u0441\u043E\u043D \u0438 \u044F\u0434 \u0432\u043C\u0435\u0441\u0442\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0438 \u043F\u0435\u0440\u0447\u0430\u0442\u043A\u0438 \u0442\u0440\u0430\u0432\u043D\u0438\u0446\u044B."
-    },
-    {
-      id: "bt_overgrowth",
-      name: "\u0413\u0440\u0438\u0431\u043D\u0430\u044F \u0437\u0430\u0432\u0430\u043B\u0438\u043D\u043A\u0430",
-      world: "meadow",
-      enemies: ["golem_moss", "spirit_forest", "spirit_forest"],
-      obstacles: [{ cell: [4, 0], kind: "mushroom" }, { cell: [4, 2], kind: "mushroom" }],
-      unlockAfter: "bt_fireflies",
-      tip: "\u0413\u043E\u043B\u0435\u043C \u0438 \u0434\u0432\u0430 \u0434\u0443\u0445\u0430. \u0417\u0430\u043C\u0435\u0434\u043B\u0435\u043D\u0438\u0435 \u043E\u043F\u0430\u0441\u043D\u043E \u2014 \u0431\u0435\u0440\u0438\u0442\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u044C."
-    },
-    {
-      id: "bt_hunt_trail",
-      name: "\u041E\u0445\u043E\u0442\u043D\u0438\u0447\u044C\u044F \u0442\u0440\u043E\u043F\u0430",
-      world: "meadow",
-      enemies: ["bee_wild", "spirit_forest", "moth_night", "slime_meadow"],
-      unlockAfter: "bt_overgrowth",
-      tip: "\u0412\u0441\u044F \u043E\u043F\u0443\u0448\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0421\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u043E\u0439."
-    },
-    {
-      id: "bt_boss_willow",
-      name: "\u0421\u0442\u0430\u0440\u0430\u044F \u0438\u0432\u0430",
-      world: "meadow",
-      enemies: ["boss_willow"],
-      unlockAfter: "bt_hunt_trail",
-      tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0438\u0432\u044B \u2014 \u0438\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u0435 \u0432\u0441\u0435\u0433\u043E, \u0447\u0435\u043C\u0443 \u0442\u044B \u043D\u0430\u0443\u0447\u0438\u043B\u0441\u044F."
-    }
-  ];
-  BATTLES.push(
-    {
-      id: "bt_rats",
-      name: "\u041A\u0440\u044B\u0441\u0438\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u0443\u043B\u043E\u043A",
-      world: "town",
-      enemies: ["rat_thief", "rat_thief", "rat_thief"],
-      unlockAfter: "bt_boss_willow",
-      tip: "\u041A\u0440\u044B\u0441\u044B \u0448\u0443\u0441\u0442\u0440\u044B\u0435 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0435. \u0421\u043A\u043E\u0440\u043E\u0441\u0442\u044C \u0438 \u0430\u043D\u0442\u0438\u0434\u043E\u0442 \u0440\u0435\u0448\u0430\u044E\u0442."
-    },
-    {
-      id: "bt_bandits",
-      name: "\u0417\u0430\u0441\u0442\u0430\u0432\u0430 \u0443 \u0441\u043A\u043B\u0430\u0434\u0430",
-      world: "town",
-      enemies: ["bandit", "rat_thief", "bandit"],
-      obstacles: [{ cell: [3, 1], kind: "crate" }],
-      unlockAfter: "bt_rats",
-      tip: "\u0420\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A\u0438 \u0431\u044C\u044E\u0442 \u0441\u0438\u043B\u044C\u043D\u043E. \u0425\u043E\u0440\u043E\u0448\u0430\u044F \u0431\u0440\u043E\u043D\u044F \u0438 \u0449\u0438\u0442 \u2014 \u043A\u0430\u043A \u043D\u0438\u043A\u043E\u0433\u0434\u0430 \u043A\u0441\u0442\u0430\u0442\u0438."
-    },
-    {
-      id: "bt_wander_golem",
-      name: "\u0411\u0440\u043E\u0434\u044F\u0447\u0430\u044F \u043A\u043B\u0430\u0434\u043A\u0430",
-      world: "town",
-      enemies: ["golem_wander", "rat_thief"],
-      unlockAfter: "bt_bandits",
-      tip: "\u0423 \u0433\u043E\u043B\u0435\u043C\u0430 \u043A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0448\u043A\u0443\u0440\u0430 \u2014 \u0431\u0435\u0440\u0438\u0442\u0435 \u0442\u044F\u0436\u0451\u043B\u043E\u0435 \u043E\u0440\u0443\u0436\u0438\u0435."
-    },
-    {
-      id: "bt_ghost_watch",
-      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043E\u0431\u0445\u043E\u0434",
-      world: "town",
-      enemies: ["ghost_guard", "ghost_guard"],
-      unlockAfter: "bt_wander_golem",
-      tip: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u041B\u0443\u043A \u0438 \u0442\u043E\u043F\u043E\u0440 \u0431\u044C\u044E\u0442 \u043F\u043E \u0434\u0443\u0445\u0430\u043C \u0431\u043E\u043B\u044C\u043D\u0435\u0435."
-    },
-    {
-      id: "bt_town_mix",
-      name: "\u0421\u0443\u043C\u0430\u0442\u043E\u0445\u0430 \u043D\u0430 \u0440\u044B\u043D\u043A\u0435",
-      world: "town",
-      enemies: ["bandit", "ghost_guard", "rat_thief"],
-      obstacles: [{ cell: [2, 0], kind: "barrel" }, { cell: [5, 2], kind: "crate" }],
-      unlockAfter: "bt_ghost_watch",
-      tip: "\u0421\u043C\u0435\u0448\u0430\u043D\u043D\u0430\u044F \u0441\u0442\u0430\u044F: \u044F\u0434, \u0441\u0442\u0440\u0430\u0445 \u0438 \u0442\u044F\u0436\u0451\u043B\u044B\u0435 \u0443\u0434\u0430\u0440\u044B. \u0413\u043E\u0442\u043E\u0432\u044C\u0441\u044F \u043A\u0430\u043A \u0441\u043B\u0435\u0434\u0443\u0435\u0442."
-    },
-    {
-      id: "bt_watchtower",
-      name: "\u0421\u0442\u043E\u0440\u043E\u0436\u0435\u0432\u0430\u044F \u0431\u0430\u0448\u043D\u044F",
-      world: "town",
-      enemies: ["ghost_guard", "ghost_guard", "bandit"],
-      unlockAfter: "bt_town_mix",
-      tip: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A\u0438 \u0438 \u0438\u0445 \u0436\u0438\u0432\u043E\u0439 \u0441\u043E\u043E\u0431\u0449\u043D\u0438\u043A. \u0421\u0442\u0440\u0430\u0445 \u0434\u0430\u0432\u0438\u0442\u044C \u0430\u043C\u0443\u043B\u0435\u0442\u043E\u043C \u043E\u0442\u0432\u0430\u0433\u0438."
-    },
-    {
-      id: "bt_cellar",
-      name: "\u041F\u043E\u0434\u0432\u0430\u043B\u044C\u043D\u044B\u0435 \u043A\u0440\u044B\u0441\u044B",
-      world: "town",
-      enemies: ["rat_thief", "rat_thief", "rat_thief", "rat_thief"],
-      unlockAfter: "bt_watchtower",
-      tip: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E \u0448\u0443\u0441\u0442\u0440\u044B\u0445 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u0438 \u0440\u0430\u0441\u0441\u0435\u0447\u0435\u043D\u0438\u0435."
-    },
-    {
-      id: "bt_tourney",
-      name: "\u0422\u0443\u0440\u043D\u0438\u0440\u043D\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
-      world: "town",
-      enemies: ["golem_wander", "bandit", "bandit"],
-      obstacles: [{ cell: [4, 1], kind: "barrel" }],
-      unlockAfter: "bt_cellar",
-      tip: "\u041A\u0430\u043C\u0435\u043D\u043D\u0430\u044F \u0441\u0442\u0435\u043D\u0430 \u0438 \u0434\u0432\u0430 \u043A\u043B\u0438\u043D\u043A\u0430 \u0437\u0430 \u043D\u0435\u0439. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0442\u044F\u0436\u0451\u043B\u044B\u043C."
-    },
-    {
-      id: "bt_boss_captain",
-      name: "\u0421\u0442\u0430\u0440\u044B\u0439 \u043A\u0430\u043F\u0438\u0442\u0430\u043D",
-      world: "town",
-      enemies: ["boss_captain"],
-      unlockAfter: "bt_tourney",
-      tip: "\u041A\u0430\u043F\u0438\u0442\u0430\u043D \u0441\u0442\u0440\u0430\u0436\u0438 \u043D\u0435 \u043E\u0442\u0434\u044B\u0445\u0430\u0435\u0442 \u0432\u0435\u043A\u0430\u043C\u0438. \u041F\u043E\u043A\u0430\u0436\u0438 \u0435\u043C\u0443, \u0447\u0442\u043E \u043B\u0430\u0432\u043A\u0430 \u043F\u043E\u0434 \u0437\u0430\u0449\u0438\u0442\u043E\u0439."
-    }
-  );
-  BATTLES.push(
-    {
-      id: "bk_blots",
-      name: "\u041F\u0440\u043E\u043B\u0438\u0442\u044B\u0435 \u0447\u0435\u0440\u043D\u0438\u043B\u0430",
-      world: "attic",
-      enemies: ["ink_blot", "ink_blot"],
-      unlockAfter: "bt_boss_captain",
-      tip: "\u041A\u043B\u044F\u043A\u0441\u044B \u0442\u0440\u0430\u0432\u044F\u0442 \u0438 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u044E\u0442. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F."
-    },
-    {
-      id: "bk_moths",
-      name: "\u041C\u043E\u043B\u044C \u0432 \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u0435",
-      world: "attic",
-      enemies: ["book_moth", "book_moth", "ink_blot"],
-      obstacles: [{ cell: [3, 0], kind: "books" }],
-      unlockAfter: "bk_blots",
-      tip: "\u041A\u043D\u0438\u0436\u043D\u0430\u044F \u043C\u043E\u043B\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442, \u043A\u0430\u043A \u0438 \u0435\u0451 \u043B\u0435\u0441\u043D\u044B\u0435 \u0441\u0451\u0441\u0442\u0440\u044B. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0432\u0441\u0451 \u0435\u0449\u0451 \u0432 \u0446\u0435\u043D\u0435."
-    },
-    {
-      id: "bk_spirits",
-      name: "\u0428\u043E\u0440\u043E\u0445\u0438 \u0441\u0442\u0440\u0430\u043D\u0438\u0446",
-      world: "attic",
-      enemies: ["paper_spirit", "paper_spirit"],
-      unlockAfter: "bk_moths",
-      tip: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0435 \u0434\u0443\u0445\u0438 \u043D\u0430\u0432\u043E\u0434\u044F\u0442 \u0441\u0442\u0440\u0430\u0445. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
-    },
-    {
-      id: "bk_illustration",
-      name: "\u0412\u0438\u0442\u0440\u0430\u0436\u043D\u0430\u044F \u0433\u0440\u0430\u0432\u044E\u0440\u0430",
-      world: "attic",
-      enemies: ["illustration", "book_moth"],
-      unlockAfter: "bk_spirits",
-      tip: "\u041E\u0436\u0438\u0432\u0448\u0430\u044F \u0438\u043B\u043B\u044E\u0441\u0442\u0440\u0430\u0446\u0438\u044F \u0442\u043E\u043B\u0441\u0442\u043E\u043A\u043E\u0436\u0430. \u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0439 \u0442\u044F\u0436\u0451\u043B\u044B\u043C \u043E\u0440\u0443\u0436\u0438\u0435\u043C."
-    },
-    {
-      id: "bk_storm",
-      name: "\u0411\u0443\u0440\u044F \u0432 \u0431\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0435",
-      world: "attic",
-      enemies: ["paper_spirit", "ink_blot", "book_moth"],
-      unlockAfter: "bk_illustration",
-      tip: "\u0412\u0441\u0435 \u043E\u0431\u0438\u0442\u0430\u0442\u0435\u043B\u0438 \u0447\u0435\u0440\u0434\u0430\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F \u0438 \u0437\u0435\u043B\u044C\u044F."
-    },
-    {
-      id: "bt_reading",
-      name: "\u0427\u0438\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u0437\u0430\u043B",
-      world: "attic",
-      enemies: ["book_moth", "paper_spirit", "book_moth"],
-      unlockAfter: "bk_storm",
-      tip: "\u041C\u043E\u043B\u044C \u0438 \u0434\u0443\u0445 \u0441\u0440\u0435\u0434\u0438 \u0444\u043E\u043B\u0438\u0430\u043D\u0442\u043E\u0432. \u0421\u043E\u043D \u0438 \u0441\u0442\u0440\u0430\u0445 \u2014 \u043A\u043E\u043D\u0442\u0440\u043E\u043B\u0438\u0440\u0443\u0439 \u043E\u0431\u0430."
-    },
-    {
-      id: "bt_archive",
-      name: "\u041F\u044B\u043B\u044C\u043D\u044B\u0439 \u0430\u0440\u0445\u0438\u0432",
-      world: "attic",
-      enemies: ["illustration", "ink_blot", "ink_blot"],
-      obstacles: [{ cell: [4, 1], kind: "books" }, { cell: [3, 2], kind: "books" }],
-      unlockAfter: "bt_reading",
-      tip: "\u0413\u0440\u0430\u0432\u044E\u0440\u0430 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430. \u042F\u0434 \u0437\u0430\u043C\u0435\u0434\u043B\u044F\u0435\u0442 \u2014 \u0434\u0435\u0440\u0436\u0438 \u043E\u0442\u0432\u0430\u0440 \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
-    },
-    {
-      id: "bt_inkwell",
-      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043A\u043E\u043B\u043E\u0434\u0435\u0446",
-      world: "attic",
-      enemies: ["ink_blot", "paper_spirit", "ink_blot", "paper_spirit"],
-      obstacles: [{ cell: [2, 1], kind: "books" }, { cell: [5, 1], kind: "books" }],
-      unlockAfter: "bt_archive",
-      tip: "\u0427\u0435\u0442\u0432\u0435\u0440\u043E \u043E\u0431\u0438\u0442\u0430\u0442\u0435\u043B\u0435\u0439 \u0447\u0435\u0440\u0434\u0430\u043A\u0430 \u0440\u0430\u0437\u043E\u043C. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u0435\u043C."
-    },
-    {
-      id: "bk_boss_keeper",
-      name: "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0430",
-      world: "attic",
-      enemies: ["boss_keeper"],
-      unlockAfter: "bt_inkwell",
-      tip: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u043E\u0442\u0434\u0430\u0441\u0442 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0431\u0435\u0437 \u0431\u043E\u044F. \u0421\u043E\u0431\u0435\u0440\u0438 \u0432\u0441\u0451 \u043B\u0443\u0447\u0448\u0435\u0435, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C."
-    }
-  );
-  BATTLES.push(
-    {
-      id: "ex_01",
-      name: "\u041F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043D\u0430\u044F \u0442\u0440\u043E\u043F\u0430",
-      world: "crossroads",
-      enemies: [
-        { id: "slime_meadow", scale: 1.1 },
-        { id: "bandit", scale: 1.1 },
-        { id: "ink_blot", scale: 1.1 }
-      ],
-      unlockAfter: "bk_boss_keeper",
-      tip: "\u041C\u0438\u0440\u044B \u0441\u043C\u0435\u0448\u0430\u043B\u0438\u0441\u044C. \u0421\u043B\u0438\u0437\u043D\u0438, \u0440\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A\u0438 \u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u0430 \u0432 \u043E\u0434\u043D\u043E\u043C \u0431\u043E\u044E."
-    },
-    {
-      id: "ex_02",
-      name: "\u0421\u043C\u0435\u0448\u0430\u043D\u043D\u044B\u0439 \u043F\u0430\u0442\u0440\u0443\u043B\u044C",
-      world: "crossroads",
-      enemies: [
-        { id: "rat_thief", scale: 1.15 },
-        { id: "rat_thief", scale: 1.15 },
-        { id: "book_moth", scale: 1.15 }
-      ],
-      obstacles: [{ cell: [3, 1], kind: "signpost" }],
-      unlockAfter: "ex_01",
-      tip: "\u0411\u044B\u0441\u0442\u0440\u044B\u0435 \u0438 \u044F\u0434\u043E\u0432\u0438\u0442\u044B\u0435, \u0430 \u043C\u043E\u043B\u044C \u0443\u0441\u044B\u043F\u043B\u044F\u0435\u0442. \u0414\u0435\u0440\u0436\u0438 \u0437\u0435\u043B\u044C\u044F \u043D\u0430\u0433\u043E\u0442\u043E\u0432\u0435."
-    },
-    {
-      id: "ex_03",
-      name: "\u0414\u0443\u0445\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
-      world: "crossroads",
-      enemies: [
-        { id: "paper_spirit", scale: 1.2 },
-        { id: "ghost_guard", scale: 1.2 }
-      ],
-      unlockAfter: "ex_02",
-      tip: "\u0414\u0432\u043E\u0435 \u0434\u0443\u0445\u043E\u0432 \u0441\u043E \u0441\u0442\u0440\u0430\u0445\u043E\u043C. \u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0442\u0432\u0430\u0433\u0438 \u0438\u043B\u0438 \u0442\u043E\u043F\u043E\u0440 \u0434\u0440\u043E\u0432\u043E\u0441\u0435\u043A\u0430."
-    },
-    {
-      id: "ex_04",
-      name: "\u041A\u0430\u043C\u0435\u043D\u043D\u044B\u0439 \u043A\u0430\u0440\u0430\u0432\u0430\u043D",
-      world: "crossroads",
-      enemies: [
-        { id: "golem_wander", scale: 1.25 },
-        { id: "golem_moss", scale: 1.25 }
-      ],
-      unlockAfter: "ex_03",
-      tip: "\u0414\u0432\u0435 \u043A\u0430\u043C\u0435\u043D\u043D\u044B\u0435 \u0441\u0442\u0435\u043D\u044B. \u041D\u0443\u0436\u0435\u043D \u0441\u0435\u0440\u044C\u0451\u0437\u043D\u044B\u0439 \u0443\u0440\u043E\u043D \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0442\u0438\u0435."
-    },
-    {
-      id: "ex_05",
-      name: "\u042F\u0434\u043E\u0432\u0438\u0442\u044B\u0439 \u0442\u0443\u043C\u0430\u043D",
-      world: "crossroads",
-      enemies: [
-        { id: "ink_blot", scale: 1.3 },
-        { id: "bee_wild", scale: 1.3 },
-        { id: "rat_thief", scale: 1.3 }
-      ],
-      obstacles: [{ cell: [4, 0], kind: "lantern" }, { cell: [4, 2], kind: "lantern" }],
-      unlockAfter: "ex_04",
-      tip: "\u042F\u0434 \u0441\u043E \u0432\u0441\u0435\u0445 \u0441\u0442\u043E\u0440\u043E\u043D. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E."
-    },
-    {
-      id: "ex_06",
-      name: "\u041D\u043E\u0447\u043D\u0430\u044F \u0441\u0442\u0440\u0430\u0436\u0430",
-      world: "crossroads",
-      enemies: [
-        { id: "ghost_guard", scale: 1.3 },
-        { id: "ghost_guard", scale: 1.3 },
-        { id: "moth_night", scale: 1.3 }
-      ],
-      unlockAfter: "ex_05",
-      tip: "\u0421\u0442\u0440\u0430\u0445 \u0438 \u0441\u043E\u043D \u0432 \u043E\u0434\u043D\u043E\u043C \u0444\u043B\u0430\u043A\u043E\u043D\u0435. \u0428\u043B\u0435\u043C \u0431\u0430\u0440\u0441\u0443\u043A\u0430 \u0441\u043D\u043E\u0432\u0430 \u0432 \u0434\u0435\u043B\u0435."
-    },
-    {
-      id: "ex_07",
-      name: "\u0411\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u0447\u043D\u0430\u044F \u043E\u0441\u0430\u0434\u0430",
-      world: "crossroads",
-      enemies: [
-        { id: "illustration", scale: 1.35 },
-        { id: "paper_spirit", scale: 1.35 },
-        { id: "paper_spirit", scale: 1.35 }
-      ],
-      unlockAfter: "ex_06",
-      tip: "\u0422\u043E\u043B\u0441\u0442\u0430\u044F \u0433\u0440\u0430\u0432\u044E\u0440\u0430 \u0438 \u0434\u0432\u0430 \u0434\u0443\u0445\u0430. \u041F\u0440\u043E\u0440\u044B\u0432\u0430\u0439\u0441\u044F \u043A \u043D\u0435\u0439 \u0441\u043A\u0432\u043E\u0437\u044C \u0441\u0442\u0440\u043E\u0439."
-    },
-    {
-      id: "ex_08",
-      name: "\u0425\u0430\u043E\u0441 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430",
-      world: "crossroads",
-      enemies: [
-        { id: "golem_wander", scale: 1.4 },
-        { id: "ink_blot", scale: 1.4 },
-        { id: "book_moth", scale: 1.4 }
-      ],
-      obstacles: [{ cell: [3, 2], kind: "signpost" }],
-      unlockAfter: "ex_07",
-      tip: "\u0412\u0441\u0451 \u0438 \u0441\u0440\u0430\u0437\u0443: \u0441\u0442\u0435\u043D\u0430, \u044F\u0434 \u0438 \u0441\u043E\u043D. \u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u043F\u0435\u0440\u0435\u0434 \u0421\u0442\u0440\u0430\u0436\u0435\u043C."
-    },
-    {
-      id: "ex_boss",
-      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
-      world: "crossroads",
-      enemies: [{ id: "boss_star_guardian", scale: 1 }],
-      unlockAfter: "ex_08",
-      tip: "\u041E\u043D \u0433\u043E\u0440\u0438\u0442 \u0437\u0432\u0451\u0437\u0434\u043D\u044B\u043C \u043E\u0433\u043D\u0451\u043C. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u043E\u0433\u043D\u044E \u043D\u0435 \u043F\u043E\u043C\u0435\u0448\u0430\u0435\u0442."
-    }
-  );
-  for (const w of WORLDS) {
-    if (w?.battles) BATTLES.push(...w.battles);
-  }
-  BATTLES.push(...WANTED_BATTLES);
-  var BATTLE_BY_ID = Object.fromEntries(BATTLES.map((b) => [b.id, b]));
-
   // src/data/trophies.js
   var TROPHIES = [
     {
@@ -19573,59 +20261,116 @@
   var MERC_BY_ID = Object.fromEntries(MERCENARIES.map((m) => [m.id, m]));
 
   // src/data/cosmetics.js
-  var COSMETICS = [
-    // Круглый год
+  var COSMETICS_VERSION = 2;
+  var lavkaScene = (id) => ({
+    src: `assets/cosmetics/lavka_pack_${id}_web.jpg`,
+    preview: `assets/cosmetics/lavka_pack_${id}_web.jpg`,
+    layoutId: "lavka_base_3x1"
+  });
+  var COSMETIC_PACKS = [
     {
-      id: "cos_carpet",
-      name: "\u041A\u043E\u0432\u0451\u0440 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
-      icon: "\u{1F7E5}",
+      id: "hearth",
+      name: "\u0414\u043E\u043C\u0430\u0448\u043D\u0438\u0439 \u043E\u0447\u0430\u0433",
+      icon: "\u{1F3EE}",
       price: 200,
       season: null,
-      description: "\u0413\u043B\u0443\u0431\u043E\u043A\u0438\u0439 \u0431\u043E\u0440\u0434\u043E\u0432\u044B\u0439 \u043A\u043E\u0432\u0451\u0440 \u0432 \u0446\u0435\u043D\u0442\u0440\u0435 \u043B\u0430\u0432\u043A\u0438."
+      kind: "background",
+      changes: [
+        "\u0411\u043E\u0440\u0434\u043E\u0432\u044B\u0439 \u043A\u043E\u0432\u0451\u0440 \u0438 \u043C\u044F\u0433\u043A\u0438\u0439 \u0442\u0435\u043A\u0441\u0442\u0438\u043B\u044C \u043E\u0431\u044A\u0435\u0434\u0438\u043D\u044F\u044E\u0442 \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u043E \u043F\u0435\u0440\u0435\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C.",
+        "\u041B\u0430\u0442\u0443\u043D\u043D\u0430\u044F \u0444\u0443\u0440\u043D\u0438\u0442\u0443\u0440\u0430 \u0438 \u0440\u0435\u0437\u043D\u0430\u044F \u0432\u044B\u0432\u0435\u0441\u043A\u0430 \u0441\u0432\u044F\u0437\u044B\u0432\u0430\u044E\u0442 \u043F\u043E\u043B\u043A\u0438 \u0432 \u0435\u0434\u0438\u043D\u044B\u0439 \u0434\u043E\u043C\u0430\u0448\u043D\u0438\u0439 \u043E\u0431\u0440\u0430\u0437.",
+        "\u041F\u043E\u043B\u043A\u0438 \u043D\u0430\u043F\u043E\u043B\u043D\u044F\u044E\u0442\u0441\u044F \u043B\u044E\u0431\u0438\u043C\u044B\u043C\u0438 \u043A\u043D\u0438\u0433\u0430\u043C\u0438, \u043A\u0435\u0440\u0430\u043C\u0438\u043A\u043E\u0439 \u0438 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u0430\u043C\u0438 \u043E\u0431\u0438\u0445\u043E\u0434\u0430.",
+        "\u0421\u0432\u0435\u0447\u0438 \u0438 \u043B\u0430\u043C\u043F\u044B \u0434\u0430\u044E\u0442 \u0431\u043E\u043B\u0435\u0435 \u043C\u044F\u0433\u043A\u0438\u0439 \u0442\u0451\u043F\u043B\u044B\u0439 \u0441\u0432\u0435\u0442 \u043F\u0440\u0438 \u043F\u0440\u0435\u0436\u043D\u0435\u0439 \u043F\u043B\u0430\u043D\u0438\u0440\u043E\u0432\u043A\u0435.",
+        "\u0417\u0430 \u043E\u043A\u043D\u043E\u043C \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u0430\u044F \u0432\u0435\u0447\u0435\u0440\u043D\u044F\u044F \u0434\u043E\u0440\u043E\u0433\u0430 \u0432 \u043F\u0440\u0438\u0432\u044B\u0447\u043D\u043E\u043C \u043B\u0435\u0441\u0443."
+      ],
+      scenes: { lavka: lavkaScene("hearth") }
     },
     {
-      id: "cos_crest",
-      name: "\u0424\u0438\u0440\u043C\u0435\u043D\u043D\u0430\u044F \u0432\u044B\u0432\u0435\u0441\u043A\u0430",
-      icon: "\u{1FAA7}",
-      sealPrice: 2,
-      season: null,
-      description: "\u0420\u0435\u0437\u043D\u0430\u044F \u0432\u044B\u0432\u0435\u0441\u043A\u0430 \xAB\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432\xBB."
-    },
-    // Сезонные наборы
-    {
-      id: "cos_flowers",
-      name: "\u0412\u0435\u0441\u0435\u043D\u043D\u044F\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430: \u0446\u0432\u0435\u0442\u044B",
+      id: "spring",
+      name: "\u0412\u0435\u0441\u0435\u043D\u043D\u0435\u0435 \u043F\u0440\u043E\u0431\u0443\u0436\u0434\u0435\u043D\u0438\u0435",
       icon: "\u{1F338}",
       price: 120,
       season: "spring",
-      description: "\u041F\u043E\u043B\u043A\u0438 \u0432 \u0446\u0432\u0435\u0442\u0430\u0445. \u041F\u0430\u0445\u043D\u0435\u0442 \u043F\u0435\u0440\u0432\u044B\u043C \u0434\u043E\u0436\u0434\u0451\u043C."
+      kind: "background",
+      changes: [
+        "\u041F\u0430\u0441\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u043B\u0435\u043D\u0442\u044B \u0438 \u043B\u0451\u0433\u043A\u0438\u0439 \u0442\u0435\u043A\u0441\u0442\u0438\u043B\u044C \u043E\u0441\u0432\u0435\u0436\u0430\u044E\u0442 \u043F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u0438 \u0443\u0433\u043E\u043B\u043E\u043A \u0434\u043B\u044F \u0433\u043E\u0441\u0442\u0435\u0439.",
+        "\u041D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445 \u043F\u043E\u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0432\u0435\u0441\u0435\u043D\u043D\u0438\u0435 \u0446\u0432\u0435\u0442\u044B, \u043A\u0435\u0440\u0430\u043C\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0432\u0430\u0437\u044B \u0438 \u043F\u0443\u0447\u043A\u0438 \u0442\u0440\u0430\u0432.",
+        "\u0424\u0443\u0440\u043D\u0438\u0442\u0443\u0440\u0430 \u043F\u043E\u043B\u0443\u0447\u0430\u0435\u0442 \u0441\u0432\u0435\u0442\u043B\u044B\u0435 \u043C\u0435\u0434\u043D\u044B\u0435 \u0438 \u043C\u0435\u0434\u043E\u0432\u044B\u0435 \u043E\u0442\u0442\u0435\u043D\u043A\u0438.",
+        "\u0423\u0442\u0440\u0435\u043D\u043D\u0438\u0439 \u0441\u0432\u0435\u0442 \u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u0441\u044F \u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u0435\u0435, \u0430 \u0437\u0430 \u043E\u043A\u043D\u043E\u043C \u0446\u0432\u0435\u0442\u0451\u0442 \u0434\u043E\u0440\u043E\u0433\u0430 \u0432 \u0433\u043E\u0440\u0443."
+      ],
+      scenes: { lavka: lavkaScene("spring") }
     },
     {
-      id: "cos_fireflies",
-      name: "\u041B\u0435\u0442\u043D\u0438\u0439 \u0444\u0435\u0441\u0442\u0438\u0432\u0430\u043B\u044C: \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u0438",
+      id: "summer",
+      name: "\u041B\u0435\u0442\u043D\u0438\u0439 \u0444\u0435\u0441\u0442\u0438\u0432\u0430\u043B\u044C \u043E\u0433\u043E\u043D\u044C\u043A\u043E\u0432",
       icon: "\u2728",
       price: 120,
       season: "summer",
-      description: "\u041C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0435 \u043E\u0433\u043E\u043D\u044C\u043A\u0438 \u043A\u0440\u0443\u0436\u0430\u0442 \u043D\u0430\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C."
+      kind: "background",
+      changes: [
+        "\u041B\u0451\u0433\u043A\u0438\u0435 \u0433\u0438\u0440\u043B\u044F\u043D\u0434\u044B \u0438 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u0447\u043D\u044B\u0435 \u0442\u043A\u0430\u043D\u0438 \u0443\u043A\u0440\u0430\u0448\u0430\u044E\u0442 \u0431\u0430\u043B\u043A\u0438, \u043D\u0435 \u043C\u0435\u043D\u044F\u044F \u0430\u0440\u0445\u0438\u0442\u0435\u043A\u0442\u0443\u0440\u0443.",
+        "\u041D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445 \u0441\u043E\u0441\u0435\u0434\u0441\u0442\u0432\u0443\u044E\u0442 \u043B\u0435\u0442\u043D\u0438\u0435 \u0442\u0440\u0430\u0432\u044B, \u0441\u0442\u0435\u043A\u043B\u044F\u043D\u043D\u044B\u0435 \u043A\u043E\u043B\u0431\u044B \u0438 \u0433\u043B\u0430\u0434\u043A\u0430\u044F \u043C\u0435\u0434\u044C.",
+        "\u0417\u043E\u043B\u043E\u0442\u044B\u0435 \u043E\u0433\u043E\u043D\u044C\u043A\u0438 \u0441\u043E\u0431\u0438\u0440\u0430\u044E\u0442\u0441\u044F \u043D\u0430\u0434 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u043C \u0438 \u0432\u0434\u043E\u043B\u044C \u043A\u043D\u0438\u0436\u043D\u043E\u0433\u043E \u0448\u043A\u0430\u0444\u0430.",
+        "\u0422\u0451\u043F\u043B\u044B\u0439 \u0432\u0435\u0447\u0435\u0440 \u0437\u0430 \u043E\u043A\u043D\u043E\u043C \u0441\u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u044F\u0441\u043D\u044B\u043C \u043B\u0435\u0442\u043D\u0438\u043C \u0441\u0443\u043C\u0435\u0440\u0435\u0447\u043D\u044B\u043C \u043B\u0435\u0441\u043E\u043C."
+      ],
+      scenes: { lavka: lavkaScene("summer") }
     },
     {
-      id: "cos_garland",
-      name: "\u041E\u0441\u0435\u043D\u043D\u0438\u0439 \u0440\u044B\u043D\u043E\u043A: \u0433\u0438\u0440\u043B\u044F\u043D\u0434\u0430",
+      id: "autumn",
+      name: "\u041E\u0441\u0435\u043D\u043D\u044F\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430",
       icon: "\u{1F38F}",
       price: 120,
       season: "autumn",
-      description: "\u0424\u043B\u0430\u0436\u043A\u0438 \u0438 \u0436\u0451\u043B\u0443\u0434\u0438 \u043F\u043E\u0434 \u043F\u043E\u0442\u043E\u043B\u043A\u043E\u043C."
+      kind: "background",
+      changes: [
+        "\u0422\u043A\u0430\u043D\u044B\u0435 \u0444\u043B\u0430\u0436\u043A\u0438, \u0436\u0451\u043B\u0443\u0434\u0438 \u0438 \u043E\u0445\u0440\u0438\u0441\u0442\u044B\u0439 \u0442\u0435\u043A\u0441\u0442\u0438\u043B\u044C \u0441\u043E\u0431\u0438\u0440\u0430\u044E\u0442 \u044F\u0440\u043C\u0430\u0440\u043E\u0447\u043D\u0443\u044E \u043A\u043E\u043C\u043F\u043E\u0437\u0438\u0446\u0438\u044E.",
+        "\u041F\u043E\u043B\u043A\u0438 \u043F\u043E\u043F\u043E\u043B\u043D\u044F\u044E\u0442\u0441\u044F \u0442\u044B\u043A\u0432\u0430\u043C\u0438, \u0441\u0443\u0445\u0438\u043C\u0438 \u0442\u0440\u0430\u0432\u0430\u043C\u0438 \u0438 \u0440\u0435\u0437\u043D\u044B\u043C\u0438 \u0434\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u044B\u043C\u0438 \u0448\u043A\u0430\u0442\u0443\u043B\u043A\u0430\u043C\u0438.",
+        "\u0421\u043E\u0441\u0442\u0430\u0440\u0435\u043D\u043D\u0430\u044F \u043B\u0430\u0442\u0443\u043D\u044C \u0438 \u043C\u0435\u0434\u043D\u044B\u0435 \u043B\u0430\u043C\u043F\u044B \u043F\u043E\u0434\u0447\u0451\u0440\u043A\u0438\u0432\u0430\u044E\u0442 \u0442\u0451\u043F\u043B\u0443\u044E \u0444\u0443\u0440\u043D\u0438\u0442\u0443\u0440\u0443.",
+        "\u042F\u043D\u0442\u0430\u0440\u043D\u044B\u0439 \u0441\u0432\u0435\u0442 \u0438 \u043B\u0438\u0441\u0442\u043E\u043F\u0430\u0434 \u0437\u0430 \u043E\u043A\u043D\u043E\u043C \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u044E\u0442 \u0443\u044E\u0442 \u043F\u0440\u0435\u0436\u043D\u0435\u0439 \u043B\u0430\u0432\u043A\u0438."
+      ],
+      scenes: { lavka: lavkaScene("autumn") }
     },
     {
-      id: "cos_snow",
-      name: "\u0417\u0438\u043C\u043D\u0438\u0439 \u043E\u0447\u0430\u0433: \u0441\u043D\u0435\u0433 \u0437\u0430 \u043E\u043A\u043D\u043E\u043C",
+      id: "winter",
+      name: "\u0417\u0438\u043C\u043D\u0438\u0439 \u043E\u0447\u0430\u0433",
       icon: "\u2744\uFE0F",
       price: 150,
       season: "winter",
-      description: "\u0417\u0430 \u043E\u043A\u043D\u043E\u043C \u0442\u0438\u0445\u043E \u043F\u0430\u0434\u0430\u0435\u0442 \u0441\u043D\u0435\u0433. \u0412\u043D\u0443\u0442\u0440\u0438 \u2014 \u0442\u0435\u043F\u043B\u043E."
+      kind: "background",
+      changes: [
+        "\u0428\u0435\u0440\u0441\u0442\u044F\u043D\u044B\u0435 \u0434\u043E\u0440\u043E\u0436\u043A\u0438 \u0438 \u043F\u043B\u043E\u0442\u043D\u044B\u0435 \u0437\u0430\u043D\u0430\u0432\u0435\u0441\u0438 \u0441\u043E\u0433\u0440\u0435\u0432\u0430\u044E\u0442 \u043A\u0430\u043C\u0435\u043D\u043D\u044B\u0439 \u043F\u043E\u043B \u0438 \u043E\u043A\u043D\u0430.",
+        "\u041D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445 \u043F\u043E\u044F\u0432\u043B\u044F\u044E\u0442\u0441\u044F \u0432\u044F\u0437\u0430\u043D\u044B\u0435 \u0432\u0435\u0449\u0438, \u0441\u0432\u0435\u0447\u0438 \u0438 \u0437\u0430\u043F\u0430\u0441\u044B \u0434\u043B\u044F \u0434\u043E\u043B\u0433\u0438\u0445 \u0432\u0435\u0447\u0435\u0440\u043E\u0432.",
+        "\u041C\u0430\u0442\u043E\u0432\u0430\u044F \u0444\u0443\u0440\u043D\u0438\u0442\u0443\u0440\u0430 \u0438 \u043F\u0440\u0438\u0433\u043B\u0443\u0448\u0451\u043D\u043D\u044B\u0435 \u043E\u0433\u043D\u0438 \u0443\u0441\u0438\u043B\u0438\u0432\u0430\u044E\u0442 \u043E\u0449\u0443\u0449\u0435\u043D\u0438\u0435 \u0434\u043E\u043C\u0430\u0448\u043D\u0435\u0433\u043E \u0442\u0435\u043F\u043B\u0430.",
+        "\u0417\u0430 \u043F\u0440\u0435\u0436\u043D\u0438\u043C \u043E\u043A\u043D\u043E\u043C \u043B\u0435\u0436\u0438\u0442 \u0441\u043D\u0435\u0436\u043D\u044B\u0439 \u043B\u0435\u0441, \u0430 \u0432\u043D\u0443\u0442\u0440\u0438 \u0433\u043E\u0440\u0438\u0442 \u0442\u0451\u043F\u043B\u044B\u0439 \u043E\u0447\u0430\u0433."
+      ],
+      scenes: { lavka: lavkaScene("winter") }
+    },
+    {
+      id: "halloween",
+      name: "\u0425\u044D\u043B\u043B\u043E\u0443\u0438\u043D \xAB\u0422\u0435\u043D\u0438 \u0438 \u0442\u044B\u043A\u0432\u044B\xBB",
+      icon: "\u{1F383}",
+      price: 600,
+      season: "autumn",
+      kind: "background",
+      changes: [
+        "\u041F\u0443\u0440\u043F\u0443\u0440\u043D\u044B\u0439 \u0438 \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442\u0438\u043B\u044C \u043E\u0431\u043E\u0437\u043D\u0430\u0447\u0430\u0435\u0442 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u0447\u043D\u0443\u044E \u043D\u043E\u0447\u043D\u0443\u044E \u0441\u0446\u0435\u043D\u0443.",
+        "\u0422\u044B\u043A\u0432\u0435\u043D\u043D\u044B\u0435 \u043B\u0430\u043C\u043F\u044B \u0438 \u043A\u043E\u0432\u0430\u043D\u0430\u044F \u0444\u0443\u0440\u043D\u0438\u0442\u0443\u0440\u0430 \u0437\u0430\u043C\u0435\u043D\u044F\u044E\u0442 \u0447\u0430\u0441\u0442\u044C \u043F\u0440\u0438\u0432\u044B\u0447\u043D\u044B\u0445 \u0443\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u0439.",
+        "\u041F\u043E\u043B\u043A\u0438 \u043D\u0430\u043F\u043E\u043B\u043D\u044F\u044E\u0442\u0441\u044F \u0441\u0432\u0435\u0447\u0430\u043C\u0438, \u0441\u0443\u0445\u0438\u043C\u0438 \u0432\u0435\u0442\u043A\u0430\u043C\u0438 \u0438 \u0431\u0430\u043D\u043A\u0430\u043C\u0438 \u0441 \u043F\u0443\u0440\u043F\u0443\u0440\u043D\u044B\u043C\u0438 \u0437\u0435\u043B\u044C\u044F\u043C\u0438.",
+        "\u0424\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u0442\u0435\u043D\u0438 \u043A\u043E\u043D\u0442\u0440\u0430\u0441\u0442\u0438\u0440\u0443\u044E\u0442 \u0441 \u0442\u0451\u043F\u043B\u044B\u043C\u0438 \u043E\u0433\u043D\u044F\u043C\u0438 \u043D\u0430 \u0441\u0442\u0430\u0440\u043E\u043C \u0434\u0435\u0440\u0435\u0432\u0435.",
+        "\u0417\u0430 \u043E\u043A\u043D\u043E\u043C \u0441\u0442\u0435\u043B\u0435\u0442\u0441\u044F \u0442\u0443\u043C\u0430\u043D, \u0432\u0438\u0434\u043D\u0435\u044E\u0442\u0441\u044F \u0442\u044B\u043A\u0432\u044B \u0438 \u0432\u044B\u0441\u043E\u043A\u0430\u044F \u043E\u0441\u0435\u043D\u043D\u044F\u044F \u043B\u0443\u043D\u0430."
+      ],
+      scenes: { lavka: lavkaScene("halloween") }
     }
   ];
-  var COSMETIC_BY_ID = Object.fromEntries(COSMETICS.map((c) => [c.id, c]));
+  var COSMETIC_PACK_BY_ID = Object.fromEntries(COSMETIC_PACKS.map((pack) => [pack.id, pack]));
+  var COSMETIC_BY_ID = COSMETIC_PACK_BY_ID;
+  var LEGACY_COSMETIC_ALIASES = {
+    cos_carpet: "hearth",
+    cos_crest: "hearth",
+    cos_flowers: "spring",
+    cos_fireflies: "summer",
+    cos_garland: "autumn",
+    cos_snow: "winter"
+  };
   var SEASON_LABEL = {
     spring: "\u0412\u0435\u0441\u043D\u0430",
     summer: "\u041B\u0435\u0442\u043E",
@@ -19931,6 +20676,66 @@
     return m ? `${m.icon} ${m.name}` : id;
   }
 
+  // src/core/materialExchange.js
+  var BOSS_MATERIAL_IDS = [...new Set(
+    Object.values(ENEMY_BY_ID).filter((enemy) => enemy.boss).flatMap((enemy) => enemy.reward?.materials || []).filter((id) => MATERIAL_BY_ID[id])
+  )];
+  var BOSS_MATERIAL_SET = new Set(BOSS_MATERIAL_IDS);
+  var REGULAR_MATERIALS = MATERIALS.filter((material) => !BOSS_MATERIAL_SET.has(material.id));
+  var BOSS_MATERIALS = BOSS_MATERIAL_IDS.map((id) => MATERIAL_BY_ID[id]);
+  function isBossMaterial(id) {
+    return BOSS_MATERIAL_SET.has(id);
+  }
+  function materialExchangeTerms(inputId, outputId) {
+    if (!MATERIAL_BY_ID[inputId] || !MATERIAL_BY_ID[outputId]) return null;
+    if (inputId === outputId || isBossMaterial(outputId)) return null;
+    const inputBoss = isBossMaterial(inputId);
+    return {
+      input: inputId,
+      output: outputId,
+      cost: inputBoss ? 1 : 3,
+      received: inputBoss ? 2 : 1,
+      inputBoss
+    };
+  }
+  function materialExchangeInputs(state2) {
+    return MATERIALS.filter((material) => {
+      const have = state2.materials?.[material.id] || 0;
+      return have >= (isBossMaterial(material.id) ? 1 : 3);
+    });
+  }
+  function validateMaterialExchange(state2, inputId, outputId) {
+    if (!MATERIAL_BY_ID[inputId] || !MATERIAL_BY_ID[outputId]) {
+      return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u0430" };
+    }
+    if (inputId === outputId) {
+      return { ok: false, error: "\u0412\u044B\u0431\u0435\u0440\u0438 \u0440\u0430\u0437\u043D\u044B\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0434\u043B\u044F \u043E\u0431\u043C\u0435\u043D\u0430" };
+    }
+    if (isBossMaterial(outputId)) {
+      return { ok: false, error: "\u0411\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0439 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B \u043D\u0435\u043B\u044C\u0437\u044F \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043E\u0431\u043C\u0435\u043D\u043E\u043C" };
+    }
+    const terms = materialExchangeTerms(inputId, outputId);
+    const have = Number.isFinite(state2.materials?.[inputId]) ? Math.max(0, Math.floor(state2.materials[inputId])) : 0;
+    if (have < terms.cost) {
+      return {
+        ...terms,
+        ok: false,
+        have,
+        error: `\u041D\u0443\u0436\u043D\u043E ${terms.cost} \u0448\u0442. \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u0430 \u0434\u043B\u044F \u043E\u0431\u043C\u0435\u043D\u0430, \u0435\u0441\u0442\u044C ${have}`
+      };
+    }
+    return { ...terms, ok: true, have };
+  }
+  function exchangeMaterials(state2, inputId, outputId) {
+    const check = validateMaterialExchange(state2, inputId, outputId);
+    if (!check.ok) return check;
+    state2.materials ||= {};
+    state2.materials[inputId] -= check.cost;
+    if (state2.materials[inputId] <= 0) delete state2.materials[inputId];
+    state2.materials[outputId] = (state2.materials[outputId] || 0) + check.received;
+    return { ...check, ok: true };
+  }
+
   // src/data/sets.js
   var SETS = {
     meadow: {
@@ -20153,269 +20958,6 @@
     if (item2.hand === "two") parts.push("\u0434\u0432\u0443\u0440\u0443\u0447\u043D\u043E\u0435 (\u0431\u0435\u0437 \u0449\u0438\u0442\u0430)");
     return parts.join(", ");
   }
-
-  // src/data/enemies.js
-  var ENEMIES = [
-    {
-      id: "slime_meadow",
-      name: "\u041B\u0443\u0436\u0430\u0439\u043D\u044B\u0439 \u0441\u043B\u0438\u0437\u0435\u043D\u044C",
-      icon: "\u{1F7E2}",
-      hp: 30,
-      attack: 5,
-      armor: 4,
-      speed: 6,
-      crit: 0.02,
-      dodge: 0.02,
-      elem: "phys",
-      skills: ["sting_poison_weak"],
-      reward: { coins: [12, 20], materials: ["slime_jelly"] }
-    },
-    {
-      id: "bee_wild",
-      name: "\u0414\u0438\u043A\u0430\u044F \u043F\u0447\u0435\u043B\u0430",
-      icon: "\u{1F41D}",
-      hp: 22,
-      attack: 7,
-      armor: 2,
-      speed: 14,
-      crit: 0.08,
-      dodge: 0.1,
-      elem: "phys",
-      skills: ["sting_poison"],
-      reward: { coins: [15, 25], materials: ["honey"] }
-    },
-    {
-      id: "spirit_forest",
-      name: "\u041B\u0435\u0441\u043D\u043E\u0439 \u0434\u0443\u0445",
-      icon: "\u{1F33F}",
-      hp: 38,
-      attack: 8,
-      armor: 6,
-      speed: 9,
-      crit: 0.05,
-      dodge: 0.08,
-      elem: "phys",
-      skills: ["slow_spores"],
-      tags: ["spirit"],
-      reward: { coins: [20, 32], materials: ["glow_moss"] }
-    },
-    {
-      id: "moth_night",
-      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u043C\u043E\u0442\u044B\u043B\u0451\u043A",
-      icon: "\u{1F98B}",
-      hp: 26,
-      attack: 6,
-      armor: 3,
-      speed: 11,
-      crit: 0.04,
-      dodge: 0.12,
-      elem: "phys",
-      skills: ["pollen_sleep"],
-      reward: { coins: [18, 28], materials: ["moth_dust"] }
-    },
-    {
-      id: "golem_moss",
-      name: "\u041C\u0448\u0438\u0441\u0442\u044B\u0439 \u0433\u043E\u043B\u0435\u043C",
-      icon: "\u{1F5FF}",
-      hp: 90,
-      attack: 14,
-      armor: 18,
-      speed: 5,
-      crit: 0.02,
-      dodge: 0,
-      elem: "phys",
-      skills: ["heavy_blow"],
-      reward: { coins: [35, 50], materials: ["moss_stone"] }
-    },
-    // Босс мира
-    {
-      id: "boss_willow",
-      name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B",
-      icon: "\u{1F333}",
-      hp: 160,
-      attack: 15,
-      armor: 14,
-      speed: 7,
-      crit: 0.06,
-      dodge: 0.03,
-      elem: "phys",
-      skills: ["heavy_blow", "slow_spores", "pollen_sleep"],
-      boss: true,
-      reward: { coins: [150, 200], seals: 1, materials: ["willow_heart"] }
-    }
-  ];
-  ENEMIES.push(
-    {
-      id: "rat_thief",
-      name: "\u041A\u0440\u044B\u0441\u0430-\u0432\u043E\u0440\u0438\u0448\u043A\u0430",
-      icon: "\u{1F400}",
-      hp: 45,
-      attack: 11,
-      armor: 6,
-      speed: 13,
-      crit: 0.1,
-      dodge: 0.14,
-      elem: "phys",
-      skills: ["sting_poison"],
-      reward: { coins: [28, 40], materials: ["rat_tail"] }
-    },
-    {
-      id: "bandit",
-      name: "\u0414\u0432\u043E\u0440\u043E\u0432\u044B\u0439 \u0440\u0430\u0437\u0431\u043E\u0439\u043D\u0438\u043A",
-      icon: "\u{1F5E1}\uFE0F",
-      hp: 65,
-      attack: 14,
-      armor: 10,
-      speed: 10,
-      crit: 0.08,
-      dodge: 0.05,
-      elem: "phys",
-      skills: ["heavy_blow"],
-      reward: { coins: [35, 55], materials: ["torn_cloth"] }
-    },
-    {
-      id: "golem_wander",
-      name: "\u0411\u0440\u043E\u0434\u044F\u0447\u0438\u0439 \u0433\u043E\u043B\u0435\u043C",
-      icon: "\u{1F9F1}",
-      hp: 110,
-      attack: 16,
-      armor: 22,
-      speed: 5,
-      crit: 0.03,
-      dodge: 0,
-      elem: "phys",
-      skills: ["heavy_blow", "slow_spores"],
-      reward: { coins: [50, 70], materials: ["brick_chunk"] }
-    },
-    {
-      id: "ghost_guard",
-      name: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A \u0441\u0442\u0440\u0430\u0436\u0438",
-      icon: "\u{1F47B}",
-      hp: 70,
-      attack: 15,
-      armor: 8,
-      speed: 11,
-      crit: 0.07,
-      dodge: 0.15,
-      elem: "phys",
-      skills: ["fear_chill"],
-      tags: ["spirit"],
-      reward: { coins: [45, 65], materials: ["ectoplasm"] }
-    },
-    {
-      id: "boss_captain",
-      name: "\u041F\u0440\u0438\u0437\u0440\u0430\u043A \u043A\u0430\u043F\u0438\u0442\u0430\u043D\u0430 \u0441\u0442\u0440\u0430\u0436\u0438",
-      icon: "\u{1F480}",
-      hp: 240,
-      attack: 20,
-      armor: 18,
-      speed: 9,
-      crit: 0.1,
-      dodge: 0.06,
-      elem: "phys",
-      skills: ["heavy_blow", "fear_chill", "pollen_sleep"],
-      boss: true,
-      tags: ["spirit"],
-      reward: { coins: [260, 340], seals: 2, materials: ["captain_badge"] }
-    }
-  );
-  ENEMIES.push(
-    {
-      id: "ink_blot",
-      name: "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u0430\u044F \u043A\u043B\u044F\u043A\u0441\u0430",
-      icon: "\u{1FADF}",
-      hp: 80,
-      attack: 15,
-      armor: 10,
-      speed: 8,
-      crit: 0.05,
-      dodge: 0.04,
-      elem: "phys",
-      skills: ["sting_poison", "slow_spores"],
-      reward: { coins: [55, 75], materials: ["ink_drop"] }
-    },
-    {
-      id: "paper_spirit",
-      name: "\u0411\u0443\u043C\u0430\u0436\u043D\u044B\u0439 \u0434\u0443\u0445",
-      icon: "\u{1F4C4}",
-      hp: 75,
-      attack: 17,
-      armor: 8,
-      speed: 12,
-      crit: 0.08,
-      dodge: 0.16,
-      elem: "phys",
-      skills: ["fear_chill"],
-      tags: ["spirit"],
-      reward: { coins: [60, 85], materials: ["paper_scrap"] }
-    },
-    {
-      id: "book_moth",
-      name: "\u041A\u043D\u0438\u0436\u043D\u0430\u044F \u043C\u043E\u043B\u044C",
-      icon: "\u{1F98B}",
-      hp: 60,
-      attack: 13,
-      armor: 6,
-      speed: 14,
-      crit: 0.06,
-      dodge: 0.14,
-      elem: "phys",
-      skills: ["pollen_sleep"],
-      reward: { coins: [50, 70], materials: ["page_dust"] }
-    },
-    {
-      id: "illustration",
-      name: "\u041E\u0436\u0438\u0432\u0448\u0430\u044F \u0438\u043B\u043B\u044E\u0441\u0442\u0440\u0430\u0446\u0438\u044F",
-      icon: "\u{1F5BC}\uFE0F",
-      hp: 130,
-      attack: 19,
-      armor: 20,
-      speed: 6,
-      crit: 0.06,
-      dodge: 0.02,
-      elem: "phys",
-      skills: ["heavy_blow"],
-      reward: { coins: [70, 95], materials: ["gold_leaf"] }
-    },
-    {
-      id: "boss_keeper",
-      name: "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B",
-      icon: "\u{1F4D6}",
-      hp: 320,
-      attack: 23,
-      armor: 22,
-      speed: 10,
-      crit: 0.1,
-      dodge: 0.08,
-      elem: "phys",
-      skills: ["fear_chill", "heavy_blow", "pollen_sleep"],
-      boss: true,
-      tags: ["spirit"],
-      reward: { coins: [380, 500], seals: 3, materials: ["last_page"] }
-    }
-  );
-  ENEMIES.push(
-    {
-      id: "boss_star_guardian",
-      name: "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436",
-      icon: "\u{1F31F}",
-      hp: 420,
-      attack: 27,
-      armor: 26,
-      speed: 11,
-      crit: 0.12,
-      dodge: 0.08,
-      elem: "fire",
-      skills: ["heavy_blow", "fear_chill", "spit_fire"],
-      boss: true,
-      tags: ["spirit"],
-      reward: { coins: [600, 800], seals: 5, materials: ["star_shard"] }
-    }
-  );
-  for (const w of WORLDS) {
-    if (w?.enemies) ENEMIES.push(...w.enemies);
-  }
-  var ENEMY_BY_ID = Object.fromEntries(ENEMIES.map((e) => [e.id, e]));
 
   // src/core/formBattle.js
   var GAUGE_FULL = 100;
@@ -21010,7 +21552,7 @@
       slept: knight.stats.sleptTicks > 0,
       poisoned: knight.stats.poisonTicks > 0,
       deathCause: knight.hp > 0 ? null : inferCause(knight),
-      advice: victory ? null : timedOut ? "\u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u0432\u0440\u0430\u0433\u043E\u0432 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0434\u043E\u0431\u0438\u0442\u044C \u0432\u043E\u0432\u0440\u0435\u043C\u044F. \u041F\u043E\u0434\u043D\u0438\u043C\u0430\u0439 \u0430\u0442\u0430\u043A\u0443: \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u043E\u043C\u043E\u0449\u043D\u0435\u0435, \u043A\u0440\u0438\u0442, \u043F\u0440\u043E\u0431\u0438\u0432\u0430\u043D\u0438\u0435 \u0431\u0440\u043E\u043D\u0438 \u2014 \u0438\u043B\u0438 \u043F\u043E\u0437\u043E\u0432\u0438 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432." : adviceFor(knight, allies, foes, inferCause(knight))
+      advice: victory ? null : timedOut ? "\u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u0432\u0440\u0430\u0433\u043E\u0432 \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0434\u043E\u0431\u0438\u0442\u044C \u0432\u043E\u0432\u0440\u0435\u043C\u044F. \u041F\u043E\u0434\u043D\u0438\u043C\u0430\u0439 \u0430\u0442\u0430\u043A\u0443: \u043E\u0440\u0443\u0436\u0438\u0435 \u043F\u043E\u043C\u043E\u0449\u043D\u0435\u0435, \u043A\u0440\u0438\u0442 \u0438\u043B\u0438 \u043F\u0440\u043E\u0431\u0438\u0432\u0430\u043D\u0438\u0435 \u0431\u0440\u043E\u043D\u0438." : adviceFor(knight, allies, foes, inferCause(knight))
     };
     return { victory, log, report, ticks: tick };
   }
@@ -21021,13 +21563,13 @@
   }
   function adviceFor(knight, allies, foes, cause) {
     if (cause === "sleep") {
-      return "\u0420\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0443\u043B \u043D\u0430 \u043F\u043E\u0441\u0442\u0443. \u0428\u043B\u0435\u043C \u0441 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435\u043C \u0441\u043D\u0443 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u2014 \u0438 \u043F\u043E\u0440\u044F\u0434\u043E\u043A.";
+      return "\u0420\u044B\u0446\u0430\u0440\u044C \u0443\u0441\u043D\u0443\u043B \u043D\u0430 \u043F\u043E\u0441\u0442\u0443. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u0441\u043D\u0443 \u0438\u043B\u0438 \u0437\u0435\u043B\u044C\u0435 \u0431\u043E\u0434\u0440\u043E\u0441\u0442\u0438 \u2014 \u0438 \u043F\u043E\u0440\u044F\u0434\u043E\u043A.";
     }
     if (cause === "poison") {
-      return "\u042F\u0434 \u043F\u043E\u0434\u0442\u043E\u0447\u0438\u043B \u0440\u044B\u0446\u0430\u0440\u044F. \u0410\u043C\u0443\u043B\u0435\u0442 \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u044F\u0434\u0438\u044F \u0438\u043B\u0438 \u0447\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u044B\u0439 \u043E\u0442\u0432\u0430\u0440 \u043F\u043E\u043C\u043E\u0433\u0443\u0442.";
+      return "\u042F\u0434 \u043F\u043E\u0434\u0442\u043E\u0447\u0438\u043B \u0440\u044B\u0446\u0430\u0440\u044F. \u0421\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u0435 \u044F\u0434\u0443 \u0438 \u043A\u0440\u0435\u043F\u043A\u0430\u044F \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0430 \u043E\u0431\u043B\u0435\u0433\u0447\u0430\u0442 \u0431\u043E\u0439.";
     }
     if (allies.length === 1) {
-      return "\u0412 \u043E\u0434\u0438\u043D\u043E\u0447\u043A\u0443 \u0442\u044F\u0436\u0435\u043B\u043E. \u041D\u0430\u0439\u043C\u0438 \u0432 \u0442\u0430\u0432\u0435\u0440\u043D\u0435 \u0433\u0440\u043E\u043C\u0438\u043B\u0443 \u0432 \u043F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434 \u0438 \u043B\u0443\u0447\u043D\u0438\u0446\u0443 \u0437\u0430 \u0441\u043F\u0438\u043D\u0443.";
+      return "\u0412 \u043E\u0434\u0438\u043D\u043E\u0447\u043A\u0443 \u0442\u044F\u0436\u0435\u043B\u043E. \u0423\u0441\u0438\u043B\u044C \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0443 \u0440\u044B\u0446\u0430\u0440\u044F \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044C \u0440\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0443.";
     }
     const frontDown = allies.filter((a) => FRONT.includes(a.slot) && a.hp <= 0).length;
     if (frontDown > 0) {
@@ -21098,7 +21640,7 @@
     };
   }
   function firstUnsolvedOfType(state2, mech) {
-    return ALL_PUZZLES.find((p) => puzzleTypeOf(p) === mech && !state2.puzzlesDone[p.id]) || null;
+    return ALL_PUZZLES.find((p) => puzzleTypeOf2(p) === mech && !state2.puzzlesDone[p.id]) || null;
   }
   function storyCurrentPuzzle(state2) {
     const step = state2.story?.step || 0;
@@ -21190,7 +21732,7 @@
     const visit = (mem.visits || 0) + 1;
     if (beat) {
       const last = storyBeatAt(story.step).steps.at(-1).speaker;
-      const mech2 = puzzleTypeOf(puzzle);
+      const mech2 = puzzleTypeOf2(puzzle);
       const task = TASK_LINES[mech2][story.step % TASK_LINES[mech2].length];
       return {
         kind: "beat",
@@ -21212,7 +21754,7 @@
       }
     }
     if (!mem.silenceShown && visit === silenceVisit(guestId)) lines.push(script.silence);
-    const mech = puzzleTypeOf(puzzle);
+    const mech = puzzleTypeOf2(puzzle);
     lines.push(TASK_LINES[mech][story.step % TASK_LINES[mech].length]);
     return {
       kind: "visit",
@@ -21223,10 +21765,13 @@
       puzzleName: puzzle.name
     };
   }
-  function storyAcceptScene(state2, scene) {
+  function storyAcceptScene(state2, scene, { prologOnly = false } = {}) {
     const story = state2.story;
     if (!story || !scene) return;
-    if (scene.kind === "prolog") story.prologSeen = true;
+    if (scene.kind === "prolog") {
+      story.prologSeen = true;
+      if (prologOnly) return;
+    }
     if (scene.kind === "epilog") {
       story.epilogSeen = true;
       return;
@@ -21256,10 +21801,873 @@
     return true;
   }
 
+  // src/data/onboarding.js
+  var ONBOARDING_VERSION = 1;
+  var ONBOARDING_BATTLE_SEED = 1;
+  var ONBOARDING_BRANCHES = [
+    {
+      id: "tw_01",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u043B\u043A\u0430",
+      icon: "\u{1F9FA}",
+      route: { name: "puzzle", params: { id: "tw_01" } }
+    },
+    {
+      id: "sk_md_01",
+      name: "\u0423\u0442\u0440\u0435\u043D\u043D\u044F\u044F \u043F\u043E\u043B\u044F\u043D\u0430",
+      icon: "\u{1F50D}",
+      route: { name: "puzzle", params: { id: "sk_md_01" } }
+    },
+    {
+      id: "pp_01",
+      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0430",
+      icon: "\u{1F97E}",
+      route: { name: "puzzle", params: { id: "pp_01" } }
+    }
+  ];
+  var ONBOARDING_STEPS = [
+    {
+      id: "prolog",
+      title: "\u041B\u0430\u0432\u043A\u0430 \u0432\u044B\u0431\u0440\u0430\u043B\u0430 \u0445\u043E\u0437\u044F\u0438\u043D\u0430",
+      goal: "\u041F\u043E\u0441\u043B\u0443\u0448\u0430\u0439 \u043A\u043E\u0440\u043E\u0442\u043A\u043E\u0435 \u043F\u0440\u0438\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u0435 \u0434\u0443\u0445\u0430 \u0438 \u043A\u043E\u0442\u0430. \u0421\u0440\u0430\u0437\u0443 \u043F\u043E\u0441\u043B\u0435 \u043D\u0435\u0433\u043E \u043D\u0430\u0447\u043D\u0451\u0442\u0441\u044F \u043F\u0435\u0440\u0432\u043E\u0435 \u0434\u0435\u043B\u043E.",
+      cta: "\u041A \u043F\u0440\u043E\u043B\u043E\u0433\u0443",
+      route: { name: "story", params: { prologOnly: true } }
+    },
+    {
+      id: "md_01",
+      title: "\u041F\u0435\u0440\u0432\u044B\u0439 \u0441\u0432\u0435\u0442",
+      goal: "\u041F\u043E\u0432\u0435\u0440\u043D\u0438 \u0437\u0435\u0440\u043A\u0430\u043B\u043E \u0432 \xAB\u041F\u0435\u0440\u0432\u043E\u043C \u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043A\u0435\xBB \u0438 \u0437\u0430\u0436\u0433\u0438 \u0444\u043E\u043D\u0430\u0440\u044C.",
+      cta: "\u041A \u043F\u0435\u0440\u0432\u043E\u0439 \u0437\u0430\u0433\u0430\u0434\u043A\u0435",
+      route: { name: "puzzle", params: { id: "md_01" } },
+      hintTitle: "\u041E\u0434\u0438\u043D \u043F\u043E\u0432\u043E\u0440\u043E\u0442",
+      hint: "\u0422\u0430\u043F\u043D\u0438 \u0437\u0435\u0440\u043A\u0430\u043B\u043E \u043D\u0430 \u043F\u043E\u043B\u0435. \u041B\u0443\u0447 \u0438\u0437\u043C\u0435\u043D\u0438\u0442 \u043D\u0430\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435, \u0430 \u0444\u043E\u043D\u0430\u0440\u044C \u0437\u0430\u0436\u0436\u0451\u0442\u0441\u044F.",
+      targets: { puzzle: '[data-puzzle-id="md_01"]' }
+    },
+    {
+      id: "md_02",
+      title: "\u041B\u0443\u0447 \u043F\u043E \u043D\u043E\u0432\u043E\u043C\u0443 \u043F\u0443\u0442\u0438",
+      goal: "\u0420\u0435\u0448\u0438 \xAB\u041F\u0435\u0440\u0432\u043E\u0435 \u0437\u0435\u0440\u043A\u0430\u043B\u043E\xBB. \u041E\u0442\u043C\u0435\u043D\u0430, \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430 \u0438 \u0441\u0431\u0440\u043E\u0441 \u043E\u0441\u0442\u0430\u044E\u0442\u0441\u044F \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B.",
+      cta: "\u041A \xAB\u041F\u0435\u0440\u0432\u043E\u043C\u0443 \u0437\u0435\u0440\u043A\u0430\u043B\u0443\xBB",
+      route: { name: "puzzle", params: { id: "md_02" } },
+      hintTitle: "\u0421\u0432\u0435\u0442 \u0438\u0434\u0451\u0442 \u0437\u0430 \u0437\u0435\u0440\u043A\u0430\u043B\u043E\u043C",
+      hint: "\u0417\u0434\u0435\u0441\u044C \u0442\u043E\u0436\u0435 \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u0437\u0435\u0440\u043A\u0430\u043B\u043E. \u0415\u0441\u043B\u0438 \u0437\u0430\u0445\u043E\u0447\u0435\u0448\u044C \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u043B\u0443\u0447 \u0441\u043D\u0430\u0447\u0430\u043B\u0430, \u0432\u043E\u0437\u044C\u043C\u0438 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0443 \u2014 \u043E\u043D\u0430 \u043D\u0435 \u043C\u0435\u0448\u0430\u0435\u0442 \u043F\u043E\u0431\u0435\u0434\u0435.",
+      targets: { puzzle: '[data-puzzle-id="md_02"]' }
+    },
+    {
+      id: "branch",
+      title: "\u041E\u0434\u043D\u0430 \u0437\u0430\u0431\u043E\u0442\u0430 \u043D\u0430 \u0432\u044B\u0431\u043E\u0440",
+      goal: "\u0412\u044B\u0431\u0435\u0440\u0438 \u0438 \u0447\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438 \u043E\u0434\u043D\u0443 \u0437\u0430\u0433\u0430\u0434\u043A\u0443: \u043F\u043E\u0440\u044F\u0434\u043E\u043A \u043D\u0430 \u043F\u043E\u043B\u043A\u0435, \u043F\u043E\u0438\u0441\u043A \u043D\u0430\u0445\u043E\u0434\u043E\u043A \u0438\u043B\u0438 \u043B\u0435\u0441\u043D\u0443\u044E \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0443.",
+      cta: "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u0437\u0430\u0433\u0430\u0434\u043A\u0443",
+      route: { name: "puzzles", params: {} }
+    },
+    {
+      id: "bt_slimes",
+      title: "\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u0445\u043E\u0434",
+      goal: "\u041E\u0442\u043F\u0440\u0430\u0432\u044C \u0440\u044B\u0446\u0430\u0440\u044F \u043A \xAB\u041B\u0443\u0436\u0435 \u0443 \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0438\xBB. \u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C, \u0430 \u0434\u043E\u0431\u044B\u0447\u0430 \u043F\u0440\u0438\u0433\u043E\u0434\u0438\u0442\u0441\u044F \u043B\u0430\u0432\u043A\u0435.",
+      cta: "\u041A \u043F\u0435\u0440\u0432\u043E\u043C\u0443 \u043F\u043E\u0445\u043E\u0434\u0443",
+      route: { name: "battle", params: { id: "bt_slimes" } },
+      hintTitle: "\u0421\u043C\u043E\u0442\u0440\u0438 \u043D\u0430 \u0434\u0435\u043B\u043E \u0440\u044B\u0446\u0430\u0440\u044F",
+      hint: "\u041D\u0430\u0436\u043C\u0438 \xAB\u0412 \u0431\u043E\u0439!\xBB. \u0420\u0430\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0443 \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u043D\u044F\u0442\u044C, \u043D\u043E \u0434\u043B\u044F \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0432\u044B\u0445\u043E\u0434\u0430 \u043E\u043D\u0430 \u0443\u0436\u0435 \u043F\u043E\u0434\u0445\u043E\u0434\u0438\u0442.",
+      targets: {
+        battles: '[data-battle-id="bt_slimes"]',
+        battle: '[data-battle-start="bt_slimes"]'
+      }
+    },
+    {
+      id: "square",
+      title: "\u0414\u043E\u0431\u044B\u0447\u0435 \u2014 \u0434\u0435\u043B\u043E",
+      goal: "\u0412\u0435\u0440\u043D\u0443\u043B\u0438\u0441\u044C \u043C\u043E\u043D\u0435\u0442\u044B \u0438 \u0441\u043B\u0438\u0437\u044C. \u0418\u0437 \u043B\u0430\u0432\u043A\u0438 \u0432\u044B\u0439\u0434\u0438 \u043D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C: \u0434\u0430\u043B\u044C\u0448\u0435 \u043D\u0430\u0439\u0434\u0451\u043C \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435.",
+      cta: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
+      route: { name: "hub", params: { scene: "square" } },
+      hintTitle: "\u0417\u0430 \u0434\u0432\u0435\u0440\u044C\u044E \u2014 \u0433\u043E\u0440\u043E\u0434",
+      hint: "\u041D\u0430\u0436\u043C\u0438 \xAB\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C\xBB. \u041C\u043E\u0436\u043D\u043E \u043E\u0442\u043E\u0439\u0442\u0438 \u0438 \u0438\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u044C \u043B\u0430\u0432\u043A\u0443: \u0434\u0443\u0433\u0430 \u043F\u043E\u0434\u043E\u0436\u0434\u0451\u0442 \u043D\u0430 \u044D\u0442\u043E\u043C \u0448\u0430\u0433\u0435.",
+      targets: { hub: '[data-hotspot="@square"]' }
+    },
+    {
+      id: "market",
+      title: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B",
+      goal: "\u0421 \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u043F\u0440\u043E\u0439\u0434\u0438 \u0432 \u0442\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B \u2014 \u0442\u0430\u043C \u0440\u0430\u0431\u043E\u0442\u0430\u044E\u0442 \u0431\u0440\u043E\u043D\u043D\u0438\u043A, \u043C\u0430\u0433 \u0438 \u0430\u043B\u0445\u0438\u043C\u0438\u043A.",
+      cta: "\u0412 \u0442\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B",
+      route: { name: "hub", params: { scene: "market" } },
+      hintTitle: "\u041B\u0430\u0432\u043A\u0438 \u0440\u044F\u0434\u043E\u043C",
+      hint: "\u041E\u0442\u043A\u0440\u043E\u0439 \u0442\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B \u043D\u0430 \u0441\u0446\u0435\u043D\u0435 \u043F\u043B\u043E\u0449\u0430\u0434\u0438.",
+      targets: { hub: '[data-hotspot="@market"]' }
+    },
+    {
+      id: "boots",
+      title: "\u0421\u0430\u043F\u043E\u0433\u0438 \u0434\u043B\u044F \u0434\u043E\u0440\u043E\u0433\u0438",
+      goal: "\u041A\u0443\u043F\u0438 \u0438 \u043D\u0430\u0434\u0435\u043D\u044C \xAB\u0421\u0430\u043F\u043E\u0433\u0438 \u0442\u0440\u043E\u043F\u0438\u043D\u043E\u043A\xBB \u0443 \u0431\u0440\u043E\u043D\u043D\u0438\u043A\u0430. \u0415\u0441\u043B\u0438 \u043E\u043D\u0438 \u043B\u0435\u0433\u043B\u0438 \u0432 \u0441\u0443\u043D\u0434\u0443\u043A, \u043D\u0430\u0434\u0435\u043D\u044C \u0438\u0445 \u0432 \u043A\u043E\u043C\u043D\u0430\u0442\u0435 \u0440\u044B\u0446\u0430\u0440\u044F.",
+      cta: "\u041A \u0431\u0440\u043E\u043D\u043D\u0438\u043A\u0443",
+      earnCta: "\u0417\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u043D\u0430 \u0441\u0430\u043F\u043E\u0433\u0438",
+      route: { name: "shopArmorer", params: {} },
+      hintTitle: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0430 \u0441 \u0446\u0435\u043B\u044C\u044E",
+      hint: "\u041A\u0443\u043F\u0438 \u0438\u043C\u0435\u043D\u043D\u043E \xAB\u0421\u0430\u043F\u043E\u0433\u0438 \u0442\u0440\u043E\u043F\u0438\u043D\u043E\u043A\xBB. \u0421\u0432\u043E\u0431\u043E\u0434\u043D\u044B\u0439 \u0441\u043B\u043E\u0442 \u043D\u0430\u0434\u0435\u0432\u0430\u0435\u0442 \u0432\u0435\u0449\u044C \u0441\u0440\u0430\u0437\u0443; \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u0430\u044F \u043F\u043E\u043A\u0443\u043F\u043A\u0430 \u043D\u0435 \u043D\u0443\u0436\u043D\u0430.",
+      targets: {
+        shopArmorer: '[data-item-id="bt_path"]',
+        equip: '[data-equip-slot="boots"]'
+      }
+    },
+    {
+      id: "bees_attempt",
+      title: "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u0443 \u043F\u0447\u0435\u043B\u0438\u043D\u043E\u0433\u043E \u0434\u0435\u0440\u0435\u0432\u0430",
+      goal: "\u0421\u0445\u043E\u0434\u0438 \u043A \xAB\u041F\u0447\u0435\u043B\u0438\u043D\u043E\u043C\u0443 \u0434\u0435\u0440\u0435\u0432\u0443\xBB. \u041F\u043E\u0431\u0435\u0434\u0430 \u0441\u0440\u0430\u0437\u0443 \u0437\u0430\u0441\u0447\u0438\u0442\u044B\u0432\u0430\u0435\u0442\u0441\u044F, \u0430 \u043F\u0435\u0440\u0432\u0430\u044F \u0443\u0447\u0435\u0431\u043D\u0430\u044F \u043D\u0435\u0443\u0434\u0430\u0447\u0430 \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442 \u043F\u043E\u044F\u0441.",
+      cta: "\u041A \u043F\u0447\u0451\u043B\u0430\u043C",
+      route: { name: "battle", params: { id: "bt_bees" } },
+      hintTitle: "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u0431\u0435\u0437 \u043F\u043E\u0442\u0435\u0440\u044C",
+      hint: "\u0417\u0430\u043F\u0443\u0441\u043A\u0430\u0439 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0439 \u0431\u043E\u0439. \u0415\u0441\u043B\u0438 \u043E\u043D \u043D\u0435 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0441\u044F \u0441 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0440\u0430\u0437\u0430, \u0437\u0435\u043B\u044C\u044F \u043D\u0430 \u043F\u043E\u044F\u0441\u0435 \u043E\u0441\u0442\u0430\u043D\u0443\u0442\u0441\u044F \u0434\u043B\u044F \u0443\u0441\u0438\u043B\u0435\u043D\u0438\u044F.",
+      targets: { battle: '[data-battle-start="bt_bees"]' }
+    },
+    {
+      id: "upgrade",
+      title: "\u0417\u0430\u0431\u043E\u0442\u0430 \u043F\u0435\u0440\u0435\u0434 \u043D\u043E\u0432\u043E\u0439 \u043F\u043E\u043F\u044B\u0442\u043A\u043E\u0439",
+      goal: "\u041D\u0430\u0434\u0435\u043D\u044C \xAB\u041A\u043E\u043B\u044C\u0446\u043E \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F\xBB \u0438 \u0437\u0430\u043F\u043E\u043B\u043D\u0438 \u043E\u0431\u0430 \u043A\u0430\u0440\u043C\u0430\u0448\u043A\u0430 \u043F\u043E\u044F\u0441\u0430. \u0412\u0442\u043E\u0440\u043E\u0435 \u0437\u0435\u043B\u044C\u0435 \u0443\u0436\u0435 \u043B\u0435\u0436\u0438\u0442 \u0432 \u0441\u0443\u043D\u0434\u0443\u043A\u0435.",
+      cta: "\u0423\u0441\u0438\u043B\u0438\u0442\u044C \u0440\u044B\u0446\u0430\u0440\u044F",
+      earnCta: "\u0417\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u043D\u0430 \u0443\u0441\u0438\u043B\u0435\u043D\u0438\u0435",
+      route: { name: "shopMagic", params: {} },
+      hintTitle: "\u041A\u043E\u043B\u044C\u0446\u043E \u0438 \u0437\u0430\u043F\u0430\u0441\u043D\u043E\u0435 \u0437\u0435\u043B\u044C\u0435",
+      hint: "\u041A\u043E\u043B\u044C\u0446\u043E \u043D\u0430\u0434\u0435\u0432\u0430\u0435\u0442\u0441\u044F \u0432 \u0441\u0432\u043E\u0431\u043E\u0434\u043D\u044B\u0439 \u0441\u043B\u043E\u0442 \u0441\u0440\u0430\u0437\u0443 \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043A\u0443\u043F\u043A\u0438. \u0417\u0430\u0442\u0435\u043C \u043F\u043E\u043B\u043E\u0436\u0438 \u0437\u0435\u043B\u044C\u0435 \u0438\u0437 \u0441\u0443\u043D\u0434\u0443\u043A\u0430 \u0432\u043E \u0432\u0442\u043E\u0440\u043E\u0439 \u043A\u0430\u0440\u043C\u0430\u0448\u0435\u043A \u043F\u043E\u044F\u0441\u0430.",
+      targets: {
+        shopMagic: '[data-item-id="rng_health"]',
+        equip: '[data-equip-slot="ring1"]',
+        shopAlchemy: '[data-item-id="pot_heal"]'
+      }
+    },
+    {
+      id: "bees_victory",
+      title: "\u041D\u0430\u0437\u0430\u0434 \u043A \u043F\u0447\u0451\u043B\u0430\u043C",
+      goal: "\u0421 \u043A\u043E\u043B\u044C\u0446\u043E\u043C \u0438 \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043D\u044B\u043C \u043F\u043E\u044F\u0441\u043E\u043C \u0441\u043D\u043E\u0432\u0430 \u043E\u0442\u043F\u0440\u0430\u0432\u044C\u0441\u044F \u043A \xAB\u041F\u0447\u0435\u043B\u0438\u043D\u043E\u043C\u0443 \u0434\u0435\u0440\u0435\u0432\u0443\xBB \u0438 \u043F\u043E\u0431\u0435\u0434\u0438.",
+      cta: "\u041D\u043E\u0432\u0430\u044F \u043F\u043E\u043F\u044B\u0442\u043A\u0430",
+      route: { name: "battle", params: { id: "bt_bees" } },
+      hintTitle: "\u0422\u0435\u043F\u0435\u0440\u044C \u0442\u044B \u0433\u043E\u0442\u043E\u0432",
+      hint: "\u0417\u0430\u043F\u0443\u0441\u043A\u0430\u0439 \u043E\u0431\u044B\u0447\u043D\u044B\u0439 \u0431\u043E\u0439: \u0432\u044B\u043F\u0438\u0442\u044B\u0435 \u0437\u0435\u043B\u044C\u044F \u0442\u0435\u043F\u0435\u0440\u044C \u0440\u0430\u0441\u0445\u043E\u0434\u0443\u044E\u0442\u0441\u044F \u043A\u0430\u043A \u0432\u0441\u0435\u0433\u0434\u0430, \u043D\u043E \u0438\u0445 \u0437\u0430\u043C\u0435\u043D\u0438\u0442 \u043A\u0440\u0430\u0444\u0442 \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u0431\u0435\u0434\u044B.",
+      targets: { battle: '[data-battle-start="bt_bees"]' }
+    },
+    {
+      id: "craft",
+      title: "\u0421\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u043E\u0435 \u0437\u0435\u043B\u044C\u0435",
+      goal: "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u0441\u0432\u0430\u0440\u0438 \u0434\u0432\u0430 \u0437\u0435\u043B\u044C\u044F \u043B\u0435\u0447\u0435\u043D\u0438\u044F: \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u0431\u0435\u0434 \u0445\u0432\u0430\u0442\u0438\u0442 \u0441\u043B\u0438\u0437\u0438 \u0438 \u043C\u0451\u0434\u0430.",
+      cta: "\u041A \u043A\u0443\u0437\u043D\u0438\u0446\u0435 \u0438 \u043A\u043E\u0442\u043B\u0443",
+      gatherCta: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B",
+      route: { name: "craft", params: {} },
+      hintTitle: "\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0441\u0442\u0430\u043D\u043E\u0432\u044F\u0442\u0441\u044F \u0434\u0435\u043B\u043E\u043C",
+      hint: "\u041D\u0430\u0436\u043C\u0438 \xAB\u0421\u0434\u0435\u043B\u0430\u0442\u044C\xBB \u0443 \u0440\u0435\u0446\u0435\u043F\u0442\u0430 \u0434\u0432\u0443\u0445 \u0437\u0435\u043B\u0438\u0439 \u043B\u0435\u0447\u0435\u043D\u0438\u044F. \u042D\u0442\u043E \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0439 \u043A\u0440\u0430\u0444\u0442: \u0441\u043B\u0438\u0437\u044C \u0438 \u043C\u0451\u0434 \u0441\u043F\u0438\u0448\u0443\u0442\u0441\u044F \u0441\u043E \u0441\u043A\u043B\u0430\u0434\u0430.",
+      targets: { craft: '[data-recipe-id="rcp_pot_heal"]' }
+    },
+    {
+      id: "done",
+      title: "\u041B\u0430\u0432\u043A\u0430 \u0441\u043D\u043E\u0432\u0430 \u0436\u0438\u0432\u0430",
+      goal: "\u041F\u0435\u0440\u0432\u044B\u0435 \u0434\u0435\u043B\u0430 \u0441\u0434\u0435\u043B\u0430\u043D\u044B. \u0422\u0435\u043F\u0435\u0440\u044C \u0432\u044B\u0431\u0438\u0440\u0430\u0439 \u0441\u0432\u043E\u0439 \u043F\u0443\u0442\u044C: \u0437\u0430\u0433\u0430\u0434\u043A\u0438, \u0438\u0441\u0442\u043E\u0440\u0438\u044F \u0438\u043B\u0438 \u043F\u043E\u0445\u043E\u0434\u044B \u2014 \u0431\u0435\u0437 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u044F\u0434\u043A\u0430.",
+      cta: "",
+      route: null
+    }
+  ];
+  var ONBOARDING_STEP_BY_ID = Object.fromEntries(
+    ONBOARDING_STEPS.map((step) => [step.id, step])
+  );
+  var ONBOARDING_FINAL_ROUTES = [
+    { id: "puzzles", icon: "\u{1F9E9}", label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", route: { name: "puzzles", params: {} } },
+    { id: "story", icon: "\u{1F4D6}", label: "\u041A \u0438\u0441\u0442\u043E\u0440\u0438\u0438", route: { name: "story", params: {} } },
+    { id: "battles", icon: "\u2694\uFE0F", label: "\u041A \u043F\u043E\u0445\u043E\u0434\u0430\u043C", route: { name: "battles", params: {} } }
+  ];
+  var ONBOARDING_EARN_ROUTE = { name: "puzzles", params: {} };
+  var ONBOARDING_GUIDE_SECTIONS = [
+    {
+      id: "tavern",
+      title: "\u0422\u0430\u0432\u0435\u0440\u043D\u0430 \u0438 \u043A\u043E\u043D\u044E\u0448\u043D\u044F",
+      short: "\u0417\u0434\u0435\u0441\u044C \u0436\u0438\u0432\u0443\u0442 \u0441\u043F\u0443\u0442\u043D\u0438\u043A\u0438, \u043F\u0438\u0442\u043E\u043C\u0446\u044B \u0438 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u0438. \u041C\u043E\u0436\u043D\u043E \u043F\u0440\u043E\u0441\u0442\u043E \u043F\u043E\u0437\u043D\u0430\u043A\u043E\u043C\u0438\u0442\u044C\u0441\u044F \u0441 \u043E\u0442\u0440\u044F\u0434\u043E\u043C.",
+      route: { name: "tavern", params: {} }
+    },
+    {
+      id: "cabinet",
+      title: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432",
+      short: "\u041D\u0438\u0448\u0438 \u0434\u043B\u044F \u0431\u0443\u0434\u0443\u0449\u0438\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A \u0443\u0436\u0435 \u0436\u0434\u0443\u0442. \u041D\u0435 \u043D\u0443\u0436\u043D\u043E \u043F\u043E\u043B\u0443\u0447\u0430\u0442\u044C \u0442\u0440\u043E\u0444\u0435\u0439, \u0447\u0442\u043E\u0431\u044B \u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u043A\u043E\u043C\u043D\u0430\u0442\u0443.",
+      route: { name: "hub", params: { scene: "cabinet" } }
+    },
+    {
+      id: "guests",
+      title: "\u0413\u043E\u0441\u0442\u0435\u0432\u0430\u044F \u043A\u043D\u0438\u0433\u0430",
+      short: "\u041F\u043E\u0440\u0442\u0440\u0435\u0442\u044B \u0437\u043D\u0430\u043A\u043E\u043C\u044B\u0445 \u0438 \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u044B\u0435 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440\u044B \u043E \u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0445 \u0438\u0441\u0442\u043E\u0440\u0438\u044F\u0445 \u043B\u0430\u0432\u043A\u0438.",
+      route: { name: "guests", params: {} }
+    },
+    {
+      id: "achievements",
+      title: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u043A\u043E\u0440\u0434\u043E\u0432",
+      short: "\u0417\u0434\u0435\u0441\u044C \u043E\u0442\u043C\u0435\u0447\u0430\u044E\u0442\u0441\u044F \u0434\u0435\u043B\u0430, \u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u0443\u0436\u0435 \u043F\u043E\u043B\u0443\u0447\u0438\u043B\u0438\u0441\u044C, \u0438 \u0442\u0435, \u0447\u0442\u043E \u0436\u0434\u0443\u0442 \u0432\u043F\u0435\u0440\u0435\u0434\u0438.",
+      route: { name: "achievements", params: {} }
+    },
+    {
+      id: "deck",
+      title: "\u041A\u043E\u043B\u043E\u0434\u0430 \u0441\u0443\u0434\u044C\u0431\u044B",
+      short: "\u041A\u0430\u0440\u0442\u044B \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u044E\u0442\u0441\u044F \u043F\u043E \u043C\u0435\u0440\u0435 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u043E\u0432. \u041F\u043E\u043B\u0438\u0441\u0442\u0430\u0439 \u043A\u043E\u043B\u043E\u0434\u0443 \u0432 \u0441\u0432\u043E\u0451\u043C \u0442\u0435\u043C\u043F\u0435.",
+      route: { name: "deck", params: {} }
+    },
+    {
+      id: "board",
+      title: "\u0414\u043E\u0441\u043A\u0430 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0439",
+      short: "\u0420\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0435 \u043B\u0438\u0441\u0442\u044B \u0434\u043B\u044F \u0431\u0443\u0434\u0443\u0449\u0438\u0445 \u043F\u043E\u0445\u043E\u0434\u043E\u0432. \u041E\u0441\u043C\u043E\u0442\u0440\u0430 \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E, \u0431\u0440\u0430\u0442\u044C \u0437\u0430\u0434\u0430\u043D\u0438\u0435 \u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E.",
+      route: { name: "board", params: {} }
+    },
+    {
+      id: "workshop",
+      title: "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F",
+      short: "\u0420\u0435\u0434\u0430\u043A\u0442\u043E\u0440 \u0438 \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0445 \u0438\u0434\u0435\u0439, \u043A\u043E\u0433\u0434\u0430 \u0437\u0430\u0445\u043E\u0447\u0435\u0442\u0441\u044F \u044D\u043A\u0441\u043F\u0435\u0440\u0438\u043C\u0435\u043D\u0442\u043E\u0432.",
+      route: { name: "workshop", params: {} }
+    },
+    {
+      id: "shop",
+      title: "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u043B\u0430\u0432\u043A\u0438",
+      short: "\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F \u0438 \u0441\u043A\u0443\u043F\u043A\u0430 \u043D\u0430\u0445\u043E\u0434\u043E\u043A. \u041C\u043E\u0436\u043D\u043E \u043F\u0440\u043E\u0441\u0442\u043E \u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C\u0441\u044F, \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u043F\u043E\u043A\u0443\u043F\u0430\u044F.",
+      route: { name: "shop", params: {} }
+    }
+  ];
+
+  // src/core/onboarding.js
+  var BRANCH_IDS = ONBOARDING_BRANCHES.map((branch) => branch.id);
+  var TRACKED_PURCHASES = /* @__PURE__ */ new Set(["bt_path", "rng_health"]);
+  var processedBattleResults = /* @__PURE__ */ new WeakSet();
+  var priceCache = /* @__PURE__ */ new Map();
+  function copyRoute(route) {
+    return route ? { name: route.name, params: { ...route.params || {} } } : null;
+  }
+  function hasItem(state2, itemId) {
+    return (state2.inventory || []).includes(itemId) || (state2.consumableBelt || []).includes(itemId) || Object.values(state2.equipped || {}).includes(itemId);
+  }
+  function hasEquipped(state2, itemId) {
+    return Object.values(state2.equipped || {}).includes(itemId);
+  }
+  function honestPuzzle(state2, puzzleId) {
+    const entry = state2.puzzlesDone?.[puzzleId];
+    return !!entry && !entry.skipped;
+  }
+  function priceOf(itemId) {
+    if (!priceCache.has(itemId)) {
+      const stock = SHOP_STOCK.find((entry) => entry.itemId === itemId);
+      priceCache.set(itemId, stock ? pricedShopItem(stock).price : Infinity);
+    }
+    return priceCache.get(itemId);
+  }
+  function newOnboardingState() {
+    return {
+      version: ONBOARDING_VERSION,
+      status: "active",
+      step: "prolog",
+      freeChoiceId: null,
+      flags: {},
+      guide: { started: false, seen: [], closed: false }
+    };
+  }
+  function onboardingIsActive(state2) {
+    return state2.onboarding?.status === "active";
+  }
+  function onboardingBlocksStory(state2) {
+    return ["active", "paused"].includes(state2.onboarding?.status);
+  }
+  function onboardingBlocksLegacyTutorials(state2) {
+    return ["active", "paused", "done", "skipped"].includes(state2.onboarding?.status);
+  }
+  function onboardingStep(state2) {
+    return ONBOARDING_STEP_BY_ID[state2.onboarding?.step] || null;
+  }
+  function syncFacts(state2) {
+    const arc = state2.onboarding;
+    const flags = arc.flags;
+    for (const itemId of TRACKED_PURCHASES) {
+      if (hasItem(state2, itemId)) flags[`bought_${itemId}`] = true;
+      if (hasEquipped(state2, itemId) && flags[`bought_${itemId}`]) flags[`ready_${itemId}`] = true;
+    }
+    if ((state2.consumableBelt || []).length >= 2) flags.beltReady = true;
+    const completedChoice = BRANCH_IDS.includes(arc.freeChoiceId) && honestPuzzle(state2, arc.freeChoiceId) ? arc.freeChoiceId : BRANCH_IDS.find((id) => honestPuzzle(state2, id)) || null;
+    if (completedChoice) arc.freeChoiceId = completedChoice;
+    else if (!BRANCH_IDS.includes(arc.freeChoiceId)) arc.freeChoiceId = null;
+  }
+  function targetStep(state2) {
+    const arc = state2.onboarding;
+    const flags = arc.flags;
+    if (!state2.story?.prologSeen) return "prolog";
+    if (!honestPuzzle(state2, "md_01")) return "md_01";
+    if (!honestPuzzle(state2, "md_02")) return "md_02";
+    if (!arc.freeChoiceId || !honestPuzzle(state2, arc.freeChoiceId)) return "branch";
+    if (!state2.battlesDone?.bt_slimes) return "bt_slimes";
+    if (!flags.squareSeen) return "square";
+    if (!flags.marketSeen) return "market";
+    if (!flags.ready_bt_path) return "boots";
+    if (!flags.beesAttempts && !state2.battlesDone?.bt_bees) return "bees_attempt";
+    if (state2.battlesDone?.bt_bees) return flags.crafted_rcp_pot_heal ? "done" : "craft";
+    return flags.ready_rng_health && flags.beltReady ? "bees_victory" : "upgrade";
+  }
+  function reconcileOnboarding(state2) {
+    const arc = state2.onboarding;
+    if (!arc) return false;
+    const before = JSON.stringify(arc);
+    arc.flags ||= {};
+    arc.freeChoiceId ??= null;
+    syncFacts(state2);
+    if (arc.status === "active") {
+      const target = targetStep(state2);
+      arc.step = target;
+      if (target === "done") arc.status = "done";
+    }
+    arc.version = ONBOARDING_VERSION;
+    return before !== JSON.stringify(arc);
+  }
+  function applyOnboardingEvent(state2, change) {
+    if (!state2.onboarding) return false;
+    const before = JSON.stringify(state2.onboarding);
+    state2.onboarding.flags ||= {};
+    change();
+    reconcileOnboarding(state2);
+    return before !== JSON.stringify(state2.onboarding);
+  }
+  function onboardingPuzzleChoice(state2, puzzleId) {
+    if (!state2.onboarding || state2.onboarding.step !== "branch" || !BRANCH_IDS.includes(puzzleId)) return false;
+    return applyOnboardingEvent(state2, () => {
+      state2.onboarding.freeChoiceId = puzzleId;
+    });
+  }
+  function onboardingPuzzleSolved(state2, puzzleId) {
+    return applyOnboardingEvent(state2, () => {
+      if (BRANCH_IDS.includes(puzzleId) && honestPuzzle(state2, puzzleId) && (!honestPuzzle(state2, state2.onboarding.freeChoiceId) || state2.onboarding.step === "branch")) {
+        state2.onboarding.freeChoiceId = puzzleId;
+      }
+    });
+  }
+  function onboardingPurchase(state2, itemId) {
+    return applyOnboardingEvent(state2, () => {
+      if (TRACKED_PURCHASES.has(itemId)) state2.onboarding.flags[`bought_${itemId}`] = true;
+    });
+  }
+  function onboardingEquipmentChanged(state2) {
+    return reconcileOnboarding(state2);
+  }
+  function onboardingCrafted(state2, recipeId) {
+    return applyOnboardingEvent(state2, () => {
+      if (recipeId === "rcp_pot_heal") state2.onboarding.flags.crafted_rcp_pot_heal = true;
+    });
+  }
+  function onboardingScene(state2, scene) {
+    return applyOnboardingEvent(state2, () => {
+      if (scene === "square") state2.onboarding.flags.squareSeen = true;
+      if (scene === "market") {
+        state2.onboarding.flags.squareSeen = true;
+        state2.onboarding.flags.marketSeen = true;
+      }
+    });
+  }
+  function onboardingBattleOptions(state2, battleId) {
+    return {
+      preserveBeltOnDefeat: battleId === "bt_bees" && onboardingIsActive(state2) && !state2.battlesDone?.bt_bees && !(state2.onboarding.flags.beesAttempts > 0)
+    };
+  }
+  function onboardingFixedBattleSeed(state2, battleId) {
+    return onboardingIsActive(state2) && ["bt_slimes", "bt_bees"].includes(battleId) ? ONBOARDING_BATTLE_SEED : null;
+  }
+  function onboardingBattleFinished(state2, battleId, result) {
+    if (!result || result.practice) return false;
+    return applyOnboardingEvent(state2, () => {
+      if (battleId === "bt_bees" && onboardingIsActive(state2) && !processedBattleResults.has(result)) {
+        processedBattleResults.add(result);
+        state2.onboarding.flags.beesAttempts = (state2.onboarding.flags.beesAttempts || 0) + 1;
+        if (!result.victory) state2.onboarding.flags.beesDefeatSeen = true;
+      }
+    });
+  }
+  function earnRoute() {
+    return copyRoute(ONBOARDING_EARN_ROUTE);
+  }
+  function purchaseRoute(state2, itemId, shopRoute, equipRoute = { name: "equip", params: {} }) {
+    if (hasItem(state2, itemId)) return copyRoute(equipRoute);
+    return state2.coins >= priceOf(itemId) ? copyRoute(shopRoute) : earnRoute();
+  }
+  function upgradeRoute(state2) {
+    const flags = state2.onboarding.flags;
+    if (!flags.ready_rng_health) {
+      return purchaseRoute(state2, "rng_health", { name: "shopMagic", params: {} });
+    }
+    if (!flags.beltReady) {
+      const hasBeltItem = (state2.inventory || []).some((id) => ITEM_BY_ID[id]?.slot === "consumable");
+      if (hasBeltItem) return { name: "equip", params: {} };
+      return state2.coins >= priceOf("pot_heal") ? { name: "shopAlchemy", params: {} } : earnRoute();
+    }
+    return { name: "battle", params: { id: "bt_bees" } };
+  }
+  function craftRoute(state2) {
+    const recipe = RECIPE_BY_ID.rcp_pot_heal;
+    for (const [materialId, needed] of Object.entries(recipe.materials)) {
+      if ((state2.materials?.[materialId] || 0) < needed) {
+        return {
+          name: "battle",
+          params: { id: materialId === "slime_jelly" ? "bt_slimes" : "bt_bees" }
+        };
+      }
+    }
+    return copyRoute(ONBOARDING_STEP_BY_ID.craft.route);
+  }
+  function onboardingRoute(state2) {
+    if (!state2.onboarding || ["done", "skipped"].includes(state2.onboarding.status)) return null;
+    const step = onboardingStep(state2);
+    if (!step) return null;
+    if (step.id === "boots") {
+      return purchaseRoute(state2, "bt_path", ONBOARDING_STEP_BY_ID.boots.route);
+    }
+    if (step.id === "upgrade") return upgradeRoute(state2);
+    if (step.id === "craft") return craftRoute(state2);
+    return copyRoute(step.route);
+  }
+  function onboardingActionLabel(state2, route = onboardingRoute(state2)) {
+    const step = onboardingStep(state2);
+    if (!step || !route) return "";
+    if (route.name === "puzzles" && step.earnCta) return step.earnCta;
+    if (route.name === "battle" && step.gatherCta) return step.gatherCta;
+    return step.cta;
+  }
+  function onboardingCtaForResult(state2, result) {
+    if (!onboardingIsActive(state2) || !result) return null;
+    const step = state2.onboarding.step;
+    const route = onboardingRoute(state2);
+    if (!route) return null;
+    if (result.kind === "puzzle" && ["md_01", "md_02", ...BRANCH_IDS].includes(result.id)) {
+      if (["prolog", "done"].includes(step)) return null;
+      const label = onboardingActionLabel(state2, route);
+      return label ? { label, route } : null;
+    }
+    if (result.kind === "battle" && result.id === "bt_slimes" && step !== "prolog") {
+      if (step === "square") {
+        return { label: "\u041F\u043E\u0442\u0440\u0430\u0442\u0438\u0442\u044C \u0434\u043E\u0431\u044B\u0447\u0443", route: { name: "hub", params: { scene: "lavka" } } };
+      }
+      return { label: onboardingActionLabel(state2, route) || "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0434\u0443\u0433\u0443", route };
+    }
+    if (result.kind === "battle" && result.id === "bt_bees") {
+      if (!["upgrade", "bees_victory", "craft"].includes(step)) return null;
+      return { label: onboardingActionLabel(state2, route) || "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u0434\u0443\u0433\u0443", route };
+    }
+    return null;
+  }
+  function pauseOnboarding(state2) {
+    if (!onboardingIsActive(state2)) return false;
+    state2.onboarding.status = "paused";
+    return true;
+  }
+  function resumeOnboarding(state2) {
+    if (state2.onboarding?.status !== "paused") return false;
+    state2.onboarding.status = "active";
+    reconcileOnboarding(state2);
+    return true;
+  }
+  function skipOnboarding(state2) {
+    if (!["active", "paused"].includes(state2.onboarding?.status)) return false;
+    state2.onboarding.status = "skipped";
+    return true;
+  }
+  function restartOnboarding(state2) {
+    const previous = state2.onboarding || newOnboardingState();
+    state2.onboarding = {
+      ...newOnboardingState(),
+      freeChoiceId: previous.freeChoiceId || null,
+      flags: { ...previous.flags || {}, finalSeen: false }
+    };
+    reconcileOnboarding(state2);
+    return true;
+  }
+  function startOnboardingGuide(state2) {
+    const arc = state2.onboarding;
+    if (arc?.status !== "done" || !arc.flags.finalSeen || arc.guide?.started) return false;
+    arc.guide = { started: true, seen: [], closed: false };
+    return true;
+  }
+  function closeOnboardingGuide(state2) {
+    const guide = state2.onboarding?.guide;
+    if (!guide?.started || guide.closed) return false;
+    guide.closed = true;
+    return true;
+  }
+  function reopenOnboardingGuide(state2) {
+    const guide = state2.onboarding?.guide;
+    if (!guide?.started) return false;
+    guide.closed = false;
+    return true;
+  }
+  function onboardingGuideNext(state2) {
+    const arc = state2.onboarding;
+    if (arc?.status !== "done" || !arc.guide?.started || arc.guide.closed) return null;
+    const seen = new Set(arc.guide.seen || []);
+    return ONBOARDING_GUIDE_SECTIONS.find((section) => !seen.has(section.id)) || null;
+  }
+  function onboardingVisit(state2, currentRoute2, params = {}) {
+    const arc = state2.onboarding;
+    if (arc?.status !== "done" || !arc.guide?.started || arc.guide.closed) return false;
+    const section = ONBOARDING_GUIDE_SECTIONS.find((candidate) => {
+      if (candidate.route.name !== currentRoute2) return false;
+      if (currentRoute2 !== "hub") return true;
+      return (params.scene || "lavka") === candidate.route.params.scene;
+    });
+    if (!section) return false;
+    arc.guide.seen ||= [];
+    if (arc.guide.seen.includes(section.id)) return false;
+    arc.guide.seen.push(section.id);
+    return true;
+  }
+
+  // src/core/goals.js
+  var CREW_DEF = { companion: COMPANION_BY_ID, pet: PET_BY_ID, merc: MERC_BY_ID };
+  var SHOP_ROUTE = { armory: "shopArmory", armorer: "shopArmorer", magic: "shopMagic", alchemy: "shopAlchemy" };
+  var ITEM_ICON = {
+    sword: "\u{1F5E1}\uFE0F",
+    mace: "\u{1F528}",
+    dagger: "\u{1F52A}",
+    greatsword: "\u2694\uFE0F",
+    greataxe: "\u{1FA93}",
+    bow: "\u{1F3F9}",
+    shield: "\u{1F6E1}\uFE0F",
+    helmet: "\u{1FA96}",
+    armor: "\u{1F9E5}",
+    gloves: "\u{1F9E4}",
+    boots: "\u{1F97E}",
+    amulet: "\u{1F4FF}",
+    ring: "\u{1F48D}",
+    potion: "\u{1F9EA}",
+    staff: "\u{1FA84}",
+    scroll: "\u{1F4DC}"
+  };
+  function unlocked(state2, unlockAfter) {
+    return !unlockAfter || !!state2.battlesDone?.[unlockAfter];
+  }
+  function itemDefinition(state2, id) {
+    const stock = SHOP_STOCK.find((entry) => entry.itemId === id);
+    if (!stock || !unlocked(state2, stock.unlockAfter)) return null;
+    const item2 = pricedShopItem(stock);
+    const shopEntry = Object.entries(SHOPS).find(([, shop2]) => shop2.types.includes(item2.type));
+    if (!shopEntry) return null;
+    const [shopKey, shop] = shopEntry;
+    return {
+      kind: "item",
+      id,
+      name: item2.name,
+      icon: ITEM_ICON[item2.type] || "\u{1F381}",
+      item: item2,
+      route: { name: SHOP_ROUTE[shopKey], params: {} },
+      routeLabel: shop.name
+    };
+  }
+  function crewDefinition(state2, id) {
+    const stock = CREW_STOCK.find((entry) => entry.id === id);
+    if (!stock || !unlocked(state2, stock.unlockAfter)) return null;
+    const crew = CREW_DEF[stock.kind]?.[id];
+    if (!crew) return null;
+    return {
+      kind: "crew",
+      id,
+      name: crew.name,
+      icon: crew.icon || "\u{1F43E}",
+      crew,
+      route: { name: "tavern", params: {} },
+      routeLabel: "\u0422\u0430\u0432\u0435\u0440\u043D\u0430 \u0438 \u043A\u043E\u043D\u044E\u0448\u043D\u044F"
+    };
+  }
+  function recipeDefinition(state2, id) {
+    const recipe = RECIPE_BY_ID[id];
+    if (!recipe || !unlocked(state2, recipe.unlockAfter)) return null;
+    return {
+      kind: "recipe",
+      id,
+      name: recipe.name,
+      icon: recipe.icon || "\u2692\uFE0F",
+      recipe,
+      route: { name: "craft", params: {} },
+      routeLabel: "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B"
+    };
+  }
+  function definition(state2, goal) {
+    if (!goal) return null;
+    if (goal.kind === "item") return itemDefinition(state2, goal.id);
+    if (goal.kind === "crew") return crewDefinition(state2, goal.id);
+    if (goal.kind === "recipe") return recipeDefinition(state2, goal.id);
+    return null;
+  }
+  function currencyText(currency, amount) {
+    const lastTwo = amount % 100;
+    const last = amount % 10;
+    const one = last === 1 && (lastTwo < 11 || lastTwo > 14);
+    const few = last >= 2 && last <= 4 && (lastTwo < 12 || lastTwo > 14);
+    if (currency === "seals") {
+      if (one) return "\u043F\u0435\u0447\u0430\u0442\u044C";
+      if (few) return "\u043F\u0435\u0447\u0430\u0442\u0438";
+      return "\u043F\u0435\u0447\u0430\u0442\u0435\u0439";
+    }
+    if (one) return "\u043C\u043E\u043D\u0435\u0442\u0430";
+    if (few) return "\u043C\u043E\u043D\u0435\u0442\u044B";
+    return "\u043C\u043E\u043D\u0435\u0442";
+  }
+  function currencyIcon(currency) {
+    return currency === "seals" ? "\u{1F530}" : "\u{1FA99}";
+  }
+  function setSavingsGoal(state2, kind, id) {
+    const candidate = { kind, id };
+    const def = definition(state2, candidate);
+    if (!def) return { ok: false, error: "\u0422\u0430\u043A\u043E\u0439 \u0446\u0435\u043B\u0438 \u043D\u0435\u0442 \u0438\u043B\u0438 \u043E\u043D\u0430 \u0435\u0449\u0451 \u0437\u0430\u043A\u0440\u044B\u0442\u0430" };
+    state2.savingsGoal = candidate;
+    return { ok: true, goal: { ...candidate } };
+  }
+  function clearSavingsGoal(state2) {
+    if (!state2.savingsGoal) return false;
+    state2.savingsGoal = null;
+    return true;
+  }
+  function savingsGoalProgress(state2) {
+    const goal = state2.savingsGoal;
+    const def = definition(state2, goal);
+    if (!def) return null;
+    if (def.kind === "recipe") {
+      const recipe = def.recipe;
+      const missing = [];
+      for (const [matId, need] of Object.entries(recipe.materials)) {
+        const have = state2.materials?.[matId] || 0;
+        if (have < need) {
+          missing.push({
+            matId,
+            need,
+            have,
+            missing: need - have,
+            label: materialLabel(matId),
+            text: `${materialLabel(matId)} ${have}/${need}`
+          });
+        }
+      }
+      const needed2 = recipe.coins || 0;
+      const current2 = state2.coins || 0;
+      const remaining2 = Math.max(0, needed2 - current2);
+      const ready2 = missing.length === 0 && remaining2 === 0;
+      const parts = missing.map((entry) => `${entry.label} \xD7${entry.missing}`);
+      if (remaining2 > 0) parts.push(`\u{1FA99} ${remaining2}`);
+      const short2 = parts.join(" \xB7 ");
+      return {
+        kind: def.kind,
+        id: def.id,
+        name: def.name,
+        icon: def.icon,
+        route: def.route,
+        routeLabel: def.routeLabel,
+        ready: ready2,
+        readyText: "\u041C\u043E\u0436\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u0442\u044C",
+        missing,
+        coins: { current: current2, needed: needed2, remaining: remaining2 },
+        short: short2,
+        text: ready2 ? "\u041C\u043E\u0436\u043D\u043E \u0441\u043E\u0437\u0434\u0430\u0442\u044C" : `\u041E\u0441\u0442\u0430\u043B\u043E\u0441\u044C: ${short2}`
+      };
+    }
+    const source = def.kind === "item" ? def.item : def.crew;
+    const currency = source.sealPrice ? "seals" : source.currency === "seals" ? "seals" : "coins";
+    const needed = source.sealPrice || source.price;
+    const current = state2[currency] || 0;
+    const remaining = Math.max(0, needed - current);
+    const ready = remaining === 0;
+    const readyText = def.kind === "item" ? "\u041C\u043E\u0436\u043D\u043E \u043A\u0443\u043F\u0438\u0442\u044C" : "\u041C\u043E\u0436\u043D\u043E \u043D\u0430\u043D\u044F\u0442\u044C";
+    const short = `${remaining} ${currencyText(currency, remaining)}`;
+    return {
+      kind: def.kind,
+      id: def.id,
+      name: def.name,
+      icon: def.icon,
+      route: def.route,
+      routeLabel: def.routeLabel,
+      ready,
+      readyText,
+      current,
+      needed,
+      remaining,
+      currency,
+      currencyIcon: currencyIcon(currency),
+      missing: [],
+      short,
+      text: ready ? readyText : `\u0414\u043E \u0446\u0435\u043B\u0438 \xAB${def.name}\xBB \u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C ${short}`
+    };
+  }
+  function goalJournal(state2, icon, text) {
+    state2.journal ||= [];
+    state2.journal.push({ icon, text, at: Date.now() });
+    if (state2.journal.length > 30) state2.journal.splice(0, state2.journal.length - 30);
+  }
+  function completeSavingsGoal(state2, kind, id) {
+    if (state2.savingsGoal?.kind !== kind || state2.savingsGoal.id !== id) return false;
+    const progress = savingsGoalProgress(state2);
+    if (!progress) return false;
+    state2.savingsGoal = null;
+    goalJournal(state2, progress.icon, `\u0426\u0435\u043B\u044C \u0434\u043E\u0441\u0442\u0438\u0433\u043D\u0443\u0442\u0430: ${progress.name}.`);
+    return true;
+  }
+
+  // src/data/energy.js
+  var BATTLE_ENERGY_VERSION = 1;
+  var BATTLE_ENERGY_CAP = 36;
+  var BATTLE_ENERGY_REGEN_MS = 2 * 60 * 60 * 1e3;
+  var BATTLE_ENERGY_NORMAL_COST = 1;
+  var BATTLE_ENERGY_BOSS_COST = 3;
+
+  // src/core/energy.js
+  function newBattleEnergy(now = Date.now()) {
+    return { version: BATTLE_ENERGY_VERSION, value: BATTLE_ENERGY_CAP, updatedAt: now };
+  }
+  function finiteNow(now) {
+    return Number.isFinite(now) ? now : Date.now();
+  }
+  function refreshBattleEnergy(state2, now = Date.now()) {
+    const energy = state2.battleEnergy;
+    if (!energy) return null;
+    const at = finiteNow(now);
+    energy.version = BATTLE_ENERGY_VERSION;
+    energy.value = Number.isFinite(energy.value) ? Math.max(0, Math.min(BATTLE_ENERGY_CAP, Math.floor(energy.value))) : BATTLE_ENERGY_CAP;
+    energy.updatedAt = Number.isFinite(energy.updatedAt) ? energy.updatedAt : at;
+    if (at < energy.updatedAt) return energy;
+    if (energy.value >= BATTLE_ENERGY_CAP) {
+      energy.value = BATTLE_ENERGY_CAP;
+      return energy;
+    }
+    const gained = Math.floor((at - energy.updatedAt) / BATTLE_ENERGY_REGEN_MS);
+    if (gained <= 0) return energy;
+    energy.value = Math.min(BATTLE_ENERGY_CAP, energy.value + gained);
+    energy.updatedAt = energy.value >= BATTLE_ENERGY_CAP ? at : energy.updatedAt + gained * BATTLE_ENERGY_REGEN_MS;
+    return energy;
+  }
+  function isBossBattle(battle) {
+    return (battle?.enemies || []).some((entry) => {
+      const id = typeof entry === "string" ? entry : entry.id;
+      return !!ENEMY_BY_ID[id]?.boss;
+    });
+  }
+  function battleEnergyCost(battle, repeat = true) {
+    if (!repeat) return 0;
+    return isBossBattle(battle) ? BATTLE_ENERGY_BOSS_COST : BATTLE_ENERGY_NORMAL_COST;
+  }
+  function millisecondsToNextEnergy(state2, now = Date.now()) {
+    const energy = state2.battleEnergy;
+    if (!energy || energy.value >= BATTLE_ENERGY_CAP) return 0;
+    return Math.max(0, energy.updatedAt + BATTLE_ENERGY_REGEN_MS - finiteNow(now));
+  }
+  function battleEnergyTerms(state2, battle, now = Date.now()) {
+    refreshBattleEnergy(state2, now);
+    const victories = state2.battlesDone?.[battle.id]?.victories || 0;
+    const repeat = victories > 0;
+    const cost = battleEnergyCost(battle, repeat);
+    const value = state2.battleEnergy.value;
+    return {
+      value,
+      cap: BATTLE_ENERGY_CAP,
+      cost,
+      first: !repeat,
+      repeat,
+      boss: isBossBattle(battle),
+      enough: value >= cost,
+      nextInMs: millisecondsToNextEnergy(state2, now)
+    };
+  }
+  function spendBattleEnergy(state2, amount, now = Date.now()) {
+    const at = finiteNow(now);
+    refreshBattleEnergy(state2, at);
+    const energy = state2.battleEnergy;
+    const cost = Math.max(0, Math.floor(amount));
+    if (!energy || energy.value < cost) return false;
+    const wasFull = energy.value >= BATTLE_ENERGY_CAP;
+    energy.value -= cost;
+    if (cost > 0 && wasFull && at >= energy.updatedAt) energy.updatedAt = at;
+    return true;
+  }
+
+  // src/data/bossDrops.js
+  var BOSS_DROPS = {
+    bt_boss_willow: { itemId: "shd_willow_vow" },
+    bt_boss_captain: { itemId: "glv_captain_oath" },
+    bk_boss_keeper: { itemId: "rng_keeper_bookmark" },
+    ex_boss: { itemId: "amu_star_compass" },
+    nm_boss: { itemId: "wpn_nm_afterhours" },
+    sw_boss: { itemId: "bt_sw_reed" },
+    sf_boss: { itemId: "rng_sf_encore" },
+    cr_boss: { itemId: "hlm_cr_geode" },
+    ash_boss: { itemId: "arm_ash_wayfarer" },
+    jade_boss: { itemId: "wpn_jade_branch" },
+    deep_boss: { itemId: "shd_deep_tideglass" },
+    mist_boss: { itemId: "glv_mist_minute" }
+  };
+
+  // src/core/bossDrops.js
+  var BOSS_DROP_BASE_CHANCE = 0.05;
+  var BOSS_DROP_DRY_STEP = 0.02;
+  var BOSS_DROP_PITY_WINS = 12;
+  var BOSS_DROP_ITEM_FIND_CAP = 0.05;
+  function isBossDropBattle(battle) {
+    return (battle?.enemies || []).some((entry) => {
+      const id = typeof entry === "string" ? entry : entry.id;
+      return !!ENEMY_BY_ID[id]?.boss;
+    }) && !!BOSS_DROPS[battle.id];
+  }
+  function bossDropChance(dry = 0, itemFind = 0) {
+    const misses = Math.max(0, Math.floor(Number(dry) || 0));
+    if (misses >= BOSS_DROP_PITY_WINS - 1) return 1;
+    const findBonus = Math.min(BOSS_DROP_ITEM_FIND_CAP, Math.max(0, Number(itemFind) || 0));
+    return Math.min(1, BOSS_DROP_BASE_CHANCE + misses * BOSS_DROP_DRY_STEP + findBonus);
+  }
+  function hashSeed(text) {
+    let hash = 2166136261;
+    for (const char of text) hash = Math.imul(hash ^ char.codePointAt(0), 16777619);
+    return hash >>> 0;
+  }
+  function bossDropRoll(battleId, victory, battleSeed) {
+    return makeRng(hashSeed(`${battleId}|${victory}|${battleSeed}`)).next();
+  }
+  function battleItemFind(state2) {
+    let itemFind = collectStats(state2.equipped || {}).stats.itemFind || 0;
+    for (const id of state2.squadCompanions || []) {
+      itemFind += COMPANION_BY_ID[id]?.bonus?.itemFind || 0;
+    }
+    itemFind += PET_BY_ID[state2.pet]?.bonus?.itemFind || 0;
+    return itemFind;
+  }
+  function ownsItem(state2, itemId) {
+    return (state2.inventory || []).includes(itemId) || (state2.consumableBelt || []).includes(itemId) || Object.values(state2.equipped || {}).includes(itemId);
+  }
+  function bossDropStatus(state2, battle, itemFind = battleItemFind(state2)) {
+    if (!isBossDropBattle(battle)) return null;
+    const saved = state2.bossDrops?.[battle.id] || {};
+    const dry = Math.max(0, Math.min(BOSS_DROP_PITY_WINS - 1, Math.floor(saved.dry || 0)));
+    const collected = !!saved.collected || ownsItem(state2, BOSS_DROPS[battle.id].itemId);
+    const chance = bossDropChance(dry, itemFind);
+    return {
+      battleId: battle.id,
+      itemId: BOSS_DROPS[battle.id].itemId,
+      chance,
+      dry,
+      dryAfter: dry,
+      remaining: collected ? 0 : BOSS_DROP_PITY_WINS - dry,
+      guaranteed: dry >= BOSS_DROP_PITY_WINS - 1,
+      collected,
+      dropped: false,
+      roll: null
+    };
+  }
+  function rollBossDrop(state2, battle, { victory, seed, itemFind = battleItemFind(state2) } = {}) {
+    const status2 = bossDropStatus(state2, battle, itemFind);
+    if (!status2 || status2.collected) return status2;
+    const roll = bossDropRoll(battle.id, victory, seed);
+    const dropped = roll < status2.chance;
+    const dryAfter = dropped ? 0 : Math.min(BOSS_DROP_PITY_WINS - 1, status2.dry + 1);
+    state2.bossDrops ||= {};
+    state2.bossDrops[battle.id] = {
+      ...state2.bossDrops[battle.id] || {},
+      dry: dryAfter,
+      collected: dropped
+    };
+    return {
+      ...status2,
+      dropped,
+      collected: dropped,
+      dryAfter,
+      remaining: dropped ? 0 : BOSS_DROP_PITY_WINS - dryAfter,
+      roll
+    };
+  }
+
   // src/core/state.js
   var SAVE_KEY = "cozy_adventures_save_v2";
-  function newGame() {
+  function newGame(now = Date.now()) {
     return {
+      economyVersion: ECONOMY_VERSION,
       coins: 80,
       seals: 0,
       materials: {},
@@ -21280,16 +22688,24 @@
       // id -> { moves, hintsUsed }
       battlesDone: {},
       // id -> { victories }
+      battleEnergy: newBattleEnergy(now),
+      // только наградные повторы; поражения и первые победы бесплатны
+      bossDrops: {},
+      // battleId -> { dry, collected }: личный pity и защита от дублей
       customPuzzles: [],
       // уровни из редактора
       lastDailyBonus: null,
       // день, когда получен бонус заказа дня
       lastCatGift: null,
       // день последнего подарка от кота
+      cosmeticsVersion: COSMETICS_VERSION,
+      // пакетная модель полных тем
       cosmeticsOwned: [],
-      // купленные украшения
+      // все купленные пакеты без дублей
       cosmeticsActive: [],
-      // выставленные украшения
+      // не более одного выбранного pack id
+      legacyCosmeticsActive: [],
+      // прежние спрайты только для fallback до загрузки полного фона
       seekOverrides: {},
       // правки хотспотов искалок из редактора: levelId -> groups
       shopSeenStock: [],
@@ -21304,14 +22720,18 @@
       // id трофеев, которые игрок уже посмотрел в кабинете
       journal: [],
       // дневник кота: последние события [{icon, text, at}]
+      savingsGoal: null,
+      // необязательная цель накопления { kind, id }
       tutorial: {},
       // пройденные этапы обучения
       tutorialSkipped: false,
       // игрок пропустил обучение целиком
+      onboarding: newOnboardingState(),
+      // первая дуга и путеводитель: версия, факты и посещения
       story: newStoryState(),
       // режим истории: шаг, круг гостей, память визитов
-      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true, cursorMode: "themed", cursorTheme: "default" },
-      // настройки (бой, каталоги)
+      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true, cursorMode: "themed", cursorTheme: "default", cosmeticsNoticeDismissed: false, cosmeticsPackNoticeDismissed: false },
+      // настройки (бой, каталоги, оформление)
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
       cheats: { used: [], spiderHat: false },
@@ -21319,14 +22739,32 @@
       stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 }
     };
   }
-  function migrate(state2) {
+  function migrate(state2, now = Date.now()) {
+    const hadOnboarding = !!state2.onboarding;
+    const hadGuide = !!state2.onboarding?.guide;
+    state2.economyVersion ||= ECONOMY_VERSION;
     state2.crew ||= [];
     state2.squadCompanions ||= [];
     state2.squadMercs ||= [];
     state2.pet ??= null;
     state2.customPuzzles ||= [];
-    state2.cosmeticsOwned ||= [];
-    state2.cosmeticsActive ||= [];
+    state2.cosmeticsOwned = Array.isArray(state2.cosmeticsOwned) ? state2.cosmeticsOwned : [];
+    const previousOwned = [...state2.cosmeticsOwned];
+    const previousActive = Array.isArray(state2.cosmeticsActive) ? [...state2.cosmeticsActive] : [];
+    const previousLegacy = Array.isArray(state2.legacyCosmeticsActive) ? [...state2.legacyCosmeticsActive] : previousActive;
+    if ((state2.cosmeticsVersion || 1) < COSMETICS_VERSION) {
+      const owned = [];
+      for (const id of previousOwned) {
+        const packId = LEGACY_COSMETIC_ALIASES[id] || id;
+        if (!owned.includes(packId)) owned.push(packId);
+      }
+      const lastId = previousActive[previousActive.length - 1];
+      const activePack = lastId ? LEGACY_COSMETIC_ALIASES[lastId] || lastId : null;
+      state2.cosmeticsOwned = owned;
+      state2.cosmeticsActive = activePack && COSMETIC_BY_ID[activePack] ? [activePack] : [];
+      state2.legacyCosmeticsActive = previousLegacy.filter((id) => LEGACY_COSMETIC_ALIASES[id]);
+    }
+    state2.cosmeticsVersion = COSMETICS_VERSION;
     state2.seekOverrides ||= {};
     state2.shopSeenStock ||= [];
     state2.inventorySeen ||= [];
@@ -21347,6 +22785,8 @@
     state2.settings.puzzleCatalogMode ??= "shelf";
     state2.settings.guestCatalogMode ??= "shelf";
     state2.settings.storyMode ??= true;
+    state2.settings.cosmeticsNoticeDismissed ??= false;
+    state2.settings.cosmeticsPackNoticeDismissed ??= false;
     state2.settings.cursorMode ??= state2.settings.themedCursors === false ? "system" : "themed";
     delete state2.settings.themedCursors;
     state2.settings.cursorTheme ??= "default";
@@ -21357,6 +22797,48 @@
     state2.cheats ||= { used: [], spiderHat: false };
     state2.materials ||= {};
     state2.seals ??= 0;
+    state2.savingsGoal ??= null;
+    if (!state2.battleEnergy || typeof state2.battleEnergy !== "object" || Array.isArray(state2.battleEnergy)) {
+      state2.battleEnergy = newBattleEnergy(now);
+    }
+    state2.bossDrops ||= {};
+    refreshBattleEnergy(state2, now);
+    if (!hadOnboarding) {
+      const developed = Object.keys(state2.puzzlesDone || {}).length > 0 || Object.keys(state2.battlesDone || {}).length > 0 || Object.keys(state2.materials || {}).length > 0 || (state2.crew || []).length > 0 || (state2.stats.puzzlesSolved || 0) > 0 || (state2.stats.battlesWon || 0) > 0 || (state2.stats.itemsBought || 0) > 0 || (state2.stats.itemsCrafted || 0) > 0 || !!state2.story.prologSeen || !!state2.story.pending || (state2.story.step || 0) > 0 || state2.coins !== 80 || state2.seals !== 0;
+      state2.onboarding = newOnboardingState();
+      if ((state2.stats.itemsCrafted || 0) > 0 && state2.battlesDone?.bt_bees) {
+        const laterRecipeOpen = RECIPES.some((recipe) => recipe.id !== "rcp_pot_heal" && state2.battlesDone?.[recipe.unlockAfter]);
+        if (!laterRecipeOpen) state2.onboarding.flags.crafted_rcp_pot_heal = true;
+      }
+      const hasTrailBoots = (state2.inventory || []).includes("bt_path") || Object.values(state2.equipped || {}).includes("bt_path");
+      if (hasTrailBoots || state2.onboarding.flags.crafted_rcp_pot_heal) {
+        state2.onboarding.flags.squareSeen = true;
+        state2.onboarding.flags.marketSeen = true;
+      }
+      if (developed) {
+        state2.onboarding.status = "done";
+        state2.onboarding.step = "done";
+      } else if (state2.tutorialSkipped) state2.onboarding.status = "skipped";
+    } else {
+      const current = state2.onboarding;
+      state2.onboarding = { ...newOnboardingState(), ...current, flags: { ...current.flags || {} } };
+      if (!["active", "paused", "skipped", "done"].includes(state2.onboarding.status)) {
+        state2.onboarding.status = "active";
+      }
+      if (!ONBOARDING_STEPS.some((step) => step.id === state2.onboarding.step)) {
+        state2.onboarding.step = "prolog";
+      }
+      if (state2.onboarding.status === "done") state2.onboarding.step = "done";
+    }
+    if (!hadGuide) {
+      state2.onboarding.guide = { started: false, seen: [], closed: false };
+      if (state2.onboarding.status === "done") state2.onboarding.flags.finalSeen = true;
+    }
+    state2.onboarding.guide.started ??= false;
+    state2.onboarding.guide.seen = Array.isArray(state2.onboarding.guide.seen) ? state2.onboarding.guide.seen : [];
+    state2.onboarding.guide.closed ??= false;
+    state2.onboarding.version = ONBOARDING_VERSION;
+    reconcileOnboarding(state2);
     return state2;
   }
   function addCoins(state2, n) {
@@ -21384,7 +22866,7 @@
     return granted;
   }
   function shopStock(state2) {
-    return SHOP_STOCK.filter((s) => s.unlockAfter === null || state2.battlesDone[s.unlockAfter]).map((s) => ITEM_BY_ID[s.itemId]);
+    return SHOP_STOCK.filter((s) => s.unlockAfter === null || state2.battlesDone[s.unlockAfter]).map(pricedShopItem).sort(compareShopItems);
   }
   function unseenShopItems(state2) {
     const seen = new Set(state2.shopSeenStock || []);
@@ -21394,10 +22876,11 @@
     state2.shopSeenStock = shopStock(state2).map((i) => i.id);
   }
   function buyItem(state2, itemId) {
-    const item2 = ITEM_BY_ID[itemId];
-    if (!item2) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u0442\u043E\u0432\u0430\u0440\u0430" };
-    const inStock = shopStock(state2).some((i) => i.id === itemId);
-    if (!inStock) return { ok: false, error: "\u0422\u043E\u0432\u0430\u0440 \u0435\u0449\u0451 \u043D\u0435 \u043D\u0430 \u043F\u043E\u043B\u043A\u0435" };
+    if (!ITEM_BY_ID[itemId]) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u0442\u043E\u0432\u0430\u0440\u0430" };
+    const item2 = shopStock(state2).find((candidate) => candidate.id === itemId);
+    if (!item2) return { ok: false, error: "\u0422\u043E\u0432\u0430\u0440 \u0435\u0449\u0451 \u043D\u0435 \u043D\u0430 \u043F\u043E\u043B\u043A\u0435" };
+    const owned = item2.slot !== "consumable" && (state2.inventory.includes(itemId) || state2.consumableBelt.includes(itemId) || Object.values(state2.equipped).includes(itemId));
+    if (owned) return { ok: false, error: "\u042D\u0442\u0430 \u0432\u0435\u0449\u044C \u0443\u0436\u0435 \u0443 \u0432\u0430\u0441: \u0432 \u0441\u0443\u043D\u0434\u0443\u043A\u0435, \u043D\u0430 \u043F\u043E\u044F\u0441\u0435 \u0438\u043B\u0438 \u043D\u0430\u0434\u0435\u0442\u0430." };
     if (item2.sealPrice) {
       if (state2.seals < item2.sealPrice) return { ok: false, error: "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430" };
       state2.seals -= item2.sealPrice;
@@ -21409,7 +22892,10 @@
     state2.stats.itemsBought = (state2.stats.itemsBought || 0) + 1;
     journalPush(state2, "\u{1FA99}", `\u041A\u0443\u043F\u043B\u0435\u043D\u043E: ${item2.name}.`);
     const auto = autoEquip(state2, itemId);
-    return { ok: true, autoEquipped: auto };
+    onboardingPurchase(state2, itemId);
+    const result = { ok: true, autoEquipped: auto };
+    if (completeSavingsGoal(state2, "item", itemId)) result.goalCompleted = true;
+    return result;
   }
   function autoEquip(state2, itemId) {
     const item2 = ITEM_BY_ID[itemId];
@@ -21434,12 +22920,12 @@
     state2.inventory.splice(index, 1);
     return { slot: result.slot };
   }
-  var CREW_DEF = { companion: COMPANION_BY_ID, pet: PET_BY_ID, merc: MERC_BY_ID };
+  var CREW_DEF2 = { companion: COMPANION_BY_ID, pet: PET_BY_ID, merc: MERC_BY_ID };
   function crewStock(state2) {
-    return CREW_STOCK.filter((s) => s.unlockAfter === null || state2.battlesDone[s.unlockAfter]).map((s) => ({ ...CREW_DEF[s.kind][s.id], kind: s.kind, hired: state2.crew.includes(s.id) }));
+    return CREW_STOCK.filter((s) => s.unlockAfter === null || state2.battlesDone[s.unlockAfter]).map((s) => ({ ...CREW_DEF2[s.kind][s.id], kind: s.kind, hired: state2.crew.includes(s.id) }));
   }
   function hireCrew(state2, id, kind) {
-    const def = CREW_DEF[kind]?.[id];
+    const def = CREW_DEF2[kind]?.[id];
     if (!def) return { ok: false, error: "\u0422\u0430\u043A\u043E\u0433\u043E \u043D\u0435 \u0431\u044B\u0432\u0430\u0435\u0442" };
     if (state2.crew.includes(id)) return { ok: false, error: "\u0423\u0436\u0435 \u0432 \u043A\u043E\u043C\u0430\u043D\u0434\u0435" };
     const purse = def.currency === "seals" ? "seals" : "coins";
@@ -21458,7 +22944,9 @@
       state2.formation[key] = wantSlots.find((s) => !taken.includes(s)) ?? (isTank ? 0 : 4);
     }
     if (kind === "pet" && !state2.pet) state2.pet = id;
-    return { ok: true };
+    const result = { ok: true };
+    if (completeSavingsGoal(state2, "crew", id)) result.goalCompleted = true;
+    return result;
   }
   function toggleCompanion(state2, id) {
     const i = state2.squadCompanions.indexOf(id);
@@ -21499,12 +22987,14 @@
       if (state2.consumableBelt.length >= 2) return { ok: false, error: "\u0412 \u043F\u043E\u044F\u0441\u0435 \u0442\u043E\u043B\u044C\u043A\u043E \u0434\u0432\u0430 \u043A\u0430\u0440\u043C\u0430\u0448\u043A\u0430" };
       state2.inventory.splice(inventoryIndex, 1);
       state2.consumableBelt.push(id);
+      onboardingEquipmentChanged(state2);
       return { ok: true };
     }
     const result = equip(state2.equipped, id);
     if (!result.ok) return result;
     state2.inventory.splice(inventoryIndex, 1);
     for (const off of result.swappedOff || []) state2.inventory.push(off);
+    onboardingEquipmentChanged(state2);
     return { ok: true, slot: result.slot };
   }
   function unequipToInventory(state2, slot) {
@@ -21548,10 +23038,22 @@
     }
     return { changed: names.length, names };
   }
+  var RECIPE_PROGRESS = new Map(RECIPES.map((recipe) => {
+    const battle = recipe.unlockAfter ? BATTLE_BY_ID[recipe.unlockAfter] : null;
+    const order = recipe.unlockAfter ? BATTLES.findIndex((entry) => entry.id === recipe.unlockAfter) : -1;
+    return [recipe.id, {
+      tier: battle ? battleEconomy(battle).tier : 0,
+      order
+    }];
+  }));
   function recipeList(state2) {
     return RECIPES.filter((r) => r.unlockAfter === null || state2.battlesDone[r.unlockAfter]).map((r) => {
       const check = canCraft(state2, r.id);
       return { ...r, canCraft: check.ok, missing: check.missing || [], error: check.error };
+    }).sort((a, b) => {
+      const pa = RECIPE_PROGRESS.get(a.id);
+      const pb = RECIPE_PROGRESS.get(b.id);
+      return pa.tier - pb.tier || pa.order - pb.order || Number(!a.canCraft) - Number(!b.canCraft) || (a.coins || 0) - (b.coins || 0) || Number(a.kind !== "potion") - Number(b.kind !== "potion") || a.id.localeCompare(b.id, "ru");
     });
   }
   function canCraft(state2, recipeId) {
@@ -21582,16 +23084,37 @@
     for (let i = 0; i < count; i++) state2.inventory.push(r.result.itemId);
     state2.stats.itemsCrafted = (state2.stats.itemsCrafted || 0) + 1;
     journalPush(state2, "\u2692\uFE0F", `\u0413\u043E\u0442\u043E\u0432\u043E: ${r.name.toLowerCase()}.`);
-    return { ok: true, itemId: r.result.itemId, count };
+    onboardingCrafted(state2, recipeId);
+    const result = { ok: true, itemId: r.result.itemId, count };
+    if (completeSavingsGoal(state2, "recipe", recipeId)) result.goalCompleted = true;
+    return result;
+  }
+  function exchangeMaterial(state2, inputId, outputId) {
+    const result = exchangeMaterials(state2, inputId, outputId);
+    if (result.ok) {
+      journalPush(state2, "\u{1F501}", `\u041E\u0431\u043C\u0435\u043D: ${materialLabel(inputId)} \xD7${result.cost} \u2192 ${materialLabel(outputId)} \xD7${result.received}.`);
+    }
+    return result;
   }
   function journalPush(state2, icon, text) {
     state2.journal ||= [];
     state2.journal.push({ icon, text, at: Date.now() });
     if (state2.journal.length > 30) state2.journal.splice(0, state2.journal.length - 30);
   }
+  function selectCosmetic(state2, id) {
+    if (id === null) {
+      state2.cosmeticsActive = [];
+      state2.legacyCosmeticsActive = [];
+      return { ok: true, active: false };
+    }
+    if (!COSMETIC_BY_ID[id] || !state2.cosmeticsOwned.includes(id)) return { ok: false, active: false };
+    state2.cosmeticsActive = [id];
+    state2.legacyCosmeticsActive = [id];
+    return { ok: true, active: true };
+  }
   function buyCosmetic(state2, id) {
     const def = COSMETIC_BY_ID[id];
-    if (!def) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u0443\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F" };
+    if (!def) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u044F" };
     if (state2.cosmeticsOwned.includes(id)) return { ok: false, error: "\u0423\u0436\u0435 \u043A\u0443\u043F\u043B\u0435\u043D\u043E" };
     if (def.sealPrice) {
       if (state2.seals < def.sealPrice) return { ok: false, error: "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430" };
@@ -21601,15 +23124,12 @@
       state2.coins -= def.price;
     }
     state2.cosmeticsOwned.push(id);
-    state2.cosmeticsActive.push(id);
+    selectCosmetic(state2, id);
     return { ok: true };
   }
   function toggleCosmetic(state2, id) {
-    if (!state2.cosmeticsOwned.includes(id)) return { ok: false };
-    const i = state2.cosmeticsActive.indexOf(id);
-    if (i >= 0) state2.cosmeticsActive.splice(i, 1);
-    else state2.cosmeticsActive.push(id);
-    return { ok: true, active: i < 0 };
+    const active = state2.cosmeticsActive.length === 1 && state2.cosmeticsActive[0] === id;
+    return selectCosmetic(state2, active ? null : id);
   }
   var PUZZLE_POOL = new Map(
     [
@@ -22514,9 +24034,14 @@
     "seat_99",
     "seat_100"
   ];
-  var ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
+  var ALL_PUZZLES = derivePuzzleCatalog(CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id)));
   function allPuzzles(state2) {
-    return [...ALL_PUZZLES, ...state2.customPuzzles || []];
+    const custom = (state2.customPuzzles || []).map((p) => derivePuzzle(p, {
+      tier: p.economyTier ?? 0,
+      order: 0,
+      finale: false
+    }));
+    return [...ALL_PUZZLES, ...custom];
   }
   function findPuzzle(state2, id) {
     return allPuzzles(state2).find((p) => p.id === id) || null;
@@ -22561,23 +24086,28 @@
     if (s) s.setItem(SEEK_OVERRIDES_KEY, JSON.stringify(all));
     state2.seekOverrides = {};
   }
-  function puzzleTypeOf(p) {
+  function puzzleTypeOf2(p) {
     return p.mechanic || "mirror";
   }
   function puzzleAvailable(state2, index) {
     const p = ALL_PUZZLES[index];
     if (!p) return false;
-    const sameType = ALL_PUZZLES.filter((q) => puzzleTypeOf(q) === puzzleTypeOf(p));
+    const sameType = ALL_PUZZLES.filter((q) => puzzleTypeOf2(q) === puzzleTypeOf2(p));
     const pos = sameType.indexOf(p);
     if (pos <= 0) return true;
     return !!state2.puzzlesDone[sameType[pos - 1].id];
   }
+  function puzzleNeedsHonest(state2, puzzleId) {
+    const entry = state2.puzzlesDone[puzzleId];
+    return !entry || !!entry.skipped;
+  }
   function completePuzzle(state2, puzzleId, info = {}) {
     const puzzle = findPuzzle(state2, puzzleId);
     if (!puzzle) return null;
-    const firstTime = !state2.puzzlesDone[puzzleId];
-    const coinFactor = info.coinFactor ?? 1;
-    const isDaily = firstTime && state2.lastDailyBonus !== todayKey() && isDailyPuzzle(state2, puzzleId);
+    const previous = state2.puzzlesDone[puzzleId];
+    const firstHonest = !previous || !!previous.skipped;
+    const repeat = !firstHonest;
+    const isDaily = state2.lastDailyBonus !== todayKey() && isDailyPuzzle(state2, puzzleId);
     state2.puzzlesDone[puzzleId] = {
       moves: info.moves ?? 0,
       hintsUsed: info.hintsUsed ?? 0,
@@ -22585,26 +24115,22 @@
     };
     state2.stats.puzzlesSolved += 1;
     storyOnPuzzleComplete(state2, puzzleId);
-    journalPush(state2, "\u{1F9E9}", firstTime ? `\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \xAB${puzzle.name}\xBB \u0440\u0435\u0448\u0435\u043D\u0430. \u041B\u0430\u0432\u043A\u0430 \u0441\u0432\u0435\u0442\u043B\u0435\u0435\u0442.` : `\xAB${puzzle.name}\xBB \u2014 \u0441\u043D\u043E\u0432\u0430 \u0440\u0435\u0448\u0435\u043D\u0430, \u043A\u043E\u0442 \u0434\u043E\u0432\u043E\u043B\u0435\u043D.`);
-    const rewards = puzzle.rewards || [{ type: "coins", amount: 15 }];
-    let dailyBonus = false;
+    journalPush(state2, "\u{1F9E9}", firstHonest ? `\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \xAB${puzzle.name}\xBB \u0440\u0435\u0448\u0435\u043D\u0430. \u041B\u0430\u0432\u043A\u0430 \u0441\u0432\u0435\u0442\u043B\u0435\u0435\u0442.` : `\xAB${puzzle.name}\xBB \u2014 \u0441\u043D\u043E\u0432\u0430 \u0440\u0435\u0448\u0435\u043D\u0430, \u043A\u043E\u0442 \u0434\u043E\u0432\u043E\u043B\u0435\u043D.`);
     if (isDaily) {
-      dailyBonus = true;
       state2.lastDailyBonus = todayKey();
       journalPush(state2, "\u{1F31F}", "\u0417\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D \u2014 \u043F\u0443\u0442\u043D\u0438\u043A \u0449\u0435\u0434\u0440\u043E \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442!");
     }
-    if (!firstTime) {
-      const coins = rewards.find((r) => r.type === "coins");
-      const amount = coins ? Math.round(coins.amount / 3 * coinFactor) : 10;
-      addCoins(state2, amount);
-      return [{ type: "coins", amount }];
-    }
-    const granted = grantRewards(state2, rewards.map((r) => r.type === "coins" ? { ...r, amount: Math.round(r.amount * (dailyBonus ? 2 : 1) * coinFactor) } : r));
+    const rewards = puzzleRewards(puzzle, {
+      repeat,
+      factor: info.coinFactor ?? 1,
+      daily: isDaily
+    });
+    const granted = grantRewards(state2, rewards, {});
+    onboardingPuzzleSolved(state2, puzzleId);
     return granted;
   }
   function skipPuzzlePrice(puzzle) {
-    const coins = (puzzle.rewards || []).find((r) => r.type === "coins");
-    return Math.max(50, Math.round((coins?.amount || 50) * 1.5));
+    return puzzleSkipTerms(puzzle).price;
   }
   function skipPuzzle(state2, puzzleId) {
     const puzzle = findPuzzle(state2, puzzleId);
@@ -22614,14 +24140,11 @@
       return { ok: false, error: "\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \u0435\u0449\u0451 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u0442\u0430" };
     }
     if (state2.puzzlesDone[puzzleId]) return { ok: false, error: "\u0423\u0436\u0435 \u0440\u0435\u0448\u0435\u043D\u0430" };
-    const price = skipPuzzlePrice(puzzle);
+    const { price, consolation } = puzzleSkipTerms(puzzle);
     if (state2.coins < price) return { ok: false, error: "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043C\u043E\u043D\u0435\u0442", price };
     state2.coins -= price;
     state2.puzzlesDone[puzzleId] = { moves: 0, hintsUsed: 0, skipped: true, at: Date.now() };
-    state2.stats.puzzlesSolved += 1;
     storyOnPuzzleComplete(state2, puzzleId);
-    const coins = (puzzle.rewards || []).find((r) => r.type === "coins");
-    const consolation = Math.round((coins?.amount || 30) / 3);
     addCoins(state2, consolation);
     return { ok: true, price, consolation };
   }
@@ -22654,7 +24177,7 @@
     return (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
   }
   function dailyPuzzle(state2) {
-    const open = ALL_PUZZLES.filter((p, i) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, i));
+    const open = ALL_PUZZLES.filter((p, i) => puzzleNeedsHonest(state2, p.id) && puzzleAvailable(state2, i));
     const pool = open.length > 0 ? open.slice(0, 6) : ALL_PUZZLES.slice(-6);
     return pool[dayHash(todayKey()) % pool.length];
   }
@@ -22674,8 +24197,8 @@
   function nextPuzzle(currentId) {
     const idx = ALL_PUZZLES.findIndex((p) => p.id === currentId);
     if (idx < 0) return null;
-    const mech = puzzleTypeOf(ALL_PUZZLES[idx]);
-    return ALL_PUZZLES.slice(idx + 1).find((p) => puzzleTypeOf(p) === mech) || null;
+    const mech = puzzleTypeOf2(ALL_PUZZLES[idx]);
+    return ALL_PUZZLES.slice(idx + 1).find((p) => puzzleTypeOf2(p) === mech) || null;
   }
   function nextBattle(currentId) {
     const idx = BATTLES.findIndex((b) => b.id === currentId);
@@ -22689,19 +24212,108 @@
     if (!b) return false;
     return b.unlockAfter === null || !!state2.battlesDone[b.unlockAfter];
   }
-  function runBattle(state2, battleId, seed = 1) {
+  function accessibleBattleAdvice(state2, report) {
+    const sources = /* @__PURE__ */ new Map();
+    for (const id of state2.inventory || []) if (ITEM_BY_ID[id]) sources.set(id, "inventory");
+    for (const id of state2.consumableBelt || []) if (ITEM_BY_ID[id]) sources.set(id, "belt");
+    for (const item2 of shopStock(state2)) if (!sources.has(item2.id)) sources.set(item2.id, "shop");
+    for (const recipe of recipeList(state2)) {
+      if (!sources.has(recipe.result.itemId)) sources.set(recipe.result.itemId, "recipe");
+    }
+    const equippedIds = new Set(Object.values(state2.equipped || {}).filter(Boolean));
+    const itemAction = (id) => {
+      const item2 = ITEM_BY_ID[id];
+      const source = sources.get(id);
+      if (!item2 || !source || source === "belt" || equippedIds.has(id)) return null;
+      if (source === "inventory") {
+        return item2.slot === "consumable" ? `\u041F\u043E\u043B\u043E\u0436\u0438 \u043D\u0430 \u043F\u043E\u044F\u0441 \xAB${item2.name}\xBB \u0438\u0437 \u0441\u0443\u043D\u0434\u0443\u043A\u0430` : `\u041D\u0430\u0434\u0435\u043D\u044C \xAB${item2.name}\xBB \u0438\u0437 \u0441\u0443\u043D\u0434\u0443\u043A\u0430`;
+      }
+      if (source === "shop") return `\u041A\u0443\u043F\u0438 \xAB${item2.name}\xBB \u0432 \u0442\u043E\u0440\u0433\u043E\u0432\u043E\u043C \u043A\u0432\u0430\u0440\u0442\u0430\u043B\u0435`;
+      return `\u0421\u043E\u0437\u0434\u0430\u0439 \xAB${item2.name}\xBB \u0432 \u043A\u0443\u0437\u043D\u0438\u0446\u0435 \u2014 \u0440\u0435\u0446\u0435\u043F\u0442 \u0443\u0436\u0435 \u043E\u0442\u043A\u0440\u044B\u0442`;
+    };
+    const bestItem = (filter = () => true, score = itemScore) => {
+      const options = [];
+      for (const id of sources.keys()) {
+        const item2 = ITEM_BY_ID[id];
+        if (!filter(item2)) continue;
+        const text = itemAction(id);
+        if (text) options.push({ item: item2, text });
+      }
+      options.sort((a, b) => score(b.item) - score(a.item));
+      return options[0]?.text || null;
+    };
+    const isUpgrade = (item2) => {
+      if (item2.slot === "shield" && isShieldBlocked(state2.equipped)) return false;
+      const scoreAt = (slot) => state2.equipped[slot] ? itemScore(ITEM_BY_ID[state2.equipped[slot]]) : -1;
+      const current = item2.slot === "ring" ? Math.min(scoreAt("ring1"), scoreAt("ring2")) : scoreAt(item2.slot);
+      return itemScore(item2) > current;
+    };
+    const gearAction = (filter = () => true) => bestItem(
+      (item2) => item2.slot !== "consumable" && isUpgrade(item2) && filter(item2)
+    );
+    const defenseAction = () => gearAction(
+      (item2) => (item2.stats?.armor || 0) > 0 || (item2.stats?.hp || 0) > 0 || (item2.stats?.block || 0) > 0
+    ) || gearAction() || bestItem((item2) => item2.id === "pot_heal");
+    const mercAction = () => {
+      const candidates = crewStock(state2).filter((m) => m.kind === "merc" && !state2.squadMercs.includes(m.id));
+      candidates.sort((a, b) => Number(b.role === "\u0442\u0430\u043D\u043A") - Number(a.role === "\u0442\u0430\u043D\u043A"));
+      const merc = candidates[0];
+      if (!merc) return null;
+      if (state2.crew.includes(merc.id)) return `\u0412\u043E\u0437\u044C\u043C\u0438 \xAB${merc.name}\xBB \u0432 \u043E\u0442\u0440\u044F\u0434 \u0447\u0435\u0440\u0435\u0437 \u0442\u0430\u0432\u0435\u0440\u043D\u0443`;
+      return `\u041D\u0430\u0439\u043C\u0438 \u0432 \u0442\u0430\u0432\u0435\u0440\u043D\u0435 \xAB${merc.name}\xBB${merc.role === "\u0442\u0430\u043D\u043A" ? " \u0434\u043B\u044F \u043F\u0435\u0440\u0435\u0434\u043D\u0435\u0433\u043E \u0440\u044F\u0434\u0430" : ""}`;
+    };
+    let action = null;
+    if (report.timedOut) {
+      action = state2.settings.tactic !== "offense" ? "\u0421\u043C\u0435\u043D\u0438 \u0442\u0430\u043A\u0442\u0438\u043A\u0443 \u043D\u0430 \xAB\u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435\xBB" : bestItem(
+        (item2) => item2.slot !== "consumable" && isUpgrade(item2) && ((item2.stats?.attack || 0) > 0 || (item2.stats?.crit || 0) > 0 || item2.traits?.includes("pierce")),
+        (item2) => (item2.stats?.attack || 0) * 4 + (item2.stats?.crit || 0) * 100 + itemScore(item2) / 100
+      ) || mercAction() || defenseAction();
+    } else if (report.deathCause === "sleep") {
+      action = bestItem((item2) => (item2.stats?.resist?.sleep || 0) > 0 || item2.effect?.kind === "cleanse_sleep") || defenseAction();
+    } else if (report.deathCause === "poison") {
+      action = bestItem((item2) => (item2.stats?.resist?.poison || 0) > 0 || item2.effect?.kind === "cleanse_poison") || defenseAction();
+    } else if ((report.alliesStats || []).length === 1) {
+      action = mercAction() || defenseAction();
+    } else {
+      action = defenseAction();
+    }
+    action ||= "\u041F\u0435\u0440\u0435\u0441\u0442\u0430\u0432\u044C \u043A\u0440\u0435\u043F\u043A\u0438\u0445 \u0431\u043E\u0439\u0446\u043E\u0432 \u0432 \u043F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434, \u0430 \u0441\u0442\u0440\u0435\u043B\u043A\u043E\u0432 \u2014 \u0437\u0430 \u0438\u0445 \u0441\u043F\u0438\u043D\u044B";
+    return `${report.advice || "\u041D\u0435 \u0445\u0432\u0430\u0442\u0438\u043B\u043E \u043C\u043E\u0449\u0438."} ${action}.`;
+  }
+  function runBattle(state2, battleId, seed = 1, options = {}) {
     const battle = BATTLE_BY_ID[battleId];
     if (!battle || !battleAvailable(state2, battleId)) return null;
-    return runFormationBattle(state2, battle, seed);
+    const practice = options.practice === true;
+    const now = options.now ?? Date.now();
+    const energy = battleEnergyTerms(state2, battle, now);
+    if (!practice && energy.repeat && !energy.enough) {
+      return {
+        blocked: "energy",
+        ok: false,
+        battle,
+        practice: false,
+        rewards: [],
+        energySpent: 0,
+        energyAfter: energy.value,
+        energyCost: energy.cost,
+        error: `\u0414\u043B\u044F \u043D\u0430\u0433\u0440\u0430\u0434\u043D\u043E\u0433\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u0430 \u043D\u0443\u0436\u043D\u043E ${energy.cost} \u044D\u043D\u0435\u0440\u0433\u0438\u0438. \u0421\u0435\u0439\u0447\u0430\u0441: ${energy.value}. \u041C\u043E\u0436\u043D\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0443 \u0431\u0435\u0437 \u043D\u0430\u0433\u0440\u0430\u0434.`
+      };
+    }
+    const tutorial = onboardingBattleOptions(state2, battleId);
+    const result = runFormationBattle(state2, battle, seed, {
+      preserveBeltOnDefeat: options.preserveBeltOnDefeat ?? tutorial.preserveBeltOnDefeat,
+      practice,
+      now,
+      energy
+    });
+    if (!result.victory) result.report.advice = accessibleBattleAdvice(state2, result.report);
+    if (!practice) onboardingBattleFinished(state2, battleId, result);
+    return result;
   }
-  function enemyReward(enemyId, knightStats, seed) {
+  function enemyReward(enemyId, knightStats) {
     const def = enemyRewardDef(enemyId);
     if (!def) return [];
     const out = [];
-    if (def.coins) {
-      const base = Math.round((def.coins[0] + def.coins[1]) / 2);
-      out.push({ type: "coins", amount: Math.round(base * (1 + (knightStats.goldFind || 0))) });
-    }
     if (def.seals) out.push({ type: "seals", amount: def.seals });
     if (def.materials) {
       const matMult = (knightStats.materialsFind || 0) >= 0.5 ? 2 : 1;
@@ -22749,7 +24361,8 @@
     "\u041E\u0411\u0423\u0427\u0415\u041D\u0418\u0415": (state2) => {
       state2.tutorial = {};
       state2.tutorialSkipped = false;
-      return "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0441\u0431\u0440\u043E\u0448\u0435\u043D\u043E. \u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043D\u043E\u0432\u0430 \u0432\u0441\u0451 \u043F\u043E\u043A\u0430\u0436\u0435\u0442.";
+      restartOnboarding(state2);
+      return state2.onboarding.status === "done" ? "\u0423\u0447\u0435\u0431\u043D\u0430\u044F \u0434\u0443\u0433\u0430 \u0441\u0432\u0435\u0440\u0435\u043D\u0430: \u0443\u0436\u0435 \u0441\u0434\u0435\u043B\u0430\u043D\u043D\u043E\u0435 \u043F\u043E\u0432\u0442\u043E\u0440\u044F\u0442\u044C \u043D\u0435 \u043D\u0443\u0436\u043D\u043E." : "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0441\u0431\u0440\u043E\u0448\u0435\u043D\u043E. \u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0441\u043D\u043E\u0432\u0430 \u0432\u0441\u0451 \u043F\u043E\u043A\u0430\u0436\u0435\u0442.";
     },
     "\u041F\u0410\u0423\u0427\u041E\u041A": (state2) => {
       state2.cheats.spiderHat = !state2.cheats.spiderHat;
@@ -22772,7 +24385,7 @@
     s.setItem(SAVE_KEY, JSON.stringify(state2));
     return true;
   }
-  function loadGame(storage) {
+  function loadGame(storage, now = Date.now()) {
     const s = storage || (typeof localStorage !== "undefined" ? localStorage : null);
     if (!s) return null;
     try {
@@ -22780,7 +24393,7 @@
       if (!raw) return null;
       const data = JSON.parse(raw);
       if (!data || typeof data.coins !== "number") return null;
-      const migrated = migrate(data);
+      const migrated = migrate(data, now);
       migrateSeekOverrides(migrated, s);
       return migrated;
     } catch {
@@ -22795,7 +24408,7 @@
     state2.formation[unitKey] = slot;
     return true;
   }
-  function runFormationBattle(state2, battle, seed) {
+  function runFormationBattle(state2, battle, seed, options = {}) {
     const { stats, traits } = collectStats(state2.equipped);
     for (const cid of state2.squadCompanions) {
       const c = COMPANION_BY_ID[cid];
@@ -22827,29 +24440,48 @@
     };
     const result = simulateFormationBattle(allies, foes, seed, state2.settings.tactic || "balance", obstacles);
     const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
-    for (const used of usedIds) {
-      const i = state2.consumableBelt.indexOf(used);
-      if (i >= 0) state2.consumableBelt.splice(i, 1);
+    if (!options.practice && !(options.preserveBeltOnDefeat && !result.victory)) {
+      for (const used of usedIds) {
+        const i = state2.consumableBelt.indexOf(used);
+        if (i >= 0) state2.consumableBelt.splice(i, 1);
+      }
     }
     let rewards = [];
-    if (result.victory) {
-      const firstTime = !state2.battlesDone[battle.id];
+    let energySpent = 0;
+    let bossDrop = null;
+    if (result.victory && !options.practice) {
+      const firstTime = (state2.battlesDone[battle.id]?.victories || 0) === 0;
+      const energyCost = options.energy?.cost || 0;
+      if (energyCost > 0 && spendBattleEnergy(state2, energyCost, options.now ?? Date.now())) {
+        energySpent = energyCost;
+      }
       state2.battlesDone[battle.id] = {
         victories: (state2.battlesDone[battle.id]?.victories || 0) + 1,
-        at: Date.now()
+        at: options.now ?? Date.now()
       };
       state2.stats.battlesWon += 1;
       journalPush(state2, "\u2694\uFE0F", `\u041F\u043E\u0445\u043E\u0434 \xAB${battle.name}\xBB \u2014 \u043F\u043E\u0431\u0435\u0434\u0430! \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u0441 \u0442\u0440\u043E\u0444\u0435\u044F\u043C\u0438.`);
+      rewards.push({
+        type: "coins",
+        amount: battleCoinReward(battle, { repeat: !firstTime, goldFind: stats.goldFind || 0 })
+      });
       for (const entry of battle.enemies) {
         const enemyId = typeof entry === "string" ? entry : entry.id;
-        const scale = typeof entry === "string" ? 1 : entry.scale || 1;
-        const def = enemyReward(enemyId, stats, seed);
-        for (const r of def) {
-          if (r.type === "coins") r.amount = Math.round(r.amount * scale);
-          rewards.push(r);
+        for (const reward of enemyReward(enemyId, stats)) {
+          if (reward.type === "seals" && !firstTime) continue;
+          rewards.push(reward);
         }
       }
-      grantRewards(state2, rewards, {});
+      bossDrop = rollBossDrop(state2, battle, {
+        victory: state2.battlesDone[battle.id].victories,
+        seed,
+        itemFind: stats.itemFind || 0
+      });
+      if (bossDrop?.dropped) rewards.push({ type: "item", id: bossDrop.itemId });
+      rewards = grantRewards(state2, rewards, {});
+      if (bossDrop?.dropped) {
+        journalPush(state2, "\u{1F381}", `\u0420\u0435\u0434\u043A\u0430\u044F \u043D\u0430\u0445\u043E\u0434\u043A\u0430 \u0431\u043E\u0441\u0441\u0430: \xAB${ITEM_BY_ID[bossDrop.itemId].name}\xBB.`);
+      }
       const trophy = TROPHY_BY_BATTLE[battle.id];
       if (trophy && !state2.trophies.includes(trophy.id)) {
         state2.trophies.push(trophy.id);
@@ -22859,15 +24491,295 @@
       if (traits.includes("heal_after_battle")) {
         rewards.push({ type: "note", text: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0447\u0430\u0433\u0430 \u0441\u043E\u0433\u0440\u0435\u043B \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F." });
       }
-      if (!firstTime) rewards = rewards.map((r) => r.type === "coins" ? { ...r, amount: Math.round(r.amount * 0.5) } : r);
     }
     return {
       ...result,
       rewards,
       battle,
+      bossDrop,
+      practice: options.practice === true,
+      energySpent,
+      energyAfter: state2.battleEnergy?.value ?? 0,
       formation: initialFormation
       // начальные клетки (не конец боя!)
     };
+  }
+
+  // src/ui/tutorial.js
+  var activeTutorial = null;
+  function tutorialDone(state2, key) {
+    return !!state2.tutorialSkipped || !!state2.tutorial[key];
+  }
+  function destroyTutorial() {
+    const session = activeTutorial;
+    if (!session) return;
+    activeTutorial = null;
+    session.destroy();
+  }
+  function skipAllTutorials(state2) {
+    state2.tutorialSkipped = true;
+    destroyTutorial();
+  }
+  function startTutorial(ctx2, key, steps, options = {}) {
+    destroyTutorial();
+    const { state: state2 } = ctx2;
+    if (tutorialDone(state2, key)) return () => {
+    };
+    if (!steps || steps.length === 0) return () => {
+    };
+    const session = {
+      index: 0,
+      destroyed: false,
+      overlay: null,
+      spot: null,
+      bubble: null,
+      target: null,
+      listeners: /* @__PURE__ */ new Set(),
+      stepListeners: /* @__PURE__ */ new Set(),
+      timers: /* @__PURE__ */ new Set(),
+      frames: /* @__PURE__ */ new Set()
+    };
+    activeTutorial = session;
+    function listen(target, type, fn, options2, perStep = false) {
+      if (!target?.addEventListener) return;
+      target.addEventListener(type, fn, options2);
+      const entry = { target, type, fn, options: options2 };
+      (perStep ? session.stepListeners : session.listeners).add(entry);
+    }
+    function removeListeners(entries2) {
+      for (const entry of entries2) {
+        entry.target.removeEventListener?.(entry.type, entry.fn, entry.options);
+      }
+      entries2.clear();
+    }
+    function later(fn, ms) {
+      if (session.destroyed) return null;
+      const id = setTimeout(() => {
+        session.timers.delete(id);
+        if (!session.destroyed) fn();
+      }, ms);
+      session.timers.add(id);
+      return id;
+    }
+    function frame(fn) {
+      const request = window.requestAnimationFrame?.bind(window);
+      if (!request) return later(fn, 16);
+      const id = request(() => {
+        session.frames.delete(id);
+        if (!session.destroyed) fn();
+      });
+      session.frames.add(id);
+      return id;
+    }
+    function clearStep() {
+      removeListeners(session.stepListeners);
+      for (const id of session.timers) clearTimeout(id);
+      session.timers.clear();
+      for (const id of session.frames) window.cancelAnimationFrame?.(id);
+      session.frames.clear();
+      session.overlay?.remove();
+      session.overlay = null;
+      session.spot = null;
+      session.bubble = null;
+      session.target = null;
+    }
+    function destroy() {
+      if (session.destroyed) return;
+      session.destroyed = true;
+      clearStep();
+      removeListeners(session.listeners);
+      if (activeTutorial === session) activeTutorial = null;
+    }
+    session.destroy = destroy;
+    function finish() {
+      if (session.destroyed) return;
+      state2.tutorial[key] = true;
+      destroy();
+      ctx2.save();
+    }
+    function finishAll() {
+      if (session.destroyed) return;
+      if (options.onSkip) {
+        options.onSkip();
+        if (!session.destroyed) destroy();
+        return;
+      }
+      skipAllTutorials(state2);
+      ctx2.save();
+      ctx2.toast("\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u043E. \u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0432\u0441\u0435\u0433\u0434\u0430 \u0440\u044F\u0434\u043E\u043C, \u0435\u0441\u043B\u0438 \u0447\u0442\u043E.");
+    }
+    function remeasure() {
+      const { spot, bubble, target } = session;
+      if (session.destroyed || !spot || !bubble) return;
+      if (target?.getBoundingClientRect) {
+        const r = target.getBoundingClientRect();
+        const pad = 10;
+        spot.style.display = "";
+        spot.style.left = `${r.left - pad + window.scrollX}px`;
+        spot.style.top = `${r.top - pad + window.scrollY}px`;
+        spot.style.width = `${r.width + pad * 2}px`;
+        spot.style.height = `${r.height + pad * 2}px`;
+      } else {
+        spot.style.display = "none";
+      }
+      positionBubble(spot, bubble);
+    }
+    function showStep() {
+      clearStep();
+      if (session.destroyed) return;
+      if (session.index >= steps.length) {
+        finish();
+        return;
+      }
+      const stepIndex = session.index;
+      const step = steps[stepIndex];
+      const target = typeof step.target === "function" ? step.target() : step.target;
+      session.target = target || null;
+      const overlay = document.createElement("div");
+      overlay.className = "tut-overlay";
+      session.overlay = overlay;
+      const spot = document.createElement("div");
+      spot.className = "tut-spot";
+      session.spot = spot;
+      overlay.appendChild(spot);
+      const bubble = document.createElement("div");
+      bubble.className = "tut-bubble";
+      bubble.innerHTML = `
+      <div class="tut-cat">\u{1F408}</div>
+      <div class="tut-body">
+        <div class="tut-title">${step.title}</div>
+        <div class="tut-text">${step.text}</div>
+        <div class="tut-actions"></div>
+      </div>`;
+      session.bubble = bubble;
+      overlay.appendChild(bubble);
+      document.body.appendChild(overlay);
+      let advanced = false;
+      const advance = (ev) => {
+        ev?.stopPropagation?.();
+        if (session.destroyed || advanced || session.index !== stepIndex) return;
+        advanced = true;
+        session.index += 1;
+        ctx2.sfx?.("tap");
+        showStep();
+      };
+      const actions = bubble.querySelector(".tut-actions");
+      const next = document.createElement("button");
+      next.className = "primary small";
+      const isLast = stepIndex === steps.length - 1;
+      next.textContent = step.cta || (isLast ? "\u041F\u043E\u043D\u044F\u043B!" : "\u0414\u0430\u043B\u044C\u0448\u0435 \u2192");
+      listen(next, "click", advance, void 0, true);
+      actions.appendChild(next);
+      const skip = document.createElement("button");
+      skip.className = "ghost small";
+      skip.textContent = options.skipLabel || "\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u043E\u0431\u0443\u0447\u0435\u043D\u0438\u0435";
+      listen(skip, "click", (ev) => {
+        ev.stopPropagation?.();
+        finishAll();
+      }, void 0, true);
+      actions.appendChild(skip);
+      if (target && step.advanceOnTargetClick !== false) {
+        listen(target, "pointerdown", advance, { once: true }, true);
+      }
+      target?.scrollIntoView?.({ block: "center", behavior: "smooth" });
+      remeasure();
+      frame(remeasure);
+      later(remeasure, 80);
+      later(remeasure, 400);
+    }
+    listen(window, "resize", remeasure);
+    listen(window, "scroll", remeasure, true);
+    showStep();
+    return destroy;
+  }
+  function positionBubble(spot, bubble) {
+    if (!spot || spot.style.display === "none" || !bubble) {
+      if (bubble) {
+        bubble.style.left = "50%";
+        bubble.style.top = "20%";
+        bubble.style.transform = "translateX(-50%)";
+      }
+      return;
+    }
+    const sr = spot.getBoundingClientRect();
+    const top = sr.top || 0;
+    const bottom = sr.bottom ?? top + (sr.height || 0);
+    const bw = bubble.offsetWidth || 320;
+    const bh = bubble.offsetHeight || 120;
+    let left = sr.left + sr.width / 2 - bw / 2 + window.scrollX;
+    left = Math.max(10, Math.min(left, (window.innerWidth || 800) - bw - 10));
+    const below = bottom + 14 + window.scrollY;
+    const above = top - bh - 14 + window.scrollY;
+    const viewportH = window.innerHeight || 600;
+    const fitsBelow = bottom + bh + 20 < viewportH;
+    bubble.style.left = `${left}px`;
+    bubble.style.top = `${fitsBelow ? below : above}px`;
+  }
+
+  // src/ui/goalView.js
+  function savingsGoalSummary(state2) {
+    const progress = savingsGoalProgress(state2);
+    if (!progress) return "";
+    return `\u{1F3AF} ${progress.name}: ${progress.ready ? progress.readyText : `\u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C ${progress.short}`}`;
+  }
+  function createSavingsGoalCard(ctx2, { onChange } = {}) {
+    const progress = savingsGoalProgress(ctx2.state);
+    if (!progress) return null;
+    const card = document.createElement("section");
+    card.className = "panel savings-goal";
+    card.dataset.goalKind = progress.kind;
+    card.dataset.goalId = progress.id;
+    const title = document.createElement("div");
+    title.className = "savings-goal-title";
+    title.textContent = `${progress.icon} \u0426\u0435\u043B\u044C: ${progress.name}`;
+    card.appendChild(title);
+    if (progress.kind === "recipe") {
+      const status2 = document.createElement("div");
+      status2.className = "savings-goal-status";
+      status2.textContent = progress.ready ? progress.readyText : "\u041F\u043E\u043A\u0430 \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442:";
+      card.appendChild(status2);
+      if (!progress.ready) {
+        const missing = document.createElement("div");
+        missing.className = "savings-goal-missing";
+        for (const entry of progress.missing) {
+          const line = document.createElement("div");
+          line.textContent = entry.text;
+          missing.appendChild(line);
+        }
+        if (progress.coins.needed > 0) {
+          const coins = document.createElement("div");
+          coins.textContent = `\u{1FA99} ${progress.coins.current}/${progress.coins.needed}`;
+          missing.appendChild(coins);
+        }
+        card.appendChild(missing);
+      }
+    } else {
+      const status2 = document.createElement("div");
+      status2.className = "savings-goal-status";
+      status2.textContent = progress.text;
+      card.appendChild(status2);
+    }
+    const actions = document.createElement("div");
+    actions.className = "savings-goal-actions";
+    const route = document.createElement("button");
+    route.className = "small primary";
+    route.textContent = "\u041A \u0446\u0435\u043B\u0438";
+    route.title = progress.routeLabel;
+    route.dataset.goalRoute = "1";
+    route.addEventListener("click", () => ctx2.go(progress.route.name, progress.route.params));
+    const clear = document.createElement("button");
+    clear.className = "small ghost";
+    clear.textContent = "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C";
+    clear.dataset.goalClear = "1";
+    clear.addEventListener("click", () => {
+      if (!clearSavingsGoal(ctx2.state)) return;
+      ctx2.save();
+      if (onChange) onChange();
+      else card.remove();
+    });
+    actions.append(route, clear);
+    card.appendChild(actions);
+    return card;
   }
 
   // src/ui/common.js
@@ -22954,22 +24866,37 @@
     if (r.type === "material") return `\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B: ${materialLabel(r.id)}${r.amount > 1 ? ` \xD7${r.amount}` : ""}`;
     return "";
   }
-  function showOverlay(ctx2, { title, subtitle, rewards, advice, buttons, art }) {
+  function showOverlay(ctx2, { title, subtitle, rewards, advice, buttons = [], art, onboardingResult = null }) {
+    destroyTutorial();
     const overlay = document.createElement("div");
     overlay.className = "overlay";
     const rewardHtml = (rewards || []).map(rewardText).filter(Boolean).join("<br>");
+    const goalHtml = onboardingResult || rewardHtml || advice ? savingsGoalSummary(ctx2.state) : "";
     overlay.innerHTML = `
     <div class="card">
       ${art ? `<div class="overlay-art">${art}</div>` : ""}
       <h2>${title}</h2>
       ${subtitle ? `<div class="muted">${subtitle}</div>` : ""}
       ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ""}
+      ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ""}
       ${advice ? `<div class="advice">\u{1F4A1} ${advice}</div>` : ""}
       <div class="actions"></div>
     </div>`;
     const actions = overlay.querySelector(".actions");
+    const tutorialCta = onboardingCtaForResult(ctx2.state, onboardingResult);
+    if (tutorialCta) {
+      const btn = document.createElement("button");
+      btn.className = "primary";
+      btn.textContent = tutorialCta.label;
+      btn.dataset.onboardingCta = onboardingResult.id;
+      btn.addEventListener("click", () => {
+        overlay.remove();
+        ctx2.go(tutorialCta.route.name, tutorialCta.route.params);
+      });
+      actions.appendChild(btn);
+    }
     const story = ctx2.state?.story;
-    if (ctx2.state?.settings?.storyMode !== false && story?.justCompleted) {
+    if (!tutorialCta && !onboardingBlocksStory(ctx2.state) && ctx2.state?.settings?.storyMode !== false && story?.justCompleted) {
       story.justCompleted = null;
       const storyBtn = document.createElement("button");
       storyBtn.className = "primary";
@@ -22983,7 +24910,7 @@
     for (const b of buttons) {
       const btn = document.createElement("button");
       btn.textContent = b.label;
-      if (b.primary) btn.className = "primary";
+      if (b.primary && !tutorialCta) btn.className = "primary";
       btn.addEventListener("click", () => {
         overlay.remove();
         b.onClick();
@@ -23006,126 +24933,6 @@
     };
     window.addEventListener("keydown", onKey);
     return overlay;
-  }
-
-  // src/ui/tutorial.js
-  function tutorialDone(state2, key) {
-    return !!state2.tutorialSkipped || !!state2.tutorial[key];
-  }
-  function skipAllTutorials(state2) {
-    state2.tutorialSkipped = true;
-  }
-  function startTutorial(ctx2, key, steps) {
-    const { state: state2 } = ctx2;
-    if (tutorialDone(state2, key)) return () => {
-    };
-    if (!steps || steps.length === 0) return () => {
-    };
-    let i = 0;
-    let overlay = null;
-    let cancelled = false;
-    function finish(markDone = true) {
-      if (overlay) {
-        overlay.remove();
-        overlay = null;
-      }
-      if (markDone && !cancelled) {
-        state2.tutorial[key] = true;
-        ctx2.save();
-      }
-    }
-    function finishAll() {
-      cancelled = true;
-      skipAllTutorials(state2);
-      ctx2.save();
-      finish(false);
-      ctx2.toast("\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u043E. \u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0432\u0441\u0435\u0433\u0434\u0430 \u0440\u044F\u0434\u043E\u043C, \u0435\u0441\u043B\u0438 \u0447\u0442\u043E.");
-    }
-    function showStep() {
-      if (cancelled) return;
-      if (i >= steps.length) {
-        finish();
-        return;
-      }
-      const step = steps[i];
-      const target = typeof step.target === "function" ? step.target() : step.target;
-      if (overlay) overlay.remove();
-      overlay = document.createElement("div");
-      overlay.className = "tut-overlay";
-      const spot = document.createElement("div");
-      spot.className = "tut-spot";
-      if (target && target.getBoundingClientRect) {
-        const r = target.getBoundingClientRect();
-        const pad = 10;
-        spot.style.left = `${r.left - pad + window.scrollX}px`;
-        spot.style.top = `${r.top - pad + window.scrollY}px`;
-        spot.style.width = `${r.width + pad * 2}px`;
-        spot.style.height = `${r.height + pad * 2}px`;
-        target.scrollIntoView?.({ block: "center", behavior: "smooth" });
-      } else {
-        spot.style.display = "none";
-      }
-      overlay.appendChild(spot);
-      const bubble = document.createElement("div");
-      bubble.className = "tut-bubble";
-      bubble.innerHTML = `
-      <div class="tut-cat">\u{1F408}</div>
-      <div class="tut-body">
-        <div class="tut-title">${step.title}</div>
-        <div class="tut-text">${step.text}</div>
-        <div class="tut-actions"></div>
-      </div>`;
-      overlay.appendChild(bubble);
-      const raf2 = typeof requestAnimationFrame !== "undefined" ? requestAnimationFrame : (f) => setTimeout(f, 16);
-      raf2(() => positionBubble(spot, bubble));
-      const actions = bubble.querySelector(".tut-actions");
-      const next = document.createElement("button");
-      next.className = "primary small";
-      const isLast = i === steps.length - 1;
-      next.textContent = step.cta || (isLast ? "\u041F\u043E\u043D\u044F\u043B!" : "\u0414\u0430\u043B\u044C\u0448\u0435 \u2192");
-      const advance = (ev) => {
-        ev?.stopPropagation?.();
-        i += 1;
-        ctx2.sfx?.("tap");
-        showStep();
-      };
-      next.addEventListener("click", advance);
-      actions.appendChild(next);
-      const skip = document.createElement("button");
-      skip.className = "ghost small";
-      skip.textContent = "\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u043E\u0431\u0443\u0447\u0435\u043D\u0438\u0435";
-      skip.addEventListener("click", (ev) => {
-        ev.stopPropagation?.();
-        finishAll();
-      });
-      actions.appendChild(skip);
-      if (target && target.addEventListener && step.advanceOnTargetClick !== false) {
-        target.addEventListener("pointerdown", advance, { once: true });
-      }
-      document.body.appendChild(overlay);
-    }
-    showStep();
-    return finish;
-  }
-  function positionBubble(spot, bubble) {
-    if (!spot || spot.style.display === "none" || !bubble) {
-      if (bubble) {
-        bubble.style.left = "50%";
-        bubble.style.top = "20%";
-        bubble.style.transform = "translateX(-50%)";
-      }
-      return;
-    }
-    const sr = spot.getBoundingClientRect();
-    const bw = bubble.offsetWidth || 320;
-    let left = sr.left + sr.width / 2 - bw / 2 + window.scrollX;
-    left = Math.max(10, Math.min(left, (window.innerWidth || 800) - bw - 10));
-    const below = sr.bottom + 14 + window.scrollY;
-    const above = sr.top - (bubble.offsetHeight || 120) - 14 + window.scrollY;
-    const viewportH = window.innerHeight || 600;
-    const fitsBelow = sr.bottom + (bubble.offsetHeight || 120) + 20 < viewportH;
-    bubble.style.left = `${left}px`;
-    bubble.style.top = `${fitsBelow ? below : above}px`;
   }
 
   // src/ui/cursors.js
@@ -23211,6 +25018,118 @@
     body.dataset.cursor = key;
   }
 
+  // src/core/hubGeometry.js
+  function normalizeScenePoints(points) {
+    if (!Array.isArray(points) || points.length < 3) {
+      throw new RangeError("\u0414\u043B\u044F \u0441\u0438\u043B\u0443\u044D\u0442\u0430 \u043D\u0443\u0436\u043D\u044B \u043C\u0438\u043D\u0438\u043C\u0443\u043C \u0442\u0440\u0438 \u0432\u0435\u0440\u0448\u0438\u043D\u044B");
+    }
+    return points.map((point, index) => {
+      const x = Array.isArray(point) ? point[0] : point?.x;
+      const y = Array.isArray(point) ? point[1] : point?.y;
+      if (!Number.isFinite(x) || !Number.isFinite(y) || x < 0 || x > 100 || y < 0 || y > 100) {
+        throw new RangeError(`\u0412\u0435\u0440\u0448\u0438\u043D\u0430 ${index} \u0434\u043E\u043B\u0436\u043D\u0430 \u0438\u043C\u0435\u0442\u044C \u043A\u043E\u043D\u0435\u0447\u043D\u044B\u0435 \u043A\u043E\u043E\u0440\u0434\u0438\u043D\u0430\u0442\u044B \u043E\u0442 0 \u0434\u043E 100`);
+      }
+      return { x, y };
+    });
+  }
+  function cssNumber(value) {
+    return String(Number(value.toFixed(4)));
+  }
+  function scenePolygonGeometry(input) {
+    const points = normalizeScenePoints(input);
+    const xs = points.map((point) => point.x);
+    const ys = points.map((point) => point.y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const top = Math.min(...ys);
+    const bottom = Math.max(...ys);
+    const width = right - left;
+    const height = bottom - top;
+    if (width <= 0 || height <= 0) {
+      throw new RangeError("\u0421\u0438\u043B\u0443\u044D\u0442 \u0434\u043E\u043B\u0436\u0435\u043D \u0437\u0430\u043D\u0438\u043C\u0430\u0442\u044C \u043D\u0435\u043D\u0443\u043B\u0435\u0432\u0443\u044E \u0448\u0438\u0440\u0438\u043D\u0443 \u0438 \u0432\u044B\u0441\u043E\u0442\u0443");
+    }
+    const localPoints = points.map((point) => ({
+      x: (point.x - left) / width * 100,
+      y: (point.y - top) / height * 100
+    }));
+    const polygon = `polygon(${localPoints.map((point) => `${cssNumber(point.x)}% ${cssNumber(point.y)}%`).join(", ")})`;
+    let area2 = 0;
+    let cx = 0;
+    let cy = 0;
+    for (let i = 0; i < points.length; i += 1) {
+      const a = points[i];
+      const b = points[(i + 1) % points.length];
+      const cross = a.x * b.y - b.x * a.y;
+      area2 += cross;
+      cx += (a.x + b.x) * cross;
+      cy += (a.y + b.y) * cross;
+    }
+    const center = Math.abs(area2) > 1e-9 ? { x: cx / (3 * area2), y: cy / (3 * area2) } : { x: left + width / 2, y: top + height / 2 };
+    const labelAnchor = { x: center.x, y: bottom };
+    const localCenter = {
+      x: (center.x - left) / width * 100,
+      y: (center.y - top) / height * 100
+    };
+    return {
+      points,
+      bbox: { left, top, width, height },
+      left,
+      top,
+      width,
+      height,
+      polygon,
+      center,
+      localCenter,
+      labelAnchor
+    };
+  }
+
+  // src/core/cosmetics.js
+  var LAVKA_LAYOUT_ID = "lavka_base_3x1";
+  var BASE_LAVKA_BACKGROUND = "assets/hub/hub_banner_web.jpg";
+  var COSMETIC_SCENE_BASE = {
+    lavka: { src: BASE_LAVKA_BACKGROUND, layoutId: LAVKA_LAYOUT_ID },
+    square: { src: "assets/hub/town_square_v2_web.jpg", layoutId: "square_v2_3x1" },
+    market: { src: "assets/hub/town_market_v2_web.jpg", layoutId: "market_v2_3x1" },
+    cabinet: { src: "assets/hub/trophy_room_v2_web.jpg", layoutId: "cabinet_v2_3x1" }
+  };
+  function canonicalCosmeticId(id) {
+    return LEGACY_COSMETIC_ALIASES[id] || id;
+  }
+  function activeCosmeticId(state2) {
+    const active = Array.isArray(state2?.cosmeticsActive) ? state2.cosmeticsActive : [];
+    return active.length > 0 ? canonicalCosmeticId(active[active.length - 1]) : null;
+  }
+  function legacyCosmeticIds(state2, selectedId = activeCosmeticId(state2)) {
+    if (!selectedId) return [];
+    const legacy = Array.isArray(state2?.legacyCosmeticsActive) ? state2.legacyCosmeticsActive : Array.isArray(state2?.cosmeticsActive) ? state2.cosmeticsActive : [];
+    const ids = legacy.flatMap((id) => {
+      if (LEGACY_COSMETIC_ALIASES[id]) return [id];
+      if (COSMETIC_BY_ID[id]) {
+        return Object.keys(LEGACY_COSMETIC_ALIASES).filter((legacyId) => LEGACY_COSMETIC_ALIASES[legacyId] === id);
+      }
+      return [];
+    });
+    return [...new Set(ids)];
+  }
+  function resolveCosmeticBackground(state2, { scene = "lavka", layoutId } = {}) {
+    const base = COSMETIC_SCENE_BASE[scene] || COSMETIC_SCENE_BASE.lavka;
+    const selectedId = activeCosmeticId(state2);
+    const def = selectedId ? COSMETIC_BY_ID[selectedId] : null;
+    const variant = def?.scenes?.[scene] || null;
+    const acceptedLayout = layoutId ?? variant?.layoutId ?? base.layoutId;
+    const full = !!(def && def.kind === "background" && variant?.src && variant.layoutId === acceptedLayout);
+    return {
+      selectedId,
+      id: full ? selectedId : null,
+      src: full ? variant.src : base.src,
+      fallbackSrc: base.src,
+      layoutId: full ? variant.layoutId : base.layoutId,
+      full,
+      legacyIds: scene === "lavka" ? legacyCosmeticIds(state2, selectedId) : []
+    };
+  }
+
   // src/ui/hub.js
   function hasUnseenIn(state2, shopKey) {
     const unseen = new Set(unseenShopItems(state2).map((i) => i.id));
@@ -23236,6 +25155,149 @@
     return lines[Math.floor(Math.random() * lines.length)];
   }
   var spr = (px) => `max(${px}px, ${(px / 10.28).toFixed(2)}cqw)`;
+  var LAVKA_HOTSPOT_SHAPES = {
+    puzzles: [
+      [3.5, 0],
+      [16.3, 0],
+      [17.4, 8],
+      [17.4, 68],
+      [16.3, 72],
+      [16.3, 82],
+      [13.8, 86],
+      [8.5, 86],
+      [7.5, 80],
+      [3.4, 77]
+    ],
+    shop: [
+      [24.2, 52.8],
+      [51.2, 52.8],
+      [52.4, 55.5],
+      [51.7, 75.5],
+      [50.5, 77],
+      [48.7, 77],
+      [48.7, 55.5],
+      [39.5, 55.5],
+      [39.5, 77],
+      [25.2, 77],
+      [24.3, 74.5],
+      [23.5, 56]
+    ],
+    guests: [
+      [46.8, 55.5],
+      [48.2, 57],
+      [47.8, 62],
+      [48.5, 64.5],
+      [47.5, 68.5],
+      [45.8, 69.5],
+      [45.8, 87],
+      [47.5, 89],
+      [47.2, 92.5],
+      [41, 92.5],
+      [40.5, 90],
+      [42.2, 87],
+      [42.2, 70],
+      [40, 68.5],
+      [39.6, 64],
+      [41.3, 60.5],
+      [45.8, 60],
+      [46.2, 57.5]
+    ],
+    equip: [
+      [53.8, 26.5],
+      [55.2, 26.5],
+      [56, 29],
+      [55.8, 33.5],
+      [57.2, 35],
+      [58, 40],
+      [57.5, 47],
+      [56.6, 52.5],
+      [52.4, 52.5],
+      [51.5, 47],
+      [51.2, 40],
+      [52, 36],
+      [53.2, 33.5],
+      [53.2, 29]
+    ],
+    "@square": [
+      [75.2, 30],
+      [76.2, 25],
+      [78, 22],
+      [80.5, 21],
+      [82.5, 24],
+      [84, 29],
+      [84.8, 36],
+      [84.8, 78],
+      [83.5, 82],
+      [76.5, 82],
+      [75.2, 78],
+      [74.8, 38]
+    ],
+    battles: [
+      [88.2, 0],
+      [100, 0],
+      [100, 65.5],
+      [98, 68],
+      [89, 66],
+      [87.2, 62],
+      [87.2, 14]
+    ],
+    "@cabinet": [
+      [65.2, 62],
+      [65.8, 58],
+      [67.2, 55.5],
+      [69.2, 55],
+      [70.8, 57.5],
+      [71.6, 61],
+      [71.6, 75.5],
+      [65, 75.5],
+      [64.8, 68]
+    ]
+  };
+  var LAVKA_LAYOUT_SHAPES = {
+    [LAVKA_LAYOUT_ID]: LAVKA_HOTSPOT_SHAPES
+  };
+  var SQUARE_V2_HOTSPOT_SHAPES = {
+    board: [[1.5, 35], [5, 31], [10, 36], [11.5, 42], [11, 75], [8, 78], [1, 77], [0.5, 55]],
+    "@lavka": [[12, 28], [18, 18], [22, 9], [26, 15], [31, 16], [34, 28], [34, 62], [31, 66], [15, 66], [12, 58]],
+    craft: [[35, 27], [39, 20], [44, 17], [45.5, 8], [48.5, 8], [49.2, 31], [51, 35], [49.5, 53], [43, 53], [43, 63], [35, 63]],
+    workshop: [[52.5, 28], [57, 21], [63, 24], [67, 30], [69, 39], [69, 63], [60, 63], [60, 55], [55, 55], [55, 52], [52, 52]],
+    "@market": [[70.5, 32], [74, 28], [80, 28], [83, 33], [83.5, 61], [81, 64], [71, 63], [69.5, 47]],
+    tavern: [[88, 0], [100, 0], [100, 68], [84, 68], [84, 54], [84, 36]]
+  };
+  var MARKET_V2_HOTSPOT_SHAPES = {
+    shopArmory: [[0, 0], [10, 0], [18, 7], [24.5, 18], [24.5, 78], [22, 88], [0, 88]],
+    shopArmorer: [[24.5, 0], [34, 0], [41, 8], [44, 20], [44, 82], [41, 87], [27, 87], [24.5, 70]],
+    shopMagic: [[58, 9], [64, 0], [73, 0], [78, 12], [78, 82], [75, 88], [59, 88], [57, 70]],
+    shopAlchemy: [[81, 0], [100, 0], [100, 90], [79, 90], [78, 74], [78, 20]],
+    "@square": [
+      [44, 68],
+      [44, 45],
+      [45, 30],
+      [44, 20],
+      [46, 15],
+      [46, 5],
+      [50, 1],
+      [55, 1],
+      [57, 8],
+      [56, 18],
+      [57, 35],
+      [57, 68],
+      [57, 100],
+      [44, 100]
+    ]
+  };
+  var CABINET_V2_HOTSPOT_SHAPES = {
+    achievements: [[2.5, 74], [8, 70], [14, 72], [20, 70], [24, 76], [23, 85], [18, 90], [8, 92], [2, 86]],
+    battles: [[10.7, 16.5], [22.4, 16.5], [22.4, 44.5], [10.7, 44.5]],
+    deck: [[87, 76], [93, 73], [98, 76], [97.5, 85], [94, 89], [87, 87]],
+    "@lavka": [[80.5, 12], [84, 6], [90, 5], [94, 11], [95, 24], [95, 70], [92, 73], [81, 73], [80, 58]]
+  };
+  var CABINET_V2_COLUMNS = [28, 36.7, 45.4, 54.2, 62.9, 71.7];
+  var CABINET_V2_TROPHY_SPOTS = [
+    ...CABINET_V2_COLUMNS.map((x) => ({ x, y: 35, size: 52 })),
+    ...CABINET_V2_COLUMNS.map((x) => ({ x, y: 64, size: 52 }))
+  ];
+  var CABINET_V2_MINI_SPOTS = [41.7, 46.9, 52.3, 57.6].map((x) => ({ x, y: 79, size: 30 }));
   function renderHub(container, ctx2, params = {}) {
     const { state: state2 } = ctx2;
     const solved = Object.keys(state2.puzzlesDone).length;
@@ -23245,13 +25307,15 @@
       ctx2.setHubScene?.(scene2);
       container.innerHTML = "";
       renderHub(container, ctx2, { scene: scene2 });
+      ctx2.syncOnboarding?.();
     }
     const SCENES = {
       lavka: {
         candidates: ["assets/hub/hub_banner_web.jpg"],
-        lens: true,
+        layoutId: "lavka_base_3x1",
+        shapes: LAVKA_HOTSPOT_SHAPES,
         alt: "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432",
-        // Хотспоты: [icon, label, screen, x%, y%, showDot]
+        // [icon, label, screen, x%, y%, showDot]; x/y — только legacy-круги.
         hotspots: [
           ["\u{1F4DA}", "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438", "puzzles", 10, 42, () => solved === 0],
           ["\u{1FA99}", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A", "shop", 37, 60, () => false],
@@ -23263,30 +25327,39 @@
         ]
       },
       square: {
-        candidates: ["assets/hub/town_square_web.jpg"],
+        candidates: ["assets/hub/town_square_v2_web.jpg", "assets/hub/town_square_web.jpg"],
+        layoutId: "square_v2_3x1",
+        legacyLayoutId: "square_legacy_3x1",
+        shapes: SQUARE_V2_HOTSPOT_SHAPES,
         alt: "\u0413\u043E\u0440\u043E\u0434\u0441\u043A\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C",
         hotspots: [
-          ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 79, 60, () => false],
-          ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 39, 58, () => false],
-          ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 53, 68, () => false],
           ["\u{1F4CC}", "\u0414\u043E\u0441\u043A\u0430 \u043E\u0431\u044A\u044F\u0432\u043B\u0435\u043D\u0438\u0439", "board", 7, 59, () => false],
           ["\u{1F3EE}", "\u0412 \u043B\u0430\u0432\u043A\u0443", "@lavka", 17, 50, () => false],
-          ["\u{1F3EC}", "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B", "@market", 58, 38, () => ["armory", "armorer", "magic", "alchemy"].some((k) => hasUnseenIn(state2, k))]
+          ["\u2692\uFE0F", "\u041A\u0443\u0437\u043D\u0438\u0446\u0430 \u0438 \u043A\u043E\u0442\u0451\u043B", "craft", 39, 58, () => false],
+          ["\u{1F6E0}\uFE0F", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F", "workshop", 53, 68, () => false],
+          ["\u{1F3EC}", "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B", "@market", 58, 38, () => ["armory", "armorer", "magic", "alchemy"].some((k) => hasUnseenIn(state2, k))],
+          ["\u{1F37A}", "\u0422\u0430\u0432\u0435\u0440\u043D\u0430", "tavern", 79, 60, () => false]
         ]
       },
       market: {
-        candidates: ["assets/hub/town_market_web.jpg"],
+        candidates: ["assets/hub/town_market_v2_web.jpg", "assets/hub/town_market_web.jpg"],
+        layoutId: "market_v2_3x1",
+        legacyLayoutId: "market_legacy_3x1",
+        shapes: MARKET_V2_HOTSPOT_SHAPES,
         alt: "\u0422\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B",
         hotspots: [
           ["\u{1F5E1}\uFE0F", "\u041E\u0440\u0443\u0436\u0435\u0439\u043D\u0438\u043A", "shopArmory", 7, 60, () => hasUnseenIn(state2, "armory")],
           ["\u{1F6E1}\uFE0F", "\u0411\u0440\u043E\u043D\u043D\u0438\u043A", "shopArmorer", 35, 60, () => hasUnseenIn(state2, "armorer")],
+          ["\u{1F307}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 52, 60, () => false],
           ["\u{1F52E}", "\u041C\u0430\u0433", "shopMagic", 63, 62, () => hasUnseenIn(state2, "magic")],
-          ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 80, 60, () => hasUnseenIn(state2, "alchemy")],
-          ["\u{1F307}", "\u041D\u0430 \u043F\u043B\u043E\u0449\u0430\u0434\u044C", "@square", 52, 60, () => false]
+          ["\u{1F9EA}", "\u0410\u043B\u0445\u0438\u043C\u0438\u043A", "shopAlchemy", 80, 60, () => hasUnseenIn(state2, "alchemy")]
         ]
       },
       cabinet: {
-        candidates: ["assets/hub/trophy_room_web.jpg"],
+        candidates: ["assets/hub/trophy_room_v2_web.jpg", "assets/hub/trophy_room_web.jpg"],
+        layoutId: "cabinet_v2_3x1",
+        legacyLayoutId: "cabinet_legacy_3x1",
+        shapes: CABINET_V2_HOTSPOT_SHAPES,
         alt: "\u041A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432",
         hotspots: [
           ["\u{1F4D6}", "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u043A\u043E\u0440\u0434\u043E\u0432", "achievements", 87.5, 64, () => false],
@@ -23301,65 +25374,222 @@
     applyCursor("hub", { scene: sceneId }, state2);
     const scenePanel = document.createElement("div");
     scenePanel.className = "panel hub-picture";
+    scenePanel.dataset.scene = sceneId;
+    scenePanel.dataset.layoutId = scene.layoutId;
+    scenePanel.dataset.layoutMode = "primary";
     scenePanel.style.padding = "0";
     scenePanel.style.overflow = "hidden";
+    scenePanel.style.aspectRatio = "3 / 1";
+    let cosmeticBackground = null;
+    if (sceneId === "lavka") {
+      const resolved = resolveCosmeticBackground(state2, { scene: "lavka" });
+      const knownLayout = !!LAVKA_LAYOUT_SHAPES[resolved.layoutId];
+      cosmeticBackground = knownLayout ? resolved : {
+        ...resolved,
+        src: BASE_LAVKA_BACKGROUND,
+        layoutId: LAVKA_LAYOUT_ID,
+        full: false,
+        id: null
+      };
+      scenePanel.dataset.layoutId = cosmeticBackground.layoutId;
+    }
+    const legacyLayer = cosmeticBackground?.legacyIds.length ? document.createElement("div") : null;
+    if (legacyLayer) {
+      legacyLayer.className = "hub-legacy-cosmetics";
+      legacyLayer.dataset.legacyCosmetics = cosmeticBackground.legacyIds.join(" ");
+    }
     const picture = document.createElement("img");
     picture.className = "hub-scene";
     picture.alt = scene.alt;
+    const candidates = [cosmeticBackground?.src || scene.candidates[0], ...scene.candidates.slice(1)];
     let candidateIdx = 0;
-    picture.addEventListener("error", () => {
-      candidateIdx += 1;
-      if (candidateIdx < scene.candidates.length) picture.src = scene.candidates[candidateIdx];
-      else picture.remove();
-    });
-    picture.src = scene.candidates[0];
-    scenePanel.appendChild(picture);
-    container.appendChild(scenePanel);
-    const hotspotEls = {};
-    const LENS_Z = 14;
-    const lensBgPos = (hx, hy) => {
-      const ih = LENS_Z / 3;
-      const bx = (hx * LENS_Z - 0.5) / (LENS_Z - 1) * 100;
-      const by = (hy * ih - 0.5) / (ih - 1) * 100;
-      return `${bx.toFixed(2)}% ${by.toFixed(2)}%`;
-    };
-    let hsIndex = 0;
-    for (const [icon, label, screen, x, y, dot] of scene.hotspots) {
-      const b = document.createElement("button");
-      b.className = scene.lens ? "hotspot lens" : "hotspot";
-      b.style.left = `${x}%`;
-      b.style.top = `${y}%`;
-      b.setAttribute("aria-label", label);
-      if (scene.lens) {
-        b.style.backgroundImage = `url("${scene.candidates[0]}")`;
-        b.style.backgroundSize = `${LENS_Z * 100}% auto`;
-        b.style.backgroundPosition = lensBgPos(x / 100, y / 100);
-        b.innerHTML = `<span class="hs-glint" style="animation-delay:${(hsIndex * 0.35).toFixed(2)}s"></span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
-      } else {
-        b.innerHTML = `<span class="hs-icon">${icon}</span><span class="hs-label">${label}</span>${dot() ? '<span class="hs-dot"></span>' : ""}`;
-      }
-      hsIndex += 1;
-      b.addEventListener("click", () => {
-        ctx2.sfx?.("tap");
-        b.classList.add("zap");
-        setTimeout(() => {
-          if (screen === "@square") rerender("square");
-          else if (screen === "@lavka") rerender("lavka");
-          else if (screen === "@market") rerender("market");
-          else if (screen === "@cabinet") rerender("cabinet");
-          else ctx2.go(screen);
-        }, 150);
-      });
-      scenePanel.appendChild(b);
-      hotspotEls[screen] = b;
+    const trophyEls = [];
+    const sceneSpriteEls = [];
+    const smokeEls = [];
+    const usingLegacyLayout = () => Boolean(scene.legacyLayoutId && candidateIdx > 0);
+    function applySceneLayout() {
+      const legacy = usingLegacyLayout();
+      scenePanel.dataset.layoutId = legacy ? scene.legacyLayoutId : sceneId === "lavka" ? cosmeticBackground.layoutId : scene.layoutId;
+      scenePanel.dataset.layoutMode = legacy ? "legacy" : "primary";
+      renderHotspots();
+      layoutTrophies();
+      layoutSceneSprites();
+      layoutAtmosphere();
     }
+    let currentSrc = candidates[0];
+    const setPictureSrc = (src) => {
+      currentSrc = src;
+      picture.src = src;
+    };
+    const legacyMode = () => cosmeticBackground?.legacyIds.length ? "legacy" : "base";
+    if (cosmeticBackground) scenePanel.dataset.cosmeticMode = cosmeticBackground.full ? "pending" : legacyMode();
+    picture.addEventListener("load", () => {
+      if (!cosmeticBackground) return;
+      if (cosmeticBackground.full && currentSrc === cosmeticBackground.src) {
+        legacyLayer?.remove();
+        scenePanel.dataset.cosmeticMode = "full";
+      } else {
+        scenePanel.dataset.cosmeticMode = legacyMode();
+      }
+    });
+    picture.addEventListener("error", () => {
+      if (cosmeticBackground && currentSrc !== BASE_LAVKA_BACKGROUND) {
+        scenePanel.dataset.cosmeticMode = legacyMode();
+        setPictureSrc(BASE_LAVKA_BACKGROUND);
+        return;
+      }
+      const wasLegacy = usingLegacyLayout();
+      candidateIdx += 1;
+      if (candidateIdx < candidates.length) {
+        setPictureSrc(candidates[candidateIdx]);
+        if (wasLegacy !== usingLegacyLayout()) {
+          applySceneLayout();
+          ctx2.syncOnboarding?.();
+        }
+      } else {
+        picture.remove();
+        scenePanel.classList.add("hub-scene-missing");
+      }
+    });
+    setPictureSrc(candidates[0]);
+    scenePanel.appendChild(picture);
+    if (legacyLayer) scenePanel.appendChild(legacyLayer);
+    container.appendChild(scenePanel);
+    const hotspotRoot = document.createElement("div");
+    hotspotRoot.className = "hub-hotspot-layout";
+    scenePanel.appendChild(hotspotRoot);
+    const hotspotEls = {};
+    const activateHotspot = (screen, source) => {
+      ctx2.sfx?.("tap");
+      (hotspotEls[screen] || source).classList.add("zap");
+      setTimeout(() => {
+        if (screen === "@square") rerender("square");
+        else if (screen === "@lavka") rerender("lavka");
+        else if (screen === "@market") rerender("market");
+        else if (screen === "@cabinet") rerender("cabinet");
+        else ctx2.go(screen);
+      }, 150);
+    };
+    const span = (className, text) => {
+      const el = document.createElement("span");
+      el.className = className;
+      el.textContent = text;
+      return el;
+    };
+    function renderHotspots() {
+      hotspotRoot.innerHTML = "";
+      for (const key of Object.keys(hotspotEls)) delete hotspotEls[key];
+      const shapes = usingLegacyLayout() ? null : sceneId === "lavka" ? LAVKA_LAYOUT_SHAPES[cosmeticBackground.layoutId] : scene.shapes;
+      for (const [, label, screen, x, y, dot] of scene.hotspots) {
+        const geometry = shapes?.[screen] ? scenePolygonGeometry(shapes[screen]) : null;
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = geometry ? "hotspot hub-shape" : "hotspot";
+        b.dataset.hotspot = screen;
+        b.setAttribute("aria-label", label);
+        b.addEventListener("click", () => activateHotspot(screen, b));
+        hotspotEls[screen] = b;
+        const labelEl = span("hs-label", label);
+        const dotEl = dot() ? span("hs-dot", "") : null;
+        if (geometry) {
+          const holder = document.createElement("div");
+          holder.className = "hub-shape-hotspot";
+          b.style.left = `${geometry.left}%`;
+          b.style.top = `${geometry.top}%`;
+          b.style.width = `${geometry.width}%`;
+          b.style.height = `${geometry.height}%`;
+          b.style.clipPath = geometry.polygon;
+          b.style.webkitClipPath = geometry.polygon;
+          labelEl.style.left = `${geometry.labelAnchor.x}%`;
+          labelEl.style.top = `${geometry.labelAnchor.y}%`;
+          holder.append(b, labelEl);
+          if (dotEl) {
+            dotEl.classList.add("hub-shape-dot");
+            dotEl.style.left = `${geometry.center.x}%`;
+            dotEl.style.top = `${geometry.top}%`;
+            holder.appendChild(dotEl);
+          }
+          hotspotRoot.appendChild(holder);
+        } else {
+          b.style.left = `${x}%`;
+          b.style.top = `${y}%`;
+          b.appendChild(labelEl);
+          if (dotEl) b.appendChild(dotEl);
+          hotspotRoot.appendChild(b);
+        }
+      }
+    }
+    function currentTrophySpots() {
+      if (sceneId !== "cabinet") return [];
+      if (usingLegacyLayout()) {
+        const trophies = TROPHIES.map((t, i) => ({
+          t,
+          x: 29.7 + i % 6 * 8.4,
+          y: i < 6 ? 35 : 61.5,
+          size: 52
+        }));
+        const minis = MINI_TROPHIES.map((t, i) => ({ t, x: 42 + i * 5.5, y: 76.5, size: 30 }));
+        return [...trophies, ...minis];
+      }
+      return [
+        ...TROPHIES.map((t, i) => ({ t, ...CABINET_V2_TROPHY_SPOTS[i] })),
+        ...MINI_TROPHIES.map((t, i) => ({ t, ...CABINET_V2_MINI_SPOTS[i] }))
+      ];
+    }
+    function layoutTrophies() {
+      const spots = currentTrophySpots();
+      for (let i = 0; i < trophyEls.length; i += 1) {
+        trophyEls[i].style.left = `${spots[i].x}%`;
+        trophyEls[i].style.top = `${spots[i].y}%`;
+      }
+    }
+    function positionedSpot(spot) {
+      return !usingLegacyLayout() && spot.v2 ? { ...spot, ...spot.v2 } : spot;
+    }
+    function layoutSceneSprites() {
+      for (const { el, spot } of sceneSpriteEls) {
+        const position = positionedSpot(spot);
+        el.style.left = `${position.x}%`;
+        el.style.top = `${position.y}%`;
+      }
+    }
+    function layoutAtmosphere() {
+      for (let i = 0; i < smokeEls.length; i += 1) {
+        smokeEls[i].style.left = `${usingLegacyLayout() ? 33 + i : 46.3 + i * 0.9}%`;
+        smokeEls[i].style.top = `${usingLegacyLayout() ? 16 : 11 - i * 1.5}%`;
+      }
+    }
+    renderHotspots();
+    const textNav = document.createElement("nav");
+    textNav.className = "hub-text-nav";
+    textNav.setAttribute("aria-label", `\u0420\u0430\u0437\u0434\u0435\u043B\u044B: ${scene.alt}`);
+    const highlightHotspot = (screen, active) => {
+      const hotspot = hotspotEls[screen];
+      if (hotspot) hotspot.classList[active ? "add" : "remove"]("nav-highlight");
+    };
+    for (const [icon, label, screen] of scene.hotspots) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "ghost";
+      b.dataset.hubRoute = screen;
+      b.textContent = `${icon} ${label}`;
+      b.addEventListener("pointerenter", () => highlightHotspot(screen, true));
+      b.addEventListener("pointerleave", () => highlightHotspot(screen, false));
+      b.addEventListener("focus", () => highlightHotspot(screen, true));
+      b.addEventListener("blur", () => highlightHotspot(screen, false));
+      b.addEventListener("click", () => activateHotspot(screen, b));
+      textNav.appendChild(b);
+    }
+    container.appendChild(textNav);
     const progress = document.createElement("div");
     progress.className = "muted center mt";
     progress.style.fontSize = "14px";
     const season = SEASON_LABEL2[currentSeason()];
-    const cosIcons = (state2.cosmeticsActive || []).length ? ` \xB7 \u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F: ${(state2.cosmeticsActive || []).map((id) => ({ cos_carpet: "\u{1F7E5}", cos_crest: "\u{1FAA7}", cos_flowers: "\u{1F338}", cos_fireflies: "\u2728", cos_garland: "\u{1F38F}", cos_snow: "\u2744\uFE0F" })[id] || "\u{1F380}").join(" ")}` : "";
+    const cosIcons = (state2.cosmeticsActive || []).length ? ` \xB7 \u041E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435: ${(state2.cosmeticsActive || []).map((id) => ({ cos_carpet: "\u{1F7E5}", cos_crest: "\u{1FAA7}", cos_flowers: "\u{1F338}", cos_fireflies: "\u2728", cos_garland: "\u{1F38F}", cos_snow: "\u2744\uFE0F" })[id] || "\u{1F380}").join(" ")}` : "";
     progress.innerHTML = `\u{1F9E9} \u0417\u0430\u0433\u0430\u0434\u043E\u043A \u0440\u0435\u0448\u0435\u043D\u043E: <b>${solved}/${ALL_PUZZLES.length}</b> \xB7 \u2694\uFE0F \u041F\u043E\u0445\u043E\u0434\u043E\u0432 \u043F\u0440\u043E\u0439\u0434\u0435\u043D\u043E: <b>${won}/${BATTLES.length}</b> \xB7 \u{1F43E} \u041A\u043E\u043C\u0430\u043D\u0434\u0430: <b>${(state2.crew || []).length}</b> \xB7 ${season}${cosIcons}`;
     container.appendChild(progress);
+    const goalCard = createSavingsGoalCard(ctx2, { onChange: () => rerender(sceneId) });
+    if (goalCard) container.appendChild(goalCard);
     function petCat(btn) {
       ctx2.sfx?.("purr");
       const r = petTheCat(state2);
@@ -23379,30 +25609,34 @@
       rerender(sceneId);
     }
     const PET_SPOTS = {
-      pet_hedgehog: { scene: "square", x: 30, y: 82, size: 50 },
+      pet_hedgehog: { scene: "square", x: 30, y: 82, size: 50, v2: { x: 50, y: 84 } },
       pet_fox: { scene: "square", x: 9, y: 97, size: 60 },
       pet_puppy: { scene: "lavka", x: 88, y: 92, size: 92, flip: true },
-      pet_owl: { scene: "square", x: 7, y: 44, size: 64 },
+      pet_owl: { scene: "square", x: 7, y: 44, size: 64, v2: { x: 7.5, y: 35, size: 52 } },
       pet_horse: { scene: "square", x: 90, y: 90, size: 130 }
     };
     for (const [petId, spot] of Object.entries(PET_SPOTS)) {
       if (spot.scene !== sceneId || !(state2.crew || []).includes(petId) || !PET_BY_ID[petId]) continue;
       const def = PET_BY_ID[petId];
       const isActive = state2.pet === petId;
-      const el = document.createElement("div");
+      const el = document.createElement("button");
+      sceneSpriteEls.push({ el, spot });
+      const position = positionedSpot(spot);
+      el.type = "button";
       el.className = `hub-pet${isActive ? " active" : ""}`;
-      el.style.left = `${spot.x}%`;
-      el.style.top = `${spot.y}%`;
+      el.style.left = `${position.x}%`;
+      el.style.top = `${position.y}%`;
       el.title = isActive ? `${def.name} \u2014 \u0438\u0434\u0451\u0442 \u0441 \u0442\u043E\u0431\u043E\u0439 \u0432 \u043F\u043E\u0445\u043E\u0434\u044B` : def.name;
+      el.setAttribute("aria-label", el.title);
       const img = document.createElement("img");
       img.src = `assets/pets/${petId}.webp`;
       img.alt = def.name;
-      img.style.width = spr(spot.size);
+      img.style.width = spr(position.size);
       if (spot.flip) img.style.transform = "scaleX(-1)";
       img.addEventListener("error", () => {
         img.remove();
         el.textContent = def.icon;
-        el.style.fontSize = spr(Math.round(spot.size * 0.7));
+        el.style.fontSize = spr(Math.round(position.size * 0.7));
       });
       el.appendChild(img);
       el.addEventListener("click", () => {
@@ -23416,7 +25650,7 @@
       { id: "cmp_cat", icon: "\u{1F408}", name: "\u041A\u043E\u0442-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u2014 \u043F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C", scene: "lavka", x: 26, y: 89, size: 85, pet: true },
       { id: "cmp_firefly", scene: "lavka", x: 47, y: 13, size: 26 },
       { id: "cmp_herbalist", scene: "square", x: 21, y: 97, size: 85 },
-      { id: "cmp_smith", scene: "square", x: 45, y: 86, size: 50 }
+      { id: "cmp_smith", scene: "square", x: 45, y: 86, size: 50, v2: { x: 36, y: 88 } }
     ];
     for (const spot of CREW_SPOTS) {
       const owned = spot.always || (state2.crew || []).includes(spot.id);
@@ -23424,11 +25658,15 @@
       const def = COMPANION_BY_ID[spot.id];
       const name = spot.name || def?.name || spot.id;
       const icon = spot.icon || def?.icon || "\u{1F43E}";
-      const el = document.createElement("div");
+      const el = document.createElement("button");
+      sceneSpriteEls.push({ el, spot });
+      const position = positionedSpot(spot);
+      el.type = "button";
       el.className = "hub-pet";
-      el.style.left = `${spot.x}%`;
-      el.style.top = `${spot.y}%`;
+      el.style.left = `${position.x}%`;
+      el.style.top = `${position.y}%`;
       el.title = name;
+      el.setAttribute("aria-label", name);
       const img = document.createElement("img");
       img.src = `assets/crew/${spot.id}.webp`;
       img.alt = name;
@@ -23452,15 +25690,17 @@
       scenePanel.appendChild(el);
     }
     const STORY_GUEST_SPOT = { scene: "lavka", x: 57, y: 90, size: 110 };
-    const storyGuestId = storyHubGuest(state2);
+    const storyGuestId = onboardingBlocksStory(state2) ? null : storyHubGuest(state2);
     if (storyGuestId && STORY_GUEST_SPOT.scene === sceneId) {
       const g = GUEST_BY_ID[storyGuestId];
       if (g) {
-        const el = document.createElement("div");
+        const el = document.createElement("button");
+        el.type = "button";
         el.className = "hub-pet hub-guest";
         el.style.left = `${STORY_GUEST_SPOT.x}%`;
         el.style.top = `${STORY_GUEST_SPOT.y}%`;
         el.title = `${g.name} \u2014 \u0436\u0434\u0451\u0442 \u0441 \u0437\u0430\u0434\u0430\u043D\u0438\u0435\u043C`;
+        el.setAttribute("aria-label", el.title);
         if (g.art) {
           const img = document.createElement("img");
           img.src = g.art;
@@ -23492,25 +25732,16 @@
         state2.trophiesSeen = [...state2.trophiesSeen || [], ...unseen];
         ctx2.save();
       }
-      const TROPHY_SPOTS = TROPHIES.map((t, i) => ({
-        t,
-        x: 29.7 + i % 6 * 8.4,
-        y: i < 6 ? 35 : 61.5,
-        size: 52
-      }));
-      const MINI_SPOTS = MINI_TROPHIES.map((t, i) => ({
-        t,
-        x: 42 + i * 5.5,
-        y: 76.5,
-        size: 30
-      }));
-      for (const spot of [...TROPHY_SPOTS, ...MINI_SPOTS]) {
+      const spots = currentTrophySpots();
+      for (const spot of spots) {
         const owned = (state2.trophies || []).includes(spot.t.id);
-        const el = document.createElement("div");
+        const el = document.createElement("button");
+        el.type = "button";
         el.className = `hub-trophy${owned ? "" : " locked"}`;
         el.style.left = `${spot.x}%`;
         el.style.top = `${spot.y}%`;
         el.title = owned ? spot.t.name : "???";
+        el.setAttribute("aria-label", owned ? spot.t.name : "\u041F\u0443\u0441\u0442\u043E\u0435 \u043C\u0435\u0441\u0442\u043E \u0434\u043B\u044F \u0442\u0440\u043E\u0444\u0435\u044F \u2014 \u0443\u0437\u043D\u0430\u0442\u044C \u0443\u0441\u043B\u043E\u0432\u0438\u0435");
         if (owned) {
           const img = document.createElement("img");
           img.src = `assets/trophies/tro_${spot.t.id}.png`;
@@ -23542,16 +25773,20 @@
           });
         });
         scenePanel.appendChild(el);
+        trophyEls.push(el);
       }
     }
-    const fx = (cls, style, content) => {
+    const fx = (cls, style, content, root = scenePanel) => {
       const e = document.createElement("div");
       e.className = `cos-fx ${cls}`;
       e.style.cssText = style;
       if (content) e.innerHTML = content;
-      scenePanel.appendChild(e);
+      root.appendChild(e);
+      return e;
     };
+    const legacyFx = (cls, style, content) => fx(cls, style, content, legacyLayer);
     const fxImg = (id, style, stub, rot) => {
+      if (!legacyLayer) return null;
       const img = document.createElement("img");
       img.className = "cos-fx cos-img";
       img.style.cssText = style + (rot ? `;transform:rotate(${rot}deg)` : "");
@@ -23565,22 +25800,22 @@
         stub?.();
       });
       img.src = `assets/cosmetics/${id}.webp`;
-      scenePanel.appendChild(img);
+      legacyLayer.appendChild(img);
       return img;
     };
     if (sceneId === "lavka") {
-      const cos = new Set(state2.cosmeticsActive || []);
+      const cos = new Set(cosmeticBackground.legacyIds);
       if (cos.has("cos_carpet")) {
-        fxImg("cos_carpet", "left:52%;top:74%;width:30%", () => fx("cos-carpet", "left:36%;top:78%;width:26%;height:16%"), 10);
+        fxImg("cos_carpet", "left:52%;top:74%;width:30%", () => legacyFx("cos-carpet", "left:36%;top:78%;width:26%;height:16%"), 10);
       }
       if (cos.has("cos_crest")) {
-        fxImg("cos_crest", "left:71%;top:9%;width:max(85px, 8.27cqw)", () => fx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432"), -4);
+        fxImg("cos_crest", "left:71%;top:9%;width:max(85px, 8.27cqw)", () => legacyFx("cos-crest", "left:38%;top:4%", "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432"), -4);
       }
       if (cos.has("cos_flowers")) {
         const spots = [
-          //['left:24%;top:20%;width:60px', () => fx('sway', 'left:11%;top:33%;font-size:26px', '🌸')],
-          ["left:50%;top:76%;width:max(74px, 7.2cqw)", () => fx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}")]
-          //['left:60%;top:41%;width:60px', () => fx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼')],
+          //['left:24%;top:20%;width:60px', () => legacyFx('sway', 'left:11%;top:33%;font-size:26px', '🌸')],
+          ["left:50%;top:76%;width:max(74px, 7.2cqw)", () => legacyFx("sway", "left:22%;top:60%;font-size:22px;animation-delay:.5s", "\u{1F337}")]
+          //['left:60%;top:41%;width:60px', () => legacyFx('sway', 'left:63%;top:44%;font-size:24px;animation-delay:1s', '🌼')],
         ];
         for (const [style, stub] of spots) {
           fxImg("cos_flowers", style + ";animation:fx-sway 3.6s ease-in-out infinite alternate", stub);
@@ -23588,21 +25823,24 @@
       }
       if (cos.has("cos_fireflies")) {
         fxImg("cos_fireflies", "left:22%;top:22%;width:max(80px, 7.78cqw);animation:fx-float 5s ease-in-out infinite alternate", () => {
-          for (let i = 0; i < 5; i++) fx("firefly", `left:${35 + i * 7}%;top:${38 + i % 3 * 8}%;animation-delay:${i * 0.7}s`);
+          for (let i = 0; i < 5; i++) legacyFx("firefly", `left:${35 + i * 7}%;top:${38 + i % 3 * 8}%;animation-delay:${i * 0.7}s`);
         });
       }
       if (cos.has("cos_garland")) {
-        fxImg("cos_garland", "left:60%;top:20%;width:32%;animation:fx-sway 4s ease-in-out infinite alternate;transform-origin:top center", () => fx("sway", "left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px", "\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}"));
+        fxImg("cos_garland", "left:60%;top:20%;width:32%;animation:fx-sway 4s ease-in-out infinite alternate;transform-origin:top center", () => legacyFx("sway", "left:12%;top:3%;width:60%;font-size:20px;letter-spacing:12px", "\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}\u{1F342}\u{1F38F}"));
       }
       if (cos.has("cos_snow")) {
         fxImg("cos_snow", "left:89%;top:30%;width:8%", () => {
-          for (let i = 0; i < 8; i++) fx("snowflake", `left:${86 + i % 4 * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, "\u2744");
+          for (let i = 0; i < 8; i++) legacyFx("snowflake", `left:${86 + i % 4 * 3.5}%;top:${28 + i * 6}%;animation-delay:${i * 0.5}s`, "\u2744");
         });
       }
       for (let i = 0; i < 6; i++) fx("dust", `left:${20 + i * 12}%;top:${22 + i % 3 * 14}%;animation-delay:${i * 0.9}s`);
     }
     if (sceneId === "square") {
-      for (let i = 0; i < 3; i++) fx("smokepuff", `left:${33 + i}%;top:16%;animation-delay:${i * 1.3}s`);
+      for (let i = 0; i < 3; i++) {
+        smokeEls.push(fx("smokepuff", `left:${33 + i}%;top:16%;animation-delay:${i * 1.3}s`));
+      }
+      layoutAtmosphere();
     }
     const chatter = pickChatter(state2);
     const journal = (state2.journal || []).slice(-2).reverse();
@@ -23627,19 +25865,7 @@
       catPanel.appendChild(body);
       container.appendChild(catPanel);
     }
-    const anim = document.createElement("img");
-    anim.alt = "";
-    anim.style.cssText = "width:100%;border-radius:14px;margin-top:14px;opacity:0.9";
-    const animCandidates = ["assets/hub/intro_web.jpg"];
-    let animIdx = 0;
-    anim.addEventListener("error", () => {
-      animIdx += 1;
-      if (animIdx < animCandidates.length) anim.src = animCandidates[animIdx];
-      else anim.remove();
-    });
-    anim.src = animCandidates[0];
-    container.appendChild(anim);
-    if (sceneId === "lavka") {
+    if (sceneId === "lavka" && !onboardingBlocksLegacyTutorials(state2)) {
       startTutorial(ctx2, "welcome", [
         {
           target: picture,
@@ -24304,6 +26530,7 @@
           title: "\u{1F3EE} \u041B\u0430\u0432\u043A\u0430 \u0433\u043E\u0442\u043E\u0432\u0430 \u043A \u043E\u0442\u043A\u0440\u044B\u0442\u0438\u044E!",
           subtitle: `\xAB${level.name}\xBB \u2014 \u0440\u0435\u0448\u0435\u043D\u043E`,
           rewards,
+          onboardingResult: { kind: "puzzle", id: level.id },
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
             { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
@@ -25877,6 +28104,7 @@
           title: "\u{1F9FA} \u0412\u0441\u0451 \u043D\u0430\u0439\u0434\u0435\u043D\u043E!",
           subtitle: `\xAB${level.name}\xBB \u2014 \u043F\u0440\u043E\u043C\u0430\u0445\u043E\u0432: ${puzzle.misses}`,
           rewards,
+          onboardingResult: { kind: "puzzle", id: level.id },
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
             { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
@@ -26218,6 +28446,7 @@
           title: "\u{1F4E6} \u041F\u043E\u0441\u044B\u043B\u043A\u0430 \u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0430!",
           subtitle: `\xAB${level.name}\xBB \u2014 \u043A\u0443\u0440\u044C\u0435\u0440 \u0434\u043E\u0432\u043E\u043B\u0435\u043D`,
           rewards,
+          onboardingResult: { kind: "puzzle", id: level.id },
           buttons: [
             ...next ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u2192 ${next.name}`, primary: true, onClick: () => ctx2.go("puzzle", { id: next.id }) }] : [],
             { label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", primary: !next, onClick: () => backToPuzzleType(ctx2, level) },
@@ -29373,7 +31602,7 @@
   }
 
   // src/core/glassPuzzle.js
-  function hashSeed(str) {
+  function hashSeed2(str) {
     let h = 2166136261;
     for (let i = 0; i < str.length; i++) {
       h ^= str.charCodeAt(i);
@@ -29397,7 +31626,7 @@
   function createGlassPuzzle(level) {
     const [cols, rows] = level.grid;
     const total = cols * rows;
-    const initial = shuffledPieces(total, level.seed ?? hashSeed(level.id));
+    const initial = shuffledPieces(total, level.seed ?? hashSeed2(level.id));
     return {
       level,
       initial,
@@ -29507,7 +31736,7 @@
       c.width = cols * 160;
       c.height = rows * 160;
       const g2 = c.getContext("2d");
-      const rng = makeRng(hashSeed(level.id) ^ 2654435769);
+      const rng = makeRng(hashSeed2(level.id) ^ 2654435769);
       const baseHue = rng.int(0, 359);
       const grad = g2.createLinearGradient(0, 0, 0, c.height);
       grad.addColorStop(0, `hsl(${baseHue}, 45%, 62%)`);
@@ -29864,7 +32093,7 @@
     const [cols, rows] = level.grid;
     const total = cols * rows;
     const anchors = new Set(level.anchors || []);
-    const initial = shuffledRots(total, anchors, level.seed ?? hashSeed(level.id));
+    const initial = shuffledRots(total, anchors, level.seed ?? hashSeed2(level.id));
     return {
       level,
       anchors,
@@ -29979,7 +32208,7 @@
       c.width = cols * 160;
       c.height = rows * 160;
       const g2 = c.getContext("2d");
-      const rng = makeRng(hashSeed(level.id) ^ 2654435769);
+      const rng = makeRng(hashSeed2(level.id) ^ 2654435769);
       const baseHue = rng.int(0, 359);
       const grad = g2.createLinearGradient(0, 0, 0, c.height);
       grad.addColorStop(0, `hsl(${baseHue}, 45%, 62%)`);
@@ -31399,8 +33628,8 @@
   function catalogEntries(types, state2) {
     return types.map((t) => {
       const items = ALL_PUZZLES.filter((p) => typeOf(p) === t.mech);
-      const done = items.filter((p) => state2.puzzlesDone[p.id]).length;
-      const hasFresh = items.some((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
+      const done = items.filter((p) => state2.puzzlesDone[p.id] && !state2.puzzlesDone[p.id].skipped).length;
+      const hasFresh = items.some((p) => (!state2.puzzlesDone[p.id] || state2.puzzlesDone[p.id].skipped) && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
       return {
         ...t,
         done,
@@ -31829,30 +34058,32 @@
     const t = PUZZLE_TYPES.find((x) => x.mech === mech);
     const items = ALL_PUZZLES.filter((p) => typeOf2(p) === mech);
     container.appendChild(header(ctx2, `${t.icon} ${t.name}`, t.desc, "puzzles"));
-    const firstUnsolved = items.find((p) => !state2.puzzlesDone[p.id] && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
+    const firstUnsolved = items.find((p) => puzzleNeedsHonest(state2, p.id) && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
     const list = document.createElement("div");
     list.className = "list";
     items.forEach((p, i) => {
       const available = puzzleAvailable(state2, ALL_PUZZLES.indexOf(p));
-      const done = !!state2.puzzlesDone[p.id];
+      const entry = state2.puzzlesDone[p.id];
+      const solved = !!entry && !entry.skipped;
       const row = document.createElement("div");
-      row.className = "row" + (available ? "" : " locked") + (done ? " done" : "");
+      row.className = "row" + (available ? "" : " locked") + (solved ? " done" : "");
       if (firstUnsolved && p.id === firstUnsolved.id) row.dataset.scrollTarget = "1";
       const stars = "\u2605".repeat(p.difficulty) + "\u2606".repeat(Math.max(0, 5 - p.difficulty));
       const dailyClaimed = state2.lastDailyBonus === todayKey();
-      const isDaily = available && !done && !dailyClaimed && isDailyPuzzle(state2, p.id);
+      const isDaily = available && !dailyClaimed && isDailyPuzzle(state2, p.id);
       row.innerHTML = `
-      <span class="icon">${available ? done ? "\u{1F3EE}" : "\u{1F9E9}" : "\u{1F512}"}</span>
+      <span class="icon">${available ? solved ? "\u{1F3EE}" : "\u{1F9E9}" : "\u{1F512}"}</span>
       <span class="grow">
         <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">\u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \xD72</span>' : ""}</div>
         <div class="desc">${available ? p.intro : "\u0420\u0435\u0448\u0438 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443, \u0447\u0442\u043E\u0431\u044B \u043E\u0442\u043A\u0440\u044B\u0442\u044C."}</div>
       </span>`;
       if (available) {
         const btn = document.createElement("button");
-        btn.textContent = done ? "\u0415\u0449\u0451 \u0440\u0430\u0437" : "\u0420\u0435\u0448\u0430\u0442\u044C";
+        btn.dataset.puzzleId = p.id;
+        btn.textContent = solved ? "\u0415\u0449\u0451 \u0440\u0430\u0437" : entry?.skipped ? "\u0420\u0435\u0448\u0438\u0442\u044C \u0447\u0435\u0441\u0442\u043D\u043E" : "\u0420\u0435\u0448\u0430\u0442\u044C";
         btn.addEventListener("click", () => ctx2.go("puzzle", { id: p.id }));
         row.appendChild(btn);
-        if (!done) {
+        if (!entry) {
           const skipBtn = puzzleSkipButton(ctx2, p, () => {
             container.innerHTML = "";
             renderPuzzleTypeList(container, ctx2, mech);
@@ -31937,6 +34168,7 @@
     canvasBox.className = "puzzle-canvas-box";
     const canvas = document.createElement("canvas");
     canvas.className = "game";
+    canvas.dataset.puzzleId = level.id;
     const [gw, gh] = level.grid;
     const dpr = window.devicePixelRatio || 1;
     canvas.width = gw * CELL5 * dpr;
@@ -32139,7 +34371,7 @@
         if (!finished) finish();
       }, 1400);
     }
-    if (level.id === "md_02") {
+    if (level.id === "md_02" && !onboardingBlocksLegacyTutorials(ctx2.state)) {
       startTutorial(ctx2, "first_puzzle", [
         {
           target: canvas,
@@ -32165,6 +34397,7 @@
     };
   }
   function showVictory(ctx2, level, rewards) {
+    destroyTutorial();
     const overlay = document.createElement("div");
     overlay.className = "overlay";
     const rewardHtml = rewards.map((r) => {
@@ -32173,16 +34406,30 @@
       if (r.type === "item") return `\u{1F381} ${ITEM_BY_ID[r.id]?.name || r.id}`;
       return "";
     }).filter(Boolean).join("<br>");
+    const goalHtml = savingsGoalSummary(ctx2.state);
     overlay.innerHTML = `
     <div class="card">
       <h2>\u{1F3EE} \u041B\u0430\u0432\u043A\u0430 \u0441\u0438\u044F\u0435\u0442!</h2>
       <div class="muted">\xAB${level.name}\xBB \u2014 \u0440\u0435\u0448\u0435\u043D\u043E</div>
       <div class="rewards">${rewardHtml}</div>
+      ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ""}
       <div class="actions"></div>
     </div>`;
     const actions = overlay.querySelector(".actions");
+    const tutorialCta = onboardingCtaForResult(ctx2.state, { kind: "puzzle", id: level.id });
+    if (tutorialCta) {
+      const btn = document.createElement("button");
+      btn.className = "primary";
+      btn.textContent = tutorialCta.label;
+      btn.dataset.onboardingCta = level.id;
+      btn.addEventListener("click", () => {
+        overlay.remove();
+        ctx2.go(tutorialCta.route.name, tutorialCta.route.params);
+      });
+      actions.appendChild(btn);
+    }
     const story = ctx2.state?.story;
-    const storyNext = ctx2.state?.settings?.storyMode !== false && story?.justCompleted;
+    const storyNext = !tutorialCta && !onboardingBlocksStory(ctx2.state) && ctx2.state?.settings?.storyMode !== false && story?.justCompleted;
     if (storyNext) {
       story.justCompleted = null;
       const storyBtn = document.createElement("button");
@@ -32194,7 +34441,7 @@
       });
       actions.appendChild(storyBtn);
     }
-    const next = nextPuzzle(level.id);
+    const next = tutorialCta ? null : nextPuzzle(level.id);
     if (next) {
       const nextBtn = document.createElement("button");
       if (!storyNext) nextBtn.className = "primary";
@@ -32212,7 +34459,7 @@
       ctx2.go("puzzle", { id: level.id });
     });
     const toList = document.createElement("button");
-    if (!next && !storyNext) toList.className = "primary";
+    if (!next && !storyNext && !tutorialCta) toList.className = "primary";
     toList.textContent = "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C";
     toList.addEventListener("click", () => {
       overlay.remove();
@@ -32622,6 +34869,7 @@
       const item2 = id ? ITEM_BY_ID[id] : null;
       const cell = document.createElement("div");
       cell.className = "slot" + (item2 ? "" : " empty") + (slot === "shield" && shieldBlocked && !item2 ? " blocked" : "") + (slot === targetSlot ? " targeting" : "");
+      cell.dataset.equipSlot = slot;
       const icoBox = document.createElement("div");
       icoBox.className = "slot-item";
       cell.appendChild(icoBox);
@@ -32672,6 +34920,7 @@
       const item2 = id ? ITEM_BY_ID[id] : null;
       const cell = document.createElement("div");
       cell.className = "slot" + (item2 ? "" : " empty") + (targetSlot === "belt" && !item2 ? " targeting" : "");
+      cell.dataset.beltSlot = String(i);
       cell.style.flex = "0 0 calc((100% - 20px) / 3)";
       const icoBox = document.createElement("div");
       icoBox.className = "slot-item";
@@ -33498,10 +35747,12 @@
       </span>
       <span class="price">${priceLabel}</span>`;
       row.prepend(itemIconEl(item2));
+      const owned = item2.slot !== "consumable" && (state2.inventory.includes(item2.id) || state2.consumableBelt.includes(item2.id) || Object.values(state2.equipped).includes(item2.id));
       const btn = document.createElement("button");
       btn.className = "small";
-      btn.textContent = "\u041A\u0443\u043F\u0438\u0442\u044C";
-      btn.disabled = !afford;
+      btn.dataset.itemId = item2.id;
+      btn.textContent = owned ? "\u0423\u0436\u0435 \u0435\u0441\u0442\u044C" : "\u041A\u0443\u043F\u0438\u0442\u044C";
+      btn.disabled = owned || !afford;
       const showCompare = () => showCompareTip(state2, item2, btn);
       btn.addEventListener("mouseenter", showCompare);
       btn.addEventListener("focus", showCompare);
@@ -33522,6 +35773,26 @@
         }
       });
       row.appendChild(btn);
+      if (!owned) {
+        const goalBtn = document.createElement("button");
+        const selected = state2.savingsGoal?.kind === "item" && state2.savingsGoal.id === item2.id;
+        goalBtn.className = "small ghost goal-set";
+        goalBtn.dataset.goalKind = "item";
+        goalBtn.dataset.goalId = item2.id;
+        goalBtn.textContent = selected ? "\u0426\u0435\u043B\u044C \u2713" : "\u0426\u0435\u043B\u044C";
+        goalBtn.title = "\u0421\u0434\u0435\u043B\u0430\u0442\u044C \u0446\u0435\u043B\u044C\u044E \u043D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u0438\u044F";
+        goalBtn.addEventListener("click", () => {
+          const result = setSavingsGoal(state2, "item", item2.id);
+          if (!result.ok) {
+            ctx2.toast(result.error);
+            return;
+          }
+          ctx2.sfx?.("tap");
+          ctx2.save();
+          rerenderCurrent();
+        });
+        row.appendChild(goalBtn);
+      }
       buyList.appendChild(row);
       btnByItemId[item2.id] = btn;
     }
@@ -33552,7 +35823,7 @@
     container.appendChild(buyPanel);
     const items = itemsForShop(state2, shopKey, shopStock(state2));
     const btnByItemId = buildBuyList(buyPanel, ctx2, items, newIds2);
-    if ((state2.stats.itemsBought || 0) === 0) {
+    if ((state2.stats.itemsBought || 0) === 0 && !onboardingBlocksLegacyTutorials(state2)) {
       const owned = /* @__PURE__ */ new Set([...state2.inventory || [], ...Object.values(state2.equipped || {})]);
       const afford = (it) => it.sealPrice ? state2.seals >= it.sealPrice : state2.coins >= it.price;
       const target = items.find((it) => !owned.has(it.id) && afford(it));
@@ -33580,7 +35851,7 @@
     container.appendChild(header(
       ctx2,
       "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u043B\u0430\u0432\u043A\u0438",
-      "\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F \u0434\u043B\u044F \u0434\u043E\u043C\u0430 \u0438 \u0441\u043A\u0443\u043F\u043A\u0430 \u0442\u0432\u043E\u0438\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A. \u0421\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u2014 \u0432 \u043B\u0430\u0432\u043A\u0430\u0445 \u043F\u043B\u043E\u0449\u0430\u0434\u0438.",
+      "\u041E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435 \u0434\u043B\u044F \u0434\u043E\u043C\u0430 \u0438 \u0441\u043A\u0443\u043F\u043A\u0430 \u0442\u0432\u043E\u0438\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A. \u0421\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435 \u2014 \u0432 \u043B\u0430\u0432\u043A\u0430\u0445 \u043F\u043B\u043E\u0449\u0430\u0434\u0438.",
       "hub"
     ));
     container.appendChild(quickNav(ctx2, [
@@ -33593,37 +35864,92 @@
     ]));
     const cosPanel = document.createElement("div");
     cosPanel.className = "panel";
-    cosPanel.innerHTML = '<h3>\u0423\u043A\u0440\u0430\u0448\u0435\u043D\u0438\u044F \u043B\u0430\u0432\u043A\u0438</h3><div class="muted" style="font-size:13px;margin-bottom:8px">\u0422\u043E\u043B\u044C\u043A\u043E \u043A\u0440\u0430\u0441\u043E\u0442\u0430 \u2014 \u043D\u0438\u043A\u0430\u043A\u043E\u0433\u043E \u0432\u043B\u0438\u044F\u043D\u0438\u044F \u043D\u0430 \u0441\u0438\u043B\u0443.</div>';
+    cosPanel.dataset.cosmeticsPanel = "lavka";
+    cosPanel.innerHTML = '<h3>\u041E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435 \u043B\u0430\u0432\u043A\u0438</h3><div class="muted" style="font-size:13px;margin-bottom:8px">\u041E\u0434\u043D\u0430 \u043F\u043E\u043B\u043D\u0430\u044F \u0442\u0435\u043C\u0430 \u0437\u0430 \u0440\u0430\u0437: \u0442\u0435\u043A\u0441\u0442\u0438\u043B\u044C, \u0444\u0443\u0440\u043D\u0438\u0442\u0443\u0440\u0430, \u043F\u043E\u043B\u043A\u0438, \u0441\u0432\u0435\u0442 \u0438 \u0432\u0438\u0434 \u0437\u0430 \u043E\u043A\u043D\u043E\u043C, \u0430 \u043D\u0435 \u043E\u0434\u0438\u043D \u0441\u043F\u0440\u0430\u0439\u0442.</div>';
+    if (!state2.settings.cosmeticsPackNoticeDismissed) {
+      const note = document.createElement("div");
+      note.className = "cosmetic-notice";
+      const text = document.createElement("span");
+      text.textContent = "\u041F\u0440\u0435\u0436\u043D\u0438\u0435 \u043F\u043E\u043A\u0443\u043F\u043A\u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B \u0432 \u043F\u0430\u043A\u0435\u0442\u0430\u0445 \u0431\u0435\u0437 \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E\u0439 \u043E\u043F\u043B\u0430\u0442\u044B. \u041F\u043E\u043B\u043D\u044B\u0435 \u0442\u0435\u043C\u044B \u0432\u043A\u043B\u044E\u0447\u0430\u044E\u0442\u0441\u044F \u043F\u043E \u043C\u0435\u0440\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0444\u0430\u0439\u043B\u043E\u0432; \u043F\u043E\u043A\u0430 \u0444\u0430\u0439\u043B\u0430 \u043D\u0435\u0442, \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u044E\u0442 \u0431\u0430\u0437\u043E\u0432\u0430\u044F \u043B\u0430\u0432\u043A\u0430 \u0438 \u043F\u0440\u0435\u0436\u043D\u0438\u0439 sprite fallback.";
+      const dismiss = document.createElement("button");
+      dismiss.type = "button";
+      dismiss.className = "small ghost";
+      dismiss.dataset.cosmeticNoticeDismiss = "1";
+      dismiss.textContent = "\u041F\u043E\u043D\u044F\u0442\u043D\u043E";
+      dismiss.setAttribute("aria-label", "\u0421\u043A\u0440\u044B\u0442\u044C \u043F\u043E\u044F\u0441\u043D\u0435\u043D\u0438\u0435 \u043E\u0431 \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0438");
+      dismiss.addEventListener("click", () => {
+        state2.settings.cosmeticsPackNoticeDismissed = true;
+        ctx2.save();
+        note.remove();
+      });
+      note.append(text, dismiss);
+      cosPanel.appendChild(note);
+    }
     const cosList = document.createElement("div");
     cosList.className = "list";
-    for (const c of COSMETICS) {
+    const previewEl = (src, icon) => {
+      const preview = document.createElement("span");
+      preview.className = "cosmetic-preview";
+      preview.textContent = icon;
+      const img = document.createElement("img");
+      img.className = "cosmetic-preview-img";
+      img.alt = "";
+      img.addEventListener("error", () => img.remove());
+      img.src = src;
+      preview.prepend(img);
+      return preview;
+    };
+    const baseActive = state2.cosmeticsActive.length === 0;
+    const baseRow = document.createElement("div");
+    baseRow.className = "row" + (baseActive ? " done" : "");
+    baseRow.dataset.cosmeticRow = "base";
+    baseRow.innerHTML = '<span class="grow"><div class="name">\u0411\u0430\u0437\u043E\u0432\u0430\u044F \u043B\u0430\u0432\u043A\u0430</div><div class="desc">\u0418\u0441\u0445\u043E\u0434\u043D\u044B\u0439 \u0432\u0438\u0434 \u0431\u0435\u0437 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u044F.</div></span><span class="price">\u0411\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E</span>';
+    baseRow.prepend(previewEl("assets/hub/hub_banner_web.jpg", "\u{1F3EE}"));
+    const baseBtn = document.createElement("button");
+    baseBtn.type = "button";
+    baseBtn.className = "small" + (baseActive ? " ghost" : "");
+    baseBtn.dataset.cosmeticId = "base";
+    baseBtn.textContent = baseActive ? "\u0412\u044B\u0431\u0440\u0430\u043D\u0430" : "\u0412\u044B\u0431\u0440\u0430\u0442\u044C";
+    baseBtn.setAttribute("aria-pressed", String(baseActive));
+    baseBtn.addEventListener("click", () => {
+      selectCosmetic(state2, null);
+      ctx2.save();
+      rerenderCurrent();
+    });
+    baseRow.appendChild(baseBtn);
+    cosList.appendChild(baseRow);
+    for (const c of COSMETIC_PACKS) {
       const owned = state2.cosmeticsOwned.includes(c.id);
-      const active = state2.cosmeticsActive.includes(c.id);
+      const active = state2.cosmeticsActive.length === 1 && state2.cosmeticsActive[0] === c.id;
       const row = document.createElement("div");
       row.className = "row" + (active ? " done" : "");
+      row.dataset.cosmeticRow = c.id;
       const price = c.sealPrice ? `\u{1F530} ${c.sealPrice}` : `\u{1FA99} ${c.price}`;
       row.innerHTML = `
-      <span class="icon">${c.icon}</span>
       <span class="grow">
         <div class="name">${c.name}${c.season ? ` <span class="badge">${SEASON_LABEL[c.season]}</span>` : ""}</div>
-        <div class="desc">${c.description}</div>
+        <ul class="cosmetic-changes">${c.changes.map((change) => `<li>${change}</li>`).join("")}</ul>
       </span>`;
+      row.prepend(previewEl(c.scenes.lavka.preview, c.icon));
       const btn = document.createElement("button");
+      btn.type = "button";
       btn.className = "small" + (active ? " ghost" : "");
+      btn.dataset.cosmeticId = c.id;
+      btn.setAttribute("aria-pressed", String(active));
       if (!owned) {
         btn.innerHTML = `\u041A\u0443\u043F\u0438\u0442\u044C \xB7 ${price}`;
         btn.disabled = c.sealPrice ? state2.seals < c.sealPrice : state2.coins < c.price;
         btn.addEventListener("click", () => {
           const r = buyCosmetic(state2, c.id);
           if (r.ok) {
-            ctx2.toast(`${c.name} \u2014 \u0443\u0436\u0435 \u0432 \u043B\u0430\u0432\u043A\u0435!`);
+            ctx2.toast(`${c.name} \u2014 \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435 \u0432\u044B\u0431\u0440\u0430\u043D\u043E.`);
             ctx2.sfx?.("success");
             ctx2.save();
             rerenderCurrent();
           } else ctx2.toast(r.error);
         });
       } else {
-        btn.textContent = active ? "\u0423\u0431\u0440\u0430\u0442\u044C" : "\u0412\u044B\u0441\u0442\u0430\u0432\u0438\u0442\u044C";
+        btn.textContent = active ? "\u0423\u0431\u0440\u0430\u0442\u044C" : "\u0412\u044B\u0431\u0440\u0430\u0442\u044C";
         btn.addEventListener("click", () => {
           toggleCosmetic(state2, c.id);
           ctx2.save();
@@ -33744,6 +36070,13 @@
       { icon: "\u{1F392}", label: "\u041A\u043E\u043C\u043D\u0430\u0442\u0430 \u0440\u044B\u0446\u0430\u0440\u044F", screen: "equip", primary: true },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
+    refreshBattleEnergy(state2);
+    const energyPanel = document.createElement("div");
+    energyPanel.className = "panel battle-energy battle-energy-list";
+    energyPanel.dataset.energyValue = String(state2.battleEnergy.value);
+    const nextMinutes = Math.max(1, Math.ceil(millisecondsToNextEnergy(state2) / 6e4));
+    energyPanel.textContent = `\u26A1 \u042D\u043D\u0435\u0440\u0433\u0438\u044F \u043F\u043E\u0445\u043E\u0434\u043E\u0432: ${state2.battleEnergy.value}/${BATTLE_ENERGY_CAP} \xB7 +1 \u0437\u0430 2 \u0447\u0430\u0441\u0430` + (state2.battleEnergy.value >= BATTLE_ENERGY_CAP ? " \xB7 \u0437\u0430\u043F\u0430\u0441 \u043F\u043E\u043B\u043D\u044B\u0439" : ` \xB7 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0447\u0435\u0440\u0435\u0437 ${nextMinutes} \u043C\u0438\u043D`);
+    container.appendChild(energyPanel);
     const worlds = battleWorlds(state2);
     const won = Object.keys(state2.battlesDone).length;
     const firstUnbeaten = firstUnbeatenBattle(state2);
@@ -33802,6 +36135,7 @@
       </span>`;
       if (available) {
         const btn = document.createElement("button");
+        btn.dataset.battleId = b.id;
         btn.textContent = done ? "\u0421\u043D\u043E\u0432\u0430" : "\u0412 \u043F\u043E\u0445\u043E\u0434!";
         btn.className = done ? "" : "primary";
         btn.addEventListener("click", () => ctx2.go("battle", { id: b.id }));
@@ -33814,7 +36148,7 @@
     if (scrollTarget && scrollTarget.scrollIntoView) {
       setTimeout(() => scrollTarget.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
-    if (won === 0) {
+    if (won === 0 && !onboardingBlocksLegacyTutorials(state2)) {
       const firstBtn = list.children[0]?.querySelector?.("button");
       if (firstBtn) {
         startTutorial(ctx2, "first_battle", [
@@ -33918,6 +36252,26 @@
           });
         }
         row.appendChild(btn);
+        if (!def.hired) {
+          const goalBtn = document.createElement("button");
+          const selected = state2.savingsGoal?.kind === "crew" && state2.savingsGoal.id === def.id;
+          goalBtn.className = "small ghost goal-set";
+          goalBtn.dataset.goalKind = "crew";
+          goalBtn.dataset.goalId = def.id;
+          goalBtn.textContent = selected ? "\u0426\u0435\u043B\u044C \u2713" : "\u0426\u0435\u043B\u044C";
+          goalBtn.title = "\u0421\u0434\u0435\u043B\u0430\u0442\u044C \u0446\u0435\u043B\u044C\u044E \u043D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u0438\u044F";
+          goalBtn.addEventListener("click", () => {
+            const result = setSavingsGoal(state2, "crew", def.id);
+            if (!result.ok) {
+              ctx2.toast(result.error);
+              return;
+            }
+            ctx2.sfx?.("tap");
+            ctx2.save();
+            rerender();
+          });
+          row.appendChild(goalBtn);
+        }
         list.appendChild(row);
       }
       panel.appendChild(list);
@@ -34108,7 +36462,8 @@
         difficulty: 1,
         grid: [gw, gh],
         objects: objects.map((o) => ({ ...o })),
-        rewards: [{ type: "coins", amount: 15 }],
+        rewards: [],
+        // Монеты вычисляет core/economy.js по нормативной модели
         intro: "\u0423\u0440\u043E\u0432\u0435\u043D\u044C \u0438\u0437 \u043C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u043E\u0439."
       };
     }
@@ -34289,6 +36644,84 @@
   }
 
   // src/ui/craftView.js
+  function preferredExchangeOutput(state2, inputId) {
+    for (const recipe of recipeList(state2)) {
+      for (const [matId, need] of Object.entries(recipe.materials)) {
+        if (matId === inputId || isBossMaterial(matId)) continue;
+        if ((state2.materials[matId] || 0) < need) return matId;
+      }
+    }
+    return REGULAR_MATERIALS.find((material) => material.id !== inputId)?.id || null;
+  }
+  function appendMaterialExchange(container, state2, ctx2, rerender) {
+    const inputs = materialExchangeInputs(state2);
+    if (inputs.length === 0) return;
+    const panel = document.createElement("div");
+    panel.className = "panel material-exchange";
+    panel.innerHTML = "<h3>\u041E\u0431\u043C\u0435\u043D\u043D\u0438\u043A \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430</h3>";
+    const description = document.createElement("div");
+    description.className = "muted";
+    description.textContent = "\u041E\u0431\u044B\u0447\u043D\u044B\u0439 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B: 3 \u2192 1 \xB7 \u0431\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0439: 1 \u2192 2. \u041C\u0435\u043D\u044F\u0442\u044C \u043C\u043E\u0436\u043D\u043E \u043C\u0435\u0436\u0434\u0443 \u043B\u044E\u0431\u044B\u043C\u0438 \u043C\u0438\u0440\u0430\u043C\u0438; \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0431\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0439 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B \u043D\u0435\u043B\u044C\u0437\u044F.";
+    panel.appendChild(description);
+    const controls = document.createElement("div");
+    controls.className = "material-exchange-controls";
+    const inputLabel = document.createElement("label");
+    inputLabel.textContent = "\u041E\u0442\u0434\u0430\u0442\u044C";
+    const inputSelect = document.createElement("select");
+    inputSelect.dataset.exchangeInput = "1";
+    for (const material of inputs) {
+      const option = document.createElement("option");
+      option.value = material.id;
+      option.textContent = `${material.icon} ${material.name} \xD7${state2.materials[material.id]}${isBossMaterial(material.id) ? " \xB7 \u0431\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0439" : ""}`;
+      inputSelect.appendChild(option);
+    }
+    inputSelect.value = inputs[0].id;
+    inputLabel.appendChild(inputSelect);
+    const outputLabel = document.createElement("label");
+    outputLabel.textContent = "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C";
+    const outputSelect = document.createElement("select");
+    outputSelect.dataset.exchangeOutput = "1";
+    for (const material of REGULAR_MATERIALS) {
+      const option = document.createElement("option");
+      option.value = material.id;
+      option.textContent = `${material.icon} ${material.name}`;
+      outputSelect.appendChild(option);
+    }
+    outputSelect.value = preferredExchangeOutput(state2, inputSelect.value);
+    outputLabel.appendChild(outputSelect);
+    const button = document.createElement("button");
+    button.className = "small primary";
+    button.dataset.materialExchange = "1";
+    button.textContent = "\u041E\u0431\u043C\u0435\u043D\u044F\u0442\u044C";
+    const rate = document.createElement("div");
+    rate.className = "muted material-exchange-rate";
+    function syncTerms() {
+      for (const option of outputSelect.children) option.disabled = option.value === inputSelect.value;
+      if (outputSelect.value === inputSelect.value) {
+        outputSelect.value = preferredExchangeOutput(state2, inputSelect.value);
+      }
+      const terms = materialExchangeTerms(inputSelect.value, outputSelect.value);
+      button.disabled = !terms || (state2.materials[inputSelect.value] || 0) < terms.cost;
+      rate.textContent = terms ? `\u041A\u0443\u0440\u0441: ${terms.cost} \xD7 ${materialLabel(terms.input)} \u2192 ${terms.received} \xD7 ${materialLabel(terms.output)}.` : "\u0412\u044B\u0431\u0435\u0440\u0438 \u0440\u0430\u0437\u043D\u044B\u0435 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B. \u0411\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0439 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B \u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D \u0442\u043E\u043B\u044C\u043A\u043E \u043A\u0430\u043A \u0432\u0445\u043E\u0434.";
+    }
+    inputSelect.addEventListener("change", syncTerms);
+    outputSelect.addEventListener("change", syncTerms);
+    button.addEventListener("click", () => {
+      const result = exchangeMaterial(state2, inputSelect.value, outputSelect.value);
+      if (!result.ok) {
+        ctx2.toast(result.error);
+        return;
+      }
+      ctx2.toast(`\u041E\u0431\u043C\u0435\u043D \u0441\u043E\u0441\u0442\u043E\u044F\u043B\u0441\u044F: ${materialLabel(result.output)} \xD7${result.received}.`);
+      ctx2.sfx?.("success");
+      ctx2.save();
+      rerender();
+    });
+    controls.append(inputLabel, outputLabel, button);
+    panel.append(controls, rate);
+    container.appendChild(panel);
+    syncTerms();
+  }
   function renderCraft(container, ctx2) {
     const { state: state2 } = ctx2;
     container.appendChild(header(
@@ -34352,6 +36785,7 @@
       row.prepend(itemIconEl(item2));
       const btn = document.createElement("button");
       btn.className = "small" + (r.canCraft ? " primary" : "");
+      btn.dataset.recipeId = r.id;
       btn.textContent = "\u0421\u0434\u0435\u043B\u0430\u0442\u044C";
       btn.disabled = !r.canCraft;
       btn.title = r.note;
@@ -34367,11 +36801,30 @@
         }
       });
       row.appendChild(btn);
+      const goalBtn = document.createElement("button");
+      const selected = state2.savingsGoal?.kind === "recipe" && state2.savingsGoal.id === r.id;
+      goalBtn.className = "small ghost goal-set";
+      goalBtn.dataset.goalKind = "recipe";
+      goalBtn.dataset.goalId = r.id;
+      goalBtn.textContent = selected ? "\u0426\u0435\u043B\u044C \u2713" : "\u0426\u0435\u043B\u044C";
+      goalBtn.title = "\u0421\u0434\u0435\u043B\u0430\u0442\u044C \u0446\u0435\u043B\u044C\u044E \u043D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u0438\u044F";
+      goalBtn.addEventListener("click", () => {
+        const result = setSavingsGoal(state2, "recipe", r.id);
+        if (!result.ok) {
+          ctx2.toast(result.error);
+          return;
+        }
+        ctx2.sfx?.("tap");
+        ctx2.save();
+        rerender();
+      });
+      row.appendChild(goalBtn);
       rcpList.appendChild(row);
     }
     rcpPanel.appendChild(rcpList);
     layout.appendChild(rcpPanel);
     container.appendChild(layout);
+    appendMaterialExchange(container, state2, ctx2, rerender);
     function rerender() {
       container.innerHTML = "";
       renderCraft(container, ctx2);
@@ -34923,6 +37376,20 @@
         ctx2.go("hub");
       }
     }));
+    if (state2.onboarding?.guide?.started) {
+      helpSec.appendChild(makeActionRow({
+        name: "\u041F\u0443\u0442\u0435\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C",
+        hint: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u043E\u0431\u0437\u043E\u0440\u0443 \u0440\u0430\u0437\u0434\u0435\u043B\u043E\u0432 \u0431\u0435\u0437 \u0441\u0431\u0440\u043E\u0441\u0430 \u043E\u0442\u043C\u0435\u0442\u043E\u043A \u0438 \u0431\u0435\u0437 \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E\u0439 \u043F\u0435\u0440\u0432\u043E\u0439 \u0434\u0443\u0433\u0438.",
+        btnText: "\u{1F5FA}\uFE0F \u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043F\u0443\u0442\u0435\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C",
+        onClick: () => {
+          if (!reopenOnboardingGuide(state2)) return;
+          ctx2.save();
+          const next = onboardingGuideNext(state2);
+          if (next) ctx2.go(next.route.name, next.route.params);
+          else ctx2.go("hub");
+        }
+      }));
+    }
     container.appendChild(helpSec);
     const dangerSec = makeSection("\u26A0\uFE0F \u041E\u043F\u0430\u0441\u043D\u0430\u044F \u0437\u043E\u043D\u0430", true);
     dangerSec.appendChild(makeActionRow({
@@ -34996,6 +37463,20 @@
 
   // src/ui/formationView.js
   var FRONT2 = [0, 1, 2];
+  function formatEnergyWait(ms) {
+    const totalMinutes = Math.max(1, Math.ceil(ms / 6e4));
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return hours > 0 ? `${hours} \u0447 ${minutes} \u043C\u0438\u043D` : `${minutes} \u043C\u0438\u043D`;
+  }
+  function formatRewardWins(count) {
+    const lastTwo = count % 100;
+    const last = count % 10;
+    if (lastTwo >= 11 && lastTwo <= 14) return "\u043D\u0430\u0433\u0440\u0430\u0434\u043D\u044B\u0445 \u043F\u043E\u0431\u0435\u0434";
+    if (last === 1) return "\u043D\u0430\u0433\u0440\u0430\u0434\u043D\u0430\u044F \u043F\u043E\u0431\u0435\u0434\u0430";
+    if (last >= 2 && last <= 4) return "\u043D\u0430\u0433\u0440\u0430\u0434\u043D\u044B\u0435 \u043F\u043E\u0431\u0435\u0434\u044B";
+    return "\u043D\u0430\u0433\u0440\u0430\u0434\u043D\u044B\u0445 \u043F\u043E\u0431\u0435\u0434";
+  }
   function unitSpriteEl(art, icon, mini = false, fallbackArt = null) {
     const span = document.createElement("span");
     span.className = "uf-icon unit-art" + (mini ? " mini" : "");
@@ -35082,12 +37563,30 @@
     }
   }
   function renderFormation(container, ctx2, params) {
+    let currentCleanup2 = null;
+    let disposed = false;
+    const rerender = () => {
+      currentCleanup2?.();
+      if (disposed) return;
+      container.innerHTML = "";
+      currentCleanup2 = renderFormationScreen(container, ctx2, params, rerender) || null;
+    };
+    rerender();
+    return () => {
+      disposed = true;
+      currentCleanup2?.();
+      currentCleanup2 = null;
+    };
+  }
+  function renderFormationScreen(container, ctx2, params, rerender) {
     const battle = BATTLE_BY_ID[params.id];
     if (!battle || !battleAvailable(ctx2.state, battle.id)) {
       ctx2.go("battles");
       return;
     }
     const { state: state2 } = ctx2;
+    const energy = battleEnergyTerms(state2, battle);
+    const dropPreview = bossDropStatus(state2, battle);
     container.appendChild(header(ctx2, battle.name, battle.tip, "battles"));
     const field = document.createElement("div");
     field.className = "form-field";
@@ -35128,6 +37627,7 @@
         if (!selectedUnit) return;
         moveFormationSlot(state2, selectedUnit, s);
         selectedUnit = null;
+        ctx2.save();
         ctx2.sfx?.("rotate");
         rerender();
       });
@@ -35193,6 +37693,17 @@
       ctx2.sfx?.("rotate");
       ctx2.save();
       rerender();
+    }
+    let dragActive = true;
+    function cleanupDrag() {
+      if (!dragActive) return;
+      dragActive = false;
+      window.removeEventListener("pointermove", onDragMove);
+      window.removeEventListener("pointerup", onDragEnd);
+      unitDrag?.ghost?.remove();
+      unitDrag = null;
+      hoverSlotEl?.classList.remove("selected");
+      hoverSlotEl = null;
     }
     window.addEventListener("pointermove", onDragMove);
     window.addEventListener("pointerup", onDragEnd);
@@ -35260,20 +37771,62 @@
     const spacer = document.createElement("span");
     spacer.className = "form-toolbar-spacer";
     prepPanel.appendChild(spacer);
+    const rewardBlocked = energy.repeat && !energy.enough;
     const goBtn = document.createElement("button");
     goBtn.className = "small primary form-go";
-    goBtn.textContent = "\u2694\uFE0F \u0412 \u0431\u043E\u0439!";
-    goBtn.addEventListener("click", () => startBattle());
+    goBtn.textContent = rewardBlocked ? `\u041D\u0443\u0436\u043D\u043E ${energy.cost} \u26A1` : "\u2694\uFE0F \u0412 \u0431\u043E\u0439!";
+    goBtn.dataset.battleStart = battle.id;
+    goBtn.disabled = rewardBlocked;
+    goBtn.title = rewardBlocked ? "\u0414\u043B\u044F \u043D\u0430\u0433\u0440\u0430\u0434\u043D\u043E\u0433\u043E \u043F\u043E\u0432\u0442\u043E\u0440\u0430 \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u044D\u043D\u0435\u0440\u0433\u0438\u0438. \u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430 \u0432\u0441\u0435\u0433\u0434\u0430." : energy.first ? "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u0431\u0435\u0434\u0430 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u0430, \u0434\u0430\u0436\u0435 \u043F\u0440\u0438 \u043D\u0443\u043B\u0435\u0432\u043E\u0439 \u044D\u043D\u0435\u0440\u0433\u0438\u0438." : `\u041D\u0430\u0433\u0440\u0430\u0434\u043D\u0430\u044F \u043F\u043E\u0431\u0435\u0434\u0430: \u2212${energy.cost} \u044D\u043D\u0435\u0440\u0433\u0438\u0438.`;
+    goBtn.addEventListener("click", () => startBattle(false));
     prepPanel.appendChild(goBtn);
+    const practiceBtn = document.createElement("button");
+    practiceBtn.className = "small form-practice" + (rewardBlocked ? " primary" : " ghost");
+    practiceBtn.textContent = rewardBlocked ? "\u{1F6E1}\uFE0F \u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430 \u0431\u0435\u0437 \u043D\u0430\u0433\u0440\u0430\u0434" : "\u{1F6E1}\uFE0F \u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430";
+    practiceBtn.dataset.battlePractice = battle.id;
+    practiceBtn.title = "\u0422\u043E\u0442 \u0436\u0435 \u0431\u043E\u0439: \u0431\u0435\u0437 \u043D\u0430\u0433\u0440\u0430\u0434 \u0438 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441\u0430, \u0431\u0435\u0437 \u0442\u0440\u0430\u0442\u044B \u044D\u043D\u0435\u0440\u0433\u0438\u0438 \u0438 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432 \u043F\u043E\u044F\u0441\u0430.";
+    practiceBtn.addEventListener("click", () => startBattle(true));
+    prepPanel.appendChild(practiceBtn);
     container.appendChild(prepPanel);
-    function rerender() {
-      container.innerHTML = "";
-      renderFormation(container, ctx2, params);
+    const energyPanel = document.createElement("div");
+    energyPanel.className = "panel battle-energy" + (rewardBlocked ? " is-low" : "");
+    energyPanel.dataset.energyValue = String(energy.value);
+    const energyMain = document.createElement("div");
+    energyMain.className = "battle-energy-main";
+    energyMain.textContent = `\u26A1 \u042D\u043D\u0435\u0440\u0433\u0438\u044F \u043F\u043E\u0445\u043E\u0434\u043E\u0432: ${energy.value}/${energy.cap}`;
+    const energyRules = document.createElement("div");
+    energyRules.className = "muted";
+    energyRules.textContent = energy.first ? `\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u0431\u0435\u0434\u0430 \u2014 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E \xB7 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0435 \u2014 ${battleEnergyCost(battle, true)} \u26A1 \xB7 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u2014 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E.` : `\u041F\u043E\u0431\u0435\u0434\u0430 \u0441 \u043D\u0430\u0433\u0440\u0430\u0434\u043E\u0439 \u2014 ${energy.cost} \u26A1 \xB7 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0438 \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430 \u2014 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E.`;
+    const energyTimer = document.createElement("div");
+    energyTimer.className = "muted battle-energy-timer";
+    energyTimer.textContent = energy.value >= energy.cap ? "\u0417\u0430\u043F\u0430\u0441 \u043F\u043E\u043B\u043D\u044B\u0439 \xB7 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435: +1 \u0437\u0430 2 \u0447\u0430\u0441\u0430." : `\u0414\u043E \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0435\u0439 \u0435\u0434\u0438\u043D\u0438\u0446\u044B: ${formatEnergyWait(energy.nextInMs)} \xB7 \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435: +1 \u0437\u0430 2 \u0447\u0430\u0441\u0430.`;
+    energyPanel.append(energyMain, energyRules, energyTimer);
+    container.appendChild(energyPanel);
+    if (dropPreview) {
+      const dropItem = ITEM_BY_ID[dropPreview.itemId];
+      const dropPanel = document.createElement("div");
+      dropPanel.className = "panel boss-drop-preview";
+      const dropName = document.createElement("div");
+      dropName.className = "boss-drop-name";
+      dropName.textContent = `\u{1F381} \u0412\u043E\u0437\u043C\u043E\u0436\u043D\u0430\u044F \u043D\u0430\u0445\u043E\u0434\u043A\u0430: \xAB${dropItem.name}\xBB`;
+      const dropChance = document.createElement("div");
+      dropChance.className = "muted";
+      dropChance.textContent = dropPreview.collected ? "\u0423\u0436\u0435 \u0432 \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438 \u2014 \u0434\u0443\u0431\u043B\u0438\u043A\u0430\u0442 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435 \u0432\u044B\u043F\u0430\u0434\u0435\u0442." : dropPreview.guaranteed ? "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u043D\u0430\u0433\u0440\u0430\u0434\u043D\u0430\u044F \u043F\u043E\u0431\u0435\u0434\u0430 \u0433\u0430\u0440\u0430\u043D\u0442\u0438\u0440\u0443\u0435\u0442 \u043D\u0430\u0445\u043E\u0434\u043A\u0443." : `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439 \u0448\u0430\u043D\u0441: ${Math.round(dropPreview.chance * 100)}% \xB7 \u0433\u0430\u0440\u0430\u043D\u0442\u0438\u044F \u043D\u0435 \u043F\u043E\u0437\u0434\u043D\u0435\u0435 \u0447\u0435\u043C \u0447\u0435\u0440\u0435\u0437 ${dropPreview.remaining} ${formatRewardWins(dropPreview.remaining)}.`;
+      dropPanel.append(dropName, dropChance);
+      container.appendChild(dropPanel);
     }
-    function startBattle() {
-      const seed = Date.now() % 1e5 + 1;
-      const result = runBattle(state2, battle.id, seed);
-      ctx2.save();
+    let replayCleanup = null;
+    function startBattle(practice = false) {
+      const seed = onboardingFixedBattleSeed(state2, battle.id) ?? Date.now() % 1e5 + 1;
+      const result = runBattle(state2, battle.id, seed, { practice });
+      if (result?.blocked) {
+        ctx2.toast?.(result.error);
+        rerender();
+        return;
+      }
+      if (!result) return;
+      cleanupDrag();
+      if (!result.practice) ctx2.save();
       playBattle(result);
     }
     function playBattle(result) {
@@ -35287,15 +37840,17 @@
         const d = ENEMY_BY_ID[e.id];
         unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)), art: e.id });
       });
-      playBattleReplay(container, ctx2, {
+      replayCleanup = playBattleReplay(container, ctx2, {
         title: battle.name,
         subtitle: battle.tip,
         backTo: "battles",
         world: battle.world,
         result,
         unitDefs,
+        onboardingResult: result.practice ? null : { kind: "battle", id: battle.id },
         overlayButtons: (rep) => {
-          const nextB = rep.victory ? nextBattle(battle.id) : null;
+          const tutorialCta = result.practice ? null : onboardingCtaForResult(state2, { kind: "battle", id: battle.id });
+          const nextB = rep.victory && !result.practice && !tutorialCta ? nextBattle(battle.id) : null;
           return [
             ...nextB ? [{ label: `\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0431\u0438\u0442\u0432\u0430 \u2192 ${nextB.name}`, primary: true, onClick: () => ctx2.go("battle", { id: nextB.id }) }] : [],
             { label: "\u{1F392} \u041A \u044D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0435", onClick: () => ctx2.go("equip") },
@@ -35304,18 +37859,18 @@
               { label: "\u{1F3EC} \u0412 \u0442\u043E\u0440\u0433\u043E\u0432\u044B\u0439 \u043A\u0432\u0430\u0440\u0442\u0430\u043B \u2014 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u0435", onClick: () => ctx2.go("hub", { scene: "market" }) }
             ],
             { label: "\u{1F501} \u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => ctx2.go("battle", { id: battle.id }) },
-            { label: "\u041A \u043F\u043E\u0445\u043E\u0434\u0430\u043C", primary: !nextB, onClick: () => ctx2.go("battles") }
+            { label: "\u041A \u043F\u043E\u0445\u043E\u0434\u0430\u043C", primary: !nextB && !tutorialCta, onClick: () => ctx2.go("battles") }
           ];
         }
       });
     }
     return () => {
-      window.removeEventListener("pointermove", onDragMove);
-      window.removeEventListener("pointerup", onDragEnd);
-      if (unitDrag?.ghost) unitDrag.ghost.remove();
+      cleanupDrag();
+      replayCleanup?.();
+      replayCleanup = null;
     };
   }
-  function playBattleReplay(container, ctx2, { title, subtitle, backTo = "battles", world, result, unitDefs, overlayButtons }) {
+  function playBattleReplay(container, ctx2, { title, subtitle, backTo = "battles", world, result, unitDefs, overlayButtons, onboardingResult = null }) {
     container.innerHTML = "";
     container.appendChild(header(ctx2, title, subtitle ?? "\u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u0438 \u0443\u0447\u0438\u0441\u044C", backTo));
     const field2 = document.createElement("div");
@@ -35388,6 +37943,45 @@
     let timer = null;
     let i = 0;
     let done = false;
+    let cancelled = false;
+    let resultOverlay = null;
+    const timers = /* @__PURE__ */ new Set();
+    const frames = /* @__PURE__ */ new Set();
+    function later(fn, ms) {
+      if (cancelled) return null;
+      const id = setTimeout(() => {
+        timers.delete(id);
+        if (!cancelled) fn();
+      }, ms);
+      timers.add(id);
+      return id;
+    }
+    function cancelLater(id) {
+      if (id === null || id === void 0) return;
+      clearTimeout(id);
+      timers.delete(id);
+    }
+    function frame(fn) {
+      const request = window.requestAnimationFrame?.bind(window);
+      if (!request) return later(fn, 16);
+      const id = request(() => {
+        frames.delete(id);
+        if (!cancelled) fn();
+      });
+      frames.add(id);
+      return id;
+    }
+    function cleanup() {
+      if (cancelled) return;
+      cancelled = true;
+      done = true;
+      for (const id of timers) clearTimeout(id);
+      timers.clear();
+      for (const id of frames) window.cancelAnimationFrame?.(id);
+      frames.clear();
+      resultOverlay?.remove();
+      resultOverlay = null;
+    }
     function figOf(uid) {
       return figures.get(uid) || null;
     }
@@ -35423,7 +38017,7 @@
       el.classList.remove(cls);
       void el.offsetWidth;
       el.classList.add(cls);
-      setTimeout(() => el.classList.remove(cls), ms);
+      later(() => el.classList.remove(cls), ms);
     }
     function floatText(fig, text, cls) {
       if (!fig) return;
@@ -35434,14 +38028,14 @@
       el.style.left = `${fig.x}%`;
       el.style.top = `calc(${fig.y}% - ${lift}px)`;
       field2.appendChild(el);
-      setTimeout(() => el.remove(), 900);
+      later(() => el.remove(), 900);
     }
     function animateHit(e) {
       const atk = figOf(e.fromUid);
       const def = figOf(e.toUid);
       if (!atk || !def) return;
       setFigPose(atk.el, "atk");
-      setTimeout(() => {
+      later(() => {
         if (atk.unit.hp > 0) setFigPose(atk.el, "idle");
       }, 420);
       if (e.ranged || e.magic) {
@@ -35453,17 +38047,17 @@
         proj.style.left = `${atk.x}%`;
         proj.style.top = `calc(${atk.y}% - ${lift}px)`;
         field2.appendChild(proj);
-        requestAnimationFrame(() => {
+        frame(() => {
           proj.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
         });
-        setTimeout(() => proj.remove(), 340);
-        setTimeout(() => hitLand(def, e), 320);
+        later(() => proj.remove(), 340);
+        later(() => hitLand(def, e), 320);
       } else {
         const dx = (def.x - atk.x) * 0.5;
         const dy = (def.y - atk.y) * 0.5;
         atk.el.style.transition = "transform 0.14s ease";
         atk.el.style.transform = `translate(-50%, -50%) translate(${dx * field2.offsetWidth / 100}px, ${dy * field2.offsetHeight / 100}px)`;
-        setTimeout(() => {
+        later(() => {
           atk.el.style.transform = "";
           hitLand(def, e);
         }, 160);
@@ -35478,7 +38072,7 @@
         pulse(defFig.el, "anim-death", 650);
       } else {
         setFigPose(defFig.el, "hurt");
-        setTimeout(() => {
+        later(() => {
           if (defFig.unit.hp > 0) setFigPose(defFig.el, "idle");
         }, 480);
       }
@@ -35543,7 +38137,7 @@
             f.el.style.left = `${nx}%`;
             f.el.style.top = `${ny}%`;
             setFigPose(f.el, "walk");
-            setTimeout(() => {
+            later(() => {
               if (f.unit.hp > 0) setFigPose(f.el, "idle");
             }, 300);
           }
@@ -35567,7 +38161,7 @@
               if (f.unit.hp <= 0) setFigPose(f.el, "down");
               else {
                 setFigPose(f.el, "hurt");
-                setTimeout(() => {
+                later(() => {
                   if (f.unit.hp > 0) setFigPose(f.el, "idle");
                 }, 320);
               }
@@ -35599,7 +38193,7 @@
       return { sleep: "\u0437\u0430\u0441\u044B\u043F\u0430\u0435\u0442 \u{1F634}", poison: "\u043E\u0442\u0440\u0430\u0432\u043B\u0435\u043D \u2620\uFE0F", slow: "\u0437\u0430\u043C\u0435\u0434\u043B\u0435\u043D \u{1F40C}", fear: "\u043E\u0445\u0432\u0430\u0447\u0435\u043D \u0441\u0442\u0440\u0430\u0445\u043E\u043C \u{1F628}", regen: "\u043F\u043E\u0434\u043A\u0440\u0435\u043F\u043B\u044F\u0435\u0442\u0441\u044F \u{1F49A}", shield: "\u043F\u043E\u0434 \u0449\u0438\u0442\u043E\u043C \u0437\u0435\u043B\u044C\u044F \u{1F6E1}\uFE0F" }[kind] || kind;
     }
     function step() {
-      if (done) return;
+      if (done || cancelled) return;
       if (i >= result.log.length) {
         endScreen();
         return;
@@ -35612,10 +38206,10 @@
         i += 1;
       }
       const delay = applied.t === "move" ? Math.max(70, speed * 0.3) : speed;
-      timer = setTimeout(step, delay);
+      timer = later(step, delay);
     }
     function finishNow() {
-      if (done) return;
+      if (done || cancelled) return;
       while (i < result.log.length) {
         i += 1;
       }
@@ -35623,28 +38217,41 @@
       endScreen();
     }
     function endScreen() {
-      if (done) return;
+      if (done || cancelled) return;
       done = true;
-      clearTimeout(timer);
+      cancelLater(timer);
+      timer = null;
       const rep = result.report;
       ctx2.sfx?.(rep.victory ? "success" : "fail");
       const rewardHtml = (result.rewards || []).map(rewardText).filter(Boolean).join("<br>");
-      const overlay = showOverlay(ctx2, {
-        title: rep.victory ? "\u{1F3C6} \u041F\u043E\u0431\u0435\u0434\u0430!" : "\u{1F319} \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C",
-        subtitle: `\u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: ${rep.dealt} \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: ${rep.taken} \xB7 \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: ${rep.foesDown}/${rep.foesTotal}` + (rep.timedOut ? "<br>\u23F3 \u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u0432\u044B\u044F\u0432\u043B\u0435\u043D." : "") + ((rep.alliesStats || []).length > 1 ? "<br>" + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join(" \xB7 ") : ""),
+      const hasEnergy = Number.isFinite(result.energyAfter);
+      const energyHtml = result.practice ? `<br>\u{1F6E1}\uFE0F \u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430 \u0431\u0435\u0437 \u043D\u0430\u0433\u0440\u0430\u0434: \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0438 \u043F\u043E\u044F\u0441 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B${hasEnergy ? ` \xB7 \u044D\u043D\u0435\u0440\u0433\u0438\u044F ${result.energyAfter}/${BATTLE_ENERGY_CAP} \u043D\u0435 \u043F\u043E\u0442\u0440\u0430\u0447\u0435\u043D\u0430` : ""}.` : hasEnergy ? rep.victory ? `<br>\u26A1 \u042D\u043D\u0435\u0440\u0433\u0438\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u0431\u0435\u0434\u044B: ${result.energyAfter}/${BATTLE_ENERGY_CAP}${result.energySpent ? ` (\u2212${result.energySpent})` : " \xB7 \u0431\u0435\u0437 \u0442\u0440\u0430\u0442\u044B"}.` : `<br>\u26A1 \u042D\u043D\u0435\u0440\u0433\u0438\u044F: ${result.energyAfter}/${BATTLE_ENERGY_CAP} \xB7 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u0431\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E.` : "";
+      resultOverlay = showOverlay(ctx2, {
+        title: result.practice ? rep.victory ? "\u{1F6E1}\uFE0F \u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430: \u043F\u043E\u0431\u0435\u0434\u0430" : "\u{1F6E1}\uFE0F \u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0430" : rep.victory ? "\u{1F3C6} \u041F\u043E\u0431\u0435\u0434\u0430!" : "\u{1F319} \u0420\u044B\u0446\u0430\u0440\u044C \u0432\u0435\u0440\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0434\u043E\u0445\u043D\u0443\u0442\u044C",
+        subtitle: `\u0423\u0440\u043E\u043D\u0430 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u043E: ${rep.dealt} \xB7 \u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E: ${rep.taken} \xB7 \u0412\u0440\u0430\u0433\u043E\u0432 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D\u043E: ${rep.foesDown}/${rep.foesTotal}` + energyHtml + (rep.timedOut ? "<br>\u23F3 \u0411\u043E\u0439 \u0437\u0430\u0442\u044F\u043D\u0443\u043B\u0441\u044F \u0434\u043E \u043F\u0440\u0435\u0434\u0435\u043B\u0430 \u2014 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u0435\u043B\u044C \u043D\u0435 \u0432\u044B\u044F\u0432\u043B\u0435\u043D." : "") + ((rep.alliesStats || []).length > 1 ? "<br>" + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} \u0443\u0440\u043E\u043D\u0430${a.alive ? "" : " (\u043F\u0430\u043B)"}`).join(" \xB7 ") : ""),
         rewards: [],
         advice: rep.advice,
+        onboardingResult,
         buttons: overlayButtons(rep)
       });
+      if (result.bossDrop?.dropped) {
+        const card = resultOverlay.querySelector(".card");
+        const joy = document.createElement("div");
+        joy.className = "rewards boss-drop-joy";
+        const drop = result.bossDrop;
+        joy.innerHTML = `\u2728 <strong>\u0420\u0435\u0434\u043A\u0430\u044F \u043D\u0430\u0445\u043E\u0434\u043A\u0430 \u0431\u043E\u0441\u0441\u0430!</strong><br>\xAB${ITEM_BY_ID[drop.itemId].name}\xBB<br><span class="muted">${drop.guaranteed ? "\u0413\u0430\u0440\u0430\u043D\u0442\u0438\u044F \u043F\u043E\u0441\u043B\u0435 \u0434\u043E\u043B\u0433\u0438\u0445 \u043F\u043E\u0438\u0441\u043A\u043E\u0432 \u0441\u0440\u0430\u0431\u043E\u0442\u0430\u043B\u0430." : `\u0428\u0430\u043D\u0441 \u044D\u0442\u043E\u0439 \u043F\u043E\u043F\u044B\u0442\u043A\u0438: ${Math.round(drop.chance * 100)}%.`}</span>`;
+        card.insertBefore(joy, resultOverlay.querySelector(".advice") || resultOverlay.querySelector(".actions"));
+      }
       if (rewardHtml) {
-        const card = overlay.querySelector(".card");
+        const card = resultOverlay.querySelector(".card");
         const rw = document.createElement("div");
         rw.className = "rewards";
         rw.innerHTML = rewardHtml;
-        card.insertBefore(rw, card.querySelector(".advice") || card.querySelector(".actions"));
+        card.insertBefore(rw, resultOverlay.querySelector(".advice") || resultOverlay.querySelector(".actions"));
       }
     }
     step();
+    return cleanup;
   }
 
   // src/ui/seekEditorView.js
@@ -36008,41 +38615,49 @@
   }
 
   // src/data/achievements.js
+  function solvedPuzzleCount(state2, ctx2 = {}) {
+    const ids = ctx2.puzzleIds || Object.keys(state2.puzzlesDone || {});
+    return ids.filter((id) => puzzleSolved(state2, id)).length;
+  }
+  function puzzleSolved(state2, id) {
+    const entry = state2.puzzlesDone?.[id];
+    return !!entry && !entry.skipped;
+  }
   var ACHIEVEMENTS = [
     {
       id: "first_puzzle",
       icon: "\u{1F9E9}",
       name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430",
       desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0443.",
-      check: (s) => s.stats.puzzlesSolved >= 1
+      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= 1
     },
     {
       id: "ten_puzzles",
       icon: "\u{1F3EE}",
       name: "\u0414\u0435\u0441\u044F\u0442\u043A\u0430 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
       desc: "\u0420\u0435\u0448\u0438\u0442\u044C 10 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A.",
-      check: (s) => s.stats.puzzlesSolved >= 10
+      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= 10
     },
     {
       id: "meadow_master",
       icon: "\u{1F33F}",
       name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043E\u043F\u0443\u0448\u043A\u0438",
       desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u0422\u0438\u0445\u043E\u0439 \u043E\u043F\u0443\u0448\u043A\u0438.",
-      check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, "0")}`).every((id) => s.puzzlesDone[id])
+      check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, "0")}`).every((id) => puzzleSolved(s, id))
     },
     {
       id: "half_campaign",
       icon: "\u{1F4D6}",
       name: "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u0443\u0442\u0438",
       desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0432\u0441\u0435\u0445 \u0437\u0430\u0433\u0430\u0434\u043E\u043A \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
-      check: (s, ctx2) => s.stats.puzzlesSolved >= Math.ceil(ctx2.puzzlesTotal / 2)
+      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= Math.ceil(ctx2.puzzlesTotal / 2)
     },
     {
       id: "all_puzzles",
       icon: "\u{1F31F}",
       name: "\u041C\u0430\u0441\u0442\u0435\u0440 \u0437\u0430\u0433\u0430\u0434\u043E\u043A",
       desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
-      check: (s, ctx2) => s.stats.puzzlesSolved >= ctx2.puzzlesTotal
+      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= ctx2.puzzlesTotal
     },
     {
       id: "first_battle",
@@ -36126,7 +38741,7 @@
       icon: "\u{1F50D}",
       name: "\u041E\u0440\u043B\u0438\u043D\u044B\u0439 \u0433\u043B\u0430\u0437",
       desc: "\u041F\u0440\u043E\u0439\u0442\u0438 \u0432\u0441\u0435 \u0438\u0441\u043A\u0430\u043B\u043A\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
-      check: (s, ctx2) => ctx2.seekIds.every((id) => s.puzzlesDone[id])
+      check: (s, ctx2) => ctx2.seekIds.every((id) => puzzleSolved(s, id))
     },
     {
       id: "cat_friend",
@@ -36166,8 +38781,8 @@
   // src/ui/achievementsView.js
   function renderAchievements(container, ctx2) {
     const { state: state2 } = ctx2;
-    const unlocked = state2.achievements || {};
-    const total = Object.keys(unlocked).length;
+    const unlocked2 = state2.achievements || {};
+    const total = Object.keys(unlocked2).length;
     container.appendChild(header(
       ctx2,
       "\u0414\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u044F",
@@ -36176,10 +38791,10 @@
     const list = document.createElement("div");
     list.className = "list";
     for (const a of ACHIEVEMENTS) {
-      const got = !!unlocked[a.id];
+      const got = !!unlocked2[a.id];
       const row = document.createElement("div");
       row.className = "row" + (got ? " done" : " locked");
-      const date = got ? new Date(unlocked[a.id]).toLocaleDateString("ru-RU") : "";
+      const date = got ? new Date(unlocked2[a.id]).toLocaleDateString("ru-RU") : "";
       row.innerHTML = `
       <span class="icon">${got ? a.icon : "\u{1F512}"}</span>
       <span class="grow">
@@ -36196,6 +38811,22 @@
   // src/ui/sandboxView.js
   var MAX_TEAM = 6;
   function renderSandbox(container, ctx2) {
+    let currentCleanup2 = null;
+    let disposed = false;
+    const rerender = (action = null) => {
+      currentCleanup2?.();
+      if (disposed) return;
+      container.innerHTML = "";
+      currentCleanup2 = renderSandboxScreen(container, ctx2, rerender, action) || null;
+    };
+    rerender();
+    return () => {
+      disposed = true;
+      currentCleanup2?.();
+      currentCleanup2 = null;
+    };
+  }
+  function renderSandboxScreen(container, ctx2, rerender, action) {
     const { state: state2 } = ctx2;
     const picked = renderSandbox._picked ||= { allies: ["merc_guard", "merc_archer"], foes: ["slime_meadow", "slime_meadow"] };
     container.appendChild(header(
@@ -36204,10 +38835,6 @@
       "\u0421\u043E\u0431\u0435\u0440\u0438 \u043E\u0431\u0435 \u043A\u043E\u043C\u0430\u043D\u0434\u044B \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u0438\u043C\u0443\u043B\u044F\u0446\u0438\u044E: \u043E\u0434\u0438\u043D \u0431\u043E\u0439 \u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0438\u043B\u0438 \u0441\u0435\u0440\u0438\u044F \u043D\u0430 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0443",
       "workshop"
     ));
-    function rerender() {
-      container.innerHTML = "";
-      renderSandbox(container, ctx2);
-    }
     function teamPanel(title, pool, list, getDef) {
       const panel = document.createElement("div");
       panel.className = "panel";
@@ -36326,6 +38953,7 @@
         foes: foes.map((f) => ({ uid: f.uid, slot: f.slot, cell: [...f.cell], size: f.size || 1 }))
       };
     }
+    let replayCleanup = null;
     function runOne() {
       const { allies, foes } = buildUnits();
       const formation = formationOf(allies, foes);
@@ -36333,27 +38961,16 @@
       const result = simulateFormationBattle(allies, foes, seed, state2.settings.tactic || "balance");
       result.formation = formation;
       result.rewards = [];
-      playBattleReplay(container, ctx2, {
+      replayCleanup = playBattleReplay(container, ctx2, {
         title: "\u0422\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043E\u0447\u043D\u044B\u0439 \u0431\u043E\u0439",
         backTo: "sandbox",
         world: "meadow",
         result,
         unitDefs: buildUnitDefs(),
         overlayButtons: () => [
-          { label: "\u{1F501} \u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => {
-            container.innerHTML = "";
-            renderSandbox(container, ctx2);
-            runOne();
-          } },
-          { label: "\u{1F4CA} \u0421\u0435\u0440\u0438\u044F \xD730", onClick: () => {
-            container.innerHTML = "";
-            renderSandbox(container, ctx2);
-            runSeries();
-          } },
-          { label: "\u{1F9EA} \u041A \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0443", primary: true, onClick: () => {
-            container.innerHTML = "";
-            renderSandbox(container, ctx2);
-          } }
+          { label: "\u{1F501} \u0415\u0449\u0451 \u0440\u0430\u0437", onClick: () => rerender("one") },
+          { label: "\u{1F4CA} \u0421\u0435\u0440\u0438\u044F \xD730", onClick: () => rerender("series") },
+          { label: "\u{1F9EA} \u041A \u043A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440\u0443", primary: true, onClick: () => rerender() }
         ]
       });
     }
@@ -36375,6 +38992,12 @@
       <div class="muted">\u0421\u0440\u0435\u0434\u043D\u044F\u044F \u0434\u043B\u0438\u043D\u0430 \u0431\u043E\u044F: ${Math.round(ticksSum / N)} \u0442\u0438\u043A\u043E\u0432 \xB7 \u0442\u0430\u043A\u0442\u0438\u043A\u0430: ${{ defense: "\u{1F6E1} \u0417\u0430\u0449\u0438\u0442\u0430", balance: "\u2696 \u0411\u0430\u043B\u0430\u043D\u0441", offense: "\u2694 \u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435" }[state2.settings.tactic || "balance"]}</div>`;
       seriesOut.appendChild(panel);
     }
+    if (action === "one") runOne();
+    if (action === "series") runSeries();
+    return () => {
+      replayCleanup?.();
+      replayCleanup = null;
+    };
   }
 
   // src/ui/brewBookView.js
@@ -37336,13 +39959,18 @@
   }
 
   // src/ui/storyView.js
-  function renderStory(container, ctx2) {
+  function renderStory(container, ctx2, params = {}) {
     const { state: state2 } = ctx2;
+    if (onboardingBlocksStory(state2) && state2.story?.prologSeen) {
+      ctx2.go("hub");
+      return void 0;
+    }
     const scene = buildStoryScene(state2);
     if (!scene) {
       ctx2.go("hub");
       return void 0;
     }
+    const prologOnly = scene.kind === "prolog" && (!!params.prologOnly || onboardingBlocksStory(state2));
     let idx = 0;
     const stage = document.createElement("div");
     stage.className = "panel story-stage";
@@ -37405,20 +40033,24 @@
       bubble.classList.remove("story-pop");
       void bubble.offsetWidth;
       bubble.classList.add("story-pop");
-      taskLine.textContent = isLast && scene.puzzleName ? `\u{1F514} \u0417\u0430\u0434\u0430\u043D\u0438\u0435: \xAB${scene.puzzleName}\xBB` : "";
+      taskLine.textContent = !prologOnly && isLast && scene.puzzleName ? `\u{1F514} \u0417\u0430\u0434\u0430\u043D\u0438\u0435: \xAB${scene.puzzleName}\xBB` : "";
       dots.innerHTML = "";
       for (let i = 0; i < scene.steps.length; i += 1) {
         const d = document.createElement("span");
         d.className = `story-dot${i <= idx ? " on" : ""}`;
         dots.appendChild(d);
       }
-      if (isLast) nextBtn.textContent = scene.puzzleId ? "\u041A \u0434\u0435\u043B\u0443 \u25B8" : "\u0412 \u043B\u0430\u0432\u043A\u0443 \u25B8";
+      if (isLast) nextBtn.textContent = prologOnly ? "\u041A \u043F\u0435\u0440\u0432\u043E\u0439 \u0437\u0430\u0433\u0430\u0434\u043A\u0435 \u25B8" : scene.puzzleId ? "\u041A \u0434\u0435\u043B\u0443 \u25B8" : "\u0412 \u043B\u0430\u0432\u043A\u0443 \u25B8";
       else nextBtn.textContent = "\u0414\u0430\u043B\u044C\u0448\u0435 \u25B8";
     }
     function finish() {
-      storyAcceptScene(state2, scene);
+      storyAcceptScene(state2, scene, { prologOnly });
       ctx2.save();
-      if (scene.puzzleId) ctx2.go("puzzle", { id: scene.puzzleId });
+      if (prologOnly) {
+        const nextRoute = onboardingRoute(state2);
+        if (nextRoute) ctx2.go(nextRoute.name, nextRoute.params);
+        else ctx2.go("hub");
+      } else if (scene.puzzleId) ctx2.go("puzzle", { id: scene.puzzleId });
       else ctx2.go("hub");
     }
     function next() {
@@ -37599,15 +40231,252 @@
     }
   }
 
+  // src/ui/onboardingView.js
+  var dockEl = null;
+  var dockParent = null;
+  var viewKey = "";
+  var hintSignature = "";
+  var hintTarget = null;
+  function makeButton(label, className, onClick, data = {}) {
+    const button = document.createElement("button");
+    button.className = className;
+    button.textContent = label;
+    Object.assign(button.dataset, data);
+    button.addEventListener("click", () => {
+      button.disabled = true;
+      onClick();
+    });
+    return button;
+  }
+  function removeDock() {
+    dockEl?.remove();
+    dockEl = null;
+    dockParent = null;
+    viewKey = "";
+    hintSignature = "";
+    hintTarget = null;
+  }
+  function skipArc(ctx2) {
+    if (!skipOnboarding(ctx2.state)) return;
+    destroyTutorial();
+    ctx2.save();
+    ctx2.toast?.("\u041F\u0435\u0440\u0432\u0430\u044F \u0434\u0443\u0433\u0430 \u043F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u0430. \u0412\u0441\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u044B \u043E\u0441\u0442\u0430\u044E\u0442\u0441\u044F \u043E\u0442\u043A\u0440\u044B\u0442\u044B.");
+  }
+  function goRoute(ctx2, route) {
+    if (route) ctx2.go(route.name, route.params || {});
+  }
+  function finishCard(ctx2) {
+    ctx2.state.onboarding.flags.finalSeen = true;
+    startOnboardingGuide(ctx2.state);
+    ctx2.save();
+  }
+  function hideGuide(ctx2) {
+    if (!closeOnboardingGuide(ctx2.state)) return;
+    destroyTutorial();
+    ctx2.save();
+  }
+  function targetSelector(step, route, state2) {
+    let selector = step.targets?.[route.name] || null;
+    if (step.id === "upgrade" && route.name === "equip" && Object.values(state2.equipped || {}).includes("rng_health")) {
+      selector = '[data-belt-slot="1"]';
+    }
+    return selector;
+  }
+  function maybeHint(ctx2, step, route) {
+    const selector = targetSelector(step, route, ctx2.state);
+    if (!selector || !step.hint) return;
+    if (hintTarget && hintTarget.isConnected === false) {
+      destroyTutorial();
+      hintSignature = "";
+      hintTarget = null;
+    }
+    const signature = `${step.id}|${route.name}|${JSON.stringify(route.params || {})}|${selector}`;
+    if (hintSignature === signature) return;
+    const target = document.querySelector(selector);
+    if (!target) return;
+    hintSignature = signature;
+    hintTarget = target;
+    startTutorial(ctx2, `onboarding_${step.id}`, [{
+      target,
+      title: step.hintTitle || step.title,
+      text: step.hint,
+      cta: "\u041F\u043E\u043D\u044F\u0442\u043D\u043E",
+      advanceOnTargetClick: false
+    }], {
+      skipLabel: "\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u0434\u0443\u0433\u0443",
+      onSkip: () => skipArc(ctx2)
+    });
+  }
+  function renderGuide(ctx2) {
+    const guide = ctx2.state.onboarding.guide;
+    const next = onboardingGuideNext(ctx2.state);
+    const count = (guide.seen || []).length;
+    const head = document.createElement("div");
+    head.className = "onboarding-head";
+    const eyebrow = document.createElement("span");
+    eyebrow.className = "onboarding-eyebrow";
+    eyebrow.textContent = `\u041F\u0443\u0442\u0435\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C ${count}/${ONBOARDING_GUIDE_SECTIONS.length}`;
+    const title = document.createElement("div");
+    title.className = "onboarding-title";
+    title.textContent = next ? next.title : "\u041B\u0430\u0432\u043A\u0430 \u0437\u043D\u0430\u043A\u043E\u043C\u0430";
+    head.append(eyebrow, title);
+    const goal = document.createElement("div");
+    goal.className = "onboarding-goal";
+    goal.textContent = next ? next.short : "\u0412\u0441\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u044B \u043E\u0441\u043C\u043E\u0442\u0440\u0435\u043D\u044B. \u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0430\u0439\u0441\u044F \u043A \u043D\u0438\u043C \u0432 \u043B\u044E\u0431\u043E\u0435 \u0432\u0440\u0435\u043C\u044F \u2014 \u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u0434\u0435\u043B \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435\u0442.";
+    const actions = document.createElement("div");
+    actions.className = "onboarding-actions";
+    if (next) {
+      actions.appendChild(makeButton("\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0440\u0430\u0437\u0434\u0435\u043B", "primary small", () => {
+        goRoute(ctx2, next.route);
+      }, { onboardingGuideRoute: next.id }));
+    }
+    actions.appendChild(makeButton("\u0421\u043A\u0440\u044B\u0442\u044C", "ghost small", () => hideGuide(ctx2), {
+      onboardingAction: "guide-close"
+    }));
+    dockEl.append(head, goal, actions);
+  }
+  function syncOnboardingDock(ctx2, current = { name: "hub", params: {} }) {
+    const arc = ctx2.state.onboarding;
+    const step = onboardingStep(ctx2.state);
+    const guideVisible = arc?.status === "done" && arc.guide?.started && !arc.guide.closed;
+    const finalVisible = arc?.status === "done" && !arc.flags.finalSeen;
+    const arcVisible = ["active", "paused"].includes(arc?.status);
+    if (!arc || !step || arc.status === "skipped" || !arcVisible && !finalVisible && !guideVisible) {
+      removeDock();
+      destroyTutorial();
+      return;
+    }
+    const nextViewKey = `${arc.status}|${step.id}|${current.name}|${JSON.stringify(current.params || {})}|${guideVisible ? (arc.guide.seen || []).length : "\u043D\u0435\u0442"}|${arc.guide?.closed ? 1 : 0}`;
+    if (nextViewKey !== viewKey) {
+      destroyTutorial();
+      hintSignature = "";
+      hintTarget = null;
+      viewKey = nextViewKey;
+    }
+    if (dockEl && ((dockEl.parent || dockEl.parentNode) !== document.body || dockParent !== document.body)) {
+      removeDock();
+    }
+    if (!dockEl) {
+      dockEl = document.createElement("aside");
+      dockParent = document.body;
+      document.body.appendChild(dockEl);
+    }
+    dockEl.className = `onboarding-dock${arc.status === "paused" ? " compact" : guideVisible ? " guide" : ""}`;
+    dockEl.dataset.onboardingStatus = arc.status;
+    dockEl.dataset.onboardingStep = step.id;
+    dockEl.dataset.onboardingGuide = guideVisible ? "1" : "0";
+    dockEl.setAttribute("aria-label", guideVisible ? "\u041F\u0443\u0442\u0435\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C \u0445\u043E\u0437\u044F\u0438\u043D\u0430" : "\u041F\u0435\u0440\u0432\u0430\u044F \u0438\u0433\u0440\u043E\u0432\u0430\u044F \u0434\u0443\u0433\u0430");
+    dockEl.setAttribute("aria-live", "polite");
+    dockEl.innerHTML = "";
+    if (arc.status === "paused") {
+      const text = document.createElement("span");
+      text.className = "onboarding-paused-text";
+      text.textContent = `\u041F\u0430\u0443\u0437\u0430: ${step.title}`;
+      const resume = makeButton("\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C \u043E\u0431\u0443\u0447\u0435\u043D\u0438\u0435", "primary small", () => {
+        if (!resumeOnboarding(ctx2.state)) return;
+        ctx2.save();
+        goRoute(ctx2, onboardingRoute(ctx2.state));
+      }, { onboardingAction: "resume" });
+      dockEl.append(text, resume);
+      return;
+    }
+    if (guideVisible) {
+      renderGuide(ctx2);
+      destroyTutorial();
+      return;
+    }
+    if (arc.status === "done") {
+      const title2 = document.createElement("div");
+      title2.className = "onboarding-title";
+      title2.textContent = `\u{1F3EE} ${step.title}`;
+      const goal2 = document.createElement("div");
+      goal2.className = "onboarding-goal";
+      goal2.textContent = step.goal;
+      const routes2 = document.createElement("div");
+      routes2.className = "onboarding-final-routes";
+      for (const item2 of ONBOARDING_FINAL_ROUTES) {
+        routes2.appendChild(makeButton(`${item2.icon} ${item2.label}`, "ghost small", () => {
+          finishCard(ctx2);
+          goRoute(ctx2, item2.route);
+        }, { onboardingRoute: item2.id }));
+      }
+      const close = makeButton("\u0421\u043A\u0440\u044B\u0442\u044C \u0444\u0438\u043D\u0430\u043B", "ghost small", () => finishCard(ctx2), {
+        onboardingAction: "dismiss"
+      });
+      dockEl.append(title2, goal2, routes2, close);
+      destroyTutorial();
+      return;
+    }
+    const head = document.createElement("div");
+    head.className = "onboarding-head";
+    const position = ONBOARDING_STEPS.findIndex((candidate) => candidate.id === step.id) + 1;
+    const total = ONBOARDING_STEPS.length - 1;
+    const eyebrow = document.createElement("span");
+    eyebrow.className = "onboarding-eyebrow";
+    eyebrow.textContent = `\u041F\u0435\u0440\u0432\u0430\u044F \u0434\u0443\u0433\u0430 \xB7 ${position}/${total}`;
+    const title = document.createElement("div");
+    title.className = "onboarding-title";
+    title.textContent = step.title;
+    head.append(eyebrow, title);
+    const goal = document.createElement("div");
+    goal.className = "onboarding-goal";
+    goal.textContent = step.goal;
+    const actions = document.createElement("div");
+    actions.className = "onboarding-actions";
+    const route = onboardingRoute(ctx2.state);
+    if (route) {
+      actions.appendChild(makeButton(onboardingActionLabel(ctx2.state, route), "primary small", () => goRoute(ctx2, route), {
+        onboardingRoute: step.id
+      }));
+    }
+    actions.appendChild(makeButton("\u0421\u0432\u0435\u0440\u043D\u0443\u0442\u044C", "ghost small", () => {
+      if (pauseOnboarding(ctx2.state)) {
+        destroyTutorial();
+        ctx2.save();
+      }
+    }, { onboardingAction: "pause" }));
+    actions.appendChild(makeButton("\u041F\u0440\u043E\u043F\u0443\u0441\u0442\u0438\u0442\u044C \u0434\u0443\u0433\u0443", "ghost small", () => skipArc(ctx2), {
+      onboardingAction: "skip"
+    }));
+    dockEl.append(head, goal, actions);
+    if (step.id === "branch") {
+      const choices = document.createElement("div");
+      choices.className = "onboarding-branches";
+      for (const branch of ONBOARDING_BRANCHES) {
+        choices.appendChild(makeButton(`${branch.icon} ${branch.name}`, "ghost small", () => {
+          goRoute(ctx2, branch.route);
+        }, { onboardingChoice: branch.id }));
+      }
+      dockEl.appendChild(choices);
+    }
+    maybeHint(ctx2, step, current);
+  }
+
   // src/ui/app.js
   var screenEl = document.getElementById("screen");
   var toastEl = document.getElementById("toast");
   var state = loadGame() || newGame();
+  var currentRoute = "hub";
+  var currentParams = {};
+  var dockSyncQueued = false;
+  function syncDock() {
+    syncOnboardingDock(ctx, { name: currentRoute, params: currentParams });
+  }
+  function syncDockSoon() {
+    if (dockSyncQueued) return;
+    dockSyncQueued = true;
+    queueMicrotask(() => {
+      dockSyncQueued = false;
+      syncDock();
+    });
+  }
   function save() {
+    reconcileOnboarding(state);
     saveGame(state);
     updateWallet();
     const fresh = checkAchievements(state, {
       puzzlesTotal: ALL_PUZZLES.length,
+      puzzleIds: ALL_PUZZLES.map((p) => p.id),
       battlesTotal: BATTLES.length,
       seekIds: SEEK_PUZZLES.map((p) => p.id)
     });
@@ -37618,6 +40487,7 @@
       }, 600);
       saveGame(state);
     }
+    syncDockSoon();
   }
   function updateWallet() {
     document.getElementById("wallet-coins").textContent = `\u{1FA99} ${state.coins}`;
@@ -37659,6 +40529,20 @@
   };
   var currentCleanup = null;
   function go(name, params = {}) {
+    destroyTutorial();
+    currentRoute = routes[name] ? name : "hub";
+    if (currentRoute === "hub") {
+      lastHubScene = params.scene || lastHubScene;
+      currentParams = { ...params, scene: lastHubScene };
+    } else {
+      currentParams = params;
+    }
+    let navigationChanged = currentRoute === "hub" ? onboardingScene(state, currentParams.scene) : reconcileOnboarding(state);
+    if (currentRoute === "puzzle") {
+      navigationChanged = onboardingPuzzleChoice(state, currentParams.id) || navigationChanged;
+    }
+    navigationChanged = onboardingVisit(state, currentRoute, currentParams) || navigationChanged;
+    if (navigationChanged) saveGame(state);
     if (currentCleanup) {
       currentCleanup();
       currentCleanup = null;
@@ -37668,17 +40552,25 @@
     screenEl.classList.remove("screen-enter");
     void screenEl.offsetWidth;
     screenEl.classList.add("screen-enter");
-    const route = routes[name] || routes.hub;
-    document.body.dataset.route = routes[name] ? name : "hub";
-    currentCleanup = route(screenEl, params) || null;
-    applyCursor(name, params, state);
+    const route = routes[currentRoute];
+    document.body.dataset.route = currentRoute;
+    currentCleanup = route(screenEl, currentParams) || null;
+    applyCursor(currentRoute, currentParams, state);
     window.scrollTo(0, 0);
+    syncDock();
+  }
+  function initialRoute() {
+    if (state.onboarding?.status === "active" && state.onboarding.step === "prolog" && !state.story?.prologSeen) {
+      return { name: "story", params: { prologOnly: true } };
+    }
+    return { name: "hub", params: {} };
   }
   function newGameConfirm() {
     if (confirm("\u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443? \u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u043B\u0430\u0432\u043A\u0438 \u0431\u0443\u0434\u0435\u0442 \u0441\u0442\u0451\u0440\u0442.")) {
       state = newGame();
+      const start = initialRoute();
       save();
-      go("hub");
+      go(start.name, start.params);
       toast("\u041D\u043E\u0432\u0430\u044F \u043B\u0430\u0432\u043A\u0430 \u043E\u0442\u043A\u0440\u044B\u0442\u0430. \u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C, \u0445\u043E\u0437\u044F\u0438\u043D!");
     }
   }
@@ -37693,7 +40585,13 @@
     sfx,
     setHubScene(scene) {
       lastHubScene = scene;
-    }
+      currentRoute = "hub";
+      currentParams = { scene };
+      const sceneChanged = onboardingScene(state, scene);
+      const guideChanged = onboardingVisit(state, "hub", currentParams);
+      if (sceneChanged || guideChanged) saveGame(state);
+    },
+    syncOnboarding: syncDock
   };
   initSound();
   var musicUnlock = () => {
@@ -37871,5 +40769,6 @@
     document.body.appendChild(overlay);
   }
   updateWallet();
-  go("hub");
+  var startRoute = initialRoute();
+  go(startRoute.name, startRoute.params);
 })();

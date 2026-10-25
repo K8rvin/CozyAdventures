@@ -179,10 +179,14 @@ export function buildStoryScene(state) {
 }
 
 // Фиксация показанной сцены: выдать задание, отметить пролог/эпилог/подкол.
-export function storyAcceptScene(state, scene) {
+// prologOnly отмечает пролог увиденным, но не выдаёт задание story-ring.
+export function storyAcceptScene(state, scene, { prologOnly = false } = {}) {
   const story = state.story;
   if (!story || !scene) return;
-  if (scene.kind === 'prolog') story.prologSeen = true;
+  if (scene.kind === 'prolog') {
+    story.prologSeen = true;
+    if (prologOnly) return;
+  }
   if (scene.kind === 'epilog') { story.epilogSeen = true; return; }
   if (scene.puzzleId) {
     story.pending = { puzzleId: scene.puzzleId, guestId: scene.guestId, beat: scene.kind !== 'visit' };

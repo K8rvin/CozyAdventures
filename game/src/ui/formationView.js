@@ -7,8 +7,28 @@ import { runBattle, moveFormationSlot, nextBattle, battleAvailable } from '../co
 import { knightArtId } from '../core/items.js';
 import { enemyFormationSlots, slotToCell } from '../core/formBattle.js';
 import { header, showOverlay, rewardText } from './common.js';
+import { onboardingCtaForResult, onboardingFixedBattleSeed } from '../core/onboarding.js';
+import { battleEnergyTerms, battleEnergyCost } from '../core/energy.js';
+import { bossDropStatus } from '../core/bossDrops.js';
+import { BATTLE_ENERGY_CAP } from '../data/energy.js';
 
 const FRONT = [0, 1, 2];
+
+function formatEnergyWait(ms) {
+  const totalMinutes = Math.max(1, Math.ceil(ms / 60000));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return hours > 0 ? `${hours} ч ${minutes} мин` : `${minutes} мин`;
+}
+
+function formatRewardWins(count) {
+  const lastTwo = count % 100;
+  const last = count % 10;
+  if (lastTwo >= 11 && lastTwo <= 14) return 'наградных побед';
+  if (last === 1) return 'наградная победа';
+  if (last >= 2 && last <= 4) return 'наградные победы';
+  return 'наградных побед';
+}
 
 // Спрайт бойца: арт assets/battle/units/<art>_<pose>_web.png поверх эмодзи.
 // Нет файла позы — откат на стойку (idle) того же набора; нет и её — следующий
@@ -105,9 +125,28 @@ function addObstacles(fieldEl, obstacles) {
 }
 
 export function renderFormation(container, ctx, params) {
+  let currentCleanup = null;
+  let disposed = false;
+  const rerender = () => {
+    currentCleanup?.();
+    if (disposed) return;
+    container.innerHTML = '';
+    currentCleanup = renderFormationScreen(container, ctx, params, rerender) || null;
+  };
+  rerender();
+  return () => {
+    disposed = true;
+    currentCleanup?.();
+    currentCleanup = null;
+  };
+}
+
+function renderFormationScreen(container, ctx, params, rerender) {
   const battle = BATTLE_BY_ID[params.id];
   if (!battle || !battleAvailable(ctx.state, battle.id)) { ctx.go('battles'); return; }
   const { state } = ctx;
+  const energy = battleEnergyTerms(state, battle);
+  const dropPreview = bossDropStatus(state, battle);
 
   container.appendChild(header(ctx, battle.name, battle.tip, 'battles'));
 
@@ -157,6 +196,7 @@ export function renderFormation(container, ctx, params) {
       if (!selectedUnit) return;
       moveFormationSlot(state, selectedUnit, s);
       selectedUnit = null;
+      ctx.save();
       ctx.sfx?.('rotate');
       rerender();
     });
@@ -230,6 +270,18 @@ export function renderFormation(container, ctx, params) {
     rerender();
   }
 
+  let dragActive = true;
+  function cleanupDrag() {
+    if (!dragActive) return;
+    dragActive = false;
+    window.removeEventListener('pointermove', onDragMove);
+    window.removeEventListener('pointerup', onDragEnd);
+    unitDrag?.ghost?.remove();
+    unitDrag = null;
+    hoverSlotEl?.classList.remove('selected');
+    hoverSlotEl = null;
+  }
+
   window.addEventListener('pointermove', onDragMove);
   window.addEventListener('pointerup', onDragEnd);
 
@@ -299,23 +351,77 @@ export function renderFormation(container, ctx, params) {
   spacer.className = 'form-toolbar-spacer';
   prepPanel.appendChild(spacer);
 
+  const rewardBlocked = energy.repeat && !energy.enough;
   const goBtn = document.createElement('button');
   goBtn.className = 'small primary form-go';
-  goBtn.textContent = '⚔️ В бой!';
-  goBtn.addEventListener('click', () => startBattle());
+  goBtn.textContent = rewardBlocked ? `Нужно ${energy.cost} ⚡` : '⚔️ В бой!';
+  goBtn.dataset.battleStart = battle.id;
+  goBtn.disabled = rewardBlocked;
+  goBtn.title = rewardBlocked
+    ? 'Для наградного повтора не хватает энергии. Тренировка доступна всегда.'
+    : energy.first ? 'Первая победа бесплатна, даже при нулевой энергии.' : `Наградная победа: −${energy.cost} энергии.`;
+  goBtn.addEventListener('click', () => startBattle(false));
   prepPanel.appendChild(goBtn);
+
+  const practiceBtn = document.createElement('button');
+  practiceBtn.className = 'small form-practice' + (rewardBlocked ? ' primary' : ' ghost');
+  practiceBtn.textContent = rewardBlocked ? '🛡️ Тренировка без наград' : '🛡️ Тренировка';
+  practiceBtn.dataset.battlePractice = battle.id;
+  practiceBtn.title = 'Тот же бой: без наград и прогресса, без траты энергии и предметов пояса.';
+  practiceBtn.addEventListener('click', () => startBattle(true));
+  prepPanel.appendChild(practiceBtn);
   container.appendChild(prepPanel);
 
-  function rerender() {
-    container.innerHTML = '';
-    renderFormation(container, ctx, params);
+  const energyPanel = document.createElement('div');
+  energyPanel.className = 'panel battle-energy' + (rewardBlocked ? ' is-low' : '');
+  energyPanel.dataset.energyValue = String(energy.value);
+  const energyMain = document.createElement('div');
+  energyMain.className = 'battle-energy-main';
+  energyMain.textContent = `⚡ Энергия походов: ${energy.value}/${energy.cap}`;
+  const energyRules = document.createElement('div');
+  energyRules.className = 'muted';
+  energyRules.textContent = energy.first
+    ? `Первая победа — бесплатно · следующие — ${battleEnergyCost(battle, true)} ⚡ · поражение — бесплатно.`
+    : `Победа с наградой — ${energy.cost} ⚡ · поражение и тренировка — бесплатно.`;
+  const energyTimer = document.createElement('div');
+  energyTimer.className = 'muted battle-energy-timer';
+  energyTimer.textContent = energy.value >= energy.cap
+    ? 'Запас полный · восстановление: +1 за 2 часа.'
+    : `До следующей единицы: ${formatEnergyWait(energy.nextInMs)} · восстановление: +1 за 2 часа.`;
+  energyPanel.append(energyMain, energyRules, energyTimer);
+  container.appendChild(energyPanel);
+
+  if (dropPreview) {
+    const dropItem = ITEM_BY_ID[dropPreview.itemId];
+    const dropPanel = document.createElement('div');
+    dropPanel.className = 'panel boss-drop-preview';
+    const dropName = document.createElement('div');
+    dropName.className = 'boss-drop-name';
+    dropName.textContent = `🎁 Возможная находка: «${dropItem.name}»`;
+    const dropChance = document.createElement('div');
+    dropChance.className = 'muted';
+    dropChance.textContent = dropPreview.collected
+      ? 'Уже в коллекции — дубликат больше не выпадет.'
+      : dropPreview.guaranteed
+        ? 'Следующая наградная победа гарантирует находку.'
+        : `Следующий шанс: ${Math.round(dropPreview.chance * 100)}% · гарантия не позднее чем через ${dropPreview.remaining} ${formatRewardWins(dropPreview.remaining)}.`;
+    dropPanel.append(dropName, dropChance);
+    container.appendChild(dropPanel);
   }
 
   // --- Бой ---
-  function startBattle() {
-    const seed = (Date.now() % 100000) + 1;
-    const result = runBattle(state, battle.id, seed);
-    ctx.save();
+  let replayCleanup = null;
+  function startBattle(practice = false) {
+    const seed = onboardingFixedBattleSeed(state, battle.id) ?? ((Date.now() % 100000) + 1);
+    const result = runBattle(state, battle.id, seed, { practice });
+    if (result?.blocked) {
+      ctx.toast?.(result.error);
+      rerender();
+      return;
+    }
+    if (!result) return;
+    cleanupDrag();
+    if (!result.practice) ctx.save();
     playBattle(result);
   }
 
@@ -331,10 +437,12 @@ export function renderFormation(container, ctx, params) {
       const d = ENEMY_BY_ID[e.id];
       unitDefs.set(`e${i}`, { name: d.name, icon: d.icon, hp: Math.round(d.hp * (e.scale || 1)), art: e.id });
     });
-    playBattleReplay(container, ctx, {
+    replayCleanup = playBattleReplay(container, ctx, {
       title: battle.name, subtitle: battle.tip, backTo: 'battles', world: battle.world, result, unitDefs,
+      onboardingResult: result.practice ? null : { kind: 'battle', id: battle.id },
       overlayButtons: (rep) => {
-        const nextB = rep.victory ? nextBattle(battle.id) : null;
+        const tutorialCta = result.practice ? null : onboardingCtaForResult(state, { kind: 'battle', id: battle.id });
+        const nextB = rep.victory && !result.practice && !tutorialCta ? nextBattle(battle.id) : null;
         return [
           ...(nextB ? [{ label: `Следующая битва → ${nextB.name}`, primary: true, onClick: () => ctx.go('battle', { id: nextB.id }) }] : []),
           { label: '🎒 К экипировке', onClick: () => ctx.go('equip') },
@@ -343,21 +451,20 @@ export function renderFormation(container, ctx, params) {
             { label: '🏬 В торговый квартал — снаряжение', onClick: () => ctx.go('hub', { scene: 'market' }) },
           ]),
           { label: '🔁 Ещё раз', onClick: () => ctx.go('battle', { id: battle.id }) },
-          { label: 'К походам', primary: !nextB, onClick: () => ctx.go('battles') },
+          { label: 'К походам', primary: !nextB && !tutorialCta, onClick: () => ctx.go('battles') },
         ];
       },
     });
   }
 
-  // Очистка слушателей перетаскивания при уходе со страницы
   return () => {
-    window.removeEventListener('pointermove', onDragMove);
-    window.removeEventListener('pointerup', onDragEnd);
-    if (unitDrag?.ghost) unitDrag.ghost.remove();
+    cleanupDrag();
+    replayCleanup?.();
+    replayCleanup = null;
   };
 }
 
-export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'battles', world, result, unitDefs, overlayButtons }) {
+export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'battles', world, result, unitDefs, overlayButtons, onboardingResult = null }) {
   container.innerHTML = '';
   // Шапка повторяет экран расстановки (заголовок/подзаголовок боя) — поле не прыгает
   container.appendChild(header(ctx, title, subtitle ?? 'Бой идёт сам — смотри и учись', backTo));
@@ -439,6 +546,49 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
     let timer = null;
     let i = 0;
     let done = false;
+    let cancelled = false;
+    let resultOverlay = null;
+    const timers = new Set();
+    const frames = new Set();
+
+    function later(fn, ms) {
+      if (cancelled) return null;
+      const id = setTimeout(() => {
+        timers.delete(id);
+        if (!cancelled) fn();
+      }, ms);
+      timers.add(id);
+      return id;
+    }
+
+    function cancelLater(id) {
+      if (id === null || id === undefined) return;
+      clearTimeout(id);
+      timers.delete(id);
+    }
+
+    function frame(fn) {
+      const request = window.requestAnimationFrame?.bind(window);
+      if (!request) return later(fn, 16);
+      const id = request(() => {
+        frames.delete(id);
+        if (!cancelled) fn();
+      });
+      frames.add(id);
+      return id;
+    }
+
+    function cleanup() {
+      if (cancelled) return;
+      cancelled = true;
+      done = true;
+      for (const id of timers) clearTimeout(id);
+      timers.clear();
+      for (const id of frames) window.cancelAnimationFrame?.(id);
+      frames.clear();
+      resultOverlay?.remove();
+      resultOverlay = null;
+    }
 
     function figOf(uid) {
       return figures.get(uid) || null;
@@ -475,7 +625,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
       el.classList.remove(cls);
       void el.offsetWidth;
       el.classList.add(cls);
-      setTimeout(() => el.classList.remove(cls), ms);
+      later(() => el.classList.remove(cls), ms);
     }
 
     // Всплывающий боевой текст над головой фигурки («Уворот!», «яд — мимо»):
@@ -489,7 +639,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
       el.style.left = `${fig.x}%`;
       el.style.top = `calc(${fig.y}% - ${lift}px)`;
       field2.appendChild(el);
-      setTimeout(() => el.remove(), 900);
+      later(() => el.remove(), 900);
     }
 
     function animateHit(e) {
@@ -497,7 +647,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
       const def = figOf(e.toUid);
       if (!atk || !def) return;
       setFigPose(atk.el, 'atk');
-      setTimeout(() => { if (atk.unit.hp > 0) setFigPose(atk.el, 'idle'); }, 420);
+      later(() => { if (atk.unit.hp > 0) setFigPose(atk.el, 'idle'); }, 420);
       if (e.ranged || e.magic) {
         // Снаряд летит от атакующего к цели: магический болт, стихия или стрела
         const proj = document.createElement('div');
@@ -511,18 +661,18 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
         proj.style.left = `${atk.x}%`;
         proj.style.top = `calc(${atk.y}% - ${lift}px)`;
         field2.appendChild(proj);
-        requestAnimationFrame(() => {
+        frame(() => {
           proj.style.transform = `translate(${(def.x - atk.x) * field2.offsetWidth / 100}px, ${(def.y - atk.y) * field2.offsetHeight / 100}px)`;
         });
-        setTimeout(() => proj.remove(), 340);
-        setTimeout(() => hitLand(def, e), 320);
+        later(() => proj.remove(), 340);
+        later(() => hitLand(def, e), 320);
       } else {
         // Выпад: фигурка несётся к цели и возвращается
         const dx = (def.x - atk.x) * 0.5;
         const dy = (def.y - atk.y) * 0.5;
         atk.el.style.transition = 'transform 0.14s ease';
         atk.el.style.transform = `translate(-50%, -50%) translate(${dx * field2.offsetWidth / 100}px, ${dy * field2.offsetHeight / 100}px)`;
-        setTimeout(() => {
+        later(() => {
           atk.el.style.transform = '';
           hitLand(def, e);
         }, 160);
@@ -538,7 +688,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
         pulse(defFig.el, 'anim-death', 650);
       } else {
         setFigPose(defFig.el, 'hurt');
-        setTimeout(() => { if (defFig.unit.hp > 0) setFigPose(defFig.el, 'idle'); }, 480);
+        later(() => { if (defFig.unit.hp > 0) setFigPose(defFig.el, 'idle'); }, 480);
       }
     }
 
@@ -603,7 +753,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
             f.el.style.left = `${nx}%`;
             f.el.style.top = `${ny}%`;
             setFigPose(f.el, 'walk');
-            setTimeout(() => { if (f.unit.hp > 0) setFigPose(f.el, 'idle'); }, 300);
+            later(() => { if (f.unit.hp > 0) setFigPose(f.el, 'idle'); }, 300);
           }
           break;
         }
@@ -626,7 +776,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
               if (f.unit.hp <= 0) setFigPose(f.el, 'down');
               else {
                 setFigPose(f.el, 'hurt');
-                setTimeout(() => { if (f.unit.hp > 0) setFigPose(f.el, 'idle'); }, 320);
+                later(() => { if (f.unit.hp > 0) setFigPose(f.el, 'idle'); }, 320);
               }
             }
           }
@@ -658,7 +808,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
     }
 
     function step() {
-      if (done) return;
+      if (done || cancelled) return;
       if (i >= result.log.length) { endScreen(); return; }
       applyEvent(result.log[i]);
       const applied = result.log[i];
@@ -670,11 +820,11 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
       }
       // Шаги по полю — ускоренно, чтобы манёвр не затягивал бой
       const delay = applied.t === 'move' ? Math.max(70, speed * 0.3) : speed;
-      timer = setTimeout(step, delay);
+      timer = later(step, delay);
     }
 
     function finishNow() {
-      if (done) return;
+      if (done || cancelled) return;
       while (i < result.log.length) { i += 1; }
       // Мгновенно применяем финальные HP
       for (const f of figures.values()) f.unit.hp = 0;
@@ -682,30 +832,53 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
     }
 
     function endScreen() {
-      if (done) return;
+      if (done || cancelled) return;
       done = true;
-      clearTimeout(timer);
+      cancelLater(timer);
+      timer = null;
       const rep = result.report;
       ctx.sfx?.(rep.victory ? 'success' : 'fail');
       const rewardHtml = (result.rewards || []).map(rewardText).filter(Boolean).join('<br>');
-      const overlay = showOverlay(ctx, {
-        title: rep.victory ? '🏆 Победа!' : '🌙 Рыцарь вернулся отдохнуть',
+      const hasEnergy = Number.isFinite(result.energyAfter);
+      const energyHtml = result.practice
+        ? `<br>🛡️ Тренировка без наград: прогресс и пояс сохранены${hasEnergy ? ` · энергия ${result.energyAfter}/${BATTLE_ENERGY_CAP} не потрачена` : ''}.`
+        : hasEnergy
+          ? rep.victory
+            ? `<br>⚡ Энергия после победы: ${result.energyAfter}/${BATTLE_ENERGY_CAP}${result.energySpent ? ` (−${result.energySpent})` : ' · без траты'}.`
+            : `<br>⚡ Энергия: ${result.energyAfter}/${BATTLE_ENERGY_CAP} · поражение бесплатно.`
+          : '';
+      resultOverlay = showOverlay(ctx, {
+        title: result.practice
+          ? rep.victory ? '🛡️ Тренировка: победа' : '🛡️ Тренировка завершена'
+          : rep.victory ? '🏆 Победа!' : '🌙 Рыцарь вернулся отдохнуть',
         subtitle: `Урона нанесено: ${rep.dealt} · Получено: ${rep.taken} · Врагов повержено: ${rep.foesDown}/${rep.foesTotal}` +
+          energyHtml +
           (rep.timedOut ? '<br>⏳ Бой затянулся до предела — победитель не выявлен.' : '') +
           ((rep.alliesStats || []).length > 1 ? '<br>' + rep.alliesStats.map((a) => `${a.icon} ${a.name}: ${a.dealt} урона${a.alive ? '' : ' (пал)'}`).join(' · ') : ''),
         rewards: [],
         advice: rep.advice,
+        onboardingResult,
         buttons: overlayButtons(rep),
       });
+      if (result.bossDrop?.dropped) {
+        const card = resultOverlay.querySelector('.card');
+        const joy = document.createElement('div');
+        joy.className = 'rewards boss-drop-joy';
+        const drop = result.bossDrop;
+        joy.innerHTML = `✨ <strong>Редкая находка босса!</strong><br>«${ITEM_BY_ID[drop.itemId].name}»<br>` +
+          `<span class="muted">${drop.guaranteed ? 'Гарантия после долгих поисков сработала.' : `Шанс этой попытки: ${Math.round(drop.chance * 100)}%.`}</span>`;
+        card.insertBefore(joy, resultOverlay.querySelector('.advice') || resultOverlay.querySelector('.actions'));
+      }
       if (rewardHtml) {
-        const card = overlay.querySelector('.card');
+        const card = resultOverlay.querySelector('.card');
         const rw = document.createElement('div');
         rw.className = 'rewards';
         rw.innerHTML = rewardHtml;
-        card.insertBefore(rw, card.querySelector('.advice') || card.querySelector('.actions'));
+        card.insertBefore(rw, resultOverlay.querySelector('.advice') || resultOverlay.querySelector('.actions'));
       }
     }
 
     step();
+    return cleanup;
   }
 

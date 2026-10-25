@@ -1,6 +1,11 @@
 // Состояние игры: экономика, инвентарь, прогресс, сохранения.
 import { ITEM_BY_ID } from '../data/items.js';
-import { SHOP_STOCK, CREW_STOCK } from '../data/shop.js';
+import { SHOP_STOCK, CREW_STOCK, pricedShopItem, compareShopItems } from '../data/shop.js';
+import { ECONOMY_VERSION } from '../data/economy.js';
+import {
+  derivePuzzleCatalog, derivePuzzle, puzzleRewards, puzzleSkipTerms,
+  battleCoinReward, battleEconomy, itemPrice,
+} from './economy.js';
 import { PUZZLES } from '../data/puzzles.js';
 import { SHELF_PUZZLES } from '../data/puzzlesShelf.js';
 import { BOOK_PUZZLES } from '../data/puzzlesBook.js';
@@ -19,9 +24,10 @@ import { SEATING_PUZZLES } from '../data/puzzlesSeating.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
-import { COSMETIC_BY_ID } from '../data/cosmetics.js';
+import { COSMETIC_BY_ID, LEGACY_COSMETIC_ALIASES, COSMETICS_VERSION } from '../data/cosmetics.js';
 import { RECIPES, RECIPE_BY_ID } from '../data/recipes.js';
-import { MATERIALS } from '../data/materials.js';
+import { MATERIALS, materialLabel } from '../data/materials.js';
+import { exchangeMaterials } from './materialExchange.js';
 import { emptyEquipment, equip, unequip, collectStats, isShieldBlocked, itemScore } from './items.js';
 import {
   makeFormationKnight, makeFormationMerc, makeFormationEnemy,
@@ -29,11 +35,23 @@ import {
 } from './formBattle.js';
 import { ENEMY_BY_ID } from '../data/enemies.js';
 import { newStoryState, storyOnPuzzleComplete } from './storyEngine.js';
+import {
+  ONBOARDING_VERSION, ONBOARDING_STEPS, newOnboardingState, reconcileOnboarding,
+  onboardingPuzzleSolved, onboardingPurchase, onboardingEquipmentChanged,
+  onboardingCrafted, onboardingBattleOptions, onboardingBattleFinished,
+  restartOnboarding,
+} from './onboarding.js';
+import { completeSavingsGoal } from './goals.js';
+import {
+  newBattleEnergy, refreshBattleEnergy, battleEnergyTerms, spendBattleEnergy,
+} from './energy.js';
+import { rollBossDrop } from './bossDrops.js';
 
 const SAVE_KEY = 'cozy_adventures_save_v2';
 
-export function newGame() {
+export function newGame(now = Date.now()) {
   return {
+    economyVersion: ECONOMY_VERSION,
     coins: 80,
     seals: 0,
     materials: {},          // id -> count
@@ -46,11 +64,15 @@ export function newGame() {
     pet: null,              // активный питомец
     puzzlesDone: {},        // id -> { moves, hintsUsed }
     battlesDone: {},        // id -> { victories }
+    battleEnergy: newBattleEnergy(now), // только наградные повторы; поражения и первые победы бесплатны
+    bossDrops: {},          // battleId -> { dry, collected }: личный pity и защита от дублей
     customPuzzles: [],      // уровни из редактора
     lastDailyBonus: null,   // день, когда получен бонус заказа дня
     lastCatGift: null,      // день последнего подарка от кота
-    cosmeticsOwned: [],     // купленные украшения
-    cosmeticsActive: [],    // выставленные украшения
+    cosmeticsVersion: COSMETICS_VERSION, // пакетная модель полных тем
+    cosmeticsOwned: [],     // все купленные пакеты без дублей
+    cosmeticsActive: [],    // не более одного выбранного pack id
+    legacyCosmeticsActive: [], // прежние спрайты только для fallback до загрузки полного фона
     seekOverrides: {},      // правки хотспотов искалок из редактора: levelId -> groups
     shopSeenStock: [],      // id товаров прилавка, которые игрок уже видел
     inventorySeen: [],      // id предметов сундука, которые игрок уже видел (метка «новое»)
@@ -58,25 +80,50 @@ export function newGame() {
     trophies: [],           // id трофеев кабинета (за боссов и розыск)
     trophiesSeen: [],       // id трофеев, которые игрок уже посмотрел в кабинете
     journal: [],            // дневник кота: последние события [{icon, text, at}]
+    savingsGoal: null,      // необязательная цель накопления { kind, id }
     tutorial: {},           // пройденные этапы обучения
     tutorialSkipped: false, // игрок пропустил обучение целиком
+    onboarding: newOnboardingState(), // первая дуга и путеводитель: версия, факты и посещения
     story: newStoryState(), // режим истории: шаг, круг гостей, память визитов
-    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf', guestCatalogMode: 'shelf', storyMode: true, cursorMode: 'themed', cursorTheme: 'default' }, // настройки (бой, каталоги)
+    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf', guestCatalogMode: 'shelf', storyMode: true, cursorMode: 'themed', cursorTheme: 'default', cosmeticsNoticeDismissed: false, cosmeticsPackNoticeDismissed: false }, // настройки (бой, каталоги, оформление)
     formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
     cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
   };
 }
 
-// Миграция старых сохранений (v1 без crew)
-function migrate(state) {
+// Миграция старых сохранений: прежние настройки, накопления и первая дуга.
+function migrate(state, now = Date.now()) {
+  const hadOnboarding = !!state.onboarding;
+  const hadGuide = !!state.onboarding?.guide;
+  // Денежную массу и накопления не пересчитываем: версия только фиксирует модель.
+  state.economyVersion ||= ECONOMY_VERSION;
   state.crew ||= [];
   state.squadCompanions ||= [];
   state.squadMercs ||= [];
   state.pet ??= null;
   state.customPuzzles ||= [];
-  state.cosmeticsOwned ||= [];
-  state.cosmeticsActive ||= [];
+  state.cosmeticsOwned = Array.isArray(state.cosmeticsOwned) ? state.cosmeticsOwned : [];
+  const previousOwned = [...state.cosmeticsOwned];
+  const previousActive = Array.isArray(state.cosmeticsActive) ? [...state.cosmeticsActive] : [];
+  const previousLegacy = Array.isArray(state.legacyCosmeticsActive)
+    ? [...state.legacyCosmeticsActive]
+    : previousActive;
+  if ((state.cosmeticsVersion || 1) < COSMETICS_VERSION) {
+    // carpet+crest схлопываются в один hearth; активным становится pack последнего id.
+    const owned = [];
+    for (const id of previousOwned) {
+      const packId = LEGACY_COSMETIC_ALIASES[id] || id;
+      if (!owned.includes(packId)) owned.push(packId);
+    }
+    const lastId = previousActive[previousActive.length - 1];
+    const activePack = lastId ? (LEGACY_COSMETIC_ALIASES[lastId] || lastId) : null;
+    state.cosmeticsOwned = owned;
+    state.cosmeticsActive = activePack && COSMETIC_BY_ID[activePack] ? [activePack] : [];
+    // Для fallback сохраняются только реальные старые cos_* id, не товарные pack id.
+    state.legacyCosmeticsActive = previousLegacy.filter((id) => LEGACY_COSMETIC_ALIASES[id]);
+  }
+  state.cosmeticsVersion = COSMETICS_VERSION;
   state.seekOverrides ||= {};
   state.shopSeenStock ||= [];
   state.inventorySeen ||= [];
@@ -97,6 +144,8 @@ function migrate(state) {
   state.settings.puzzleCatalogMode ??= 'shelf'; // вид каталога: полка, превью, список или мозаика
   state.settings.guestCatalogMode ??= 'shelf'; // вид гостевой книги: полка, портрет, список или мозаика
   state.settings.storyMode ??= true; // режим истории: гость в лавке ведёт по сюжету
+  state.settings.cosmeticsNoticeDismissed ??= false; // прежнее пояснение о полных фонах
+  state.settings.cosmeticsPackNoticeDismissed ??= false; // отдельное пояснение пакетной модели
   // Курсоры: system (обычная стрелка) / themed (по режимам) / fixed (один везде)
   state.settings.cursorMode ??= state.settings.themedCursors === false ? 'system' : 'themed';
   delete state.settings.themedCursors;
@@ -108,6 +157,61 @@ function migrate(state) {
   state.cheats ||= { used: [], spiderHat: false };
   state.materials ||= {};
   state.seals ??= 0;
+  state.savingsGoal ??= null;
+  // Старым сейвам выдаём полный запас: прошлые победы задним числом не тарифицируются.
+  if (!state.battleEnergy || typeof state.battleEnergy !== 'object' || Array.isArray(state.battleEnergy)) {
+    state.battleEnergy = newBattleEnergy(now);
+  }
+  state.bossDrops ||= {};
+  refreshBattleEnergy(state, now);
+
+  if (!hadOnboarding) {
+    const developed = Object.keys(state.puzzlesDone || {}).length > 0
+      || Object.keys(state.battlesDone || {}).length > 0
+      || Object.keys(state.materials || {}).length > 0
+      || (state.crew || []).length > 0
+      || (state.stats.puzzlesSolved || 0) > 0
+      || (state.stats.battlesWon || 0) > 0
+      || (state.stats.itemsBought || 0) > 0
+      || (state.stats.itemsCrafted || 0) > 0
+      || !!state.story.prologSeen || !!state.story.pending || (state.story.step || 0) > 0
+      || state.coins !== 80 || state.seals !== 0;
+    state.onboarding = newOnboardingState();
+    if ((state.stats.itemsCrafted || 0) > 0 && state.battlesDone?.bt_bees) {
+      const laterRecipeOpen = RECIPES.some((recipe) => recipe.id !== 'rcp_pot_heal'
+        && state.battlesDone?.[recipe.unlockAfter]);
+      if (!laterRecipeOpen) state.onboarding.flags.crafted_rcp_pot_heal = true;
+    }
+    const hasTrailBoots = (state.inventory || []).includes('bt_path')
+      || Object.values(state.equipped || {}).includes('bt_path');
+    if (hasTrailBoots || state.onboarding.flags.crafted_rcp_pot_heal) {
+      state.onboarding.flags.squareSeen = true;
+      state.onboarding.flags.marketSeen = true;
+    }
+    if (developed) {
+      state.onboarding.status = 'done';
+      state.onboarding.step = 'done';
+    } else if (state.tutorialSkipped) state.onboarding.status = 'skipped';
+  } else {
+    const current = state.onboarding;
+    state.onboarding = { ...newOnboardingState(), ...current, flags: { ...(current.flags || {}) } };
+    if (!['active', 'paused', 'skipped', 'done'].includes(state.onboarding.status)) {
+      state.onboarding.status = 'active';
+    }
+    if (!ONBOARDING_STEPS.some((step) => step.id === state.onboarding.step)) {
+      state.onboarding.step = 'prolog';
+    }
+    if (state.onboarding.status === 'done') state.onboarding.step = 'done';
+  }
+  if (!hadGuide) {
+    state.onboarding.guide = { started: false, seen: [], closed: false };
+    if (state.onboarding.status === 'done') state.onboarding.flags.finalSeen = true;
+  }
+  state.onboarding.guide.started ??= false;
+  state.onboarding.guide.seen = Array.isArray(state.onboarding.guide.seen) ? state.onboarding.guide.seen : [];
+  state.onboarding.guide.closed ??= false;
+  state.onboarding.version = ONBOARDING_VERSION;
+  reconcileOnboarding(state);
   return state;
 }
 
@@ -144,7 +248,8 @@ export function grantRewards(state, rewards, multipliers = {}) {
 export function shopStock(state) {
   return SHOP_STOCK
     .filter((s) => s.unlockAfter === null || state.battlesDone[s.unlockAfter])
-    .map((s) => ITEM_BY_ID[s.itemId]);
+    .map(pricedShopItem)
+    .sort(compareShopItems);
 }
 
 // Товары, появившиеся в продаже с последнего визита в прилавок.
@@ -159,10 +264,15 @@ export function markShopSeen(state) {
 }
 
 export function buyItem(state, itemId) {
-  const item = ITEM_BY_ID[itemId];
-  if (!item) return { ok: false, error: 'Нет такого товара' };
-  const inStock = shopStock(state).some((i) => i.id === itemId);
-  if (!inStock) return { ok: false, error: 'Товар ещё не на полке' };
+  if (!ITEM_BY_ID[itemId]) return { ok: false, error: 'Нет такого товара' };
+  const item = shopStock(state).find((candidate) => candidate.id === itemId);
+  if (!item) return { ok: false, error: 'Товар ещё не на полке' };
+  const owned = item.slot !== 'consumable' && (
+    state.inventory.includes(itemId)
+    || state.consumableBelt.includes(itemId)
+    || Object.values(state.equipped).includes(itemId)
+  );
+  if (owned) return { ok: false, error: 'Эта вещь уже у вас: в сундуке, на поясе или надета.' };
   if (item.sealPrice) {
     if (state.seals < item.sealPrice) return { ok: false, error: 'Не хватает печатей мастера' };
     state.seals -= item.sealPrice;
@@ -176,7 +286,10 @@ export function buyItem(state, itemId) {
 
   // Авто-экипировка: если слот свободен (или есть место в поясе) — надеваем сразу.
   const auto = autoEquip(state, itemId);
-  return { ok: true, autoEquipped: auto };
+  onboardingPurchase(state, itemId);
+  const result = { ok: true, autoEquipped: auto };
+  if (completeSavingsGoal(state, 'item', itemId)) result.goalCompleted = true;
+  return result;
 }
 
 // Надеть вещь, только если целевой слот пуст (без замены).
@@ -212,7 +325,9 @@ export function sellItem(state, inventoryIndex) {
   const id = state.inventory[inventoryIndex];
   const item = ITEM_BY_ID[id];
   if (!item) return { ok: false };
-  const price = Math.max(1, Math.floor(item.price / 2));
+  const stock = SHOP_STOCK.find((entry) => entry.itemId === id);
+  const basePrice = stock ? itemPrice(item, { tier: stock.tier }) : item.price;
+  const price = Math.max(1, Math.floor(basePrice / 2));
   state.inventory.splice(inventoryIndex, 1);
   addCoins(state, price);
   return { ok: true, price };
@@ -250,7 +365,9 @@ export function hireCrew(state, id, kind) {
     state.formation[key] = wantSlots.find((s) => !taken.includes(s)) ?? (isTank ? 0 : 4);
   }
   if (kind === 'pet' && !state.pet) state.pet = id;
-  return { ok: true };
+  const result = { ok: true };
+  if (completeSavingsGoal(state, 'crew', id)) result.goalCompleted = true;
+  return result;
 }
 
 export function toggleCompanion(state, id) {
@@ -289,12 +406,14 @@ export function equipFromInventory(state, inventoryIndex) {
     if (state.consumableBelt.length >= 2) return { ok: false, error: 'В поясе только два кармашка' };
     state.inventory.splice(inventoryIndex, 1);
     state.consumableBelt.push(id);
+    onboardingEquipmentChanged(state);
     return { ok: true };
   }
   const result = equip(state.equipped, id);
   if (!result.ok) return result;
   state.inventory.splice(inventoryIndex, 1);
   for (const off of result.swappedOff || []) state.inventory.push(off);
+  onboardingEquipmentChanged(state);
   return { ok: true, slot: result.slot };
 }
 
@@ -350,12 +469,30 @@ export function autoEquipBest(state) {
 
 // --- Крафт: материалы → зелья и снаряжение ---
 
+const RECIPE_PROGRESS = new Map(RECIPES.map((recipe) => {
+  const battle = recipe.unlockAfter ? BATTLE_BY_ID[recipe.unlockAfter] : null;
+  const order = recipe.unlockAfter ? BATTLES.findIndex((entry) => entry.id === recipe.unlockAfter) : -1;
+  return [recipe.id, {
+    tier: battle ? battleEconomy(battle).tier : 0,
+    order,
+  }];
+}));
+
 export function recipeList(state) {
   return RECIPES
     .filter((r) => r.unlockAfter === null || state.battlesDone[r.unlockAfter])
     .map((r) => {
       const check = canCraft(state, r.id);
       return { ...r, canCraft: check.ok, missing: check.missing || [], error: check.error };
+    })
+    .sort((a, b) => {
+      const pa = RECIPE_PROGRESS.get(a.id);
+      const pb = RECIPE_PROGRESS.get(b.id);
+      return pa.tier - pb.tier || pa.order - pb.order
+        || Number(!a.canCraft) - Number(!b.canCraft)
+        || (a.coins || 0) - (b.coins || 0)
+        || Number(a.kind !== 'potion') - Number(b.kind !== 'potion')
+        || a.id.localeCompare(b.id, 'ru');
     });
 }
 
@@ -388,7 +525,18 @@ export function craft(state, recipeId) {
   for (let i = 0; i < count; i++) state.inventory.push(r.result.itemId);
   state.stats.itemsCrafted = (state.stats.itemsCrafted || 0) + 1;
   journalPush(state, '⚒️', `Готово: ${r.name.toLowerCase()}.`);
-  return { ok: true, itemId: r.result.itemId, count };
+  onboardingCrafted(state, recipeId);
+  const result = { ok: true, itemId: r.result.itemId, count };
+  if (completeSavingsGoal(state, 'recipe', recipeId)) result.goalCompleted = true;
+  return result;
+}
+
+export function exchangeMaterial(state, inputId, outputId) {
+  const result = exchangeMaterials(state, inputId, outputId);
+  if (result.ok) {
+    journalPush(state, '🔁', `Обмен: ${materialLabel(inputId)} ×${result.cost} → ${materialLabel(outputId)} ×${result.received}.`);
+  }
+  return result;
 }
 
 // --- Дневник кота: последние события глазами кота-хранителя ---
@@ -398,11 +546,23 @@ export function journalPush(state, icon, text) {
   if (state.journal.length > 30) state.journal.splice(0, state.journal.length - 30);
 }
 
-// --- Косметика лавки (только красота, без влияния на силу) ---
+// --- Оформление лавки (только красота, без влияния на силу) ---
+
+export function selectCosmetic(state, id) {
+  if (id === null) {
+    state.cosmeticsActive = [];
+    state.legacyCosmeticsActive = [];
+    return { ok: true, active: false };
+  }
+  if (!COSMETIC_BY_ID[id] || !state.cosmeticsOwned.includes(id)) return { ok: false, active: false };
+  state.cosmeticsActive = [id];
+  state.legacyCosmeticsActive = [id];
+  return { ok: true, active: true };
+}
 
 export function buyCosmetic(state, id) {
   const def = COSMETIC_BY_ID[id];
-  if (!def) return { ok: false, error: 'Нет такого украшения' };
+  if (!def) return { ok: false, error: 'Нет такого оформления' };
   if (state.cosmeticsOwned.includes(id)) return { ok: false, error: 'Уже куплено' };
   if (def.sealPrice) {
     if (state.seals < def.sealPrice) return { ok: false, error: 'Не хватает печатей мастера' };
@@ -412,16 +572,13 @@ export function buyCosmetic(state, id) {
     state.coins -= def.price;
   }
   state.cosmeticsOwned.push(id);
-  state.cosmeticsActive.push(id); // сразу выставляем
+  selectCosmetic(state, id); // покупка сразу заменяет текущее оформление
   return { ok: true };
 }
 
 export function toggleCosmetic(state, id) {
-  if (!state.cosmeticsOwned.includes(id)) return { ok: false };
-  const i = state.cosmeticsActive.indexOf(id);
-  if (i >= 0) state.cosmeticsActive.splice(i, 1);
-  else state.cosmeticsActive.push(id);
-  return { ok: true, active: i < 0 };
+  const active = state.cosmeticsActive.length === 1 && state.cosmeticsActive[0] === id;
+  return selectCosmetic(state, active ? null : id);
 }
 
 // --- Головоломки ---
@@ -586,10 +743,14 @@ const CAMPAIGN_ORDER = [
   'seat_81', 'seat_82', 'seat_83', 'seat_84', 'seat_85', 'seat_86', 'seat_87', 'seat_88', 'seat_89', 'seat_90',
   'seat_91', 'seat_92', 'seat_93', 'seat_94', 'seat_95', 'seat_96', 'seat_97', 'seat_98', 'seat_99', 'seat_100',
 ];
-export const ALL_PUZZLES = CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id));
+// Единый производный слой наград: исходные 838 уровней не дублируют формулы.
+export const ALL_PUZZLES = derivePuzzleCatalog(CAMPAIGN_ORDER.map((id) => PUZZLE_POOL.get(id)));
 
 export function allPuzzles(state) {
-  return [...ALL_PUZZLES, ...(state.customPuzzles || [])];
+  const custom = (state.customPuzzles || []).map((p) => derivePuzzle(p, {
+    tier: p.economyTier ?? 0, order: 0, finale: false,
+  }));
+  return [...ALL_PUZZLES, ...custom];
 }
 
 export function findPuzzle(state, id) {
@@ -663,52 +824,46 @@ export function puzzleAvailable(state, index) {
   return !!state.puzzlesDone[sameType[pos - 1].id];
 }
 
+export function puzzleNeedsHonest(state, puzzleId) {
+  const entry = state.puzzlesDone[puzzleId];
+  return !entry || !!entry.skipped;
+}
+
 export function completePuzzle(state, puzzleId, info = {}) {
   const puzzle = findPuzzle(state, puzzleId);
   if (!puzzle) return null;
-  const firstTime = !state.puzzlesDone[puzzleId];
-  // Модификатор монетной части: штраф за ошибки или бонус вроде ×1,5
-  const coinFactor = info.coinFactor ?? 1;
-  // Заказ дня определяем ДО отметки о решении: после неё загадка выпадает
-  // из списка открытых, dailyPuzzle укажет на другую и бонус никогда не дойдёт.
-  const isDaily = firstTime && state.lastDailyBonus !== todayKey() && isDailyPuzzle(state, puzzleId);
+  const previous = state.puzzlesDone[puzzleId];
+  const firstHonest = !previous || !!previous.skipped;
+  const repeat = !firstHonest;
+  // Daily определяется до записи решения и работает как за первое, так и за повторное.
+  const isDaily = state.lastDailyBonus !== todayKey() && isDailyPuzzle(state, puzzleId);
   state.puzzlesDone[puzzleId] = {
     moves: info.moves ?? 0,
     hintsUsed: info.hintsUsed ?? 0,
     at: Date.now(),
   };
   state.stats.puzzlesSolved += 1;
-  storyOnPuzzleComplete(state, puzzleId); // режим истории: уровень мог быть заданием гостя
-  journalPush(state, '🧩', firstTime
+  storyOnPuzzleComplete(state, puzzleId); // после пропуска pending уже закрыт и не продвинется повторно
+  journalPush(state, '🧩', firstHonest
     ? `Загадка «${puzzle.name}» решена. Лавка светлеет.`
     : `«${puzzle.name}» — снова решена, кот доволен.`);
-  // Уровни из мастерской: скромная награда за повторное прохождение чужих загадок
-  const rewards = puzzle.rewards || [{ type: 'coins', amount: 15 }];
-  // Заказ дня: двойные монеты за загадку дня (раз в день)
-  let dailyBonus = false;
   if (isDaily) {
-    dailyBonus = true;
     state.lastDailyBonus = todayKey();
     journalPush(state, '🌟', 'Заказ дня выполнен — путник щедро благодарит!');
   }
-  if (!firstTime) {
-    const coins = rewards.find((r) => r.type === 'coins');
-    const amount = coins ? Math.round(coins.amount / 3 * coinFactor) : 10;
-    addCoins(state, amount);
-    return [{ type: 'coins', amount }];
-  }
-  const granted = grantRewards(state, rewards.map((r) => (
-    r.type === 'coins'
-      ? { ...r, amount: Math.round(r.amount * (dailyBonus ? 2 : 1) * coinFactor) }
-      : r
-  )));
+  const rewards = puzzleRewards(puzzle, {
+    repeat,
+    factor: info.coinFactor ?? 1,
+    daily: isDaily,
+  });
+  const granted = grantRewards(state, rewards, {});
+  onboardingPuzzleSolved(state, puzzleId);
   return granted;
 }
 
-// Пропуск головоломки за монеты: цепочка открывается, но наград нет.
+// Пропуск открывает цепочку/историю, но не превращает уровень в дешёвый repeat-farm.
 export function skipPuzzlePrice(puzzle) {
-  const coins = (puzzle.rewards || []).find((r) => r.type === 'coins');
-  return Math.max(50, Math.round((coins?.amount || 50) * 1.5));
+  return puzzleSkipTerms(puzzle).price;
 }
 
 export function skipPuzzle(state, puzzleId) {
@@ -719,15 +874,12 @@ export function skipPuzzle(state, puzzleId) {
     return { ok: false, error: 'Загадка ещё не открыта' };
   }
   if (state.puzzlesDone[puzzleId]) return { ok: false, error: 'Уже решена' };
-  const price = skipPuzzlePrice(puzzle);
+  const { price, consolation } = puzzleSkipTerms(puzzle);
   if (state.coins < price) return { ok: false, error: 'Не хватает монет', price };
   state.coins -= price;
   state.puzzlesDone[puzzleId] = { moves: 0, hintsUsed: 0, skipped: true, at: Date.now() };
-  state.stats.puzzlesSolved += 1;
   storyOnPuzzleComplete(state, puzzleId); // пропуск тоже закрывает задание истории
-  // Утешение от кота-хранителя: треть монет уровня, без предметов и печатей
-  const coins = (puzzle.rewards || []).find((r) => r.type === 'coins');
-  const consolation = Math.round((coins?.amount || 30) / 3);
+  // Утешение считается от первой нормативной награды, без предметов и печатей.
   addCoins(state, consolation);
   return { ok: true, price, consolation };
 }
@@ -768,9 +920,9 @@ export function todayKey() {
   return new Date().toISOString().slice(0, 10);
 }
 
-// Загадка дня: детерминирована по дате и прогрессу игрока (ближайшая нерешённая).
+// Загадка дня: ближайшие открытые нерешённые/пропущенные, а после кампании — повторные.
 export function dailyPuzzle(state) {
-  const open = ALL_PUZZLES.filter((p, i) => !state.puzzlesDone[p.id] && puzzleAvailable(state, i));
+  const open = ALL_PUZZLES.filter((p, i) => puzzleNeedsHonest(state, p.id) && puzzleAvailable(state, i));
   const pool = open.length > 0 ? open.slice(0, 6) : ALL_PUZZLES.slice(-6);
   return pool[dayHash(todayKey()) % pool.length];
 }
@@ -798,9 +950,9 @@ export function nextPuzzle(currentId) {
   return ALL_PUZZLES.slice(idx + 1).find((p) => puzzleTypeOf(p) === mech) || null;
 }
 
-// Первая нерешённая кампейн-головоломка (для автоскролла списка).
+// Первая нерешённая или ожидающая честного решения после пропуска.
 export function firstUnsolvedPuzzle(state) {
-  return ALL_PUZZLES.find((p, i) => !state.puzzlesDone[p.id] && puzzleAvailable(state, i)) || null;
+  return ALL_PUZZLES.find((p, i) => puzzleNeedsHonest(state, p.id) && puzzleAvailable(state, i)) || null;
 }
 
 // Следующая битва после текущей (для кнопки «Следующая битва →»).
@@ -822,21 +974,119 @@ export function battleAvailable(state, battleId) {
   return b.unlockAfter === null || !!state.battlesDone[b.unlockAfter];
 }
 
-export function runBattle(state, battleId, seed = 1) {
-  const battle = BATTLE_BY_ID[battleId];
-  if (!battle || !battleAvailable(state, battleId)) return null;
-  return runFormationBattle(state, battle, seed);
+// Конкретный совет только из уже доступных источников усиления.
+// Чистая функция: не меняет состояние и не открывает контент раньше времени.
+export function accessibleBattleAdvice(state, report) {
+  const sources = new Map();
+  for (const id of state.inventory || []) if (ITEM_BY_ID[id]) sources.set(id, 'inventory');
+  for (const id of state.consumableBelt || []) if (ITEM_BY_ID[id]) sources.set(id, 'belt');
+  for (const item of shopStock(state)) if (!sources.has(item.id)) sources.set(item.id, 'shop');
+  for (const recipe of recipeList(state)) {
+    if (!sources.has(recipe.result.itemId)) sources.set(recipe.result.itemId, 'recipe');
+  }
+  const equippedIds = new Set(Object.values(state.equipped || {}).filter(Boolean));
+
+  const itemAction = (id) => {
+    const item = ITEM_BY_ID[id];
+    const source = sources.get(id);
+    if (!item || !source || source === 'belt' || equippedIds.has(id)) return null;
+    if (source === 'inventory') {
+      return item.slot === 'consumable'
+        ? `Положи на пояс «${item.name}» из сундука`
+        : `Надень «${item.name}» из сундука`;
+    }
+    if (source === 'shop') return `Купи «${item.name}» в торговом квартале`;
+    return `Создай «${item.name}» в кузнице — рецепт уже открыт`;
+  };
+
+  const bestItem = (filter = () => true, score = itemScore) => {
+    const options = [];
+    for (const id of sources.keys()) {
+      const item = ITEM_BY_ID[id];
+      if (!filter(item)) continue;
+      const text = itemAction(id);
+      if (text) options.push({ item, text });
+    }
+    options.sort((a, b) => score(b.item) - score(a.item));
+    return options[0]?.text || null;
+  };
+
+  const isUpgrade = (item) => {
+    if (item.slot === 'shield' && isShieldBlocked(state.equipped)) return false;
+    const scoreAt = (slot) => state.equipped[slot] ? itemScore(ITEM_BY_ID[state.equipped[slot]]) : -1;
+    const current = item.slot === 'ring'
+      ? Math.min(scoreAt('ring1'), scoreAt('ring2'))
+      : scoreAt(item.slot);
+    return itemScore(item) > current;
+  };
+  const gearAction = (filter = () => true) => bestItem(
+    (item) => item.slot !== 'consumable' && isUpgrade(item) && filter(item),
+  );
+  const defenseAction = () => gearAction(
+    (item) => (item.stats?.armor || 0) > 0 || (item.stats?.hp || 0) > 0 || (item.stats?.block || 0) > 0,
+  ) || gearAction() || bestItem((item) => item.id === 'pot_heal');
+
+  const mercAction = () => {
+    const candidates = crewStock(state).filter((m) => m.kind === 'merc' && !state.squadMercs.includes(m.id));
+    candidates.sort((a, b) => Number(b.role === 'танк') - Number(a.role === 'танк'));
+    const merc = candidates[0];
+    if (!merc) return null;
+    if (state.crew.includes(merc.id)) return `Возьми «${merc.name}» в отряд через таверну`;
+    return `Найми в таверне «${merc.name}»${merc.role === 'танк' ? ' для переднего ряда' : ''}`;
+  };
+
+  let action = null;
+  if (report.timedOut) {
+    action = state.settings.tactic !== 'offense'
+      ? 'Смени тактику на «Нападение»'
+      : bestItem(
+        (item) => item.slot !== 'consumable' && isUpgrade(item)
+          && ((item.stats?.attack || 0) > 0 || (item.stats?.crit || 0) > 0 || item.traits?.includes('pierce')),
+        (item) => (item.stats?.attack || 0) * 4 + (item.stats?.crit || 0) * 100 + itemScore(item) / 100,
+      ) || mercAction() || defenseAction();
+  } else if (report.deathCause === 'sleep') {
+    action = bestItem((item) => (item.stats?.resist?.sleep || 0) > 0 || item.effect?.kind === 'cleanse_sleep')
+      || defenseAction();
+  } else if (report.deathCause === 'poison') {
+    action = bestItem((item) => (item.stats?.resist?.poison || 0) > 0 || item.effect?.kind === 'cleanse_poison')
+      || defenseAction();
+  } else if ((report.alliesStats || []).length === 1) {
+    action = mercAction() || defenseAction();
+  } else {
+    action = defenseAction();
+  }
+  action ||= 'Переставь крепких бойцов в передний ряд, а стрелков — за их спины';
+  return `${report.advice || 'Не хватило мощи.'} ${action}.`;
 }
 
-function enemyReward(enemyId, knightStats, seed) {
-  // Детерминированная награда: среднее диапазона, goldFind влияет.
+export function runBattle(state, battleId, seed = 1, options = {}) {
+  const battle = BATTLE_BY_ID[battleId];
+  if (!battle || !battleAvailable(state, battleId)) return null;
+  const practice = options.practice === true;
+  const now = options.now ?? Date.now();
+  const energy = battleEnergyTerms(state, battle, now);
+  if (!practice && energy.repeat && !energy.enough) {
+    return {
+      blocked: 'energy', ok: false, battle, practice: false, rewards: [],
+      energySpent: 0, energyAfter: energy.value, energyCost: energy.cost,
+      error: `Для наградного повтора нужно ${energy.cost} энергии. Сейчас: ${energy.value}. Можно выбрать тренировку без наград.`,
+    };
+  }
+  const tutorial = onboardingBattleOptions(state, battleId);
+  const result = runFormationBattle(state, battle, seed, {
+    preserveBeltOnDefeat: options.preserveBeltOnDefeat ?? tutorial.preserveBeltOnDefeat,
+    practice, now, energy,
+  });
+  if (!result.victory) result.report.advice = accessibleBattleAdvice(state, result.report);
+  if (!practice) onboardingBattleFinished(state, battleId, result);
+  return result;
+}
+
+function enemyReward(enemyId, knightStats) {
+  // Монеты считаются на уровне боя; здесь остаются немонетные награды врагов.
   const def = enemyRewardDef(enemyId);
   if (!def) return [];
   const out = [];
-  if (def.coins) {
-    const base = Math.round((def.coins[0] + def.coins[1]) / 2);
-    out.push({ type: 'coins', amount: Math.round(base * (1 + (knightStats.goldFind || 0))) });
-  }
   if (def.seals) out.push({ type: 'seals', amount: def.seals });
   if (def.materials) {
     // Ездовой питомец: материалов больше
@@ -880,7 +1130,10 @@ const CHEATS = {
   'ОБУЧЕНИЕ': (state) => {
     state.tutorial = {};
     state.tutorialSkipped = false;
-    return 'Обучение сброшено. Кот-хранитель снова всё покажет.';
+    restartOnboarding(state);
+    return state.onboarding.status === 'done'
+      ? 'Учебная дуга сверена: уже сделанное повторять не нужно.'
+      : 'Обучение сброшено. Кот-хранитель снова всё покажет.';
   },
   'ПАУЧОК': (state) => {
     state.cheats.spiderHat = !state.cheats.spiderHat;
@@ -915,7 +1168,7 @@ export function saveGame(state, storage) {
   return true;
 }
 
-export function loadGame(storage) {
+export function loadGame(storage, now = Date.now()) {
   const s = storage || (typeof localStorage !== 'undefined' ? localStorage : null);
   if (!s) return null;
   try {
@@ -923,7 +1176,7 @@ export function loadGame(storage) {
     if (!raw) return null;
     const data = JSON.parse(raw);
     if (!data || typeof data.coins !== 'number') return null;
-    const migrated = migrate(data);
+    const migrated = migrate(data, now);
     migrateSeekOverrides(migrated, s);
     return migrated;
   } catch {
@@ -943,7 +1196,7 @@ export function moveFormationSlot(state, unitKey, slot) {
   return true;
 }
 
-function runFormationBattle(state, battle, seed) {
+function runFormationBattle(state, battle, seed, options = {}) {
   const { stats, traits } = collectStats(state.equipped);
   for (const cid of state.squadCompanions) {
     const c = COMPANION_BY_ID[cid];
@@ -986,30 +1239,52 @@ function runFormationBattle(state, battle, seed) {
   const result = simulateFormationBattle(allies, foes, seed, state.settings.tactic || 'balance', obstacles);
 
   const usedIds = knight.potions.filter((p) => p.used).map((p) => p.itemId);
-  for (const used of usedIds) {
-    const i = state.consumableBelt.indexOf(used);
-    if (i >= 0) state.consumableBelt.splice(i, 1);
+  if (!options.practice && !(options.preserveBeltOnDefeat && !result.victory)) {
+    for (const used of usedIds) {
+      const i = state.consumableBelt.indexOf(used);
+      if (i >= 0) state.consumableBelt.splice(i, 1);
+    }
   }
 
   let rewards = [];
-  if (result.victory) {
-    const firstTime = !state.battlesDone[battle.id];
+  let energySpent = 0;
+  let bossDrop = null;
+  if (result.victory && !options.practice) {
+    const firstTime = (state.battlesDone[battle.id]?.victories || 0) === 0;
+    const energyCost = options.energy?.cost || 0;
+    // Единая синхронная транзакция: энергия, победа, находки и обычные награды.
+    if (energyCost > 0 && spendBattleEnergy(state, energyCost, options.now ?? Date.now())) {
+      energySpent = energyCost;
+    }
     state.battlesDone[battle.id] = {
       victories: (state.battlesDone[battle.id]?.victories || 0) + 1,
-      at: Date.now(),
+      at: options.now ?? Date.now(),
     };
     state.stats.battlesWon += 1;
     journalPush(state, '⚔️', `Поход «${battle.name}» — победа! Рыцарь вернулся с трофеями.`);
+    rewards.push({
+      type: 'coins',
+      amount: battleCoinReward(battle, { repeat: !firstTime, goldFind: stats.goldFind || 0 }),
+    });
     for (const entry of battle.enemies) {
       const enemyId = typeof entry === 'string' ? entry : entry.id;
-      const scale = typeof entry === 'string' ? 1 : (entry.scale || 1);
-      const def = enemyReward(enemyId, stats, seed);
-      for (const r of def) {
-        if (r.type === 'coins') r.amount = Math.round(r.amount * scale);
-        rewards.push(r);
+      for (const reward of enemyReward(enemyId, stats)) {
+        if (reward.type === 'seals' && !firstTime) continue;
+        rewards.push(reward);
       }
     }
-    grantRewards(state, rewards, {});
+    bossDrop = rollBossDrop(state, battle, {
+      victory: state.battlesDone[battle.id].victories,
+      seed,
+      itemFind: stats.itemFind || 0,
+    });
+    if (bossDrop?.dropped) rewards.push({ type: 'item', id: bossDrop.itemId });
+    // Повтор: 20% монет и никаких новых печатей; материалы не меняются.
+    // Внесетовая находка проходит тот же grantRewards ровно один раз.
+    rewards = grantRewards(state, rewards, {});
+    if (bossDrop?.dropped) {
+      journalPush(state, '🎁', `Редкая находка босса: «${ITEM_BY_ID[bossDrop.itemId].name}».`);
+    }
     // Трофей кабинета за первую победу над боем (боссы и розыскные листы)
     const trophy = TROPHY_BY_BATTLE[battle.id];
     if (trophy && !state.trophies.includes(trophy.id)) {
@@ -1020,10 +1295,12 @@ function runFormationBattle(state, battle, seed) {
     if (traits.includes('heal_after_battle')) {
       rewards.push({ type: 'note', text: 'Амулет очага согрел рыцаря после боя.' });
     }
-    if (!firstTime) rewards = rewards.map((r) => (r.type === 'coins' ? { ...r, amount: Math.round(r.amount * 0.5) } : r));
   }
   return {
-    ...result, rewards, battle,
+    ...result, rewards, battle, bossDrop,
+    practice: options.practice === true,
+    energySpent,
+    energyAfter: state.battleEnergy?.value ?? 0,
     formation: initialFormation, // начальные клетки (не конец боя!)
   };
 }

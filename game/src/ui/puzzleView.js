@@ -4,7 +4,7 @@ import {
 } from '../core/puzzle.js';
 import { hint as solverHint } from '../core/solver.js';
 import {
-  puzzleAvailable, completePuzzle, findPuzzle, ALL_PUZZLES,
+  puzzleAvailable, completePuzzle, findPuzzle, ALL_PUZZLES, puzzleNeedsHonest,
   nextPuzzle, isDailyPuzzle, todayKey,
 } from '../core/state.js';
 import { ITEM_BY_ID } from '../data/items.js';
@@ -23,9 +23,13 @@ import { renderGlassPuzzle } from './glassView.js';
 import { renderSpinPuzzle } from './spinView.js';
 import { renderGiftPuzzle } from './giftView.js';
 import { renderSeatingPuzzle } from './seatingView.js';
-import { startTutorial } from './tutorial.js';
+import { startTutorial, destroyTutorial } from './tutorial.js';
+import {
+  onboardingBlocksStory, onboardingBlocksLegacyTutorials, onboardingCtaForResult,
+} from '../core/onboarding.js';
 import { quickNav, puzzleSkipButton, header, backToPuzzleType } from './common.js';
 import { createPuzzleCatalogModePicker, renderPuzzleCatalog } from './puzzleCatalogView.js';
+import { savingsGoalSummary } from './goalView.js';
 
 // --- Типы головоломок: промежуточный экран-карточки ---
 
@@ -88,32 +92,34 @@ export function renderPuzzleTypeList(container, ctx, mech) {
   const items = ALL_PUZZLES.filter((p) => typeOf(p) === mech);
   container.appendChild(header(ctx, `${t.icon} ${t.name}`, t.desc, 'puzzles'));
 
-  const firstUnsolved = items.find((p) => !state.puzzlesDone[p.id]
+  const firstUnsolved = items.find((p) => puzzleNeedsHonest(state, p.id)
     && puzzleAvailable(state, ALL_PUZZLES.indexOf(p)));
   const list = document.createElement('div');
   list.className = 'list';
   items.forEach((p, i) => {
     const available = puzzleAvailable(state, ALL_PUZZLES.indexOf(p));
-    const done = !!state.puzzlesDone[p.id];
+    const entry = state.puzzlesDone[p.id];
+    const solved = !!entry && !entry.skipped;
     const row = document.createElement('div');
-    row.className = 'row' + (available ? '' : ' locked') + (done ? ' done' : '');
+    row.className = 'row' + (available ? '' : ' locked') + (solved ? ' done' : '');
     if (firstUnsolved && p.id === firstUnsolved.id) row.dataset.scrollTarget = '1';
     const stars = '★'.repeat(p.difficulty) + '☆'.repeat(Math.max(0, 5 - p.difficulty));
-    // «Заказ дня ×2» виден только пока бонус не забран сегодня
+    // Daily виден и для повторного уровня после полной кампании, пока бонус не забран.
     const dailyClaimed = state.lastDailyBonus === todayKey();
-    const isDaily = available && !done && !dailyClaimed && isDailyPuzzle(state, p.id);
+    const isDaily = available && !dailyClaimed && isDailyPuzzle(state, p.id);
     row.innerHTML = `
-      <span class="icon">${available ? (done ? '🏮' : '🧩') : '🔒'}</span>
+      <span class="icon">${available ? (solved ? '🏮' : '🧩') : '🔒'}</span>
       <span class="grow">
         <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">заказ дня ×2</span>' : ''}</div>
         <div class="desc">${available ? p.intro : 'Реши предыдущую загадку, чтобы открыть.'}</div>
       </span>`;
     if (available) {
       const btn = document.createElement('button');
-      btn.textContent = done ? 'Ещё раз' : 'Решать';
+      btn.dataset.puzzleId = p.id;
+      btn.textContent = solved ? 'Ещё раз' : entry?.skipped ? 'Решить честно' : 'Решать';
       btn.addEventListener('click', () => ctx.go('puzzle', { id: p.id }));
       row.appendChild(btn);
-      if (!done) {
+      if (!entry) {
         const skipBtn = puzzleSkipButton(ctx, p, () => {
           container.innerHTML = '';
           renderPuzzleTypeList(container, ctx, mech);
@@ -205,6 +211,7 @@ export function renderPuzzle(container, ctx, params) {
   canvasBox.className = 'puzzle-canvas-box';
   const canvas = document.createElement('canvas');
   canvas.className = 'game';
+  canvas.dataset.puzzleId = level.id;
   const [gw, gh] = level.grid;
   const dpr = window.devicePixelRatio || 1;
   canvas.width = gw * CELL * dpr;
@@ -430,14 +437,14 @@ export function renderPuzzle(container, ctx, params) {
 
   draw();
 
-  // Уровень уже решён на старте (обучающий «Первый светлячок»):
-  // даём посмотреть на луч и мягко завершаем сами.
+  // Если данные уровня уже решены на старте, даём посмотреть на луч перед наградой.
+  // «Первый светлячок» к таким уровням не относится: его решает реальный тап по зеркалу.
   if (!finished && isSolved(puzzle)) {
     setTimeout(() => { if (!finished) finish(); }, 1400);
   }
 
-  // Первое интерактивное обучение головоломке (на уровне с первым зеркалом)
-  if (level.id === 'md_02') {
+  // Прежняя подсказка не дублирует точечные подсказки первой дуги.
+  if (level.id === 'md_02' && !onboardingBlocksLegacyTutorials(ctx.state)) {
     startTutorial(ctx, 'first_puzzle', [
       {
         target: canvas,
@@ -465,6 +472,7 @@ export function renderPuzzle(container, ctx, params) {
 }
 
 function showVictory(ctx, level, rewards) {
+  destroyTutorial();
   const overlay = document.createElement('div');
   overlay.className = 'overlay';
   const rewardHtml = rewards.map((r) => {
@@ -474,17 +482,32 @@ function showVictory(ctx, level, rewards) {
     return '';
   }).filter(Boolean).join('<br>');
 
+  const goalHtml = savingsGoalSummary(ctx.state);
   overlay.innerHTML = `
     <div class="card">
       <h2>🏮 Лавка сияет!</h2>
       <div class="muted">«${level.name}» — решено</div>
       <div class="rewards">${rewardHtml}</div>
+      ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ''}
       <div class="actions"></div>
     </div>`;
   const actions = overlay.querySelector('.actions');
-  // Режим истории: только что закрыто задание гостя — ведём к следующему
+  const tutorialCta = onboardingCtaForResult(ctx.state, { kind: 'puzzle', id: level.id });
+  if (tutorialCta) {
+    const btn = document.createElement('button');
+    btn.className = 'primary';
+    btn.textContent = tutorialCta.label;
+    btn.dataset.onboardingCta = level.id;
+    btn.addEventListener('click', () => {
+      overlay.remove();
+      ctx.go(tutorialCta.route.name, tutorialCta.route.params);
+    });
+    actions.appendChild(btn);
+  }
+  // История не перехватывает первую дугу; её обычный переход возвращается после неё.
   const story = ctx.state?.story;
-  const storyNext = ctx.state?.settings?.storyMode !== false && story?.justCompleted;
+  const storyNext = !tutorialCta && !onboardingBlocksStory(ctx.state)
+    && ctx.state?.settings?.storyMode !== false && story?.justCompleted;
   if (storyNext) {
     story.justCompleted = null;
     const storyBtn = document.createElement('button');
@@ -493,7 +516,7 @@ function showVictory(ctx, level, rewards) {
     storyBtn.addEventListener('click', () => { overlay.remove(); ctx.go('story'); });
     actions.appendChild(storyBtn);
   }
-  const next = nextPuzzle(level.id);
+  const next = tutorialCta ? null : nextPuzzle(level.id);
   if (next) {
     const nextBtn = document.createElement('button');
     if (!storyNext) nextBtn.className = 'primary';
@@ -505,7 +528,7 @@ function showVictory(ctx, level, rewards) {
   again.textContent = 'Ещё раз';
   again.addEventListener('click', () => { overlay.remove(); ctx.go('puzzle', { id: level.id }); });
   const toList = document.createElement('button');
-  if (!next && !storyNext) toList.className = 'primary';
+  if (!next && !storyNext && !tutorialCta) toList.className = 'primary';
   toList.textContent = 'К загадкам';
   toList.addEventListener('click', () => { overlay.remove(); backToPuzzleType(ctx, level); });
   const toShop = document.createElement('button');
@@ -513,7 +536,7 @@ function showVictory(ctx, level, rewards) {
   toShop.addEventListener('click', () => { overlay.remove(); ctx.go('hub'); });
   actions.append(again, toList, toShop);
   document.body.appendChild(overlay);
-  // Enter/пробел — основная кнопка («Следующая →»); слушатель самоочищается
+  // Enter/пробел — основная кнопка учебного или обычного перехода; слушатель самоочищается
   const onVictoryKey = (ev) => {
     if (!overlay.isConnected) { window.removeEventListener('keydown', onVictoryKey); return; }
     if (ev.key !== 'Enter' && ev.key !== ' ') return;

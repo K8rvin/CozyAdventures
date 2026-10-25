@@ -4,6 +4,7 @@ import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js
 import { applyCheat } from '../core/state.js';
 import { createPuzzleCatalogModePicker } from './puzzleCatalogView.js';
 import { CURSOR_THEMES, applyCursor, cursorMode, fixedCursorTheme } from './cursors.js';
+import { reopenOnboardingGuide, onboardingGuideNext } from '../core/onboarding.js';
 
 function makeSection(title, danger = false) {
   const sec = document.createElement('div');
@@ -201,6 +202,20 @@ export function renderSettings(container, ctx) {
       ctx.go('hub');
     },
   }));
+  if (state.onboarding?.guide?.started) {
+    helpSec.appendChild(makeActionRow({
+      name: 'Путеводитель',
+      hint: 'Вернуться к обзору разделов без сброса отметок и без повторной первой дуги.',
+      btnText: '🗺️ Показать путеводитель',
+      onClick: () => {
+        if (!reopenOnboardingGuide(state)) return;
+        ctx.save();
+        const next = onboardingGuideNext(state);
+        if (next) ctx.go(next.route.name, next.route.params);
+        else ctx.go('hub');
+      },
+    }));
+  }
   container.appendChild(helpSec);
 
   const dangerSec = makeSection('⚠️ Опасная зона', true);

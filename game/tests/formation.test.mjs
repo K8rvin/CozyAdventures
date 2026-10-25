@@ -183,6 +183,82 @@ test('runBattle проходит бой и даёт награду', () => {
   assert.ok(s.battlesDone.bt_slimes);
 });
 
+test('начисленные монеты совпадают с result.rewards на первой и повторной победе', () => {
+  const s = newGame();
+  s.coins = 137; // непустой кошелёк не должен влиять на расчёт разницы
+  const coinSum = (result) => result.rewards
+    .filter((r) => r.type === 'coins')
+    .reduce((sum, r) => sum + r.amount, 0);
+
+  const firstBefore = s.coins;
+  const firstEarnedBefore = s.stats.coinsEarned;
+  const first = runBattle(s, 'bt_slimes', 1);
+  assert.equal(first.victory, true);
+  assert.ok(first.rewards.some((r) => r.type === 'material'), 'кроме монет есть материалы');
+  assert.equal(s.coins - firstBefore, coinSum(first), 'кошелёк после первой победы');
+  assert.equal(s.stats.coinsEarned - firstEarnedBefore, coinSum(first), 'статистика после первой победы');
+
+  const secondBefore = s.coins;
+  const secondEarnedBefore = s.stats.coinsEarned;
+  const second = runBattle(s, 'bt_slimes', 1);
+  assert.equal(second.victory, true);
+  assert.equal(s.coins - secondBefore, coinSum(second), 'кошелёк после повторной победы');
+  assert.equal(s.stats.coinsEarned - secondEarnedBefore, coinSum(second), 'статистика после повторной победы');
+  assert.deepEqual(
+    second.rewards.filter((r) => r.type === 'coins').map((r) => r.amount),
+    first.rewards.filter((r) => r.type === 'coins').map((r) => Math.round(r.amount * 0.2)),
+    'повторные монеты — примерно 20% с одним округлением итога',
+  );
+  assert.deepEqual(
+    second.rewards.filter((r) => r.type === 'material'),
+    first.rewards.filter((r) => r.type === 'material'),
+    'остальные награды за повтор пока не меняются',
+  );
+});
+
+test('советы на bt_bees предлагают только уже доступное усиление', () => {
+  const s = newGame();
+  assert.equal(runBattle(s, 'bt_slimes', 1).victory, true);
+  const forbidden = [
+    'Лесная лучница', 'Дворовый громила', 'лучницу', 'громилу',
+    'Перчатки травницы', 'Амулет противоядия', 'Чернильный отвар',
+  ];
+  for (const seed of [1, 14]) { // яд и обычная гибель в одиночку
+    const attempt = structuredClone(s);
+    const result = runBattle(attempt, 'bt_bees', seed);
+    assert.equal(result.victory, false);
+    for (const text of forbidden) {
+      assert.ok(!result.report.advice.includes(text), `закрытая рекомендация «${text}»: ${result.report.advice}`);
+    }
+    assert.ok(!result.report.advice.includes('Найми в таверне'), 'наёмники ещё не открыты');
+    assert.ok(result.report.advice.includes('Стёганый камзол'), 'есть открытый и полезный путь усиления');
+  }
+});
+
+test('советы по яду, сну, отряду и таймауту следуют реальным открытиям', async () => {
+  const { accessibleBattleAdvice } = await import('../src/core/state.js');
+  const s = newGame();
+  const report = (extra) => ({ advice: 'Нужно усилиться.', alliesStats: [{}], ...extra });
+
+  let advice = accessibleBattleAdvice(s, report({ deathCause: 'poison' }));
+  assert.ok(!advice.includes('Амулет противоядия') && !advice.includes('Чернильный отвар'));
+  advice = accessibleBattleAdvice(s, report({ timedOut: true, advice: 'Бой затянулся.' }));
+  assert.ok(advice.includes('Нападение'), 'таймаут предлагает доступную смену тактики');
+  assert.ok(!advice.includes('наёмников'), 'закрытый найм не предлагается даже в общем виде');
+
+  s.battlesDone.bt_bees = { victories: 1 };
+  advice = accessibleBattleAdvice(s, report({ deathCause: 'sleep' }));
+  assert.ok(advice.includes('Шлем сонного барсука'), 'открытая защита от сна предлагается');
+  advice = accessibleBattleAdvice(s, report({ deathCause: 'phys' }));
+  assert.ok(advice.includes('Лесная лучница'), 'открытый наёмник предлагается для одиночного отряда');
+
+  s.battlesDone.bt_moths = { victories: 1 };
+  advice = accessibleBattleAdvice(s, report({ deathCause: 'poison' }));
+  assert.ok(advice.includes('Амулет противоядия'), 'противоядие появляется только после своего открытия');
+  advice = accessibleBattleAdvice(s, report({ deathCause: 'phys' }));
+  assert.ok(advice.includes('Дворовый громила') && advice.includes('переднего ряда'), 'танк предлагается после открытия');
+});
+
 test('статусы видны в логе: наложение, тики и снятие', () => {
   const knight = makeFormationKnight(
     { hp: 500, attack: 1, armor: 0, speed: 10, crit: 0, dodge: 0, block: 0, resist: {} },

@@ -174,6 +174,7 @@ export function renderEquip(container, ctx) {
     cell.className = 'slot' + (item ? '' : ' empty') +
       (slot === 'shield' && shieldBlocked && !item ? ' blocked' : '') +
       (slot === targetSlot ? ' targeting' : '');
+    cell.dataset.equipSlot = slot;
     const icoBox = document.createElement('div');
     icoBox.className = 'slot-item';
     cell.appendChild(icoBox);
@@ -228,6 +229,7 @@ export function renderEquip(container, ctx) {
     const item = id ? ITEM_BY_ID[id] : null;
     const cell = document.createElement('div');
     cell.className = 'slot' + (item ? '' : ' empty') + (targetSlot === 'belt' && !item ? ' targeting' : '');
+    cell.dataset.beltSlot = String(i);
     // Кармашек той же ширины, что и слоты сетки (3 колонки, gap 10px)
     cell.style.flex = '0 0 calc((100% - 20px) / 3)';
     const icoBox = document.createElement('div');

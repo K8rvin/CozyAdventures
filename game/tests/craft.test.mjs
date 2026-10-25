@@ -6,6 +6,8 @@ import {
 import { RECIPES } from '../src/data/recipes.js';
 import { ITEM_BY_ID } from '../src/data/items.js';
 import { MATERIALS, MATERIAL_BY_ID, materialLabel } from '../src/data/materials.js';
+import { BATTLES, BATTLE_BY_ID } from '../src/data/battles.js';
+import { battleEconomy } from '../src/core/economy.js';
 
 test('все рецепты ссылаются на существующие предметы и материалы', () => {
   for (const r of RECIPES) {
@@ -85,4 +87,46 @@ test('ездовой питомец удваивает материалы', () =
   assert.ok(r.victory);
   const drops = r.rewards.filter((x) => x.type === 'material');
   assert.ok(drops.every((x) => x.amount === 2), 'с Сивкой материалов ×2');
+});
+
+test('продажа крафтовой вещи не создаёт магазинную цену из ниоткуда', async () => {
+  const { sellItem } = await import('../src/core/state.js');
+  const s = newGame();
+  s.inventory = ['shd_master'];
+  const result = sellItem(s, 0);
+  assert.equal(result.ok, true);
+  assert.equal(result.price, 1, 'у крафтовой вещи price: 0 — продаётся за одну монету');
+});
+
+test('рецепты идут по progression unlockAfter, доступности и цене без смены canCraft', () => {
+  const state = newGame();
+  for (const battle of BATTLES) state.battlesDone[battle.id] = { victories: 1 };
+  const recipes = recipeList(state);
+  assert.equal(recipes[0].id, 'rcp_pot_heal', 'учебный рецепт остаётся первым открытым');
+  const index = (id) => recipes.findIndex((recipe) => recipe.id === id);
+  assert.ok(index('rcp_master_dagger') < index('rcp_master_shield'));
+  assert.ok(index('rcp_master_shield') < index('rcp_master_amulet'));
+  assert.ok(index('rcp_master_amulet') < index('rcp_master_gloves'),
+    'исторический массив больше не ставит поздние открытия раньше ранних');
+
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+    assert.equal(recipe.canCraft, canCraft(state, recipe.id).ok, `${recipe.id}: доступность не изменилась`);
+    const progress = (entry) => ({
+      tier: battleEconomy(BATTLE_BY_ID[entry.unlockAfter]).tier,
+      order: BATTLES.findIndex((battle) => battle.id === entry.unlockAfter),
+    });
+    if (i > 0) {
+      const previous = progress(recipes[i - 1]);
+      const current = progress(recipe);
+      assert.ok(previous.tier < current.tier
+        || (previous.tier === current.tier && previous.order <= current.order),
+      `${recipes[i - 1].id} → ${recipe.id}: порядок progression`);
+    }
+  }
+
+  state.materials = { honey: 2, moth_dust: 1 };
+  const sameUnlock = recipeList(state).filter((recipe) => recipe.unlockAfter === 'bt_moths');
+  assert.equal(sameUnlock[0].id, 'rcp_master_ring', 'при равном unlockAfter доступный рецепт идёт раньше');
+  assert.equal(sameUnlock[0].canCraft, canCraft(state, sameUnlock[0].id).ok);
 });

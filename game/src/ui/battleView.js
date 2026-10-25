@@ -6,6 +6,9 @@ import { TROPHIES } from '../data/trophies.js';
 import { battleAvailable, firstUnbeatenBattle } from '../core/state.js';
 import { startTutorial } from './tutorial.js';
 import { header, quickNav } from './common.js';
+import { onboardingBlocksLegacyTutorials } from '../core/onboarding.js';
+import { refreshBattleEnergy, millisecondsToNextEnergy } from '../core/energy.js';
+import { BATTLE_ENERGY_CAP } from '../data/energy.js';
 
 // Метаданные миров для плиток. Арт — готовые фоны боёв assets/battle/.
 const WORLD_META = {
@@ -64,6 +67,15 @@ export function renderBattleList(container, ctx) {
     { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
     { icon: '🏠', label: 'В лавку', screen: 'hub' },
   ]));
+
+  refreshBattleEnergy(state);
+  const energyPanel = document.createElement('div');
+  energyPanel.className = 'panel battle-energy battle-energy-list';
+  energyPanel.dataset.energyValue = String(state.battleEnergy.value);
+  const nextMinutes = Math.max(1, Math.ceil(millisecondsToNextEnergy(state) / 60000));
+  energyPanel.textContent = `⚡ Энергия походов: ${state.battleEnergy.value}/${BATTLE_ENERGY_CAP} · +1 за 2 часа` +
+    (state.battleEnergy.value >= BATTLE_ENERGY_CAP ? ' · запас полный' : ` · следующая через ${nextMinutes} мин`);
+  container.appendChild(energyPanel);
 
   const worlds = battleWorlds(state);
   const won = Object.keys(state.battlesDone).length;
@@ -134,6 +146,7 @@ export function renderBattleList(container, ctx) {
       </span>`;
     if (available) {
       const btn = document.createElement('button');
+      btn.dataset.battleId = b.id;
       btn.textContent = done ? 'Снова' : 'В поход!';
       btn.className = done ? '' : 'primary';
       btn.addEventListener('click', () => ctx.go('battle', { id: b.id }));
@@ -151,7 +164,7 @@ export function renderBattleList(container, ctx) {
   }
 
   // Обучение первому бою
-  if (won === 0) {
+  if (won === 0 && !onboardingBlocksLegacyTutorials(state)) {
     const firstBtn = list.children[0]?.querySelector?.('button');
     if (firstBtn) {
       startTutorial(ctx, 'first_battle', [

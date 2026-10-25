@@ -189,7 +189,7 @@ export function renderEditor(container, ctx, params) {
       world: 'custom', name: name || 'Без названия', difficulty: 1,
       grid: [gw, gh],
       objects: objects.map((o) => ({ ...o })),
-      rewards: [{ type: 'coins', amount: 15 }],
+      rewards: [], // Монеты вычисляет core/economy.js по нормативной модели
       intro: 'Уровень из мастерской.',
     };
   }

@@ -1,8 +1,9 @@
 # Промты для генерации ассетов (PNG/JPEG)
 
 Отдай эти промты своим моделям (Midjourney, DALL·E, Flux, SD и т.п.).
-Сохраняй результат под указанными именами в `game/assets/` — игра подхватит их автоматически
-(сейчас используются `.svg`; если положишь `.png` с тем же именем — скажи, поменяю пути в коде).
+Большие оригиналы храни в `art-src/<тема>/`; в `game/assets/` попадают сжатые
+файлы по указанным runtime-путям. Новые v2-сцены и полные темы лавки не появятся
+в игре просто от копирования файла: сначала нужны приёмка и отдельная интеграция.
 
 Общий стиль игры: уютная волшебная лавка, тёплый свет свечей, тёмное дерево,
 янтарные акценты, без текста и водяных знаков.
@@ -33,14 +34,16 @@ counter, sleeping cat, knight helmet on a stand, window with forest view,
 no text --ar 3:1
 ```
 
-## 1б. hub_banner — детальная версия под хотспоты
+## 1б. hub_banner — детальная V1 под хотспоты (исторический референс)
 
-Более детальный вариант главной сцены: у каждого хотспота и пет-спота есть свой
-тематический «якорь» в арте (координаты совпадают с текущими в `hub.js`, так что
-хотспоты останутся на местах). Животных и людей НЕ рисуем — кот, питомцы,
-спутники и гость истории накладываются спрайтами.
+Раздел сохраняет прежнюю композицию как референс, а не как актуальную разметку.
+Текущий источник координат лавки — `LAVKA_HOTSPOT_SHAPES` в `game/src/ui/hub.js`:
+7 силуэтных полигонов. Числа ниже НЕ копировать в код и не использовать для проверки
+совпадений. Людей и животных по-прежнему не рисуем: персонажи накладываются спрайтами.
+Для новых полных тем базовый `hub_banner_gpt.png` служит только неизменным входом;
+сам базовый арт и его runtime-файл не перезаписываем — работа идёт в разделе 22.
 
-Якоря: 📚 Головоломки (10,42) — книжный шкаф слева · 🪙 Прилавок (43,55) ·
+Исторические V1-якоря: 📚 Головоломки (10,42) — книжный шкаф слева · 🪙 Прилавок (43,55) ·
 📖 Гостевая книга (47,70) — аналой перед прилавком · 🛡️ Комната рыцаря (68,50) —
 доспех + арка · 🌆 На площадь (77,52) — круглая дверь · 🪟 В поход (93,45) — окно
 с дорогой · 🦌 Кабинет трофеев (72,90) — низкая арка со ступенями вниз и рогами ·
@@ -88,9 +91,9 @@ along the back wall, soft evening light mixing candlelight and cool window glow.
 --ar 3:1
 ```
 
-Размер: ≥2400×800, 3:1. Оригинал → `art-src/hub/`, сжатый `_web.jpg` → заменить
-`game/assets/hub/hub_banner_web.jpg` (код менять не нужно, путь тот же).
-После замены при желании подправить координаты в `hub.js`.
+Исторический V1-формат: ≥2400×800, 3:1, оригинал в `art-src/hub/`.
+Для новой работы используй раздел 22: source ≥3000×1000, versioned filenames и
+ручная приёмка по фактическому изображению. Базовую лавку при создании тем не меняем.
 
 ## 2. seek_meadow.png — сцена поиска «Тихая опушка»
 
@@ -229,10 +232,12 @@ of brass, hundreds of small overlapping objects, storybook watercolor
 style, brass and sepia palette with misty blue glow, no text --ar 8:5
 ```
 
-## 1b. town_square.png — городская площадь (хаб-навигация)
+## 1b. town_square.png — V1 городской площади (исторический референс)
 
-Площадь для переходов: слева кузница, справа таверна, в центре верстак-мастерская,
-с краю дорога/фонарь обратно в лавку. Здания должны чётко читаться по углам.
+Сохранённая композиция старой площади: слева кузница, справа таверна, в центре
+верстак-мастерская, с краю дорога обратно в лавку. **Для новой работы этот
+text-only промт не использовать:** актуальные reference contract, имена и приёмка —
+в разделе 22, `town_square_v2.png`.
 
 ```
 A cozy medieval town square, wide banner, storybook watercolor illustration 
@@ -245,12 +250,14 @@ cobblestones, flower pots, a fountain with doves, no people, no text,
 no watermark --ar 3:1
 ```
 
-Размер: ≥1500×500 (как hub_banner). Сохранить как `assets/town_square.jfif` —
-игра подхватит (цепочка `town_square_web.jpg → seek_town_web.jpg`).
+Исторический V1-размер: ≥1500×500, исходник `art-src/hub/town_square.jfif`.
+Старые пути и предположение о fallback-цепочке не использовать для v2.
 
-## 1c. town_market.png — торговый квартал (лавки: оружейник, бронник, маг, алхимик)
+## 1c. town_market.png — V1 торгового квартала (исторический референс)
 
-Квартал, где четыре лавки чётко читаются по углам и имеют вывески-предметы.
+Сохранённая композиция четырёх лавок с вывесками-предметами. **Не конкурирует
+с новой работой:** для `town_market_v2.png` использовать только раздел 22;
+животные и читаемые надписи из старых вариантов там запрещены.
 
 ```
 A cozy medieval merchant quarter, wide banner, storybook watercolor 
@@ -265,7 +272,8 @@ flower pots, a cat sleeping on a windowsill, no people, no text,
 no watermark --ar 3:1
 ```
 
-Размер: ≥1500×500 (как hub_banner). Сохранить как `assets/town_market.jfif`.
+Исторический V1-размер: ≥1500×500, исходник `art-src/hub/town_market.jfif`.
+Новая версия и её интеграция — только по разделу 22.
 
 ## 5. icon_knight.png — портрет рыцаря (128×128)
 
@@ -511,12 +519,13 @@ white background, no ground, no shadow, no text, cozy fantasy game character
 
 ---
 
-## 10. Украшения лавки — assets/cosmetics/*.png (белый фон, вырежу скриптом)
+## 10. LEGACY-спрайты оформления — только исторический overlay-workflow
 
-Арт-оверлеи для внешек (покупаются в прилавке, включаются/выключаются).
-Кладутся поверх сцены лавки, поэтому — изолированные объекты на белом фоне,
-тот же storybook watercolor со свечной палитрой. После генерации пришли
-как есть — вырежу фон, сожму в webp и заменю CSS-заглушки.
+Эти изолированные объекты остаются описанием уже существующих спрайтов для
+временного fallback. **Для новых работ раздел не использовать.** Новое оформление —
+не prop/overlay, а полный фон лавки с сохранённой архитектурой по разделу 22.
+Ниже намеренно сохранены старые промты и приёмы вырезания, чтобы не терять историю;
+они не требуют новой генерации и не описывают текущую целевую интеграцию.
 
 Общий хвост стиля:
 
@@ -594,8 +603,8 @@ composition, isolated on a plain solid white background, no window frame,
 no text, no watermark --ar 3:4
 ```
 
-Сохранять как `assets/cosmetics/cos_*.png` (или пришли как есть — переименую).
-Места на сцене подгоню сам: укажи только, если что-то по смыслу не совпало.
+Исторические файлы — `art-src/cosmetics/cos_*.png` и уже готовые legacy webp/png.
+Новые `lavka_pack_*` по этому workflow не создаём: их полные фоны — в разделе 22.
 
 ### 10.2b. cos_crest.png — вывеска С ТЕКСТОМ (замена версии без букв)
 
@@ -622,9 +631,9 @@ no watermark
 - Если модель упорно пишет «перекрестке» или ломает «Ё» — добавь в конец:
   `the letter Ё must have two dots on top, correct Russian spelling`.
 
-Когда сгенерируешь — пришли файл: вырежу фон, положу в
-`assets/cosmetics/cos_crest.webp`, и уберу из кода текстовую подложку
-(табличка будет полностью картинкой).
+Это описание уже выполненного legacy-преобразования, а не новое задание и не
+инструкция менять код. Полный пакет `lavka_pack_hearth` согласует вывеску без
+читаемого текста с остальными деталями сцены по разделу 22.
 
 ---
 
@@ -755,16 +764,17 @@ with warm brass accents, + хвост стиля
 
 ---
 
-## 12. Кабинет трофеев — assets/trophy_room_web.jpg + assets/trophies/*.png
+## 12. Кабинет трофеев — V1-сцена + assets/trophies/*.png
 
-Новая сцена-хаб: кабинет хозяина лавки с трофеями за боссов. Комната
-нарочно с МИНИМУМОМ вещей — трофеи расставляются кодом поверх пустых
-пьедесталов и полок.
+Комната нарочно с МИНИМУМОМ вещей — трофеи расставляются кодом поверх пустых
+пьедесталов и полок. Промты самих трофеев ниже остаются актуальными, а V1-сцена
+сохранена только как исторический composition reference.
 
-### 12.1 trophy_room.png — сцена кабинета (САМЫЙ ВАЖНЫЙ)
+### 12.1 trophy_room.png — V1-сцена (исторический референс)
 
-ВАЖНО: стена с пьедесталами должна быть ПУСТОЙ — никаких предметов на
-полках, в рамах и на крюках. Только камин, стол и пустые места под трофеи.
+Стена с пьедесталами должна быть ПУСТОЙ — никаких предметов на полках, в рамах
+и на крюках. **Для новой сцены этот text-only промт не использовать:** нужны
+`trophy_room_v2.png`, общий reference contract и приёмка из раздела 22.
 
 ```
 A cozy trophy cabinet room of a magical shopkeeper, wide establishing
@@ -781,10 +791,9 @@ EMPTY pedestals and shelves, no trophies, no clutter on the wall,
 no people, no text, no watermark --ar 3:1
 ```
 
-Размер: ≥1500×500 (как hub_banner). Сохранить как `assets/trophy_room.png`
-(я сожму в `trophy_room_web.jpg`). Координаты пьедесталов потом подгоню
-под арт — важно только, чтобы пустых мест было 12 (2 ряда × 6) + одна
-полка на 4 мелких жетона.
+Исторический V1-размер: ≥1500×500, исходник `art-src/hub/trophy_room.png`.
+Для v2 — source ≥3000×1000 и ручная разметка по факту: ровно 12 ниш 2×6 плюс
+4 маленьких пустых постамента, книга рекордов, карта миров, колода и ясный выход.
 
 ### 12.2 Трофеи — assets/trophies/tro_*.png (белый фон, вырежу скриптом)
 
@@ -2042,4 +2051,617 @@ text, no letters, no numbers, no UI, no watermark. --ar 16:10
 
 - Карточка типа **pc_seating.png** — в разделе 15 (добавлена в список).
 - Курсор **seating.png / seating_hover.png** — в разделе 19 (строка в таблице).
+
+---
+
+## 22. Хабы v2 и полные фоны (актуальный workflow)
+
+Этот раздел — единственный актуальный workflow для новых `town_square_v2`,
+`town_market_v2`, `trophy_room_v2` и полных лавочных тем. Разделы 1b/1c/10/12.1 —
+только исторические референсы. Изображения создаёт пользователь; само наличие
+промта не означает готовый ассет или интеграцию.
+
+### 22.1 Общий reference contract
+
+- **Стиль по умолчанию:** `art-src/hub/hub_banner_gpt.png`. Текущая сцена каждого хаба —
+  только composition reference, а не источник нового стиля. Если редактирование исходника
+  не нравится, используй самостоятельные text-only промты из 22.5.12 без референса.
+- **Формат:** ровно 3:1, source минимум **3000×1000**, runtime **2400×800**.
+  Оригиналы v2 — `art-src/hub/`; оригиналы тем — `art-src/cosmetics/`.
+- Во всех сценах: no people, no animals, no readable text, no letters, no numbers,
+  no watermark, no UI. Вывески — только предметные знаки без букв.
+- Интерактивные якоря должны быть крупными, различимыми и разнесёнными, с пустым
+  пространством для спрайтов питомцев/команды. Не запекать трофеи нигде.
+- Runtime v2 уже интегрированы: `game/assets/hub/town_square_v2_web.jpg`,
+  `town_market_v2_web.jpg`, `trophy_room_v2_web.jpg`.
+- Промты ниже самодостаточны и повторяют нужные ограничения: склеивать их с V1 или
+  добавлять старые координаты не требуется.
+
+### 22.2 town_square_v2.png — городская площадь
+
+Composition reference: `art-src/hub/town_square.jfif`. Результат — новый versioned
+файл `art-src/hub/town_square_v2.png`, не замена текущей сцены.
+
+```
+Create a finished high-resolution 3:1 game background of a cozy medieval town
+square. Use art-src/hub/hub_banner_gpt.png ONLY as the visual style reference:
+storybook watercolor, gentle ink outlines, warm amber light, deep wood and soft
+evening shadows. Use art-src/hub/town_square.jfif ONLY as the broad composition
+reference; create a cleaner new image rather than repainting its defects.
+Output exactly 3:1, at least 3000x1000 pixels, suitable for a 2400x800 runtime image.
+
+Keep six large, distinct and clearly separated navigation anchors:
+1. a wooden notice board with blank, unreadable pinned notes;
+2. a welcoming entrance to the magical shop, with a lantern and a clear path home;
+3. a working forge with an anvil and its own tall smoking chimney;
+4. a separate craftsman workshop with a workbench and tools;
+5. an unmistakable road or arch leading to the merchant quarter;
+6. a cozy tavern with a mug-shaped sign and warm windows.
+Leave several quiet open cobblestone areas near the edges for future pet and crew
+sprites. Keep architecture and props from covering those empty spaces. Rich
+high-resolution detail, readable silhouettes at one-third scale, no people, no
+animals, no birds, no readable text, no letters, no numbers, no watermark, no UI,
+no logos, no trophies or trophy displays baked into the scene. --ar 3:1
+```
+
+### 22.3 town_market_v2.png — торговый квартал
+
+Composition reference: `art-src/hub/town_market.jfif`. Результат — новый versioned
+файл `art-src/hub/town_market_v2.png`.
+
+```
+Create a finished high-resolution 3:1 game background of a cozy merchant quarter.
+Use art-src/hub/hub_banner_gpt.png ONLY as the visual style reference: storybook
+watercolor, gentle ink outlines, warm candlelit amber and deep brown tones. Use
+art-src/hub/town_market.jfif ONLY as the broad composition reference, improving
+clarity and separation. Output exactly 3:1, at least 3000x1000 pixels, suitable
+for a 2400x800 runtime image.
+
+Show FOUR visually distinct, separate shops around a cobblestone lane:
+- a weaponsmith with a crossed-swords sign, blades and a practice shield;
+- an armorer with a shield-shaped sign, an empty armor stand and helmets;
+- a magic shop with a crystal-ball sign, starry cloth and glowing bottles;
+- an alchemist with a flask-shaped sign, herbs, a cauldron and glass retorts.
+All signs must use objects and symbols only, absolutely no letters. Give each shop
+a different roofline, doorway and color accent so the four click targets cannot be
+confused. Add one clear, unobstructed road back to the town square. Preserve open
+walking space between the shops and crisp fine detail for a high-resolution image.
+No people, no animals, no cats, no readable text, no letters, no numbers, no
+watermark, no UI, no logos, no trophies baked into windows or displays. --ar 3:1
+```
+
+### 22.4 trophy_room_v2.png — кабинет трофеев
+
+Composition reference: `art-src/hub/trophy_room.png`. Результат — новый versioned
+файл `art-src/hub/trophy_room_v2.png`.
+
+```
+Create a finished high-resolution 3:1 game background of an empty trophy cabinet
+inside a magical shopkeeper's home. Use art-src/hub/hub_banner_gpt.png ONLY as the
+visual style reference: storybook watercolor, gentle ink outlines, warm wood and
+candlelight. Use art-src/hub/trophy_room.png ONLY as the broad composition
+reference. Output exactly 3:1, at least 3000x1000 pixels, suitable for 2400x800.
+
+The wall must contain EXACTLY TWELVE large empty display niches arranged as TWO
+ROWS OF SIX, with every niche fully visible and separated. Add EXACTLY FOUR small
+empty pedestals together on one lower shelf. All sixteen display places must be
+completely bare: no trophies, cups, weapons, antlers, statues, books or decorative
+objects inside them and no objects pretending to be future trophies.
+Also include, as separate anchors: an open record book on a desk, a framed world
+map with no labels, a physical deck of oversized fate cards on a side table, and
+a clearly visible unobstructed exit back to the shop. A quiet fireplace is allowed
+outside the display wall. No people, no animals, no readable text, no letters,
+no numbers, no map labels, no watermark, no UI, no logos, and ABSOLUTELY NO TROPHIES
+ANYWHERE in the image. --ar 3:1
+```
+
+### 22.5 Полные пакеты лавки `lavka_pack_<id>` (первая волна, 6 тем)
+
+В магазине только `hearth`, `spring`, `summer`, `autumn`, `winter`, `halloween`.
+Одиночные ковёр, вывеска, цветы или гирлянда больше не являются отдельными заданиями:
+ковёр уже есть в базовой лавке. Каждый пакет меняет согласованный НАБОР деталей.
+
+Общий контракт всех шести промтов: edit provided `hub_banner_gpt.png`, не изменять
+сам исходник; ONE complete full-background 3:1, source ≥3000×1000, runtime 2400×800.
+Сохранить камеру, архитектуру и точные силуэты `lavka_base_3x1`: левый книжный шкаф,
+центральный прилавок с отдельным аналоем, пустой доспех и высокая арка за ним,
+нижняя светящаяся арка, большая правая деревянная дверь и всё правое окно с рамой.
+Меняем coordinated SET decorations/textiles/shelf contents/hardware/lighting/outdoor
+view, не isolated prop/overlay/collage. Якоря остаются раздельными, без людей,
+животных, читаемого текста, букв, цифр, watermark, UI, logos и запечённых трофеев.
+
+Preview создаётся из того же полного фона, отдельной генерации не требуется.
+Если редактирование исходника даёт слабый результат, не пытайся исправлять его десятками
+попыток: сразу переходи к самостоятельным text-only промтам из 22.5.12 — они описывают
+ту же комнату и темы с нуля, без приложенной картинки и режима редактирования.
+
+#### 22.5.1 lavka_pack_hearth.png — Домашний очаг
+
+Source: `art-src/cosmetics/lavka_pack_hearth.png` · runtime: `assets/cosmetics/lavka_pack_hearth_web.jpg`.
+
+```
+Edit the provided art-src/hub/hub_banner_gpt.png and do not alter the source file.
+Create ONE complete full-background 3:1 image, at least 3000x1000 pixels, suitable
+for a 2400x800 runtime background. Preserve the EXACT camera, perspective and
+architecture of lavka_base_3x1: left bookcase, central counter with a separate
+lectern, empty armor stand and tall arch behind it, lower glowing arch, large right
+wooden door, and the entire right window with its frame. Keep all seven interaction
+silhouettes fixed, visible and separated.
+Create a coordinated HOME HEARTH edition, never a single-prop decoration. Layer a
+narrow woven runner and soft wool curtains over the EXISTING rug; do not add another
+rug and do not make a rug the main change. Add a carved crest with NO writing,
+matched brass hardware, beloved books and handmade ceramics on shelves, grouped
+candles of different heights and warm amber lighting. Keep the familiar quiet forest
+outside the unchanged window. This is one complete background, not an overlay,
+isolated prop, transparent patch, collage or before-and-after comparison. No people,
+no animals, no human figures baked into the scene, no readable text, no letters,
+no numbers, no watermark, no UI, no logos, no trophies anywhere. --ar 3:1
+```
+
+#### 22.5.2 lavka_pack_spring.png — Весеннее пробуждение
+
+Source: `art-src/cosmetics/lavka_pack_spring.png` · runtime: `assets/cosmetics/lavka_pack_spring_web.jpg`.
+
+```
+Edit the provided art-src/hub/hub_banner_gpt.png and do not alter the source file.
+Create ONE complete full-background 3:1 image, at least 3000x1000 pixels, suitable
+for a 2400x800 runtime background. Preserve the EXACT camera, perspective and
+architecture of lavka_base_3x1: left bookcase, central counter with a separate
+lectern, empty armor stand and tall arch behind it, lower glowing arch, large right
+wooden door, and the entire right window with its frame. Keep all seven interaction
+silhouettes fixed, visible and separated.
+Create a coordinated SPRING AWAKENING edition: pots of violets and daisies, pastel
+ribbons and light curtains, seed packets with no writing, small garden tools,
+copper and honey-colored hardware, fresh morning light and a flowering road outside
+the unchanged window. Balance flowers with updated shelf contents, textiles and
+lighting rather than adding one flower asset. Deliver ONE complete background,
+not an overlay, isolated prop, transparent patch or collage. No people, no animals,
+no human figures baked into the scene, no readable text, no letters, no numbers,
+no watermark, no UI, no logos, no trophies anywhere. --ar 3:1
+```
+
+#### 22.5.3 lavka_pack_summer.png — Летний фестиваль огоньков
+
+Source: `art-src/cosmetics/lavka_pack_summer.png` · runtime: `assets/cosmetics/lavka_pack_summer_web.jpg`.
+
+```
+Edit the provided art-src/hub/hub_banner_gpt.png and do not alter the source file.
+Create ONE complete full-background 3:1 image, at least 3000x1000 pixels, suitable
+for a 2400x800 runtime background. Preserve the EXACT camera, perspective and
+architecture of lavka_base_3x1: left bookcase, central counter with a separate
+lectern, empty armor stand and tall arch behind it, lower glowing arch, large right
+wooden door, and the entire right window with its frame. Keep all seven interaction
+silhouettes fixed, visible and separated.
+Create a coordinated SUMMER LIGHT FESTIVAL edition with a teal twilight palette,
+golden lanterns and abstract points of magical light, light garlands, summer herbs,
+fruit and colorful glass on shelves, airy curtains and a lush summer forest outside.
+Use abstract lights ONLY, not fireflies, insects or animals. Unify fabrics, hardware,
+shelf contents and lighting; do not make one garland the whole theme. Deliver ONE
+complete background, not an overlay, particle sprite, transparent patch or collage.
+No people, no animals, no insects, no human figures baked into the scene, no
+readable text, no letters, no numbers, no watermark, no UI, no logos, no trophies
+anywhere. --ar 3:1
+```
+
+#### 22.5.4 lavka_pack_autumn.png — Осенняя ярмарка
+
+Source: `art-src/cosmetics/lavka_pack_autumn.png` · runtime: `assets/cosmetics/lavka_pack_autumn_web.jpg`.
+
+```
+Edit the provided art-src/hub/hub_banner_gpt.png and do not alter the source file.
+Create ONE complete full-background 3:1 image, at least 3000x1000 pixels, suitable
+for a 2400x800 runtime background. Preserve the EXACT camera, perspective and
+architecture of lavka_base_3x1: left bookcase, central counter with a separate
+lectern, empty armor stand and tall arch behind it, lower glowing arch, large right
+wooden door, and the entire right window with its frame. Keep all seven interaction
+silhouettes fixed, visible and separated.
+Create a coordinated AUTUMN FAIR edition: pumpkins, wheat sheaves, dried orange
+slices, completely blank fabric flags, woven baskets and wooden crates on shelves,
+copper and burgundy textiles, a few dry leaves and warm amber light. Keep pumpkins
+away from the lectern and all navigation silhouettes. Unify shelf contents,
+hardware, fabrics and outdoor autumn colors instead of adding one garland. Deliver
+ONE complete background, not an overlay, isolated prop, transparent patch or
+collage. No people, no animals, no human figures baked into the scene, no readable
+text, no letters, no numbers, no watermark, no UI, no logos, no trophies anywhere.
+--ar 3:1
+```
+
+#### 22.5.5 lavka_pack_winter.png — Зимний очаг
+
+Source: `art-src/cosmetics/lavka_pack_winter.png` · runtime: `assets/cosmetics/lavka_pack_winter_web.jpg`.
+
+```
+Edit the provided art-src/hub/hub_banner_gpt.png and do not alter the source file.
+Create ONE complete full-background 3:1 image, at least 3000x1000 pixels, suitable
+for a 2400x800 runtime background. Preserve the EXACT camera, perspective and
+architecture of lavka_base_3x1: left bookcase, central counter with a separate
+lectern, empty armor stand and tall arch behind it, lower glowing arch, large right
+wooden door, and the entire right window with its frame. Keep all seven interaction
+silhouettes fixed, visible and separated.
+Create a coordinated WINTER HEARTH edition: snowy forest and distant mountains
+outside, delicate frost ONLY on the outer edges of the glass, evergreen branches,
+knitted textiles, stacked firewood, thick wool curtains, candles and pinecones.
+Keep the interior dry, warm, bright and uncluttered, with no snow covering anchors.
+Unify textiles, shelf supplies, hardware, lighting and outdoor view; do not add a
+single snow overlay. Deliver ONE static complete background, not an overlay,
+transparent patch, video or collage. No people, no animals, no human figures baked
+into the scene, no readable text, no letters, no numbers, no watermark, no UI,
+no logos, no trophies anywhere. --ar 3:1
+```
+
+#### 22.5.6 lavka_pack_halloween.png — Хэллоуин «Тени и тыквы» (первый showcase)
+
+Source: `art-src/cosmetics/lavka_pack_halloween.png` · runtime: `assets/cosmetics/lavka_pack_halloween_web.jpg`.
+
+```
+Edit the provided art-src/hub/hub_banner_gpt.png and do not alter the source file.
+Create ONE complete full-background 3:1 image, at least 3000x1000 pixels, suitable
+for a 2400x800 runtime background. Preserve the EXACT camera, perspective and
+architecture of lavka_base_3x1: left bookcase, central counter with a separate
+lectern, empty armor stand and tall arch behind it, lower glowing arch, large right
+wooden door, and the entire right window with its frame. Keep all seven interaction
+silhouettes fixed, visible and separated.
+Create the FIRST seasonal showcase edition, COZY HALLOWEEN, never horror: orange,
+purple and charcoal fabrics, smiling pumpkin lanterns, paper bats, black candles,
+small webs ONLY in free corners, purple potions and a moonlit fog outside. Unify
+textiles, shelf contents, hardware and lighting. Do not cover the bookcase, counter,
+lectern, armor stand, either arch, door or window with webs, bats or pumpkins.
+Deliver ONE complete background, not an overlay, isolated prop, transparent patch
+or collage. No people, no animals, no human figures baked into the scene, no
+readable text, no letters, no numbers, no watermark, no UI, no logos, no trophies
+anywhere. --ar 3:1
+```
+
+#### 22.5.7 lavka_pack_night_market.png — БУДУЩАЯ идея, НЕ в магазине
+
+Source для будущей работы: `art-src/cosmetics/lavka_pack_night_market.png`;
+runtime только после отдельной интеграции: `assets/cosmetics/lavka_pack_night_market_web.jpg`.
+
+```
+Using the provided art-src/hub/hub_banner_gpt.png as the editing base, create ONE
+complete full-background 3:1 image at least 3000x1000 pixels for a 2400x800 runtime,
+without altering the source. Preserve lavka_base_3x1 camera, architecture, all
+seven anchor silhouettes and their separation. Create a coordinated NIGHT MARKET
+edition with indigo and purple lanterns, decorative masks displayed as objects,
+folded silk, hanging ornaments, richer shelf displays and a glowing night city
+outside the unchanged right window. No isolated prop or overlay. No people,
+animals, readable text, letters, numbers, watermark, UI, logos or trophies. --ar 3:1
+```
+
+#### 22.5.8 lavka_pack_star_fair.png — БУДУЩАЯ идея, НЕ в магазине
+
+Source: `art-src/cosmetics/lavka_pack_star_fair.png`; runtime после интеграции:
+`assets/cosmetics/lavka_pack_star_fair_web.jpg`.
+
+```
+Using the provided art-src/hub/hub_banner_gpt.png as the editing base, create ONE
+complete full-background 3:1 image at least 3000x1000 pixels for a 2400x800 runtime,
+without altering the source. Preserve lavka_base_3x1 camera, architecture, all
+seven anchor silhouettes and their separation. Create a coordinated STAR FAIR
+edition in navy and gold: constellation ornaments with no writing, a telescope,
+an armillary sphere, luminous crystals and distant fireworks outside, while keeping
+the shop calm and readable. Unify textiles, hardware, shelves and lighting, not just
+one telescope. No people, animals, readable text, letters, numbers, watermark, UI,
+logos or trophies. --ar 3:1
+```
+
+#### 22.5.9 lavka_pack_rainy_hearth.png — БУДУЩАЯ идея, НЕ в магазине
+
+Source: `art-src/cosmetics/lavka_pack_rainy_hearth.png`; runtime после интеграции:
+`assets/cosmetics/lavka_pack_rainy_hearth_web.jpg`.
+
+```
+Using the provided art-src/hub/hub_banner_gpt.png as the editing base, create ONE
+complete full-background 3:1 image at least 3000x1000 pixels for a 2400x800 runtime,
+without altering the source. Preserve lavka_base_3x1 camera, architecture, all
+seven anchor silhouettes and their separation. Create a coordinated RAINY HEARTH
+edition: rain on the outside of the right window, grey-green curtains, an umbrella
+stand, folded towels, a tea tray with copper mugs, healthy houseplants and a bright
+warm hearth. Keep the interior dry and the anchors unobstructed. No isolated prop
+or overlay. No people, animals, readable text, letters, numbers, watermark, UI,
+logos or trophies. --ar 3:1
+```
+
+#### 22.5.10 lavka_pack_arcane_library.png — БУДУЩАЯ идея, НЕ в магазине
+
+Source: `art-src/cosmetics/lavka_pack_arcane_library.png`; runtime после интеграции:
+`assets/cosmetics/lavka_pack_arcane_library_web.jpg`.
+
+```
+Using the provided art-src/hub/hub_banner_gpt.png as the editing base, create ONE
+complete full-background 3:1 image at least 3000x1000 pixels for a 2400x800 runtime,
+without altering the source. Preserve lavka_base_3x1 camera, architecture, all
+seven anchor silhouettes and their separation. Create a coordinated ARCANE LIBRARY
+edition: more books and manuscripts with unreadable pages, rolled maps without
+labels, green reading lamps, ribbon bookmarks, an ink set and a small reading nook
+that does not move the existing anchors. Unify shelf contents, textiles, hardware
+and lighting. No people, animals, readable text, letters, numbers, watermark, UI,
+logos or trophies. --ar 3:1
+```
+
+#### 22.5.11 CUSTOM layout variant — только после отдельного layoutId
+
+Это вариант на будущее, не товар и не разрешение менять базовую карту. Source:
+`art-src/cosmetics/lavka_pack_custom_<layoutId>.png`; runtime после отдельной
+интеграции: `assets/cosmetics/lavka_pack_custom_<layoutId>_web.jpg`.
+Перед работой нужен новый layoutId и ПОЛНАЯ переразметка всех семи маршрутов;
+`lavka_base_3x1` и его полигоны не переиспользуются. Missing image всегда возвращает
+base src + base layout, не custom-полигоны.
+
+```
+Edit the provided art-src/hub/hub_banner_gpt.png without altering the source, and
+create ONE complete full-background 3:1 image at least 3000x1000 pixels for a
+2400x800 runtime. This is an approved CUSTOM LAYOUT edition, not the base layout.
+You may rearrange furniture, but preserve seven distinct, understandable functions:
+puzzle books, merchant counter, guest lectern, empty armor stand, trophy-cabinet
+arch, town-square door and expedition window. Give every function a separate,
+visible, practical silhouette with empty space for native buttons and character
+sprites. Use a coordinated set of textiles, shelf contents, hardware and lighting,
+not an isolated prop or overlay. No people, animals, readable text, letters,
+numbers, watermark, UI, logos or trophies. After generation, every hotspot must be
+manually remapped and assigned a new layoutId before integration. --ar 3:1
+```
+
+#### 22.5.12 TEXT-ONLY без референса — если редактирование исходника не нравится
+
+Это **альтернативный самостоятельный конвейер**, а не редактирование. Используй его,
+когда результат `Edit provided...` выглядит плохо: не прикладывай `hub_banner_gpt.png`
+и не проси модель повторить его. Каждый промт ниже уже содержит полную композицию.
+Проценты — только ориентир для художника, а не готовые координаты для кода: после
+генерации всё равно проверяем силуэты глазами. Source/runtime-пути те же, что в 22.5.1–6.
+
+```
+Create ONE complete finished game background from WRITTEN DESCRIPTION ONLY.
+Do not use or request a reference image, editing mask, overlay or before/after comparison.
+Wide 3:1 panorama, at least 3000x1000 pixels, for a 2400x800 runtime. Detailed painterly
+storybook illustration with gentle ink outlines, coherent perspective and contact shadows,
+warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art, no collage.
+
+Interior, eye-level view from the entrance toward the back wall. Approximate composition:
+a tall dark-wood bookcase fills x=3–17% and most of the left wall; a long merchant counter
+stands at x=24–52%, y=52–77%; a separate small lectern with an open book stands in front
+of it at x=40–49%, y=56–92%. An EMPTY armor stand is right of center at x=51–58%,
+y=26–70%, with a tall arched doorway behind it. A lower glowing arch sits at x=65–72%,
+y=55–76%. A large wooden door with iron hinges occupies x=75–85%, y=21–82%. A huge
+multi-paned window with a complete wooden frame fills x=87–100%, y=0–68%, showing a
+quiet forest road and distant blue mountains. Stone floor, exposed beams, candles,
+potions and handmade objects on shelves. Keep all seven areas visually separated.
+
+Theme: COZY HOME HEARTH. Layer a narrow woven runner and soft wool curtains over the
+existing rug, not a second rug and not a rug-focused scene. Add a carved shop crest
+with NO writing, matching brass hardware, beloved books and handmade ceramics on
+shelves, grouped candles of different heights and a gentle amber glow. Change the whole
+coordinated set of textiles, shelf contents, hardware and lighting, not one isolated prop.
+Keep the familiar quiet forest outside. No people, no animals, no readable text, letters,
+numbers, watermark, UI, logos or trophies anywhere. --ar 3:1
+```
+
+```
+Create ONE complete finished game background from WRITTEN DESCRIPTION ONLY.
+Do not use or request a reference image, editing mask, overlay or before/after comparison.
+Wide 3:1 panorama, at least 3000x1000 pixels, for a 2400x800 runtime. Detailed painterly
+storybook illustration with gentle ink outlines, coherent perspective and contact shadows,
+warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art, no collage.
+
+Use this exact interior concept: left wall x=3–17% is a tall bookcase; a merchant counter
+is at x=24–52%, y=52–77%; a separate lectern with an open book is at x=40–49%, y=56–92%;
+an EMPTY armor stand and a tall arch behind it are at x=51–58%, y=26–70%; a lower glowing
+arch is at x=65–72%, y=55–76%; a large hinged wooden door is at x=75–85%, y=21–82%;
+a complete multi-paned window is at x=87–100%, y=0–68%, with forest and mountains outside.
+Stone floor, exposed beams, candles and varied handmade goods. All seven zones remain
+distinct and unobstructed.
+
+Theme: SPRING AWAKENING. Fill the room with a coordinated spring redesign: pots of violets
+and daisies, pastel ribbons and light curtains, unlabeled seed packets, small garden tools,
+copper and honey-colored hardware, fresh handmade ceramics and brighter morning light.
+Show a flowering road and fresh green hills outside the complete window frame. Change
+shelf contents, textiles and lighting together, not just one flower prop. No people,
+animals, readable text, letters, numbers, watermark, UI, logos or trophies anywhere. --ar 3:1
+```
+
+```
+Create ONE complete finished game background from WRITTEN DESCRIPTION ONLY.
+Do not use or request a reference image, editing mask, overlay or before/after comparison.
+Wide 3:1 panorama, at least 3000x1000 pixels, for a 2400x800 runtime. Detailed painterly
+storybook illustration with gentle ink outlines, coherent perspective and contact shadows,
+deep wood, warm amber light and deep brown shadows. No flat vector, no clip-art, no collage.
+
+Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
+separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
+at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
+Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
+
+Theme: SUMMER LIGHT FESTIVAL. Use a coordinated teal-twilight redesign with golden lanterns,
+abstract points of magical light, light garlands, summer herbs, fruit and colorful glass on
+the shelves, airy curtains and a lush summer forest outside. Use abstract lights ONLY,
+never insects or animals. Unify fabrics, hardware, shelf contents and lighting; do not make
+one garland the whole theme. No people, animals, insects, readable text, letters, numbers,
+watermark, UI, logos or trophies anywhere. --ar 3:1
+```
+
+```
+Create ONE complete finished game background from WRITTEN DESCRIPTION ONLY.
+Do not use or request a reference image, editing mask, overlay or before/after comparison.
+Wide 3:1 panorama, at least 3000x1000 pixels, for a 2400x800 runtime. Detailed painterly
+storybook illustration with gentle ink outlines, coherent perspective and contact shadows,
+warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art, no collage.
+
+Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
+separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
+at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
+Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
+
+Theme: AUTUMN FAIR. Redesign the whole shop with pumpkins, wheat sheaves, dried orange
+slices, completely blank fabric flags, woven baskets and wooden crates on the shelves,
+copper and burgundy textiles, a few dry leaves and warm amber light. Keep pumpkins away
+from the lectern and every navigation silhouette. Unify shelf contents, hardware, fabrics
+and outdoor autumn colors; do not add just one garland. No people, animals, readable text,
+letters, numbers, watermark, UI, logos or trophies anywhere. --ar 3:1
+```
+
+```
+Create ONE complete finished game background from WRITTEN DESCRIPTION ONLY.
+Do not use or request a reference image, editing mask, overlay or before/after comparison.
+Wide 3:1 panorama, at least 3000x1000 pixels, for a 2400x800 runtime. Detailed painterly
+storybook illustration with gentle ink outlines, coherent perspective and contact shadows,
+warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art, no collage.
+
+Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
+separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
+at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
+Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
+
+Theme: WINTER HEARTH. Show a snowy forest and distant blue mountains outside the complete
+window frame, with delicate frost ONLY on the outer edges of the glass. Add evergreen
+branches, knitted textiles, stacked firewood, thick wool curtains, candles and pinecones.
+Keep the interior dry, warm, bright and uncluttered, with no snow covering any anchor.
+Unify textiles, shelf supplies, hardware, lighting and outdoor view; no single snow overlay.
+No people, animals, readable text, letters, numbers, watermark, UI, logos or trophies anywhere.
+--ar 3:1
+```
+
+```
+Create ONE complete finished game background from WRITTEN DESCRIPTION ONLY.
+Do not use or request a reference image, editing mask, overlay or before/after comparison.
+Wide 3:1 panorama, at least 3000x1000 pixels, for a 2400x800 runtime. Detailed painterly
+storybook illustration with gentle ink outlines, coherent perspective and contact shadows,
+warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art, no collage.
+
+Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
+separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
+at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
+Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
+
+Theme: COZY HALLOWEEN, never horror. Use orange, purple and charcoal fabrics, smiling
+pumpkin lanterns, paper bats, black candles, small webs ONLY in free corners, purple
+potions and a moonlit fog outside. Unify textiles, shelf contents, hardware and lighting.
+Do not cover the bookcase, counter, lectern, armor stand, either arch, door or window
+with webs, bats or pumpkins. Deliver a complete new scene, not an overlay or isolated prop.
+No people, animals, readable text, letters, numbers, watermark, UI, logos or trophies anywhere.
+--ar 3:1
+```
+
+### 22.6 OPTIONAL: согласованные multi-scene editions после стабилизации лавки
+
+**Это семейство будущих вариантов, а не готовый продукт и не текущая задача.**
+Сначала должны быть созданы и приняты полные темы лавки. Только затем можно делать
+согласованные seasonal/holiday/rain/night editions для square, market и cabinet:
+каждая сцена получает СВОЙ полный фон, не общий растянутый арт и не видео.
+
+- `square_v2_3x1`: сохранить доску, вход в лавку, кузницу с трубой, отдельную
+  мастерскую, арку market, таверну и свободные pet/crew spaces; фонтан не маршрут.
+- `market_v2_3x1`: сохранить четыре раздельных фасада и центральную дорогу обратно.
+- `cabinet_v2_3x1`: сохранить карту, книгу, колоду и выход, ровно 12 пустых ниш
+  2×6 и 4 пустые малые подставки; трофеи в фон не запекать.
+- Source по существующей конвенции: `art-src/hub/town_square_pack_<edition>.png`,
+  `town_market_pack_<edition>.png`, `trophy_room_pack_<edition>.png`. Runtime-пути
+  появляются только после отдельной интеграции; базовые v2 не перезаписываются.
+- Новые наборы не превращают бесплатные темы в платные. Ни бонусов, ни энергии,
+  ни силы за покупку. Реальный payment URL и платформа обсуждаются отдельно,
+  не как обязательная часть набора.
+
+Шаблон для одной сцены из будущей edition (подставить тему и нужную сцену):
+
+```
+Create ONE complete full-background 3:1 image for the <edition> edition of the
+existing <town_square_v2 | town_market_v2 | trophy_room_v2> scene. Work on one
+scene at a time, edit the corresponding current v2 reference without altering its
+source file, and use art-src/hub/hub_banner_gpt.png only as the style reference.
+Output at least 3000x1000 pixels, suitable for a 2400x800 runtime background.
+Preserve the exact current layoutId, camera, architecture, all navigation
+silhouettes and empty character spaces. Apply the <edition> as a coordinated set
+of textiles, props, hardware, lighting and outdoor details, not an isolated prop,
+overlay, collage, video or animation. For the trophy room, keep exactly twelve
+empty niches in two rows of six and four empty small pedestals, with no trophies
+anywhere. No people, animals, readable text, letters, numbers, watermark, UI,
+logos or baked trophies. Generate each scene independently with its own versioned
+filename; do not replace the current v2 backgrounds. --ar 3:1
+```
+
+
+### 22.7 Приёмка, выравнивание и интеграция
+
+- **Уже готово:** `town_square_v2_web.jpg`, `town_market_v2_web.jpg`,
+  `trophy_room_v2_web.jpg` интегрированы в 2400×800 и прошли Chrome-приёмку,
+  включая hit-test и 12+4 мест кабинета. Их layoutId — `square_v2_3x1`,
+  `market_v2_3x1`, `cabinet_v2_3x1`; error возвращает старый файл и legacy circles.
+  Не описывать эти сцены как отсутствующие и не генерировать заново без причины.
+- **Ещё не созданы:** `lavka_pack_hearth/spring/summer/autumn/winter/halloween`.
+  Source — `art-src/cosmetics/lavka_pack_<id>.png`, runtime после обработки —
+  `assets/cosmetics/lavka_pack_<id>_web.jpg`, 2400×800. Не создавать placeholder
+  и не объявлять путь готовым файлом.
+- Для каждой новой темы проверить source ≥3000×1000, ровно 3:1, отсутствие растяжения,
+  людей, животных, читаемого текста, watermark/UI/logos и запечённых трофеев.
+  Прилавок и аналой остаются раздельными, все семь якорей видимы и не перекрыты.
+- Связка `src + layoutId` обязательна. Все текущие пакеты используют
+  `lavka_base_3x1` и `LAVKA_HOTSPOT_SHAPES`. Неизвестный layout возвращает base src
+  и base layout; custom требует нового layoutId и полной разметки, а не заимствования
+  базовых полигонов.
+- Миграция `COSMETICS_VERSION=2`: carpet+crest → одна hearth без повторной оплаты,
+  flowers → spring, fireflies → summer, garland → autumn, snow → winter. Старые
+  `cos_*` остаются только для legacy fallback, не для каталога.
+- Missing selected image → базовый `hub_banner_web.jpg` + прежние legacy overlays;
+  successful load полного pack-фона → legacy-слой полностью скрывается. Проверить
+  обе ветки на реальном файле, не надеясь только на наличие metadata.
+- Preview делается из того же полного фона, без новой генерации. В магазине видны
+  3–5 содержательных changes пакета, а не описание одного спрайта.
+- Versioned filenames обязательны. Не перезаписывать `hub_banner_gpt.png`, текущие
+  v2 и особенно старые `glass`/`spin`: эти изображения нужны другим головоломкам.
+- `night_market`, `star_fair`, `rainy_hearth`, `arcane_library` и multi-scene editions —
+  только идеи до появления реальных файлов. Не добавлять их заранее в данные или
+  магазин и не превращать бесплатные темы в платные.
+- Для КАЖДОЙ новой темы после генерации выполнить Chrome-приёмку: загрузка без error,
+  сравнение с базой на одном полотне, hit-test всех якорей, mobile nav, клавиатура и
+  touch, missing/successful load и отсутствие legacy поверх полного фона. Для
+  halloween дополнительно проверить первый showcase: паутина и тыквы не закрывают
+  якоря. Для custom — отдельно проверить новую разметку и base fallback.
+
+---
+
+## 23. Иконки внесетовых босс-находок (12 предметов)
+
+Предметы уже существуют в `game/src/data/items.js` и связаны с боссами через
+`game/src/data/bossDrops.js`. Здесь только иконки, **не новые предметы и не новые
+сеты**. Оригиналы — `art-src/items/`, runtime — `game/assets/items/<id>_web.jpg`
+(квадрат 256–512 px). При отсутствии файла уже работает эмодзи-fallback.
+
+Единый шаблон в стиле раздела 18. Подставь English visual prompt из списка в
+`{SUBJECT}`; фон у всех **rare**, точный HEX `#2e4a66`.
+
+```
+Game inventory icon, {SUBJECT}, single object centered, filling about 70%
+of the frame, slightly angled three-quarter view, cozy storybook watercolor
+style with gentle ink outlines, warm light from the upper left, soft shadow
+under the object, plain solid background of exact hex color #2e4a66, no
+other objects, no readable text, no letters, no numbers, no watermark --ar 1:1
+```
+
+1. **shd_willow_vow — Щит ивовой клятвы**
+   `a sturdy round shield of dark willow wood with a living green branch curling around its rim and a small golden oath knot carved into the center`
+2. **glv_captain_oath — Перчатки капитанской клятвы**
+   `a pair of dignified captain gauntlets in deep blue leather with brass wrist plates and a small crimson oath ribbon tied without writing`
+3. **rng_keeper_bookmark — Кольцо живой закладки**
+   `an antique gold ring holding a tiny folded living book page that curls like a bookmark, with a warm amber glow along its edges`
+4. **amu_star_compass — Амулет звёздного компаса**
+   `a round silver pendant compass with a tiny star-shaped needle pointing toward a glowing constellation, no letters or cardinal labels`
+5. **wpn_nm_afterhours — Кинжал после полуночи**
+   `a slim midnight-blue dagger with a moonlit silver edge and a miniature lantern-shaped pommel glowing softly in the dark`
+6. **bt_sw_reed — Сапоги камышовой тропы**
+   `a pair of waterproof traveler boots with woven reed patterns, moss-green lining and flexible mud-proof soles for a swamp path`
+7. **rng_sf_encore — Кольцо ярмарочного биса**
+   `a festive silver ring decorated with tiny colorful fairground beads and two small ribbon loops suggesting a joyful encore`
+8. **hlm_cr_geode — Шлем жеодового эха**
+   `a rounded mountain helmet of brushed steel with a split geode set into the forehead, revealing luminous blue and violet crystals`
+9. **arm_ash_wayfarer — Броня пепельного путника**
+   `a layered wayfarer armor of ash-grey cloth and scorched metal plates with a travel cloak and faint ember light inside the seams`
+10. **wpn_jade_branch — Меч нефритовой ветви**
+    `an elegant one-handed sword shaped around a living jade branch, with carved green leaves and a luminous vein running along the blade`
+11. **shd_deep_tideglass — Щит приливного стекла**
+    `a protective shield of translucent blue-green tideglass framed in dark silver, with a rolling ocean wave suspended inside the glass`
+12. **glv_mist_minute — Перчатки тихой минуты**
+    `a pair of soft mist-violet gloves with delicate silver stitching and a tiny numeral-free clock dial resting quietly on each wrist`
 

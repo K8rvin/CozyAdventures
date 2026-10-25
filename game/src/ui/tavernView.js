@@ -1,6 +1,7 @@
 // Таверна и конюшня: найм спутников, питомцев, наёмников, состав отряда.
 import { crewStock, hireCrew, toggleCompanion, toggleMerc, setPet } from '../core/state.js';
 import { header, quickNav } from './common.js';
+import { setSavingsGoal } from '../core/goals.js';
 
 const KIND_LABEL = {
   companion: '✨ Спутники (в отряде до 3)',
@@ -84,6 +85,23 @@ export function renderTavern(container, ctx) {
         });
       }
       row.appendChild(btn);
+      if (!def.hired) {
+        const goalBtn = document.createElement('button');
+        const selected = state.savingsGoal?.kind === 'crew' && state.savingsGoal.id === def.id;
+        goalBtn.className = 'small ghost goal-set';
+        goalBtn.dataset.goalKind = 'crew';
+        goalBtn.dataset.goalId = def.id;
+        goalBtn.textContent = selected ? 'Цель ✓' : 'Цель';
+        goalBtn.title = 'Сделать целью накопления';
+        goalBtn.addEventListener('click', () => {
+          const result = setSavingsGoal(state, 'crew', def.id);
+          if (!result.ok) { ctx.toast(result.error); return; }
+          ctx.sfx?.('tap');
+          ctx.save();
+          rerender();
+        });
+        row.appendChild(goalBtn);
+      }
       list.appendChild(row);
     }
     panel.appendChild(list);

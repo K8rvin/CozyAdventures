@@ -1,15 +1,17 @@
-// Лавка на перекрёстке (украшения + скупка) и тематические лавки площади.
+// Лавка на перекрёстке (оформление + скупка) и тематические лавки площади.
 import { ITEM_BY_ID, RARITY_LABEL } from '../data/items.js';
 import { itemIconEl, itemIconHtml } from './itemTip.js';
 import { describeItem, SLOTS, SLOT_LABEL } from '../core/items.js';
 import {
-  shopStock, buyItem, buyCosmetic, toggleCosmetic,
+  shopStock, buyItem, buyCosmetic, toggleCosmetic, selectCosmetic,
   unseenShopItems, markShopSeen,
 } from '../core/state.js';
-import { COSMETICS, SEASON_LABEL } from '../data/cosmetics.js';
+import { COSMETIC_PACKS, SEASON_LABEL } from '../data/cosmetics.js';
 import { SHOPS, itemsForShop } from '../data/shop.js';
 import { startTutorial } from './tutorial.js';
 import { header, quickNav } from './common.js';
+import { onboardingBlocksLegacyTutorials } from '../core/onboarding.js';
+import { setSavingsGoal } from '../core/goals.js';
 
 // --- Список товаров (общий строитель). Возвращает карту itemId -> кнопка «Купить» ---
 function buildBuyList(container, ctx, items, newIds) {
@@ -32,10 +34,16 @@ function buildBuyList(container, ctx, items, newIds) {
       </span>
       <span class="price">${priceLabel}</span>`;
     row.prepend(itemIconEl(item));
+    const owned = item.slot !== 'consumable' && (
+      state.inventory.includes(item.id)
+      || state.consumableBelt.includes(item.id)
+      || Object.values(state.equipped).includes(item.id)
+    );
     const btn = document.createElement('button');
     btn.className = 'small';
-    btn.textContent = 'Купить';
-    btn.disabled = !afford;
+    btn.dataset.itemId = item.id;
+    btn.textContent = owned ? 'Уже есть' : 'Купить';
+    btn.disabled = owned || !afford;
     // Сравнение с надетым: характеристики текущего слота при наведении
     const showCompare = () => showCompareTip(state, item, btn);
     btn.addEventListener('mouseenter', showCompare);
@@ -57,6 +65,23 @@ function buildBuyList(container, ctx, items, newIds) {
       }
     });
     row.appendChild(btn);
+    if (!owned) {
+      const goalBtn = document.createElement('button');
+      const selected = state.savingsGoal?.kind === 'item' && state.savingsGoal.id === item.id;
+      goalBtn.className = 'small ghost goal-set';
+      goalBtn.dataset.goalKind = 'item';
+      goalBtn.dataset.goalId = item.id;
+      goalBtn.textContent = selected ? 'Цель ✓' : 'Цель';
+      goalBtn.title = 'Сделать целью накопления';
+      goalBtn.addEventListener('click', () => {
+        const result = setSavingsGoal(state, 'item', item.id);
+        if (!result.ok) { ctx.toast(result.error); return; }
+        ctx.sfx?.('tap');
+        ctx.save();
+        rerenderCurrent();
+      });
+      row.appendChild(goalBtn);
+    }
     buyList.appendChild(row);
     btnByItemId[item.id] = btn;
   }
@@ -91,7 +116,7 @@ export function renderMarket(container, ctx, shopKey) {
 
   // Обучение первой покупке: целимся в первую вещь, которой у игрока ЕЩЁ НЕТ
   // (начальный «Дедов меч» уже надет — предлагать его бессмысленно)
-  if ((state.stats.itemsBought || 0) === 0) {
+  if ((state.stats.itemsBought || 0) === 0 && !onboardingBlocksLegacyTutorials(state)) {
     const owned = new Set([...(state.inventory || []), ...Object.values(state.equipped || {})]);
     const afford = (it) => (it.sealPrice ? state.seals >= it.sealPrice : state.coins >= it.price);
     const target = items.find((it) => !owned.has(it.id) && afford(it));
@@ -117,12 +142,12 @@ export function renderMarket(container, ctx, shopKey) {
   };
 }
 
-// --- Лавка на перекрёстке: украшения и скупка ---
+// --- Лавка на перекрёстке: оформление и скупка ---
 export function renderShop(container, ctx) {
   const { state } = ctx;
 
   container.appendChild(header(ctx, 'Прилавок лавки',
-    'Украшения для дома и скупка твоих находок. Снаряжение — в лавках площади.', 'hub'));
+    'Оформление для дома и скупка твоих находок. Снаряжение — в лавках площади.', 'hub'));
   container.appendChild(quickNav(ctx, [
     { icon: '🎒', label: 'Комната рыцаря', screen: 'equip', primary: true },
     { icon: '🗡️', label: 'Оружейник', screen: 'shopArmory' },
@@ -132,36 +157,92 @@ export function renderShop(container, ctx) {
     { icon: '🏠', label: 'В лавку', screen: 'hub' },
   ]));
 
-  // --- Косметика и сезонные наборы (не влияет на силу) ---
   const cosPanel = document.createElement('div');
   cosPanel.className = 'panel';
-  cosPanel.innerHTML = '<h3>Украшения лавки</h3><div class="muted" style="font-size:13px;margin-bottom:8px">Только красота — никакого влияния на силу.</div>';
+  cosPanel.dataset.cosmeticsPanel = 'lavka';
+  cosPanel.innerHTML = '<h3>Оформление лавки</h3><div class="muted" style="font-size:13px;margin-bottom:8px">Одна полная тема за раз: текстиль, фурнитура, полки, свет и вид за окном, а не один спрайт.</div>';
+  if (!state.settings.cosmeticsPackNoticeDismissed) {
+    const note = document.createElement('div');
+    note.className = 'cosmetic-notice';
+    const text = document.createElement('span');
+    text.textContent = 'Прежние покупки сохранены в пакетах без повторной оплаты. Полные темы включаются по мере добавления файлов; пока файла нет, действуют базовая лавка и прежний sprite fallback.';
+    const dismiss = document.createElement('button');
+    dismiss.type = 'button';
+    dismiss.className = 'small ghost';
+    dismiss.dataset.cosmeticNoticeDismiss = '1';
+    dismiss.textContent = 'Понятно';
+    dismiss.setAttribute('aria-label', 'Скрыть пояснение об оформлении');
+    dismiss.addEventListener('click', () => {
+      state.settings.cosmeticsPackNoticeDismissed = true;
+      ctx.save();
+      note.remove();
+    });
+    note.append(text, dismiss);
+    cosPanel.appendChild(note);
+  }
   const cosList = document.createElement('div');
   cosList.className = 'list';
-  for (const c of COSMETICS) {
+  const previewEl = (src, icon) => {
+    const preview = document.createElement('span');
+    preview.className = 'cosmetic-preview';
+    preview.textContent = icon;
+    const img = document.createElement('img');
+    img.className = 'cosmetic-preview-img';
+    img.alt = '';
+    img.addEventListener('error', () => img.remove());
+    img.src = src;
+    preview.prepend(img);
+    return preview;
+  };
+
+  const baseActive = state.cosmeticsActive.length === 0;
+  const baseRow = document.createElement('div');
+  baseRow.className = 'row' + (baseActive ? ' done' : '');
+  baseRow.dataset.cosmeticRow = 'base';
+  baseRow.innerHTML = '<span class="grow"><div class="name">Базовая лавка</div><div class="desc">Исходный вид без дополнительного оформления.</div></span><span class="price">Бесплатно</span>';
+  baseRow.prepend(previewEl('assets/hub/hub_banner_web.jpg', '🏮'));
+  const baseBtn = document.createElement('button');
+  baseBtn.type = 'button';
+  baseBtn.className = 'small' + (baseActive ? ' ghost' : '');
+  baseBtn.dataset.cosmeticId = 'base';
+  baseBtn.textContent = baseActive ? 'Выбрана' : 'Выбрать';
+  baseBtn.setAttribute('aria-pressed', String(baseActive));
+  baseBtn.addEventListener('click', () => {
+    selectCosmetic(state, null);
+    ctx.save();
+    rerenderCurrent();
+  });
+  baseRow.appendChild(baseBtn);
+  cosList.appendChild(baseRow);
+
+  for (const c of COSMETIC_PACKS) {
     const owned = state.cosmeticsOwned.includes(c.id);
-    const active = state.cosmeticsActive.includes(c.id);
+    const active = state.cosmeticsActive.length === 1 && state.cosmeticsActive[0] === c.id;
     const row = document.createElement('div');
     row.className = 'row' + (active ? ' done' : '');
+    row.dataset.cosmeticRow = c.id;
     const price = c.sealPrice ? `🔰 ${c.sealPrice}` : `🪙 ${c.price}`;
     row.innerHTML = `
-      <span class="icon">${c.icon}</span>
       <span class="grow">
         <div class="name">${c.name}${c.season ? ` <span class="badge">${SEASON_LABEL[c.season]}</span>` : ''}</div>
-        <div class="desc">${c.description}</div>
+        <ul class="cosmetic-changes">${c.changes.map((change) => `<li>${change}</li>`).join('')}</ul>
       </span>`;
+    row.prepend(previewEl(c.scenes.lavka.preview, c.icon));
     const btn = document.createElement('button');
+    btn.type = 'button';
     btn.className = 'small' + (active ? ' ghost' : '');
+    btn.dataset.cosmeticId = c.id;
+    btn.setAttribute('aria-pressed', String(active));
     if (!owned) {
       btn.innerHTML = `Купить · ${price}`;
       btn.disabled = c.sealPrice ? state.seals < c.sealPrice : state.coins < c.price;
       btn.addEventListener('click', () => {
         const r = buyCosmetic(state, c.id);
-        if (r.ok) { ctx.toast(`${c.name} — уже в лавке!`); ctx.sfx?.('success'); ctx.save(); rerenderCurrent(); }
+        if (r.ok) { ctx.toast(`${c.name} — оформление выбрано.`); ctx.sfx?.('success'); ctx.save(); rerenderCurrent(); }
         else ctx.toast(r.error);
       });
     } else {
-      btn.textContent = active ? 'Убрать' : 'Выставить';
+      btn.textContent = active ? 'Убрать' : 'Выбрать';
       btn.addEventListener('click', () => { toggleCosmetic(state, c.id); ctx.save(); rerenderCurrent(); });
     }
     row.appendChild(btn);

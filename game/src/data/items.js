@@ -734,6 +734,84 @@ ITEMS.push(
   },
 );
 
+// --- Личные находки двенадцати боссов: внесетовые сайдгрейды, не товары и не рецепты ---
+ITEMS.push(
+  {
+    id: 'shd_willow_vow', name: 'Щит ивовой клятвы', slot: 'shield', hand: 'one', type: 'shield',
+    rarity: 'rare', price: 0,
+    stats: { armor: 10, hp: 6, block: 0.12 },
+    traits: ['first_hit_reduction'],
+    description: 'Гибкие ветви гасят первый натиск, но не заменяют крепкий башенный щит.',
+  },
+  {
+    id: 'glv_captain_oath', name: 'Перчатки капитанской клятвы', slot: 'gloves', type: 'gloves',
+    rarity: 'rare', price: 0,
+    stats: { attack: 4, armor: 3 },
+    traits: ['thorns_small'],
+    description: 'Потёртые наручи отвечают обидчику лёгким ответным ударом.',
+  },
+  {
+    id: 'rng_keeper_bookmark', name: 'Кольцо живой закладки', slot: 'ring', type: 'ring',
+    rarity: 'rare', price: 0,
+    stats: { hp: 4, speed: 2, itemFind: 0.04 },
+    description: 'Шелестит на нужной странице и бережёт маленькие находки.',
+  },
+  {
+    id: 'amu_star_compass', name: 'Амулет звёздного компаса', slot: 'amulet', type: 'amulet',
+    rarity: 'rare', price: 0,
+    stats: { hp: 12, crit: 0.02, resist: { fire: 0.15 } },
+    description: 'Стрелка указывает не на север, а на безопасную дорогу домой.',
+  },
+  {
+    id: 'wpn_nm_afterhours', name: 'Кинжал после полуночи', slot: 'weapon', hand: 'one', type: 'dagger',
+    rarity: 'rare', price: 0,
+    stats: { attack: 17, speed: 2, crit: 0.04 },
+    description: 'Лёгкий клинок для тихих переулков; уступает рыночным тяжеловесам в уроне.',
+  },
+  {
+    id: 'bt_sw_reed', name: 'Сапоги камышовой тропы', slot: 'boots', type: 'boots',
+    rarity: 'rare', price: 0,
+    stats: { speed: 2, dodge: 0.05, resist: { poison: 0.1 } },
+    description: 'Сухие только сверху, зато знают каждую кочку и не боятся болотной мошки.',
+  },
+  {
+    id: 'rng_sf_encore', name: 'Кольцо ярмарочного биса', slot: 'ring', type: 'ring',
+    rarity: 'rare', price: 0,
+    stats: { crit: 0.04, dodge: 0.03, itemFind: 0.03 },
+    description: 'Звенит после удачного выступления и подмигивает следующей находке.',
+  },
+  {
+    id: 'hlm_cr_geode', name: 'Шлем жеодового эха', slot: 'helmet', type: 'helmet',
+    rarity: 'rare', price: 0,
+    stats: { hp: 16, armor: 5, resist: { slow: 0.15 } },
+    description: 'Пустой кварцевый купол звенит в такт шагам и отгоняет сонную медлительность.',
+  },
+  {
+    id: 'arm_ash_wayfarer', name: 'Броня пепельного путника', slot: 'armor', type: 'armor',
+    rarity: 'rare', price: 0,
+    stats: { armor: 18, hp: 12, resist: { fire: 0.15 } },
+    description: 'Лёгкая дорожная чешуя для жаркого ветра, а не парадная броня хана.',
+  },
+  {
+    id: 'wpn_jade_branch', name: 'Меч нефритовой ветви', slot: 'weapon', hand: 'one', type: 'sword',
+    rarity: 'rare', price: 0,
+    stats: { attack: 22, hp: 5, speed: 2 },
+    description: 'Ровный клинок с живой рукоятью; спокойнее и медленнее боевого веера.',
+  },
+  {
+    id: 'shd_deep_tideglass', name: 'Щит приливного стекла', slot: 'shield', hand: 'one', type: 'shield',
+    rarity: 'rare', price: 0,
+    stats: { armor: 14, hp: 8, block: 0.16, resist: { slow: 0.1 } },
+    description: 'Внутри плещется маленькая волна; легче раковины, но и мягче удар.',
+  },
+  {
+    id: 'glv_mist_minute', name: 'Перчатки тихой минуты', slot: 'gloves', type: 'gloves',
+    rarity: 'rare', price: 0,
+    stats: { attack: 4, speed: 1, resist: { slow: 0.15 } },
+    description: 'Секундная стрелка на манжете помогает не терять темп в густом тумане.',
+  },
+);
+
 export const ITEM_BY_ID = Object.fromEntries(ITEMS.map((i) => [i.id, i]));
 
 export const RARITY_LABEL = {

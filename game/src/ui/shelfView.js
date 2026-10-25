@@ -273,6 +273,7 @@ export function renderShelfPuzzle(container, ctx, level) {
         title: '🏮 Лавка готова к открытию!',
         subtitle: `«${level.name}» — решено`,
         rewards,
+        onboardingResult: { kind: 'puzzle', id: level.id },
         buttons: [
           ...(next ? [{ label: `Следующая → ${next.name}`, primary: true, onClick: () => ctx.go('puzzle', { id: next.id }) }] : []),
           { label: 'К загадкам', primary: !next, onClick: () => backToPuzzleType(ctx, level) },
