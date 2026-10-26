@@ -136,7 +136,8 @@ export function syncOnboardingDock(ctx, current = { name: 'hub', params: {} }) {
   const guideVisible = arc?.status === 'done' && arc.guide?.started && !arc.guide.closed;
   const finalVisible = arc?.status === 'done' && !arc.flags.finalSeen;
   const arcVisible = ['active', 'paused'].includes(arc?.status);
-  if (!arc || !step || arc.status === 'skipped' || (!arcVisible && !finalVisible && !guideVisible)) {
+  if (current.name === 'battleLore' || !arc || !step || arc.status === 'skipped'
+    || (!arcVisible && !finalVisible && !guideVisible)) {
     removeDock();
     destroyTutorial();
     return;

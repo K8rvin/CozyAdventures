@@ -22,7 +22,7 @@
     эндгейм-билд), `available` (верхняя граница открытого снаряжения, не путь
     игрока), `reasonable` (консервативные покупки на первые монетные награды),
     `upgrade` (reasonable + одно следующее усиление), `all` (все четыре).
-    Миры: nm, sw, sf, ash, cr, jade, deep, mist.
+    Миры: meadow, town, attic, crossroads, nm, sw, sf, cr, ash, jade, deep, mist.
   - `node tools/sim-economy.mjs all` — все нормативные сценарии дохода и покупок;
     `node tools/sim-economy.mjs shopping` — только бюджет и разовые стоки.
 - CI (GitHub Actions, `.github/workflows/deploy.yml`): пуш в main → тесты → сборка →
@@ -89,13 +89,15 @@ game/
   старых денег; фактические и отчётные награды обязаны совпадать.
 - Покупка/продажа использует эффективную цену `pricedShopItem` (tier/order/override),
   НЕ сырой `ITEM_BY_ID.price`. Не обходить этот слой в UI, симуляциях и целях.
-- `sim-economy.mjs`: доход 72 305 монет, разовые стоки 55 320 (косметика
-  1 310), отношение ≈1,31. Печатные стоки 45, печати 62/45 ≈1,38. Это измерение
+- `sim-economy.mjs`: доход 76 762 монеты, разовые стоки 55 320 (косметика
+  1 310), отношение ≈1,39. Печатные стоки 45, печати 62/45 ≈1,38. Это измерение
   модели на текущий контент, не обещание игроку и не фактический темп прохождения.
 - `sim-world` по умолчанию использует endgame. Текущий nm_17: scales 1,64,
-  endgame 42%, reasonable 79%, upgrade 100%; остальные endgame-миры выше 40%.
-  Это не значит «баланс идеален»: reasonable выявил слабые nm_06 13%, nm_07 8%,
-  nm_08 0%, nm_boss 38% — они остаются открытой работой.
+  endgame 42%, reasonable 71%, upgrade 100%; остальные endgame-миры выше 40%.
+  Новые большие сборы проходят пороги tests/battleCrowds.test.mjs. Прежние
+  nm_06/nm_07/nm_08/nm_boss теперь 100/100/100/96% по reasonable, но баланс не
+  идеален: остаются sf_boss 0%, cr_10 38%, cr_15/cr_16 0% и старые провалы
+  ранних миров. Это слабости конкретного профиля, не всех билдов.
 
 ## Энергия и босс-находки
 
@@ -119,8 +121,13 @@ game/
 - `COSMETIC_PACKS`: шесть pack id, `COSMETICS_VERSION=2`, aliases старых покупок
   (carpet+crest → hearth и т.д.) без повторной оплаты. Один активный pack;
   resolver выбирает variant по `scenes[scene]`, scene-specific base и `src + layoutId`.
-  Полных `lavka_pack_<id>_web.jpg` пока нет: missing → база + прежние overlays,
-  successful load → legacy-слой скрывается. Неизвестный layout → base src/layout.
+  Все шесть `lavka_pack_<id>_web.jpg` уже в runtime (2400×800). У каждого свой
+  `lavka_pack_<id>_3x1` в `LAVKA_COSMETIC_LAYOUTS` (`data/cosmetics.js`): 7 полигонов
+  и места pet_puppy/cmp_cat/cmp_firefly/story_guest по фактическому арту. Реестр
+  `LAVKA_LAYOUTS` в hub.js использует `mergeSceneLayout`, не меняя базовые координаты.
+  Pending/missing/unknown layout → база + прежние overlays и базовая геометрия;
+  successful load → pack layout, legacy-слой скрывается. В Chrome проверены все
+  42 маршрута, клавиатура, 390 px/touch и обе ветки загрузки.
 - Будущие темы сначала получают промт и реальные файлы, затем проходят приёмку.
   Не добавлять их в данные или магазин заранее. Актуальные промты — р.22.
 
@@ -288,6 +295,21 @@ game/
 - Новый гость истории = id в STORY_GUESTS + блок в GUEST_SCRIPT; гость обязан быть в
   GUESTS гостевой книги; все строки — без латиницы (тест следит).
 
+## Лор походов
+
+- `data/battleLore.js`: у всех 12 миров intro/outro по 2–3 реплики существующих
+  гостей из GUEST_BY_ID, всего 24 сцены. Тексты строго по-русски, новых артов нет.
+- `core/battleLore.js`: сцены, просмотры и кампейнский successor. `nextBattle`
+  пропускает wanted (после mist_boss — null); уже пройденный бой доступен для
+  повтора даже после вставки новых предшественников в цепочку.
+- Просмотры — `state.battleLoreSeen` (`world:intro/outro`); миграции только в
+  `state.js`, на старых сейвах уже пройденные сцены не запускаются принудительно.
+  Отметка только на последнем CTA, выход не отмечает сцену, перечитывание в списке мира.
+- `ui/battleLoreView.js` + маршрут `battleLore`: app guard ведёт к intro перед
+  боем; после итога босса — outro до следующего мира. Поражение и practice сцен
+  не вызывают; storyMode, story.pending и onboarding не затрагиваются. Тесты —
+  `battleLore.test.mjs` и UI lifecycle/smoke.
+
 ## Гостевая книга
 
 - Хотспот «Гостевая книга» в сцене лавки → маршрут `guests` → `ui/guestBookView.js`.
@@ -353,7 +375,7 @@ game/
   подними версию CACHE.
 - Пользователь генерирует ассеты сам по `art-src/PROMPTS.md`; большие оригиналы
   (jfif/png) хранятся в `art-src/<тема>/`, в рантайм идут сжатые `*_web.jpg` / `*.webp`
-  из тематических папок `game/assets/`. V2 уже есть, а полных `lavka_pack` пока нет:
+  из тематических папок `game/assets/`. V2 и шесть полных `lavka_pack` уже есть;
   не выдавай metadata/prompt за готовый файл и не убирай прежний fallback.
 
 ## Git и секреты

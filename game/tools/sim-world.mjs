@@ -7,7 +7,7 @@ import {
   newGame, runBattle, addCoins, shopStock, buyItem, autoEquipBest,
   crewStock, hireCrew, toggleCompanion, toggleMerc, setPet, equipFromInventory,
 } from '../src/core/state.js';
-import { BATTLE_BY_ID } from '../src/data/battles.js';
+import { BATTLES, BATTLE_BY_ID } from '../src/data/battles.js';
 import { ENEMY_BY_ID } from '../src/data/enemies.js';
 import { ITEM_BY_ID } from '../src/data/items.js';
 import { RECIPES } from '../src/data/recipes.js';
@@ -25,6 +25,21 @@ const PROFILE_LABEL = {
   reasonable: 'первая нормативная монетная награда и консервативный buyer',
   upgrade: 'reasonable + ровно одно следующее усиление; недостающие монеты — явное сценарное допущение',
 };
+
+export const SIM_WORLDS = (() => {
+  const packaged = new Set(WORLDS.map((world) => world.id));
+  const early = [];
+  for (const battle of BATTLES) {
+    if (battle.wanted || packaged.has(battle.world)) continue;
+    let world = early.find((candidate) => candidate.id === battle.world);
+    if (!world) {
+      world = { id: battle.world, label: battle.world, battles: [] };
+      early.push(world);
+    }
+    world.battles.push(battle);
+  }
+  return [...early, ...WORLDS];
+})();
 
 export function battleChain(targetId) {
   const chain = [];
@@ -344,7 +359,7 @@ export function createProfile(targetId, profile = 'endgame') {
 
 function usage() {
   console.log('Использование: node tools/sim-world.mjs <worldId> [minWinrate%] [endgame|available|reasonable|upgrade|all]');
-  console.log('По умолчанию: endgame и 60%. Миры:', WORLDS.map((world) => world.id).join(', '));
+  console.log('По умолчанию: endgame и 60%. Миры:', SIM_WORLDS.map((world) => world.id).join(', '));
   for (const profile of PROFILES) console.log(`  ${profile}: ${PROFILE_LABEL[profile]}`);
 }
 
@@ -375,7 +390,7 @@ if (isMain) {
   const worldId = process.argv[2];
   const minWinrate = Number(process.argv[3] || 60);
   const requestedProfile = process.argv[4] || 'endgame';
-  const world = WORLDS.find((candidate) => candidate.id === worldId);
+  const world = SIM_WORLDS.find((candidate) => candidate.id === worldId);
   if (!world || !Number.isFinite(minWinrate) || minWinrate < 0 || minWinrate > 100
     || ![...PROFILES, 'all'].includes(requestedProfile)) {
     usage();

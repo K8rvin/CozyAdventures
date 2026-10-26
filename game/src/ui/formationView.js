@@ -11,6 +11,7 @@ import { onboardingCtaForResult, onboardingFixedBattleSeed } from '../core/onboa
 import { battleEnergyTerms, battleEnergyCost } from '../core/energy.js';
 import { bossDropStatus } from '../core/bossDrops.js';
 import { BATTLE_ENERGY_CAP } from '../data/energy.js';
+import { battleLoreOutroRoute } from '../core/battleLore.js';
 
 const FRONT = [0, 1, 2];
 
@@ -442,8 +443,11 @@ function renderFormationScreen(container, ctx, params, rerender) {
       onboardingResult: result.practice ? null : { kind: 'battle', id: battle.id },
       overlayButtons: (rep) => {
         const tutorialCta = result.practice ? null : onboardingCtaForResult(state, { kind: 'battle', id: battle.id });
-        const nextB = rep.victory && !result.practice && !tutorialCta ? nextBattle(battle.id) : null;
+        const outro = rep.victory && !result.practice && !tutorialCta
+          ? battleLoreOutroRoute(state, battle.id) : null;
+        const nextB = rep.victory && !result.practice && !tutorialCta && !outro ? nextBattle(battle.id) : null;
         return [
+          ...(outro ? [{ label: '📖 Эпилог мира', primary: true, onClick: () => ctx.go('battleLore', outro) }] : []),
           ...(nextB ? [{ label: `Следующая битва → ${nextB.name}`, primary: true, onClick: () => ctx.go('battle', { id: nextB.id }) }] : []),
           { label: '🎒 К экипировке', onClick: () => ctx.go('equip') },
           ...(rep.victory ? [] : [
@@ -451,7 +455,7 @@ function renderFormationScreen(container, ctx, params, rerender) {
             { label: '🏬 В торговый квартал — снаряжение', onClick: () => ctx.go('hub', { scene: 'market' }) },
           ]),
           { label: '🔁 Ещё раз', onClick: () => ctx.go('battle', { id: battle.id }) },
-          { label: 'К походам', primary: !nextB && !tutorialCta, onClick: () => ctx.go('battles') },
+          { label: 'К походам', primary: !nextB && !tutorialCta && !outro, onClick: () => ctx.go('battles') },
         ];
       },
     });

@@ -200,9 +200,38 @@ export const WORLD = {
       tip: 'Колесо и фейерверк перед финалом. Сопротивление огню и тяжёлое оружие.',
     },
     {
+      id: 'sf_crowd_4', name: 'Сбой на карусельном ряду', world: 'sf',
+      enemies: [
+        { id: 'sf_wheel', scale: 1.11 }, { id: 'sf_guard', scale: 1.11 },
+        { id: 'sf_firefly', scale: 1.11 }, { id: 'sf_doll', scale: 1.11 },
+      ],
+      unlockAfter: 'sf_19',
+      tip: 'Колесо давит и замедляет, страж бьёт прицельно, жонглёр жжёт, кукла усыпляет. Броня и бодрость помогут пережить представление.',
+    },
+    {
+      id: 'sf_crowd_5', name: 'Парад перед чемпионом', world: 'sf',
+      enemies: [
+        { id: 'sf_wheel', scale: 0.93 }, { id: 'sf_steed', scale: 0.93 },
+        { id: 'sf_spirit', scale: 0.93 }, { id: 'sf_firefly', scale: 0.93 },
+        { id: 'sf_guard', scale: 0.93 },
+      ],
+      unlockAfter: 'sf_crowd_4',
+      tip: 'Колесо и конёк наносят тяжёлые удары, дух нагоняет страх, жонглёр жжёт, а страж выбирает хрупкую цель. Защити задний ряд.',
+    },
+    {
+      id: 'sf_crowd_6', name: 'Последний ярмарочный круг', world: 'sf',
+      enemies: [
+        { id: 'sf_wheel', scale: 0.88 }, { id: 'sf_steed', scale: 0.88 },
+        { id: 'sf_guard', scale: 0.88 }, { id: 'sf_firefly', scale: 0.88 },
+        { id: 'sf_doll', scale: 0.88 }, { id: 'sf_spirit', scale: 0.88 },
+      ],
+      unlockAfter: 'sf_crowd_5',
+      tip: 'Тяжёлые колесо и конёк держат натиск, страж стреляет прицельно, жонглёр жжёт. Кукла усыпляет, дух пугает — собери защиту от всех помех.',
+    },
+    {
       id: 'sf_boss', name: 'Чемпион миров', world: 'sf',
       enemies: [{ id: 'sf_boss', scale: 1.95 }],
-      unlockAfter: 'sf_19',
+      unlockAfter: 'sf_crowd_6',
       tip: 'Чемпион бьёт наотмашь, нагоняет страх и переводит дух. Держи темп и не давай ему передышки.',
     },
   ],

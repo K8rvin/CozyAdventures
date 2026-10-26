@@ -17,6 +17,8 @@ import { renderBrewBook } from './brewBookView.js';
 import { renderGuestBook } from './guestBookView.js';
 import { renderFateDeck } from './fateDeckView.js';
 import { renderStory } from './storyView.js';
+import { renderBattleLore } from './battleLoreView.js';
+import { battleLoreIntroRoute } from '../core/battleLore.js';
 import { renderBoard } from './boardView.js';
 import { renderMarket } from './shopView.js';
 import { checkAchievements } from '../data/achievements.js';
@@ -106,6 +108,7 @@ const routes = {
   guests: (c, p) => renderGuestBook(c, ctx, p),
   deck: (c, p) => renderFateDeck(c, ctx, p),
   story: (c, p) => renderStory(c, ctx, p),
+  battleLore: (c, p) => renderBattleLore(c, ctx, p),
   sandbox: (c, p) => renderSandbox(c, ctx, p),
   board: (c, p) => renderBoard(c, ctx, p),
   shopArmory: (c) => renderMarket(c, ctx, 'armory'),
@@ -118,6 +121,10 @@ let currentCleanup = null;
 
 function go(name, params = {}) {
   destroyTutorial();
+  if (name === 'battle') {
+    const lore = battleLoreIntroRoute(state, params.id);
+    if (lore) { name = 'battleLore'; params = lore; }
+  }
   currentRoute = routes[name] ? name : 'hub';
   if (currentRoute === 'hub') {
     lastHubScene = params.scene || lastHubScene;
@@ -344,17 +351,19 @@ brandEl.addEventListener('click', () => {
 });
 
 function showAbout() {
+  const puzzleTypes = new Set(ALL_PUZZLES.map((puzzle) => puzzle.mechanic || 'mirror')).size;
+  const campaignBattles = BATTLES.filter((battle) => !battle.wanted).length;
   const overlay = document.createElement('div');
   overlay.className = 'overlay';
   overlay.innerHTML = `
     <div class="card" style="text-align:left">
       <h2 style="text-align:center">🏮 Лавка на перекрёстке миров</h2>
-      <div class="muted center" style="margin-bottom:10px">версия 0.9 · уютная игра-магазин с приключениями</div>
+      <div class="muted center" style="margin-bottom:10px">версия 0.10 · уютная игра-магазин с приключениями</div>
       <p><b>Автор:</b> K8rvin (Андрей)</p>
       <p><b>Сделано:</b> вдвоём — человек и ИИ-агент Kimi Code.
       Чистый JavaScript, Canvas, SVG-арт, локальные сохранения. Ни строчки бэкенда.</p>
-      <p><b>Внутри:</b> 6 механик головоломок · 58 загадок · 200 боёв в 12 мирах ·
-      60+ существ · крафт · отряд · два режима автобоя · и один очень трудолюбивый паучок 🕷️</p>
+      <p><b>Внутри:</b> ${puzzleTypes} механик головоломок · ${ALL_PUZZLES.length} загадок · ${campaignBattles} боёв в 12 мирах ·
+      60+ существ · крафт · отряд · поле 8×3 и лор-сцены · и один очень трудолюбивый паучок 🕷️</p>
       <p class="muted">Спасибо, что заглянул на перекрёсток. Стучи по вывеске в любое время.</p>
       <div class="actions" style="text-align:center"></div>
     </div>`;

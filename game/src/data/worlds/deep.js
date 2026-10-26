@@ -182,9 +182,38 @@ export const WORLD = {
       tip: 'Последний караул перед троном: страж и певунья. Тяжёлое оружие и бодрость.',
     },
     {
+      id: 'deep_crowd_4', name: 'Пение над жемчужным рифом', world: 'deep',
+      enemies: [
+        { id: 'deep_coral_golem', scale: 1.26 }, { id: 'deep_pearl_guard', scale: 1.26 },
+        { id: 'deep_siren', scale: 1.26 }, { id: 'deep_light_bubble', scale: 1.26 },
+      ],
+      unlockAfter: 'deep_19',
+      tip: 'Голем и жемчужный страж бьют тяжело; голем слегка травит, а страж замедляет. Русалка усыпляет и лечит, пузырёк жжёт светом — сбей певунью.',
+    },
+    {
+      id: 'deep_crowd_5', name: 'Течение несёт чужие голоса', world: 'deep',
+      enemies: [
+        { id: 'deep_coral_golem', scale: 1.31 }, { id: 'deep_shadow', scale: 1.31 },
+        { id: 'deep_current_spirit', scale: 1.31 }, { id: 'deep_siren', scale: 1.31 },
+        { id: 'deep_light_bubble', scale: 1.31 },
+      ],
+      unlockAfter: 'deep_crowd_4',
+      tip: 'Русалка поёт усыпляющую песнь и лечит, тень пугает, течение замедляет. Голем бьёт тяжело и травит, а пузырёк жжёт — береги задний ряд.',
+    },
+    {
+      id: 'deep_crowd_6', name: 'Грот смыкает стены', world: 'deep',
+      enemies: [
+        { id: 'deep_coral_golem', scale: 1.1 }, { id: 'deep_pearl_guard', scale: 1.1 },
+        { id: 'deep_shadow', scale: 1.1 }, { id: 'deep_current_spirit', scale: 1.1 },
+        { id: 'deep_siren', scale: 1.1 }, { id: 'deep_light_bubble', scale: 1.1 },
+      ],
+      unlockAfter: 'deep_crowd_5',
+      tip: 'Коралловый голем и жемчужный страж бьют тяжело, первый травит, второй замедляет. Русалка лечит и усыпляет, тень пугает, течение сковывает, пузырёк жжёт светом.',
+    },
+    {
       id: 'deep_boss', name: 'Владычица грота', world: 'deep',
       enemies: [{ id: 'deep_boss_queen', scale: 2.35 }],
-      unlockAfter: 'deep_19',
+      unlockAfter: 'deep_crowd_6',
       tip: 'Владычица усыпляет песней, леденит взглядом и стаскивает течением. Шлем барсука и амулет отваги.',
     },
   ],

@@ -169,9 +169,38 @@ export const WORLD = {
       tip: 'Воин и кицунэ на пике силы. Последняя проверка перед Драконом.',
     },
     {
+      id: 'jade_crowd_4', name: 'Фонари под лисьим мороком', world: 'jade',
+      enemies: [
+        { id: 'jade_warrior', scale: 1.1 }, { id: 'jade_crane', scale: 1.1 },
+        { id: 'jade_lantern', scale: 1.1 }, { id: 'jade_kitsune', scale: 1.1 },
+      ],
+      unlockAfter: 'jade_19',
+      tip: 'Воин бьёт тяжело, журавль стреляет прицельно, фонарь жжёт и травит. Кицунэ усыпляет и пугает — противоядие, бодрость и отвага не помешают.',
+    },
+    {
+      id: 'jade_crowd_5', name: 'Чайный дозор у пруда', world: 'jade',
+      enemies: [
+        { id: 'jade_warrior', scale: 0.97 }, { id: 'jade_teamaster', scale: 0.97 },
+        { id: 'jade_crane', scale: 0.97 }, { id: 'jade_lantern', scale: 0.97 },
+        { id: 'jade_kitsune', scale: 0.97 },
+      ],
+      unlockAfter: 'jade_crowd_4',
+      tip: 'Чайный мастер лечит и замедляет, воин давит тяжёлыми ударами. Журавль меток, фонарь жжёт и травит, кицунэ усыпляет и пугает — не растягивай бой.',
+    },
+    {
+      id: 'jade_crowd_6', name: 'Двойной бумажный заслон', world: 'jade',
+      enemies: [
+        { id: 'jade_warrior', scale: 0.8 }, { id: 'jade_warrior', scale: 0.8 },
+        { id: 'jade_teamaster', scale: 0.8 }, { id: 'jade_crane', scale: 0.8 },
+        { id: 'jade_lantern', scale: 0.8 }, { id: 'jade_kitsune', scale: 0.8 },
+      ],
+      unlockAfter: 'jade_crowd_5',
+      tip: 'Два воина наносят тяжёлые удары, пока мастер лечит и замедляет. Журавль, фонарь и кицунэ добавляют точные выстрелы, огонь, яд, сон и страх.',
+    },
+    {
       id: 'jade_boss', name: 'Дракон нефритового сада', world: 'jade',
       enemies: [{ id: 'jade_boss', scale: 2.0 }],
-      unlockAfter: 'jade_19',
+      unlockAfter: 'jade_crowd_6',
       tip: 'Хранитель дышит нефритовым пламенем. Сопротивление огню и всё лучшее, что у тебя есть.',
     },
   ],

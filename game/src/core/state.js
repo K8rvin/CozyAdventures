@@ -46,6 +46,8 @@ import {
   newBattleEnergy, refreshBattleEnergy, battleEnergyTerms, spendBattleEnergy,
 } from './energy.js';
 import { rollBossDrop } from './bossDrops.js';
+import { BATTLE_LORE } from '../data/battleLore.js';
+import { battleLoreFinalBattle, nextCampaignBattle } from './battleLore.js';
 
 const SAVE_KEY = 'cozy_adventures_save_v2';
 
@@ -64,6 +66,7 @@ export function newGame(now = Date.now()) {
     pet: null,              // активный питомец
     puzzlesDone: {},        // id -> { moves, hintsUsed }
     battlesDone: {},        // id -> { victories }
+    battleLoreSeen: {},     // world:intro/outro -> true после последней реплики
     battleEnergy: newBattleEnergy(now), // только наградные повторы; поражения и первые победы бесплатны
     bossDrops: {},          // battleId -> { dry, collected }: личный pity и защита от дублей
     customPuzzles: [],      // уровни из редактора
@@ -96,6 +99,8 @@ export function newGame(now = Date.now()) {
 function migrate(state, now = Date.now()) {
   const hadOnboarding = !!state.onboarding;
   const hadGuide = !!state.onboarding?.guide;
+  const hadBattleLore = state.battleLoreSeen && typeof state.battleLoreSeen === 'object'
+    && !Array.isArray(state.battleLoreSeen);
   // Денежную массу и накопления не пересчитываем: версия только фиксирует модель.
   state.economyVersion ||= ECONOMY_VERSION;
   state.crew ||= [];
@@ -158,6 +163,19 @@ function migrate(state, now = Date.now()) {
   state.materials ||= {};
   state.seals ??= 0;
   state.savingsGoal ??= null;
+  state.battleLoreSeen = hadBattleLore ? state.battleLoreSeen : {};
+  if (!hadBattleLore) {
+    for (const world of Object.keys(BATTLE_LORE)) {
+      const battles = BATTLES.filter((battle) => !battle.wanted && battle.world === world);
+      if (battles.some((battle) => state.battlesDone?.[battle.id])) {
+        state.battleLoreSeen[`${world}:intro`] = true;
+      }
+      const finalBattle = battleLoreFinalBattle(world);
+      if (finalBattle && state.battlesDone?.[finalBattle.id]) {
+        state.battleLoreSeen[`${world}:outro`] = true;
+      }
+    }
+  }
   // Старым сейвам выдаём полный запас: прошлые победы задним числом не тарифицируются.
   if (!state.battleEnergy || typeof state.battleEnergy !== 'object' || Array.isArray(state.battleEnergy)) {
     state.battleEnergy = newBattleEnergy(now);
@@ -955,10 +973,9 @@ export function firstUnsolvedPuzzle(state) {
   return ALL_PUZZLES.find((p, i) => puzzleNeedsHonest(state, p.id) && puzzleAvailable(state, i)) || null;
 }
 
-// Следующая битва после текущей (для кнопки «Следующая битва →»).
+// Следующая кампейнская битва после текущей (для кнопки «Следующая битва →»).
 export function nextBattle(currentId) {
-  const idx = BATTLES.findIndex((b) => b.id === currentId);
-  return idx >= 0 && idx + 1 < BATTLES.length ? BATTLES[idx + 1] : null;
+  return nextCampaignBattle(currentId);
 }
 
 // Первая доступная непройденная битва (для автоскролла списка походов).
@@ -971,7 +988,7 @@ export function firstUnbeatenBattle(state) {
 export function battleAvailable(state, battleId) {
   const b = BATTLE_BY_ID[battleId];
   if (!b) return false;
-  return b.unlockAfter === null || !!state.battlesDone[b.unlockAfter];
+  return !!state.battlesDone[battleId] || b.unlockAfter === null || !!state.battlesDone[b.unlockAfter];
 }
 
 // Конкретный совет только из уже доступных источников усиления.

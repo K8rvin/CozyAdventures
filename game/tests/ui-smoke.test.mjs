@@ -127,6 +127,9 @@ const { renderBrewBook } = await import('../src/ui/brewBookView.js');
 const { renderGuestBook } = await import('../src/ui/guestBookView.js');
 const { renderFateDeck } = await import('../src/ui/fateDeckView.js');
 const { renderStory } = await import('../src/ui/storyView.js');
+const { renderBattleLore } = await import('../src/ui/battleLoreView.js');
+const { BATTLE_LORE } = await import('../src/data/battleLore.js');
+const { battleLoreFinalBattle } = await import('../src/core/battleLore.js');
 const { renderSandbox } = await import('../src/ui/sandboxView.js');
 const { showCompareTip, hideCompareTip } = await import('../src/ui/shopView.js');
 const { header, resetTopbarHeader, DEFAULT_TOPBAR_TITLE } = await import('../src/ui/common.js');
@@ -401,6 +404,21 @@ test('все экраны рендерятся без ошибок', () => {
   assert.ok(true);
 });
 
+test('лор походов: все 24 сцены рендерятся с гостями', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  for (const [world, scenes] of Object.entries(BATTLE_LORE)) {
+    for (const kind of ['intro', 'outro']) {
+      if (kind === 'outro') state.battlesDone[battleLoreFinalBattle(world).id] = { victories: 1 };
+      const root = new El('main');
+      const cleanup = renderBattleLore(root, ctx, { world, kind, replay: true });
+      assert.ok(flatElements(root).some((el) => el.textContent === scenes[kind].steps[0].text),
+        `${world}/${kind}: не показана первая реплика`);
+      if (typeof cleanup === 'function') cleanup();
+    }
+  }
+});
+
 test('походы рыцаря: плитки миров и фильтр списка боёв', () => {
   const state = newGame();
   const ctx = makeUiCtx(state);
@@ -410,7 +428,8 @@ test('походы рыцаря: плитки миров и фильтр спи�
   const tiles = all.filter((el) => (el.className || '').split(' ').includes('world-tile'));
   assert.equal(tiles.length, 1, 'на новой игре видна плитка только открытого мира');
   const rows = all.filter((el) => (el.className || '').split(' ').includes('row'));
-  assert.equal(rows.length, 9, 'по умолчанию показаны бои только первого мира');
+  assert.equal(rows.length, 12, 'по умолчанию показаны бои только первого мира');
+  assert.equal(all.find((el) => el.dataset.loreKind === 'outro').disabled, true);
   const hasCls = (el, c) => (el.className || '').split(' ').includes(c);
   const current = tiles.filter((el) => hasCls(el, 'current'));
   assert.equal(current.length, 1, 'выбрана ровно одна плитка');
@@ -418,7 +437,7 @@ test('походы рыцаря: плитки миров и фильтр спи�
 
   // Мир пройден целиком → экран сам перескакивает к следующему рубежу
   const state2 = newGame();
-  for (const b of ['bt_slimes', 'bt_bees', 'bt_moths', 'bt_spirits', 'bt_golem', 'bt_fireflies', 'bt_overgrowth', 'bt_hunt_trail', 'bt_boss_willow']) {
+  for (const b of ['bt_slimes', 'bt_bees', 'bt_moths', 'bt_spirits', 'bt_golem', 'bt_fireflies', 'bt_overgrowth', 'bt_hunt_trail', 'meadow_crowd_4', 'meadow_crowd_5', 'meadow_crowd_6', 'bt_boss_willow']) {
     state2.battlesDone[b] = { victories: 1 };
   }
   const root2 = new El('main');
@@ -428,7 +447,7 @@ test('походы рыцаря: плитки миров и фильтр спи�
   const current2 = tiles2.find((el) => (el.className || '').split(' ').includes('current'));
   assert.equal(current2.dataset.world, 'town', 'после босса опушки выбран дворик');
   const rows2 = flatElements(root2).filter((el) => (el.className || '').split(' ').includes('row'));
-  assert.equal(rows2.length, 9, 'список показывает бои дворика');
+  assert.equal(rows2.length, 12, 'список показывает бои дворика');
 
   // Ручной выбор пройденного мира не сбрасывается обратно к рубежу
   const meadowTile = tiles2.find((el) => el.dataset.world === 'meadow');
@@ -437,8 +456,10 @@ test('походы рыцаря: плитки миров и фильтр спи�
   const current3 = tiles3.find((el) => (el.className || '').split(' ').includes('current'));
   assert.equal(current3.dataset.world, 'meadow', 'клик по пройденному миру держит выбор');
   const rows3 = flatElements(root2).filter((el) => (el.className || '').split(' ').includes('row'));
-  assert.equal(rows3.length, 9, 'список показывает бои опушки');
+  assert.equal(rows3.length, 12, 'список показывает бои опушки');
   assert.ok(rows3.every((el) => (el.className || '').includes('done')), 'все бои опушки пройдены');
+  const outro = flatElements(root2).find((el) => el.dataset.loreKind === 'outro' && el.dataset.world === 'meadow');
+  assert.equal(outro.disabled, false, 'после босса эпилог доступен для чтения');
 });
 
 test('каталог головоломок: четыре режима и общий переключатель в настройках', () => {

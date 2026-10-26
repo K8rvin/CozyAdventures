@@ -1,6 +1,6 @@
 // Мир «Сказочные топи»: туман, избушки на курьих ножках, лягушки-хранители,
 // болотные духи, ведьмины помощники, куклы-обманщики и светящиеся ягоды.
-// Открывается после босса мира nm. Цепочка из 20 боёв, scale 1.6 → 1.85.
+// Открывается после босса мира nm. Цепочка из 23 боёв.
 export const WORLD = {
   id: 'sw',
   label: '🐸 Сказочные топи',
@@ -203,9 +203,38 @@ export const WORLD = {
       tip: 'Избушку лечат ягоды, кукла напевает. Сруби куст и не усни.',
     },
     {
+      id: 'sw_crowd_4', name: 'Избушка на ягодной поляне', world: 'sw',
+      enemies: [
+        { id: 'sw_hut_walker', scale: 1.35 }, { id: 'sw_glow_bush', scale: 1.35 },
+        { id: 'sw_witch_cat', scale: 1.35 }, { id: 'sw_bog_spirit', scale: 1.35 },
+      ],
+      unlockAfter: 'sw_19',
+      tip: 'Избушка жжёт и бьёт тяжело, светоягодник лечит и замедляет, кот стреляет прицельно и слегка травит. Болотный дух пугает — не теряй темп.',
+    },
+    {
+      id: 'sw_crowd_5', name: 'Кукольные следы в тумане', world: 'sw',
+      enemies: [
+        { id: 'sw_hut_walker', scale: 1.18 }, { id: 'sw_bog_spirit', scale: 1.18 },
+        { id: 'sw_doll_trickster', scale: 1.18 }, { id: 'sw_witch_cat', scale: 1.18 },
+        { id: 'sw_glow_bush', scale: 1.18 },
+      ],
+      unlockAfter: 'sw_crowd_4',
+      tip: 'Кукла добавляет сон и страх к яду кота и замедлению духа. Пока избушка давит огнём, светоягодник лечит союзников — разберись с лекарем.',
+    },
+    {
+      id: 'sw_crowd_6', name: 'Топкий хоровод', world: 'sw',
+      enemies: [
+        { id: 'sw_hut_walker', scale: 0.95 }, { id: 'sw_frog_guardian', scale: 0.95 },
+        { id: 'sw_bog_spirit', scale: 0.95 }, { id: 'sw_doll_trickster', scale: 0.95 },
+        { id: 'sw_witch_cat', scale: 0.95 }, { id: 'sw_glow_bush', scale: 0.95 },
+      ],
+      unlockAfter: 'sw_crowd_5',
+      tip: 'Избушка и лягушка бьют тяжело, куст лечит, кот травит, кукла усыпляет, а дух пугает и замедляет. Прикрой отряд и сбей лекаря.',
+    },
+    {
       id: 'sw_boss', name: 'Хозяйка Топей', world: 'sw',
       enemies: [{ id: 'sw_hag_queen', scale: 1.6 }],
-      unlockAfter: 'sw_19',
+      unlockAfter: 'sw_crowd_6',
       tip: 'Она травит, нагоняет страх и бьёт наотмашь. Возьми всё лучшее, что есть.',
     },
   ],

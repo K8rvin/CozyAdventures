@@ -1,4 +1,4 @@
-// Боевые столкновения мира «Тихая опушка»: 5 обычных + босс.
+// Боевые столкновения мира «Тихая опушка»: 11 обычных + босс.
 // unlock: индекс предыдущего боя, который надо пройти.
 
 // Препятствия на поле боя: непролазные клетки (бойцы обходят, стрелки и
@@ -76,9 +76,38 @@ export const BATTLES = [
     tip: 'Вся опушка разом. Проверка перед Старой ивой.',
   },
   {
+    id: 'meadow_crowd_4', name: 'Совет у мшистого пня', world: 'meadow',
+    enemies: [
+      { id: 'golem_moss', scale: 0.58 }, { id: 'slime_meadow', scale: 0.58 },
+      { id: 'moth_night', scale: 0.58 }, { id: 'bee_wild', scale: 0.58 },
+    ],
+    unlockAfter: 'bt_hunt_trail',
+    tip: 'Голем бьёт тяжело, слизень и пчела травят, а мотылёк усыпляет. Крепкая броня, противоядие и бодрость пригодятся всему отряду.',
+  },
+  {
+    id: 'meadow_crowd_5', name: 'Хоровод на заросшей тропе', world: 'meadow',
+    enemies: [
+      { id: 'golem_moss', scale: 0.48 }, { id: 'spirit_forest', scale: 0.48 },
+      { id: 'moth_night', scale: 0.48 }, { id: 'bee_wild', scale: 0.48 },
+      { id: 'slime_meadow', scale: 0.48 },
+    ],
+    unlockAfter: 'meadow_crowd_4',
+    tip: 'Голем давит тяжёлыми ударами, дух замедляет, мотылёк усыпляет. Пчела и слизень травят — сохрани темп и запасись противоядием.',
+  },
+  {
+    id: 'meadow_crowd_6', name: 'Два стража опушки', world: 'meadow',
+    enemies: [
+      { id: 'golem_moss', scale: 0.35 }, { id: 'golem_moss', scale: 0.35 },
+      { id: 'spirit_forest', scale: 0.35 }, { id: 'moth_night', scale: 0.35 },
+      { id: 'bee_wild', scale: 0.35 }, { id: 'slime_meadow', scale: 0.35 },
+    ],
+    unlockAfter: 'meadow_crowd_5',
+    tip: 'Два голема бьют тяжело, дух замедляет, мотылёк усыпляет, а пчела и слизень отравляют. Собери защиту от всех лесных козней.',
+  },
+  {
     id: 'bt_boss_willow', name: 'Старая ива', world: 'meadow',
     enemies: ['boss_willow'],
-    unlockAfter: 'bt_hunt_trail',
+    unlockAfter: 'meadow_crowd_6',
     tip: 'Хранитель ивы — испытание всего, чему ты научился.',
   },
 ];
@@ -137,9 +166,38 @@ BATTLES.push(
     tip: 'Каменная стена и два клинка за ней. Пробивай тяжёлым.',
   },
   {
+    id: 'town_crowd_4', name: 'Застава перед капитаном', world: 'town',
+    enemies: [
+      { id: 'golem_wander', scale: 0.95 }, { id: 'bandit', scale: 0.95 },
+      { id: 'ghost_guard', scale: 0.95 }, { id: 'rat_thief', scale: 0.95 },
+    ],
+    unlockAfter: 'bt_tourney',
+    tip: 'Голем и разбойник бьют тяжело, голем ещё и замедляет. Призрак нагоняет страх, крыса травит — крепкая броня, отвага и противоядие не помешают.',
+  },
+  {
+    id: 'town_crowd_5', name: 'Тревога на мостовой', world: 'town',
+    enemies: [
+      { id: 'golem_wander', scale: 0.82 }, { id: 'bandit', scale: 0.82 },
+      { id: 'bandit', scale: 0.82 }, { id: 'ghost_guard', scale: 0.82 },
+      { id: 'rat_thief', scale: 0.82 },
+    ],
+    unlockAfter: 'town_crowd_4',
+    tip: 'Два разбойника усиливают натиск голема, призрак леденит страхом, а крыса отравляет. Защити отряд от тяжёлых ударов и не забудь амулет отваги.',
+  },
+  {
+    id: 'town_crowd_6', name: 'Двойной каменный заслон', world: 'town',
+    enemies: [
+      { id: 'golem_wander', scale: 0.8 }, { id: 'golem_wander', scale: 0.8 },
+      { id: 'bandit', scale: 0.8 }, { id: 'bandit', scale: 0.8 },
+      { id: 'ghost_guard', scale: 0.8 }, { id: 'rat_thief', scale: 0.8 },
+    ],
+    unlockAfter: 'town_crowd_5',
+    tip: 'Два голема давят и замедляют, два разбойника бьют наотмашь. Призрак пугает, крыса травит — собери строй, который выдержит весь этот натиск.',
+  },
+  {
     id: 'bt_boss_captain', name: 'Старый капитан', world: 'town',
     enemies: ['boss_captain'],
-    unlockAfter: 'bt_tourney',
+    unlockAfter: 'town_crowd_6',
     tip: 'Капитан стражи не отдыхает веками. Покажи ему, что лавка под защитой.',
   },
 );
@@ -198,9 +256,38 @@ BATTLES.push(
     tip: 'Четверо обитателей чердака разом. Последняя проверка перед Хранителем.',
   },
   {
+    id: 'attic_crowd_4', name: 'Гравюра над чернильницей', world: 'attic',
+    enemies: [
+      { id: 'illustration', scale: 0.82 }, { id: 'ink_blot', scale: 0.82 },
+      { id: 'paper_spirit', scale: 0.82 }, { id: 'book_moth', scale: 0.82 },
+    ],
+    unlockAfter: 'bt_inkwell',
+    tip: 'Иллюстрация бьёт тяжело, клякса травит и замедляет, бумажный дух пугает, моль усыпляет. Приготовь противоядие, отвагу и бодрость.',
+  },
+  {
+    id: 'attic_crowd_5', name: 'Переплётный переполох', world: 'attic',
+    enemies: [
+      { id: 'illustration', scale: 0.77 }, { id: 'ink_blot', scale: 0.77 },
+      { id: 'paper_spirit', scale: 0.77 }, { id: 'book_moth', scale: 0.77 },
+      { id: 'book_moth', scale: 0.77 },
+    ],
+    unlockAfter: 'attic_crowd_4',
+    tip: 'Две книжные моли по очереди усыпляют, дух нагоняет страх, клякса травит и замедляет. Не дай иллюстрации воспользоваться замешательством — её удары тяжелы.',
+  },
+  {
+    id: 'attic_crowd_6', name: 'Бунт двух иллюстраций', world: 'attic',
+    enemies: [
+      { id: 'illustration', scale: 0.58 }, { id: 'illustration', scale: 0.58 },
+      { id: 'ink_blot', scale: 0.58 }, { id: 'ink_blot', scale: 0.58 },
+      { id: 'paper_spirit', scale: 0.58 }, { id: 'book_moth', scale: 0.58 },
+    ],
+    unlockAfter: 'attic_crowd_5',
+    tip: 'Две иллюстрации давят тяжёлыми ударами, две кляксы травят и замедляют. Дух пугает, моль усыпляет — не дай им запутать отряд.',
+  },
+  {
     id: 'bk_boss_keeper', name: 'Последняя страница', world: 'attic',
     enemies: ['boss_keeper'],
-    unlockAfter: 'bt_inkwell',
+    unlockAfter: 'attic_crowd_6',
     tip: 'Хранитель не отдаст страницу без боя. Собери всё лучшее, что у тебя есть.',
   },
 );
@@ -276,9 +363,38 @@ BATTLES.push(
     tip: 'Всё и сразу: стена, яд и сон. Последняя проверка перед Стражем.',
   },
   {
+    id: 'crossroads_crowd_4', name: 'Заслон четырёх дорог', world: 'crossroads',
+    enemies: [
+      { id: 'golem_wander', scale: 1 }, { id: 'illustration', scale: 1 },
+      { id: 'paper_spirit', scale: 1 }, { id: 'moth_night', scale: 1 },
+    ],
+    unlockAfter: 'ex_08',
+    tip: 'Бродячий голем и иллюстрация бьют тяжело, голем ещё замедляет. Дух пугает, мотылёк усыпляет — тяжёлое оружие, отвага и бодрость откроют путь.',
+  },
+  {
+    id: 'crossroads_crowd_5', name: 'Пёстрый патруль перекрёстка', world: 'crossroads',
+    enemies: [
+      { id: 'golem_moss', scale: 0.95 }, { id: 'bandit', scale: 0.95 },
+      { id: 'ink_blot', scale: 0.95 }, { id: 'book_moth', scale: 0.95 },
+      { id: 'ghost_guard', scale: 0.95 },
+    ],
+    unlockAfter: 'crossroads_crowd_4',
+    tip: 'Голем и разбойник бьют тяжело, клякса травит и замедляет, моль усыпляет, призрак пугает. Проверь все защиты перед этим смешанным отрядом.',
+  },
+  {
+    id: 'crossroads_crowd_6', name: 'Все пути в одном бою', world: 'crossroads',
+    enemies: [
+      { id: 'golem_wander', scale: 0.85 }, { id: 'golem_moss', scale: 0.85 },
+      { id: 'illustration', scale: 0.85 }, { id: 'paper_spirit', scale: 0.85 },
+      { id: 'book_moth', scale: 0.85 }, { id: 'bee_wild', scale: 0.85 },
+    ],
+    unlockAfter: 'crossroads_crowd_5',
+    tip: 'Трое тяжеловесов — два голема и иллюстрация, а бродячий голем ещё замедляет. Дух пугает, моль усыпляет, пчела травит: держи строй и запас зелий.',
+  },
+  {
     id: 'ex_boss', name: 'Звёздный страж', world: 'crossroads',
     enemies: [{ id: 'boss_star_guardian', scale: 1 }],
-    unlockAfter: 'ex_08',
+    unlockAfter: 'crossroads_crowd_6',
     tip: 'Он горит звёздным огнём. Сопротивление огню не помешает.',
   },
 );

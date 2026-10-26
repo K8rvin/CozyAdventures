@@ -27,6 +27,7 @@ test('маппинг маршрутов на темы', () => {
     shopAlchemy: ['shop', {}],
     battles: ['battle', {}],
     battle: ['battle', {}],
+    battleLore: ['battle', {}],
     tavern: ['tavern', {}],
     craft: ['craft', {}],
     workshop: ['workshop', {}],

@@ -29,7 +29,7 @@ test('трофеи: у каждого — существующий бой, ун�
 test('трофей выдаётся за первую победу над боссом и не дублируется', () => {
   const s = legendKnight();
   // Открываем цепочку до Старой ивы
-  for (const id of ['bt_slimes', 'bt_bees', 'bt_moths', 'bt_spirits', 'bt_golem', 'bt_fireflies', 'bt_overgrowth', 'bt_hunt_trail']) {
+  for (const id of ['bt_slimes', 'bt_bees', 'bt_moths', 'bt_spirits', 'bt_golem', 'bt_fireflies', 'bt_overgrowth', 'bt_hunt_trail', 'meadow_crowd_4', 'meadow_crowd_5', 'meadow_crowd_6']) {
     s.battlesDone[id] = { victories: 1 };
   }
   const r1 = runBattle(s, 'bt_boss_willow', 1);

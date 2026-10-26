@@ -1,6 +1,6 @@
 // Мир «Пепельные степи»: выжженные равнины, кочевые шаманы огня,
 // пепельные волки, духи бурь и остатки погибшего каравана.
-// Открывается после cr_boss, цепочка из 20 боёв, scale 1.9 → 2.15.
+// Открывается после cr_boss, цепочка из 23 боёв.
 export const WORLD = {
   id: 'ash',
   label: '🔥 Пепельные степи',
@@ -198,9 +198,38 @@ export const WORLD = {
       tip: 'Вся нечисть степи разом: огонь, страх и сон. Последняя проверка перед Ханом.',
     },
     {
+      id: 'ash_crowd_4', name: 'Пепел на караванной тропе', world: 'ash',
+      enemies: [
+        { id: 'ash_wolf', scale: 1.55 }, { id: 'ash_shaman', scale: 1.55 },
+        { id: 'ash_scorpion', scale: 1.55 }, { id: 'ash_ghoul', scale: 1.55 },
+      ],
+      unlockAfter: 'ash_19',
+      tip: 'Волк бьёт тяжело, шаман жжёт и лечит, скорпион травит, а тень караванщика усыпляет и пугает. Запасись противоядием и не затягивай бой.',
+    },
+    {
+      id: 'ash_crowd_5', name: 'Стервятник над бурёй', world: 'ash',
+      enemies: [
+        { id: 'ash_wolf', scale: 1.4 }, { id: 'ash_shaman', scale: 1.4 },
+        { id: 'ash_storm_spirit', scale: 1.4 }, { id: 'ash_vulture', scale: 1.4 },
+        { id: 'ash_ghoul', scale: 1.4 },
+      ],
+      unlockAfter: 'ash_crowd_4',
+      tip: 'Шаман лечит и жжёт, волк бьёт тяжело, стервятник стреляет прицельно. Дух бури пугает и замедляет, а тень усыпляет — держи отвагу и бодрость.',
+    },
+    {
+      id: 'ash_crowd_6', name: 'Перед шатром Хана', world: 'ash',
+      enemies: [
+        { id: 'ash_wolf', scale: 1.15 }, { id: 'ash_shaman', scale: 1.15 },
+        { id: 'ash_storm_spirit', scale: 1.15 }, { id: 'ash_scorpion', scale: 1.15 },
+        { id: 'ash_vulture', scale: 1.15 }, { id: 'ash_ghoul', scale: 1.15 },
+      ],
+      unlockAfter: 'ash_crowd_5',
+      tip: 'Волк бьёт тяжело, шаман жжёт и лечит, скорпион травит, стервятник стреляет прицельно. Дух бури замедляет и пугает, а тень ещё и усыпляет.',
+    },
+    {
       id: 'ash_boss', name: 'Хан пепельных бурь', world: 'ash',
       enemies: [{ id: 'ash_khan', scale: 1.9 }],
-      unlockAfter: 'ash_19',
+      unlockAfter: 'ash_crowd_6',
       tip: 'Хан жжёт огнём и наводит страх. Собери лучшее снаряжение и отряд.',
     },
   ],

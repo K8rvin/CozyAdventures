@@ -1,6 +1,6 @@
 // Мир «Туманные часы»: край времён. Часовые духи, ржавые автоматоны,
 // эхо прошлого лавочника и хранители времени. Финальный босс — само Время.
-// 24 боя, линейная цепочка; открывается после deep_boss. scale 2.2 → 2.6.
+// 27 боёв, линейная цепочка; открывается после deep_boss.
 export const WORLD = {
   id: 'mist',
   label: '⏳ Туманные часы',
@@ -212,9 +212,38 @@ export const WORLD = {
       tip: 'Хранитель и автоматон вместе. Последняя проверка перед Временем.',
     },
     {
+      id: 'mist_crowd_4', name: 'Завод перед последним звоном', world: 'mist',
+      enemies: [
+        { id: 'mist_rust_automaton', scale: 1.53 }, { id: 'mist_time_warden', scale: 1.53 },
+        { id: 'mist_cog_hound', scale: 1.53 }, { id: 'mist_echo_keeper', scale: 1.53 },
+      ],
+      unlockAfter: 'mist_23',
+      tip: 'Автоматон бьёт тяжело, хранитель лечит и замедляет, гончая стреляет прицельно, эхо усыпляет. Не дай хранителю затянуть бой.',
+    },
+    {
+      id: 'mist_crowd_5', name: 'Песок в часовом механизме', world: 'mist',
+      enemies: [
+        { id: 'mist_rust_automaton', scale: 1.35 }, { id: 'mist_time_warden', scale: 1.35 },
+        { id: 'mist_clock_spirit', scale: 1.35 }, { id: 'mist_sand_wisp', scale: 1.35 },
+        { id: 'mist_cog_hound', scale: 1.35 },
+      ],
+      unlockAfter: 'mist_crowd_4',
+      tip: 'Хранитель и песчаный огонёк замедляют, а хранитель ещё и лечит. Автоматон давит, гончая бьёт прицельно, часовой дух пугает — держи темп.',
+    },
+    {
+      id: 'mist_crowd_6', name: 'Эхо последней минуты', world: 'mist',
+      enemies: [
+        { id: 'mist_rust_automaton', scale: 1.25 }, { id: 'mist_time_warden', scale: 1.25 },
+        { id: 'mist_clock_spirit', scale: 1.25 }, { id: 'mist_sand_wisp', scale: 1.25 },
+        { id: 'mist_cog_hound', scale: 1.25 }, { id: 'mist_echo_keeper', scale: 1.25 },
+      ],
+      unlockAfter: 'mist_crowd_5',
+      tip: 'Автоматон бьёт тяжело, хранитель лечит, дух пугает, огонёк и хранитель замедляют. Гончая стреляет метко, а эхо усыпляет — приготовь бодрость и отвагу.',
+    },
+    {
       id: 'mist_boss', name: 'Само Время', world: 'mist',
       enemies: [{ id: 'mist_boss', scale: 1 }],
-      unlockAfter: 'mist_23',
+      unlockAfter: 'mist_crowd_6',
       tip: 'Время замедляет и давит страхом. Держи темп и не бойся — у лавки есть будущее.',
     },
   ],

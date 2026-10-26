@@ -4092,6 +4092,22 @@ body::-webkit-scrollbar { display: none; }
   .story-pop { animation: none; }
 }
 
+.battle-lore-stage { max-width: 760px; margin: 14px auto 0; }
+.battle-lore-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+.battle-lore-title { font-weight: 700; }
+.battle-lore-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 640px) {
+  .battle-lore-panel { align-items: flex-start; }
+  .battle-lore-actions { width: 100%; }
+}
+
 /* Гость режима истории на сцене лавки */
 .hub-guest img {
   border-radius: 50%;

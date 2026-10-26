@@ -17,8 +17,9 @@ import { startTutorial } from './tutorial.js';
 import { applyCursor } from './cursors.js';
 import { onboardingBlocksStory, onboardingBlocksLegacyTutorials } from '../core/onboarding.js';
 import { createSavingsGoalCard } from './goalView.js';
-import { scenePolygonGeometry } from '../core/hubGeometry.js';
+import { mergeSceneLayout, scenePolygonGeometry } from '../core/hubGeometry.js';
 import { resolveCosmeticBackground, BASE_LAVKA_BACKGROUND, LAVKA_LAYOUT_ID } from '../core/cosmetics.js';
+import { LAVKA_COSMETIC_LAYOUTS } from '../data/cosmetics.js';
 
 // Реплики спутников и питомцев для дневника (случайная при визите)
 const CHATTER = {
@@ -85,11 +86,26 @@ export const LAVKA_HOTSPOT_SHAPES = {
   ],
 };
 
-// Единственная разрешённая сейчас карта лавки; будущий custom layout добавляется
-// сюда отдельно, без подмены базовых координат.
-export const LAVKA_LAYOUT_SHAPES = {
-  [LAVKA_LAYOUT_ID]: LAVKA_HOTSPOT_SHAPES,
+const LAVKA_BASE_SPRITE_SPOTS = {
+  pet_puppy: { x: 88, y: 92 },
+  cmp_cat: { x: 26, y: 89 },
+  cmp_firefly: { x: 47, y: 13 },
+  story_guest: { x: 57, y: 90 },
 };
+const LAVKA_BASE_LAYOUT = {
+  hotspots: LAVKA_HOTSPOT_SHAPES,
+  sprites: LAVKA_BASE_SPRITE_SPOTS,
+};
+export const LAVKA_LAYOUTS = {
+  [LAVKA_LAYOUT_ID]: LAVKA_BASE_LAYOUT,
+  ...Object.fromEntries(Object.entries(LAVKA_COSMETIC_LAYOUTS).map(([id, layout]) => [
+    id,
+    mergeSceneLayout(LAVKA_BASE_LAYOUT, layout),
+  ])),
+};
+export const LAVKA_LAYOUT_SHAPES = Object.fromEntries(
+  Object.entries(LAVKA_LAYOUTS).map(([id, layout]) => [id, layout.hotspots]),
+);
 
 // V2 размечены по фактическим runtime-изображениям 2400×800. Координаты не
 // наследуются от старых сцен: при error включается отдельный legacy-layout.
@@ -217,6 +233,7 @@ export function renderHub(container, ctx, params = {}) {
   scenePanel.style.overflow = 'hidden';
   scenePanel.style.aspectRatio = '3 / 1';
   let cosmeticBackground = null;
+  let effectiveLavkaLayoutId = LAVKA_LAYOUT_ID;
   if (sceneId === 'lavka') {
     const resolved = resolveCosmeticBackground(state, { scene: 'lavka' });
     const knownLayout = !!LAVKA_LAYOUT_SHAPES[resolved.layoutId];
@@ -227,7 +244,8 @@ export function renderHub(container, ctx, params = {}) {
       full: false,
       id: null,
     };
-    scenePanel.dataset.layoutId = cosmeticBackground.layoutId;
+    effectiveLavkaLayoutId = cosmeticBackground.full ? LAVKA_LAYOUT_ID : cosmeticBackground.layoutId;
+    scenePanel.dataset.layoutId = effectiveLavkaLayoutId;
   }
   const legacyLayer = cosmeticBackground?.legacyIds.length ? document.createElement('div') : null;
   if (legacyLayer) {
@@ -246,7 +264,7 @@ export function renderHub(container, ctx, params = {}) {
   function applySceneLayout() {
     const legacy = usingLegacyLayout();
     scenePanel.dataset.layoutId = legacy ? scene.legacyLayoutId
-      : (sceneId === 'lavka' ? cosmeticBackground.layoutId : scene.layoutId);
+      : (sceneId === 'lavka' ? effectiveLavkaLayoutId : scene.layoutId);
     scenePanel.dataset.layoutMode = legacy ? 'legacy' : 'primary';
     renderHotspots();
     layoutTrophies();
@@ -262,17 +280,26 @@ export function renderHub(container, ctx, params = {}) {
   if (cosmeticBackground) scenePanel.dataset.cosmeticMode = cosmeticBackground.full ? 'pending' : legacyMode();
   picture.addEventListener('load', () => {
     if (!cosmeticBackground) return;
-    if (cosmeticBackground.full && currentSrc === cosmeticBackground.src) {
+    const fullLoaded = cosmeticBackground.full && currentSrc === cosmeticBackground.src;
+    effectiveLavkaLayoutId = fullLoaded ? cosmeticBackground.layoutId : LAVKA_LAYOUT_ID;
+    if (fullLoaded) {
       legacyLayer?.remove();
       scenePanel.dataset.cosmeticMode = 'full';
     } else {
+      if (legacyLayer && !legacyLayer.parent) scenePanel.appendChild(legacyLayer);
       scenePanel.dataset.cosmeticMode = legacyMode();
     }
+    applySceneLayout();
+    ctx.syncOnboarding?.();
   });
   picture.addEventListener('error', () => {
     if (cosmeticBackground && currentSrc !== BASE_LAVKA_BACKGROUND) {
+      effectiveLavkaLayoutId = LAVKA_LAYOUT_ID;
       scenePanel.dataset.cosmeticMode = legacyMode();
       setPictureSrc(BASE_LAVKA_BACKGROUND);
+      if (legacyLayer && !legacyLayer.parent) scenePanel.appendChild(legacyLayer);
+      applySceneLayout();
+      ctx.syncOnboarding?.();
       return;
     }
     const wasLegacy = usingLegacyLayout();
@@ -318,7 +345,7 @@ export function renderHub(container, ctx, params = {}) {
     hotspotRoot.innerHTML = '';
     for (const key of Object.keys(hotspotEls)) delete hotspotEls[key];
     const shapes = usingLegacyLayout() ? null
-      : (sceneId === 'lavka' ? LAVKA_LAYOUT_SHAPES[cosmeticBackground.layoutId] : scene.shapes);
+      : (sceneId === 'lavka' ? LAVKA_LAYOUT_SHAPES[effectiveLavkaLayoutId] : scene.shapes);
     for (const [, label, screen, x, y, dot] of scene.hotspots) {
       const geometry = shapes?.[screen] ? scenePolygonGeometry(shapes[screen]) : null;
       const b = document.createElement('button');
@@ -381,12 +408,14 @@ export function renderHub(container, ctx, params = {}) {
       trophyEls[i].style.top = `${spots[i].y}%`;
     }
   }
-  function positionedSpot(spot) {
-    return !usingLegacyLayout() && spot.v2 ? { ...spot, ...spot.v2 } : spot;
+  function positionedSpot(spot, spriteId) {
+    const position = !usingLegacyLayout() && spot.v2 ? { ...spot, ...spot.v2 } : spot;
+    if (sceneId !== 'lavka' || usingLegacyLayout() || !spriteId) return position;
+    return { ...position, ...LAVKA_LAYOUTS[effectiveLavkaLayoutId]?.sprites?.[spriteId] };
   }
   function layoutSceneSprites() {
-    for (const { el, spot } of sceneSpriteEls) {
-      const position = positionedSpot(spot);
+    for (const { el, spot, spriteId } of sceneSpriteEls) {
+      const position = positionedSpot(spot, spriteId);
       el.style.left = `${position.x}%`;
       el.style.top = `${position.y}%`;
     }
@@ -464,7 +493,7 @@ export function renderHub(container, ctx, params = {}) {
   const PET_SPOTS = {
     pet_hedgehog: { scene: 'square', x: 30, y: 82, size: 50, v2: { x: 50, y: 84 } },
     pet_fox: { scene: 'square', x: 9, y: 97, size: 60 },
-    pet_puppy: { scene: 'lavka', x: 88, y: 92, size: 92, flip: true },
+    pet_puppy: { scene: 'lavka', ...LAVKA_BASE_SPRITE_SPOTS.pet_puppy, size: 92, flip: true },
     pet_owl: { scene: 'square', x: 7, y: 44, size: 64, v2: { x: 7.5, y: 35, size: 52 } },
     pet_horse: { scene: 'square', x: 90, y: 90, size: 130 },
   };
@@ -473,10 +502,11 @@ export function renderHub(container, ctx, params = {}) {
     const def = PET_BY_ID[petId];
     const isActive = state.pet === petId;
     const el = document.createElement('button');
-    sceneSpriteEls.push({ el, spot });
-    const position = positionedSpot(spot);
+    sceneSpriteEls.push({ el, spot, spriteId: petId });
+    const position = positionedSpot(spot, petId);
     el.type = 'button';
     el.className = `hub-pet${isActive ? ' active' : ''}`;
+    el.dataset.sprite = petId;
     el.style.left = `${position.x}%`;
     el.style.top = `${position.y}%`;
     el.title = isActive ? `${def.name} — идёт с тобой в походы` : def.name;
@@ -504,8 +534,8 @@ export function renderHub(container, ctx, params = {}) {
   // появляются, когда наняты (активность в отряде не обязательна).
   // Картинка assets/crew/<id>.webp; если её нет — иконка-фолбэк.
   const CREW_SPOTS = [
-    { id: 'cmp_cat', icon: '🐈', name: 'Кот-хранитель — погладить', scene: 'lavka', x: 26, y: 89, size: 85, pet: true },
-    { id: 'cmp_firefly', scene: 'lavka', x: 47, y: 13, size: 26 },
+    { id: 'cmp_cat', icon: '🐈', name: 'Кот-хранитель — погладить', scene: 'lavka', ...LAVKA_BASE_SPRITE_SPOTS.cmp_cat, size: 85, pet: true },
+    { id: 'cmp_firefly', scene: 'lavka', ...LAVKA_BASE_SPRITE_SPOTS.cmp_firefly, size: 26 },
     { id: 'cmp_herbalist', scene: 'square', x: 21, y: 97, size: 85 },
     { id: 'cmp_smith', scene: 'square', x: 45, y: 86, size: 50, v2: { x: 36, y: 88 } },
   ];
@@ -516,10 +546,11 @@ export function renderHub(container, ctx, params = {}) {
     const name = spot.name || def?.name || spot.id;
     const icon = spot.icon || def?.icon || '🐾';
     const el = document.createElement('button');
-    sceneSpriteEls.push({ el, spot });
-    const position = positionedSpot(spot);
+    sceneSpriteEls.push({ el, spot, spriteId: spot.id });
+    const position = positionedSpot(spot, spot.id);
     el.type = 'button';
     el.className = 'hub-pet';
+    el.dataset.sprite = spot.id;
     el.style.left = `${position.x}%`;
     el.style.top = `${position.y}%`;
     el.title = name;
@@ -546,32 +577,35 @@ export function renderHub(container, ctx, params = {}) {
 
   // --- Гость режима истории: ждёт в лавке с заданием, клик = сцена-монолог.
   // Портрет — арт из assets/fate/, фолбэк — эмодзи (как у питомцев выше).
-  const STORY_GUEST_SPOT = { scene: 'lavka', x: 57, y: 90, size: 110 };
+  const STORY_GUEST_SPOT = { scene: 'lavka', ...LAVKA_BASE_SPRITE_SPOTS.story_guest, size: 110 };
   const storyGuestId = onboardingBlocksStory(state) ? null : storyHubGuest(state);
   if (storyGuestId && STORY_GUEST_SPOT.scene === sceneId) {
     const g = GUEST_BY_ID[storyGuestId];
     if (g) {
       const el = document.createElement('button');
+      const position = positionedSpot(STORY_GUEST_SPOT, 'story_guest');
+      sceneSpriteEls.push({ el, spot: STORY_GUEST_SPOT, spriteId: 'story_guest' });
       el.type = 'button';
       el.className = 'hub-pet hub-guest';
-      el.style.left = `${STORY_GUEST_SPOT.x}%`;
-      el.style.top = `${STORY_GUEST_SPOT.y}%`;
+      el.dataset.sprite = 'story_guest';
+      el.style.left = `${position.x}%`;
+      el.style.top = `${position.y}%`;
       el.title = `${g.name} — ждёт с заданием`;
       el.setAttribute('aria-label', el.title);
       if (g.art) {
         const img = document.createElement('img');
         img.src = g.art;
         img.alt = g.name;
-        img.style.width = spr(STORY_GUEST_SPOT.size);
+        img.style.width = spr(position.size);
         img.addEventListener('error', () => {
           img.remove();
           el.textContent = g.icon;
-          el.style.fontSize = spr(Math.round(STORY_GUEST_SPOT.size * 0.7));
+          el.style.fontSize = spr(Math.round(position.size * 0.7));
         });
         el.appendChild(img);
       } else {
         el.textContent = g.icon;
-        el.style.fontSize = spr(Math.round(STORY_GUEST_SPOT.size * 0.7));
+        el.style.fontSize = spr(Math.round(position.size * 0.7));
       }
       const dot = document.createElement('span');
       dot.className = 'hs-dot hub-guest-dot';

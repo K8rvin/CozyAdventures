@@ -46,6 +46,7 @@ const ROUTE_CURSORS = {
   shopAlchemy: () => 'shop',
   battles: () => 'battle',
   battle: () => 'battle',
+  battleLore: () => 'battle',
   tavern: () => 'tavern',
   craft: () => 'craft',
   workshop: () => 'workshop',

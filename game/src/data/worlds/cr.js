@@ -175,9 +175,38 @@ export const WORLD = {
       tip: 'Дракон и его хрустальный страж. Последняя проверка перед пиком.',
     },
     {
+      id: 'cr_crowd_4', name: 'Караул звенящего льда', world: 'cr',
+      enemies: [
+        { id: 'cr_golem', scale: 1.05 }, { id: 'cr_owl', scale: 1.05 },
+        { id: 'cr_shardling', scale: 1.05 }, { id: 'cr_icewisp', scale: 1.05 },
+      ],
+      unlockAfter: 'cr_19',
+      tip: 'Голем бьёт тяжело и замедляет, сова усыпляет, осколок стреляет прицельно, а ледяная искра сковывает. Сохрани темп и не дай рыцарю уснуть.',
+    },
+    {
+      id: 'cr_crowd_5', name: 'Совиный крик в ущелье', world: 'cr',
+      enemies: [
+        { id: 'cr_golem', scale: 0.85 }, { id: 'cr_owl', scale: 0.85 },
+        { id: 'cr_echo', scale: 0.85 }, { id: 'cr_shardling', scale: 0.85 },
+        { id: 'cr_icewisp', scale: 0.85 },
+      ],
+      unlockAfter: 'cr_crowd_4',
+      tip: 'К сну совы и точным выстрелам осколка добавляется страх эха. Голем и ледяная искра замедляют — отвага и бодрость здесь одинаково важны.',
+    },
+    {
+      id: 'cr_crowd_6', name: 'Дракон над звенящим строем', world: 'cr',
+      enemies: [
+        { id: 'cr_golem', scale: 0.75 }, { id: 'cr_dragon_young', scale: 0.75 },
+        { id: 'cr_shardling', scale: 0.75 }, { id: 'cr_icewisp', scale: 0.75 },
+        { id: 'cr_owl', scale: 0.75 }, { id: 'cr_echo', scale: 0.75 },
+      ],
+      unlockAfter: 'cr_crowd_5',
+      tip: 'Голем и дракон бьют тяжело, дракон и эхо нагоняют страх. Сова усыпляет, искра и голем замедляют, осколок добивает прицельно — держи отвагу и бодрость.',
+    },
+    {
       id: 'cr_boss', name: 'Древний дракон кварца', world: 'cr',
       enemies: [{ id: 'cr_dragon_ancient', scale: 2.05 }],
-      unlockAfter: 'cr_19',
+      unlockAfter: 'cr_crowd_6',
       tip: 'Древний дракон звенит тысячей граней. Собери всё лучшее, что у тебя есть.',
     },
   ],

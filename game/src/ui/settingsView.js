@@ -234,7 +234,7 @@ export function renderSettings(container, ctx) {
   let taps = 0;
   let revealed = false;
   const renderSecret = () => {
-    secret.textContent = `Лавка на перекрёстке миров · версия 0.9 · 🕯️${taps > 0 && taps < 5 ? ' · …' + taps : ''}`;
+    secret.textContent = `Лавка на перекрёстке миров · версия 0.10 · 🕯️${taps > 0 && taps < 5 ? ' · …' + taps : ''}`;
   };
   renderSecret();
   secret.addEventListener('click', () => {

@@ -335,13 +335,13 @@ test('economyVersion и повторная загрузка идемпотент
 
 test('полные бюджеты первых наград и печатей находятся в целевых отношениях', () => {
   const report = budget();
-  assert.equal(report.coins, 72305, 'доход не меняется');
+  assert.equal(report.coins, 76762, 'доход соответствует каталогу с большими сборами');
   assert.equal(report.cosmetics, 1310, 'шесть полных пакетов');
   assert.equal(report.cosmeticSealStock, 0, 'отдельной печатной вывески больше нет');
   assert.equal(report.stock, 55320);
   assert.equal(report.sealStock, 45);
   const ratio = report.coins / report.stock;
-  assert.ok(Math.abs(ratio - 1.31) < 0.01, `монеты/разовые стоки: ${ratio}`);
+  assert.ok(Math.abs(ratio - 1.39) < 0.01, `монеты/разовые стоки: ${ratio}`);
   assert.ok(ratio >= 1.3 && ratio <= 1.8, `монеты/разовые стоки: ${ratio}`);
   const sealRatio = report.seals / report.sealStock;
   assert.ok(Math.abs(sealRatio - 62 / 45) < 1e-12, `печати/печатные стоки: ${sealRatio}`);

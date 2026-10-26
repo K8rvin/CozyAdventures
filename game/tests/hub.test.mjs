@@ -96,19 +96,19 @@ globalThis.confirm = () => true;
 
 const { newGame, saveGame, loadGame, buyCosmetic } = await import('../src/core/state.js');
 const {
-  renderHub, LAVKA_HOTSPOT_SHAPES, SQUARE_V2_HOTSPOT_SHAPES,
-  MARKET_V2_HOTSPOT_SHAPES, CABINET_V2_HOTSPOT_SHAPES,
+  renderHub, LAVKA_HOTSPOT_SHAPES, LAVKA_LAYOUT_SHAPES, LAVKA_LAYOUTS,
+  SQUARE_V2_HOTSPOT_SHAPES, MARKET_V2_HOTSPOT_SHAPES, CABINET_V2_HOTSPOT_SHAPES,
   CABINET_V2_TROPHY_SPOTS, CABINET_V2_MINI_SPOTS,
 } = await import('../src/ui/hub.js');
 const { renderShop } = await import('../src/ui/shopView.js');
-const { scenePolygonGeometry, normalizeScenePoints } = await import('../src/core/hubGeometry.js');
+const { scenePolygonGeometry, normalizeScenePoints, mergeSceneLayout } = await import('../src/core/hubGeometry.js');
 const {
   resolveCosmeticBackground, legacyCosmeticIds, BASE_LAVKA_BACKGROUND, LAVKA_LAYOUT_ID,
   COSMETIC_SCENE_BASE,
 } = await import('../src/core/cosmetics.js');
 const {
   COSMETICS, COSMETIC_PACKS, COSMETIC_BY_ID, COSMETIC_PACK_BY_ID,
-  LEGACY_COSMETIC_ALIASES, COSMETICS_VERSION,
+  LEGACY_COSMETIC_ALIASES, COSMETICS_VERSION, LAVKA_COSMETIC_LAYOUTS,
 } = await import('../src/data/cosmetics.js');
 
 function makeCtx(state = newGame()) {
@@ -193,6 +193,56 @@ test('все семь силуэтов лавки валидны и привяз
     'кабинет ведёт в нижнюю светящуюся арку');
   const battles = scenePolygonGeometry(LAVKA_HOTSPOT_SHAPES.battles);
   assert.ok(battles.left >= 87 && battles.left + battles.width === 100, 'поход занимает всё правое окно с рамой');
+});
+
+test('cosmetic layout merge: частичные overrides наследуют базу без мутаций', () => {
+  const base = {
+    hotspots: {
+      puzzles: [[0, 0], [10, 0], [10, 10], [0, 10]],
+      shop: [[20, 20], [30, 20], [30, 30], [20, 30]],
+    },
+    sprites: {
+      cmp_cat: { x: 26, y: 89, size: 85 },
+      story_guest: { x: 57, y: 90 },
+    },
+  };
+  const customPuzzles = [[1, 1], [11, 1], [11, 11], [1, 11]];
+  const merged = mergeSceneLayout(base, {
+    hotspots: { puzzles: customPuzzles },
+    sprites: { cmp_cat: { x: 73 } },
+  });
+  assert.equal(merged.hotspots.puzzles, customPuzzles);
+  assert.equal(merged.hotspots.shop, base.hotspots.shop);
+  assert.deepEqual(merged.sprites.cmp_cat, { x: 73, y: 89, size: 85 });
+  assert.deepEqual(merged.sprites.story_guest, { x: 57, y: 90 });
+  assert.deepEqual(base.sprites.cmp_cat, { x: 26, y: 89, size: 85 });
+  assert.deepEqual(base.hotspots.puzzles, [[0, 0], [10, 0], [10, 10], [0, 10]]);
+});
+
+test('cosmetic runtime: шесть JPEG 2400×800 RGB, собственные layouts и спрайты', () => {
+  const routes = ['puzzles', 'shop', 'guests', 'equip', '@square', 'battles', '@cabinet'];
+  const sprites = ['pet_puppy', 'cmp_cat', 'cmp_firefly', 'story_guest'];
+  assert.deepEqual(Object.keys(LAVKA_COSMETIC_LAYOUTS), COSMETIC_PACKS.map((pack) => `lavka_pack_${pack.id}_3x1`));
+  for (const pack of COSMETIC_PACKS) {
+    const layoutId = `lavka_pack_${pack.id}_3x1`;
+    assert.equal(pack.scenes.lavka.layoutId, layoutId);
+    const info = jpegInfo(new URL(`../assets/cosmetics/lavka_pack_${pack.id}_web.jpg`, import.meta.url));
+    assert.deepEqual(info, { width: 2400, height: 800, components: 3 }, pack.id);
+    const layout = LAVKA_LAYOUTS[layoutId];
+    assert.equal(LAVKA_LAYOUT_SHAPES[layoutId], layout.hotspots);
+    assert.deepEqual(Object.keys(layout.hotspots), routes);
+    assert.deepEqual(Object.keys(layout.sprites), sprites);
+    for (const route of routes) {
+      const geometry = scenePolygonGeometry(layout.hotspots[route]);
+      assert.ok(geometry.width > 0 && geometry.height > 0, `${pack.id}:${route}`);
+    }
+    for (const sprite of sprites) {
+      const spot = layout.sprites[sprite];
+      assert.ok(Number.isFinite(spot.x) && spot.x >= 0 && spot.x <= 100, `${pack.id}:${sprite}:x`);
+      assert.ok(Number.isFinite(spot.y) && spot.y >= 0 && spot.y <= 100, `${pack.id}:${sprite}:y`);
+    }
+    assert.notDeepEqual(layout.hotspots, LAVKA_HOTSPOT_SHAPES, pack.id);
+  }
 });
 
 test('лавка: native shape buttons, sibling labels/dots, текстовые маршруты и click', (t) => {
@@ -499,7 +549,8 @@ test('pack metadata, aliases и scene resolver: полные темы без с�
     assert.deepEqual(Object.keys(c.scenes), ['lavka']);
     assert.equal(c.scenes.lavka.src, `assets/cosmetics/lavka_pack_${c.id}_web.jpg`);
     assert.equal(c.scenes.lavka.preview, c.scenes.lavka.src);
-    assert.equal(c.scenes.lavka.layoutId, LAVKA_LAYOUT_ID);
+    assert.equal(c.scenes.lavka.layoutId, `lavka_pack_${c.id}_3x1`);
+    assert.ok(LAVKA_COSMETIC_LAYOUTS[c.scenes.lavka.layoutId]);
   }
   assert.deepEqual(LEGACY_COSMETIC_ALIASES, {
     cos_carpet: 'hearth', cos_crest: 'hearth', cos_flowers: 'spring',
@@ -521,7 +572,7 @@ test('pack metadata, aliases и scene resolver: полные темы без с�
   assert.equal(selected.selectedId, 'hearth');
   assert.equal(selected.src, COSMETIC_BY_ID.hearth.scenes.lavka.src);
   assert.equal(selected.fallbackSrc, BASE_LAVKA_BACKGROUND);
-  assert.equal(selected.layoutId, LAVKA_LAYOUT_ID);
+  assert.equal(selected.layoutId, 'lavka_pack_hearth_3x1');
   assert.equal(selected.full, true);
   assert.deepEqual(selected.legacyIds, ['cos_carpet', 'cos_crest']);
   assert.deepEqual(legacyCosmeticIds({ cosmeticsActive: ['cos_crest'] }), ['cos_crest']);
@@ -601,6 +652,78 @@ test('фон: error выбранного src → база + legacy; successful l
   renderHub(baseRoot, makeCtx(baseState));
   assert.equal(sceneImage(baseRoot).src, BASE_LAVKA_BACKGROUND);
   assert.equal(byClass(baseRoot, 'hub-legacy-cosmetics').length, 0);
+});
+
+test('pack layouts: pending/load/error синхронно меняют фон, хотспоты и всех спрайтов', () => {
+  const base = LAVKA_LAYOUTS[LAVKA_LAYOUT_ID];
+  for (const pack of COSMETIC_PACKS) {
+    const state = newGame();
+    state.onboarding.status = 'done';
+    state.onboarding.step = 'done';
+    state.crew = ['pet_puppy', 'cmp_cat', 'cmp_firefly'];
+    state.pet = 'pet_puppy';
+    state.cosmeticsOwned = [pack.id];
+    state.cosmeticsActive = [pack.id];
+    state.legacyCosmeticsActive = [];
+    const root = new El('main');
+    renderHub(root, makeCtx(state));
+    const panel = scenePanel(root);
+    const image = sceneImage(root);
+    const layoutId = `lavka_pack_${pack.id}_3x1`;
+    const custom = LAVKA_LAYOUTS[layoutId];
+    const sprite = (id) => byData(root, 'sprite', id)[0];
+    const assertHotspots = (layout, stage) => {
+      for (const route of Object.keys(layout.hotspots)) {
+        const button = byData(root, 'hotspot', route)[0];
+        assert.equal(button.style.clipPath, scenePolygonGeometry(layout.hotspots[route]).polygon,
+          `${pack.id}:${route}:${stage}`);
+      }
+    };
+    assert.equal(panel.dataset.layoutId, LAVKA_LAYOUT_ID, `${pack.id}: pending`);
+    assert.equal(panel.dataset.cosmeticMode, 'pending');
+    assertHotspots(base, 'pending');
+    for (const id of Object.keys(base.sprites)) {
+      assert.equal(sprite(id).style.left, `${base.sprites[id].x}%`, `${pack.id}:${id}:pending.x`);
+      assert.equal(sprite(id).style.top, `${base.sprites[id].y}%`, `${pack.id}:${id}:pending.y`);
+    }
+    image.dispatch('load');
+    assert.equal(panel.dataset.layoutId, layoutId, `${pack.id}: loaded`);
+    assert.equal(panel.dataset.cosmeticMode, 'full');
+    assertHotspots(custom, 'loaded');
+    for (const id of Object.keys(custom.sprites)) {
+      assert.equal(sprite(id).style.left, `${custom.sprites[id].x}%`, `${pack.id}:${id}:loaded.x`);
+      assert.equal(sprite(id).style.top, `${custom.sprites[id].y}%`, `${pack.id}:${id}:loaded.y`);
+    }
+    image.dispatch('error');
+    assert.equal(image.src, BASE_LAVKA_BACKGROUND);
+    assert.equal(panel.dataset.layoutId, LAVKA_LAYOUT_ID, `${pack.id}: error`);
+    assertHotspots(base, 'error');
+    for (const id of Object.keys(base.sprites)) {
+      assert.equal(sprite(id).style.left, `${base.sprites[id].x}%`, `${pack.id}:${id}:error.x`);
+      assert.equal(sprite(id).style.top, `${base.sprites[id].y}%`, `${pack.id}:${id}:error.y`);
+    }
+    image.dispatch('load');
+    assert.equal(panel.dataset.layoutId, LAVKA_LAYOUT_ID, `${pack.id}: загрузка базы не включает pack layout`);
+  }
+});
+
+test('pack error после successful load возвращает legacy overlays вместе с базовым layout', () => {
+  const state = newGame();
+  state.cosmeticsOwned = ['hearth'];
+  state.cosmeticsActive = ['hearth'];
+  state.legacyCosmeticsActive = ['hearth'];
+  const root = new El('main');
+  renderHub(root, makeCtx(state));
+  const image = sceneImage(root);
+  image.dispatch('load');
+  assert.equal(byClass(root, 'hub-legacy-cosmetics').length, 0);
+  image.dispatch('error');
+  assert.equal(scenePanel(root).dataset.layoutId, LAVKA_LAYOUT_ID);
+  assert.equal(scenePanel(root).dataset.cosmeticMode, 'legacy');
+  assert.equal(byClass(root, 'hub-legacy-cosmetics').length, 1);
+  image.dispatch('load');
+  assert.equal(scenePanel(root).dataset.layoutId, LAVKA_LAYOUT_ID);
+  assert.equal(byClass(root, 'hub-legacy-cosmetics').length, 1);
 });
 
 test('старый владелец carpet+crest получает одну hearth бесплатно; successful load скрывает legacy', () => {

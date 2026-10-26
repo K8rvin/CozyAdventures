@@ -9,6 +9,7 @@ import { header, quickNav } from './common.js';
 import { onboardingBlocksLegacyTutorials } from '../core/onboarding.js';
 import { refreshBattleEnergy, millisecondsToNextEnergy } from '../core/energy.js';
 import { BATTLE_ENERGY_CAP } from '../data/energy.js';
+import { battleLoreSeen } from '../core/battleLore.js';
 
 // Метаданные миров для плиток. Арт — готовые фоны боёв assets/battle/.
 const WORLD_META = {
@@ -128,6 +129,31 @@ export function renderBattleList(container, ctx) {
   listHead.dataset.listHead = '1';
   listHead.textContent = `${world.meta.icon} ${world.meta.label} · ${world.done}/${world.total}`;
   container.appendChild(listHead);
+
+  const lorePanel = document.createElement('div');
+  lorePanel.className = 'panel battle-lore-panel';
+  const loreTitle = document.createElement('span');
+  loreTitle.className = 'battle-lore-title';
+  loreTitle.textContent = '📖 История мира';
+  const loreActions = document.createElement('div');
+  loreActions.className = 'battle-lore-actions';
+  const finalBattle = world.battles[world.battles.length - 1];
+  for (const kind of ['intro', 'outro']) {
+    const seen = battleLoreSeen(state, world.id, kind);
+    const open = kind === 'intro' || !!state.battlesDone[finalBattle.id];
+    const button = document.createElement('button');
+    button.className = `small ${open && !seen ? 'primary' : 'ghost'}`;
+    button.disabled = !open;
+    button.dataset.loreKind = kind;
+    button.dataset.world = world.id;
+    button.textContent = kind === 'intro'
+      ? seen ? 'Вступление · перечитать' : 'Вступление'
+      : !open ? 'Эпилог · после босса' : seen ? 'Эпилог · перечитать' : 'Эпилог мира';
+    button.addEventListener('click', () => ctx.go('battleLore', { world: world.id, kind, replay: true }));
+    loreActions.appendChild(button);
+  }
+  lorePanel.append(loreTitle, loreActions);
+  container.appendChild(lorePanel);
 
   const list = document.createElement('div');
   list.className = 'list';

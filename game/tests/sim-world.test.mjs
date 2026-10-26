@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { createProfile, upgradeProfileState, battleChain } from '../tools/sim-world.mjs';
+import { createProfile, upgradeProfileState, battleChain, SIM_WORLDS } from '../tools/sim-world.mjs';
 import { SHOP_STOCK, CREW_STOCK } from '../src/data/shop.js';
 import { ITEM_BY_ID } from '../src/data/items.js';
 import { RECIPES } from '../src/data/recipes.js';
@@ -11,6 +11,15 @@ import { battleCoinReward } from '../src/core/economy.js';
 import { runBattle } from '../src/core/state.js';
 
 const CREW_DEF = { companion: COMPANION_BY_ID, pet: PET_BY_ID, merc: MERC_BY_ID };
+
+test('sim-world охватывает все двенадцать миров без wanted', () => {
+  assert.deepEqual(SIM_WORLDS.map((world) => world.id),
+    ['meadow', 'town', 'attic', 'crossroads', 'nm', 'sw', 'sf', 'cr', 'ash', 'jade', 'deep', 'mist']);
+  for (const world of SIM_WORLDS) {
+    assert.ok(world.battles.length > 0, `${world.id}: пустой список боёв`);
+    assert.ok(world.battles.every((battle) => !battle.wanted), `${world.id}: wanted попал в мир`);
+  }
+});
 
 function assertLegalProfile(state, targetId) {
   assert.ok(state.coins >= 0, 'монеты не уходят в минус');

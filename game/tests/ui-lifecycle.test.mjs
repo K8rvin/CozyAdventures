@@ -231,12 +231,15 @@ const {
 const { renderFormation, playBattleReplay } = await import('../src/ui/formationView.js');
 const { renderSandbox } = await import('../src/ui/sandboxView.js');
 const { renderStory } = await import('../src/ui/storyView.js');
+const { renderBattleLore } = await import('../src/ui/battleLoreView.js');
+const { BATTLE_LORE } = await import('../src/data/battleLore.js');
 const { renderCraft } = await import('../src/ui/craftView.js');
 const { REGULAR_MATERIALS } = await import('../src/core/materialExchange.js');
 const { STORY_PROLOG } = await import('../src/data/story.js');
 const { ONBOARDING_GUIDE_SECTIONS } = await import('../src/data/onboarding.js');
 const { showOverlay } = await import('../src/ui/common.js');
 const { syncOnboardingDock, destroyOnboardingDock } = await import('../src/ui/onboardingView.js');
+const { createProfile } = await import('../tools/sim-world.mjs');
 
 function listenerCount(type) { return (windowListeners[type] || []).length; }
 function overlays() { return flat(documentStub.body).filter((el) => classes(el).includes('overlay')); }
@@ -913,4 +916,87 @@ test('кузница: обменник выбирает нужный выход,
   assert.equal(state.journal.length, 4);
   assert.ok(!flat(root).some((el) => classes(el).includes('material-exchange')),
     'после исчерпания допустимых входов панель исчезает');
+});
+
+test('лор-вступление не отмечается при выходе и ведёт к исходному бою после CTA', () => {
+  resetDom();
+  const state = newGame();
+  const before = { story: structuredClone(state.story), onboarding: structuredClone(state.onboarding) };
+  const ctx = makeCtx(state);
+  ctx.visits = [];
+  ctx.go = (...args) => ctx.visits.push(args);
+  const root = new El('main');
+  const cleanup = renderBattleLore(root, ctx, { world: 'meadow', kind: 'intro', battleId: 'bt_slimes' });
+  byText(root, 'Дальше ▸').click();
+  assert.equal(state.battleLoreSeen['meadow:intro'], undefined);
+  assert.equal(listenerCount('keydown'), 1);
+  cleanup();
+  assert.equal(listenerCount('keydown'), 0);
+  assert.equal(state.battleLoreSeen['meadow:intro'], undefined, 'выход до последней реплики не отмечает сцену');
+
+  const root2 = new El('main');
+  const cleanup2 = renderBattleLore(root2, ctx, { world: 'meadow', kind: 'intro', battleId: 'bt_slimes' });
+  for (let i = 0; i < BATTLE_LORE.meadow.intro.steps.length; i += 1) {
+    flat(root2).find((el) => classes(el).includes('story-next')).click();
+  }
+  assert.equal(state.battleLoreSeen['meadow:intro'], true);
+  assert.deepEqual(ctx.visits.at(-1), ['battle', { id: 'bt_slimes' }]);
+  assert.deepEqual(state.story, before.story);
+  assert.deepEqual(state.onboarding, before.onboarding);
+  cleanup2();
+  assert.equal(listenerCount('keydown'), 0);
+});
+
+test('победа над боссом ведёт через эпилог к следующему миру, practice — без эпилога', () => {
+  resetDom();
+  const { state } = createProfile('bt_boss_willow', 'endgame');
+  state.onboarding.status = 'done';
+  state.onboarding.step = 'done';
+  const ctx = makeCtx(state);
+  ctx.visits = [];
+  ctx.go = (...args) => ctx.visits.push(args);
+  const root = new El('main');
+  const cleanup = renderFormation(root, ctx, { id: 'bt_boss_willow' });
+  byText(root, '⚔️ В бой!').click();
+  byText(root, '⏭️ К итогу').click();
+  const overlay = overlays()[0];
+  assert.ok(overlay, 'обычный итог босса показан перед лором');
+  assert.equal(state.battlesDone.bt_boss_willow.victories, 1);
+  assert.ok(!flat(overlay).some((el) => String(el.textContent || '').includes('Следующая битва')),
+    'следующий мир ждёт завершения эпилога');
+  const outro = byText(overlay, '📖 Эпилог мира');
+  assert.ok(outro);
+  outro.click();
+  assert.deepEqual(ctx.visits.at(-1), ['battleLore', { world: 'meadow', kind: 'outro', battleId: 'bt_boss_willow' }]);
+
+  const outroRoot = new El('main');
+  const outroCleanup = renderBattleLore(outroRoot, ctx, ctx.visits.at(-1)[1]);
+  for (let i = 0; i < BATTLE_LORE.meadow.outro.steps.length; i += 1) {
+    flat(outroRoot).find((el) => classes(el).includes('story-next')).click();
+  }
+  assert.equal(state.battleLoreSeen['meadow:outro'], true);
+  assert.deepEqual(ctx.visits.at(-1), ['battle', { id: 'bt_rats' }]);
+  outroCleanup();
+
+  const introRoot = new El('main');
+  const introCleanup = renderBattleLore(introRoot, ctx, { world: 'town', kind: 'intro', battleId: 'bt_rats' });
+  for (let i = 0; i < BATTLE_LORE.town.intro.steps.length; i += 1) {
+    flat(introRoot).find((el) => classes(el).includes('story-next')).click();
+  }
+  assert.equal(state.battleLoreSeen['town:intro'], true);
+  assert.deepEqual(ctx.visits.at(-1), ['battle', { id: 'bt_rats' }]);
+  introCleanup();
+  cleanup();
+
+  resetDom();
+  const practiceState = createProfile('bt_boss_willow', 'endgame').state;
+  practiceState.onboarding.status = 'done';
+  practiceState.onboarding.step = 'done';
+  const practiceRoot = new El('main');
+  const practiceCleanup = renderFormation(practiceRoot, makeCtx(practiceState), { id: 'bt_boss_willow' });
+  byText(practiceRoot, '🛡️ Тренировка').click();
+  byText(practiceRoot, '⏭️ К итогу').click();
+  assert.equal(byText(overlays()[0], '📖 Эпилог мира'), undefined);
+  assert.equal(practiceState.battleLoreSeen['meadow:outro'], undefined);
+  practiceCleanup();
 });

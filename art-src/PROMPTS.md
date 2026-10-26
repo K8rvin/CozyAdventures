@@ -2421,8 +2421,11 @@ Interior, eye-level view from the entrance toward the back wall. Approximate com
 a tall dark-wood bookcase fills x=3–17% and most of the left wall; a long merchant counter
 stands at x=24–52%, y=52–77%; a separate small lectern with an open book stands in front
 of it at x=40–49%, y=56–92%. An EMPTY armor stand is right of center at x=51–58%,
-y=26–70%, with a tall arched doorway behind it. A lower glowing arch sits at x=65–72%,
-y=55–76%. A large wooden door with iron hinges occupies x=75–85%, y=21–82%. A huge
+y=26–70%, with a tall arched doorway behind it. A low OPEN WALK-IN ARCHWAY sits at x=65–72%,
+y=55–76% and leads to a trophy room. Its dark doorway opening reveals stone steps descending
+into a corridor beyond. This is NOT a bookshelf, display niche, cabinet, fireplace, alcove
+or flower stand. The passage stays completely unobstructed: no flowers, shelves, trophies,
+furniture or objects inside it. A large wooden door with iron hinges occupies x=75–85%, y=21–82%. A huge
 multi-paned window with a complete wooden frame fills x=87–100%, y=0–68%, showing a
 quiet forest road and distant blue mountains. Stone floor, exposed beams, candles,
 potions and handmade objects on shelves. Keep all seven areas visually separated.
@@ -2445,8 +2448,11 @@ warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art,
 
 Use this exact interior concept: left wall x=3–17% is a tall bookcase; a merchant counter
 is at x=24–52%, y=52–77%; a separate lectern with an open book is at x=40–49%, y=56–92%;
-an EMPTY armor stand and a tall arch behind it are at x=51–58%, y=26–70%; a lower glowing
-arch is at x=65–72%, y=55–76%; a large hinged wooden door is at x=75–85%, y=21–82%;
+an EMPTY armor stand and a tall arch behind it are at x=51–58%, y=26–70%; a low OPEN WALK-IN
+ARCHWAY is at x=65–72%, y=55–76%, leading to a trophy room. Its dark doorway opening reveals
+stone steps descending into a corridor beyond. This is NOT a bookshelf, display niche, cabinet,
+fireplace, alcove or flower stand. The passage stays completely unobstructed: no flowers,
+shelves, trophies, furniture or objects inside it. A large hinged wooden door is at x=75–85%, y=21–82%;
 a complete multi-paned window is at x=87–100%, y=0–68%, with forest and mountains outside.
 Stone floor, exposed beams, candles and varied handmade goods. All seven zones remain
 distinct and unobstructed.
@@ -2468,7 +2474,10 @@ deep wood, warm amber light and deep brown shadows. No flat vector, no clip-art,
 
 Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
 separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
-at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+at x=51–58%, y=26–70%; a low OPEN WALK-IN ARCHWAY at x=65–72%, y=55–76%, leading to a trophy room.
+Its dark doorway opening reveals stone steps descending into a corridor beyond.
+This is NOT a bookshelf, display niche, cabinet, fireplace, alcove or flower stand.
+The passage stays completely unobstructed: no flowers, shelves, trophies, furniture or objects inside it. large wooden door with
 iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
 Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
 
@@ -2489,7 +2498,10 @@ warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art,
 
 Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
 separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
-at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+at x=51–58%, y=26–70%; a low OPEN WALK-IN ARCHWAY at x=65–72%, y=55–76%, leading to a trophy room.
+Its dark doorway opening reveals stone steps descending into a corridor beyond.
+This is NOT a bookshelf, display niche, cabinet, fireplace, alcove or flower stand.
+The passage stays completely unobstructed: no flowers, shelves, trophies, furniture or objects inside it. large wooden door with
 iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
 Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
 
@@ -2510,7 +2522,10 @@ warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art,
 
 Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
 separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
-at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+at x=51–58%, y=26–70%; a low OPEN WALK-IN ARCHWAY at x=65–72%, y=55–76%, leading to a trophy room.
+Its dark doorway opening reveals stone steps descending into a corridor beyond.
+This is NOT a bookshelf, display niche, cabinet, fireplace, alcove or flower stand.
+The passage stays completely unobstructed: no flowers, shelves, trophies, furniture or objects inside it. large wooden door with
 iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
 Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
 
@@ -2532,7 +2547,10 @@ warm amber light, dark wood and deep brown shadows. No flat vector, no clip-art,
 
 Interior composition: a tall bookcase at x=3–17%; merchant counter at x=24–52%, y=52–77%;
 separate lectern with an open book at x=40–49%, y=56–92%; EMPTY armor stand and a tall arch
-at x=51–58%, y=26–70%; lower glowing arch at x=65–72%, y=55–76%; large wooden door with
+at x=51–58%, y=26–70%; a low OPEN WALK-IN ARCHWAY at x=65–72%, y=55–76%, leading to a trophy room.
+Its dark doorway opening reveals stone steps descending into a corridor beyond.
+This is NOT a bookshelf, display niche, cabinet, fireplace, alcove or flower stand.
+The passage stays completely unobstructed: no flowers, shelves, trophies, furniture or objects inside it. large wooden door with
 iron hinges at x=75–85%, y=21–82%; complete multi-paned window at x=87–100%, y=0–68%.
 Stone floor, beams, candles and shelf goods. All seven interaction zones stay separated.
 
@@ -2590,23 +2608,32 @@ filename; do not replace the current v2 backgrounds. --ar 3:1
   включая hit-test и 12+4 мест кабинета. Их layoutId — `square_v2_3x1`,
   `market_v2_3x1`, `cabinet_v2_3x1`; error возвращает старый файл и legacy circles.
   Не описывать эти сцены как отсутствующие и не генерировать заново без причины.
-- **Ещё не созданы:** `lavka_pack_hearth/spring/summer/autumn/winter/halloween`.
-  Source — `art-src/cosmetics/lavka_pack_<id>.png`, runtime после обработки —
-  `assets/cosmetics/lavka_pack_<id>_web.jpg`, 2400×800. Не создавать placeholder
-  и не объявлять путь готовым файлом.
+- **Файлы первой волны созданы и интегрированы:** все шесть
+  `assets/cosmetics/lavka_pack_<id>_web.jpg` имеют размер 2400×800. Принятые source
+  3000×1000 в `art-src/cosmetics/`: hearth — `lavka_pack_hearth_3000x1000.png`,
+  spring — `spring_awakening_game_background_3000x1000.png`,
+  summer — `summer_light_festival_game_background_3000x1000.png`,
+  autumn — `autumn_fair_shop_background_3000x1000.png`,
+  winter — `winter_hearth_game_background_3000x1000.png`,
+  halloween — `cozy_halloween_game_background_3000x1000.png`.
+  Не заменять их повторной генерацией без отдельной задачи.
 - Для каждой новой темы проверить source ≥3000×1000, ровно 3:1, отсутствие растяжения,
   людей, животных, читаемого текста, watermark/UI/logos и запечённых трофеев.
   Прилавок и аналой остаются раздельными, все семь якорей видимы и не перекрыты.
-- Связка `src + layoutId` обязательна. Все текущие пакеты используют
-  `lavka_base_3x1` и `LAVKA_HOTSPOT_SHAPES`. Неизвестный layout возвращает base src
+  Нижняя арка — открытый проход в кабинет: видны дверной проём, ступени и коридор
+  за ним. Не принимать вместо неё полку, нишу, камин или цветочную композицию.
+- Связка `src + layoutId` обязательна. У каждой текущей темы свой
+  `lavka_pack_<id>_3x1` и запись в `LAVKA_COSMETIC_LAYOUTS`: 7 полигонов и места
+  спрайтов размечены по фактическому runtime-арту. Базовые `lavka_base_3x1` и
+  `LAVKA_HOTSPOT_SHAPES` не перезаписываются. Неизвестный layout возвращает base src
   и base layout; custom требует нового layoutId и полной разметки, а не заимствования
   базовых полигонов.
 - Миграция `COSMETICS_VERSION=2`: carpet+crest → одна hearth без повторной оплаты,
   flowers → spring, fireflies → summer, garland → autumn, snow → winter. Старые
   `cos_*` остаются только для legacy fallback, не для каталога.
-- Missing selected image → базовый `hub_banner_web.jpg` + прежние legacy overlays;
-  successful load полного pack-фона → legacy-слой полностью скрывается. Проверить
-  обе ветки на реальном файле, не надеясь только на наличие metadata.
+- Missing selected image → базовый `hub_banner_web.jpg` + прежние legacy overlays
+  и базовая геометрия; successful load полного pack-фона → его layout, legacy-слой
+  полностью скрывается. Обе ветки текущих шести тем проверены на реальных файлах.
 - Preview делается из того же полного фона, без новой генерации. В магазине видны
   3–5 содержательных changes пакета, а не описание одного спрайта.
 - Versioned filenames обязательны. Не перезаписывать `hub_banner_gpt.png`, текущие
@@ -2614,6 +2641,9 @@ filename; do not replace the current v2 backgrounds. --ar 3:1
 - `night_market`, `star_fair`, `rainy_hearth`, `arcane_library` и multi-scene editions —
   только идеи до появления реальных файлов. Не добавлять их заранее в данные или
   магазин и не превращать бесплатные темы в платные.
+- Текущие шесть тем прошли Chrome-приёмку: hit-test и click всех 42 маршрутов,
+  клавиатура, 390 px/touch, mobile nav, missing/successful load и отсутствие legacy
+  поверх полного фона. У halloween паутина и тыквы не закрывают интерактивные центры.
 - Для КАЖДОЙ новой темы после генерации выполнить Chrome-приёмку: загрузка без error,
   сравнение с базой на одном полотне, hit-test всех якорей, mobile nav, клавиатура и
   touch, missing/successful load и отсутствие legacy поверх полного фона. Для

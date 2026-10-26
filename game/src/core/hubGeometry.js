@@ -17,6 +17,22 @@ function cssNumber(value) {
   return String(Number(value.toFixed(4)));
 }
 
+export function mergeSceneLayout(base = {}, override = {}) {
+  const spriteIds = new Set([
+    ...Object.keys(base.sprites || {}),
+    ...Object.keys(override.sprites || {}),
+  ]);
+  return {
+    ...base,
+    ...override,
+    hotspots: { ...base.hotspots, ...override.hotspots },
+    sprites: Object.fromEntries([...spriteIds].map((id) => [
+      id,
+      { ...base.sprites?.[id], ...override.sprites?.[id] },
+    ])),
+  };
+}
+
 export function scenePolygonGeometry(input) {
   const points = normalizeScenePoints(input);
   const xs = points.map((point) => point.x);

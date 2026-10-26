@@ -190,9 +190,38 @@ export const WORLD = {
       tip: 'Всё и сразу: кулак, лекарь и огонь. Последняя проверка.',
     },
     {
+      id: 'nm_crowd_4', name: 'Тени у янтарного фонаря', world: 'nm',
+      enemies: [
+        { id: 'nm_teller', scale: 1.2 }, { id: 'nm_shadow', scale: 1.2 },
+        { id: 'nm_lantern', scale: 1.2 }, { id: 'nm_moth', scale: 1.2 },
+      ],
+      unlockAfter: 'nm_19',
+      tip: 'Сказитель бьёт тяжело и лечит союзников, тень травит, фонарь жжёт, мотылёк усыпляет. Не затягивай бой и держи бодрость.',
+    },
+    {
+      id: 'nm_crowd_5', name: 'Две колыбельные для рынка', world: 'nm',
+      enemies: [
+        { id: 'nm_teller', scale: 1.1 }, { id: 'nm_garland', scale: 1.1 },
+        { id: 'nm_lantern', scale: 1.1 }, { id: 'nm_moth', scale: 1.1 },
+        { id: 'nm_moth', scale: 1.1 },
+      ],
+      unlockAfter: 'nm_crowd_4',
+      tip: 'Сказитель и гирляндный змей подлечивают строй, змей ещё и замедляет. Два мотылька усыпляют, а фонарь жжёт — быстрый натиск не даст лекарям перетянуть бой.',
+    },
+    {
+      id: 'nm_crowd_6', name: 'Янтарный переполох', world: 'nm',
+      enemies: [
+        { id: 'nm_teller', scale: 0.95 }, { id: 'nm_garland', scale: 0.95 },
+        { id: 'nm_shadow', scale: 0.95 }, { id: 'nm_lantern', scale: 0.95 },
+        { id: 'nm_moth', scale: 0.95 }, { id: 'nm_moth', scale: 0.95 },
+      ],
+      unlockAfter: 'nm_crowd_5',
+      tip: 'Сказитель и змей лечат, змей ещё и замедляет. Тень травит, фонарь жжёт, два мотылька усыпляют — бей сосредоточенно и не теряй бодрость.',
+    },
+    {
       id: 'nm_boss', name: 'Хозяин ночного рынка', world: 'nm',
       enemies: [{ id: 'nm_boss_keeper', scale: 1.75 }],
-      unlockAfter: 'nm_19',
+      unlockAfter: 'nm_crowd_6',
       tip: 'Он пышет жаром и страхом. Огнеупор и отвага — и корона твоя.',
     },
   ],

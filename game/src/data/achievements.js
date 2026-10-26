@@ -62,7 +62,7 @@ export const ACHIEVEMENTS = [
   },
   {
     id: 'all_battles', icon: '👑', name: 'Покоритель миров',
-    desc: 'Пройти все 200 боёв.',
+    desc: 'Пройти все 240 боёв, включая розыскные.',
     check: (s, ctx) => Object.keys(s.battlesDone).length >= ctx.battlesTotal,
   },
   {

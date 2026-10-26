@@ -240,6 +240,7 @@ test('nextBattle и firstUnbeatenBattle', () => {
   const s = newGame();
   assert.equal(nextBattle(BATTLES[0].id).id, BATTLES[1].id);
   assert.equal(nextBattle(BATTLES[BATTLES.length - 1].id), null, 'последняя битва — без следующей');
+  assert.equal(nextBattle('mist_boss'), null, 'после финала кампании не начинается розыск');
   assert.equal(firstUnbeatenBattle(s).id, BATTLES[0].id);
   s.battlesDone[BATTLES[0].id] = { victories: 1 };
   assert.equal(firstUnbeatenBattle(s).id, BATTLES[1].id);
@@ -362,7 +363,7 @@ test('достижения разблокируются по событиям', 
   const { checkAchievements, ACHIEVEMENTS } = await import('../src/data/achievements.js');
   const { SEEK_PUZZLES } = await import('../src/data/puzzlesSeek.js');
   const s = newGame();
-  const ctx = { puzzlesTotal: ALL_PUZZLES.length, battlesTotal: 200, seekIds: SEEK_PUZZLES.map((p) => p.id) };
+  const ctx = { puzzlesTotal: ALL_PUZZLES.length, battlesTotal: BATTLES.length, seekIds: SEEK_PUZZLES.map((p) => p.id) };
   assert.equal(checkAchievements(s, ctx).length, 0);
   completePuzzle(s, PUZZLES[0].id, {});
   const fresh = checkAchievements(s, ctx);
@@ -423,7 +424,7 @@ test('десятка и искалки не засчитывают пропус�
 
   s.achievements.seek_master = 12345;
   s.puzzlesDone.seek_1 = { skipped: true };
-  const fresh = checkAchievements(s, { ...seekCtx, puzzlesTotal: 1000, battlesTotal: 200 });
+  const fresh = checkAchievements(s, { ...seekCtx, puzzlesTotal: 1000, battlesTotal: BATTLES.length });
   assert.equal(s.achievements.seek_master, 12345, 'ранее выданное достижение не отзывается');
   assert.ok(!fresh.some((a) => a.id === 'seek_master'), 'и не выдаётся повторно');
 });
