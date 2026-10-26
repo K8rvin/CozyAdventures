@@ -24,7 +24,7 @@ import { renderMarket } from './shopView.js';
 import { checkAchievements } from '../data/achievements.js';
 import { ALL_PUZZLES } from '../core/state.js';
 import { BATTLES } from '../data/battles.js';
-import { SEEK_PUZZLES } from '../data/puzzlesSeek.js';
+import { queueAchievementCelebrations, clearAchievementCelebrations } from './achievementCelebration.js';
 import { initSound, sfx, startMusic } from './sound.js';
 import { applyCursor } from './cursors.js';
 import { resetTopbarHeader } from './common.js';
@@ -38,6 +38,8 @@ const screenEl = document.getElementById('screen');
 const toastEl = document.getElementById('toast');
 
 let state = loadGame() || newGame();
+const backfilledAchievements = checkAchievements(state).length;
+if (backfilledAchievements) saveGame(state);
 let currentRoute = 'hub';
 let currentParams = {};
 let dockSyncQueued = false;
@@ -58,19 +60,10 @@ function syncDockSoon() {
 
 function save() {
   reconcileOnboarding(state);
+  const fresh = checkAchievements(state);
   saveGame(state);
   updateWallet();
-  // Достижения: тосты о свежих разблокировках
-  const fresh = checkAchievements(state, {
-    puzzlesTotal: ALL_PUZZLES.length,
-    puzzleIds: ALL_PUZZLES.map((p) => p.id),
-    battlesTotal: BATTLES.length,
-    seekIds: SEEK_PUZZLES.map((p) => p.id),
-  });
-  for (const a of fresh) {
-    setTimeout(() => { toast(`🏆 Достижение: ${a.name}!`); sfx('success'); }, 600);
-    saveGame(state);
-  }
+  if (fresh.length) queueAchievementCelebrations(fresh, { sfx });
   syncDockSoon();
 }
 
@@ -166,6 +159,7 @@ function initialRoute() {
 
 function newGameConfirm() {
   if (confirm('Начать новую игру? Прогресс текущей лавки будет стёрт.')) {
+    clearAchievementCelebrations();
     state = newGame();
     const start = initialRoute();
     save();
@@ -380,3 +374,6 @@ function showAbout() {
 updateWallet();
 const startRoute = initialRoute();
 go(startRoute.name, startRoute.params);
+if (backfilledAchievements) {
+  toast(`Книга славы пополнена: новых достижений — ${backfilledAchievements}.`);
+}

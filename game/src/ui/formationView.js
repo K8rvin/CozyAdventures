@@ -12,6 +12,7 @@ import { battleEnergyTerms, battleEnergyCost } from '../core/energy.js';
 import { bossDropStatus } from '../core/bossDrops.js';
 import { BATTLE_ENERGY_CAP } from '../data/energy.js';
 import { battleLoreOutroRoute } from '../core/battleLore.js';
+import { setAchievementPresentationBusy } from './achievementCelebration.js';
 
 const FRONT = [0, 1, 2];
 
@@ -469,6 +470,7 @@ function renderFormationScreen(container, ctx, params, rerender) {
 }
 
 export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'battles', world, result, unitDefs, overlayButtons, onboardingResult = null }) {
+  setAchievementPresentationBusy('battle-replay', true);
   container.innerHTML = '';
   // Шапка повторяет экран расстановки (заголовок/подзаголовок боя) — поле не прыгает
   container.appendChild(header(ctx, title, subtitle ?? 'Бой идёт сам — смотри и учись', backTo));
@@ -592,6 +594,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
       frames.clear();
       resultOverlay?.remove();
       resultOverlay = null;
+      setAchievementPresentationBusy('battle-replay', false);
     }
 
     function figOf(uid) {
@@ -880,6 +883,7 @@ export function playBattleReplay(container, ctx, { title, subtitle, backTo = 'ba
         rw.innerHTML = rewardHtml;
         card.insertBefore(rw, resultOverlay.querySelector('.advice') || resultOverlay.querySelector('.actions'));
       }
+      setAchievementPresentationBusy('battle-replay', false);
     }
 
     step();

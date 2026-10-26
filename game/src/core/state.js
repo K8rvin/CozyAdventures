@@ -48,6 +48,11 @@ import {
 import { rollBossDrop } from './bossDrops.js';
 import { BATTLE_LORE } from '../data/battleLore.js';
 import { battleLoreFinalBattle, nextCampaignBattle } from './battleLore.js';
+import {
+  newAchievementStats, ensureAchievementStats, recordPuzzleSkip, recordPuzzleCompletion,
+  recordBattleResult, recordShopPurchase, recordCraft, recordMaterialExchange,
+  recordSavingsGoal, recordEquipmentSets, recordSeasonalCosmetic,
+} from './achievementStats.js';
 
 const SAVE_KEY = 'cozy_adventures_save_v2';
 
@@ -80,6 +85,7 @@ export function newGame(now = Date.now()) {
     shopSeenStock: [],      // id товаров прилавка, которые игрок уже видел
     inventorySeen: [],      // id предметов сундука, которые игрок уже видел (метка «новое»)
     achievements: {},       // id -> timestamp разблокировки
+    achievementStats: newAchievementStats(), // вечные рекорды и факты особых событий
     trophies: [],           // id трофеев кабинета (за боссов и розыск)
     trophiesSeen: [],       // id трофеев, которые игрок уже посмотрел в кабинете
     journal: [],            // дневник кота: последние события [{icon, text, at}]
@@ -136,6 +142,7 @@ function migrate(state, now = Date.now()) {
   state.lastCatGift ??= null;
   state.stats.catPets ||= 0;
   state.achievements ||= {};
+  ensureAchievementStats(state);
   state.trophies ||= [];
   state.trophiesSeen ||= [];
   state.journal ||= [];
@@ -300,13 +307,17 @@ export function buyItem(state, itemId) {
   }
   state.inventory.push(itemId);
   state.stats.itemsBought = (state.stats.itemsBought || 0) + 1;
+  recordShopPurchase(state, itemId);
   journalPush(state, '🪙', `Куплено: ${item.name}.`);
 
   // Авто-экипировка: если слот свободен (или есть место в поясе) — надеваем сразу.
   const auto = autoEquip(state, itemId);
   onboardingPurchase(state, itemId);
   const result = { ok: true, autoEquipped: auto };
-  if (completeSavingsGoal(state, 'item', itemId)) result.goalCompleted = true;
+  if (completeSavingsGoal(state, 'item', itemId)) {
+    recordSavingsGoal(state);
+    result.goalCompleted = true;
+  }
   return result;
 }
 
@@ -336,6 +347,7 @@ function autoEquip(state, itemId) {
   const result = equip(state.equipped, itemId);
   if (!result.ok) return null;
   state.inventory.splice(index, 1);
+  recordEquipmentSets(state);
   return { slot: result.slot };
 }
 
@@ -384,7 +396,10 @@ export function hireCrew(state, id, kind) {
   }
   if (kind === 'pet' && !state.pet) state.pet = id;
   const result = { ok: true };
-  if (completeSavingsGoal(state, 'crew', id)) result.goalCompleted = true;
+  if (completeSavingsGoal(state, 'crew', id)) {
+    recordSavingsGoal(state);
+    result.goalCompleted = true;
+  }
   return result;
 }
 
@@ -432,6 +447,7 @@ export function equipFromInventory(state, inventoryIndex) {
   state.inventory.splice(inventoryIndex, 1);
   for (const off of result.swappedOff || []) state.inventory.push(off);
   onboardingEquipmentChanged(state);
+  recordEquipmentSets(state);
   return { ok: true, slot: result.slot };
 }
 
@@ -542,16 +558,21 @@ export function craft(state, recipeId) {
   const count = r.result.count || 1;
   for (let i = 0; i < count; i++) state.inventory.push(r.result.itemId);
   state.stats.itemsCrafted = (state.stats.itemsCrafted || 0) + 1;
+  recordCraft(state, recipeId);
   journalPush(state, '⚒️', `Готово: ${r.name.toLowerCase()}.`);
   onboardingCrafted(state, recipeId);
   const result = { ok: true, itemId: r.result.itemId, count };
-  if (completeSavingsGoal(state, 'recipe', recipeId)) result.goalCompleted = true;
+  if (completeSavingsGoal(state, 'recipe', recipeId)) {
+    recordSavingsGoal(state);
+    result.goalCompleted = true;
+  }
   return result;
 }
 
 export function exchangeMaterial(state, inputId, outputId) {
   const result = exchangeMaterials(state, inputId, outputId);
   if (result.ok) {
+    recordMaterialExchange(state);
     journalPush(state, '🔁', `Обмен: ${materialLabel(inputId)} ×${result.cost} → ${materialLabel(outputId)} ×${result.received}.`);
   }
   return result;
@@ -575,6 +596,7 @@ export function selectCosmetic(state, id) {
   if (!COSMETIC_BY_ID[id] || !state.cosmeticsOwned.includes(id)) return { ok: false, active: false };
   state.cosmeticsActive = [id];
   state.legacyCosmeticsActive = [id];
+  recordSeasonalCosmetic(state, COSMETIC_BY_ID[id], currentSeason());
   return { ok: true, active: true };
 }
 
@@ -854,19 +876,21 @@ export function completePuzzle(state, puzzleId, info = {}) {
   const firstHonest = !previous || !!previous.skipped;
   const repeat = !firstHonest;
   // Daily определяется до записи решения и работает как за первое, так и за повторное.
-  const isDaily = state.lastDailyBonus !== todayKey() && isDailyPuzzle(state, puzzleId);
+  const dailyDay = todayKey();
+  const isDaily = state.lastDailyBonus !== dailyDay && isDailyPuzzle(state, puzzleId);
   state.puzzlesDone[puzzleId] = {
     moves: info.moves ?? 0,
     hintsUsed: info.hintsUsed ?? 0,
     at: Date.now(),
   };
   state.stats.puzzlesSolved += 1;
+  recordPuzzleCompletion(state, puzzle, info, { isDaily, day: dailyDay });
   storyOnPuzzleComplete(state, puzzleId); // после пропуска pending уже закрыт и не продвинется повторно
   journalPush(state, '🧩', firstHonest
     ? `Загадка «${puzzle.name}» решена. Лавка светлеет.`
     : `«${puzzle.name}» — снова решена, кот доволен.`);
   if (isDaily) {
-    state.lastDailyBonus = todayKey();
+    state.lastDailyBonus = dailyDay;
     journalPush(state, '🌟', 'Заказ дня выполнен — путник щедро благодарит!');
   }
   const rewards = puzzleRewards(puzzle, {
@@ -896,6 +920,7 @@ export function skipPuzzle(state, puzzleId) {
   if (state.coins < price) return { ok: false, error: 'Не хватает монет', price };
   state.coins -= price;
   state.puzzlesDone[puzzleId] = { moves: 0, hintsUsed: 0, skipped: true, at: Date.now() };
+  recordPuzzleSkip(state, puzzleId);
   storyOnPuzzleComplete(state, puzzleId); // пропуск тоже закрывает задание истории
   // Утешение считается от первой нормативной награды, без предметов и печатей.
   addCoins(state, consolation);
@@ -1312,6 +1337,16 @@ function runFormationBattle(state, battle, seed, options = {}) {
     if (traits.includes('heal_after_battle')) {
       rewards.push({ type: 'note', text: 'Амулет очага согрел рыцаря после боя.' });
     }
+  }
+  if (!options.practice) {
+    recordBattleResult(state, battle, {
+      ...result, bossDrop, energySpent, practice: false,
+    }, {
+      companions: state.squadCompanions.length,
+      mercs: state.squadMercs.length,
+      pet: !!state.pet,
+      usedConsumables: usedIds,
+    });
   }
   return {
     ...result, rewards, battle, bossDrop,

@@ -377,7 +377,14 @@ export function renderBrewPuzzle(container, ctx, level) {
 
   function finish() {
     finished = true;
-    const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
+    const rewards = completePuzzle(ctx.state, level.id, {
+      moves: puzzle.moves, hintsUsed,
+      achievement: {
+        totalMistakes: puzzle.totalMistakes,
+        spoiled: puzzle.spoiled,
+        bookOpen: cozy(),
+      },
+    });
     journalPush(ctx.state, '⚗️', `Зелье «${level.name}» вручено гостю: ${guest.name}.`);
     ctx.save();
     ctx.sfx?.('success');

@@ -353,6 +353,7 @@ export function renderFatePuzzle(container, ctx, level) {
     const factor = rewardFactor(puzzle);
     const rewards = completePuzzle(ctx.state, level.id, {
       moves: puzzle.moves, hintsUsed, coinFactor: factor,
+      achievement: { mistakes: puzzle.mistakes },
     });
     ctx.save();
     ctx.sfx?.('success');

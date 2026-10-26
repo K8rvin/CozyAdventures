@@ -155,7 +155,10 @@ export function renderSeekPuzzle(container, ctx, rawLevel) {
 
   function finish() {
     finished = true;
-    const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
+    const rewards = completePuzzle(ctx.state, level.id, {
+      moves: puzzle.moves, hintsUsed,
+      achievement: { misses: puzzle.misses },
+    });
     ctx.save();
     ctx.sfx?.('success');
     draw();

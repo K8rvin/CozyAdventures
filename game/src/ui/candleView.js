@@ -1,7 +1,7 @@
 // Экран головоломки «Свечи и духи».
 import {
   createCandlePuzzle, placeCandle, undoCandle, resetCandles,
-  isCandleSolved, candleStatus, candleHint,
+  isCandleSolved, candleStatus, candleHint, solveCandles,
 } from '../core/candlePuzzle.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay , puzzleSkipButton, backToPuzzleType } from './common.js';
@@ -131,7 +131,11 @@ export function renderCandlePuzzle(container, ctx, level) {
 
   function finish() {
     finished = true;
-    const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
+    const minimum = solveCandles(level, 1).solutions[0]?.length;
+    const rewards = completePuzzle(ctx.state, level.id, {
+      moves: puzzle.moves, hintsUsed,
+      achievement: { placed: puzzle.candles.size, minimum },
+    });
     ctx.save();
     ctx.sfx?.('success');
     draw();

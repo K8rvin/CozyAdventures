@@ -8,6 +8,7 @@ import {
 import { makeRng } from '../core/rng.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
+import { setAchievementPresentationBusy } from './achievementCelebration.js';
 
 const ANIM_MS = 130; // длительность поворота лоскута на 90°
 
@@ -284,7 +285,10 @@ export function renderSpinPuzzle(container, ctx, level) {
   function finish() {
     if (finished) return;
     finished = true;
-    const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
+    const rewards = completePuzzle(ctx.state, level.id, {
+      moves: puzzle.moves, hintsUsed,
+      achievement: { par },
+    });
     ctx.save();
     startCelebration(rewards);
   }
@@ -293,6 +297,7 @@ export function renderSpinPuzzle(container, ctx, level) {
   let celebration = null;
 
   function startCelebration(rewards) {
+    setAchievementPresentationBusy('spin-celebration', true);
     ctx.sfx?.('fanfare');
     if (!canAnimate) { draw(); setTimeout(() => showWin(rewards), 400); return; }
     const bursts = [0.45, 0.85, 1.2, 1.55, 1.9].map((at) => ({
@@ -311,6 +316,7 @@ export function renderSpinPuzzle(container, ctx, level) {
   }
 
   function showWin(rewards) {
+    setAchievementPresentationBusy('spin-celebration', false);
     const next = nextPuzzle(level.id);
     const medal = puzzle.moves <= par ? ' · 🏅 Точная сборка!' : '';
     showOverlay(ctx, {
@@ -453,5 +459,6 @@ export function renderSpinPuzzle(container, ctx, level) {
     window.removeEventListener('keydown', onKey);
     canvas.removeEventListener('pointerdown', onPointerDown);
     if (rafId && typeof cancelAnimationFrame !== 'undefined') cancelAnimationFrame(rafId);
+    setAchievementPresentationBusy('spin-celebration', false);
   };
 }

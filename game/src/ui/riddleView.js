@@ -346,6 +346,7 @@ export function renderRiddlePuzzle(container, ctx, level) {
     const factor = rewardFactor(puzzle);
     const rewards = completePuzzle(ctx.state, level.id, {
       moves: puzzle.moves, hintsUsed, coinFactor: factor,
+      achievement: { attempts: puzzle.attempts.length },
     });
     ctx.save();
     page.classList.add('riddle-solved');

@@ -130,6 +130,15 @@ export function sfx(name, step = 0) {
       tone(340, 0.1, { delay: 0.3, type: 'triangle', gain: 0.04, slide: -60 });
       break;
     }
+    case 'achievement': {
+      const rank = Math.max(0, Math.min(4, step));
+      const notes = [523, 659, 784, 1047, 1319, 1568].slice(0, 4 + (rank >= 3 ? 1 : 0));
+      notes.forEach((f, i) => tone(f * (1 + rank * 0.025), 0.3, {
+        delay: i * 0.1, gain: 0.045 + rank * 0.003,
+      }));
+      if (rank >= 2) tone(2093 + rank * 110, 0.5, { delay: 0.48, gain: 0.025 });
+      break;
+    }
     case 'success':
       [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
       break;

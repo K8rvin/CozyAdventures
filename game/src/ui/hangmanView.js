@@ -302,6 +302,7 @@ export function renderHangmanPuzzle(container, ctx, level) {
     const perfect = puzzle.mistakes === 0 && puzzle.spoiled === 0;
     const rewards = completePuzzle(ctx.state, level.id, {
       moves: puzzle.moves, hintsUsed, coinFactor: factor,
+      achievement: { mistakes: puzzle.mistakes, spoiled: puzzle.spoiled },
     });
     ctx.save();
     page.classList.add('riddle-solved');

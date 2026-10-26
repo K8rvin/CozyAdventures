@@ -375,56 +375,63 @@ test('достижения разблокируются по событиям', 
 test('достижения кампании считают уникальные решения, а не повторы и пропуски', async () => {
   const { ACHIEVEMENTS } = await import('../src/data/achievements.js');
   const byId = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]));
-  const ctx = { puzzlesTotal: 4 };
+  const ids = ALL_PUZZLES.map((puzzle) => puzzle.id);
   const s = newGame();
-  s.coins = 1000;
+  s.coins = 10000;
 
   completePuzzle(s, 'md_01', {});
   completePuzzle(s, 'md_01', {});
   completePuzzle(s, 'md_01', {});
   assert.equal(s.stats.puzzlesSolved, 3, 'повторы по-прежнему видны в общей статистике');
-  assert.equal(byId.half_campaign.check(s, ctx), false, 'три записи одного уровня — не половина кампании');
+  assert.equal(byId.half_campaign.check(s), false, 'три записи одного уровня — не половина кампании');
 
   assert.equal(skipPuzzle(s, 'md_02').ok, true);
   assert.equal(s.stats.puzzlesSolved, 3, 'сам пропуск не увеличивает счётчик честных решений');
-  assert.equal(byId.half_campaign.check(s, ctx), false, 'пропуск не заменяет второе уникальное решение');
-  assert.equal(byId.all_puzzles.check(s, ctx), false, 'завышенный счётчик не открывает награду за всю кампанию');
+  assert.equal(byId.half_campaign.check(s), false, 'пропуск не заменяет второе уникальное решение');
+  assert.equal(byId.all_puzzles.check(s), false, 'завышенный счётчик не открывает награду за всю кампанию');
 
   completePuzzle(s, 'md_03', {});
   completePuzzle(s, 'md_04', {});
-  assert.equal(byId.half_campaign.check(s, ctx), true, 'два разных решения засчитаны');
-  assert.equal(byId.all_puzzles.check(s, ctx), false, 'пропущенный уровень не входит в полное прохождение');
+  assert.equal(byId.half_campaign.check(s), false, 'три уникальных решения далеки от половины реальной кампании');
+  for (const id of ids) {
+    if (id === 'md_02') continue;
+    s.puzzlesDone[id] ||= {};
+    if (ids.filter((candidate) => candidate !== 'md_02' && s.puzzlesDone[candidate] && !s.puzzlesDone[candidate].skipped).length >= byId.half_campaign.target) break;
+  }
+  assert.equal(byId.half_campaign.check(s), true, 'нужное число разных честных решений засчитано');
+  assert.equal(byId.all_puzzles.check(s), false, 'пропущенный уровень не входит в полное прохождение');
 
-  const campaignCtx = { puzzlesTotal: 2, puzzleIds: ['md_01', 'md_02'] };
   const customState = newGame();
-  customState.puzzlesDone.md_01 = {};
+  for (const id of ids.slice(0, -1)) customState.puzzlesDone[id] = {};
+  customState.customPuzzles = [{ id: 'custom_extra', mechanic: 'mirror' }];
   customState.puzzlesDone.custom_extra = {};
-  assert.equal(byId.all_puzzles.check(customState, campaignCtx), false, 'уровень Мастерской не заменяет кампанию');
-  customState.puzzlesDone.md_02 = {};
-  assert.equal(byId.all_puzzles.check(customState, campaignCtx), true);
+  assert.equal(byId.all_puzzles.check(customState), false, 'уровень Мастерской не заменяет кампанию');
+  customState.puzzlesDone[ids.at(-1)] = {};
+  assert.equal(byId.all_puzzles.check(customState), true);
 });
 
 test('десятка и искалки не засчитывают пропуски, выданные достижения сохраняются', async () => {
   const { ACHIEVEMENTS, checkAchievements } = await import('../src/data/achievements.js');
+  const { SEEK_PUZZLES } = await import('../src/data/puzzlesSeek.js');
   const byId = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]));
   const s = newGame();
   s.stats.puzzlesSolved = 100;
-  for (let i = 0; i < 9; i++) s.puzzlesDone[`level_${i}`] = {};
+  const ids = ALL_PUZZLES.map((puzzle) => puzzle.id);
+  for (const id of ids.slice(0, 9)) s.puzzlesDone[id] = {};
   s.puzzlesDone.skipped_level = { skipped: true };
-  assert.equal(byId.ten_puzzles.check(s, {}), false, 'девять решений и пропуск — ещё не десять');
-  s.puzzlesDone.level_9 = {};
-  assert.equal(byId.ten_puzzles.check(s, {}), true, 'десятая уникальная запись засчитана');
+  assert.equal(byId.ten_puzzles.check(s), false, 'девять решений и пропуск — ещё не десять');
+  s.puzzlesDone[ids[9]] = {};
+  assert.equal(byId.ten_puzzles.check(s), true, 'десятая уникальная запись засчитана');
 
-  const seekCtx = { seekIds: ['seek_1', 'seek_2'] };
-  s.puzzlesDone.seek_1 = { skipped: true };
-  s.puzzlesDone.seek_2 = {};
-  assert.equal(byId.seek_master.check(s, seekCtx), false, 'пропущенная искалка не завершает серию');
-  s.puzzlesDone.seek_1 = {};
-  assert.equal(byId.seek_master.check(s, seekCtx), true);
+  for (const puzzle of SEEK_PUZZLES) s.puzzlesDone[puzzle.id] = {};
+  s.puzzlesDone[SEEK_PUZZLES[0].id] = { skipped: true };
+  assert.equal(byId.seek_master.check(s), false, 'пропущенная искалка не завершает серию');
+  s.puzzlesDone[SEEK_PUZZLES[0].id] = {};
+  assert.equal(byId.seek_master.check(s), true);
 
   s.achievements.seek_master = 12345;
-  s.puzzlesDone.seek_1 = { skipped: true };
-  const fresh = checkAchievements(s, { ...seekCtx, puzzlesTotal: 1000, battlesTotal: BATTLES.length });
+  s.puzzlesDone[SEEK_PUZZLES[0].id] = { skipped: true };
+  const fresh = checkAchievements(s);
   assert.equal(s.achievements.seek_master, 12345, 'ранее выданное достижение не отзывается');
   assert.ok(!fresh.some((a) => a.id === 'seek_master'), 'и не выдаётся повторно');
 });

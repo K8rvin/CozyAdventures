@@ -1343,3 +1343,74 @@ test('«Гости за чайным столом»: тапы сажают и п
   assert.ok(!toasts.at(-1)?.includes('не сбылось'), 'нарушений при верной рассадке нет');
   cleanup();
 });
+
+function achievementClass(el, className) {
+  return String(el.className || '').split(/\s+/).includes(className);
+}
+
+function achievementCards(root) {
+  return flatElements(root).filter((el) => achievementClass(el, 'achievement-card'));
+}
+
+test('книга славы: крупные ассеты, полученные и секретные карточки, детали', async () => {
+  const { ACHIEVEMENTS } = await import('../src/data/achievements.js');
+  const state = newGame();
+  const ordinary = ACHIEVEMENTS.find((achievement) => !achievement.secret);
+  const secret = ACHIEVEMENTS.find((achievement) => achievement.secret);
+  state.achievements[ordinary.id] = Date.UTC(2026, 0, 2);
+  const root = new El('main');
+  renderAchievements(root, makeUiCtx(state));
+
+  const groups = flatElements(root).find((el) => achievementClass(el, 'achievement-groups'));
+  const cards = achievementCards(groups);
+  assert.equal(cards.length, 240);
+  assert.ok(cards.every((card) => flatElements(card).some((el) => el.tagName === 'img')));
+  const unlocked = cards.find((card) => card.dataset.achievementId === ordinary.id);
+  assert.ok(achievementClass(unlocked, 'is-unlocked'));
+  assert.ok(flatElements(unlocked).some((el) => String(el.textContent || '').includes('02.01.2026')));
+  const concealed = cards.find((card) => card.dataset.achievementId === secret.id);
+  assert.ok(flatElements(concealed).some((el) => el.textContent === 'Секретное достижение'));
+  assert.ok(!flatElements(concealed).some((el) => el.textContent === secret.desc));
+  assert.ok(flatElements(concealed).some((el) => el.src === 'assets/achievements/_secret.webp'));
+  assert.ok(!flatElements(groups).some((el) => /[🔒🏆]/.test(String(el.textContent || ''))));
+
+  unlocked.click();
+  const overlay = documentStub.body.children.find((el) => achievementClass(el, 'achievement-detail-overlay'));
+  assert.ok(overlay, 'карточка открывает детали');
+  assert.ok(flatElements(overlay).some((el) => achievementClass(el, 'achievement-detail-art')));
+  assert.ok(flatElements(overlay).some((el) => el.textContent === ordinary.name));
+  assert.ok(flatElements(overlay).some((el) => el.textContent === ordinary.desc));
+  const close = flatElements(overlay).find((el) => achievementClass(el, 'achievement-detail-close'));
+  close.click();
+  assert.ok(!documentStub.body.children.includes(overlay));
+});
+
+test('книга славы: фильтры и поиск не раскрывают секреты', async () => {
+  const { ACHIEVEMENTS } = await import('../src/data/achievements.js');
+  const state = newGame();
+  state.achievements[ACHIEVEMENTS[0].id] = Date.now();
+  const root = new El('main');
+  renderAchievements(root, makeUiCtx(state));
+  const groups = flatElements(root).find((el) => achievementClass(el, 'achievement-groups'));
+  const selects = flatElements(root).filter((el) => el.tagName === 'select');
+  assert.equal(selects.length, 3);
+  const change = (select, value) => {
+    select.value = value;
+    select._listeners.change[0]();
+  };
+  change(selects[2], 'unlocked');
+  assert.equal(achievementCards(groups).length, 1);
+  change(selects[2], 'locked');
+  assert.equal(achievementCards(groups).length, 239);
+  change(selects[2], 'all');
+  change(selects[0], 'special');
+  assert.equal(achievementCards(groups).length, 10);
+
+  const search = flatElements(root).find((el) => el.tagName === 'input' && el.type === 'search');
+  search.value = 'Паучий праздник';
+  search._listeners.input[0]();
+  assert.equal(achievementCards(groups).length, 0, 'скрытое имя не участвует в поиске');
+  search.value = 'секретное';
+  search._listeners.input[0]();
+  assert.equal(achievementCards(groups).length, 10, 'общее русское обозначение секрета находится');
+});

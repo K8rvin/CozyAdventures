@@ -1,6 +1,7 @@
 // Гостевая книга: каталог знакомых персонажей и короткие разговоры с ними.
 import { GUESTS, GUEST_BY_ID, guestKnown } from '../data/guests.js';
 import { header, quickNav } from './common.js';
+import { recordGuestTopic } from '../core/achievementStats.js';
 
 export const GUEST_CATALOG_MODES = [
   { id: 'shelf', name: 'Полка', icon: '📚', hint: 'Горизонтальная лента с крупными портретами' },
@@ -526,6 +527,7 @@ export function renderGuestBook(container, ctx) {
           );
           chat.scrollTop = chat.scrollHeight;
           ctx.sfx?.('tap');
+          if (recordGuestTopic(ctx.state, guest.id, topicIndex)) ctx.save();
           if ([...topics.children].every((item) => item.disabled)) {
             const done = document.createElement('div');
             done.className = 'guest-topics-done muted';

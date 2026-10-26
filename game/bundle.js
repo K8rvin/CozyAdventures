@@ -5219,7 +5219,7 @@
     return gridCells(puzzle) / 4 + (puzzle.objects || puzzle.nodes || puzzle.lanterns || puzzle.customers || puzzle.tiles || []).length;
   }
   function puzzleEconomy(puzzle, context = {}) {
-    const own = puzzle.economy || {};
+    const own2 = puzzle.economy || {};
     const override = PUZZLE_ECONOMY_OVERRIDES[puzzle.id] || {};
     const type = puzzleTypeOf(puzzle);
     const profile = PUZZLE_TYPE_ECONOMY[type] || PUZZLE_TYPE_ECONOMY.custom;
@@ -5227,13 +5227,13 @@
     const metric = Math.max(0, puzzleContentMetric(puzzle));
     const computedFirst = FIRST_COMPLETION_SECONDS + profile.first + difficulty * profile.difficulty + metric * profile.metric;
     const computedRepeat = profile.repeat + difficulty * profile.repeatDifficulty + metric * profile.repeatMetric;
-    const tier = clampTier(own.tier ?? puzzle.economyTier ?? context.tier ?? difficulty - 1);
+    const tier = clampTier(own2.tier ?? puzzle.economyTier ?? context.tier ?? difficulty - 1);
     return {
       tier,
-      order: own.order ?? context.order ?? 0,
-      finale: own.finale ?? context.finale ?? false,
-      expectedFirstSeconds: own.expectedFirstSeconds ?? puzzle.expectedFirstSeconds ?? override.expectedFirstSeconds ?? Math.max(15, Math.round(computedFirst)),
-      expectedRepeatSeconds: own.expectedRepeatSeconds ?? puzzle.expectedRepeatSeconds ?? override.expectedRepeatSeconds ?? Math.max(60, Math.round(computedRepeat))
+      order: own2.order ?? context.order ?? 0,
+      finale: own2.finale ?? context.finale ?? false,
+      expectedFirstSeconds: own2.expectedFirstSeconds ?? puzzle.expectedFirstSeconds ?? override.expectedFirstSeconds ?? Math.max(15, Math.round(computedFirst)),
+      expectedRepeatSeconds: own2.expectedRepeatSeconds ?? puzzle.expectedRepeatSeconds ?? override.expectedRepeatSeconds ?? Math.max(60, Math.round(computedRepeat))
     };
   }
   function puzzleCoinReward(puzzle, { repeat = false, factor = 1, daily = false } = {}) {
@@ -5288,7 +5288,7 @@
     return (battle.enemies || []).map((entry) => typeof entry === "string" ? { id: entry, scale: 1 } : { scale: 1, ...entry });
   }
   function battleEconomy(battle) {
-    const own = battle.economy || {};
+    const own2 = battle.economy || {};
     const override = BATTLE_ECONOMY_OVERRIDES[battle.id] || {};
     const entries2 = battleEntries(battle);
     let power = 0;
@@ -5301,12 +5301,12 @@
       boss ||= !!def.boss;
     }
     const computedFirst = Math.max(45, Math.round(FIRST_COMPLETION_SECONDS + 45 + power / 6));
-    const expectedFirstSeconds = own.expectedFirstSeconds ?? battle.expectedFirstSeconds ?? override.expectedFirstSeconds ?? computedFirst;
+    const expectedFirstSeconds = own2.expectedFirstSeconds ?? battle.expectedFirstSeconds ?? override.expectedFirstSeconds ?? computedFirst;
     return {
-      tier: clampTier(own.tier ?? battle.economyTier ?? WORLD_ECONOMY_TIER[battle.world] ?? 0),
+      tier: clampTier(own2.tier ?? battle.economyTier ?? WORLD_ECONOMY_TIER[battle.world] ?? 0),
       expectedFirstSeconds,
-      expectedRepeatSeconds: own.expectedRepeatSeconds ?? battle.expectedRepeatSeconds ?? override.expectedRepeatSeconds ?? Math.max(30, Math.round(expectedFirstSeconds * 0.75)),
-      bossMultiplier: own.bossMultiplier ?? battle.bossMultiplier ?? (boss ? BOSS_COIN_MULTIPLIER : battle.wanted ? WANTED_COIN_MULTIPLIER : 1),
+      expectedRepeatSeconds: own2.expectedRepeatSeconds ?? battle.expectedRepeatSeconds ?? override.expectedRepeatSeconds ?? Math.max(30, Math.round(expectedFirstSeconds * 0.75)),
+      bossMultiplier: own2.bossMultiplier ?? battle.bossMultiplier ?? (boss ? BOSS_COIN_MULTIPLIER : battle.wanted ? WANTED_COIN_MULTIPLIER : 1),
       power
     };
   }
@@ -5457,8 +5457,8 @@
   var SHOP_STOCK = SHOP_STOCK_ROWS.map((entry) => ({ ...entry, ...shopProgress(entry) }));
   function pricedShopItem(entry) {
     const item2 = ITEM_BY_ID[entry.itemId];
-    const progress = shopProgress(entry);
-    return { ...item2, ...progress, price: itemPrice(item2, { tier: progress.tier }) };
+    const progress2 = shopProgress(entry);
+    return { ...item2, ...progress2, price: itemPrice(item2, { tier: progress2.tier }) };
   }
   function compareShopItems(a, b) {
     return (a.tier ?? 0) - (b.tier ?? 0) || (a.order ?? 0) - (b.order ?? 0) || (a.price ?? 0) - (b.price ?? 0) || a.id.localeCompare(b.id, "ru");
@@ -20059,13 +20059,13 @@
     return nonColor.find((feature) => room.seats.filter((s) => (s.features || []).includes(feature)).length === 1) || null;
   }
   function colorJokeFor(level, guest, feature, variant) {
-    const own = GUEST_COLOR_JOKES[guest]?.[feature];
-    if (own?.length) return variant(own);
+    const own2 = GUEST_COLOR_JOKES[guest]?.[feature];
+    if (own2?.length) return variant(own2);
     return variant(COLOR_JOKES[feature]);
   }
   function featureWishText(guest, level, feature, variant) {
-    const own = GUEST_SEAT_REASONS[guest]?.[feature];
-    if (own?.length) return variant(own);
+    const own2 = GUEST_SEAT_REASONS[guest]?.[feature];
+    if (own2?.length) return variant(own2);
     const spec = SEAT_REASONS[feature];
     if (!spec) return `\u0425\u043E\u0437\u044F\u0438\u043D, \u043F\u0440\u043E\u0448\u0443 \u043C\u0435\u0441\u0442\u043E ${SEAT_FEATURE_TEXT[feature]}.`;
     const lines = [];
@@ -20094,10 +20094,10 @@
     const adjSeats = model.adj[sIdx].map((i) => model.seats[i].id);
     const guestsAt = (sid) => level.guests.find((x) => sol[x] === sid);
     const pick = (arr) => arr[Math.floor(rng.next() * arr.length)];
-    const variant = (list) => pick(list);
+    const variant = (list2) => pick(list2);
     const pairText = (other, fallback) => {
-      const own = SEATING_RELATIONS[`${guest}:${other}`]?.[type];
-      return own?.length ? variant(own) : variant(fallback);
+      const own2 = SEATING_RELATIONS[`${guest}:${other}`]?.[type];
+      return own2?.length ? variant(own2) : variant(fallback);
     };
     switch (type) {
       case "seat": {
@@ -20207,8 +20207,8 @@
           const who = guestsAt(sid);
           if (who) for (const t2 of level.traits[who]) bad.add(t2);
         }
-        const present = new Set(level.guests.flatMap((x) => level.traits[x]));
-        const rest = [...present].filter((t2) => !bad.has(t2));
+        const present2 = new Set(level.guests.flatMap((x) => level.traits[x]));
+        const rest = [...present2].filter((t2) => !bad.has(t2));
         if (!rest.length) return null;
         const t = pick(rest);
         const text = variant([
@@ -20406,7 +20406,7 @@
         const typeCount = {};
         for (const r of draft.rules) typeCount[r.type] = (typeCount[r.type] || 0) + 1;
         const collect = (ignoreCaps) => {
-          const list = [];
+          const list2 = [];
           for (const g of guests) {
             if ((wishes[g] || 0) >= cfg.maxWishes) continue;
             if (wantOnly && !wantOnly.has(g)) continue;
@@ -20418,14 +20418,14 @@
                 if ((typeCount[type] || 0) >= cap) continue;
               }
               const r = buildRule(type, g, draft, room, sol, rng, model);
-              if (r && !keys.has(ruleKey(r))) list.push([r, weight]);
+              if (r && !keys.has(ruleKey(r))) list2.push([r, weight]);
             }
           }
-          return list;
+          return list2;
         };
-        const score = (list) => {
+        const score = (list2) => {
           const out = [];
-          for (const [r, w] of list) {
+          for (const [r, w] of list2) {
             const probe = { ...draft, rules: [...draft.rules, r] };
             const pr = solveSeating(probe, SEATING_ROOMS, 6);
             if (pr.truncated) continue;
@@ -21488,11 +21488,11 @@
       if (item2.set) setCounts[item2.set] = (setCounts[item2.set] || 0) + 1;
     }
     const activeSets = [];
-    for (const [setKey, count] of Object.entries(setCounts)) {
+    for (const [setKey, count2] of Object.entries(setCounts)) {
       const def = SETS[setKey];
       if (!def) continue;
       for (const tier of [3, 6, 9]) {
-        if (count >= tier) {
+        if (count2 >= tier) {
           const t = def.tiers[tier];
           if (!t) continue;
           if (t.stats) {
@@ -21504,7 +21504,7 @@
             }
           }
           if (t.traits) traits.push(...t.traits);
-          activeSets.push({ set: setKey, name: def.name, count, tier, desc: t.desc });
+          activeSets.push({ set: setKey, name: def.name, count: count2, tier, desc: t.desc });
         }
       }
     }
@@ -21835,7 +21835,7 @@
   function stepToward(unit, goal, allUnits, log, obstacles = []) {
     const size = unit.size || 1;
     const startKey = unit.cell.join(",");
-    const blocked = new Set(obstacles.map((o) => o.cell.join(",")));
+    const blocked2 = new Set(obstacles.map((o) => o.cell.join(",")));
     const occupied = /* @__PURE__ */ new Set();
     for (const u of allUnits) {
       if (u === unit || u.hp <= 0) continue;
@@ -21846,18 +21846,18 @@
       for (let dx = 0; dx < size; dx++) {
         for (let dy = 0; dy < size; dy++) {
           const key = `${x + dx},${y + dy}`;
-          if (blocked.has(key) || occupied.has(key)) return false;
+          if (blocked2.has(key) || occupied.has(key)) return false;
         }
       }
       return true;
     };
     const prev = /* @__PURE__ */ new Map([[startKey, null]]);
     const depth = /* @__PURE__ */ new Map([[startKey, 0]]);
-    const queue = [unit.cell];
+    const queue2 = [unit.cell];
     const curDist = anchorDist(unit.cell, size, goal);
     let best = null;
-    for (let qi = 0; qi < queue.length; qi++) {
-      const [cx, cy] = queue[qi];
+    for (let qi = 0; qi < queue2.length; qi++) {
+      const [cx, cy] = queue2[qi];
       const steps = depth.get(`${cx},${cy}`);
       const d = anchorDist([cx, cy], size, goal);
       if (steps > 0 && d < curDist && (!best || d < best.d || d === best.d && steps < best.steps)) {
@@ -21877,7 +21877,7 @@
         if (!free(nx, ny) || prev.has(key)) continue;
         prev.set(key, [cx, cy]);
         depth.set(key, steps + 1);
-        queue.push([nx, ny]);
+        queue2.push([nx, ny]);
       }
     }
     if (!best) return false;
@@ -22296,10 +22296,10 @@
     return 2 + h % 2;
   }
   function visitLines(script, visit) {
-    const list = script.visits;
-    if (visit <= list.length) return list[visit - 1];
-    const variants = list.length - 3;
-    return list[3 + (visit - 4) % variants];
+    const list2 = script.visits;
+    if (visit <= list2.length) return list2[visit - 1];
+    const variants = list2.length - 3;
+    return list2[3 + (visit - 4) % variants];
   }
   function resolveStep(step) {
     const guest = GUEST_BY_ID[step.speaker] || {};
@@ -23097,10 +23097,10 @@
   }
   function completeSavingsGoal(state2, kind, id) {
     if (state2.savingsGoal?.kind !== kind || state2.savingsGoal.id !== id) return false;
-    const progress = savingsGoalProgress(state2);
-    if (!progress) return false;
+    const progress2 = savingsGoalProgress(state2);
+    if (!progress2) return false;
     state2.savingsGoal = null;
-    goalJournal(state2, progress.icon, `\u0426\u0435\u043B\u044C \u0434\u043E\u0441\u0442\u0438\u0433\u043D\u0443\u0442\u0430: ${progress.name}.`);
+    goalJournal(state2, progress2.icon, `\u0426\u0435\u043B\u044C \u0434\u043E\u0441\u0442\u0438\u0433\u043D\u0443\u0442\u0430: ${progress2.name}.`);
     return true;
   }
 
@@ -23518,6 +23518,219 @@
     return BATTLES.slice(index + 1).find((battle) => !battle.wanted) || null;
   }
 
+  // src/core/achievementStats.js
+  function newAchievementStats() {
+    return {
+      version: 1,
+      counters: {},
+      puzzles: {},
+      battles: {},
+      daily: { days: [], currentStreak: 0, bestStreak: 0 },
+      craftedRecipes: [],
+      boughtItems: [],
+      guestTopics: {},
+      setTiers: {}
+    };
+  }
+  function ensureAchievementStats(state2) {
+    const stats = state2.achievementStats;
+    if (!stats || typeof stats !== "object" || Array.isArray(stats)) {
+      state2.achievementStats = newAchievementStats();
+      return state2.achievementStats;
+    }
+    stats.version = 1;
+    stats.counters = stats.counters && typeof stats.counters === "object" && !Array.isArray(stats.counters) ? stats.counters : {};
+    stats.puzzles = stats.puzzles && typeof stats.puzzles === "object" && !Array.isArray(stats.puzzles) ? stats.puzzles : {};
+    stats.battles = stats.battles && typeof stats.battles === "object" && !Array.isArray(stats.battles) ? stats.battles : {};
+    stats.daily = stats.daily && typeof stats.daily === "object" && !Array.isArray(stats.daily) ? stats.daily : { days: [], currentStreak: 0, bestStreak: 0 };
+    stats.daily.days = Array.isArray(stats.daily.days) ? stats.daily.days : [];
+    stats.daily.currentStreak = Number.isFinite(stats.daily.currentStreak) ? stats.daily.currentStreak : 0;
+    stats.daily.bestStreak = Number.isFinite(stats.daily.bestStreak) ? stats.daily.bestStreak : 0;
+    for (const key of ["craftedRecipes", "boughtItems"]) {
+      stats[key] = Array.isArray(stats[key]) ? stats[key] : [];
+    }
+    stats.guestTopics = stats.guestTopics && typeof stats.guestTopics === "object" && !Array.isArray(stats.guestTopics) ? stats.guestTopics : {};
+    stats.setTiers = stats.setTiers && typeof stats.setTiers === "object" && !Array.isArray(stats.setTiers) ? stats.setTiers : {};
+    return stats;
+  }
+  function addUnique(list2, value) {
+    if (!list2.includes(value)) list2.push(value);
+  }
+  function puzzleRecord(stats, id) {
+    const rec = stats.puzzles[id] ||= { solves: 0, skipped: false, feats: [] };
+    rec.solves = Number.isFinite(rec.solves) ? rec.solves : 0;
+    rec.skipped = rec.skipped === true;
+    rec.feats = Array.isArray(rec.feats) ? rec.feats : [];
+    return rec;
+  }
+  function battleRecord(stats, id) {
+    const rec = stats.battles[id] ||= { attempts: 0, defeats: 0, feats: [] };
+    rec.attempts = Number.isFinite(rec.attempts) ? rec.attempts : 0;
+    rec.defeats = Number.isFinite(rec.defeats) ? rec.defeats : 0;
+    rec.feats = Array.isArray(rec.feats) ? rec.feats : [];
+    return rec;
+  }
+  function addFeat(rec, feat) {
+    addUnique(rec.feats, feat);
+  }
+  function dayNumber(day) {
+    return Date.parse(`${day}T00:00:00Z`) / 864e5;
+  }
+  function recordDaily(stats, day) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day || "") || !Number.isFinite(dayNumber(day))) return;
+    if (stats.daily.days.includes(day)) return;
+    stats.daily.days.push(day);
+    stats.daily.days.sort();
+    let best = 0;
+    let streak = 0;
+    let previous = null;
+    for (const value of stats.daily.days) {
+      const current = dayNumber(value);
+      streak = previous !== null && current - previous === 1 ? streak + 1 : 1;
+      best = Math.max(best, streak);
+      previous = current;
+    }
+    stats.daily.bestStreak = Math.max(stats.daily.bestStreak, best);
+    const latest = stats.daily.days.at(-1);
+    stats.daily.currentStreak = 1;
+    for (let i = stats.daily.days.length - 1; i > 0; i -= 1) {
+      if (dayNumber(stats.daily.days[i]) - dayNumber(stats.daily.days[i - 1]) !== 1) break;
+      stats.daily.currentStreak += 1;
+    }
+    if (latest !== day) {
+      const latestTime = dayNumber(latest);
+      const givenTime = dayNumber(day);
+      if (latestTime - givenTime > 0) {
+        stats.daily.currentStreak = 1;
+        for (let i = stats.daily.days.indexOf(day); i > 0; i -= 1) {
+          if (dayNumber(stats.daily.days[i]) - dayNumber(stats.daily.days[i - 1]) !== 1) break;
+          stats.daily.currentStreak += 1;
+        }
+      }
+    }
+  }
+  function recordPuzzleSkip(state2, puzzleId) {
+    const stats = ensureAchievementStats(state2);
+    puzzleRecord(stats, puzzleId).skipped = true;
+  }
+  function recordPuzzleCompletion(state2, puzzle, info = {}, options = {}) {
+    const stats = ensureAchievementStats(state2);
+    const rec = puzzleRecord(stats, puzzle.id);
+    const meta = info.achievement || {};
+    rec.solves += 1;
+    if (info.hintsUsed === 0) addFeat(rec, "no_hints");
+    if (rec.skipped) addFeat(rec, "skip_comeback");
+    switch (puzzle.mechanic || "mirror") {
+      case "riddle":
+        if (meta.attempts === 1) addFeat(rec, "riddle_first_try");
+        break;
+      case "hang":
+        if (meta.mistakes === 0 && meta.spoiled === 0) addFeat(rec, "hang_perfect");
+        break;
+      case "brew":
+        if (meta.totalMistakes === 0 && meta.spoiled === 0) addFeat(rec, "brew_flawless");
+        if (puzzle.hideRecipe && meta.bookOpen === false) addFeat(rec, "brew_memory");
+        if ((meta.spoiled || 0) > 0) addFeat(rec, "brew_recovery");
+        break;
+      case "fate":
+        if (meta.mistakes === 0) addFeat(rec, "fate_perfect");
+        break;
+      case "gift":
+        if (meta.tries === 0) addFeat(rec, "gift_first_try");
+        if (meta.tries === 2) addFeat(rec, "gift_third_try");
+        if ((meta.departures || 0) > 0) addFeat(rec, "gift_recovery");
+        break;
+      case "tea":
+        if (meta.exact === true) addFeat(rec, "tea_exact");
+        break;
+      case "candle":
+        if (Number.isInteger(meta.minimum) && meta.placed === meta.minimum) addFeat(rec, "candle_minimum");
+        break;
+      case "spin":
+        if (Number.isFinite(meta.par) && info.moves <= meta.par && info.hintsUsed === 0) addFeat(rec, "spin_par");
+        break;
+      case "seek":
+        if (meta.misses === 0 && info.hintsUsed === 0) addFeat(rec, "seek_no_miss");
+        break;
+      case "seating":
+        if (meta.failedServes === 0) addFeat(rec, "seating_first_serve");
+        break;
+      default:
+        break;
+    }
+    if (options.isDaily) recordDaily(stats, options.day);
+    return rec;
+  }
+  function recordBattleResult(state2, battle, result, context = {}) {
+    if (!battle?.id || !result || result.practice || context.practice) return null;
+    const stats = ensureAchievementStats(state2);
+    const rec = battleRecord(stats, battle.id);
+    const report = result.report || {};
+    const victory = result.victory === true || report.victory === true;
+    const allies = Array.isArray(report.alliesStats) ? report.alliesStats : [];
+    const isBoss = !!BOSS_DROPS[battle.id];
+    rec.attempts += 1;
+    stats.counters.battleEnergySpent = (stats.counters.battleEnergySpent || 0) + (result.energySpent || 0);
+    if (!victory) {
+      rec.defeats += 1;
+      stats.counters.battleDefeats = (stats.counters.battleDefeats || 0) + 1;
+      if (report.timedOut) addFeat(rec, "timeout");
+      return rec;
+    }
+    if (rec.defeats > 0) addFeat(rec, "battle_comeback");
+    const noDamage = allies.length > 0 && allies.every((ally) => (ally.taken || 0) === 0);
+    const allSurvive = Array.isArray(report.alliesDown) && report.alliesDown.length === 0;
+    if (noDamage) addFeat(rec, "battle_no_damage");
+    if (noDamage && isBoss) addFeat(rec, "boss_no_damage");
+    if (allSurvive && isBoss) addFeat(rec, "boss_all_survive");
+    if (context.mercs === 0) addFeat(rec, "battle_solo");
+    if (isBoss && (context.usedConsumables || []).length === 0) addFeat(rec, "boss_no_consumables");
+    if (report.knightHpLeft === 1) addFeat(rec, "battle_one_hp");
+    if (report.knightHpLeft === 0 && context.mercs > 0) addFeat(rec, "merc_last_stand");
+    if (/_crowd_6$/.test(battle.id) && report.foesTotal === 6 && allSurvive && context.companions === 3 && context.mercs === 2 && context.pet) addFeat(rec, "full_party_crowd");
+    if (result.bossDrop?.dropped && result.bossDrop?.guaranteed) {
+      addFeat(rec, "boss_pity");
+      stats.counters.bossPityDrops = (stats.counters.bossPityDrops || 0) + 1;
+    }
+    return rec;
+  }
+  function recordShopPurchase(state2, itemId) {
+    addUnique(ensureAchievementStats(state2).boughtItems, itemId);
+  }
+  function recordCraft(state2, recipeId) {
+    addUnique(ensureAchievementStats(state2).craftedRecipes, recipeId);
+  }
+  function recordMaterialExchange(state2) {
+    const stats = ensureAchievementStats(state2);
+    stats.counters.materialExchanges = (stats.counters.materialExchanges || 0) + 1;
+  }
+  function recordSavingsGoal(state2) {
+    const stats = ensureAchievementStats(state2);
+    stats.counters.savingsGoals = (stats.counters.savingsGoals || 0) + 1;
+  }
+  function recordEquipmentSets(state2) {
+    const stats = ensureAchievementStats(state2);
+    for (const active2 of collectStats(state2.equipped).activeSets) {
+      stats.setTiers[active2.set] = Math.max(stats.setTiers[active2.set] || 0, active2.tier);
+    }
+  }
+  function recordGuestTopic(state2, guestId, topicIndex) {
+    if (!guestId || !Number.isInteger(topicIndex) || topicIndex < 0) return false;
+    const stats = ensureAchievementStats(state2);
+    const topics = stats.guestTopics[guestId] ||= [];
+    if (!Array.isArray(topics)) return false;
+    if (topics.includes(topicIndex)) return false;
+    topics.push(topicIndex);
+    topics.sort((a, b) => a - b);
+    return true;
+  }
+  function recordSeasonalCosmetic(state2, pack, season) {
+    if (!pack?.season || pack.season !== season) return false;
+    const stats = ensureAchievementStats(state2);
+    stats.counters.seasonalCosmeticSelections = (stats.counters.seasonalCosmeticSelections || 0) + 1;
+    return true;
+  }
+
   // src/core/state.js
   var SAVE_KEY = "cozy_adventures_save_v2";
   function newGame(now = Date.now()) {
@@ -23571,6 +23784,8 @@
       // id предметов сундука, которые игрок уже видел (метка «новое»)
       achievements: {},
       // id -> timestamp разблокировки
+      achievementStats: newAchievementStats(),
+      // вечные рекорды и факты особых событий
       trophies: [],
       // id трофеев кабинета (за боссов и розыск)
       trophiesSeen: [],
@@ -23630,6 +23845,7 @@
     state2.lastCatGift ??= null;
     state2.stats.catPets ||= 0;
     state2.achievements ||= {};
+    ensureAchievementStats(state2);
     state2.trophies ||= [];
     state2.trophiesSeen ||= [];
     state2.journal ||= [];
@@ -23761,11 +23977,15 @@
     }
     state2.inventory.push(itemId);
     state2.stats.itemsBought = (state2.stats.itemsBought || 0) + 1;
+    recordShopPurchase(state2, itemId);
     journalPush(state2, "\u{1FA99}", `\u041A\u0443\u043F\u043B\u0435\u043D\u043E: ${item2.name}.`);
     const auto = autoEquip(state2, itemId);
     onboardingPurchase(state2, itemId);
     const result = { ok: true, autoEquipped: auto };
-    if (completeSavingsGoal(state2, "item", itemId)) result.goalCompleted = true;
+    if (completeSavingsGoal(state2, "item", itemId)) {
+      recordSavingsGoal(state2);
+      result.goalCompleted = true;
+    }
     return result;
   }
   function autoEquip(state2, itemId) {
@@ -23789,6 +24009,7 @@
     const result = equip(state2.equipped, itemId);
     if (!result.ok) return null;
     state2.inventory.splice(index, 1);
+    recordEquipmentSets(state2);
     return { slot: result.slot };
   }
   var CREW_DEF2 = { companion: COMPANION_BY_ID, pet: PET_BY_ID, merc: MERC_BY_ID };
@@ -23816,7 +24037,10 @@
     }
     if (kind === "pet" && !state2.pet) state2.pet = id;
     const result = { ok: true };
-    if (completeSavingsGoal(state2, "crew", id)) result.goalCompleted = true;
+    if (completeSavingsGoal(state2, "crew", id)) {
+      recordSavingsGoal(state2);
+      result.goalCompleted = true;
+    }
     return result;
   }
   function toggleCompanion(state2, id) {
@@ -23866,6 +24090,7 @@
     state2.inventory.splice(inventoryIndex, 1);
     for (const off of result.swappedOff || []) state2.inventory.push(off);
     onboardingEquipmentChanged(state2);
+    recordEquipmentSets(state2);
     return { ok: true, slot: result.slot };
   }
   function unequipToInventory(state2, slot) {
@@ -23951,18 +24176,23 @@
       if (state2.materials[matId] <= 0) delete state2.materials[matId];
     }
     if (r.coins) state2.coins -= r.coins;
-    const count = r.result.count || 1;
-    for (let i = 0; i < count; i++) state2.inventory.push(r.result.itemId);
+    const count2 = r.result.count || 1;
+    for (let i = 0; i < count2; i++) state2.inventory.push(r.result.itemId);
     state2.stats.itemsCrafted = (state2.stats.itemsCrafted || 0) + 1;
+    recordCraft(state2, recipeId);
     journalPush(state2, "\u2692\uFE0F", `\u0413\u043E\u0442\u043E\u0432\u043E: ${r.name.toLowerCase()}.`);
     onboardingCrafted(state2, recipeId);
-    const result = { ok: true, itemId: r.result.itemId, count };
-    if (completeSavingsGoal(state2, "recipe", recipeId)) result.goalCompleted = true;
+    const result = { ok: true, itemId: r.result.itemId, count: count2 };
+    if (completeSavingsGoal(state2, "recipe", recipeId)) {
+      recordSavingsGoal(state2);
+      result.goalCompleted = true;
+    }
     return result;
   }
   function exchangeMaterial(state2, inputId, outputId) {
     const result = exchangeMaterials(state2, inputId, outputId);
     if (result.ok) {
+      recordMaterialExchange(state2);
       journalPush(state2, "\u{1F501}", `\u041E\u0431\u043C\u0435\u043D: ${materialLabel(inputId)} \xD7${result.cost} \u2192 ${materialLabel(outputId)} \xD7${result.received}.`);
     }
     return result;
@@ -23981,6 +24211,7 @@
     if (!COSMETIC_BY_ID[id] || !state2.cosmeticsOwned.includes(id)) return { ok: false, active: false };
     state2.cosmeticsActive = [id];
     state2.legacyCosmeticsActive = [id];
+    recordSeasonalCosmetic(state2, COSMETIC_BY_ID[id], currentSeason());
     return { ok: true, active: true };
   }
   function buyCosmetic(state2, id) {
@@ -23999,8 +24230,8 @@
     return { ok: true };
   }
   function toggleCosmetic(state2, id) {
-    const active = state2.cosmeticsActive.length === 1 && state2.cosmeticsActive[0] === id;
-    return selectCosmetic(state2, active ? null : id);
+    const active2 = state2.cosmeticsActive.length === 1 && state2.cosmeticsActive[0] === id;
+    return selectCosmetic(state2, active2 ? null : id);
   }
   var PUZZLE_POOL = new Map(
     [
@@ -24978,17 +25209,19 @@
     const previous = state2.puzzlesDone[puzzleId];
     const firstHonest = !previous || !!previous.skipped;
     const repeat = !firstHonest;
-    const isDaily = state2.lastDailyBonus !== todayKey() && isDailyPuzzle(state2, puzzleId);
+    const dailyDay = todayKey();
+    const isDaily = state2.lastDailyBonus !== dailyDay && isDailyPuzzle(state2, puzzleId);
     state2.puzzlesDone[puzzleId] = {
       moves: info.moves ?? 0,
       hintsUsed: info.hintsUsed ?? 0,
       at: Date.now()
     };
     state2.stats.puzzlesSolved += 1;
+    recordPuzzleCompletion(state2, puzzle, info, { isDaily, day: dailyDay });
     storyOnPuzzleComplete(state2, puzzleId);
     journalPush(state2, "\u{1F9E9}", firstHonest ? `\u0417\u0430\u0433\u0430\u0434\u043A\u0430 \xAB${puzzle.name}\xBB \u0440\u0435\u0448\u0435\u043D\u0430. \u041B\u0430\u0432\u043A\u0430 \u0441\u0432\u0435\u0442\u043B\u0435\u0435\u0442.` : `\xAB${puzzle.name}\xBB \u2014 \u0441\u043D\u043E\u0432\u0430 \u0440\u0435\u0448\u0435\u043D\u0430, \u043A\u043E\u0442 \u0434\u043E\u0432\u043E\u043B\u0435\u043D.`);
     if (isDaily) {
-      state2.lastDailyBonus = todayKey();
+      state2.lastDailyBonus = dailyDay;
       journalPush(state2, "\u{1F31F}", "\u0417\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \u0432\u044B\u043F\u043E\u043B\u043D\u0435\u043D \u2014 \u043F\u0443\u0442\u043D\u0438\u043A \u0449\u0435\u0434\u0440\u043E \u0431\u043B\u0430\u0433\u043E\u0434\u0430\u0440\u0438\u0442!");
     }
     const rewards = puzzleRewards(puzzle, {
@@ -25015,6 +25248,7 @@
     if (state2.coins < price) return { ok: false, error: "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043C\u043E\u043D\u0435\u0442", price };
     state2.coins -= price;
     state2.puzzlesDone[puzzleId] = { moves: 0, hintsUsed: 0, skipped: true, at: Date.now() };
+    recordPuzzleSkip(state2, puzzleId);
     storyOnPuzzleComplete(state2, puzzleId);
     addCoins(state2, consolation);
     return { ok: true, price, consolation };
@@ -25362,6 +25596,19 @@
         rewards.push({ type: "note", text: "\u0410\u043C\u0443\u043B\u0435\u0442 \u043E\u0447\u0430\u0433\u0430 \u0441\u043E\u0433\u0440\u0435\u043B \u0440\u044B\u0446\u0430\u0440\u044F \u043F\u043E\u0441\u043B\u0435 \u0431\u043E\u044F." });
       }
     }
+    if (!options.practice) {
+      recordBattleResult(state2, battle, {
+        ...result,
+        bossDrop,
+        energySpent,
+        practice: false
+      }, {
+        companions: state2.squadCompanions.length,
+        mercs: state2.squadMercs.length,
+        pet: !!state2.pet,
+        usedConsumables: usedIds
+      });
+    }
     return {
       ...result,
       rewards,
@@ -25588,37 +25835,37 @@
 
   // src/ui/goalView.js
   function savingsGoalSummary(state2) {
-    const progress = savingsGoalProgress(state2);
-    if (!progress) return "";
-    return `\u{1F3AF} ${progress.name}: ${progress.ready ? progress.readyText : `\u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C ${progress.short}`}`;
+    const progress2 = savingsGoalProgress(state2);
+    if (!progress2) return "";
+    return `\u{1F3AF} ${progress2.name}: ${progress2.ready ? progress2.readyText : `\u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C ${progress2.short}`}`;
   }
   function createSavingsGoalCard(ctx2, { onChange } = {}) {
-    const progress = savingsGoalProgress(ctx2.state);
-    if (!progress) return null;
+    const progress2 = savingsGoalProgress(ctx2.state);
+    if (!progress2) return null;
     const card = document.createElement("section");
     card.className = "panel savings-goal";
-    card.dataset.goalKind = progress.kind;
-    card.dataset.goalId = progress.id;
+    card.dataset.goalKind = progress2.kind;
+    card.dataset.goalId = progress2.id;
     const title = document.createElement("div");
     title.className = "savings-goal-title";
-    title.textContent = `${progress.icon} \u0426\u0435\u043B\u044C: ${progress.name}`;
+    title.textContent = `${progress2.icon} \u0426\u0435\u043B\u044C: ${progress2.name}`;
     card.appendChild(title);
-    if (progress.kind === "recipe") {
+    if (progress2.kind === "recipe") {
       const status2 = document.createElement("div");
       status2.className = "savings-goal-status";
-      status2.textContent = progress.ready ? progress.readyText : "\u041F\u043E\u043A\u0430 \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442:";
+      status2.textContent = progress2.ready ? progress2.readyText : "\u041F\u043E\u043A\u0430 \u043D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442:";
       card.appendChild(status2);
-      if (!progress.ready) {
+      if (!progress2.ready) {
         const missing = document.createElement("div");
         missing.className = "savings-goal-missing";
-        for (const entry of progress.missing) {
+        for (const entry of progress2.missing) {
           const line = document.createElement("div");
           line.textContent = entry.text;
           missing.appendChild(line);
         }
-        if (progress.coins.needed > 0) {
+        if (progress2.coins.needed > 0) {
           const coins = document.createElement("div");
-          coins.textContent = `\u{1FA99} ${progress.coins.current}/${progress.coins.needed}`;
+          coins.textContent = `\u{1FA99} ${progress2.coins.current}/${progress2.coins.needed}`;
           missing.appendChild(coins);
         }
         card.appendChild(missing);
@@ -25626,7 +25873,7 @@
     } else {
       const status2 = document.createElement("div");
       status2.className = "savings-goal-status";
-      status2.textContent = progress.text;
+      status2.textContent = progress2.text;
       card.appendChild(status2);
     }
     const actions = document.createElement("div");
@@ -25634,9 +25881,9 @@
     const route = document.createElement("button");
     route.className = "small primary";
     route.textContent = "\u041A \u0446\u0435\u043B\u0438";
-    route.title = progress.routeLabel;
+    route.title = progress2.routeLabel;
     route.dataset.goalRoute = "1";
-    route.addEventListener("click", () => ctx2.go(progress.route.name, progress.route.params));
+    route.addEventListener("click", () => ctx2.go(progress2.route.name, progress2.route.params));
     const clear = document.createElement("button");
     clear.className = "small ghost";
     clear.textContent = "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C";
@@ -25983,8 +26230,8 @@
     return LEGACY_COSMETIC_ALIASES[id] || id;
   }
   function activeCosmeticId(state2) {
-    const active = Array.isArray(state2?.cosmeticsActive) ? state2.cosmeticsActive : [];
-    return active.length > 0 ? canonicalCosmeticId(active[active.length - 1]) : null;
+    const active2 = Array.isArray(state2?.cosmeticsActive) ? state2.cosmeticsActive : [];
+    return active2.length > 0 ? canonicalCosmeticId(active2[active2.length - 1]) : null;
   }
   function legacyCosmeticIds(state2, selectedId = activeCosmeticId(state2)) {
     if (!selectedId) return [];
@@ -26033,10 +26280,10 @@
     pet_owl: ["\u{1F989} \u0421\u043E\u0432\u0430 \u0441\u0447\u0438\u0442\u0430\u0435\u0442 \u0432\u0441\u043B\u0443\u0445 \u043E\u0441\u0442\u0430\u0442\u043A\u0438 \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445. \u0421\u0431\u0438\u0432\u0430\u0435\u0442\u0441\u044F.", "\u{1F989} \u0421\u043E\u0432\u0430 \u043E\u0434\u043E\u0431\u0440\u0438\u0442\u0435\u043B\u044C\u043D\u043E \u0443\u0445\u0430\u0435\u0442 \u043D\u043E\u0432\u043E\u043C\u0443 \u043F\u043E\u0440\u044F\u0434\u043A\u0443."]
   };
   function pickChatter(state2) {
-    const active = [...state2.squadCompanions || [], state2.pet].filter(Boolean);
-    const pool = active.flatMap((id) => CHATTER[id] || []);
+    const active2 = [...state2.squadCompanions || [], state2.pet].filter(Boolean);
+    const pool = active2.flatMap((id) => CHATTER[id] || []);
     if (pool.length === 0) return null;
-    const speaker = active[Math.floor(Math.random() * active.length)];
+    const speaker = active2[Math.floor(Math.random() * active2.length)];
     const lines = CHATTER[speaker];
     return lines[Math.floor(Math.random() * lines.length)];
   }
@@ -26479,9 +26726,9 @@
     const textNav = document.createElement("nav");
     textNav.className = "hub-text-nav";
     textNav.setAttribute("aria-label", `\u0420\u0430\u0437\u0434\u0435\u043B\u044B: ${scene.alt}`);
-    const highlightHotspot = (screen, active) => {
+    const highlightHotspot = (screen, active2) => {
       const hotspot = hotspotEls[screen];
-      if (hotspot) hotspot.classList[active ? "add" : "remove"]("nav-highlight");
+      if (hotspot) hotspot.classList[active2 ? "add" : "remove"]("nav-highlight");
     };
     for (const [icon, label, screen] of scene.hotspots) {
       const b = document.createElement("button");
@@ -26497,13 +26744,13 @@
       textNav.appendChild(b);
     }
     container.appendChild(textNav);
-    const progress = document.createElement("div");
-    progress.className = "muted center mt";
-    progress.style.fontSize = "14px";
+    const progress2 = document.createElement("div");
+    progress2.className = "muted center mt";
+    progress2.style.fontSize = "14px";
     const season = SEASON_LABEL2[currentSeason()];
     const cosIcons = (state2.cosmeticsActive || []).length ? ` \xB7 \u041E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435: ${(state2.cosmeticsActive || []).map((id) => ({ cos_carpet: "\u{1F7E5}", cos_crest: "\u{1FAA7}", cos_flowers: "\u{1F338}", cos_fireflies: "\u2728", cos_garland: "\u{1F38F}", cos_snow: "\u2744\uFE0F" })[id] || "\u{1F380}").join(" ")}` : "";
-    progress.innerHTML = `\u{1F9E9} \u0417\u0430\u0433\u0430\u0434\u043E\u043A \u0440\u0435\u0448\u0435\u043D\u043E: <b>${solved}/${ALL_PUZZLES.length}</b> \xB7 \u2694\uFE0F \u041F\u043E\u0445\u043E\u0434\u043E\u0432 \u043F\u0440\u043E\u0439\u0434\u0435\u043D\u043E: <b>${won}/${BATTLES.length}</b> \xB7 \u{1F43E} \u041A\u043E\u043C\u0430\u043D\u0434\u0430: <b>${(state2.crew || []).length}</b> \xB7 ${season}${cosIcons}`;
-    container.appendChild(progress);
+    progress2.innerHTML = `\u{1F9E9} \u0417\u0430\u0433\u0430\u0434\u043E\u043A \u0440\u0435\u0448\u0435\u043D\u043E: <b>${solved}/${ALL_PUZZLES.length}</b> \xB7 \u2694\uFE0F \u041F\u043E\u0445\u043E\u0434\u043E\u0432 \u043F\u0440\u043E\u0439\u0434\u0435\u043D\u043E: <b>${won}/${BATTLES.length}</b> \xB7 \u{1F43E} \u041A\u043E\u043C\u0430\u043D\u0434\u0430: <b>${(state2.crew || []).length}</b> \xB7 ${season}${cosIcons}`;
+    container.appendChild(progress2);
     const goalCard = createSavingsGoalCard(ctx2, { onChange: () => rerender(sceneId) });
     if (goalCard) container.appendChild(goalCard);
     function petCat(btn) {
@@ -26947,10 +27194,10 @@
     return { count: solutions.length, solutions, tooMany: false };
   }
   function validateLevel(level) {
-    const { count, solutions } = findSolutions(level);
+    const { count: count2, solutions } = findSolutions(level);
     return {
-      solvable: count > 0,
-      solutionCount: count,
+      solvable: count2 > 0,
+      solutionCount: count2,
       solutions
     };
   }
@@ -27173,8 +27420,8 @@
   }
   function shelfHint(state2) {
     const { level } = state2;
-    const { count, solutions, cells } = solveShelf(level, 64);
-    if (count === 0) return { type: "unsolvable" };
+    const { count: count2, solutions, cells } = solveShelf(level, 64);
+    if (count2 === 0) return { type: "unsolvable" };
     const bad = violations(state2).filter((v) => v.rule === "notAdjacent" || v.rule === "onLight");
     if (bad.length > 0) {
       return { type: "remove", itemId: bad[0].itemA, text: bad[0].text };
@@ -27944,11 +28191,11 @@
       return b;
     }
     function later(fn, ms) {
-      const timer = setTimeout(() => {
+      const timer2 = setTimeout(() => {
         if (!disposed) fn();
       }, ms);
-      timers.push(timer);
-      return timer;
+      timers.push(timer2);
+      return timer2;
     }
     function setChecking(value) {
       checking = value;
@@ -28054,8 +28301,8 @@
     }
     function reactToAttempt(marks) {
       const exact = marks.filter((m) => m === "exact").length;
-      const present = marks.filter((m) => m === "present").length;
-      const kind = exact > 0 ? "exact" : present > 0 ? "present" : "absent";
+      const present2 = marks.filter((m) => m === "present").length;
+      const kind = exact > 0 ? "exact" : present2 > 0 ? "present" : "absent";
       const options = KEEPER_REACTIONS[kind];
       const index = reactionCounts[kind]++;
       let text = options[index % options.length];
@@ -28133,7 +28380,8 @@
       const rewards = completePuzzle(ctx2.state, level.id, {
         moves: puzzle.moves,
         hintsUsed,
-        coinFactor: factor
+        coinFactor: factor,
+        achievement: { attempts: puzzle.attempts.length }
       });
       ctx2.save();
       page.classList.add("riddle-solved");
@@ -28525,11 +28773,11 @@
       return b;
     }
     function later(fn, ms) {
-      const timer = setTimeout(() => {
+      const timer2 = setTimeout(() => {
         if (!disposed) fn();
       }, ms);
-      timers.push(timer);
-      return timer;
+      timers.push(timer2);
+      return timer2;
     }
     function setChecking(value) {
       checking = value;
@@ -28663,7 +28911,8 @@
       const rewards = completePuzzle(ctx2.state, level.id, {
         moves: puzzle.moves,
         hintsUsed,
-        coinFactor: factor
+        coinFactor: factor,
+        achievement: { mistakes: puzzle.mistakes, spoiled: puzzle.spoiled }
       });
       ctx2.save();
       page.classList.add("riddle-solved");
@@ -28809,7 +29058,10 @@
         matches.push({ group, spotIndex: i, spot: s, found: state2.found.has(spotKey(group, i)) });
       }
     }
-    if (matches.length === 0) return { result: "empty" };
+    if (matches.length === 0) {
+      state2.misses += 1;
+      return { result: "empty" };
+    }
     const fresh = matches.find((m) => !m.found);
     if (!fresh) return { result: "already", ...matches[0] };
     state2.found.add(spotKey(fresh.group, fresh.spotIndex));
@@ -29015,7 +29267,11 @@
     window.addEventListener("keydown", onKey);
     function finish() {
       finished = true;
-      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        achievement: { misses: puzzle.misses }
+      });
       ctx2.save();
       ctx2.sfx?.("success");
       draw();
@@ -29169,10 +29425,10 @@
     const endIdx = level.tiles.findIndex((t) => t.type === "end");
     const reached = /* @__PURE__ */ new Set();
     if (startIdx < 0 || endIdx < 0) return { solved: false, reached };
-    const queue = [startIdx];
+    const queue2 = [startIdx];
     reached.add(startIdx);
-    while (queue.length > 0) {
-      const i = queue.shift();
+    while (queue2.length > 0) {
+      const i = queue2.shift();
       const t = level.tiles[i];
       const conns = t.type === "beast" ? [] : connections(t.type, state2.rot[i] ?? t.rot ?? 0);
       for (const side of conns) {
@@ -29187,7 +29443,7 @@
         const nconns = connections(nt.type, state2.rot[j] ?? nt.rot ?? 0);
         if (nconns.includes(opp)) {
           reached.add(j);
-          queue.push(j);
+          queue2.push(j);
         }
       }
     }
@@ -29221,8 +29477,8 @@
   }
   function pathHint(state2) {
     const { level } = state2;
-    const { count, solutions, rotatable } = solvePath(level, 64);
-    if (count === 0) return { type: "unsolvable" };
+    const { count: count2, solutions, rotatable } = solvePath(level, 64);
+    if (count2 === 0) return { type: "unsolvable" };
     let best = null;
     let bestDist = Infinity;
     const variants = rotatable.map((i) => {
@@ -29562,8 +29818,8 @@
   }
   function teaHint(state2) {
     const { level } = state2;
-    const { count, solutions } = solveTea(level);
-    if (count === 0) return { type: "unsolvable" };
+    const { count: count2, solutions } = solveTea(level);
+    if (count2 === 0) return { type: "unsolvable" };
     let best = null;
     let bestCost = Infinity;
     for (const sol of solutions) {
@@ -29865,7 +30121,14 @@
     function finish() {
       if (finished) return;
       finished = true;
-      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      const status2 = teaStatus(puzzle);
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        achievement: {
+          exact: status2.heatOk && Object.values(status2.diffs).every((diff) => diff === 0)
+        }
+      });
       ctx2.save();
       ctx2.sfx?.("success");
       draw();
@@ -29980,10 +30243,10 @@
     const endIdx = level.tiles.findIndex((t) => t.type === "end");
     const reached = /* @__PURE__ */ new Set();
     if (startIdx < 0 || endIdx < 0) return { solved: false, reached };
-    const queue = [startIdx];
+    const queue2 = [startIdx];
     reached.add(startIdx);
-    while (queue.length > 0) {
-      const i = queue.shift();
+    while (queue2.length > 0) {
+      const i = queue2.shift();
       const t = level.tiles[i];
       if (t.type === "blocker") continue;
       const rotI = state2.rot[i] ?? t.rot ?? 0;
@@ -29998,7 +30261,7 @@
         const nf = faceAt(nt, state2.rot[j] ?? nt.rot ?? 0, (side + 2) % 4);
         if (facesMesh(f, nf)) {
           reached.add(j);
-          queue.push(j);
+          queue2.push(j);
         }
       }
     }
@@ -30033,14 +30296,14 @@
     const at = /* @__PURE__ */ new Map();
     tiles.forEach((t, i) => at.set(t.pos.join(","), i));
     const neighbors = tiles.map((t) => {
-      const list = [];
-      if (t.type === "blocker") return list;
+      const list2 = [];
+      if (t.type === "blocker") return list2;
       for (let s = 0; s < 4; s++) {
         const [dx, dy] = SIDES2[s];
         const j = at.get(`${t.pos[0] + dx},${t.pos[1] + dy}`);
-        if (j !== void 0 && tiles[j].type !== "blocker") list.push({ s, j });
+        if (j !== void 0 && tiles[j].type !== "blocker") list2.push({ s, j });
       }
-      return list;
+      return list2;
     });
     const rotOf = tiles.map((t) => t.type === "gear" && !t.fixed ? null : t.rot ?? 0);
     function edgePossible(i, s, j) {
@@ -30051,14 +30314,14 @@
     }
     function endReachable() {
       const seen = /* @__PURE__ */ new Set([startIdx]);
-      const queue = [startIdx];
-      while (queue.length > 0) {
-        const i = queue.shift();
+      const queue2 = [startIdx];
+      while (queue2.length > 0) {
+        const i = queue2.shift();
         for (const { s, j } of neighbors[i]) {
           if (seen.has(j)) continue;
           if (edgePossible(i, s, j)) {
             seen.add(j);
-            queue.push(j);
+            queue2.push(j);
           }
         }
       }
@@ -30088,8 +30351,8 @@
   }
   function mechHint(state2) {
     const { level } = state2;
-    const { count, solutions, rotatable } = solveMech(level, 64);
-    if (count === 0) return { type: "unsolvable" };
+    const { count: count2, solutions, rotatable } = solveMech(level, 64);
+    if (count2 === 0) return { type: "unsolvable" };
     const variants = rotatable.map((i) => gearVariants(level.tiles[i]));
     let best = null;
     let bestDist = Infinity;
@@ -30454,9 +30717,9 @@
     const { walls } = candleIndex(level);
     const [w, h] = level.grid;
     const lit = /* @__PURE__ */ new Set([cellKey(cx, cy)]);
-    const queue = [[cx, cy, 0]];
-    while (queue.length > 0) {
-      const [x, y, d] = queue.shift();
+    const queue2 = [[cx, cy, 0]];
+    while (queue2.length > 0) {
+      const [x, y, d] = queue2.shift();
       if (d >= level.radius) continue;
       for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
         const nx = x + dx;
@@ -30465,7 +30728,7 @@
         const k = cellKey(nx, ny);
         if (lit.has(k) || walls.has(k)) continue;
         lit.add(k);
-        queue.push([nx, ny, d + 1]);
+        queue2.push([nx, ny, d + 1]);
       }
     }
     return lit;
@@ -30550,8 +30813,8 @@
   }
   function candleHint(state2) {
     const { level } = state2;
-    const { count, solutions } = solveCandles(level, 64);
-    if (count === 0) return { type: "unsolvable" };
+    const { count: count2, solutions } = solveCandles(level, 64);
+    if (count2 === 0) return { type: "unsolvable" };
     let best = null;
     let bestDist = Infinity;
     for (const sol of solutions) {
@@ -30698,7 +30961,12 @@
     window.addEventListener("keydown", onKey);
     function finish() {
       finished = true;
-      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      const minimum = solveCandles(level, 1).solutions[0]?.length;
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        achievement: { placed: puzzle.candles.size, minimum }
+      });
       ctx2.save();
       ctx2.sfx?.("success");
       draw();
@@ -30951,8 +31219,8 @@
   }
   function flowHint(state2) {
     const { level } = state2;
-    const { count, solutions, rotatable } = cachedSolutions(level);
-    if (count === 0) return { type: "unsolvable" };
+    const { count: count2, solutions, rotatable } = cachedSolutions(level);
+    if (count2 === 0) return { type: "unsolvable" };
     let best = null;
     let bestDist = Infinity;
     for (const sol of solutions) {
@@ -31287,6 +31555,8 @@
       // повторы текущего шага (для steps с times > 1)
       mistakes: 0,
       // ошибки в текущей варке (3 = порча)
+      totalMistakes: 0,
+      // все ошибки попытки, включая сбросы и порчу
       spoiled: 0,
       // сколько раз зелье было испорчено
       history: [],
@@ -31326,6 +31596,7 @@
       return { ok: true, solved: isBrewSolved(state2) };
     }
     state2.mistakes += 1;
+    state2.totalMistakes += 1;
     if (state2.mistakes >= BREW_MAX_MISTAKES) {
       state2.progress = 0;
       state2.reps = 0;
@@ -31812,7 +32083,15 @@
     }
     function finish() {
       finished = true;
-      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        achievement: {
+          totalMistakes: puzzle.totalMistakes,
+          spoiled: puzzle.spoiled,
+          bookOpen: cozy()
+        }
+      });
       journalPush(ctx2.state, "\u2697\uFE0F", `\u0417\u0435\u043B\u044C\u0435 \xAB${level.name}\xBB \u0432\u0440\u0443\u0447\u0435\u043D\u043E \u0433\u043E\u0441\u0442\u044E: ${guest.name}.`);
       ctx2.save();
       ctx2.sfx?.("success");
@@ -32098,11 +32377,11 @@
       return b;
     }
     function later(fn, ms) {
-      const timer = setTimeout(() => {
+      const timer2 = setTimeout(() => {
         if (!disposed) fn();
       }, ms);
-      timers.push(timer);
-      return timer;
+      timers.push(timer2);
+      return timer2;
     }
     function setChecking(value) {
       checking = value;
@@ -32353,7 +32632,8 @@
       const rewards = completePuzzle(ctx2.state, level.id, {
         moves: puzzle.moves,
         hintsUsed,
-        coinFactor: factor
+        coinFactor: factor,
+        achievement: { mistakes: puzzle.mistakes }
       });
       ctx2.save();
       ctx2.sfx?.("success");
@@ -32420,7 +32700,7 @@
       guestBar.appendChild(renderBubble());
       scene.appendChild(guestBar);
       slotEls = [];
-      const active = shownSlot();
+      const active2 = shownSlot();
       const spread = document.createElement("div");
       spread.className = "fate-spread";
       level.story.forEach((part, si) => {
@@ -32431,7 +32711,7 @@
           cell.appendChild(cardEl(slotCard, si));
         } else {
           const empty = document.createElement("div");
-          empty.className = "fate-slot" + (si === active ? " active" : "");
+          empty.className = "fate-slot" + (si === active2 ? " active" : "");
           empty.textContent = "?";
           empty.title = "\u0422\u0430\u043F\u043D\u0438, \u0447\u0442\u043E\u0431\u044B \u0441\u043B\u0443\u0448\u0430\u0442\u044C \u044D\u0442\u0443 \u0440\u0435\u043F\u043B\u0438\u043A\u0443";
           empty.addEventListener("click", () => {
@@ -32590,6 +32870,200 @@
     if (from < 0) return { type: "already" };
     const to = state2.pieces.indexOf(from);
     return { type: "swap", from, to };
+  }
+
+  // src/ui/achievementArt.js
+  function achievementArtUrl(achievement, { concealed = false } = {}) {
+    const id = concealed && achievement?.secret ? "_secret" : achievement?.id || "_book";
+    return `assets/achievements/${id}.webp`;
+  }
+  function achievementArtEl(achievement, {
+    className = "",
+    concealed = false,
+    lazy = false
+  } = {}) {
+    const frame = document.createElement("span");
+    frame.className = `achievement-art ${className}`.trim();
+    frame.dataset.rarity = achievement?.rarity || "common";
+    const fallback = document.createElement("span");
+    fallback.className = "achievement-art-fallback";
+    fallback.textContent = concealed && achievement?.secret ? "\u0421\u0435\u043A\u0440\u0435\u0442" : "\u041D\u0430\u0433\u0440\u0430\u0434\u0430";
+    frame.appendChild(fallback);
+    const img = document.createElement("img");
+    img.className = "achievement-art-image";
+    img.alt = "";
+    img.decoding = "async";
+    img.draggable = false;
+    if (lazy) img.loading = "lazy";
+    img.addEventListener("load", () => frame.classList.add("is-loaded"));
+    img.addEventListener("error", () => {
+      img.remove();
+      frame.classList.add("is-missing");
+    });
+    img.src = achievementArtUrl(achievement, { concealed });
+    frame.appendChild(img);
+    return frame;
+  }
+
+  // src/ui/achievementCelebration.js
+  var RARITIES = {
+    common: { label: "\u041E\u0431\u044B\u0447\u043D\u043E\u0435", points: 10, rank: 0 },
+    uncommon: { label: "\u041D\u0435\u043E\u0431\u044B\u0447\u043D\u043E\u0435", points: 25, rank: 1 },
+    rare: { label: "\u0420\u0435\u0434\u043A\u043E\u0435", points: 50, rank: 2 },
+    epic: { label: "\u042D\u043F\u0438\u0447\u0435\u0441\u043A\u043E\u0435", points: 100, rank: 3 },
+    legendary: { label: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u043E\u0435", points: 250, rank: 4 }
+  };
+  var queue = [];
+  var active = null;
+  var host = null;
+  var timer = null;
+  var observer = null;
+  var busy = /* @__PURE__ */ new Set();
+  function rarityOf(achievement) {
+    const base = RARITIES[achievement?.rarity] || RARITIES.common;
+    return {
+      ...base,
+      ...achievement?.rarityInfo || {},
+      label: achievement?.rarityLabel || achievement?.rarityInfo?.label || base.label,
+      points: achievement?.points ?? achievement?.rarityInfo?.points ?? base.points
+    };
+  }
+  function hasOverlay() {
+    const overlay = typeof document !== "undefined" ? document.querySelector?.(".overlay") : null;
+    return !!overlay?.classList?.contains?.("overlay");
+  }
+  function blocked() {
+    return busy.size > 0 || hasOverlay();
+  }
+  function clearTimer() {
+    if (timer !== null) clearTimeout(timer);
+    timer = null;
+  }
+  function ensureHost() {
+    if (host || typeof document === "undefined") return host;
+    host = document.createElement("div");
+    host.id = "achievement-celebration";
+    host.hidden = true;
+    host.setAttribute("role", "status");
+    host.setAttribute("aria-live", "polite");
+    host.setAttribute("aria-atomic", "true");
+    document.body.appendChild(host);
+    if (typeof MutationObserver !== "undefined") {
+      observer = new MutationObserver((mutations) => {
+        const changed = mutations.some((mutation) => [...mutation.addedNodes, ...mutation.removedNodes].some((node) => node.classList?.contains?.("overlay")));
+        if (changed) schedule(120);
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+    return host;
+  }
+  function hideHost() {
+    if (host) host.hidden = true;
+  }
+  function finishActive() {
+    clearTimer();
+    active = null;
+    hideHost();
+    schedule(180);
+  }
+  function present(sound = true) {
+    if (!active || blocked()) {
+      schedule(250);
+      return;
+    }
+    const root = ensureHost();
+    if (!root) return;
+    clearTimer();
+    const { achievement, sfx: sfx2 } = active;
+    const rarity = rarityOf(achievement);
+    root.innerHTML = "";
+    const card = document.createElement("div");
+    card.className = "achievement-celebration-card";
+    card.dataset.rarity = achievement.rarity || "common";
+    card.dataset.achievementId = achievement.id;
+    const glow = document.createElement("span");
+    glow.className = "achievement-celebration-glow";
+    card.appendChild(glow);
+    card.appendChild(achievementArtEl(achievement, { className: "achievement-celebration-art" }));
+    const body = document.createElement("div");
+    body.className = "achievement-celebration-body";
+    const eyebrow = document.createElement("div");
+    eyebrow.className = "achievement-celebration-eyebrow";
+    eyebrow.textContent = "\u041D\u043E\u0432\u043E\u0435 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435";
+    const name = document.createElement("div");
+    name.className = "achievement-celebration-name";
+    name.textContent = achievement.name;
+    const meta = document.createElement("div");
+    meta.className = "achievement-celebration-meta";
+    meta.textContent = `${rarity.label} \xB7 ${rarity.points} \u043E\u0447\u043A\u043E\u0432 \u0441\u043B\u0430\u0432\u044B`;
+    body.append(eyebrow, name, meta);
+    if (queue.length) {
+      const more = document.createElement("div");
+      more.className = "achievement-celebration-more";
+      more.textContent = `\u0415\u0449\u0451 \u0432 \u043E\u0447\u0435\u0440\u0435\u0434\u0438: ${queue.length}`;
+      body.appendChild(more);
+    }
+    card.appendChild(body);
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "achievement-celebration-close";
+    close.setAttribute("aria-label", "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u0443\u0432\u0435\u0434\u043E\u043C\u043B\u0435\u043D\u0438\u0435");
+    close.textContent = "\xD7";
+    close.addEventListener("click", finishActive);
+    card.appendChild(close);
+    root.appendChild(card);
+    root.hidden = false;
+    if (sound) sfx2?.("achievement", rarity.rank);
+    timer = setTimeout(finishActive, rarity.rank >= 3 ? 4800 : 3800);
+    timer.unref?.();
+  }
+  function schedule(delay = 250) {
+    clearTimer();
+    if (!active && queue.length === 0) {
+      hideHost();
+      return;
+    }
+    if (blocked()) {
+      hideHost();
+      timer = setTimeout(() => schedule(250), delay);
+      timer.unref?.();
+      return;
+    }
+    timer = setTimeout(() => {
+      if (blocked()) {
+        schedule(250);
+        return;
+      }
+      if (!active) active = { ...queue.shift(), announced: false };
+      const announced = active.announced;
+      active.announced = true;
+      present(!announced);
+    }, delay);
+    timer.unref?.();
+  }
+  function queueAchievementCelebrations(achievements, { sfx: sfx2 } = {}) {
+    const known = /* @__PURE__ */ new Set([
+      ...queue.map((entry) => entry.achievement.id),
+      ...active ? [active.achievement.id] : []
+    ]);
+    for (const achievement of achievements || []) {
+      if (!achievement?.id || known.has(achievement.id)) continue;
+      known.add(achievement.id);
+      queue.push({ achievement, sfx: sfx2 });
+    }
+    if (queue.length || active) schedule(active ? 250 : 900);
+  }
+  function setAchievementPresentationBusy(key, value) {
+    if (value) busy.add(key);
+    else busy.delete(key);
+    schedule(blocked() ? 250 : 120);
+  }
+  function clearAchievementCelebrations() {
+    clearTimer();
+    queue = [];
+    active = null;
+    busy.clear();
+    hideHost();
   }
 
   // src/ui/glassView.js
@@ -32847,6 +33321,7 @@
     let celebration = null;
     let rafId = 0;
     function startCelebration(rewards) {
+      setAchievementPresentationBusy("glass-celebration", true);
       ctx2.sfx?.("fanfare");
       const canAnimate = typeof requestAnimationFrame !== "undefined" && typeof performance !== "undefined";
       if (!canAnimate) {
@@ -32878,6 +33353,7 @@
       rafId = requestAnimationFrame(step);
     }
     function showWin(rewards) {
+      setAchievementPresentationBusy("glass-celebration", false);
       const next = nextPuzzle(level.id);
       showOverlay(ctx2, {
         title: "\u{1FA9F} \u0412\u0438\u0442\u0440\u0430\u0436 \u0441\u0438\u044F\u0435\u0442!",
@@ -32994,6 +33470,7 @@
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerup", onPointerUp);
       if (rafId && typeof cancelAnimationFrame !== "undefined") cancelAnimationFrame(rafId);
+      setAchievementPresentationBusy("glass-celebration", false);
     };
   }
 
@@ -33311,12 +33788,17 @@
     function finish() {
       if (finished) return;
       finished = true;
-      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        achievement: { par }
+      });
       ctx2.save();
       startCelebration(rewards);
     }
     let celebration = null;
     function startCelebration(rewards) {
+      setAchievementPresentationBusy("spin-celebration", true);
       ctx2.sfx?.("fanfare");
       if (!canAnimate) {
         draw();
@@ -33338,6 +33820,7 @@
       ensureLoop();
     }
     function showWin(rewards) {
+      setAchievementPresentationBusy("spin-celebration", false);
       const next = nextPuzzle(level.id);
       const medal = puzzle.moves <= par ? " \xB7 \u{1F3C5} \u0422\u043E\u0447\u043D\u0430\u044F \u0441\u0431\u043E\u0440\u043A\u0430!" : "";
       showOverlay(ctx2, {
@@ -33455,6 +33938,7 @@
       window.removeEventListener("keydown", onKey);
       canvas.removeEventListener("pointerdown", onPointerDown);
       if (rafId && typeof cancelAnimationFrame !== "undefined") cancelAnimationFrame(rafId);
+      setAchievementPresentationBusy("spin-celebration", false);
     };
   }
 
@@ -33479,6 +33963,8 @@
       // потраченные попытки (ошибки)
       gone: false,
       // гость ушёл думать — пора начинать заново
+      departures: 0,
+      // уходы гостя сохраняются между новыми попытками
       history: [],
       moves: 0
     };
@@ -33531,6 +34017,7 @@
     state2.history = [];
     if (state2.tries >= GIFT_MAX_TRIES) {
       state2.gone = true;
+      state2.departures += 1;
       return { result: "gone", id, broken: broken[0] };
     }
     return { result: "hint", id, broken: broken[0], triesLeft: GIFT_MAX_TRIES - state2.tries };
@@ -33567,7 +34054,9 @@
     return h;
   }
   function restartGift(state2, rng = Math.random) {
-    return createGiftPuzzle(state2.level, state2.souvenirs, rng);
+    const fresh = createGiftPuzzle(state2.level, state2.souvenirs, rng);
+    fresh.departures = state2.departures || 0;
+    return fresh;
   }
 
   // src/ui/giftView.js
@@ -33686,11 +34175,11 @@
       return b;
     }
     function later(fn, ms) {
-      const timer = setTimeout(() => {
+      const timer2 = setTimeout(() => {
         if (!disposed) fn();
       }, ms);
-      timers.push(timer);
-      return timer;
+      timers.push(timer2);
+      return timer2;
     }
     function setChecking(value) {
       checking = value;
@@ -33840,7 +34329,8 @@
       const rewards = completePuzzle(ctx2.state, level.id, {
         moves: puzzle.moves,
         hintsUsed,
-        coinFactor: factor
+        coinFactor: factor,
+        achievement: { tries: puzzle.tries, departures: puzzle.departures }
       });
       const gift = SOUVENIRS[level.answer];
       journalPush(ctx2.state, "\u{1F381}", `${level.guest.name} \u043F\u0440\u0438\u043D\u044F\u043B(\u0430) \u043F\u043E\u0434\u0430\u0440\u043E\u043A: ${gift.name}.`);
@@ -33998,6 +34488,7 @@
     const timers = [];
     let selected = null;
     let hintMark = null;
+    let failedServes = 0;
     container.appendChild(header(ctx2, level.name, `\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C: ${"\u2605".repeat(level.difficulty)}`, ["puzzles", { mech: "seating" }]));
     const wrap = document.createElement("div");
     wrap.className = "puzzle-wrap hang-wrap";
@@ -34052,11 +34543,11 @@
       return b;
     }
     function later(fn, ms) {
-      const timer = setTimeout(() => {
+      const timer2 = setTimeout(() => {
         if (!disposed) fn();
       }, ms);
-      timers.push(timer);
-      return timer;
+      timers.push(timer2);
+      return timer2;
     }
     function isFixedGuest(guestId) {
       return Object.prototype.hasOwnProperty.call(level.fixed || {}, guestId);
@@ -34257,12 +34748,14 @@
       }
       const unseated = level.guests.filter((g) => !puzzle.placement[g]);
       if (unseated.length) {
+        failedServes += 1;
         ctx2.sfx?.("fail");
         ctx2.toast(`\u0420\u0430\u043D\u043E \u043F\u043E\u0434\u0430\u0432\u0430\u0442\u044C \u0447\u0430\u0439: \u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u0441\u0430\u0434\u0438\u0442\u044C \u0433\u043E\u0441\u0442\u0435\u0439: ${unseated.length}.`);
         return;
       }
       const bad = seatingViolations(puzzle);
       if (bad.length) {
+        failedServes += 1;
         ctx2.sfx?.("fail");
         ctx2.toast(`\u041F\u043E\u0436\u0435\u043B\u0430\u043D\u0438\u0435 \u043D\u0435 \u0441\u0431\u044B\u043B\u043E\u0441\u044C: ${bad[0].text}.`);
         hintMark = { guest: bad[0].guest, seat: bad[0].rule.seat || puzzle.placement[bad[0].guest] || null };
@@ -34293,7 +34786,11 @@
     window.addEventListener("keydown", onKey);
     function finish() {
       finished = true;
-      const rewards = completePuzzle(ctx2.state, level.id, { moves: puzzle.moves, hintsUsed });
+      const rewards = completePuzzle(ctx2.state, level.id, {
+        moves: puzzle.moves,
+        hintsUsed,
+        achievement: { failedServes }
+      });
       ctx2.save();
       ctx2.sfx?.("success");
       renderAll();
@@ -34518,9 +35015,9 @@
     const sync = () => {
       const current = currentPuzzleCatalogMode(ctx2.state);
       for (const b of buttons) {
-        const active = b.dataset.mode === current;
-        b.className = `small pc-mode-option${active ? " primary is-active" : " ghost"}`;
-        b.setAttribute("aria-pressed", String(active));
+        const active2 = b.dataset.mode === current;
+        b.className = `small pc-mode-option${active2 ? " primary is-active" : " ghost"}`;
+        b.setAttribute("aria-pressed", String(active2));
       }
     };
     for (const mode of PUZZLE_CATALOG_MODES) {
@@ -34584,10 +35081,10 @@
     return media;
   }
   function makeProgressText(entry) {
-    const progress = document.createElement("div");
-    progress.className = "pc-progress";
-    progress.textContent = `\u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E ${entry.done} \u0438\u0437 ${entry.total}`;
-    return progress;
+    const progress2 = document.createElement("div");
+    progress2.className = "pc-progress";
+    progress2.textContent = `\u041F\u0440\u043E\u0439\u0434\u0435\u043D\u043E ${entry.done} \u0438\u0437 ${entry.total}`;
+    return progress2;
   }
   function makeProgress(entry) {
     const box = document.createElement("div");
@@ -34686,12 +35183,12 @@
     section.append(toolbar, track);
     container.appendChild(section);
     let activeSlot = 1;
-    let active = 0;
+    let active2 = 0;
     function setActive(slot) {
       activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
-      active = Number(cards[activeSlot].dataset.entryIndex);
+      active2 = Number(cards[activeSlot].dataset.entryIndex);
       cards.forEach((card, i) => card.classList.toggle("is-active", i === activeSlot));
-      counter.textContent = `${active + 1} / ${entries2.length}`;
+      counter.textContent = `${active2 + 1} / ${entries2.length}`;
     }
     function placeCard2(slot, smooth) {
       const card = cards[slot];
@@ -34714,7 +35211,7 @@
       placeCard2(bounded, smooth);
     }
     function step(direction) {
-      const nextEntry = (active + direction + entries2.length) % entries2.length;
+      const nextEntry = (active2 + direction + entries2.length) % entries2.length;
       let target = nextEntry + 1;
       if (direction < 0 && activeSlot === 1) target = 0;
       if (direction > 0 && activeSlot === entries2.length) target = entries2.length + 1;
@@ -34830,9 +35327,9 @@
     show(recommendedIndex(entries2));
   }
   function renderSimpleList(container, entries2, onOpen) {
-    const list = document.createElement("section");
-    list.className = "pc-simple-list";
-    list.setAttribute("aria-label", "\u0421\u043F\u0438\u0441\u043E\u043A \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
+    const list2 = document.createElement("section");
+    list2.className = "pc-simple-list";
+    list2.setAttribute("aria-label", "\u0421\u043F\u0438\u0441\u043E\u043A \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
     for (const entry of entries2) {
       const item2 = document.createElement("button");
       item2.type = "button";
@@ -34853,9 +35350,9 @@
       arrow.textContent = "\u2192";
       item2.append(text, arrow);
       item2.addEventListener("click", () => onOpen(entry));
-      list.appendChild(item2);
+      list2.appendChild(item2);
     }
-    container.appendChild(list);
+    container.appendChild(list2);
   }
   var BENTO_FILTERS = [
     { id: "all", name: "\u0412\u0441\u0435", match: () => true },
@@ -34866,10 +35363,10 @@
   function renderBento(container, entries2, onOpen) {
     const section = document.createElement("section");
     section.className = "pc-bento";
-    const filters = document.createElement("div");
-    filters.className = "pc-bento-filters";
-    filters.setAttribute("role", "group");
-    filters.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
+    const filters2 = document.createElement("div");
+    filters2.className = "pc-bento-filters";
+    filters2.setAttribute("role", "group");
+    filters2.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A");
     const grid = document.createElement("div");
     grid.className = "pc-bento-grid";
     const empty = document.createElement("div");
@@ -34879,7 +35376,7 @@
     const featured = recommendedIndex(entries2);
     const cards = entries2.map((entry) => makeCard(entry, "pc-bento-card", onOpen, true));
     cards.forEach((card) => grid.appendChild(card));
-    section.append(filters, grid, empty);
+    section.append(filters2, grid, empty);
     container.appendChild(section);
     let current = "all";
     const filterButtons = [];
@@ -34895,9 +35392,9 @@
       });
       empty.hidden = visible > 0;
       for (const b of filterButtons) {
-        const active = b.dataset.filter === current;
-        b.className = `small pc-bento-filter${active ? " primary is-active" : " ghost"}`;
-        b.setAttribute("aria-pressed", String(active));
+        const active2 = b.dataset.filter === current;
+        b.className = `small pc-bento-filter${active2 ? " primary is-active" : " ghost"}`;
+        b.setAttribute("aria-pressed", String(active2));
       }
     }
     for (const filter of BENTO_FILTERS) {
@@ -34907,7 +35404,7 @@
       b.textContent = filter.name;
       b.addEventListener("click", () => applyFilter(filter.id));
       filterButtons.push(b);
-      filters.appendChild(b);
+      filters2.appendChild(b);
     }
     applyFilter("all");
   }
@@ -34980,8 +35477,8 @@
     const items = ALL_PUZZLES.filter((p) => typeOf2(p) === mech);
     container.appendChild(header(ctx2, `${t.icon} ${t.name}`, t.desc, "puzzles"));
     const firstUnsolved = items.find((p) => puzzleNeedsHonest(state2, p.id) && puzzleAvailable(state2, ALL_PUZZLES.indexOf(p)));
-    const list = document.createElement("div");
-    list.className = "list";
+    const list2 = document.createElement("div");
+    list2.className = "list";
     items.forEach((p, i) => {
       const available = puzzleAvailable(state2, ALL_PUZZLES.indexOf(p));
       const entry = state2.puzzlesDone[p.id];
@@ -35013,15 +35510,15 @@
           row.appendChild(skipBtn);
         }
       }
-      list.appendChild(row);
+      list2.appendChild(row);
     });
-    container.appendChild(list);
+    container.appendChild(list2);
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F4DA}", label: "\u0412\u0441\u0435 \u0442\u0438\u043F\u044B", screen: "puzzles" },
       { icon: "\u{1F4D6}", label: "\u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", screen: "brewbook" },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
     ]));
-    const targetRow = list.querySelector?.('[data-scroll-target="1"]');
+    const targetRow = list2.querySelector?.('[data-scroll-target="1"]');
     if (targetRow && targetRow.scrollIntoView) {
       setTimeout(() => targetRow.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
@@ -35529,19 +36026,19 @@
   function setHtml(item2, state2) {
     if (!item2.set || !SETS[item2.set]) return "";
     const def = SETS[item2.set];
-    let count = 0;
+    let count2 = 0;
     if (state2) {
       for (const slot of SLOTS) {
         const it = ITEM_BY_ID[state2.equipped[slot]];
-        if (it?.set === item2.set) count += 1;
+        if (it?.set === item2.set) count2 += 1;
       }
     }
     const tiers = [3, 6, 9].map((t) => {
-      const active = count >= t;
+      const active2 = count2 >= t;
       const td = def.tiers[t];
-      return td ? `<div class="it-set-tier ${active ? "on" : ""}">${active ? "\u25CF" : "\u25CB"} ${t}: ${td.desc}</div>` : "";
+      return td ? `<div class="it-set-tier ${active2 ? "on" : ""}">${active2 ? "\u25CF" : "\u25CB"} ${t}: ${td.desc}</div>` : "";
     }).join("");
-    return `<div class="it-set"><div class="it-set-name">\u2728 \u0421\u0435\u0442 \xAB${def.name}\xBB \u2014 \u043D\u0430\u0434\u0435\u0442\u043E ${count}/9</div>${tiers}</div>`;
+    return `<div class="it-set"><div class="it-set-name">\u2728 \u0421\u0435\u0442 \xAB${def.name}\xBB \u2014 \u043D\u0430\u0434\u0435\u0442\u043E ${count2}/9</div>${tiers}</div>`;
   }
   var tipEl = null;
   var tipPinned = false;
@@ -35926,14 +36423,14 @@
         bar.appendChild(t);
         box.appendChild(bar);
       }
-      const filters = document.createElement("div");
-      filters.className = "chest-filters";
-      const present = new Set(state2.inventory.map((id) => {
+      const filters2 = document.createElement("div");
+      filters2.className = "chest-filters";
+      const present2 = new Set(state2.inventory.map((id) => {
         const it = ITEM_BY_ID[id];
         if (!it) return null;
         return it.slot === "ring" ? "ring" : it.slot;
       }).filter(Boolean));
-      if (filterSlot !== "all" && !present.has(filterSlot)) filterSlot = "all";
+      if (filterSlot !== "all" && !present2.has(filterSlot)) filterSlot = "all";
       const mkOpt = (sel, val, label, cur) => {
         const o = document.createElement("option");
         o.value = val;
@@ -35946,14 +36443,14 @@
       typeSel.title = "\u0424\u0438\u043B\u044C\u0442\u0440 \u043F\u043E \u0442\u0438\u043F\u0443 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u0430";
       mkOpt(typeSel, "all", "\u0412\u0441\u0435 \u0442\u0438\u043F\u044B", filterSlot);
       for (const [key, label] of SLOT_CHIPS) {
-        if (present.has(key)) mkOpt(typeSel, key, label, filterSlot);
+        if (present2.has(key)) mkOpt(typeSel, key, label, filterSlot);
       }
       typeSel.addEventListener("change", () => {
         filterSlot = typeSel.value;
         if (filterSlot !== "all" && targetSlot && filterForTarget(targetSlot) !== filterSlot) targetSlot = null;
         rerender();
       });
-      filters.appendChild(typeSel);
+      filters2.appendChild(typeSel);
       const presentR = new Set(state2.inventory.map((id) => ITEM_BY_ID[id]?.rarity).filter(Boolean));
       if (filterRarity !== "all" && !presentR.has(filterRarity)) filterRarity = "all";
       const rarSel = document.createElement("select");
@@ -35967,7 +36464,7 @@
         filterRarity = rarSel.value;
         rerender();
       });
-      filters.appendChild(rarSel);
+      filters2.appendChild(rarSel);
       const best = document.createElement("button");
       best.className = "small chest-best";
       best.textContent = "\u2728";
@@ -35983,8 +36480,8 @@
           ctx2.toast("\u041B\u0443\u0447\u0448\u0435\u0435 \u0443\u0436\u0435 \u043D\u0430\u0434\u0435\u0442\u043E");
         }
       });
-      filters.appendChild(best);
-      box.appendChild(filters);
+      filters2.appendChild(best);
+      box.appendChild(filters2);
       const entries2 = state2.inventory.map((id, index) => ({ id, index, item: ITEM_BY_ID[id] })).filter((e) => e.item).filter((e) => slotMatchesFilter(e.item, filterSlot)).filter((e) => filterRarity === "all" || e.item.rarity === filterRarity);
       entries2.sort((a, b) => {
         const sa = a.item.set ? 0 : 1;
@@ -36113,24 +36610,24 @@
       return box;
     }
     function dropTargetsFor(payload) {
-      const list = [];
+      const list2 = [];
       if (payload.kind === "chest") {
         if (payload.item.slot === "consumable") {
-          beltEls.forEach((el, i) => list.push({ type: "belt", i, el }));
+          beltEls.forEach((el, i) => list2.push({ type: "belt", i, el }));
         } else if (payload.item.slot === "ring") {
-          list.push({ type: "slot", slot: "ring1", el: slotEls.ring1 });
-          list.push({ type: "slot", slot: "ring2", el: slotEls.ring2 });
+          list2.push({ type: "slot", slot: "ring1", el: slotEls.ring1 });
+          list2.push({ type: "slot", slot: "ring2", el: slotEls.ring2 });
         } else {
-          list.push({ type: "slot", slot: payload.item.slot, el: slotEls[payload.item.slot] });
+          list2.push({ type: "slot", slot: payload.item.slot, el: slotEls[payload.item.slot] });
         }
       } else if (payload.kind === "slot") {
-        if (chestListEl) list.push({ type: "chest", el: chestListEl });
-        if (payload.slot === "ring1") list.push({ type: "slot", slot: "ring2", el: slotEls.ring2, swap: true });
-        if (payload.slot === "ring2") list.push({ type: "slot", slot: "ring1", el: slotEls.ring1, swap: true });
+        if (chestListEl) list2.push({ type: "chest", el: chestListEl });
+        if (payload.slot === "ring1") list2.push({ type: "slot", slot: "ring2", el: slotEls.ring2, swap: true });
+        if (payload.slot === "ring2") list2.push({ type: "slot", slot: "ring1", el: slotEls.ring1, swap: true });
       } else if (payload.kind === "belt") {
-        if (chestListEl) list.push({ type: "chest", el: chestListEl });
+        if (chestListEl) list2.push({ type: "chest", el: chestListEl });
       }
-      return list.filter((t) => t.el);
+      return list2.filter((t) => t.el);
     }
     function startItemDrag(ev, payload) {
       if (ev.button != null && ev.button !== 0) return;
@@ -36841,9 +37338,9 @@
     cosList.appendChild(baseRow);
     for (const c of COSMETIC_PACKS) {
       const owned = state2.cosmeticsOwned.includes(c.id);
-      const active = state2.cosmeticsActive.length === 1 && state2.cosmeticsActive[0] === c.id;
+      const active2 = state2.cosmeticsActive.length === 1 && state2.cosmeticsActive[0] === c.id;
       const row = document.createElement("div");
-      row.className = "row" + (active ? " done" : "");
+      row.className = "row" + (active2 ? " done" : "");
       row.dataset.cosmeticRow = c.id;
       const price = c.sealPrice ? `\u{1F530} ${c.sealPrice}` : `\u{1FA99} ${c.price}`;
       row.innerHTML = `
@@ -36854,9 +37351,9 @@
       row.prepend(previewEl(c.scenes.lavka.preview, c.icon));
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "small" + (active ? " ghost" : "");
+      btn.className = "small" + (active2 ? " ghost" : "");
       btn.dataset.cosmeticId = c.id;
-      btn.setAttribute("aria-pressed", String(active));
+      btn.setAttribute("aria-pressed", String(active2));
       if (!owned) {
         btn.innerHTML = `\u041A\u0443\u043F\u0438\u0442\u044C \xB7 ${price}`;
         btn.disabled = c.sealPrice ? state2.seals < c.sealPrice : state2.coins < c.price;
@@ -36870,7 +37367,7 @@
           } else ctx2.toast(r.error);
         });
       } else {
-        btn.textContent = active ? "\u0423\u0431\u0440\u0430\u0442\u044C" : "\u0412\u044B\u0431\u0440\u0430\u0442\u044C";
+        btn.textContent = active2 ? "\u0423\u0431\u0440\u0430\u0442\u044C" : "\u0412\u044B\u0431\u0440\u0430\u0442\u044C";
         btn.addEventListener("click", () => {
           toggleCosmetic(state2, c.id);
           ctx2.save();
@@ -37061,8 +37558,8 @@
     }
     lorePanel.append(loreTitle, loreActions);
     container.appendChild(lorePanel);
-    const list = document.createElement("div");
-    list.className = "list";
+    const list2 = document.createElement("div");
+    list2.className = "list";
     let scrollTarget = null;
     for (const b of world.battles) {
       const available = battleAvailable(state2, b.id);
@@ -37085,14 +37582,14 @@
         row.appendChild(btn);
       }
       if (!scrollTarget && available && !done) scrollTarget = row;
-      list.appendChild(row);
+      list2.appendChild(row);
     }
-    container.appendChild(list);
+    container.appendChild(list2);
     if (scrollTarget && scrollTarget.scrollIntoView) {
       setTimeout(() => scrollTarget.scrollIntoView({ block: "center", behavior: "smooth" }), 60);
     }
     if (won === 0 && !onboardingBlocksLegacyTutorials(state2)) {
-      const firstBtn = list.children[0]?.querySelector?.("button");
+      const firstBtn = list2.children[0]?.querySelector?.("button");
       if (firstBtn) {
         startTutorial(ctx2, "first_battle", [
           {
@@ -37157,12 +37654,12 @@
       const panel = document.createElement("div");
       panel.className = "panel";
       panel.innerHTML = `<h3>${KIND_LABEL[kind]}</h3>`;
-      const list = document.createElement("div");
-      list.className = "list";
+      const list2 = document.createElement("div");
+      list2.className = "list";
       for (const def of stock.filter((c) => c.kind === kind)) {
-        const active = kind === "companion" && state2.squadCompanions.includes(def.id) || kind === "merc" && state2.squadMercs.includes(def.id) || kind === "pet" && state2.pet === def.id;
+        const active2 = kind === "companion" && state2.squadCompanions.includes(def.id) || kind === "merc" && state2.squadMercs.includes(def.id) || kind === "pet" && state2.pet === def.id;
         const row = document.createElement("div");
-        row.className = "row" + (active ? " done" : "");
+        row.className = "row" + (active2 ? " done" : "");
         const price = def.currency === "seals" ? `\u{1F530} ${def.price}` : `\u{1FA99} ${def.price}`;
         row.innerHTML = `
         <span class="icon">${def.icon}</span>
@@ -37171,7 +37668,7 @@
           <div class="desc">${def.description} ${bonusText(def) ? `\xB7 ${bonusText(def)}` : ""}</div>
         </span>`;
         const btn = document.createElement("button");
-        btn.className = "small" + (active ? " ghost" : "");
+        btn.className = "small" + (active2 ? " ghost" : "");
         if (!def.hired) {
           btn.innerHTML = `\u041D\u0430\u043D\u044F\u0442\u044C \xB7 ${price}`;
           btn.disabled = def.currency === "seals" ? state2.seals < def.price : state2.coins < def.price;
@@ -37184,7 +37681,7 @@
             } else ctx2.toast(r.error);
           });
         } else {
-          btn.textContent = active ? "\u0423\u0431\u0440\u0430\u0442\u044C \u0438\u0437 \u043E\u0442\u0440\u044F\u0434\u0430" : "\u0412 \u043E\u0442\u0440\u044F\u0434";
+          btn.textContent = active2 ? "\u0423\u0431\u0440\u0430\u0442\u044C \u0438\u0437 \u043E\u0442\u0440\u044F\u0434\u0430" : "\u0412 \u043E\u0442\u0440\u044F\u0434";
           btn.addEventListener("click", () => {
             const fn = kind === "companion" ? toggleCompanion : kind === "merc" ? toggleMerc : setPet;
             const r = fn(state2, def.id);
@@ -37215,9 +37712,9 @@
           });
           row.appendChild(goalBtn);
         }
-        list.appendChild(row);
+        list2.appendChild(row);
       }
-      panel.appendChild(list);
+      panel.appendChild(list2);
       container.appendChild(panel);
     }
     function iconOf(st, id) {
@@ -37259,10 +37756,10 @@
     panel.className = "panel";
     panel.append(seekBtn, newBtn, sandboxBtn);
     container.appendChild(panel);
-    const list = document.createElement("div");
-    list.className = "list";
+    const list2 = document.createElement("div");
+    list2.className = "list";
     if (state2.customPuzzles.length === 0) {
-      list.innerHTML = '<div class="muted panel">\u041F\u043E\u043A\u0430 \u043F\u0443\u0441\u0442\u043E. \u041D\u0430\u0436\u043C\u0438 \xAB\u041D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u043E \u0441\u0432\u0435\u0442\u043E\u043C\xBB \u0438 \u0441\u043E\u0431\u0435\u0440\u0438 \u0441\u0432\u043E\u044E!</div>';
+      list2.innerHTML = '<div class="muted panel">\u041F\u043E\u043A\u0430 \u043F\u0443\u0441\u0442\u043E. \u041D\u0430\u0436\u043C\u0438 \xAB\u041D\u043E\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430 \u0441\u043E \u0441\u0432\u0435\u0442\u043E\u043C\xBB \u0438 \u0441\u043E\u0431\u0435\u0440\u0438 \u0441\u0432\u043E\u044E!</div>';
     }
     for (const p of state2.customPuzzles) {
       const row = document.createElement("div");
@@ -37293,9 +37790,9 @@
         }
       });
       row.append(play, edit, del);
-      list.appendChild(row);
+      list2.appendChild(row);
     }
-    container.appendChild(list);
+    container.appendChild(list2);
     function rerender() {
       container.innerHTML = "";
       renderWorkshop(container, ctx2);
@@ -37904,6 +38401,16 @@
         tone(340, 0.1, { delay: 0.3, type: "triangle", gain: 0.04, slide: -60 });
         break;
       }
+      case "achievement": {
+        const rank = Math.max(0, Math.min(4, step));
+        const notes = [523, 659, 784, 1047, 1319, 1568].slice(0, 4 + (rank >= 3 ? 1 : 0));
+        notes.forEach((f, i) => tone(f * (1 + rank * 0.025), 0.3, {
+          delay: i * 0.1,
+          gain: 0.045 + rank * 3e-3
+        }));
+        if (rank >= 2) tone(2093 + rank * 110, 0.5, { delay: 0.48, gain: 0.025 });
+        break;
+      }
       case "success":
         [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.25, { delay: i * 0.09, gain: 0.06 }));
         break;
@@ -38257,16 +38764,16 @@
     const syncCursorUI = () => {
       const mode = cursorMode(state2);
       for (const b of cursorPicker.children) {
-        const active = b.dataset.mode === mode;
-        b.className = `small pc-mode-option${active ? " primary is-active" : " ghost"}`;
-        b.setAttribute("aria-pressed", String(active));
+        const active2 = b.dataset.mode === mode;
+        b.className = `small pc-mode-option${active2 ? " primary is-active" : " ghost"}`;
+        b.setAttribute("aria-pressed", String(active2));
       }
       themeGrid.style.display = mode === "fixed" ? "" : "none";
       const current = fixedCursorTheme(state2);
       for (const chip of themeGrid.children) {
-        const active = chip.dataset.theme === current;
-        chip.className = `small set-cursor-chip${active ? " primary is-active" : " ghost"}`;
-        chip.setAttribute("aria-pressed", String(active));
+        const active2 = chip.dataset.theme === current;
+        chip.className = `small set-cursor-chip${active2 ? " primary is-active" : " ghost"}`;
+        chip.setAttribute("aria-pressed", String(active2));
       }
     };
     for (const mode of CURSOR_MODES) {
@@ -38412,9 +38919,9 @@
     const minutes = totalMinutes % 60;
     return hours > 0 ? `${hours} \u0447 ${minutes} \u043C\u0438\u043D` : `${minutes} \u043C\u0438\u043D`;
   }
-  function formatRewardWins(count) {
-    const lastTwo = count % 100;
-    const last = count % 10;
+  function formatRewardWins(count2) {
+    const lastTwo = count2 % 100;
+    const last = count2 % 10;
     if (lastTwo >= 11 && lastTwo <= 14) return "\u043D\u0430\u0433\u0440\u0430\u0434\u043D\u044B\u0445 \u043F\u043E\u0431\u0435\u0434";
     if (last === 1) return "\u043D\u0430\u0433\u0440\u0430\u0434\u043D\u0430\u044F \u043F\u043E\u0431\u0435\u0434\u0430";
     if (last >= 2 && last <= 4) return "\u043D\u0430\u0433\u0440\u0430\u0434\u043D\u044B\u0435 \u043F\u043E\u0431\u0435\u0434\u044B";
@@ -38627,11 +39134,11 @@
     }
     function onDragEnd() {
       if (!unitDrag) return;
-      const { key, active, hoverSlot, ghost } = unitDrag;
+      const { key, active: active2, hoverSlot, ghost } = unitDrag;
       ghost?.remove();
       hoverSlotEl?.classList.remove("selected");
       unitDrag = null;
-      if (!active || hoverSlot === null || hoverSlot === void 0) return;
+      if (!active2 || hoverSlot === null || hoverSlot === void 0) return;
       moveFormationSlot(state2, key, hoverSlot);
       ctx2.sfx?.("rotate");
       ctx2.save();
@@ -38652,21 +39159,21 @@
     window.addEventListener("pointerup", onDragEnd);
     for (const u of units) {
       const slot = state2.formation[u.key];
-      const host = slotEls[`ally${slot}`];
-      if (!host) continue;
-      host.classList.add("occupied");
-      host.innerHTML = "";
-      host.appendChild(unitSpriteEl(u.art, u.icon, true, u.key === "knight" ? "knight" : null));
-      host.style.touchAction = "none";
-      host.addEventListener("pointerdown", (ev) => {
+      const host2 = slotEls[`ally${slot}`];
+      if (!host2) continue;
+      host2.classList.add("occupied");
+      host2.innerHTML = "";
+      host2.appendChild(unitSpriteEl(u.art, u.icon, true, u.key === "knight" ? "knight" : null));
+      host2.style.touchAction = "none";
+      host2.addEventListener("pointerdown", (ev) => {
         unitDrag = { key: u.key, startX: ev.clientX, startY: ev.clientY, active: false, ghost: null, hoverSlot: null };
         ev.preventDefault();
       });
-      host.addEventListener("click", (ev) => {
+      host2.addEventListener("click", (ev) => {
         ev.stopPropagation?.();
         selectedUnit = selectedUnit === u.key ? null : u.key;
         field.querySelectorAll(".form-slot").forEach((s) => s.classList.remove("selected"));
-        if (selectedUnit) host.classList.add("selected");
+        if (selectedUnit) host2.classList.add("selected");
         ctx2.sfx?.("tap");
       });
     }
@@ -38816,6 +39323,7 @@
     };
   }
   function playBattleReplay(container, ctx2, { title, subtitle, backTo = "battles", world, result, unitDefs, overlayButtons, onboardingResult = null }) {
+    setAchievementPresentationBusy("battle-replay", true);
     container.innerHTML = "";
     container.appendChild(header(ctx2, title, subtitle ?? "\u0411\u043E\u0439 \u0438\u0434\u0451\u0442 \u0441\u0430\u043C \u2014 \u0441\u043C\u043E\u0442\u0440\u0438 \u0438 \u0443\u0447\u0438\u0441\u044C", backTo));
     const field2 = document.createElement("div");
@@ -38885,7 +39393,7 @@
       figures.set(uid, { el, unit, side: isAlly ? "ally" : "enemy", x, y, size });
       unitsByUid.set(uid, unit);
     }
-    let timer = null;
+    let timer2 = null;
     let i = 0;
     let done = false;
     let cancelled = false;
@@ -38926,6 +39434,7 @@
       frames.clear();
       resultOverlay?.remove();
       resultOverlay = null;
+      setAchievementPresentationBusy("battle-replay", false);
     }
     function figOf(uid) {
       return figures.get(uid) || null;
@@ -39151,7 +39660,7 @@
         i += 1;
       }
       const delay = applied.t === "move" ? Math.max(70, speed * 0.3) : speed;
-      timer = later(step, delay);
+      timer2 = later(step, delay);
     }
     function finishNow() {
       if (done || cancelled) return;
@@ -39164,8 +39673,8 @@
     function endScreen() {
       if (done || cancelled) return;
       done = true;
-      cancelLater(timer);
-      timer = null;
+      cancelLater(timer2);
+      timer2 = null;
       const rep = result.report;
       ctx2.sfx?.(rep.victory ? "success" : "fail");
       const rewardHtml = (result.rewards || []).map(rewardText).filter(Boolean).join("<br>");
@@ -39194,6 +39703,7 @@
         rw.innerHTML = rewardHtml;
         card.insertBefore(rw, resultOverlay.querySelector(".advice") || resultOverlay.querySelector(".actions"));
       }
+      setAchievementPresentationBusy("battle-replay", false);
     }
     step();
     return cleanup;
@@ -39223,8 +39733,8 @@
       panel.appendChild(expBtn);
       container.appendChild(panel);
     }
-    const list = document.createElement("div");
-    list.className = "list";
+    const list2 = document.createElement("div");
+    list2.className = "list";
     for (const p of SEEK_PUZZLES) {
       const row = document.createElement("div");
       row.className = "row";
@@ -39240,9 +39750,9 @@
       btn.textContent = "\u041F\u0440\u0430\u0432\u0438\u0442\u044C";
       btn.addEventListener("click", () => ctx2.go("seekeditor", { id: p.id }));
       row.appendChild(btn);
-      list.appendChild(row);
+      list2.appendChild(row);
     }
-    container.appendChild(list);
+    container.appendChild(list2);
   }
   function renderSeekEditor(container, ctx2, params) {
     const raw = SEEK_PUZZLES.find((p) => p.id === params.id);
@@ -39559,198 +40069,1190 @@
     refreshInfo();
   }
 
-  // src/data/achievements.js
-  function solvedPuzzleCount(state2, ctx2 = {}) {
-    const ids = ctx2.puzzleIds || Object.keys(state2.puzzlesDone || {});
-    return ids.filter((id) => puzzleSolved(state2, id)).length;
-  }
-  function puzzleSolved(state2, id) {
-    const entry = state2.puzzlesDone?.[id];
+  // src/core/achievements.js
+  var SNAPSHOT = /* @__PURE__ */ Symbol("achievementSnapshot");
+  var own = (value, key) => Object.prototype.hasOwnProperty.call(value || {}, key);
+  var object = (value) => value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  var list = (value) => Array.isArray(value) ? value : [];
+  var count = (value) => Number.isFinite(value) && value > 0 ? value : 0;
+  function honestEntry(entry) {
     return !!entry && !entry.skipped;
   }
-  var ACHIEVEMENTS = [
-    {
-      id: "first_puzzle",
-      icon: "\u{1F9E9}",
-      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430",
-      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0443.",
-      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= 1
-    },
-    {
-      id: "ten_puzzles",
-      icon: "\u{1F3EE}",
-      name: "\u0414\u0435\u0441\u044F\u0442\u043A\u0430 \u0444\u043E\u043D\u0430\u0440\u0435\u0439",
-      desc: "\u0420\u0435\u0448\u0438\u0442\u044C 10 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A.",
-      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= 10
-    },
-    {
-      id: "meadow_master",
-      icon: "\u{1F33F}",
-      name: "\u0425\u043E\u0437\u044F\u0438\u043D \u043E\u043F\u0443\u0448\u043A\u0438",
-      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u0422\u0438\u0445\u043E\u0439 \u043E\u043F\u0443\u0448\u043A\u0438.",
-      check: (s) => Array.from({ length: 12 }, (_, i) => `md_${String(i + 1).padStart(2, "0")}`).every((id) => puzzleSolved(s, id))
-    },
-    {
-      id: "half_campaign",
-      icon: "\u{1F4D6}",
-      name: "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u0443\u0442\u0438",
-      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0432\u0441\u0435\u0445 \u0437\u0430\u0433\u0430\u0434\u043E\u043A \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
-      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= Math.ceil(ctx2.puzzlesTotal / 2)
-    },
-    {
-      id: "all_puzzles",
-      icon: "\u{1F31F}",
-      name: "\u041C\u0430\u0441\u0442\u0435\u0440 \u0437\u0430\u0433\u0430\u0434\u043E\u043A",
-      desc: "\u0420\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 \u0437\u0430\u0433\u0430\u0434\u043A\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
-      check: (s, ctx2) => solvedPuzzleCount(s, ctx2) >= ctx2.puzzlesTotal
-    },
-    {
-      id: "first_battle",
-      icon: "\u2694\uFE0F",
-      name: "\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u0445\u043E\u0434",
-      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043F\u0435\u0440\u0432\u043E\u043C \u0431\u043E\u044E.",
-      check: (s) => s.stats.battlesWon >= 1
-    },
-    {
-      id: "willow_down",
-      icon: "\u{1F333}",
-      name: "\u041F\u0430\u0434\u0435\u043D\u0438\u0435 \u0438\u0432\u044B",
-      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u0441\u0442\u0430\u0440\u043E\u0439 \u0438\u0432\u044B.",
-      check: (s) => !!s.battlesDone.bt_boss_willow
-    },
-    {
-      id: "keeper_down",
-      icon: "\u{1F4D6}",
-      name: "\u041A\u043E\u043D\u0435\u0446 \u0438\u0441\u0442\u043E\u0440\u0438\u0438",
-      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B.",
-      check: (s) => !!s.battlesDone.bk_boss_keeper
-    },
-    {
-      id: "time_down",
-      icon: "\u23F3",
-      name: "\u0412\u0440\u0435\u043C\u0435\u043D\u0438 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435\u0442",
-      desc: "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0421\u0430\u043C\u043E \u0412\u0440\u0435\u043C\u044F \u2014 \u0444\u0438\u043D\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u0431\u043E\u0441\u0441\u0430.",
-      check: (s) => !!s.battlesDone.mist_boss
-    },
-    {
-      id: "fifty_battles",
-      icon: "\u{1F5E1}\uFE0F",
-      name: "\u041F\u043E\u043B\u0441\u043E\u0442\u043D\u0438 \u043F\u043E\u0431\u0435\u0434",
-      desc: "\u041F\u0440\u043E\u0439\u0442\u0438 50 \u0431\u043E\u0451\u0432.",
-      check: (s) => Object.keys(s.battlesDone).length >= 50
-    },
-    {
-      id: "all_battles",
-      icon: "\u{1F451}",
-      name: "\u041F\u043E\u043A\u043E\u0440\u0438\u0442\u0435\u043B\u044C \u043C\u0438\u0440\u043E\u0432",
-      desc: "\u041F\u0440\u043E\u0439\u0442\u0438 \u0432\u0441\u0435 240 \u0431\u043E\u0451\u0432, \u0432\u043A\u043B\u044E\u0447\u0430\u044F \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0435.",
-      check: (s, ctx2) => Object.keys(s.battlesDone).length >= ctx2.battlesTotal
-    },
-    {
-      id: "crew_five",
-      icon: "\u{1F43E}",
-      name: "\u0411\u043E\u043B\u044C\u0448\u0430\u044F \u0441\u0435\u043C\u044C\u044F",
-      desc: "\u041D\u0430\u043D\u044F\u0442\u044C 5 \u0447\u043B\u0435\u043D\u043E\u0432 \u043A\u043E\u043C\u0430\u043D\u0434\u044B.",
-      check: (s) => (s.crew || []).length >= 5
-    },
-    {
-      id: "first_craft",
-      icon: "\u2692\uFE0F",
-      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430",
-      desc: "\u0421\u0434\u0435\u043B\u0430\u0442\u044C \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C \u0432 \u043A\u0443\u0437\u043D\u0438\u0446\u0435.",
-      check: (s) => (s.stats.itemsCrafted || 0) >= 1
-    },
-    {
-      id: "rich",
-      icon: "\u{1F4B0}",
-      name: "\u0417\u0432\u043E\u043D \u043F\u043E\u043B\u043D\u044B\u0445 \u043A\u0430\u0440\u043C\u0430\u043D\u043E\u0432",
-      desc: "\u0417\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u0441\u0443\u043C\u043C\u0430\u0440\u043D\u043E 5000 \u043C\u043E\u043D\u0435\u0442.",
-      check: (s) => s.stats.coinsEarned >= 5e3
-    },
-    {
-      id: "seals_five",
-      icon: "\u{1F530}",
-      name: "\u041A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u044F \u043F\u0435\u0447\u0430\u0442\u0435\u0439",
-      desc: "\u0418\u043C\u0435\u0442\u044C 5 \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430 \u043E\u0434\u043D\u043E\u0432\u0440\u0435\u043C\u0435\u043D\u043D\u043E.",
-      check: (s) => s.seals >= 5
-    },
-    {
-      id: "shopper",
-      icon: "\u{1F6CD}\uFE0F",
-      name: "\u0417\u0430\u0432\u0441\u0435\u0433\u0434\u0430\u0442\u0430\u0439 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430",
-      desc: "\u0421\u0434\u0435\u043B\u0430\u0442\u044C 20 \u043F\u043E\u043A\u0443\u043F\u043E\u043A.",
-      check: (s) => (s.stats.itemsBought || 0) >= 20
-    },
-    {
-      id: "seek_master",
-      icon: "\u{1F50D}",
-      name: "\u041E\u0440\u043B\u0438\u043D\u044B\u0439 \u0433\u043B\u0430\u0437",
-      desc: "\u041F\u0440\u043E\u0439\u0442\u0438 \u0432\u0441\u0435 \u0438\u0441\u043A\u0430\u043B\u043A\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.",
-      check: (s, ctx2) => ctx2.seekIds.every((id) => puzzleSolved(s, id))
-    },
-    {
-      id: "cat_friend",
-      icon: "\u{1F408}",
-      name: "\u041C\u0443\u0440\u043B\u044B\u043A\u0430\u043B\u043E",
-      desc: "\u041F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C \u043A\u043E\u0442\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F 25 \u0440\u0430\u0437.",
-      check: (s) => (s.stats.catPets || 0) >= 25
-    },
-    {
-      id: "first_trophy",
-      icon: "\u{1F3C6}",
-      name: "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u043B\u043A\u0430",
-      desc: "\u041F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u044B\u0439 \u0442\u0440\u043E\u0444\u0435\u0439 \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435.",
-      check: (s) => (s.trophies || []).length >= 1
-    },
-    {
-      id: "cabinet_full",
-      icon: "\u{1F98C}",
-      name: "\u041F\u043E\u043B\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442",
-      desc: "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435 12 \u0442\u0440\u043E\u0444\u0435\u0435\u0432 \u0441 \u0431\u043E\u0441\u0441\u043E\u0432 \u043C\u0438\u0440\u043E\u0432.",
-      check: (s) => (s.trophies || []).filter((id) => !id.startsWith("mini_")).length >= 12
+  function victoriousEntry(entry) {
+    if (!entry) return false;
+    if (typeof entry !== "object") return true;
+    return entry.victories === void 0 || count(entry.victories) > 0;
+  }
+  function validDay(day) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day || "")) return false;
+    const date = /* @__PURE__ */ new Date(`${day}T00:00:00Z`);
+    return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === day;
+  }
+  function idsFrom(values) {
+    return new Set(list(values).filter((id) => typeof id === "string" && id.length > 0));
+  }
+  function matchingIds(source, condition, snapshot, custom = false) {
+    let ids = [...source];
+    if (condition.ids) {
+      const allowed = idsFrom(condition.ids);
+      ids = ids.filter((id) => allowed.has(id));
     }
-  ];
-  function checkAchievements(state2, ctx2) {
-    state2.achievements ||= {};
-    const fresh = [];
-    for (const a of ACHIEVEMENTS) {
-      if (state2.achievements[a.id]) continue;
-      if (a.check(state2, ctx2)) {
-        state2.achievements[a.id] = Date.now();
-        fresh.push(a);
+    if (condition.mechanic) {
+      ids = ids.filter((id) => snapshot.puzzleMechanics.get(id) === condition.mechanic);
+    }
+    if (!custom) ids = ids.filter((id) => snapshot.campaignPuzzleIds.has(id));
+    return ids;
+  }
+  function progress(current, target, done) {
+    const safeCurrent = count(current);
+    const safeTarget = Math.max(1, count(target));
+    return {
+      current: safeCurrent,
+      target: safeTarget,
+      done: done === void 0 ? safeCurrent >= safeTarget : !!done
+    };
+  }
+  function readTopics(snapshot) {
+    const read = /* @__PURE__ */ new Map();
+    const source = object(snapshot.telemetry.guestTopics);
+    for (const guest of snapshot.guests) {
+      const indexes = new Set(
+        list(source[guest.id]).filter((index) => Number.isInteger(index) && index >= 0 && index < guest.topicCount)
+      );
+      read.set(guest.id, indexes.size);
+    }
+    return read;
+  }
+  function createAchievementSnapshot(state2, ctx2 = {}) {
+    const puzzles = list(ctx2.puzzles).filter((puzzle) => typeof puzzle?.id === "string");
+    const campaignPuzzleIds = new Set(puzzles.map((puzzle) => puzzle.id));
+    const customPuzzleIds = new Set(
+      list(state2.customPuzzles).map((puzzle) => puzzle?.id).filter((id) => typeof id === "string" && id && !campaignPuzzleIds.has(id))
+    );
+    const knownPuzzleIds = /* @__PURE__ */ new Set([...campaignPuzzleIds, ...customPuzzleIds]);
+    const puzzleMechanics = new Map(puzzles.map((puzzle) => [puzzle.id, puzzle.mechanic || "mirror"]));
+    for (const puzzle of list(state2.customPuzzles)) {
+      if (customPuzzleIds.has(puzzle?.id)) puzzleMechanics.set(puzzle.id, puzzle.mechanic || "mirror");
+    }
+    const honestPuzzleIds = /* @__PURE__ */ new Set();
+    for (const id of knownPuzzleIds) {
+      if (honestEntry(object(state2.puzzlesDone)[id])) honestPuzzleIds.add(id);
+    }
+    const campaignHonestPuzzleIds = new Set([...honestPuzzleIds].filter((id) => campaignPuzzleIds.has(id)));
+    const customHonestPuzzleIds = new Set([...honestPuzzleIds].filter((id) => customPuzzleIds.has(id)));
+    const battleIds = new Set(
+      list(ctx2.battles).map((battle) => battle?.id).filter((id) => typeof id === "string" && id)
+    );
+    const wonBattleIds = /* @__PURE__ */ new Set();
+    for (const id of battleIds) {
+      if (victoriousEntry(object(state2.battlesDone)[id])) wonBattleIds.add(id);
+    }
+    const telemetry = object(state2.achievementStats);
+    const telemetryPuzzles = object(telemetry.puzzles);
+    const puzzleFeats = /* @__PURE__ */ new Map();
+    const noHintPuzzleIds = /* @__PURE__ */ new Set();
+    const puzzleDefinitions = new Map(puzzles.map((puzzle) => [puzzle.id, puzzle]));
+    for (const id of honestPuzzleIds) {
+      const feats = new Set(list(telemetryPuzzles[id]?.feats).filter((feat) => typeof feat === "string"));
+      const saved = object(state2.puzzlesDone)[id];
+      if (saved.hintsUsed === 0) feats.add("no_hints");
+      const definition2 = puzzleDefinitions.get(id);
+      if (definition2?.mechanic === "spin" && saved.hintsUsed === 0 && Number.isFinite(saved.moves) && saved.moves > 0 && Number.isFinite(definition2.achievementPar) && saved.moves <= definition2.achievementPar) feats.add("spin_par");
+      if (feats.has("no_hints")) noHintPuzzleIds.add(id);
+      if (feats.size) puzzleFeats.set(id, feats);
+    }
+    const telemetryBattles = object(telemetry.battles);
+    const battleFeats = /* @__PURE__ */ new Map();
+    let recordedDefeats = 0;
+    for (const id of battleIds) {
+      const record = object(telemetryBattles[id]);
+      const feats = new Set(list(record.feats).filter((feat) => typeof feat === "string"));
+      if (feats.size) battleFeats.set(id, feats);
+      recordedDefeats += count(record.defeats);
+    }
+    const guests = list(ctx2.guests).map((guest) => ({
+      id: guest.id,
+      levelIds: list(guest.levelIds),
+      topicCount: count(guest.topicCount)
+    })).filter((guest) => typeof guest.id === "string");
+    const storyGuestIds = idsFrom(ctx2.storyGuestIds);
+    const story = object(state2.story);
+    const storyGuests = object(story.guests);
+    const storyGuestsMet = /* @__PURE__ */ new Set();
+    const storyOwnPeople = /* @__PURE__ */ new Set();
+    const silentGuests = /* @__PURE__ */ new Set();
+    for (const id of storyGuestIds) {
+      const memory = object(storyGuests[id]);
+      if (count(memory.visits) > 0) storyGuestsMet.add(id);
+      if (count(memory.visits) >= 4) storyOwnPeople.add(id);
+      if (memory.silenceShown === true) silentGuests.add(id);
+    }
+    if (storyGuestIds.has(story.pending?.guestId)) storyGuestsMet.add(story.pending.guestId);
+    const achievementIds = idsFrom(ctx2.achievementIds);
+    const unlockedAchievementIds = /* @__PURE__ */ new Set();
+    for (const id of achievementIds) {
+      if (own(state2.achievements, id)) unlockedAchievementIds.add(id);
+    }
+    const setTiers = /* @__PURE__ */ new Map();
+    const itemSets = object(ctx2.itemSets);
+    const setIds = idsFrom(ctx2.setIds);
+    const equipment = object(state2.equipped);
+    for (const id of setIds) {
+      const equippedCount = Object.values(equipment).filter((itemId) => itemSets[itemId] === id).length;
+      const currentTier = equippedCount >= 9 ? 9 : equippedCount >= 6 ? 6 : equippedCount >= 3 ? 3 : 0;
+      setTiers.set(id, Math.max(currentTier, count(object(telemetry.setTiers)[id])));
+    }
+    const fateCards = /* @__PURE__ */ new Set();
+    const fateCardIds = idsFrom(ctx2.fateCardIds);
+    for (const level of list(ctx2.fateLevels)) {
+      if (!campaignHonestPuzzleIds.has(level.id)) continue;
+      for (const cardId of list(level.cards)) {
+        if (fateCardIds.has(cardId)) fateCards.add(cardId);
       }
+    }
+    const dailyDays = new Set(list(object(telemetry.daily).days).filter(validDay));
+    if (validDay(state2.lastDailyBonus)) dailyDays.add(state2.lastDailyBonus);
+    return {
+      [SNAPSHOT]: true,
+      state: state2,
+      telemetry,
+      counters: object(telemetry.counters),
+      campaignPuzzleIds,
+      customPuzzleIds,
+      campaignHonestPuzzleIds,
+      customHonestPuzzleIds,
+      puzzleMechanics,
+      puzzleFeats,
+      noHintPuzzleIds,
+      battleIds,
+      wonBattleIds,
+      battleFeats,
+      recordedDefeats,
+      guests,
+      topicRead: readTopics({ telemetry, guests }),
+      storyGuestIds,
+      storyGuestsMet,
+      storyOwnPeople,
+      silentGuests,
+      achievementIds,
+      unlockedAchievementIds,
+      setTiers,
+      fateCards,
+      dailyDays,
+      guideIds: idsFrom(ctx2.guideIds),
+      loreKeys: idsFrom(ctx2.loreKeys),
+      crewIds: idsFrom(ctx2.crewIds),
+      companionIds: idsFrom(ctx2.companionIds),
+      mercIds: idsFrom(ctx2.mercIds),
+      petIds: idsFrom(ctx2.petIds),
+      cosmeticIds: idsFrom(ctx2.cosmeticIds),
+      bossDrops: object(ctx2.bossDrops),
+      brewGuestLevels: object(ctx2.brewGuestLevels),
+      seatingGuestLevels: object(ctx2.seatingGuestLevels)
+    };
+  }
+  function evaluate(snapshot, definition2) {
+    const { state: state2 } = snapshot;
+    const condition = object(definition2.condition);
+    const target = definition2.target;
+    switch (condition.kind) {
+      case "puzzles": {
+        const noHints = condition.noHints === true;
+        const source = noHints ? snapshot.noHintPuzzleIds : snapshot.campaignHonestPuzzleIds;
+        return progress(matchingIds(source, condition, snapshot).length, target);
+      }
+      case "puzzleSolves":
+        return progress(object(state2.stats).puzzlesSolved, target);
+      case "battles": {
+        let ids = [...snapshot.wonBattleIds];
+        if (condition.ids) {
+          const allowed = idsFrom(condition.ids);
+          ids = ids.filter((id) => allowed.has(id));
+        }
+        return progress(ids.length, target);
+      }
+      case "battleWins":
+        return progress(object(state2.stats).battlesWon, target);
+      case "daily":
+        return progress(snapshot.dailyDays.size, target);
+      case "storyFlag":
+        return progress(Number(state2.story?.[condition.flag] === true), target);
+      case "storyStep":
+        return progress(object(state2.story).step, target);
+      case "storyBeat": {
+        const story = object(state2.story);
+        const reached = count(story.step) > condition.step || count(story.step) === condition.step && story.pending?.beat === true && story.pending?.guestId === "spirit";
+        return progress(Number(reached), target);
+      }
+      case "storyGuests": {
+        const source = condition.visits >= 4 ? snapshot.storyOwnPeople : snapshot.storyGuestsMet;
+        return progress(source.size, target);
+      }
+      case "guide": {
+        const seen = new Set(list(state2.onboarding?.guide?.seen));
+        return progress([...snapshot.guideIds].filter((id) => seen.has(id)).length, target);
+      }
+      case "bookGuests": {
+        const current = snapshot.guests.filter((guest) => guest.levelIds.some((id) => snapshot.campaignHonestPuzzleIds.has(id))).length;
+        return progress(current, target);
+      }
+      case "guestTopics": {
+        const values = [...snapshot.topicRead.values()];
+        if (condition.mode === "one") {
+          const done = snapshot.guests.some((guest) => guest.topicCount > 0 && snapshot.topicRead.get(guest.id) >= guest.topicCount);
+          return progress(Math.max(0, ...values), target, done);
+        }
+        return progress(values.reduce((sum, value) => sum + value, 0), target);
+      }
+      case "guestLevels": {
+        const groups = condition.group === "seating" ? snapshot.seatingGuestLevels : snapshot.brewGuestLevels;
+        const current = Object.values(groups).filter((ids) => list(ids).some((id) => snapshot.campaignHonestPuzzleIds.has(id))).length;
+        return progress(current, target);
+      }
+      case "lore": {
+        const seen = object(state2.battleLoreSeen);
+        return progress([...snapshot.loreKeys].filter((key) => seen[key] === true).length, target);
+      }
+      case "crew": {
+        const hired = new Set(list(state2.crew));
+        return progress([...snapshot.crewIds].filter((id) => hired.has(id)).length, target);
+      }
+      case "fullParty": {
+        const companions = new Set(list(state2.squadCompanions).filter((id) => snapshot.companionIds.has(id)));
+        const mercs = new Set(list(state2.squadMercs).filter((id) => snapshot.mercIds.has(id)));
+        const full = companions.size >= 3 && mercs.size >= 2 && snapshot.petIds.has(state2.pet);
+        return progress(Number(full), target);
+      }
+      case "stat":
+        return progress(object(state2.stats)[condition.key], target);
+      case "unique": {
+        const allowed = idsFrom(condition.ids);
+        const values = new Set(list(snapshot.telemetry[condition.key]));
+        return progress([...allowed].filter((id) => values.has(id)).length, target);
+      }
+      case "seals":
+        return progress(state2.seals, target);
+      case "trophies": {
+        const owned = new Set(list(state2.trophies));
+        return progress(condition.ids.filter((id) => owned.has(id)).length, target);
+      }
+      case "bossDrops": {
+        const ownedItems = /* @__PURE__ */ new Set([
+          ...list(state2.inventory),
+          ...list(state2.consumableBelt),
+          ...Object.values(object(state2.equipped))
+        ]);
+        const current = Object.entries(snapshot.bossDrops).filter(([battleId, itemId]) => object(state2.bossDrops)[battleId]?.collected === true || ownedItems.has(itemId)).length;
+        return progress(current, target);
+      }
+      case "cosmetics": {
+        const owned = new Set(list(state2.cosmeticsOwned));
+        return progress([...snapshot.cosmeticIds].filter((id) => owned.has(id)).length, target);
+      }
+      case "fateDeck":
+        return progress(snapshot.fateCards.size, target);
+      case "sets":
+        return progress([...snapshot.setTiers.values()].filter((tier) => tier >= condition.tier).length, target);
+      case "counter":
+        return progress(snapshot.counters[condition.key], target);
+      case "puzzleFeat": {
+        const source = condition.includeCustom ? /* @__PURE__ */ new Set([...snapshot.campaignHonestPuzzleIds, ...snapshot.customHonestPuzzleIds]) : snapshot.campaignHonestPuzzleIds;
+        const ids = matchingIds(source, condition, snapshot, condition.includeCustom);
+        const current = ids.filter((id) => snapshot.puzzleFeats.get(id)?.has(condition.feat)).length;
+        return progress(current, target);
+      }
+      case "battleFeat": {
+        let ids = [...snapshot.battleFeats.keys()];
+        if (condition.id) ids = ids.filter((id) => id === condition.id);
+        return progress(ids.filter((id) => snapshot.battleFeats.get(id)?.has(condition.feat)).length, target);
+      }
+      case "battleDefeats":
+        return progress(Math.max(count(snapshot.counters.battleDefeats), snapshot.recordedDefeats), target);
+      case "custom": {
+        const source = condition.mode === "solved" ? snapshot.customHonestPuzzleIds : snapshot.customPuzzleIds;
+        return progress(source.size, target);
+      }
+      case "spider":
+        return progress(Number(
+          state2.cheats?.spiderHat === true || list(state2.cheats?.used).includes("\u041F\u0410\u0423\u0427\u041E\u041A")
+        ), target);
+      case "silence":
+        return progress(snapshot.silentGuests.size, target);
+      case "meta": {
+        const current = [...snapshot.unlockedAchievementIds].filter((id) => id !== definition2.id).length;
+        return progress(current, target);
+      }
+      default:
+        throw new Error(`\u041D\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043D\u043E\u0435 \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u044F: ${condition.kind || "\u043F\u0443\u0441\u0442\u043E"}`);
+    }
+  }
+  function achievementProgress(state2, definition2, ctx2) {
+    const context = ctx2 || definition2.evaluationContext || {};
+    const snapshot = context?.[SNAPSHOT] ? context : createAchievementSnapshot(state2, context);
+    return evaluate(snapshot, definition2);
+  }
+  function checkAchievements(state2, definitions2, ctx2) {
+    if (!state2.achievements || typeof state2.achievements !== "object" || Array.isArray(state2.achievements)) {
+      state2.achievements = {};
+    }
+    const catalog = list(definitions2);
+    const context = ctx2 || catalog[0]?.evaluationContext || {};
+    const snapshot = context?.[SNAPSHOT] ? context : createAchievementSnapshot(state2, {
+      ...context,
+      achievementIds: context.achievementIds || catalog.map((definition2) => definition2.id)
+    });
+    const ordered = [
+      ...catalog.filter((definition2) => definition2.condition?.kind !== "meta"),
+      ...catalog.filter((definition2) => definition2.condition?.kind === "meta")
+    ];
+    const timestamp = Number.isFinite(context.now) ? context.now : Date.now();
+    const fresh = [];
+    for (const definition2 of ordered) {
+      if (own(state2.achievements, definition2.id)) continue;
+      if (!evaluate(snapshot, definition2).done) continue;
+      state2.achievements[definition2.id] = timestamp;
+      snapshot.unlockedAchievementIds.add(definition2.id);
+      fresh.push(definition2);
     }
     return fresh;
   }
 
+  // src/data/achievements.js
+  var ACHIEVEMENT_CATEGORIES = Object.freeze({
+    puzzles: { label: "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438" },
+    battles: { label: "\u041F\u043E\u0445\u043E\u0434\u044B" },
+    general: { label: "\u041E\u0431\u0449\u0438\u0435 \u0441\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u044F" },
+    story: { label: "\u0418\u0441\u0442\u043E\u0440\u0438\u044F \u0438 \u0433\u043E\u0441\u0442\u0438" },
+    collections: { label: "\u041B\u0430\u0432\u043A\u0430 \u0438 \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438" },
+    challenges: { label: "\u0418\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u044F" },
+    special: { label: "\u041E\u0441\u043E\u0431\u044B\u0435 \u0438 \u0441\u0435\u043A\u0440\u0435\u0442\u043D\u044B\u0435" }
+  });
+  var ACHIEVEMENT_RARITIES = Object.freeze({
+    common: { label: "\u041E\u0431\u044B\u0447\u043D\u043E\u0435", points: 10 },
+    uncommon: { label: "\u041D\u0435\u043E\u0431\u044B\u0447\u043D\u043E\u0435", points: 25 },
+    rare: { label: "\u0420\u0435\u0434\u043A\u043E\u0435", points: 50 },
+    epic: { label: "\u042D\u043F\u0438\u0447\u0435\u0441\u043A\u043E\u0435", points: 100 },
+    legendary: { label: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u043E\u0435", points: 250 }
+  });
+  var CATEGORY_LABELS = Object.freeze(
+    Object.fromEntries(Object.entries(ACHIEVEMENT_CATEGORIES).map(([id, value]) => [id, value.label]))
+  );
+  var RARITY_LABELS = Object.freeze(
+    Object.fromEntries(Object.entries(ACHIEVEMENT_RARITIES).map(([id, value]) => [id, value.label]))
+  );
+  var RARITY_POINTS = Object.freeze(
+    Object.fromEntries(Object.entries(ACHIEVEMENT_RARITIES).map(([id, value]) => [id, value.points]))
+  );
+  var ACHIEVEMENT_TELEMETRY_KEYS = Object.freeze({
+    counters: Object.freeze([
+      "materialExchanges",
+      "savingsGoals",
+      "battleDefeats",
+      "seasonalCosmeticSelections"
+    ]),
+    puzzleFeats: Object.freeze([
+      "no_hints",
+      "skip_comeback",
+      "riddle_first_try",
+      "hang_perfect",
+      "brew_flawless",
+      "brew_memory",
+      "brew_recovery",
+      "fate_perfect",
+      "gift_first_try",
+      "gift_third_try",
+      "gift_recovery",
+      "tea_exact",
+      "candle_minimum",
+      "spin_par",
+      "seek_no_miss",
+      "seating_first_serve"
+    ]),
+    battleFeats: Object.freeze([
+      "timeout",
+      "battle_comeback",
+      "battle_no_damage",
+      "boss_no_damage",
+      "boss_all_survive",
+      "battle_solo",
+      "boss_no_consumables",
+      "battle_one_hp",
+      "merc_last_stand",
+      "full_party_crowd",
+      "boss_pity"
+    ])
+  });
+  var ART = {
+    campaign: "assets/glass/glass_firstday_web.jpg",
+    battle: "assets/battle/battle_bg_crossroads_web.jpg",
+    daily: "assets/glass/glass_tea_dawn_web.jpg",
+    story: "assets/fate/guest_spirit_dark_web.jpg",
+    guests: "assets/fate/guest_owl_web.jpg",
+    crew: "assets/glass/glass_hearth_web.jpg",
+    craft: "assets/glass/glass_forge_web.jpg",
+    recipes: "assets/glass/glass_recipes_web.jpg",
+    market: "assets/hub/town_market_v2_web.jpg",
+    coins: "assets/gift/souv_abacus_web.jpg",
+    seals: "assets/gift/souv_seal_web.jpg",
+    trophy: "assets/trophies/tro_willow_branch.png",
+    wanted: "assets/trophies/tro_mini_bee.png",
+    bossDrop: "assets/items/shd_willow_vow_web.jpg",
+    cosmetics: "assets/cosmetics/lavka_pack_hearth_web.jpg",
+    spring: "assets/cosmetics/lavka_pack_spring_web.jpg",
+    fate: "assets/puzzle_cards/pc_fate_web.jpg",
+    goals: "assets/glass/glass_shop_web.jpg",
+    cat: "assets/fate/guest_cat_web.jpg",
+    knight: "assets/battle/units/knight_idle_web.png",
+    merc: "assets/battle/units/merc_archer_idle_web.png",
+    boss: "assets/battle/units/boss_willow_idle_web.png",
+    bees: "assets/battle/units/bee_wild_idle_web.png",
+    spider: "assets/fate/guest_spider_web.jpg",
+    cabinet: "assets/hub/trophy_room_v2_web.jpg",
+    exchange: "assets/gift/souv_prism_web.jpg"
+  };
+  var definitions = [];
+  function add({
+    id,
+    name,
+    desc,
+    category,
+    rarity = "common",
+    secret = false,
+    condition,
+    target,
+    sourceArt,
+    motif,
+    rank = 1
+  }) {
+    const definition2 = {
+      id,
+      name,
+      desc,
+      category,
+      categoryLabel: ACHIEVEMENT_CATEGORIES[category].label,
+      rarity,
+      secret,
+      condition,
+      target,
+      sourceArt,
+      variant: { frame: rarity, motif, stage: rank - 1 }
+    };
+    definition2.check = (state2, ctx2 = {}) => achievementProgress2(state2, definition2, ctx2).done;
+    definitions.push(definition2);
+    return definition2;
+  }
+  function plural(value, forms) {
+    const n = Math.abs(value) % 100;
+    const last = n % 10;
+    if (n > 10 && n < 20) return forms[2];
+    if (last === 1) return forms[0];
+    if (last > 1 && last < 5) return forms[1];
+    return forms[2];
+  }
+  var LEVEL_FORMS = ["\u0443\u0440\u043E\u0432\u0435\u043D\u044C", "\u0443\u0440\u043E\u0432\u043D\u044F", "\u0443\u0440\u043E\u0432\u043D\u0435\u0439"];
+  var PUZZLE_TYPES2 = [
+    {
+      id: "mirror",
+      label: "\u0421\u0432\u0435\u0442 \u0438 \u0444\u043E\u043D\u0430\u0440\u0438\u043A\u0438",
+      art: "assets/puzzle_cards/pc_mirror_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u0430\u044F \u0438\u0441\u043A\u0440\u0430", "\u0421\u0432\u0435\u0442 \u043D\u0430 \u043F\u043E\u043B\u043A\u0430\u0445", "\u041B\u0443\u0447\u0438 \u043D\u0430\u0434 \u043E\u043F\u0443\u0448\u043A\u043E\u0439", "\u0424\u043E\u043D\u0430\u0440\u043D\u044B\u0439 \u043C\u0430\u0441\u0442\u0435\u0440", "\u0425\u043E\u0437\u044F\u0438\u043D \u043E\u043F\u0443\u0448\u043A\u0438"]
+    },
+    {
+      id: "shelf",
+      label: "\u041F\u043E\u043B\u043A\u0438 \u0438 \u0442\u043E\u0432\u0430\u0440\u044B",
+      art: "assets/puzzle_cards/pc_shelf_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0442\u043E\u0432\u0430\u0440 \u043D\u0430 \u043C\u0435\u0441\u0442\u0435", "\u041F\u043E\u043B\u043A\u0438 \u0432 \u043F\u043E\u0440\u044F\u0434\u043A\u0435", "\u0421\u043E\u0441\u0435\u0434\u0438 \u043F\u043E\u043C\u0438\u0440\u0438\u043B\u0438\u0441\u044C", "\u0417\u0430\u0432\u0441\u0435\u0433\u0434\u0430\u0442\u0430\u0439 \u043F\u043E\u043B\u043E\u043A", "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0432\u0438\u0442\u0440\u0438\u043D\u044B"]
+    },
+    {
+      id: "riddle",
+      label: "\u0417\u0430\u0433\u0430\u0434\u043A\u0438 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F",
+      art: "assets/puzzle_cards/pc_riddle_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u043E\u0435 \u0441\u043B\u043E\u0432\u043E \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F", "\u0421\u0442\u0440\u0430\u043D\u0438\u0446\u0430 \u043D\u0430\u0440\u043E\u0434\u043D\u044B\u0445 \u0437\u0430\u0433\u0430\u0434\u043E\u043A", "\u041F\u043E\u043B\u043A\u043D\u0438\u0433\u0438 \u043C\u0443\u0434\u0440\u043E\u0441\u0442\u0438", "\u0421\u043E\u0431\u0435\u0441\u0435\u0434\u043D\u0438\u043A \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F", "\u0412\u0441\u0435 \u043E\u0442\u0432\u0435\u0442\u044B \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F"]
+    },
+    {
+      id: "hang",
+      label: "\u0421\u0442\u0440\u043E\u043A\u0438 \u043F\u0440\u0438 \u0441\u0432\u0435\u0447\u0435",
+      art: "assets/puzzle_cards/pc_hang_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u0430\u044F \u0441\u0442\u0440\u043E\u043A\u0430 \u043F\u0440\u0438 \u0441\u0432\u0435\u0447\u0435", "\u0427\u0435\u0442\u0432\u0435\u0440\u0442\u044C \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u043E\u0439 \u043A\u043D\u0438\u0433\u0438", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043D\u043E\u0447\u043D\u044B\u0445 \u0441\u0442\u0440\u043E\u043A", "\u041F\u043E\u0447\u0442\u0438 \u0446\u0435\u043B\u0430\u044F \u0440\u0443\u043A\u043E\u043F\u0438\u0441\u044C", "\u041B\u0435\u0442\u043E\u043F\u0438\u0441\u0435\u0446 \u0441\u0432\u0435\u0447\u0438"]
+    },
+    {
+      id: "seek",
+      label: "\u041F\u043E\u0438\u0441\u043A \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432",
+      art: "assets/puzzle_cards/pc_seek_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u0430\u044F \u043D\u0430\u0445\u043E\u0434\u043A\u0430", "\u0413\u043B\u0430\u0437 \u043D\u0430 \u043C\u0435\u043B\u043E\u0447\u0438", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u043E\u0442\u0435\u0440\u044F\u043D\u043D\u044B\u0445 \u0432\u0435\u0449\u0435\u0439", "\u0421\u043B\u0435\u0434\u043E\u043F\u044B\u0442 \u043B\u0430\u0432\u043A\u0438", "\u041E\u0440\u043B\u0438\u043D\u044B\u0439 \u0433\u043B\u0430\u0437"]
+    },
+    {
+      id: "path",
+      label: "\u0422\u0440\u043E\u043F\u0438\u043D\u043A\u0438",
+      art: "assets/puzzle_cards/pc_path_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u0430\u044F \u0442\u0440\u043E\u043F\u0438\u043D\u043A\u0430 \u0434\u043E\u043C\u043E\u0439", "\u0417\u043D\u0430\u043A\u043E\u043C\u044B\u0435 \u043F\u0435\u0440\u0435\u043F\u0443\u0442\u044C\u044F", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043B\u0435\u0441\u043D\u044B\u0445 \u0434\u043E\u0440\u043E\u0433", "\u041F\u0440\u043E\u0432\u043E\u0434\u043D\u0438\u043A \u0437\u0432\u0435\u0440\u044C\u043A\u043E\u0432", "\u0425\u043E\u0437\u044F\u0438\u043D \u0432\u0441\u0435\u0445 \u0442\u0440\u043E\u043F\u0438\u043D\u043E\u043A"]
+    },
+    {
+      id: "tea",
+      label: "\u0427\u0430\u0439 \u0434\u043B\u044F \u043F\u0443\u0442\u043D\u0438\u043A\u0430",
+      art: "assets/puzzle_cards/pc_tea_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u0430\u044F \u0447\u0430\u0448\u043A\u0430 \u043F\u0443\u0442\u043D\u0438\u043A\u0443", "\u0422\u0440\u0430\u0432\u044F\u043D\u0430\u044F \u043F\u0430\u043B\u0438\u0442\u0440\u0430", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0447\u0430\u0439\u043D\u043E\u0439 \u043A\u043D\u0438\u0433\u0438", "\u041C\u0430\u0441\u0442\u0435\u0440 \u0446\u0432\u0435\u0442\u0430 \u0438 \u0442\u0435\u043F\u043B\u0430", "\u0427\u0430\u0439\u043D\u044B\u0439 \u043C\u0430\u0441\u0442\u0435\u0440 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430"]
+    },
+    {
+      id: "mech",
+      label: "\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u044B",
+      art: "assets/puzzle_cards/pc_mech_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u0430\u044F \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043A\u0430", "\u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u0430\u044F \u043E\u0436\u0438\u0432\u0430\u0435\u0442", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0445\u0438\u0442\u0440\u044B\u0445 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u043E\u0432", "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u0449\u0438\u043A \u043B\u0430\u0432\u043A\u0438", "\u0412\u043B\u0430\u0434\u044B\u043A\u0430 \u0448\u0435\u0441\u0442\u0435\u0440\u0451\u043D\u043E\u043A"]
+    },
+    {
+      id: "candle",
+      label: "\u0421\u0432\u0435\u0447\u0438 \u0438 \u0434\u0443\u0445\u0438",
+      art: "assets/puzzle_cards/pc_candle_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u0430\u044F \u0441\u0432\u0435\u0447\u0430 \u0434\u043B\u044F \u0434\u0443\u0445\u043E\u0432", "\u041A\u0440\u0443\u0433 \u0442\u0451\u043F\u043B\u043E\u0433\u043E \u0441\u0432\u0435\u0442\u0430", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0434\u0443\u0445\u043E\u0432\u043D\u044B\u0445 \u043E\u0433\u043D\u0435\u0439", "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u0444\u0438\u0442\u0438\u043B\u0435\u0439", "\u041C\u0438\u0440 \u0441\u0432\u0435\u0447\u0435\u0439 \u0438 \u0434\u0443\u0445\u043E\u0432"]
+    },
+    {
+      id: "flow",
+      label: "\u041F\u043E\u0442\u043E\u043A\u0438 \u043F\u043E\u043A\u0443\u043F\u0430\u0442\u0435\u043B\u0435\u0439",
+      art: "assets/puzzle_cards/pc_flow_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u0442\u043E\u043A \u0433\u043E\u0441\u0442\u0435\u0439", "\u041F\u0440\u0438\u043B\u0430\u0432\u043E\u043A \u0431\u0435\u0437 \u0442\u043E\u043B\u043F\u044B", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043B\u044E\u0434\u0441\u043A\u0438\u0445 \u0440\u0435\u043A", "\u0420\u0430\u0441\u043F\u043E\u0440\u044F\u0434\u0438\u0442\u0435\u043B\u044C \u043F\u043E\u0442\u043E\u043A\u043E\u0432", "\u0425\u043E\u0437\u044F\u0438\u043D \u043B\u044E\u0434\u0441\u043A\u0438\u0445 \u0440\u0435\u043A"]
+    },
+    {
+      id: "brew",
+      label: "\u0412\u0430\u0440\u043A\u0430 \u0437\u0435\u043B\u0438\u0439",
+      art: "assets/puzzle_cards/pc_brew_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u043E\u0435 \u0437\u0435\u043B\u044C\u0435 \u043F\u043E \u043A\u043D\u0438\u0433\u0435", "\u041A\u043E\u0442\u0451\u043B \u043F\u043E\u043B\u043E\u043D \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0430\u043B\u0445\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0439 \u043A\u043D\u0438\u0433\u0438", "\u041F\u043E\u0447\u0442\u0438 \u043C\u0430\u0441\u0442\u0435\u0440 \u0437\u0435\u043B\u0438\u0439", "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043A\u043D\u0438\u0433\u0438 \u0432\u0430\u0440\u043A\u0438"]
+    },
+    {
+      id: "fate",
+      label: "\u041A\u0430\u0440\u0442\u044B \u0441\u0443\u0434\u044C\u0431\u044B",
+      art: "assets/puzzle_cards/pc_fate_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u0441\u0443\u0434\u044C\u0431\u044B", "\u041A\u0430\u0440\u0442\u044B \u043B\u0435\u0433\u043B\u0438 \u043F\u043E \u043A\u0440\u0443\u0433\u0443", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u0440\u0435\u0434\u0441\u043A\u0430\u0437\u0430\u043D\u0438\u0439", "\u0421\u043E\u0431\u0435\u0441\u0435\u0434\u043D\u0438\u043A \u0441\u0443\u0434\u044C\u0431\u044B", "\u041F\u043E\u043B\u043D\u0430\u044F \u043A\u043D\u0438\u0433\u0430 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u043E\u0432"]
+    },
+    {
+      id: "glass",
+      label: "\u0412\u0438\u0442\u0440\u0430\u0436 \u043C\u0438\u0440\u043E\u0432",
+      art: "assets/puzzle_cards/pc_glass_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u043E\u0441\u043A\u043E\u043B\u043E\u043A \u043C\u0438\u0440\u0430", "\u0412\u0438\u0442\u0440\u0430\u0436\u043D\u043E\u0435 \u0441\u043E\u0437\u0432\u0435\u0437\u0434\u0438\u0435", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043E\u043A\u043E\u043D \u043C\u0438\u0440\u043E\u0432", "\u0421\u0442\u0435\u043A\u043E\u043B\u044C\u0449\u0438\u043A \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430", "\u0412\u0441\u0435 \u0432\u0438\u0442\u0440\u0430\u0436\u0438 \u043C\u0438\u0440\u043E\u0432"]
+    },
+    {
+      id: "spin",
+      label: "\u0413\u043E\u0431\u0435\u043B\u0435\u043D\u044B \u0432\u0435\u0442\u0440\u043E\u0432",
+      art: "assets/puzzle_cards/pc_spin_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u043B\u043E\u0441\u043A\u0443\u0442 \u043F\u043E \u0443\u0437\u043E\u0440\u0443", "\u0413\u043E\u0431\u0435\u043B\u0435\u043D\u044B \u0441\u043B\u0443\u0448\u0430\u044E\u0442\u0441\u044F", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0432\u044B\u0448\u0438\u0442\u044B\u0445 \u0432\u0435\u0442\u0440\u043E\u0432", "\u041F\u043E\u0447\u0442\u0438 \u0446\u0435\u043B\u044B\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D", "\u041C\u0430\u0441\u0442\u0435\u0440 \u0432\u0441\u0435\u0445 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432"]
+    },
+    {
+      id: "gift",
+      label: "\u041F\u043E\u0434\u0430\u0440\u043E\u043A \u0434\u043B\u044F \u0433\u043E\u0441\u0442\u044F",
+      art: "assets/puzzle_cards/pc_gift_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0432\u0435\u0440\u043D\u044B\u0439 \u043F\u043E\u0434\u0430\u0440\u043E\u043A", "\u0412\u0438\u0442\u0440\u0438\u043D\u0430 \u0434\u043E\u0431\u0440\u044B\u0445 \u0437\u043D\u0430\u043A\u043E\u0432", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u043E\u0434\u0430\u0440\u043E\u0447\u043D\u044B\u0445 \u0438\u0441\u0442\u043E\u0440\u0438\u0439", "\u0417\u043D\u0430\u0442\u043E\u043A \u0441\u0435\u0440\u0434\u0435\u0447\u043D\u044B\u0445 \u043C\u0435\u043B\u043E\u0447\u0435\u0439", "\u041C\u0430\u0441\u0442\u0435\u0440 \u0432\u0441\u0435\u0445 \u043F\u043E\u0434\u0430\u0440\u043A\u043E\u0432"]
+    },
+    {
+      id: "seating",
+      label: "\u0413\u043E\u0441\u0442\u0438 \u0437\u0430 \u0447\u0430\u0439\u043D\u044B\u043C \u0441\u0442\u043E\u043B\u043E\u043C",
+      art: "assets/puzzle_cards/pc_seating_web.jpg",
+      names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0433\u043E\u0441\u0442\u044C \u0437\u0430 \u0441\u0442\u043E\u043B\u043E\u043C", "\u0427\u0430\u0439\u043D\u0430\u044F \u043A\u043E\u043C\u043F\u0430\u043D\u0438\u044F \u0440\u0430\u0441\u0442\u0451\u0442", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0447\u0430\u0439\u043D\u044B\u0445 \u0440\u0430\u0441\u0441\u0430\u0434\u043E\u043A", "\u0425\u043E\u0437\u044F\u0438\u043D \u0437\u0430\u0441\u0442\u043E\u043B\u044C\u044F", "\u041C\u0430\u0441\u0442\u0435\u0440 \u0447\u0430\u0439\u043D\u043E\u0433\u043E \u044D\u0442\u0438\u043A\u0435\u0442\u0430"]
+    }
+  ];
+  var SERIES_RARITIES = ["common", "uncommon", "rare", "epic", "legendary"];
+  var LEGACY_TYPE_FINAL = { mirror: "meadow_master", seek: "seek_master" };
+  for (const type of PUZZLE_TYPES2) {
+    const levels = ALL_PUZZLES.filter((puzzle) => (puzzle.mechanic || "mirror") === type.id);
+    const targets = [1, Math.ceil(levels.length * 0.25), Math.ceil(levels.length * 0.5), Math.ceil(levels.length * 0.75), levels.length];
+    const descriptions = [
+      `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0440\u0430\u0437\u0434\u0435\u043B\u0430 \xAB${type.label}\xBB. \u041F\u0440\u043E\u043F\u0443\u0441\u043A \u043D\u0435 \u0437\u0430\u043C\u0435\u043D\u044F\u0435\u0442 \u0440\u0435\u0448\u0435\u043D\u0438\u0435.`,
+      `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C ${targets[1]} ${plural(targets[1], LEVEL_FORMS)} \u0440\u0430\u0437\u0434\u0435\u043B\u0430 \xAB${type.label}\xBB \u2014 \u0435\u0433\u043E \u043F\u0435\u0440\u0432\u0443\u044E \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044C.`,
+      `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C ${targets[2]} ${plural(targets[2], LEVEL_FORMS)} \u0440\u0430\u0437\u0434\u0435\u043B\u0430 \xAB${type.label}\xBB \u2014 \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0441\u0435\u0440\u0438\u0438 \u0431\u0435\u0437 \u043F\u043E\u0432\u0442\u043E\u0440\u043E\u0432.`,
+      `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C ${targets[3]} ${plural(targets[3], LEVEL_FORMS)} \u0440\u0430\u0437\u0434\u0435\u043B\u0430 \xAB${type.label}\xBB \u2014 \u0442\u0440\u0438 \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u0438 \u0441\u0435\u0440\u0438\u0438.`,
+      `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 ${targets[4]} ${plural(targets[4], LEVEL_FORMS)} \u0440\u0430\u0437\u0434\u0435\u043B\u0430 \xAB${type.label}\xBB; \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0438 \u043D\u0435 \u0432\u0445\u043E\u0434\u044F\u0442 \u0432 \u043F\u043E\u043B\u043D\u0443\u044E \u0441\u0435\u0440\u0438\u044E.`
+    ];
+    for (let index = 0; index < 5; index += 1) {
+      add({
+        id: index === 4 ? LEGACY_TYPE_FINAL[type.id] || `${type.id}_100` : `${type.id}_${[1, 25, 50, 75][index]}`,
+        name: type.names[index],
+        desc: descriptions[index],
+        category: "puzzles",
+        rarity: SERIES_RARITIES[index],
+        condition: { kind: "puzzles", mechanic: type.id },
+        target: targets[index],
+        sourceArt: type.art,
+        motif: type.id,
+        rank: index + 1
+      });
+    }
+  }
+  var WORLD_INFO = {
+    meadow: { label: "\u0422\u0438\u0445\u0430\u044F \u043E\u043F\u0443\u0448\u043A\u0430", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0448\u0430\u0433 \u043F\u043E \u043E\u043F\u0443\u0448\u043A\u0435", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043B\u0435\u0441\u043D\u043E\u0439 \u0442\u0440\u043E\u043F\u044B", "\u0412\u0441\u044F \u0442\u0440\u043E\u043F\u0430 \u043F\u043E\u0434 \u0438\u0432\u043E\u0439", "\u041F\u0430\u0434\u0435\u043D\u0438\u0435 \u0438\u0432\u044B"] },
+    town: { label: "\u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0435\u043A\u043E\u0432\u044B\u0439 \u0434\u0432\u043E\u0440\u0438\u043A", names: ["\u0414\u0432\u043E\u0440 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0432\u043E\u0440\u043E\u0442\u0430", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0433\u043E\u0440\u043E\u0434\u0441\u043A\u043E\u0439 \u0432\u0430\u0445\u0442\u044B", "\u0412\u0435\u0441\u044C \u0434\u0432\u043E\u0440 \u043F\u043E\u0434 \u0437\u0430\u0449\u0438\u0442\u043E\u0439", "\u041A\u0430\u043F\u0438\u0442\u0430\u043D \u0441\u043C\u0435\u043D\u0438\u043B \u0432\u0430\u0445\u0442\u0443"] },
+    attic: { label: "\u041A\u043D\u0438\u0436\u043D\u044B\u0439 \u0447\u0435\u0440\u0434\u0430\u043A", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0448\u043E\u0440\u043E\u0445 \u0447\u0435\u0440\u0434\u0430\u043A\u0430", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u044B\u043B\u044C\u043D\u043E\u0433\u043E \u0430\u0440\u0445\u0438\u0432\u0430", "\u0412\u0441\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B \u0447\u0435\u0440\u0434\u0430\u043A\u0430", "\u041A\u043E\u043D\u0435\u0446 \u0438\u0441\u0442\u043E\u0440\u0438\u0438"] },
+    crossroads: { label: "\u042D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430", names: ["\u041D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043D\u043E\u0439 \u0442\u0440\u043E\u043F\u0435", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0441\u043C\u0435\u0448\u0430\u043D\u043D\u044B\u0445 \u0434\u043E\u0440\u043E\u0433", "\u0412\u0441\u0435 \u044D\u043A\u0441\u043F\u0435\u0434\u0438\u0446\u0438\u0438 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0430", "\u0417\u0432\u0451\u0437\u0434\u043D\u044B\u0439 \u0441\u0442\u0440\u0430\u0436 \u043F\u043E\u0432\u0435\u0440\u0436\u0435\u043D"] },
+    nm: { label: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0444\u043E\u043D\u0430\u0440\u044C \u0440\u044B\u043D\u043A\u0430", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043D\u043E\u0447\u043D\u044B\u0445 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u043E\u0432", "\u0412\u0435\u0441\u044C \u043D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A", "\u041C\u0430\u0441\u043A\u0430 \u043D\u043E\u0447\u043D\u043E\u0433\u043E \u0445\u043E\u0437\u044F\u0438\u043D\u0430"] },
+    sw: { label: "\u0421\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0441\u043B\u0435\u0434 \u0432 \u0442\u043E\u043F\u0438", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0431\u043E\u043B\u043E\u0442\u043D\u043E\u0439 \u0442\u0440\u043E\u043F\u044B", "\u0412\u0441\u0435 \u0441\u043A\u0430\u0437\u043E\u0447\u043D\u044B\u0435 \u0442\u043E\u043F\u0438", "\u0425\u043E\u0437\u044F\u0439\u043A\u0430 \u0442\u043E\u043F\u0435\u0439 \u043E\u0442\u0441\u0442\u0443\u043F\u0438\u043B\u0430"] },
+    sf: { label: "\u0417\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0431\u0438\u043B\u0435\u0442 \u044F\u0440\u043C\u0430\u0440\u043A\u0438", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0437\u0432\u0451\u0437\u0434\u043D\u043E\u0433\u043E \u0448\u0430\u0442\u0440\u0430", "\u0412\u0441\u044F \u0437\u0432\u0451\u0437\u0434\u043D\u0430\u044F \u044F\u0440\u043C\u0430\u0440\u043A\u0430", "\u0427\u0435\u043C\u043F\u0438\u043E\u043D \u0441\u043D\u044F\u043B \u043A\u043E\u0440\u043E\u043D\u0443"] },
+    cr: { label: "\u0425\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u0435\u0440\u0435\u0432\u0430\u043B", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043A\u0432\u0430\u0440\u0446\u0435\u0432\u043E\u0439 \u0442\u0440\u043E\u043F\u044B", "\u0412\u0441\u0435 \u0445\u0440\u0443\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0433\u043E\u0440\u044B", "\u0414\u0440\u0435\u0432\u043D\u0438\u0439 \u0434\u0440\u0430\u043A\u043E\u043D \u0443\u0441\u043D\u0443\u043B"] },
+    ash: { label: "\u041F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0448\u0430\u0433 \u043F\u043E \u043F\u0435\u043F\u043B\u0443", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u043E\u0439 \u0441\u0442\u0435\u043F\u0438", "\u0412\u0441\u0435 \u043F\u0435\u043F\u0435\u043B\u044C\u043D\u044B\u0435 \u0441\u0442\u0435\u043F\u0438", "\u0425\u0430\u043D \u0431\u0443\u0440\u044C \u043E\u0442\u0441\u0442\u0443\u043F\u0438\u043B"] },
+    jade: { label: "\u041D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u043B\u0438\u0441\u0442 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0433\u043E \u0441\u0430\u0434\u0430", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u043E\u0439 \u0430\u043B\u043B\u0435\u0438", "\u0412\u0435\u0441\u044C \u043D\u0435\u0444\u0440\u0438\u0442\u043E\u0432\u044B\u0439 \u0441\u0430\u0434", "\u0414\u0440\u0430\u043A\u043E\u043D \u0441\u0430\u0434\u0430 \u0441\u043A\u043B\u043E\u043D\u0438\u043B\u0441\u044F"] },
+    deep: { label: "\u0413\u043B\u0443\u0431\u043E\u043A\u043E\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u043D\u044B\u0440\u043E\u043A \u0432 \u0433\u0440\u043E\u0442", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0433\u043B\u0443\u0431\u043E\u043A\u043E\u0432\u043E\u0434\u043D\u043E\u0439 \u0442\u0440\u043E\u043F\u044B", "\u0412\u0435\u0441\u044C \u0433\u043B\u0443\u0431\u043E\u043A\u043E\u0432\u043E\u0434\u043D\u044B\u0439 \u0433\u0440\u043E\u0442", "\u0412\u043B\u0430\u0434\u044B\u0447\u0438\u0446\u0430 \u0433\u043B\u0443\u0431\u0438\u043D \u043E\u0442\u0441\u0442\u0443\u043F\u0438\u043B\u0430"] },
+    mist: { label: "\u041C\u0438\u0440 \u0437\u0430 \u0433\u0440\u0430\u043D\u044C\u044E \u0432\u0440\u0435\u043C\u0435\u043D\u0438", names: ["\u041F\u0435\u0440\u0432\u044B\u0439 \u0447\u0430\u0441 \u0437\u0430 \u0433\u0440\u0430\u043D\u044C\u044E", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u0434\u043E\u0440\u043E\u0433\u0438 \u0432\u0440\u0435\u043C\u0435\u043D\u0438", "\u0412\u0441\u0435 \u043C\u0438\u0440\u044B \u0437\u0430 \u0433\u0440\u0430\u043D\u044C\u044E", "\u0412\u0440\u0435\u043C\u0435\u043D\u0438 \u0431\u043E\u043B\u044C\u0448\u0435 \u043D\u0435\u0442"] }
+  };
+  var LEGACY_BOSS = { meadow: "willow_down", attic: "keeper_down", mist: "time_down" };
+  var WORLD_TROPHY_ART = {
+    meadow: "willow_branch",
+    town: "captain_medal",
+    attic: "keeper_quill",
+    crossroads: "star_shard",
+    nm: "nm_mask",
+    sw: "sw_basket",
+    sf: "sf_cup",
+    cr: "cr_scale",
+    ash: "ash_helm",
+    jade: "jade_fan",
+    deep: "deep_pearl",
+    mist: "mist_gear"
+  };
+  var WORLD_ORDER = [...new Set(BATTLES.filter((battle) => !battle.wanted).map((battle) => battle.world))];
+  for (const world of WORLD_ORDER) {
+    const info = WORLD_INFO[world];
+    const battles = BATTLES.filter((battle) => !battle.wanted && battle.world === world);
+    const ids = battles.map((battle) => battle.id);
+    const boss = battles.find((battle) => battle.enemies.some((entry) => ENEMY_BY_ID[typeof entry === "string" ? entry : entry.id]?.boss));
+    if (!info || !boss) throw new Error(`\u041D\u0435 \u0440\u0430\u0437\u043C\u0435\u0447\u0435\u043D \u043C\u0438\u0440 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0439: ${world}`);
+    const targets = [1, Math.ceil(ids.length / 2), ids.length, 1];
+    const descriptions = [
+      `\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043F\u0435\u0440\u0432\u043E\u043C \u043F\u043E\u0445\u043E\u0434\u0435 \u043C\u0438\u0440\u0430 \xAB${info.label}\xBB; \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0435 \u043B\u0438\u0441\u0442\u044B \u0434\u043B\u044F \u044D\u0442\u043E\u0433\u043E \u043D\u0435 \u043D\u0443\u0436\u043D\u044B.`,
+      `\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 ${targets[1]} \u0440\u0430\u0437\u043D\u044B\u0445 \u043F\u043E\u0445\u043E\u0434\u0430\u0445 \u043C\u0438\u0440\u0430 \xAB${info.label}\xBB \u2014 \u043F\u0440\u043E\u0439\u0442\u0438 \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0435\u0433\u043E \u0434\u043E\u0440\u043E\u0433\u0438.`,
+      `\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432\u043E \u0432\u0441\u0435\u0445 ${targets[2]} \u043F\u043E\u0445\u043E\u0434\u0430\u0445 \u043C\u0438\u0440\u0430 \xAB${info.label}\xBB, \u043D\u0435 \u0437\u0430\u043C\u0435\u043D\u044F\u044F \u043F\u043E\u0431\u0435\u0434\u044B \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u043C\u0438 \u0431\u043E\u044F\u043C\u0438.`,
+      `\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u0431\u043E\u044E \xAB${boss.name}\xBB \u0438 \u0437\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0433\u043B\u0430\u0432\u043D\u043E\u0435 \u0438\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u0435 \u043C\u0438\u0440\u0430 \xAB${info.label}\xBB.`
+    ];
+    for (let index = 0; index < 4; index += 1) {
+      add({
+        id: index === 3 ? LEGACY_BOSS[world] || `${world}_boss` : `${world}_${["first", "half", "complete"][index]}`,
+        name: info.names[index],
+        desc: descriptions[index],
+        category: "battles",
+        rarity: ["common", "uncommon", "epic", index === 3 && world === "mist" ? "legendary" : "rare"][index],
+        condition: { kind: "battles", ids: index === 3 ? [boss.id] : ids },
+        target: targets[index],
+        sourceArt: index === 3 ? `assets/trophies/tro_${WORLD_TROPHY_ART[world]}.png` : `assets/battle/battle_bg_${world}_web.jpg`,
+        motif: world,
+        rank: index + 1
+      });
+    }
+  }
+  var puzzleTotal = ALL_PUZZLES.length;
+  var puzzleMilestones = [
+    ["first_puzzle", "\u041F\u0435\u0440\u0432\u0430\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0430", "\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0443 \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u043A\u043D\u0438\u0433\u0438 \u043B\u0430\u0432\u043A\u0438.", 1, "common"],
+    ["ten_puzzles", "\u0414\u0435\u0441\u044F\u0442\u043A\u0430 \u0444\u043E\u043D\u0430\u0440\u0435\u0439", "\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0434\u0435\u0441\u044F\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A \u0438\u0437 \u043B\u044E\u0431\u044B\u0445 \u0440\u0430\u0437\u0434\u0435\u043B\u043E\u0432.", 10, "common"],
+    ["quarter_campaign", "\u0427\u0435\u0442\u0432\u0435\u0440\u0442\u044C \u0431\u043E\u043B\u044C\u0448\u043E\u0439 \u043A\u043D\u0438\u0433\u0438", `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C ${Math.ceil(puzzleTotal / 4)} \u0440\u0430\u0437\u043D\u044B\u0445 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A \u2014 \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u044C \u0432\u0441\u0435\u0439 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.`, Math.ceil(puzzleTotal / 4), "rare"],
+    ["half_campaign", "\u041F\u043E\u043B\u043E\u0432\u0438\u043D\u0430 \u043F\u0443\u0442\u0438", `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C ${Math.ceil(puzzleTotal / 2)} \u0440\u0430\u0437\u043D\u044B\u0445 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A \u2014 \u043F\u043E\u043B\u043E\u0432\u0438\u043D\u0443 \u0432\u0441\u0435\u0439 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.`, Math.ceil(puzzleTotal / 2), "epic"],
+    ["three_quarter_campaign", "\u0422\u0440\u0438 \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u0438 \u043F\u0443\u0442\u0438", `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C ${Math.ceil(puzzleTotal * 0.75)} \u0440\u0430\u0437\u043D\u044B\u0445 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A \u2014 \u0442\u0440\u0438 \u0447\u0435\u0442\u0432\u0435\u0440\u0442\u0438 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438.`, Math.ceil(puzzleTotal * 0.75), "epic"],
+    ["all_puzzles", "\u041C\u0430\u0441\u0442\u0435\u0440 \u0437\u0430\u0433\u0430\u0434\u043E\u043A", `\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0432\u0441\u0435 ${puzzleTotal} \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0438 \u0431\u0435\u0437 \u0443\u0447\u0451\u0442\u0430 \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u043E\u0432 \u0438 \u0443\u0440\u043E\u0432\u043D\u0435\u0439 \u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u043E\u0439.`, puzzleTotal, "legendary"]
+  ];
+  for (const [id, name, desc, target, rarity] of puzzleMilestones) {
+    add({ id, name, desc, category: "general", rarity, condition: { kind: "puzzles" }, target, sourceArt: ART.campaign, motif: "campaign", rank: target === 1 ? 1 : target === puzzleTotal ? 5 : 3 });
+  }
+  for (const [target, name, desc, rarity] of [
+    [100, "\u0421\u0442\u043E \u0432\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0439 \u043A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", "\u0420\u0435\u0448\u0438\u0442\u044C \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u0441\u0442\u043E \u0440\u0430\u0437 \u0441 \u0443\u0447\u0451\u0442\u043E\u043C \u0447\u0435\u0441\u0442\u043D\u044B\u0445 \u043F\u043E\u0432\u0442\u043E\u0440\u043E\u0432.", "uncommon"],
+    [500, "\u041F\u044F\u0442\u044C\u0441\u043E\u0442 \u0440\u0435\u0448\u0451\u043D\u043D\u044B\u0445 \u0434\u0435\u043B", "\u0420\u0435\u0448\u0438\u0442\u044C \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438 \u043F\u044F\u0442\u044C\u0441\u043E\u0442 \u0440\u0430\u0437; \u043A\u0430\u0436\u0434\u0430\u044F \u0447\u0435\u0441\u0442\u043D\u0430\u044F \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u0430\u044F \u043F\u043E\u043F\u044B\u0442\u043A\u0430 \u0442\u043E\u0436\u0435 \u0438\u0434\u0451\u0442 \u0432 \u0441\u0447\u0451\u0442.", "rare"],
+    [1e3, "\u0422\u044B\u0441\u044F\u0447\u0430 \u0443\u044E\u0442\u043D\u044B\u0445 \u043F\u043E\u0431\u0435\u0434", "\u0421\u043E\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0442\u044B\u0441\u044F\u0447\u0443 \u0447\u0435\u0441\u0442\u043D\u044B\u0445 \u0440\u0435\u0448\u0435\u043D\u0438\u0439 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A, \u0432\u043A\u043B\u044E\u0447\u0430\u044F \u043F\u043E\u0432\u0442\u043E\u0440\u044B \u043B\u044E\u0431\u0438\u043C\u044B\u0445 \u0443\u0440\u043E\u0432\u043D\u0435\u0439.", "legendary"]
+  ]) {
+    add({ id: `puzzle_solves_${target}`, name, desc, category: "general", rarity, condition: { kind: "puzzleSolves" }, target, sourceArt: ART.campaign, motif: "repeat-puzzles", rank: target === 1e3 ? 5 : 3 });
+  }
+  for (const [id, name, desc, target, rarity] of [
+    ["first_battle", "\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u0445\u043E\u0434", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043F\u0435\u0440\u0432\u043E\u043C \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u043C \u0431\u043E\u044E \u0438\u0437 \u0431\u043E\u0435\u0432\u043E\u0433\u043E \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0430.", 1, "common"],
+    ["fifty_battles", "\u041F\u043E\u043B\u0441\u043E\u0442\u043D\u0438 \u043F\u043E\u0431\u0435\u0434", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043F\u044F\u0442\u0438\u0434\u0435\u0441\u044F\u0442\u0438 \u0440\u0430\u0437\u043D\u044B\u0445 \u0431\u043E\u044F\u0445, \u0432\u043A\u043B\u044E\u0447\u0430\u044F \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0435.", 50, "uncommon"],
+    ["battle_unique_100", "\u0421\u0442\u043E \u0431\u043E\u0451\u0432 \u0432 \u043B\u0435\u0442\u043E\u043F\u0438\u0441\u0438", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u0441\u0442\u0430 \u0440\u0430\u0437\u043D\u044B\u0445 \u0431\u043E\u044F\u0445 \u0431\u043E\u0435\u0432\u043E\u0433\u043E \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0430.", 100, "rare"],
+    ["battle_unique_200", "\u0414\u0432\u0435\u0441\u0442\u0438 \u0434\u043E\u0440\u043E\u0433 \u043F\u043E\u0437\u0430\u0434\u0438", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u0434\u0432\u0443\u0445\u0441\u0442\u0430\u0445 \u0440\u0430\u0437\u043D\u044B\u0445 \u0431\u043E\u044F\u0445 \u0438 \u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043F\u043E\u0437\u0430\u0434\u0438 \u0434\u0432\u0435\u0441\u0442\u0438 \u043E\u043F\u0430\u0441\u043D\u044B\u0445 \u0434\u043E\u0440\u043E\u0433.", 200, "epic"],
+    ["all_battles", "\u041F\u043E\u043A\u043E\u0440\u0438\u0442\u0435\u043B\u044C \u043C\u0438\u0440\u043E\u0432", `\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432\u043E \u0432\u0441\u0435\u0445 ${BATTLES.length} \u0431\u043E\u044F\u0445 \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0430, \u0432\u043A\u043B\u044E\u0447\u0430\u044F \u0447\u0435\u0442\u044B\u0440\u0435 \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0445 \u043B\u0438\u0441\u0442\u0430.`, BATTLES.length, "legendary"]
+  ]) {
+    add({ id, name, desc, category: "general", rarity, condition: { kind: "battles" }, target, sourceArt: ART.battle, motif: "campaign-battles", rank: target === 240 ? 5 : 3 });
+  }
+  for (const [target, name, desc, rarity] of [
+    [100, "\u0421\u0442\u043E \u043F\u043E\u0431\u0435\u0434\u043D\u044B\u0445 \u0432\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0439", "\u041E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u0441\u0442\u043E \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0445 \u043F\u043E\u0431\u0435\u0434 \u0441 \u0443\u0447\u0451\u0442\u043E\u043C \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u044B\u0445 \u043F\u043E\u0445\u043E\u0434\u043E\u0432.", "uncommon"],
+    [250, "\u0414\u0432\u0435\u0441\u0442\u0438 \u043F\u044F\u0442\u044C\u0434\u0435\u0441\u044F\u0442 \u043F\u043E\u0431\u0435\u0434", "\u041E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u0434\u0432\u0435\u0441\u0442\u0438 \u043F\u044F\u0442\u044C\u0434\u0435\u0441\u044F\u0442 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0445 \u043F\u043E\u0431\u0435\u0434; \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0438 \u043D\u0435 \u0443\u0447\u0438\u0442\u044B\u0432\u0430\u044E\u0442\u0441\u044F.", "rare"],
+    [500, "\u041F\u044F\u0442\u044C\u0441\u043E\u0442 \u043F\u043E\u0431\u0435\u0434 \u0440\u0430\u0434\u0438 \u043B\u0430\u0432\u043A\u0438", "\u041E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u043F\u044F\u0442\u044C\u0441\u043E\u0442 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0445 \u043F\u043E\u0431\u0435\u0434 \u0440\u0430\u0434\u0438 \u0441\u043F\u043E\u043A\u043E\u0439\u0441\u0442\u0432\u0438\u044F \u043B\u0430\u0432\u043A\u0438 \u0438 \u0435\u0451 \u0433\u043E\u0441\u0442\u0435\u0439.", "legendary"]
+  ]) {
+    add({ id: `battle_wins_${target}`, name, desc, category: "general", rarity, condition: { kind: "battleWins" }, target, sourceArt: ART.battle, motif: "repeat-battles", rank: target === 500 ? 5 : 3 });
+  }
+  for (const [id, name, desc, target, rarity] of [
+    ["daily_first", "\u0417\u0430\u043A\u0430\u0437 \u043D\u0430 \u0441\u0435\u0433\u043E\u0434\u043D\u044F", "\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u044B\u0439 \u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \u0438 \u0437\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0435\u0433\u043E \u0434\u0430\u0442\u0443 \u0432 \u043A\u043D\u0438\u0433\u0443.", 1, "common"],
+    ["daily_10", "\u0414\u0435\u0441\u044F\u0442\u044C \u0434\u043D\u0435\u0439 \u043E\u0441\u043E\u0431\u044B\u0445 \u0437\u0430\u043A\u0430\u0437\u043E\u0432", "\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \u0432 \u0434\u0435\u0441\u044F\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u043A\u0430\u043B\u0435\u043D\u0434\u0430\u0440\u043D\u044B\u0445 \u0434\u043D\u0435\u0439.", 10, "rare"],
+    ["daily_30", "\u0422\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u0434\u043D\u0435\u0439 \u0437\u0430\u0431\u043E\u0442\u044B", "\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \u0432 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u043A\u0430\u043B\u0435\u043D\u0434\u0430\u0440\u043D\u044B\u0445 \u0434\u043D\u0435\u0439; \u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E \u043F\u043E\u0434\u0440\u044F\u0434.", 30, "epic"]
+  ]) {
+    add({ id, name, desc, category: "general", rarity, condition: { kind: "daily" }, target, sourceArt: ART.daily, motif: "daily", rank: target === 30 ? 4 : 2 });
+  }
+  var storyDefinitions = [
+    ["story_prolog", "\u041A\u043B\u044E\u0447\u0438 \u043E\u0442 \u043B\u0430\u0432\u043A\u0438", "\u041F\u043E\u0441\u043B\u0443\u0448\u0430\u0442\u044C \u043F\u0440\u043E\u043B\u043E\u0433 \u0438 \u043F\u0440\u0438\u043D\u044F\u0442\u044C \u043A\u043B\u044E\u0447\u0438 \u043E\u0442 \u043B\u0430\u0432\u043A\u0438 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432.", { kind: "storyFlag", flag: "prologSeen" }, 1, "common", ART.story],
+    ["story_10", "\u0414\u0435\u0441\u044F\u0442\u044C \u0441\u0442\u0440\u0430\u043D\u0438\u0446 \u0438\u0441\u0442\u043E\u0440\u0438\u0438", "\u0412\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0434\u0435\u0441\u044F\u0442\u044C \u0437\u0430\u0434\u0430\u043D\u0438\u0439 \u0440\u0435\u0436\u0438\u043C\u0430 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyStep" }, 10, "uncommon", ART.story],
+    ["spirit_37", "\u0414\u0443\u0445 \u043D\u0430 \u043F\u043E\u0440\u043E\u0433\u0435 \u0434\u043E\u043C\u0430", "\u0423\u0432\u0438\u0434\u0435\u0442\u044C \u043E\u0441\u043E\u0431\u0443\u044E \u0432\u0441\u0442\u0440\u0435\u0447\u0443 \u0441 \u0434\u0443\u0445\u043E\u043C \u043D\u0430 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u0441\u0435\u0434\u044C\u043C\u043E\u043C \u0448\u0430\u0433\u0435 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyBeat", step: 37 }, 1, "rare", ART.story],
+    ["spirit_74", "\u0414\u0443\u0445 \u0441\u0440\u0435\u0434\u0438 \u0441\u0442\u0430\u0440\u044B\u0445 \u0434\u0440\u0443\u0437\u0435\u0439", "\u0423\u0432\u0438\u0434\u0435\u0442\u044C \u0432\u0442\u043E\u0440\u0443\u044E \u043E\u0441\u043E\u0431\u0443\u044E \u0432\u0441\u0442\u0440\u0435\u0447\u0443 \u0441 \u0434\u0443\u0445\u043E\u043C \u043D\u0430 \u0441\u0435\u043C\u044C\u0434\u0435\u0441\u044F\u0442 \u0447\u0435\u0442\u0432\u0451\u0440\u0442\u043E\u043C \u0448\u0430\u0433\u0435 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyBeat", step: 74 }, 1, "rare", ART.story],
+    ["spirit_100", "\u0421\u0442\u043E \u0448\u0430\u0433\u043E\u0432 \u0441 \u0434\u0443\u0445\u043E\u043C", "\u0423\u0432\u0438\u0434\u0435\u0442\u044C \u0432\u0441\u0442\u0440\u0435\u0447\u0443 \u0441 \u0434\u0443\u0445\u043E\u043C \u043D\u0430 \u0441\u043E\u0442\u043E\u043C \u0448\u0430\u0433\u0435 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyBeat", step: 100 }, 1, "epic", ART.story],
+    ["story_epilog", "\u041E\u043A\u043D\u043E \u043D\u0435 \u043F\u043E\u0433\u0430\u0441\u043D\u0435\u0442", "\u0414\u043E\u0439\u0442\u0438 \u0434\u043E \u044D\u043F\u0438\u043B\u043E\u0433\u0430 \u0438\u0441\u0442\u043E\u0440\u0438\u0438 \u0438 \u0443\u0441\u043B\u044B\u0448\u0430\u0442\u044C \u043F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0435 \u0441\u043B\u043E\u0432\u0430 \u0434\u0443\u0445\u0430 \u0438 \u043A\u043E\u0442\u0430.", { kind: "storyFlag", flag: "epilogSeen" }, 1, "legendary", ART.story],
+    ["story_guests_10", "\u0414\u0435\u0441\u044F\u0442\u044C \u0437\u043D\u0430\u043A\u043E\u043C\u044B\u0445 \u043F\u043E \u0438\u0441\u0442\u043E\u0440\u0438\u0438", "\u0412\u0441\u0442\u0440\u0435\u0442\u0438\u0442\u044C \u0434\u0435\u0441\u044F\u0442\u044C \u043E\u0431\u044B\u0447\u043D\u044B\u0445 \u0433\u043E\u0441\u0442\u0435\u0439 \u043A\u0440\u0443\u0433\u0430 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyGuests", visits: 1 }, 10, "common", ART.guests],
+    ["story_guests_35", "\u0412\u0435\u0441\u044C \u043A\u0440\u0443\u0433 \u0433\u043E\u0441\u0442\u0435\u0439", "\u0412\u0441\u0442\u0440\u0435\u0442\u0438\u0442\u044C \u0432\u0441\u0435\u0445 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u043E\u0431\u044B\u0447\u043D\u044B\u0445 \u0433\u043E\u0441\u0442\u0435\u0439 \u043A\u0440\u0443\u0433\u0430 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyGuests", visits: 1 }, STORY_GUESTS.length, "epic", ART.guests],
+    ["story_own_5", "\u041F\u044F\u0442\u0435\u0440\u043E \u0441\u0432\u043E\u0438\u0445", "\u0414\u043E\u0441\u0442\u0438\u0447\u044C \u0441\u0442\u0430\u0442\u0443\u0441\u0430 \xAB\u0421\u0432\u043E\u0439 \u0447\u0435\u043B\u043E\u0432\u0435\u043A\xBB \u0443 \u043F\u044F\u0442\u0438 \u0433\u043E\u0441\u0442\u0435\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyGuests", visits: 4 }, 5, "rare", ART.guests],
+    ["story_own_35", "\u0421\u0432\u043E\u0439 \u0434\u043B\u044F \u0432\u0441\u0435\u0433\u043E \u043A\u0440\u0443\u0433\u0430", "\u0414\u043E\u0441\u0442\u0438\u0447\u044C \u0441\u0442\u0430\u0442\u0443\u0441\u0430 \xAB\u0421\u0432\u043E\u0439 \u0447\u0435\u043B\u043E\u0432\u0435\u043A\xBB \u0443 \u0432\u0441\u0435\u0445 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u0438 \u043F\u044F\u0442\u0438 \u0433\u043E\u0441\u0442\u0435\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "storyGuests", visits: 4 }, STORY_GUESTS.length, "legendary", ART.guests],
+    ["guide_complete", "\u0412\u0441\u044F \u043B\u0430\u0432\u043A\u0430 \u043A\u0430\u043A \u043D\u0430 \u043B\u0430\u0434\u043E\u043D\u0438", "\u041F\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0432\u0441\u0435 \u0432\u043E\u0441\u0435\u043C\u044C \u0440\u0430\u0437\u0434\u0435\u043B\u043E\u0432 \u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0443\u0442\u0435\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044F.", { kind: "guide" }, ONBOARDING_GUIDE_SECTIONS.length, "uncommon", ART.cabinet],
+    ["book_guests_10", "\u0414\u0435\u0441\u044F\u0442\u044C \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u043E\u0432 \u0432 \u043A\u043D\u0438\u0433\u0435", "\u041F\u043E\u0437\u043D\u0430\u043A\u043E\u043C\u0438\u0442\u044C\u0441\u044F \u0441 \u0434\u0435\u0441\u044F\u0442\u044C\u044E \u0433\u0435\u0440\u043E\u044F\u043C\u0438 \u0433\u043E\u0441\u0442\u0435\u0432\u043E\u0439 \u043A\u043D\u0438\u0433\u0438 \u0447\u0435\u0440\u0435\u0437 \u0447\u0435\u0441\u0442\u043D\u044B\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u044F \u0438\u0445 \u0443\u0440\u043E\u0432\u043D\u0435\u0439.", { kind: "bookGuests" }, 10, "common", ART.guests],
+    ["book_guests_25", "\u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0437\u043D\u0430\u043A\u043E\u043C\u044B\u0445 \u043B\u0438\u0446", "\u041F\u043E\u0437\u043D\u0430\u043A\u043E\u043C\u0438\u0442\u044C\u0441\u044F \u0441 \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C\u044E \u043F\u044F\u0442\u044C\u044E \u0433\u0435\u0440\u043E\u044F\u043C\u0438 \u0433\u043E\u0441\u0442\u0435\u0432\u043E\u0439 \u043A\u043D\u0438\u0433\u0438.", { kind: "bookGuests" }, 25, "rare", ART.guests],
+    ["book_guests_37", "\u041F\u043E\u043B\u043D\u0430\u044F \u0433\u043E\u0441\u0442\u0435\u0432\u0430\u044F \u043A\u043D\u0438\u0433\u0430", `\u041F\u043E\u0437\u043D\u0430\u043A\u043E\u043C\u0438\u0442\u044C\u0441\u044F \u0441\u043E \u0432\u0441\u0435\u043C\u0438 ${GUESTS2.length} \u0433\u0435\u0440\u043E\u044F\u043C\u0438 \u0433\u043E\u0441\u0442\u0435\u0432\u043E\u0439 \u043A\u043D\u0438\u0433\u0438, \u0432\u043A\u043B\u044E\u0447\u0430\u044F \u0445\u043E\u0437\u044F\u0438\u043D\u0430 \u0438 \u0434\u0443\u0445\u0430.`, { kind: "bookGuests" }, GUESTS2.length, "epic", ART.guests],
+    ["topic_first", "\u041F\u0435\u0440\u0432\u0430\u044F \u0442\u0435\u043C\u0430 \u0437\u0430 \u0447\u0430\u0435\u043C", "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0442\u0435\u043C\u0443 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440\u0430 \u0441 \u043B\u044E\u0431\u044B\u043C \u0433\u0435\u0440\u043E\u0435\u043C \u0433\u043E\u0441\u0442\u0435\u0432\u043E\u0439 \u043A\u043D\u0438\u0433\u0438.", { kind: "guestTopics", mode: "any" }, 1, "common", ART.guests],
+    ["topics_one", "\u0414\u0443\u0448\u0435\u0432\u043D\u044B\u0439 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440", "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432\u0441\u0435 \u0442\u0435\u043C\u044B \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440\u0430 \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u043D\u043E\u0433\u043E \u0433\u0435\u0440\u043E\u044F \u0433\u043E\u0441\u0442\u0435\u0432\u043E\u0439 \u043A\u043D\u0438\u0433\u0438.", { kind: "guestTopics", mode: "one" }, Math.min(...GUESTS2.map((guest) => guest.topics.length)), "uncommon", ART.guests],
+    ["topics_all", "\u0412\u0441\u0435 \u0438\u0441\u0442\u043E\u0440\u0438\u0438 \u0433\u043E\u0441\u0442\u0435\u0432\u043E\u0439 \u043A\u043D\u0438\u0433\u0438", "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u043A\u0430\u0436\u0434\u0443\u044E \u0442\u0435\u043C\u0443 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440\u0430 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0433\u0435\u0440\u043E\u044F \u0431\u0435\u0437 \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u043E\u0433\u043E \u043D\u0430\u043A\u0440\u0443\u0447\u0438\u0432\u0430\u043D\u0438\u044F \u0441\u0442\u0430\u0440\u044B\u0445 \u0442\u0435\u043C.", { kind: "guestTopics", mode: "all" }, GUESTS2.reduce((sum, guest) => sum + guest.topics.length, 0), "legendary", ART.guests],
+    ["brew_guests_all", "\u0417\u0435\u043B\u044C\u0435 \u0434\u043B\u044F \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0437\u0430\u043A\u0430\u0437\u0447\u0438\u043A\u0430", "\u0427\u0435\u0441\u0442\u043D\u043E \u0432\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0437\u0430\u043A\u0430\u0437 \u043A\u0430\u0436\u0434\u043E\u0433\u043E \u0438\u0437 \u0442\u0440\u0438\u043D\u0430\u0434\u0446\u0430\u0442\u0438 \u0433\u043E\u0441\u0442\u0435\u0439 \u0432\u0430\u0440\u043A\u0438.", { kind: "guestLevels", group: "brew" }, new Set(Object.values(BREW_LEVEL_GUESTS)).size, "epic", "assets/puzzle_cards/pc_brew_web.jpg"],
+    ["seating_guests_all", "\u0412\u0441\u0435 \u043B\u0438\u0446\u0430 \u0437\u0430 \u0447\u0430\u0439\u043D\u044B\u043C \u0441\u0442\u043E\u043B\u043E\u043C", "\u0427\u0435\u0441\u0442\u043D\u043E \u043F\u0440\u043E\u0439\u0442\u0438 \u0440\u0430\u0441\u0441\u0430\u0434\u043A\u0438 \u0441\u043E \u0432\u0441\u0435\u043C\u0438 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u044C\u044E \u043F\u044F\u0442\u044C\u044E \u0433\u043E\u0441\u0442\u044F\u043C\u0438 \u0447\u0430\u0439\u043D\u043E\u0433\u043E \u0441\u0442\u043E\u043B\u0430.", { kind: "guestLevels", group: "seating" }, new Set(SEATING_PUZZLES.flatMap((level) => level.guests)).size, "epic", "assets/puzzle_cards/pc_seating_web.jpg"],
+    ["battle_lore_all", "\u041B\u0435\u0442\u043E\u043F\u0438\u0441\u044C \u0434\u0432\u0435\u043D\u0430\u0434\u0446\u0430\u0442\u0438 \u043C\u0438\u0440\u043E\u0432", "\u041F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u0432\u0441\u0435 \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u0447\u0435\u0442\u044B\u0440\u0435 \u0432\u0441\u0442\u0443\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u0438 \u0437\u0430\u0432\u0435\u0440\u0448\u0430\u044E\u0449\u0438\u0435 \u043B\u043E\u0440-\u0441\u0446\u0435\u043D\u044B \u043F\u043E\u0445\u043E\u0434\u043E\u0432.", { kind: "lore" }, Object.keys(BATTLE_LORE).length * 2, "legendary", "assets/battle/battle_bg_mist_web.jpg"]
+  ];
+  for (const [id, name, desc, condition, target, rarity, sourceArt] of storyDefinitions) {
+    add({ id, name, desc, category: "story", rarity, condition, target, sourceArt, motif: condition.kind, rank: rarity === "legendary" ? 5 : 3 });
+  }
+  var allCrew = [...COMPANIONS, ...PETS, ...MERCENARIES];
+  var allTrophies = [...TROPHIES, ...MINI_TROPHIES];
+  var collectionDefinitions = [
+    ["crew_first", "\u041F\u0435\u0440\u0432\u044B\u0439 \u043F\u043E\u043C\u043E\u0449\u043D\u0438\u043A", "\u041D\u0430\u043D\u044F\u0442\u044C \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0441\u043F\u0443\u0442\u043D\u0438\u043A\u0430, \u043F\u0438\u0442\u043E\u043C\u0446\u0430 \u0438\u043B\u0438 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u0430.", { kind: "crew" }, 1, "common", ART.crew],
+    ["crew_five", "\u0411\u043E\u043B\u044C\u0448\u0430\u044F \u0441\u0435\u043C\u044C\u044F", "\u041D\u0430\u043D\u044F\u0442\u044C \u043F\u044F\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u0447\u043B\u0435\u043D\u043E\u0432 \u043A\u043E\u043C\u0430\u043D\u0434\u044B \u043B\u0430\u0432\u043A\u0438.", { kind: "crew" }, 5, "uncommon", ART.crew],
+    ["crew_all", "\u0412\u0441\u044F \u043A\u043E\u043C\u0430\u043D\u0434\u0430 \u0432 \u0441\u0431\u043E\u0440\u0435", `\u041D\u0430\u043D\u044F\u0442\u044C \u0432\u0441\u0435\u0445 ${allCrew.length} \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445 \u0441\u043F\u0443\u0442\u043D\u0438\u043A\u043E\u0432, \u043F\u0438\u0442\u043E\u043C\u0446\u0435\u0432 \u0438 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432.`, { kind: "crew" }, allCrew.length, "epic", ART.crew],
+    ["party_full", "\u041F\u043E\u043B\u043D\u0430\u044F \u0433\u0440\u0443\u043F\u043F\u0430 \u0432 \u043F\u043E\u0445\u043E\u0434\u0435", "\u041E\u0434\u043D\u043E\u0432\u0440\u0435\u043C\u0435\u043D\u043D\u043E \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0442\u0440\u0451\u0445 \u0441\u043F\u0443\u0442\u043D\u0438\u043A\u043E\u0432, \u0434\u0432\u0443\u0445 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432 \u0438 \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0433\u043E \u043F\u0438\u0442\u043E\u043C\u0446\u0430.", { kind: "fullParty" }, 1, "rare", ART.knight],
+    ["first_craft", "\u041F\u0435\u0440\u0432\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430", "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u0435\u0449\u044C \u043F\u043E \u043B\u044E\u0431\u043E\u043C\u0443 \u0440\u0435\u0446\u0435\u043F\u0442\u0443 \u043A\u0443\u0437\u043D\u0438\u0446\u044B \u0438\u043B\u0438 \u043A\u043E\u0442\u043B\u0430.", { kind: "stat", key: "itemsCrafted" }, 1, "common", ART.craft],
+    ["craft_25", "\u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0437\u0430\u043A\u0430\u0437\u043E\u0432 \u043A\u0443\u0437\u043D\u0438\u0446\u044B", "\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u0432\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u043A\u0440\u0430\u0444\u0442\u043E\u0432 \u0441 \u0443\u0447\u0451\u0442\u043E\u043C \u043F\u043E\u0432\u0442\u043E\u0440\u043E\u0432 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432.", { kind: "stat", key: "itemsCrafted" }, 25, "uncommon", ART.craft],
+    ["craft_100", "\u0421\u0442\u043E \u0434\u0435\u043B \u043C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u043E\u0439", "\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u0432\u044B\u043F\u043E\u043B\u043D\u0438\u0442\u044C \u0441\u0442\u043E \u043A\u0440\u0430\u0444\u0442\u043E\u0432; \u043D\u0435\u0443\u0434\u0430\u0447\u043D\u044B\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0438 \u043D\u0435 \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F.", { kind: "stat", key: "itemsCrafted" }, 100, "rare", ART.craft],
+    ["recipes_all", "\u0412\u0441\u0435 \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", `\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043A\u0430\u0436\u0434\u044B\u0439 \u0438\u0437 ${RECIPES.length} \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432 \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u0438\u043D \u0440\u0430\u0437.`, { kind: "unique", key: "craftedRecipes", ids: RECIPES.map((recipe) => recipe.id) }, RECIPES.length, "epic", ART.recipes],
+    ["shopper", "\u0417\u0430\u0432\u0441\u0435\u0433\u0434\u0430\u0442\u0430\u0439 \u043F\u0440\u0438\u043B\u0430\u0432\u043A\u0430", "\u0421\u043E\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u0443\u0441\u043F\u0435\u0448\u043D\u044B\u0445 \u043F\u043E\u043A\u0443\u043F\u043E\u043A \u0442\u043E\u0432\u0430\u0440\u043E\u0432.", { kind: "stat", key: "itemsBought" }, 20, "common", ART.market],
+    ["purchases_100", "\u0421\u043E\u0442\u043D\u044F \u043F\u043E\u043A\u0443\u043F\u043E\u043A", "\u0421\u043E\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0441\u0442\u043E \u0443\u0441\u043F\u0435\u0448\u043D\u044B\u0445 \u043F\u043E\u043A\u0443\u043F\u043E\u043A \u0442\u043E\u0432\u0430\u0440\u043E\u0432 \u0431\u0435\u0437 \u0443\u0447\u0451\u0442\u0430 \u043D\u0435\u0443\u0434\u0430\u0447\u043D\u044B\u0445 \u043F\u043E\u043F\u044B\u0442\u043E\u043A.", { kind: "stat", key: "itemsBought" }, 100, "rare", ART.market],
+    ["rich", "\u0417\u0432\u043E\u043D \u043F\u043E\u043B\u043D\u044B\u0445 \u043A\u0430\u0440\u043C\u0430\u043D\u043E\u0432", "\u0417\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u0441\u0443\u043C\u043C\u0430\u0440\u043D\u043E \u043F\u044F\u0442\u044C \u0442\u044B\u0441\u044F\u0447 \u043C\u043E\u043D\u0435\u0442 \u0447\u0435\u0441\u0442\u043D\u043E\u0439 \u0438\u0433\u0440\u043E\u0439.", { kind: "stat", key: "coinsEarned" }, 5e3, "uncommon", ART.coins],
+    ["rich_50000", "\u041F\u044F\u0442\u044C\u0434\u0435\u0441\u044F\u0442 \u0442\u044B\u0441\u044F\u0447 \u0447\u0435\u0441\u0442\u043D\u043E\u0433\u043E \u0434\u043E\u0445\u043E\u0434\u0430", "\u0417\u0430\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C \u0441\u0443\u043C\u043C\u0430\u0440\u043D\u043E \u043F\u044F\u0442\u044C\u0434\u0435\u0441\u044F\u0442 \u0442\u044B\u0441\u044F\u0447 \u043C\u043E\u043D\u0435\u0442; \u0442\u0435\u043A\u0443\u0449\u0438\u0439 \u043E\u0441\u0442\u0430\u0442\u043E\u043A \u043D\u0435\u0432\u0430\u0436\u0435\u043D.", { kind: "stat", key: "coinsEarned" }, 5e4, "epic", ART.coins],
+    ["seals_five", "\u041A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u044F \u043F\u0435\u0447\u0430\u0442\u0435\u0439", "\u0418\u043C\u0435\u0442\u044C \u043F\u044F\u0442\u044C \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430 \u043E\u0434\u043D\u043E\u0432\u0440\u0435\u043C\u0435\u043D\u043D\u043E.", { kind: "seals" }, 5, "uncommon", ART.seals],
+    ["seals_45", "\u0421\u043E\u0440\u043E\u043A \u043F\u044F\u0442\u044C \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u0432 \u043A\u043D\u0438\u0433\u0435", "\u0418\u043C\u0435\u0442\u044C \u0441\u043E\u0440\u043E\u043A \u043F\u044F\u0442\u044C \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430 \u043E\u0434\u043D\u043E\u0432\u0440\u0435\u043C\u0435\u043D\u043D\u043E, \u043D\u0435 \u043F\u043E\u0442\u0440\u0430\u0442\u0438\u0432 \u0438\u0445 \u043D\u0430 \u043F\u043E\u043A\u0443\u043F\u043A\u0438.", { kind: "seals" }, 45, "epic", ART.seals],
+    ["first_trophy", "\u041F\u0435\u0440\u0432\u0430\u044F \u043F\u043E\u043B\u043A\u0430", "\u041F\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u044B\u0439 \u0431\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0439 \u0438\u043B\u0438 \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u043E\u0439 \u0442\u0440\u043E\u0444\u0435\u0439 \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435.", { kind: "trophies", ids: allTrophies.map((trophy) => trophy.id) }, 1, "common", ART.trophy],
+    ["cabinet_full", "\u041F\u043E\u043B\u043D\u044B\u0439 \u043A\u0430\u0431\u0438\u043D\u0435\u0442", "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435 \u0434\u0432\u0435\u043D\u0430\u0434\u0446\u0430\u0442\u044C \u0442\u0440\u043E\u0444\u0435\u0435\u0432 \u0441 \u0431\u043E\u0441\u0441\u043E\u0432 \u043C\u0438\u0440\u043E\u0432.", { kind: "trophies", ids: TROPHIES.map((trophy) => trophy.id) }, TROPHIES.length, "epic", ART.cabinet],
+    ["trophies_16", "\u0412\u0435\u0441\u044C \u043A\u0430\u0431\u0438\u043D\u0435\u0442 \u0442\u0440\u043E\u0444\u0435\u0435\u0432", `\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435 ${allTrophies.length} \u0442\u0440\u043E\u0444\u0435\u0435\u0432: \u0434\u0432\u0435\u043D\u0430\u0434\u0446\u0430\u0442\u044C \u0431\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0445 \u0438 \u0447\u0435\u0442\u044B\u0440\u0435 \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0445.`, { kind: "trophies", ids: allTrophies.map((trophy) => trophy.id) }, allTrophies.length, "legendary", ART.cabinet],
+    ["wanted_trophies", "\u0427\u0435\u0442\u044B\u0440\u0435 \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0445 \u0436\u0435\u0442\u043E\u043D\u0430", "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0432\u0441\u0435 \u0447\u0435\u0442\u044B\u0440\u0435 \u043C\u0438\u043D\u0438-\u0442\u0440\u043E\u0444\u0435\u044F \u0437\u0430 \u0440\u043E\u0437\u044B\u0441\u043A\u043D\u044B\u0435 \u043B\u0438\u0441\u0442\u044B.", { kind: "trophies", ids: MINI_TROPHIES.map((trophy) => trophy.id) }, MINI_TROPHIES.length, "rare", ART.wanted],
+    ["boss_find_1", "\u041F\u0435\u0440\u0432\u0430\u044F \u0440\u0435\u0434\u043A\u0430\u044F \u043D\u0430\u0445\u043E\u0434\u043A\u0430", "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0432\u043D\u0435\u0441\u0435\u0442\u043E\u0432\u0443\u044E \u0432\u0435\u0449\u044C \u0441 \u0431\u043E\u0441\u0441\u0430.", { kind: "bossDrops" }, 1, "uncommon", ART.bossDrop],
+    ["boss_find_6", "\u0428\u0435\u0441\u0442\u044C \u0431\u043E\u0441\u0441\u043E\u0432\u0441\u043A\u0438\u0445 \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u0439", "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0448\u0435\u0441\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u0432\u043D\u0435\u0441\u0435\u0442\u043E\u0432\u044B\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A \u0441 \u0431\u043E\u0441\u0441\u043E\u0432.", { kind: "bossDrops" }, 6, "rare", ART.bossDrop],
+    ["boss_find_12", "\u041F\u043E\u043B\u043D\u0430\u044F \u0434\u044E\u0436\u0438\u043D\u0430 \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u0439", `\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435 ${Object.keys(BOSS_DROPS).length} \u0432\u043D\u0435\u0441\u0435\u0442\u043E\u0432\u044B\u0445 \u043D\u0430\u0445\u043E\u0434\u043E\u043A \u0441 \u0431\u043E\u0441\u0441\u043E\u0432.`, { kind: "bossDrops" }, Object.keys(BOSS_DROPS).length, "legendary", ART.bossDrop],
+    ["cosmetic_1", "\u041B\u0430\u0432\u043A\u0430 \u0432 \u043D\u043E\u0432\u043E\u043C \u043E\u0431\u0440\u0430\u0437\u0435", "\u041A\u0443\u043F\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u043E\u0435 \u043F\u043E\u043B\u043D\u043E\u0435 \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435 \u043B\u0430\u0432\u043A\u0438.", { kind: "cosmetics" }, 1, "common", ART.cosmetics],
+    ["cosmetic_all", "\u0412\u0441\u0435 \u0448\u0435\u0441\u0442\u044C \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0439", `\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435 ${COSMETIC_PACKS.length} \u043F\u043E\u043B\u043D\u044B\u0445 \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u044F \u043B\u0430\u0432\u043A\u0438.`, { kind: "cosmetics" }, COSMETIC_PACKS.length, "epic", ART.cosmetics],
+    ["fate_deck_full", "\u041F\u043E\u043B\u043D\u0430\u044F \u043A\u043E\u043B\u043E\u0434\u0430 \u0441\u0443\u0434\u044C\u0431\u044B", `\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0432\u0441\u0435 ${Object.keys(FATE_CARDS).length} \u043A\u0430\u0440\u0442 \u0447\u0435\u0440\u0435\u0437 \u0447\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0451\u043D\u043D\u044B\u0435 \u0440\u0430\u0441\u043A\u043B\u0430\u0434\u044B; \u043F\u0440\u043E\u043F\u0443\u0441\u043A\u0438 \u043D\u0435 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u044E\u0442 \u044D\u0442\u0443 \u043D\u0430\u0433\u0440\u0430\u0434\u0443.`, { kind: "fateDeck" }, Object.keys(FATE_CARDS).length, "legendary", ART.fate],
+    ["set_first", "\u0414\u0435\u0432\u044F\u0442\u044C \u0432\u0435\u0449\u0435\u0439 \u043E\u0434\u043D\u043E\u0433\u043E \u0441\u0435\u0442\u0430", "\u0412\u043F\u0435\u0440\u0432\u044B\u0435 \u0430\u043A\u0442\u0438\u0432\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u044B\u0441\u0448\u0438\u0439 \u044F\u0440\u0443\u0441 \u043B\u044E\u0431\u043E\u0433\u043E \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0442\u0430 \u0438\u0437 \u0434\u0435\u0432\u044F\u0442\u0438 \u0432\u0435\u0449\u0435\u0439.", { kind: "sets", tier: 9 }, 1, "epic", ART.craft],
+    ["sets_all", "\u0421\u0435\u043C\u044C \u043F\u043E\u043B\u043D\u044B\u0445 \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0442\u043E\u0432", `\u0410\u043A\u0442\u0438\u0432\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0432\u044B\u0441\u0448\u0438\u0439 \u044F\u0440\u0443\u0441 \u0432\u0441\u0435\u0445 ${Object.keys(SETS).length} \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0442\u043E\u0432 \u0445\u043E\u0442\u044F \u0431\u044B \u043E\u0434\u0438\u043D \u0440\u0430\u0437 \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u0438 \u0441\u043D\u0430\u0440\u044F\u0436\u0435\u043D\u0438\u044F.`, { kind: "sets", tier: 9 }, Object.keys(SETS).length, "legendary", ART.craft],
+    ["exchange_first", "\u041F\u0435\u0440\u0432\u044B\u0439 \u043E\u0431\u043C\u0435\u043D \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u043E\u0432", "\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u043E\u0431\u043C\u0435\u043D\u044F\u0442\u044C \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u044B \u0432 \u043F\u0435\u0440\u0432\u044B\u0439 \u0440\u0430\u0437.", { kind: "counter", key: "materialExchanges" }, 1, "common", ART.exchange],
+    ["exchange_50", "\u041F\u043E\u043B\u0441\u043E\u0442\u043D\u0438 \u0447\u0435\u0441\u0442\u043D\u044B\u0445 \u043E\u0431\u043C\u0435\u043D\u043E\u0432", "\u0423\u0441\u043F\u0435\u0448\u043D\u043E \u0437\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u043F\u044F\u0442\u044C\u0434\u0435\u0441\u044F\u0442 \u043E\u0431\u043C\u0435\u043D\u043E\u0432 \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u043E\u0432; \u043E\u0442\u043A\u043B\u043E\u043D\u0451\u043D\u043D\u044B\u0435 \u043E\u0431\u043C\u0435\u043D\u044B \u043D\u0435 \u0441\u0447\u0438\u0442\u0430\u044E\u0442\u0441\u044F.", { kind: "counter", key: "materialExchanges" }, 50, "rare", ART.exchange],
+    ["goal_first", "\u041F\u0435\u0440\u0432\u0430\u044F \u0446\u0435\u043B\u044C \u0434\u043E\u0441\u0442\u0438\u0433\u043D\u0443\u0442\u0430", "\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u0443\u044E \u0446\u0435\u043B\u044C \u043D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u0438\u044F \u043F\u043E\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0451\u043D\u043D\u043E\u0439 \u043F\u043E\u043A\u0443\u043F\u043A\u043E\u0439, \u043D\u0430\u0439\u043C\u043E\u043C \u0438\u043B\u0438 \u043A\u0440\u0430\u0444\u0442\u043E\u043C.", { kind: "counter", key: "savingsGoals" }, 1, "common", ART.goals],
+    ["goal_10", "\u0414\u0435\u0441\u044F\u0442\u044C \u0441\u0431\u044B\u0432\u0448\u0438\u0445\u0441\u044F \u0446\u0435\u043B\u0435\u0439", "\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u0434\u0435\u0441\u044F\u0442\u044C \u0446\u0435\u043B\u0435\u0439 \u043D\u0430\u043A\u043E\u043F\u043B\u0435\u043D\u0438\u044F.", { kind: "counter", key: "savingsGoals" }, 10, "rare", ART.goals],
+    ["cat_friend", "\u041C\u0443\u0440\u043B\u044B\u043A\u0430\u043B\u043E", "\u041F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C \u043A\u043E\u0442\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0440\u0430\u0437.", { kind: "stat", key: "catPets" }, 25, "uncommon", ART.cat],
+    ["cat_100", "\u0421\u0442\u043E \u043C\u0443\u0440\u043B\u044B\u043A\u0430\u043D\u0438\u0439", "\u041F\u043E\u0433\u043B\u0430\u0434\u0438\u0442\u044C \u043A\u043E\u0442\u0430-\u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u0441\u0442\u043E \u0440\u0430\u0437 \u0438 \u0437\u0430\u0441\u043B\u0443\u0436\u0438\u0442\u044C \u0435\u0433\u043E \u043F\u043E\u043B\u043D\u043E\u0435 \u0434\u043E\u0432\u0435\u0440\u0438\u0435.", { kind: "stat", key: "catPets" }, 100, "rare", ART.cat]
+  ];
+  for (const [id, name, desc, condition, target, rarity, sourceArt] of collectionDefinitions) {
+    add({ id, name, desc, category: "collections", rarity, condition, target, sourceArt, motif: condition.key || condition.kind, rank: rarity === "legendary" ? 5 : 3 });
+  }
+  var MEMORY_LEVELS = ALL_PUZZLES.filter((level) => level.mechanic === "brew" && level.hideRecipe);
+  var BLIND_SPINS = ALL_PUZZLES.filter((level) => level.mechanic === "spin" && level.goldRim === false);
+  var puzzleChallenges = [
+    ["no_hints_10", "\u0414\u0435\u0441\u044F\u0442\u044C \u0434\u0435\u043B \u0441\u0432\u043E\u0438\u043C \u0443\u043C\u043E\u043C", "\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0434\u0435\u0441\u044F\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0439\u0441\u043A\u0438\u0445 \u0443\u0440\u043E\u0432\u043D\u0435\u0439 \u0441 \u044F\u0432\u043D\u043E \u0437\u0430\u043F\u0438\u0441\u0430\u043D\u043D\u044B\u043C \u043D\u0443\u043B\u0451\u043C \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A.", { kind: "puzzles", noHints: true }, 10, "uncommon"],
+    ["no_hints_100", "\u0421\u0442\u043E \u0440\u0435\u0448\u0435\u043D\u0438\u0439 \u0431\u0435\u0437 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A", "\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0441\u0442\u043E \u0440\u0430\u0437\u043D\u044B\u0445 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u0439\u0441\u043A\u0438\u0445 \u0443\u0440\u043E\u0432\u043D\u0435\u0439 \u0431\u0435\u0437 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A.", { kind: "puzzles", noHints: true }, 100, "epic"],
+    ["riddle_first_try", "\u0421\u043B\u043E\u0432\u043E \u0441 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0440\u0430\u0437\u0430", "\u041E\u0442\u0433\u0430\u0434\u0430\u0442\u044C \u043B\u044E\u0431\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u0441 \u043F\u0435\u0440\u0432\u043E\u0439 \u043F\u043E\u043F\u044B\u0442\u043A\u0438.", { kind: "puzzleFeat", feat: "riddle_first_try", mechanic: "riddle" }, 1, "rare"],
+    ["hang_perfect", "\u041D\u0438 \u043A\u043B\u044F\u043A\u0441\u044B, \u043D\u0438 \u043E\u0436\u043E\u0433\u043E\u0432", "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u0438\u0442\u044C \u043B\u044E\u0431\u044B\u0435 \u0441\u0442\u0440\u043E\u043A\u0438 \u043F\u0440\u0438 \u0441\u0432\u0435\u0447\u0435 \u0431\u0435\u0437 \u043E\u0448\u0438\u0431\u043E\u043A \u0438 \u043F\u043E\u0440\u0447\u0438 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B.", { kind: "puzzleFeat", feat: "hang_perfect", mechanic: "hang" }, 1, "rare"],
+    ["brew_flawless", "\u0427\u0438\u0441\u0442\u0430\u044F \u0432\u0430\u0440\u043A\u0430", "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u043B\u044E\u0431\u043E\u0435 \u0437\u0435\u043B\u044C\u0435 \u0431\u0435\u0437 \u0435\u0434\u0438\u043D\u043E\u0439 \u043E\u0448\u0438\u0431\u043A\u0438 \u0438 \u0431\u0435\u0437 \u043F\u043E\u0440\u0447\u0438 \u0437\u0430 \u0432\u0441\u044E \u043F\u043E\u043F\u044B\u0442\u043A\u0443.", { kind: "puzzleFeat", feat: "brew_flawless", mechanic: "brew" }, 1, "rare"],
+    ["brew_memory_first", "\u041A\u043D\u0438\u0433\u0430 \u043E\u0441\u0442\u0430\u043B\u0430\u0441\u044C \u0437\u0430\u043A\u0440\u044B\u0442\u043E\u0439", `\u041F\u0440\u043E\u0439\u0442\u0438 \u0443\u0440\u043E\u0432\u0435\u043D\u044C \xAB${MEMORY_LEVELS[0].name}\xBB \u2014 \u043F\u0435\u0440\u0432\u044B\u0439 \u0440\u0435\u0446\u0435\u043F\u0442 \u043D\u0430 \u043F\u0430\u043C\u044F\u0442\u044C \u2014 \u0431\u0435\u0437 \u043F\u043E\u0441\u0442\u043E\u044F\u043D\u043D\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u043E\u0439 \u043A\u043D\u0438\u0433\u0438.`, { kind: "puzzleFeat", feat: "brew_memory", mechanic: "brew", ids: [MEMORY_LEVELS[0].id] }, 1, "rare"],
+    ["brew_memory_all", "\u0412\u0441\u044F \u043A\u043D\u0438\u0433\u0430 \u043D\u0430 \u043F\u0430\u043C\u044F\u0442\u044C", `\u041F\u0440\u043E\u0439\u0442\u0438 \u0432\u0441\u0435 ${MEMORY_LEVELS.length} \u0443\u0440\u043E\u0432\u043D\u0435\u0439 \u0432\u0430\u0440\u043A\u0438 \u043D\u0430 \u043F\u0430\u043C\u044F\u0442\u044C \u0431\u0435\u0437 \u043F\u043E\u0441\u0442\u043E\u044F\u043D\u043D\u043E \u043E\u0442\u043A\u0440\u044B\u0442\u043E\u0439 \u043A\u043D\u0438\u0433\u0438.`, { kind: "puzzleFeat", feat: "brew_memory", mechanic: "brew", ids: MEMORY_LEVELS.map((level) => level.id) }, MEMORY_LEVELS.length, "legendary"],
+    ["fate_perfect", "\u0420\u0430\u0441\u043A\u043B\u0430\u0434 \u0431\u0435\u0437 \u043F\u043E\u043C\u0435\u0445", "\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u043B\u044E\u0431\u043E\u0439 \u0440\u0430\u0441\u043A\u043B\u0430\u0434 \u0441\u0443\u0434\u044C\u0431\u044B \u0431\u0435\u0437 \u0435\u0434\u0438\u043D\u043E\u0439 \u043E\u0448\u0438\u0431\u043E\u0447\u043D\u043E\u0439 \u043A\u0430\u0440\u0442\u044B.", { kind: "puzzleFeat", feat: "fate_perfect", mechanic: "fate" }, 1, "rare"],
+    ["gift_first_try", "\u041F\u043E\u0434\u0430\u0440\u043E\u043A \u0441 \u043F\u0435\u0440\u0432\u043E\u0433\u043E \u0432\u0437\u0433\u043B\u044F\u0434\u0430", "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u0441 \u043F\u0435\u0440\u0432\u043E\u0439 \u043F\u043E\u043F\u044B\u0442\u043A\u0438.", { kind: "puzzleFeat", feat: "gift_first_try", mechanic: "gift" }, 1, "uncommon"],
+    ["gift_third_try", "\u0422\u0440\u0435\u0442\u044C\u044F \u043F\u043E\u043F\u044B\u0442\u043A\u0430 \u2014 \u0441 \u043B\u044E\u0431\u043E\u0432\u044C\u044E", "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u0440\u043E\u0432\u043D\u043E \u0441 \u0442\u0440\u0435\u0442\u044C\u0435\u0439 \u043F\u043E\u043F\u044B\u0442\u043A\u0438.", { kind: "puzzleFeat", feat: "gift_third_try", mechanic: "gift" }, 1, "rare"],
+    ["tea_exact", "\u0422\u043E\u0447\u043D\u044B\u0439 \u043E\u0442\u0442\u0435\u043D\u043E\u043A \u0447\u0430\u044F", "\u041F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u0438\u0442\u044C \u0447\u0430\u0439 \u0441 \u043D\u0443\u043B\u0435\u0432\u044B\u043C \u043E\u0442\u043A\u043B\u043E\u043D\u0435\u043D\u0438\u0435\u043C \u043F\u043E \u0432\u0441\u0435\u043C \u043A\u0430\u043D\u0430\u043B\u0430\u043C \u0446\u0432\u0435\u0442\u0430 \u0438 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E\u0439 \u0442\u0435\u043F\u043B\u043E\u0442\u043E\u0439.", { kind: "puzzleFeat", feat: "tea_exact", mechanic: "tea" }, 1, "epic"],
+    ["candle_minimum", "\u041D\u0438 \u043E\u0434\u043D\u043E\u0439 \u043B\u0438\u0448\u043D\u0435\u0439 \u0441\u0432\u0435\u0447\u0438", "\u041F\u0440\u043E\u0439\u0442\u0438 \u0443\u0440\u043E\u0432\u0435\u043D\u044C \xAB\u0421\u0432\u0435\u0447\u0438 \u0438 \u0434\u0443\u0445\u0438\xBB \u043C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u043C \u0447\u0438\u0441\u043B\u043E\u043C \u0441\u0432\u0435\u0447\u0435\u0439 \u043F\u043E \u0440\u0435\u0448\u0430\u0442\u0435\u043B\u044E.", { kind: "puzzleFeat", feat: "candle_minimum", mechanic: "candle" }, 1, "epic"],
+    ["spin_par_first", "\u0422\u043E\u0447\u043D\u0430\u044F \u0441\u0431\u043E\u0440\u043A\u0430 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u0430", "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u043B\u044E\u0431\u043E\u0439 \u0433\u043E\u0431\u0435\u043B\u0435\u043D \u043D\u0435 \u0432\u044B\u0448\u0435 \u044D\u0442\u0430\u043B\u043E\u043D\u0430 \u0445\u043E\u0434\u043E\u0432 \u0438 \u0431\u0435\u0437 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A.", { kind: "puzzleFeat", feat: "spin_par", mechanic: "spin" }, 1, "rare"],
+    ["spin_par_25", "\u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0442\u043E\u0447\u043D\u044B\u0445 \u0443\u0437\u043E\u0440\u043E\u0432", "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432 \u043D\u0435 \u0432\u044B\u0448\u0435 \u044D\u0442\u0430\u043B\u043E\u043D\u0430 \u0445\u043E\u0434\u043E\u0432 \u0438 \u0431\u0435\u0437 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A.", { kind: "puzzleFeat", feat: "spin_par", mechanic: "spin" }, 25, "epic"],
+    ["spin_blind_all", "\u0422\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u0448\u0435\u0441\u0442\u044C \u0441\u043B\u0435\u043F\u044B\u0445 \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432", `\u0427\u0435\u0441\u0442\u043D\u043E \u0441\u043E\u0431\u0440\u0430\u0442\u044C \u0432\u0441\u0435 ${BLIND_SPINS.length} \u0433\u043E\u0431\u0435\u043B\u0435\u043D\u043E\u0432 \u0431\u0435\u0437 \u0437\u043E\u043B\u043E\u0442\u043E\u0439 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438 \u043A\u0430\u0439\u043C\u044B.`, { kind: "puzzles", ids: BLIND_SPINS.map((level) => level.id) }, BLIND_SPINS.length, "legendary"],
+    ["seek_no_miss", "\u041D\u0438 \u043F\u0440\u043E\u043C\u0430\u0445\u0430, \u043D\u0438 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0438", "\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u044C \u043B\u044E\u0431\u0443\u044E \u0438\u0441\u043A\u0430\u043B\u043A\u0443 \u0431\u0435\u0437 \u043F\u0440\u043E\u043C\u0430\u0445\u043E\u0432 \u043F\u043E \u043F\u0443\u0441\u0442\u044B\u043C \u043C\u0435\u0441\u0442\u0430\u043C \u0438 \u0431\u0435\u0437 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A.", { kind: "puzzleFeat", feat: "seek_no_miss", mechanic: "seek" }, 1, "rare"],
+    ["seating_first_serve", "\u0427\u0430\u0439 \u043F\u0440\u0438\u043D\u044F\u0442 \u0441\u0440\u0430\u0437\u0443", "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043E\u0434\u043E\u0431\u0440\u0435\u043D\u0438\u0435 \u0447\u0430\u0439\u043D\u043E\u0439 \u0440\u0430\u0441\u0441\u0430\u0434\u043A\u0438 \u0441 \u043F\u0435\u0440\u0432\u043E\u0439 \u043F\u043E\u0434\u0430\u0447\u0438.", { kind: "puzzleFeat", feat: "seating_first_serve", mechanic: "seating" }, 1, "rare"],
+    ["glass_no_hints_25", "\u0414\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0432\u0438\u0442\u0440\u0430\u0436\u0435\u0439 \u0441\u0432\u043E\u0438\u043C \u0443\u043C\u043E\u043C", "\u0421\u043E\u0431\u0440\u0430\u0442\u044C \u0434\u0432\u0430\u0434\u0446\u0430\u0442\u044C \u043F\u044F\u0442\u044C \u0440\u0430\u0437\u043D\u044B\u0445 \u0432\u0438\u0442\u0440\u0430\u0436\u0435\u0439 \u0431\u0435\u0437 \u043F\u043E\u0434\u0441\u043A\u0430\u0437\u043E\u043A.", { kind: "puzzles", mechanic: "glass", noHints: true }, 25, "epic"]
+  ];
+  var puzzleArt = Object.fromEntries(PUZZLE_TYPES2.map((type) => [type.id, type.art]));
+  for (const [id, name, desc, condition, target, rarity] of puzzleChallenges) {
+    add({ id, name, desc, category: "challenges", rarity, condition, target, sourceArt: puzzleArt[condition.mechanic] || ART.campaign, motif: condition.feat || "no-hints", rank: rarity === "legendary" ? 5 : 4 });
+  }
+  var battleChallenges = [
+    ["battle_no_damage", "\u0411\u0435\u0437 \u0435\u0434\u0438\u043D\u043E\u0439 \u0446\u0430\u0440\u0430\u043F\u0438\u043D\u044B", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u043C \u0431\u043E\u044E \u0431\u0435\u0437 \u0443\u0440\u043E\u043D\u0430 \u0432\u0441\u0435\u043C\u0443 \u043E\u0442\u0440\u044F\u0434\u0443 \u043F\u043E \u0441\u0443\u043C\u043C\u0430\u0440\u043D\u043E\u0439 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0435 \u0441\u043E\u044E\u0437\u043D\u0438\u043A\u043E\u0432.", "battle_no_damage", null, "rare", ART.knight],
+    ["boss_all_survive", "\u0412\u0441\u0435 \u0432\u0435\u0440\u043D\u0443\u043B\u0438\u0441\u044C \u0441 \u0431\u043E\u0441\u0441\u0430", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u043B\u044E\u0431\u043E\u0433\u043E \u0431\u043E\u0441\u0441\u0430 \u0431\u0435\u0437 \u043F\u043E\u0433\u0438\u0431\u0448\u0438\u0445 \u0441\u043E\u044E\u0437\u043D\u0438\u043A\u043E\u0432.", "boss_all_survive", null, "rare", ART.boss],
+    ["battle_solo", "\u041E\u0434\u0438\u043D \u0440\u044B\u0446\u0430\u0440\u044C, \u043E\u0434\u043D\u0430 \u043F\u043E\u0431\u0435\u0434\u0430", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u043C \u0431\u043E\u044E \u0431\u0435\u0437 \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u043E\u0432 \u0432 \u043E\u0442\u0440\u044F\u0434\u0435.", "battle_solo", null, "uncommon", ART.knight],
+    ["boss_no_consumables", "\u0411\u043E\u0441\u0441 \u0431\u0435\u0437 \u0437\u0435\u043B\u0438\u0439 \u0438 \u0441\u0432\u0438\u0442\u043A\u043E\u0432", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u043B\u044E\u0431\u043E\u0433\u043E \u0431\u043E\u0441\u0441\u0430 \u0431\u0435\u0437 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u043D\u044B\u0445 \u0440\u0430\u0441\u0445\u043E\u0434\u043D\u0438\u043A\u043E\u0432.", "boss_no_consumables", null, "rare", ART.boss],
+    ["battle_one_hp", "\u041D\u0430 \u0432\u043E\u043B\u043E\u0441\u043E\u043A \u043E\u0442 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u044F", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u043C \u0431\u043E\u044E, \u043E\u0441\u0442\u0430\u0432\u0438\u0432 \u0440\u044B\u0446\u0430\u0440\u044E \u0440\u043E\u0432\u043D\u043E \u043E\u0434\u043D\u0443 \u0435\u0434\u0438\u043D\u0438\u0446\u0443 \u0437\u0434\u043E\u0440\u043E\u0432\u044C\u044F.", "battle_one_hp", null, "epic", ART.knight],
+    ["merc_last_stand", "\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u0438\u0439 \u0431\u043E\u0435\u0446 \u043D\u0430\u0451\u043C\u043D\u0438\u043A", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u043F\u043E\u0441\u043B\u0435 \u0433\u0438\u0431\u0435\u043B\u0438 \u0440\u044B\u0446\u0430\u0440\u044F, \u043A\u043E\u0433\u0434\u0430 \u0444\u0438\u043D\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0434\u0430\u0440 \u043E\u0441\u0442\u0430\u043B\u0441\u044F \u043D\u0430\u0451\u043C\u043D\u0438\u043A\u0443.", "merc_last_stand", null, "epic", ART.merc],
+    ["battle_timeout", "\u0414\u043E\u043B\u0433\u0438\u0439 \u0431\u043E\u0439 \u043F\u0440\u043E\u0438\u0433\u0440\u0430\u043D", "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u0435 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043F\u043E \u043B\u0438\u043C\u0438\u0442\u0443 \u0445\u043E\u0434\u043E\u0432; \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0430 \u043D\u0435 \u0437\u0430\u0441\u0447\u0438\u0442\u044B\u0432\u0430\u0435\u0442\u0441\u044F.", "timeout", null, "uncommon", "assets/battle/battle_bg_mist_web.jpg"],
+    ["battle_comeback", "\u041F\u043E\u0441\u043B\u0435 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u2014 \u043F\u043E\u0431\u0435\u0434\u0430", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u043B\u044E\u0431\u043E\u043C \u0431\u043E\u044E, \u0433\u0434\u0435 \u0440\u0430\u043D\u044C\u0448\u0435 \u0431\u044B\u043B\u043E \u0437\u0430\u043F\u0438\u0441\u0430\u043D\u043E \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0435\u0435 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0435.", "battle_comeback", null, "uncommon", ART.battle],
+    ["boss_no_damage", "\u0411\u043E\u0441\u0441 \u043D\u0435 \u043A\u043E\u0441\u043D\u0443\u043B\u0441\u044F \u043E\u0442\u0440\u044F\u0434\u0430", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u043B\u044E\u0431\u043E\u0433\u043E \u0431\u043E\u0441\u0441\u0430 \u0431\u0435\u0437 \u0443\u0440\u043E\u043D\u0430 \u0432\u0441\u0435\u043C\u0443 \u043E\u0442\u0440\u044F\u0434\u0443.", "boss_no_damage", null, "legendary", ART.boss],
+    ["full_party_crowd", "\u041F\u043E\u043B\u043D\u044B\u0439 \u0441\u0442\u0440\u043E\u0439 \u043F\u0440\u043E\u0442\u0438\u0432 \u0448\u0435\u0441\u0442\u0438", "\u041F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u0432 \u0441\u0431\u043E\u0440\u0435 \u0438\u0437 \u0448\u0435\u0441\u0442\u0438 \u0432\u0440\u0430\u0433\u043E\u0432 \u0441 \u043F\u043E\u043B\u043D\u043E\u0439 \u0433\u0440\u0443\u043F\u043F\u043E\u0439 \u0438 \u0431\u0435\u0437 \u043F\u043E\u0433\u0438\u0431\u0448\u0438\u0445 \u0431\u043E\u0439\u0446\u043E\u0432.", "full_party_crowd", null, "legendary", ART.knight],
+    ["boss_pity", "\u0414\u0432\u0435\u043D\u0430\u0434\u0446\u0430\u0442\u0430\u044F \u043D\u0430\u0441\u0442\u043E\u0439\u0447\u0438\u0432\u043E\u0441\u0442\u044C", "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0433\u0430\u0440\u0430\u043D\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u0443\u044E \u0431\u043E\u0441\u0441-\u043D\u0430\u0445\u043E\u0434\u043A\u0443 \u043D\u0430 \u0434\u0432\u0435\u043D\u0430\u0434\u0446\u0430\u0442\u043E\u0439 \u0441\u0443\u0445\u043E\u0439 \u043D\u0430\u0433\u0440\u0430\u0434\u043D\u043E\u0439 \u043F\u043E\u0431\u0435\u0434\u0435.", "boss_pity", null, "legendary", "assets/items/glv_mist_minute_web.jpg"]
+  ];
+  for (const [id, name, desc, feat, battleId, rarity, sourceArt] of battleChallenges) {
+    add({ id, name, desc, category: "challenges", rarity, condition: { kind: "battleFeat", feat, ...battleId ? { id: battleId } : {} }, target: 1, sourceArt, motif: feat, rank: rarity === "legendary" ? 5 : 4 });
+  }
+  add({
+    id: "battle_defeats_10",
+    name: "\u0414\u0435\u0441\u044F\u0442\u044C \u0447\u0435\u0441\u0442\u043D\u044B\u0445 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0439",
+    desc: "\u0417\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0434\u0435\u0441\u044F\u0442\u044C \u043D\u0430\u0441\u0442\u043E\u044F\u0449\u0438\u0445 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0439; \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0438 \u0438 \u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u043A\u0430 \u044D\u043D\u0435\u0440\u0433\u0438\u0438 \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u044F\u044E\u0442.",
+    category: "challenges",
+    rarity: "rare",
+    condition: { kind: "battleDefeats" },
+    target: 10,
+    sourceArt: ART.battle,
+    motif: "battle-defeats",
+    rank: 3
+  });
+  var specialDefinitions = [
+    ["workshop_create", "\u0421\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C", "\u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0438 \u0441\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C \u043F\u0435\u0440\u0432\u044B\u0439 \u0440\u0435\u0448\u0430\u0435\u043C\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C \u0432 \u041C\u0430\u0441\u0442\u0435\u0440\u0441\u043A\u043E\u0439.", { kind: "custom", mode: "created" }, "rare", "assets/puzzle_cards/pc_mirror_web.jpg"],
+    ["workshop_solve", "\u0410\u0432\u0442\u043E\u0440 \u043F\u0440\u043E\u0448\u0451\u043B \u0441\u0432\u043E\u0451 \u0442\u0432\u043E\u0440\u0435\u043D\u0438\u0435", "\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0441\u043E\u0431\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u0441\u043E\u0445\u0440\u0430\u043D\u0451\u043D\u043D\u044B\u0439 \u0443\u0440\u043E\u0432\u0435\u043D\u044C; \u0432 \u043A\u0430\u043C\u043F\u0430\u043D\u0438\u044E \u043E\u043D \u043D\u0435 \u0432\u0445\u043E\u0434\u0438\u0442.", { kind: "custom", mode: "solved" }, "rare", "assets/puzzle_cards/pc_mirror_web.jpg"],
+    ["bees_return", "\u0412\u043E\u0437\u0432\u0440\u0430\u0449\u0435\u043D\u0438\u0435 \u043A \u043F\u0447\u0451\u043B\u0430\u043C", "\u041F\u043E\u0441\u043B\u0435 \u0437\u0430\u043F\u0438\u0441\u0430\u043D\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0432\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \xAB\u041F\u0447\u0435\u043B\u0438\u043D\u043E\u043C\u0443 \u0434\u0435\u0440\u0435\u0432\u0443\xBB \u0438 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u044C.", { kind: "battleFeat", feat: "battle_comeback", id: "bt_bees" }, "rare", ART.bees],
+    ["skip_return", "\u0412\u0442\u043E\u0440\u043E\u0439 \u0448\u0430\u043D\u0441 \u0434\u043B\u044F \u0437\u0430\u0433\u0430\u0434\u043A\u0438", "\u0427\u0435\u0441\u0442\u043D\u043E \u0440\u0435\u0448\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\u044C, \u0440\u0430\u043D\u0435\u0435 \u043E\u0442\u043C\u0435\u0447\u0435\u043D\u043D\u044B\u0439 \u043A\u0430\u043A \u043F\u0440\u043E\u043F\u0443\u0449\u0435\u043D\u043D\u044B\u0439.", { kind: "puzzleFeat", feat: "skip_comeback", includeCustom: true }, "uncommon", ART.campaign],
+    ["brew_recovery", "\u0418\u0437 \u043F\u043E\u0440\u0447\u0435\u043D\u043E\u0433\u043E \u043A\u043E\u0442\u043B\u0430 \u2014 \u0434\u043E\u0431\u0440\u043E\u0435 \u0437\u0435\u043B\u044C\u0435", "\u0421\u0432\u0430\u0440\u0438\u0442\u044C \u0437\u0435\u043B\u044C\u0435 \u043F\u043E\u0441\u043B\u0435 \u043E\u0434\u043D\u043E\u0439 \u0438\u043B\u0438 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u0438\u0445 \u043F\u043E\u0440\u0447 \u0432 \u0442\u043E\u0439 \u0436\u0435 \u043F\u043E\u043F\u044B\u0442\u043A\u0435.", { kind: "puzzleFeat", feat: "brew_recovery", mechanic: "brew" }, "rare", puzzleArt.brew],
+    ["gift_recovery", "\u041F\u043E\u0434\u0430\u0440\u043E\u043A \u043F\u043E\u0441\u043B\u0435 \u043F\u0440\u043E\u0449\u0430\u043D\u0438\u044F", "\u0412\u0440\u0443\u0447\u0438\u0442\u044C \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0434\u0430\u0440\u043E\u043A \u043F\u043E\u0441\u043B\u0435 \u0443\u0445\u043E\u0434\u0430 \u0433\u043E\u0441\u0442\u044F \u0438 \u043D\u043E\u0432\u043E\u0439 \u043F\u043E\u043F\u044B\u0442\u043A\u0438.", { kind: "puzzleFeat", feat: "gift_recovery", mechanic: "gift" }, "rare", puzzleArt.gift],
+    ["spider_secret", "\u041F\u0430\u0443\u0447\u0438\u0439 \u043F\u0440\u0430\u0437\u0434\u043D\u0438\u043A", "\u041D\u0430\u0439\u0442\u0438 \u043F\u0430\u0443\u0447\u044C\u044E \u043F\u0430\u0441\u0445\u0430\u043B\u043A\u0443 \u0438 \u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0435\u0439 \u043C\u0435\u0441\u0442\u043E \u0432 \u0438\u0441\u0442\u043E\u0440\u0438\u0438 \u043B\u0430\u0432\u043A\u0438.", { kind: "spider" }, "epic", ART.spider],
+    ["seasonal_style", "\u041B\u0430\u0432\u043A\u0430 \u0432 \u0440\u0438\u0442\u043C\u0435 \u0441\u0435\u0437\u043E\u043D\u0430", "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435 \u043B\u0430\u0432\u043A\u0438, \u043F\u043E\u0434\u0445\u043E\u0434\u044F\u0449\u0435\u0435 \u0441\u0435\u0437\u043E\u043D\u0443 \u0432 \u043C\u043E\u043C\u0435\u043D\u0442 \u0432\u044B\u0431\u043E\u0440\u0430.", { kind: "counter", key: "seasonalCosmeticSelections" }, "epic", ART.spring],
+    ["story_silence_all", "\u041C\u043E\u043B\u0447\u0430\u043D\u0438\u0435 \u2014 \u0442\u043E\u0436\u0435 \u0440\u0430\u0437\u0433\u043E\u0432\u043E\u0440", "\u0423\u0441\u043B\u044B\u0448\u0430\u0442\u044C \u043E\u0441\u043E\u0431\u044B\u0435 \u0440\u0435\u043F\u043B\u0438\u043A\u0438 \u043E \u043C\u043E\u043B\u0447\u0430\u043D\u0438\u0438 \u0432\u0441\u0435\u0445 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u0438 \u043F\u044F\u0442\u0438 \u043E\u0431\u044B\u0447\u043D\u044B\u0445 \u0433\u043E\u0441\u0442\u0435\u0439 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.", { kind: "silence" }, "legendary", ART.guests],
+    ["achievement_meta", "\u041A\u043D\u0438\u0433\u0430 \u0432\u0441\u0435\u0445 \u0441\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u0439", "\u041F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0432\u0441\u0435 \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0434\u0432\u0435\u0441\u0442\u0438 \u0442\u0440\u0438\u0434\u0446\u0430\u0442\u044C \u0434\u0435\u0432\u044F\u0442\u044C \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0439 \u0430\u043A\u0442\u0443\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043A\u0430\u0442\u0430\u043B\u043E\u0433\u0430.", { kind: "meta" }, "legendary", "assets/glass/glass_trophies_web.jpg"]
+  ];
+  for (const [id, name, desc, condition, rarity, sourceArt] of specialDefinitions) {
+    add({
+      id,
+      name,
+      desc,
+      category: "special",
+      rarity,
+      secret: true,
+      condition,
+      target: id === "story_silence_all" ? STORY_GUESTS.length : id === "achievement_meta" ? 239 : 1,
+      sourceArt,
+      motif: condition.feat || condition.kind,
+      rank: id === "achievement_meta" ? 5 : 4
+    });
+  }
+  var ACHIEVEMENTS = definitions;
+  var PUZZLE_CONTENT = ALL_PUZZLES.map((puzzle) => ({
+    ...puzzle,
+    achievementPar: puzzle.mechanic === "spin" ? parMoves(createSpinPuzzle(puzzle)) : void 0
+  }));
+  var GUEST_CONTENT = GUESTS2.map((guest) => ({
+    id: guest.id,
+    levelIds: [...guest.fateLevels, ...guest.brewLevels],
+    topicCount: guest.topics.length
+  }));
+  var BREW_GUEST_LEVELS = Object.fromEntries(
+    [...new Set(Object.values(BREW_LEVEL_GUESTS))].map((guestId) => [
+      guestId,
+      Object.entries(BREW_LEVEL_GUESTS).filter(([, id]) => id === guestId).map(([levelId]) => levelId)
+    ])
+  );
+  var SEATING_GUEST_LEVELS = Object.fromEntries(
+    [...new Set(SEATING_PUZZLES.flatMap((level) => level.guests))].map((guestId) => [
+      guestId,
+      SEATING_PUZZLES.filter((level) => level.guests.includes(guestId)).map((level) => level.id)
+    ])
+  );
+  var LORE_KEYS = Object.keys(BATTLE_LORE).flatMap((world) => [`${world}:intro`, `${world}:outro`]);
+  var ITEM_SETS = Object.fromEntries(ITEMS.filter((item2) => item2.set).map((item2) => [item2.id, item2.set]));
+  var BASE_CONTEXT = {
+    puzzles: PUZZLE_CONTENT,
+    battles: BATTLES,
+    guests: GUEST_CONTENT,
+    storyGuestIds: STORY_GUESTS,
+    guideIds: ONBOARDING_GUIDE_SECTIONS.map((section) => section.id),
+    loreKeys: LORE_KEYS,
+    brewGuestLevels: BREW_GUEST_LEVELS,
+    seatingGuestLevels: SEATING_GUEST_LEVELS,
+    crewIds: allCrew.map((member) => member.id),
+    companionIds: COMPANIONS.map((member) => member.id),
+    mercIds: MERCENARIES.map((member) => member.id),
+    petIds: PETS.map((member) => member.id),
+    cosmeticIds: COSMETIC_PACKS.map((pack) => pack.id),
+    bossDrops: Object.fromEntries(Object.entries(BOSS_DROPS).map(([battleId, drop]) => [battleId, drop.itemId])),
+    fateCardIds: Object.keys(FATE_CARDS),
+    fateLevels: FATE_PUZZLES.map((level) => ({ id: level.id, cards: level.hand })),
+    setIds: Object.keys(SETS),
+    itemSets: ITEM_SETS
+  };
+  var DEFINITION_CONTEXT = {
+    ...BASE_CONTEXT,
+    achievementIds: ACHIEVEMENTS.map((definition2) => definition2.id)
+  };
+  for (const definition2 of ACHIEVEMENTS) {
+    Object.defineProperty(definition2, "evaluationContext", {
+      value: DEFINITION_CONTEXT,
+      enumerable: false
+    });
+  }
+  function catalogContext(ctx2 = {}) {
+    return { ...ctx2, ...DEFINITION_CONTEXT };
+  }
+  function achievementProgress2(state2, definition2, ctx2 = {}) {
+    return achievementProgress(state2, definition2, catalogContext(ctx2));
+  }
+  function checkAchievements2(state2, ctx2 = {}) {
+    return checkAchievements(state2, ACHIEVEMENTS, catalogContext(ctx2));
+  }
+
   // src/ui/achievementsView.js
+  var RARITIES2 = {
+    common: { label: "\u041E\u0431\u044B\u0447\u043D\u044B\u0435", one: "\u041E\u0431\u044B\u0447\u043D\u043E\u0435", points: 10, rank: 0 },
+    uncommon: { label: "\u041D\u0435\u043E\u0431\u044B\u0447\u043D\u044B\u0435", one: "\u041D\u0435\u043E\u0431\u044B\u0447\u043D\u043E\u0435", points: 25, rank: 1 },
+    rare: { label: "\u0420\u0435\u0434\u043A\u0438\u0435", one: "\u0420\u0435\u0434\u043A\u043E\u0435", points: 50, rank: 2 },
+    epic: { label: "\u042D\u043F\u0438\u0447\u0435\u0441\u043A\u0438\u0435", one: "\u042D\u043F\u0438\u0447\u0435\u0441\u043A\u043E\u0435", points: 100, rank: 3 },
+    legendary: { label: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u044B\u0435", one: "\u041B\u0435\u0433\u0435\u043D\u0434\u0430\u0440\u043D\u043E\u0435", points: 250, rank: 4 }
+  };
+  var CATEGORIES = {
+    puzzles: "\u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438",
+    battles: "\u041F\u043E\u0445\u043E\u0434\u044B \u043F\u043E \u043C\u0438\u0440\u0430\u043C",
+    general: "\u041E\u0431\u0449\u0438\u0435 \u0441\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u044F",
+    story: "\u0418\u0441\u0442\u043E\u0440\u0438\u044F \u0438 \u0433\u043E\u0441\u0442\u0438",
+    collections: "\u041B\u0430\u0432\u043A\u0430 \u0438 \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u0438",
+    challenges: "\u0418\u0441\u043F\u044B\u0442\u0430\u043D\u0438\u044F",
+    special: "\u041E\u0441\u043E\u0431\u044B\u0435 \u0438 \u0441\u0435\u043A\u0440\u0435\u0442\u043D\u044B\u0435"
+  };
+  var filters = { category: "all", rarity: "all", status: "all", query: "" };
+  function make(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== void 0) node.textContent = text;
+    return node;
+  }
+  function rarityOf2(achievement) {
+    return RARITIES2[achievement.rarity] || RARITIES2.common;
+  }
+  function categoryOf(achievement) {
+    return achievement.categoryLabel || CATEGORIES[achievement.category] || achievement.category;
+  }
+  function unlockedAt(state2, achievement) {
+    return state2.achievements?.[achievement.id] || 0;
+  }
+  function pointsOf(achievement) {
+    return achievement.points ?? achievement.rarityInfo?.points ?? rarityOf2(achievement).points;
+  }
+  function progressBar(progress2, got) {
+    const wrap = make("div", "achievement-progress");
+    const bar = document.createElement("progress");
+    bar.max = Math.max(1, progress2.target);
+    bar.value = got ? progress2.target : Math.min(progress2.current, progress2.target);
+    bar.setAttribute("aria-label", `\u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441: ${Math.min(progress2.current, progress2.target)} \u0438\u0437 ${progress2.target}`);
+    const text = make("span", "achievement-progress-text", got ? `\u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E \xB7 ${progress2.target}/${progress2.target}` : `${Math.min(progress2.current, progress2.target)}/${progress2.target}`);
+    wrap.append(bar, text);
+    return wrap;
+  }
+  function openDetails(ctx2, achievement, opener) {
+    const got = unlockedAt(ctx2.state, achievement);
+    const concealed = achievement.secret && !got;
+    const progress2 = achievementProgress(ctx2.state, achievement);
+    const rarity = rarityOf2(achievement);
+    const overlay = make("div", "overlay achievement-detail-overlay");
+    const card = make("section", "card achievement-detail-card");
+    card.setAttribute("role", "dialog");
+    card.setAttribute("aria-modal", "true");
+    const titleId = `achievement-title-${achievement.id}`;
+    card.setAttribute("aria-labelledby", titleId);
+    card.dataset.rarity = achievement.rarity;
+    const close = make("button", "achievement-detail-close", "\xD7");
+    close.type = "button";
+    close.setAttribute("aria-label", "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u043A\u0430\u0440\u0442\u043E\u0447\u043A\u0443 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u044F");
+    card.appendChild(close);
+    card.appendChild(achievementArtEl(achievement, {
+      className: "achievement-detail-art",
+      concealed
+    }));
+    const eyebrow = make("div", "achievement-detail-eyebrow", got ? "\u0414\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u043E" : "\u0414\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435 \u0435\u0449\u0451 \u0437\u0430\u043A\u0440\u044B\u0442\u043E");
+    const title = make("h2", "", concealed ? "\u0421\u0435\u043A\u0440\u0435\u0442\u043D\u043E\u0435 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435" : achievement.name);
+    title.id = titleId;
+    const desc = make("p", "achievement-detail-desc", concealed ? "\u0423\u0441\u043B\u043E\u0432\u0438\u0435 \u0438 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0440\u0430\u0441\u043A\u0440\u043E\u044E\u0442\u0441\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F." : achievement.desc);
+    const meta = make("div", "achievement-detail-meta", `${rarity.one} \xB7 ${pointsOf(achievement)} \u043E\u0447\u043A\u043E\u0432 \u0441\u043B\u0430\u0432\u044B \xB7 ${categoryOf(achievement)}`);
+    card.append(eyebrow, title, desc, meta, progressBar(progress2, !!got));
+    if (got) {
+      card.appendChild(make("div", "achievement-detail-date", `\u0414\u0430\u0442\u0430 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F: ${new Date(got).toLocaleString("ru-RU")}`));
+    }
+    overlay.appendChild(card);
+    const onKey = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeDetails();
+      } else if (event.key === "Tab") {
+        event.preventDefault();
+        close.focus?.();
+      }
+    };
+    const closeDetails = () => {
+      overlay.remove();
+      window.removeEventListener("keydown", onKey);
+      opener?.focus?.();
+    };
+    close.addEventListener("click", closeDetails);
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) closeDetails();
+    });
+    document.body.appendChild(overlay);
+    window.addEventListener("keydown", onKey);
+    close.focus?.();
+  }
+  function achievementCard(ctx2, achievement, { recent = false } = {}) {
+    const got = unlockedAt(ctx2.state, achievement);
+    const concealed = achievement.secret && !got;
+    const progress2 = achievementProgress(ctx2.state, achievement);
+    const rarity = rarityOf2(achievement);
+    const card = make("button", `achievement-card ${got ? "is-unlocked" : "is-locked"}${recent ? " is-recent" : ""}`);
+    card.type = "button";
+    card.dataset.achievementId = achievement.id;
+    card.dataset.rarity = achievement.rarity;
+    card.dataset.category = achievement.category;
+    card.setAttribute("aria-label", `${concealed ? "\u0421\u0435\u043A\u0440\u0435\u0442\u043D\u043E\u0435 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435" : achievement.name}. ${rarity.one}. ${got ? "\u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E" : `\u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 ${Math.min(progress2.current, progress2.target)} \u0438\u0437 ${progress2.target}`}`);
+    card.appendChild(achievementArtEl(achievement, {
+      className: recent ? "achievement-recent-art" : "achievement-card-art",
+      concealed,
+      lazy: !recent
+    }));
+    const body = make("span", "achievement-card-body");
+    body.appendChild(make("span", "achievement-card-rarity", concealed ? "\u0421\u0435\u043A\u0440\u0435\u0442 \xB7 \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0441\u043A\u0440\u044B\u0442\u043E" : rarity.one));
+    body.appendChild(make("span", "achievement-card-name", concealed ? "\u0421\u0435\u043A\u0440\u0435\u0442\u043D\u043E\u0435 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435" : achievement.name));
+    if (!recent) {
+      body.appendChild(make("span", "achievement-card-desc", concealed ? "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0438 \u0443\u0441\u043B\u043E\u0432\u0438\u0435 \u0440\u0430\u0441\u043A\u0440\u043E\u044E\u0442\u0441\u044F \u043F\u043E\u0441\u043B\u0435 \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F." : achievement.desc));
+    }
+    body.appendChild(progressBar(progress2, !!got));
+    if (got) {
+      body.appendChild(make("span", "achievement-card-date", new Date(got).toLocaleDateString("ru-RU")));
+    }
+    card.appendChild(body);
+    card.addEventListener("click", () => openDetails(ctx2, achievement, card));
+    return card;
+  }
+  function selectFilter(className, labelText, value, options, onChange) {
+    const label = make("label", className);
+    label.appendChild(make("span", "", labelText));
+    const select = document.createElement("select");
+    for (const [id, name] of options) {
+      const option = document.createElement("option");
+      option.value = id;
+      option.textContent = name;
+      option.selected = id === value;
+      select.appendChild(option);
+    }
+    select.value = value;
+    select.addEventListener("change", () => onChange(select.value));
+    label.appendChild(select);
+    return label;
+  }
   function renderAchievements(container, ctx2) {
     const { state: state2 } = ctx2;
-    const unlocked2 = state2.achievements || {};
-    const total = Object.keys(unlocked2).length;
+    const unlocked2 = ACHIEVEMENTS.filter((achievement) => unlockedAt(state2, achievement));
+    const score = unlocked2.reduce((sum, achievement) => sum + pointsOf(achievement), 0);
+    const totalScore = ACHIEVEMENTS.reduce((sum, achievement) => sum + pointsOf(achievement), 0);
+    const percent = Math.round(unlocked2.length / ACHIEVEMENTS.length * 100);
     container.appendChild(header(
       ctx2,
-      "\u0414\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u044F",
-      `${total}/${ACHIEVEMENTS.length} \u2014 \u043F\u043E\u043B\u043A\u0438 \u0442\u0440\u043E\u0444\u0435\u0435\u0432 \u043B\u0430\u0432\u043A\u0438`
+      "\u041A\u043D\u0438\u0433\u0430 \u0441\u043B\u0430\u0432\u044B",
+      `${unlocked2.length}/${ACHIEVEMENTS.length} \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0439 \xB7 ${score} \u043E\u0447\u043A\u043E\u0432 \u0441\u043B\u0430\u0432\u044B`
     ));
-    const list = document.createElement("div");
-    list.className = "list";
-    for (const a of ACHIEVEMENTS) {
-      const got = !!unlocked2[a.id];
-      const row = document.createElement("div");
-      row.className = "row" + (got ? " done" : " locked");
-      const date = got ? new Date(unlocked2[a.id]).toLocaleDateString("ru-RU") : "";
-      row.innerHTML = `
-      <span class="icon">${got ? a.icon : "\u{1F512}"}</span>
-      <span class="grow">
-        <div class="name">${a.name}</div>
-        <div class="desc">${a.desc}${date ? ` \xB7 ${date}` : ""}</div>
-      </span>
-      <span class="price">${got ? "\u2713" : ""}</span>`;
-      list.appendChild(row);
+    const summary = make("section", "achievement-summary");
+    summary.appendChild(achievementArtEl({ id: "_book", rarity: "legendary" }, { className: "achievement-summary-art" }));
+    const summaryBody = make("div", "achievement-summary-body");
+    summaryBody.appendChild(make("h2", "", "\u0421\u043B\u0430\u0432\u0430 \u043B\u0430\u0432\u043A\u0438 \u0440\u0430\u0441\u0442\u0451\u0442"));
+    summaryBody.appendChild(make("p", "", `\u041E\u0442\u043A\u0440\u044B\u0442\u043E ${percent}% \u043A\u043D\u0438\u0433\u0438 \xB7 ${score} \u0438\u0437 ${totalScore} \u043E\u0447\u043A\u043E\u0432`));
+    summaryBody.appendChild(progressBar({ current: unlocked2.length, target: ACHIEVEMENTS.length }, false));
+    const raritySummary = make("div", "achievement-rarity-summary");
+    for (const [id, rarity] of Object.entries(RARITIES2)) {
+      const all = ACHIEVEMENTS.filter((achievement) => achievement.rarity === id);
+      const got = all.filter((achievement) => unlockedAt(state2, achievement)).length;
+      const chip = make("span", "achievement-rarity-chip", `${rarity.label}: ${got}/${all.length}`);
+      chip.dataset.rarity = id;
+      raritySummary.appendChild(chip);
     }
-    container.appendChild(list);
-    container.appendChild(quickNav(ctx2, [{ icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }]));
+    summaryBody.appendChild(raritySummary);
+    summary.appendChild(summaryBody);
+    container.appendChild(summary);
+    const recent = [...unlocked2].sort((a, b) => unlockedAt(state2, b) - unlockedAt(state2, a)).slice(0, 3);
+    if (recent.length) {
+      const section = make("section", "achievement-recent");
+      section.appendChild(make("h2", "", "\u041D\u0435\u0434\u0430\u0432\u043D\u043E \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u043D\u044B\u0435"));
+      const list2 = make("div", "achievement-recent-grid");
+      for (const achievement of recent) list2.appendChild(achievementCard(ctx2, achievement, { recent: true }));
+      section.appendChild(list2);
+      container.appendChild(section);
+    }
+    const controls = make("section", "achievement-controls");
+    const categories = [...new Set(ACHIEVEMENTS.map((achievement) => achievement.category))];
+    controls.appendChild(selectFilter("achievement-filter", "\u0420\u0430\u0437\u0434\u0435\u043B", filters.category, [
+      ["all", "\u0412\u0441\u0435 \u0440\u0430\u0437\u0434\u0435\u043B\u044B"],
+      ...categories.map((id) => [id, CATEGORIES[id] || ACHIEVEMENTS.find((a) => a.category === id)?.categoryLabel || id])
+    ], (value) => {
+      filters.category = value;
+      renderGrid();
+    }));
+    controls.appendChild(selectFilter("achievement-filter", "\u0420\u0435\u0434\u043A\u043E\u0441\u0442\u044C", filters.rarity, [
+      ["all", "\u041B\u044E\u0431\u0430\u044F \u0440\u0435\u0434\u043A\u043E\u0441\u0442\u044C"],
+      ...Object.entries(RARITIES2).map(([id, rarity]) => [id, rarity.label])
+    ], (value) => {
+      filters.rarity = value;
+      renderGrid();
+    }));
+    controls.appendChild(selectFilter("achievement-filter", "\u0421\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435", filters.status, [
+      ["all", "\u0412\u0441\u0435"],
+      ["unlocked", "\u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043D\u044B\u0435"],
+      ["locked", "\u0412 \u0440\u0430\u0431\u043E\u0442\u0435"]
+    ], (value) => {
+      filters.status = value;
+      renderGrid();
+    }));
+    const searchLabel = make("label", "achievement-filter achievement-search");
+    searchLabel.appendChild(make("span", "", "\u041F\u043E\u0438\u0441\u043A"));
+    const search = document.createElement("input");
+    search.type = "search";
+    search.value = filters.query;
+    search.placeholder = "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435 \u0438\u043B\u0438 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435";
+    search.addEventListener("input", () => {
+      filters.query = search.value;
+      renderGrid();
+    });
+    searchLabel.appendChild(search);
+    controls.appendChild(searchLabel);
+    const reset2 = make("button", "ghost small achievement-filter-reset", "\u0421\u0431\u0440\u043E\u0441\u0438\u0442\u044C \u0444\u0438\u043B\u044C\u0442\u0440\u044B");
+    reset2.type = "button";
+    reset2.addEventListener("click", () => {
+      Object.assign(filters, { category: "all", rarity: "all", status: "all", query: "" });
+      ctx2.go("achievements");
+    });
+    controls.appendChild(reset2);
+    container.appendChild(controls);
+    const resultCount = make("div", "achievement-result-count");
+    const groups = make("div", "achievement-groups");
+    function matches(achievement) {
+      const got = !!unlockedAt(state2, achievement);
+      if (filters.category !== "all" && achievement.category !== filters.category) return false;
+      if (filters.rarity !== "all" && achievement.rarity !== filters.rarity) return false;
+      if (filters.status === "unlocked" && !got) return false;
+      if (filters.status === "locked" && got) return false;
+      const query = filters.query.trim().toLocaleLowerCase("ru-RU");
+      if (query) {
+        const concealed = achievement.secret && !got;
+        const haystack = concealed ? "\u0441\u0435\u043A\u0440\u0435\u0442\u043D\u043E\u0435 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435" : `${achievement.name} ${achievement.desc}`;
+        if (!haystack.toLocaleLowerCase("ru-RU").includes(query)) return false;
+      }
+      return true;
+    }
+    function renderGrid() {
+      const visible = ACHIEVEMENTS.filter(matches);
+      resultCount.textContent = `\u041F\u043E\u043A\u0430\u0437\u0430\u043D\u043E: ${visible.length} \u0438\u0437 ${ACHIEVEMENTS.length}`;
+      groups.innerHTML = "";
+      for (const category of categories) {
+        const entries2 = visible.filter((achievement) => achievement.category === category);
+        if (!entries2.length) continue;
+        const section = make("section", "achievement-group");
+        const got = entries2.filter((achievement) => unlockedAt(state2, achievement)).length;
+        const title = make("h2", "achievement-group-title", `${CATEGORIES[category] || entries2[0].categoryLabel || category} \xB7 ${got}/${entries2.length}`);
+        section.appendChild(title);
+        const grid = make("div", "achievement-grid");
+        for (const achievement of entries2) grid.appendChild(achievementCard(ctx2, achievement));
+        section.appendChild(grid);
+        groups.appendChild(section);
+      }
+      if (!visible.length) {
+        const empty = make("div", "panel achievement-empty", "\u041F\u043E \u044D\u0442\u0438\u043C \u0444\u0438\u043B\u044C\u0442\u0440\u0430\u043C \u043D\u0438\u0447\u0435\u0433\u043E \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0437\u0430\u043F\u0440\u043E\u0441.");
+        groups.appendChild(empty);
+      }
+    }
+    container.append(resultCount, groups);
+    renderGrid();
+    container.appendChild(quickNav(ctx2, [{
+      icon: '<img class="quick-nav-art" src="assets/brand/fav2_mug.svg" alt="">',
+      label: "\u0412 \u043B\u0430\u0432\u043A\u0443",
+      screen: "hub"
+    }]));
   }
 
   // src/ui/sandboxView.js
@@ -39780,19 +41282,19 @@
       "\u0421\u043E\u0431\u0435\u0440\u0438 \u043E\u0431\u0435 \u043A\u043E\u043C\u0430\u043D\u0434\u044B \u0438 \u043F\u0440\u043E\u0432\u0435\u0440\u044C \u0441\u0438\u043C\u0443\u043B\u044F\u0446\u0438\u044E: \u043E\u0434\u0438\u043D \u0431\u043E\u0439 \u0441\u043C\u043E\u0442\u0440\u0435\u0442\u044C \u0438\u043B\u0438 \u0441\u0435\u0440\u0438\u044F \u043D\u0430 \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0443",
       "workshop"
     ));
-    function teamPanel(title, pool, list, getDef) {
+    function teamPanel(title, pool, list2, getDef) {
       const panel = document.createElement("div");
       panel.className = "panel";
       const h = document.createElement("h3");
-      h.textContent = `${title} (${list.length}/${MAX_TEAM})`;
+      h.textContent = `${title} (${list2.length}/${MAX_TEAM})`;
       h.style.marginTop = "0";
       panel.appendChild(h);
       const team = document.createElement("div");
       team.style.cssText = "display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;min-height:34px";
-      if (list.length === 0) {
+      if (list2.length === 0) {
         team.innerHTML = '<span class="muted">\u041F\u0443\u0441\u0442\u043E \u2014 \u0434\u043E\u0431\u0430\u0432\u044C \u0431\u043E\u0439\u0446\u043E\u0432 \u043D\u0438\u0436\u0435</span>';
       }
-      list.forEach((id, i) => {
+      list2.forEach((id, i) => {
         const d = getDef(id);
         const chip = document.createElement("button");
         chip.className = "small primary";
@@ -39800,7 +41302,7 @@
         chip.title = "\u0423\u0431\u0440\u0430\u0442\u044C \u0438\u0437 \u043A\u043E\u043C\u0430\u043D\u0434\u044B";
         chip.addEventListener("click", () => {
           ctx2.sfx?.("tap");
-          list.splice(i, 1);
+          list2.splice(i, 1);
           rerender();
         });
         team.appendChild(chip);
@@ -39812,13 +41314,13 @@
         const d = getDef(id);
         const b = document.createElement("button");
         b.className = "small";
-        const count = list.filter((x) => x === id).length;
-        b.innerHTML = `${d.icon} ${d.name}${d.boss ? ' <span class="badge epic">\u0411\u041E\u0421\u0421</span>' : ""}${count ? ` \xD7${count}` : ""}`;
+        const count2 = list2.filter((x) => x === id).length;
+        b.innerHTML = `${d.icon} ${d.name}${d.boss ? ' <span class="badge epic">\u0411\u041E\u0421\u0421</span>' : ""}${count2 ? ` \xD7${count2}` : ""}`;
         b.title = d.description || `${d.hp}\u2764 \u0430\u0442\u043A ${d.attack} \u0431\u0440\u043D ${d.armor} \u0441\u043A\u0440 ${d.speed}`;
-        b.disabled = list.length >= MAX_TEAM;
+        b.disabled = list2.length >= MAX_TEAM;
         b.addEventListener("click", () => {
           ctx2.sfx?.("tap");
-          list.push(id);
+          list2.push(id);
           rerender();
         });
         grid.appendChild(b);
@@ -39950,8 +41452,8 @@
     const { state: state2 } = ctx2;
     ctx2.sfx?.("page");
     container.appendChild(header(ctx2, "\u{1F4D6} \u041A\u043D\u0438\u0433\u0430 \u0440\u0435\u0446\u0435\u043F\u0442\u043E\u0432", "\u0417\u0435\u043B\u044C\u044F \u0430\u043B\u0445\u0438\u043C\u0438\u0447\u0435\u0441\u043A\u043E\u0433\u043E \u0441\u0442\u043E\u043B\u0430 \u2014 \u043A\u043E\u043B\u043B\u0435\u043A\u0446\u0438\u044F \u0445\u043E\u0437\u044F\u0438\u043D\u0430", "puzzles"));
-    const list = document.createElement("div");
-    list.className = "list";
+    const list2 = document.createElement("div");
+    list2.className = "list";
     for (const level of BREW_PUZZLES) {
       const done = !!state2.puzzlesDone[level.id];
       const stars = "\u2605".repeat(level.difficulty) + "\u2606".repeat(5 - level.difficulty);
@@ -39962,9 +41464,9 @@
       entry.innerHTML = `
       <div class="name" style="font-weight:700">${done ? flask : "\u{1F512}"} ${level.name} <span class="badge">${stars}</span></div>
       <div class="brew-book-steps">${steps}</div>`;
-      list.appendChild(entry);
+      list2.appendChild(entry);
     }
-    container.appendChild(list);
+    container.appendChild(list2);
     container.appendChild(quickNav(ctx2, [
       { icon: "\u{1F9E9}", label: "\u041A \u0437\u0430\u0433\u0430\u0434\u043A\u0430\u043C", screen: "puzzles", primary: true },
       { icon: "\u{1F3E0}", label: "\u0412 \u043B\u0430\u0432\u043A\u0443", screen: "hub" }
@@ -39992,9 +41494,9 @@
     const sync = () => {
       const current = currentGuestCatalogMode(ctx2.state);
       for (const button of buttons) {
-        const active = button.dataset.mode === current;
-        button.className = `small guest-mode-option${active ? " primary is-active" : " ghost"}`;
-        button.setAttribute("aria-pressed", String(active));
+        const active2 = button.dataset.mode === current;
+        button.className = `small guest-mode-option${active2 ? " primary is-active" : " ghost"}`;
+        button.setAttribute("aria-pressed", String(active2));
       }
     };
     for (const mode of GUEST_CATALOG_MODES) {
@@ -40121,12 +41623,12 @@
     section.append(toolbar, track);
     container.appendChild(section);
     let activeSlot = 1;
-    let active = 0;
+    let active2 = 0;
     function setActive(slot) {
       activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
-      active = Number(cards[activeSlot].dataset.guestIndex);
+      active2 = Number(cards[activeSlot].dataset.guestIndex);
       cards.forEach((card, index) => card.classList.toggle("is-active", index === activeSlot));
-      counter.textContent = `${active + 1} / ${GUESTS2.length}`;
+      counter.textContent = `${active2 + 1} / ${GUESTS2.length}`;
     }
     function placeCard2(slot, smooth) {
       const card = cards[slot];
@@ -40153,7 +41655,7 @@
       placeCard2(bounded, smooth);
     }
     function step(direction) {
-      const nextGuest = (active + direction + GUESTS2.length) % GUESTS2.length;
+      const nextGuest = (active2 + direction + GUESTS2.length) % GUESTS2.length;
       let target = nextGuest + 1;
       if (direction < 0 && activeSlot === 1) target = 0;
       if (direction > 0 && activeSlot === GUESTS2.length) target = GUESTS2.length + 1;
@@ -40260,9 +41762,9 @@
     show(recommendedIndex2(ctx2.state));
   }
   function renderSimpleList2(container, ctx2, onOpen) {
-    const list = document.createElement("section");
-    list.className = "guest-simple-list";
-    list.setAttribute("aria-label", "\u0421\u043F\u0438\u0441\u043E\u043A \u0433\u043E\u0441\u0442\u0435\u0439");
+    const list2 = document.createElement("section");
+    list2.className = "guest-simple-list";
+    list2.setAttribute("aria-label", "\u0421\u043F\u0438\u0441\u043E\u043A \u0433\u043E\u0441\u0442\u0435\u0439");
     for (const guest of GUESTS2) {
       const item2 = document.createElement("button");
       item2.type = "button";
@@ -40280,9 +41782,9 @@
       arrow.textContent = "\u2192";
       item2.append(text, arrow);
       item2.addEventListener("click", () => onOpen(guest.id));
-      list.appendChild(item2);
+      list2.appendChild(item2);
     }
-    container.appendChild(list);
+    container.appendChild(list2);
   }
   var BENTO_FILTERS2 = [
     { id: "all", name: "\u0412\u0441\u0435", match: () => true },
@@ -40292,10 +41794,10 @@
   function renderBento2(container, ctx2, onOpen) {
     const section = document.createElement("section");
     section.className = "guest-bento";
-    const filters = document.createElement("div");
-    filters.className = "guest-bento-filters";
-    filters.setAttribute("role", "group");
-    filters.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u0433\u043E\u0441\u0442\u0435\u0439");
+    const filters2 = document.createElement("div");
+    filters2.className = "guest-bento-filters";
+    filters2.setAttribute("role", "group");
+    filters2.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u0433\u043E\u0441\u0442\u0435\u0439");
     const grid = document.createElement("div");
     grid.className = "guest-bento-grid";
     const empty = document.createElement("div");
@@ -40305,7 +41807,7 @@
     const featured = recommendedIndex2(ctx2.state);
     const cards = GUESTS2.map((guest) => makeGuestCard(ctx2.state, guest, "guest-bento-card", onOpen, true));
     cards.forEach((card) => grid.appendChild(card));
-    section.append(filters, grid, empty);
+    section.append(filters2, grid, empty);
     container.appendChild(section);
     const filterButtons = [];
     function applyFilter(id) {
@@ -40319,9 +41821,9 @@
       });
       empty.hidden = visible > 0;
       for (const button of filterButtons) {
-        const active = button.dataset.filter === filter.id;
-        button.className = `small guest-bento-filter${active ? " primary is-active" : " ghost"}`;
-        button.setAttribute("aria-pressed", String(active));
+        const active2 = button.dataset.filter === filter.id;
+        button.className = `small guest-bento-filter${active2 ? " primary is-active" : " ghost"}`;
+        button.setAttribute("aria-pressed", String(active2));
       }
     }
     for (const filter of BENTO_FILTERS2) {
@@ -40331,7 +41833,7 @@
       button.textContent = filter.name;
       button.addEventListener("click", () => applyFilter(filter.id));
       filterButtons.push(button);
-      filters.appendChild(button);
+      filters2.appendChild(button);
     }
     applyFilter("all");
   }
@@ -40452,6 +41954,7 @@
             );
             chat.scrollTop = chat.scrollHeight;
             ctx2.sfx?.("tap");
+            if (recordGuestTopic(ctx2.state, guest.id, topicIndex)) ctx2.save();
             if ([...topics.children].every((item2) => item2.disabled)) {
               const done = document.createElement("div");
               done.className = "guest-topics-done muted";
@@ -40522,9 +42025,9 @@
     const sync = () => {
       const current = currentDeckMode(ctx2.state);
       for (const button of buttons) {
-        const active = button.dataset.mode === current;
-        button.className = `small deck-mode-option${active ? " primary is-active" : " ghost"}`;
-        button.setAttribute("aria-pressed", String(active));
+        const active2 = button.dataset.mode === current;
+        button.className = `small deck-mode-option${active2 ? " primary is-active" : " ghost"}`;
+        button.setAttribute("aria-pressed", String(active2));
       }
     };
     for (const mode of DECK_MODES) {
@@ -40638,12 +42141,12 @@
     section.append(toolbar, track);
     container.appendChild(section);
     let activeSlot = 1;
-    let active = 0;
+    let active2 = 0;
     function setActive(slot) {
       activeSlot = Math.max(0, Math.min(cards.length - 1, slot));
-      active = Number(cards[activeSlot].dataset.entryIndex);
+      active2 = Number(cards[activeSlot].dataset.entryIndex);
       cards.forEach((card, index) => card.classList.toggle("is-active", index === activeSlot));
-      counter.textContent = `${active + 1} / ${entries2.length}`;
+      counter.textContent = `${active2 + 1} / ${entries2.length}`;
     }
     function placeCard2(slot, smooth) {
       const card = cards[slot];
@@ -40670,7 +42173,7 @@
       placeCard2(bounded, smooth);
     }
     function step(direction) {
-      const nextEntry = (active + direction + entries2.length) % entries2.length;
+      const nextEntry = (active2 + direction + entries2.length) % entries2.length;
       let target = nextEntry + 1;
       if (direction < 0 && activeSlot === 1) target = 0;
       if (direction > 0 && activeSlot === entries2.length) target = entries2.length + 1;
@@ -40725,10 +42228,10 @@
   function renderBento3(container, ctx2, entries2, onOpen) {
     const section = document.createElement("section");
     section.className = "deck-bento";
-    const filters = document.createElement("div");
-    filters.className = "deck-bento-filters";
-    filters.setAttribute("role", "group");
-    filters.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u043A\u0430\u0440\u0442");
+    const filters2 = document.createElement("div");
+    filters2.className = "deck-bento-filters";
+    filters2.setAttribute("role", "group");
+    filters2.setAttribute("aria-label", "\u0424\u0438\u043B\u044C\u0442\u0440 \u043A\u0430\u0440\u0442");
     const grid = document.createElement("div");
     grid.className = "deck-bento-grid";
     const empty = document.createElement("div");
@@ -40738,7 +42241,7 @@
     const featured = frontierIndex(entries2);
     const cards = entries2.map((entry) => makeCard2(entry, "deck-bento-card", onOpen, false));
     cards.forEach((card) => grid.appendChild(card));
-    section.append(filters, grid, empty);
+    section.append(filters2, grid, empty);
     container.appendChild(section);
     const filterButtons = [];
     function applyFilter(id) {
@@ -40752,9 +42255,9 @@
       });
       empty.hidden = visible > 0;
       for (const button of filterButtons) {
-        const active = button.dataset.filter === filter.id;
-        button.className = `small deck-bento-filter${active ? " primary is-active" : " ghost"}`;
-        button.setAttribute("aria-pressed", String(active));
+        const active2 = button.dataset.filter === filter.id;
+        button.className = `small deck-bento-filter${active2 ? " primary is-active" : " ghost"}`;
+        button.setAttribute("aria-pressed", String(active2));
       }
     }
     for (const filter of BENTO_FILTERS3) {
@@ -40764,7 +42267,7 @@
       button.textContent = filter.name;
       button.addEventListener("click", () => applyFilter(filter.id));
       filterButtons.push(button);
-      filters.appendChild(button);
+      filters2.appendChild(button);
     }
     applyFilter("all");
   }
@@ -41183,9 +42686,9 @@
     let h = 2166136261;
     for (const c of day) h = Math.imul(h ^ c.codePointAt(0), 16777619);
     const pool = [...playerLetters(state2), ...BASE_LETTERS];
-    const count = Math.min(pool.length, 4);
+    const count2 = Math.min(pool.length, 4);
     const picked = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count2; i++) {
       h = h * 1664525 + 1013904223 >>> 0;
       picked.push(pool.splice(h % pool.length, 1)[0]);
     }
@@ -41379,12 +42882,12 @@
   function renderGuide(ctx2) {
     const guide = ctx2.state.onboarding.guide;
     const next = onboardingGuideNext(ctx2.state);
-    const count = (guide.seen || []).length;
+    const count2 = (guide.seen || []).length;
     const head = document.createElement("div");
     head.className = "onboarding-head";
     const eyebrow = document.createElement("span");
     eyebrow.className = "onboarding-eyebrow";
-    eyebrow.textContent = `\u041F\u0443\u0442\u0435\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C ${count}/${ONBOARDING_GUIDE_SECTIONS.length}`;
+    eyebrow.textContent = `\u041F\u0443\u0442\u0435\u0432\u043E\u0434\u0438\u0442\u0435\u043B\u044C ${count2}/${ONBOARDING_GUIDE_SECTIONS.length}`;
     const title = document.createElement("div");
     title.className = "onboarding-title";
     title.textContent = next ? next.title : "\u041B\u0430\u0432\u043A\u0430 \u0437\u043D\u0430\u043A\u043E\u043C\u0430";
@@ -41525,6 +43028,8 @@
   var screenEl = document.getElementById("screen");
   var toastEl = document.getElementById("toast");
   var state = loadGame() || newGame();
+  var backfilledAchievements = checkAchievements2(state).length;
+  if (backfilledAchievements) saveGame(state);
   var currentRoute = "hub";
   var currentParams = {};
   var dockSyncQueued = false;
@@ -41541,21 +43046,10 @@
   }
   function save() {
     reconcileOnboarding(state);
+    const fresh = checkAchievements2(state);
     saveGame(state);
     updateWallet();
-    const fresh = checkAchievements(state, {
-      puzzlesTotal: ALL_PUZZLES.length,
-      puzzleIds: ALL_PUZZLES.map((p) => p.id),
-      battlesTotal: BATTLES.length,
-      seekIds: SEEK_PUZZLES.map((p) => p.id)
-    });
-    for (const a of fresh) {
-      setTimeout(() => {
-        toast(`\u{1F3C6} \u0414\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0435: ${a.name}!`);
-        sfx("success");
-      }, 600);
-      saveGame(state);
-    }
+    if (fresh.length) queueAchievementCelebrations(fresh, { sfx });
     syncDockSoon();
   }
   function updateWallet() {
@@ -41644,6 +43138,7 @@
   }
   function newGameConfirm() {
     if (confirm("\u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443? \u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u043B\u0430\u0432\u043A\u0438 \u0431\u0443\u0434\u0435\u0442 \u0441\u0442\u0451\u0440\u0442.")) {
+      clearAchievementCelebrations();
       state = newGame();
       const start = initialRoute();
       save();
@@ -41850,4 +43345,7 @@
   updateWallet();
   var startRoute = initialRoute();
   go(startRoute.name, startRoute.params);
+  if (backfilledAchievements) {
+    toast(`\u041A\u043D\u0438\u0433\u0430 \u0441\u043B\u0430\u0432\u044B \u043F\u043E\u043F\u043E\u043B\u043D\u0435\u043D\u0430: \u043D\u043E\u0432\u044B\u0445 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0439 \u2014 ${backfilledAchievements}.`);
+  }
 })();

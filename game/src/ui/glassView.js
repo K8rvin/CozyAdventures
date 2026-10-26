@@ -7,6 +7,7 @@ import {
 import { makeRng } from '../core/rng.js';
 import { completePuzzle, nextPuzzle } from '../core/state.js';
 import { header, showOverlay, puzzleSkipButton, backToPuzzleType } from './common.js';
+import { setAchievementPresentationBusy } from './achievementCelebration.js';
 
 export function renderGlassPuzzle(container, ctx, level) {
   const puzzle = createGlassPuzzle(level);
@@ -271,6 +272,7 @@ export function renderGlassPuzzle(container, ctx, level) {
   let rafId = 0;
 
   function startCelebration(rewards) {
+    setAchievementPresentationBusy('glass-celebration', true);
     ctx.sfx?.('fanfare');
     const canAnimate = typeof requestAnimationFrame !== 'undefined'
       && typeof performance !== 'undefined';
@@ -298,6 +300,7 @@ export function renderGlassPuzzle(container, ctx, level) {
   }
 
   function showWin(rewards) {
+    setAchievementPresentationBusy('glass-celebration', false);
     const next = nextPuzzle(level.id);
     showOverlay(ctx, {
       title: '🪟 Витраж сияет!',
@@ -441,5 +444,6 @@ export function renderGlassPuzzle(container, ctx, level) {
     canvas.removeEventListener('pointermove', onPointerMove);
     canvas.removeEventListener('pointerup', onPointerUp);
     if (rafId && typeof cancelAnimationFrame !== 'undefined') cancelAnimationFrame(rafId);
+    setAchievementPresentationBusy('glass-celebration', false);
   };
 }

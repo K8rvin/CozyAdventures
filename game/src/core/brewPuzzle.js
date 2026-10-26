@@ -56,6 +56,7 @@ export function createBrewPuzzle(level) {
     progress: 0,      // сколько шагов рецепта выполнено верно
     reps: 0,          // повторы текущего шага (для steps с times > 1)
     mistakes: 0,      // ошибки в текущей варке (3 = порча)
+    totalMistakes: 0, // все ошибки попытки, включая сбросы и порчу
     spoiled: 0,       // сколько раз зелье было испорчено
     history: [],      // успешно выполненные действия (для отмены)
     moves: 0,
@@ -106,6 +107,7 @@ export function doBrewAction(state, action) {
   }
   // Ошибка: не тот шаг
   state.mistakes += 1;
+  state.totalMistakes += 1;
   if (state.mistakes >= BREW_MAX_MISTAKES) {
     // Зелье испорчено: прогресс сгорает, варим заново
     state.progress = 0;

@@ -35,6 +35,7 @@ export function createGiftPuzzle(level, souvenirs, rng = Math.random) {
     hidden: [],       // id сувениров, спрятанных подсказкой
     tries: 0,         // потраченные попытки (ошибки)
     gone: false,      // гость ушёл думать — пора начинать заново
+    departures: 0,    // уходы гостя сохраняются между новыми попытками
     history: [],
     moves: 0,
   };
@@ -107,6 +108,7 @@ export function giveGift(state) {
   state.history = [];
   if (state.tries >= GIFT_MAX_TRIES) {
     state.gone = true;
+    state.departures += 1;
     return { result: 'gone', id, broken: broken[0] };
   }
   return { result: 'hint', id, broken: broken[0], triesLeft: GIFT_MAX_TRIES - state.tries };
@@ -149,7 +151,9 @@ export function applyGiftHint(state) {
 
 // После ухода гостя уровень начинается заново: свежее состояние, тот же rng
 export function restartGift(state, rng = Math.random) {
-  return createGiftPuzzle(state.level, state.souvenirs, rng);
+  const fresh = createGiftPuzzle(state.level, state.souvenirs, rng);
+  fresh.departures = state.departures || 0;
+  return fresh;
 }
 
 // Проверка уровня для конвейера

@@ -32,6 +32,7 @@ export function renderSeatingPuzzle(container, ctx, level) {
   const timers = [];
   let selected = null;   // гость, выбранный тапом по карточке (ещё на подносе)
   let hintMark = null;   // { guest, seat } — временная подсветка подсказки/нарушения
+  let failedServes = 0;
 
   container.appendChild(header(ctx, level.name, `Сложность: ${'★'.repeat(level.difficulty)}`, ['puzzles', { mech: 'seating' }]));
 
@@ -323,12 +324,14 @@ export function renderSeatingPuzzle(container, ctx, level) {
     if (isSeatingSolved(puzzle)) { finish(); return; }
     const unseated = level.guests.filter((g) => !puzzle.placement[g]);
     if (unseated.length) {
+      failedServes += 1;
       ctx.sfx?.('fail');
       ctx.toast(`Рано подавать чай: осталось посадить гостей: ${unseated.length}.`);
       return;
     }
     const bad = seatingViolations(puzzle);
     if (bad.length) {
+      failedServes += 1;
       ctx.sfx?.('fail');
       ctx.toast(`Пожелание не сбылось: ${bad[0].text}.`);
       // На пару секунд подсвечиваем гостя и место из нарушенного пожелания
@@ -356,7 +359,10 @@ export function renderSeatingPuzzle(container, ctx, level) {
 
   function finish() {
     finished = true;
-    const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
+    const rewards = completePuzzle(ctx.state, level.id, {
+      moves: puzzle.moves, hintsUsed,
+      achievement: { failedServes },
+    });
     ctx.save();
     ctx.sfx?.('success');
     renderAll();

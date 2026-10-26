@@ -294,6 +294,7 @@ export function renderGiftPuzzle(container, ctx, level) {
     const factor = rewardFactor(puzzle);
     const rewards = completePuzzle(ctx.state, level.id, {
       moves: puzzle.moves, hintsUsed, coinFactor: factor,
+      achievement: { tries: puzzle.tries, departures: puzzle.departures },
     });
     const gift = SOUVENIRS[level.answer];
     journalPush(ctx.state, '🎁', `${level.guest.name} принял(а) подарок: ${gift.name}.`);

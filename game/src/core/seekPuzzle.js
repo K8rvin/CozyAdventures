@@ -36,7 +36,10 @@ export function seekTap(state, x, y) {
       matches.push({ group, spotIndex: i, spot: s, found: state.found.has(spotKey(group, i)) });
     }
   }
-  if (matches.length === 0) return { result: 'empty' };
+  if (matches.length === 0) {
+    state.misses += 1;
+    return { result: 'empty' };
+  }
   const fresh = matches.find((m) => !m.found);
   if (!fresh) return { result: 'already', ...matches[0] };
   state.found.add(spotKey(fresh.group, fresh.spotIndex));

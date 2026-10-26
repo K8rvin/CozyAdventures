@@ -311,7 +311,13 @@ export function renderTeaPuzzle(container, ctx, level) {
   function finish() {
     if (finished) return; // защита от двойной подачи (клик + повторный)
     finished = true;
-    const rewards = completePuzzle(ctx.state, level.id, { moves: puzzle.moves, hintsUsed });
+    const status = teaStatus(puzzle);
+    const rewards = completePuzzle(ctx.state, level.id, {
+      moves: puzzle.moves, hintsUsed,
+      achievement: {
+        exact: status.heatOk && Object.values(status.diffs).every((diff) => diff === 0),
+      },
+    });
     ctx.save();
     ctx.sfx?.('success');
     draw();

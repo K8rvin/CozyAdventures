@@ -36,7 +36,8 @@ game/
   index.html, styles.css, bundle.js (собранный), manifest.webmanifest, sw.js (PWA/офлайн)
   src/core/   — чистая логика БЕЗ DOM: state.js, formBattle.js, *Puzzle.js, items.js,
                 rng.js, economy.js, onboarding.js, energy.js, bossDrops.js,
-                materialExchange.js, goals.js, hubGeometry.js, cosmetics.js
+                materialExchange.js, goals.js, hubGeometry.js, cosmetics.js,
+                achievements.js (единый прогресс/выдача), achievementStats.js (рекорды)
   src/data/   — контент как данные: items, enemies, battles, puzzles*, crew, shop,
                 sets, economy, energy, onboarding, bossDrops, cosmetics…
   src/ui/     — экраны (app.js — роутер и ctx; hub.js — сцены-хабы; *View.js,
@@ -318,6 +319,35 @@ game/
   существующий портрет/эмодзи + минимум две русские темы `{ ask, answer }`.
 - Четыре вида списка (полка, портрет, список, мозаика) сохраняются в
   `settings.guestCatalogMode`; профиль с разговором листается без закрытия окна.
+
+## Достижения
+
+- «Книга славы»: 240 достижений в 7 разделах (80 серий головоломок, 48 походов,
+  20 общих, 20 истории/гостей, 32 коллекционных, 30 испытаний, 10 особых).
+  Пять редкостей с очками славы 10/25/50/100/250; очки не валюта, монетных наград
+  за достижения нет. Старые 20 ID и timestamps сохранены.
+- `data/achievements.js` — декларативный каталог из фактического контента и
+  `ACHIEVEMENT_TELEMETRY_KEYS`; `core/achievements.js` — единый
+  `achievementProgress` для проверки и UI. Не добавлять ручные списки ID поверх
+  контекста: кампания считает только известные честные ID, custom — отдельно.
+- `core/achievementStats.js` — компактные вечные факты, не журнал и не реплей:
+  `state.achievementStats` с counters/puzzles/battles/daily/уникальными покупками,
+  рецептами, темами и сетовыми ярусами. Поля создаются в newGame, миграции только
+  в state.js и идемпотентны. Не выдумывать старые поражения, безошибочные попытки,
+  разговоры и серии; явный hintsUsed 0 и сохранённые moves — доказательство.
+- `ui/achievementsView.js` — фильтры/поиск/карточки/детали; `achievementArt.js` —
+  реальные WebP без emoji-фолбэка; `achievementCelebration.js` — последовательная
+  очередь с busy/resume для overlay, реплея и glass/spin. При старом сейве
+  ретроспектива тихая, новые получения празднуются по одному.
+- Ассеты: 240 файлов `assets/achievements/<id>.webp` плюс `_book` и `_secret`,
+  512×512, реальные иллюстрации игры в рамках редкости. Пересборка:
+  `npm run achievements:art` (Node + Pillow, только dev; API и prod-зависимостей
+  нет). Источник указан в `sourceArt` каждого определения; тест проверяет все файлы
+  и размеры. После изменения каталога пересобрать арт и bundle.
+- Practice и blocked energy НЕ создают событий и не меняют achievementStats.
+  Реальные поражения учитываются, повторы — только в явно названных счётчиках.
+  Тесты: achievements.test.mjs, achievementStats.test.mjs,
+  achievementCelebration.test.mjs и ветки книги в ui-smoke.test.mjs.
 
 ## Контент: как добавлять
 
