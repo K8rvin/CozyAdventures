@@ -27,6 +27,8 @@ jobs:
         with:
           node-version: 22
       - run: npm ci
+      - name: Install Pillow for portrait converter
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends python3-pil
       - run: npm test
       - run: npm run build
       # На сайт идёт только то, что нужно игре в рантайме
