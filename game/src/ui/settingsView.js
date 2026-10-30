@@ -4,6 +4,7 @@ import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js
 import { applyCheat } from '../core/state.js';
 import { createPuzzleCatalogModePicker } from './puzzleCatalogView.js';
 import { CURSOR_THEMES, applyCursor, cursorMode, fixedCursorTheme } from './cursors.js';
+import { KNIGHT_DOLL_BODY_IDS } from '../data/knightDoll.js';
 import { reopenOnboardingGuide, onboardingGuideNext } from '../core/onboarding.js';
 
 function makeSection(title, danger = false) {
@@ -102,6 +103,43 @@ export function renderSettings(container, ctx) {
     },
   }));
   container.appendChild(storySec);
+
+  const knightSec = makeSection('⚔️ Рыцарь');
+  const bodyLabel = document.createElement('div');
+  bodyLabel.className = 'pc-layout-label';
+  bodyLabel.textContent = 'Образ рыцаря';
+  const bodyPicker = document.createElement('div');
+  bodyPicker.className = 'pc-mode-picker set-cursor-modes';
+  bodyPicker.setAttribute('role', 'group');
+  bodyPicker.setAttribute('aria-label', 'Образ рыцаря');
+  const BODY_LABELS = { male: 'Мужской', female: 'Женский' };
+  const syncBodyUI = () => {
+    for (const button of bodyPicker.children) {
+      const active = state.settings.knightBody === button.dataset.body;
+      button.className = `small pc-mode-option${active ? ' primary is-active' : ' ghost'}`;
+      button.setAttribute('aria-pressed', String(active));
+    }
+  };
+  for (const bodyId of KNIGHT_DOLL_BODY_IDS) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.body = bodyId;
+    button.textContent = BODY_LABELS[bodyId];
+    button.addEventListener('click', () => {
+      if (state.settings.knightBody === bodyId) return;
+      state.settings.knightBody = bodyId;
+      ctx.save();
+      ctx.sfx?.('tap');
+      syncBodyUI();
+    });
+    bodyPicker.appendChild(button);
+  }
+  const bodyHint = document.createElement('div');
+  bodyHint.className = 'set-hint';
+  bodyHint.textContent = 'Только внешний вид в комнате рыцаря, не влияет на характеристики и бой.';
+  knightSec.append(bodyLabel, bodyPicker, bodyHint);
+  syncBodyUI();
+  container.appendChild(knightSec);
 
   const puzzleSec = makeSection('🧩 Головоломки');
   const catalogBox = document.createElement('div');

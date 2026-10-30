@@ -75,7 +75,7 @@ class El {
   }
   get firstElementChild() { return this.children[0] || new El('div'); }
   get lastElementChild() { return this.children[this.children.length - 1] || new El('div'); }
-  setAttribute() {}
+  setAttribute(name, value) { this[name] = value; }
 }
 
 const listeners = {};
@@ -303,6 +303,26 @@ test('настройки: reopen путеводителя отдельно от 
   assert.equal(state.onboarding.step, 'done');
 });
 
+test('настройки: выбор образа рыцаря сохраняет knightBody и aria-pressed', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const root = new El('main');
+  renderSettings(root, ctx);
+  const buttons = flatElements(root).filter((el) => el.dataset.body);
+  assert.equal(buttons.length, 2);
+  const male = buttons.find((el) => el.dataset.body === 'male');
+  const female = buttons.find((el) => el.dataset.body === 'female');
+  assert.equal(male['aria-pressed'], 'true');
+  assert.equal(female['aria-pressed'], 'false');
+  female.click();
+  assert.equal(state.settings.knightBody, 'female');
+  assert.equal(female['aria-pressed'], 'true');
+  assert.equal(male['aria-pressed'], 'false');
+  male.click();
+  assert.equal(state.settings.knightBody, 'male');
+  assert.equal(male['aria-pressed'], 'true');
+});
+
 test('все экраны рендерятся без ошибок', () => {
   const state = newGame();
   const ctx = makeUiCtx(state);
@@ -402,6 +422,38 @@ test('все экраны рендерятся без ошибок', () => {
     if (typeof cleanup === 'function') cleanup();
   }
   assert.ok(true);
+});
+
+test('комната рыцаря: generated-портрет сохраняется при снятии и автоподборе', () => {
+  const state = newGame();
+  const ctx = makeUiCtx(state);
+  const root = new El('main');
+  const cleanup = renderEquip(root, ctx);
+  let all = flatElements(root);
+  assert.ok(all.some((el) => (el.className || '').includes('equip-layout')));
+  assert.ok(all.some((el) => (el.className || '').includes('equip-slots-panel')));
+  assert.ok(all.some((el) => (el.className || '').includes('knight-stage')));
+  assert.ok(all.some((el) => (el.className || '').includes('knight-generated-image')));
+  assert.ok(!all.some((el) => (el.className || '').includes('knight-fallback')));
+  assert.ok(!all.some((el) => (el.className || '').includes('knight-layers')));
+  assert.ok(!all.some((el) => el.src === 'assets/knight/icon_knight_web.jpg'));
+
+  const weapon = all.find((el) => el.dataset.equipSlot === 'weapon');
+  assert.ok(weapon);
+  for (const fn of weapon._listeners.pointerenter || []) fn({ pointerType: 'mouse' });
+  for (const fn of weapon._listeners.focus || []) fn({});
+  weapon.click();
+  assert.equal(state.equipped.weapon, null);
+  assert.ok(state.inventory.includes('wpn_rusty_sword'));
+  all = flatElements(root);
+  assert.ok(all.some((el) => (el.className || '').includes('knight-stage')));
+
+  const best = all.find((el) => (el.className || '').includes('chest-best'));
+  assert.ok(best);
+  best.click();
+  assert.equal(state.equipped.weapon, 'wpn_rusty_sword');
+  assert.ok(flatElements(root).some((el) => (el.className || '').includes('knight-stage')));
+  if (typeof cleanup === 'function') cleanup();
 });
 
 test('лор походов: все 24 сцены рендерятся с гостями', () => {

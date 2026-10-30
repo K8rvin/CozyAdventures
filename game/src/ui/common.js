@@ -33,7 +33,7 @@ export function backToPuzzleType(ctx, level) {
   ctx.go('puzzles', { mech: level?.mechanic || 'mirror' });
 }
 
-export const DEFAULT_TOPBAR_TITLE = '🏮 Лавка на перекрёстке миров';
+export const DEFAULT_TOPBAR_TITLE = 'Лавка на перекрёстке миров';
 
 export function resetTopbarHeader() {
   const titleEl = document.getElementById('topbar-title');

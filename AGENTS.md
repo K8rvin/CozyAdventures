@@ -170,6 +170,51 @@ game/
   fallbackArt откатывается на базовый набор, пока файлов нет. Промты наборов —
   art-src/PROMPTS_BATTLE.md, секции 78–80 (следит battleArt.test.mjs, счёт 80).
 
+## Комната рыцаря: генерация цельного портрета через Gemini
+
+- Активный режим — НЕ layered: `ui/knightGeneratedView.js` получает один цельный
+  WebP по комплекту экипировки. Старые `knightDollView`, Canvas, принятые броня/
+  меч/щит/зелье и production-manifest изолированных предметов в UI НЕ используются
+  и не служат fallback. `core/knightDoll.js` остаётся только для русского описания.
+  Боевая `knightArtId` — отдельная система и не затрагивается.
+- `core/knightImagePrompt.js` валидирует состояние, строит стабильный ключ комплекта
+  и prompt. `data/knightVisuals.js` — все 122 английских описания, генерируется из
+  `art-src/PROMPTS_KNIGHT.md` командой `node tools/build-knight-visuals.mjs`.
+  Референсы: тело `doll/<bodyId>/full.png`, `room_no_mirrors.png` и иконки; максимум 13.
+  `KNIGHT_IMAGE_PROMPT_VERSION=5` входит и в IndexedDB key, и в backend hash, поэтому
+  смена prompt не подставляет старое изображение. Одноручное оружие обязано быть
+  в правой кисти, щит — на левом предплечье, никакого оружия на полу; зеркала
+  и отражающие поверхности запрещены. Двуручное скрывает щит, оба кольца/расходника
+  входят в prompt, повтор ID не увеличивает число файлов.
+  `settings.knightBody` меняет ключ, невалидное тело → male.
+- `tools/knight-server.mjs` (Node 22, без JS-зависимостей): static + `/health` +
+  POST `/api/knight-image` + GET `/api/knight-cache/<sha256>.webp`. Провайдеры:
+  Gemini REST `v1beta/interactions` (`gemini-nano-banana-2.1`) и OpenRouter
+  `api/v1/chat/completions` (`google/gemini-3.1-flash-image`, `modalities: image+text`,
+  `image_url`, `image_config` 4:5 1K). Выбор — `KNIGHT_IMAGE_PROVIDER`, при наличии
+  `OPENROUTER_API_KEY` он выбирается автоматически; модель можно переопределить
+  `OPENROUTER_IMAGE_MODEL`/`GEMINI_IMAGE_MODEL`. Ключи только backend `.env`/Render,
+  НЕ в браузере/логах. Валидация, CORS,
+  rate limit, очередь 2, timeout/retry, in-flight coalescing.
+- `tools/convert-knight-image.py` (Pillow): WebP 768×960, quality 86, atomic WebP+JSON
+  metadata. Локально `game/.cache/knight` (в .gitignore), на Render `KNIGHT_CACHE_DIR`
+  на persistent disk, TTL нет. Повторный комплект НИКОГДА не генерируется заново;
+  после перезапуска читается готовый WebP. Dockerfile ставит Node 22 + Python/Pillow.
+- Постоянство также в IndexedDB `knight_portraits_v1`: после успеха Blob сохраняется
+  по каноническому key. При rerender сначала memory/IndexedDB/backend, только cache
+  miss → Gemini. Фильтры и hover новый запрос не создают. Debounce 400 мс, последний
+  комплект wins, destroy отменяет fetch и запрещает поздний ответ.
+- Во время генерации допустимо последнее СГЕНЕРИРОВАННОЕ изображение + status;
+  иначе нейтральная рамка. При ошибке сохраняется последний generated image/нейтральный
+  статус, не старые слои. `game/knight-api.js` содержит только публичный URL/endpoint,
+  сейчас локальный `/api/knight-image`; пустая строка отключает сетевые запросы.
+- Тесты: `knightImagePrompt.test.mjs`, `knightServer.test.mjs` (test mode + WebP +
+  persistent cache), `knightGeneratedView.test.mjs` (IndexedDB/lifecycle) и generated
+  ветка `ui-smoke.test.mjs`. Платный Gemini в `npm test` не вызывается;
+  `KNIGHT_TEST_MODE=1 node tools/knight-server.mjs` — локальный end-to-end.
+  После правок `src/` обязательны `npm run build && npm test`. Публичный deploy на
+  Render и включение URL — только после живой визуальной приёмки и явного разрешения.
+
 ## Головоломки: механики (puzzleView.js — PUZZLE_TYPES + dispatch)
 
 - mirror «Свет и фонарики»: `puzzle.js` + `solver.js`; тап по зеркалу, лучи, моль спит.

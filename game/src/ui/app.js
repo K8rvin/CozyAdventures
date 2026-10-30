@@ -351,7 +351,7 @@ function showAbout() {
   overlay.className = 'overlay';
   overlay.innerHTML = `
     <div class="card" style="text-align:left">
-      <h2 style="text-align:center">🏮 Лавка на перекрёстке миров</h2>
+      <h2 style="text-align:center">Лавка на перекрёстке миров</h2>
       <div class="muted center" style="margin-bottom:10px">версия 0.10 · уютная игра-магазин с приключениями</div>
       <p><b>Автор:</b> K8rvin (Андрей)</p>
       <p><b>Сделано:</b> вдвоём — человек и ИИ-агент Kimi Code.

@@ -13,14 +13,14 @@
 <body>
 <header id="topbar">
   <div class="topbar-context">
-    <button id="topbar-back" class="ghost small topbar-back" title="Назад" aria-label="Назад" hidden>← <span class="topbar-back-label">Назад</span></button>
-    <div class="brand" id="topbar-title">🏮 Лавка на перекрёстке миров</div>
+    <button id="topbar-back" class="ghost small topbar-back topbar-action" title="Назад" aria-label="Назад" hidden><svg class="topbar-back-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg><span class="topbar-back-label">Назад</span></button>
+    <div class="brand" id="topbar-title">Лавка на перекрёстке миров</div>
   </div>
   <div class="wallet">
     <span id="wallet-coins" title="Монеты">🪙 0</span>
     <span id="wallet-seals" title="Печати мастера">🔰 0</span>
-    <button id="achievements-btn" class="ghost small" title="Достижения" aria-label="Достижения" style="min-height:0;padding:4px 10px"><img class="topbar-achievement-art" src="assets/achievements/_book.webp" alt="" width="28" height="28"></button>
-    <button id="settings-btn" class="ghost small" title="Настройки" style="min-height:0;padding:4px 10px">⚙️</button>
+    <button id="achievements-btn" class="ghost small topbar-action topbar-icon-button" title="Достижения" aria-label="Достижения"><img class="topbar-achievement-art" src="assets/achievements/_book.webp" alt="" width="28" height="28"></button>
+    <button id="settings-btn" class="ghost small topbar-action topbar-icon-button" title="Настройки" aria-label="Настройки"><svg class="topbar-settings-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3a2 2 0 1 1 4 0v.09A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.4 9c.16.37.37.7.6 1 .28.32.66.5 1.1.5H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.51.5Z"/><circle cx="12" cy="12" r="3"/></svg></button>
   </div>
 </header>
 <main id="screen"></main>
@@ -36,6 +36,7 @@
     </div>
   </div>
 </div>
+<script src="knight-api.js"></script>
 <script src="bundle.js"></script>
 <script>
 (function () {

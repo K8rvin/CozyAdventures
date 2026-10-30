@@ -36,8 +36,36 @@ html, body {
 }
 
 .topbar-context { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
-#topbar .topbar-back { flex: none; min-height: 36px; padding: 4px 10px; white-space: nowrap; }
+#topbar .topbar-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 5px 11px;
+  border: 1px solid #8a6b43;
+  border-radius: 11px;
+  color: var(--text);
+  background: linear-gradient(180deg, #66503a 0%, #473526 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 226, 177, 0.14), 0 2px 5px rgba(20, 13, 8, 0.28);
+  transition: transform 0.12s ease, scale 0.06s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+#topbar .topbar-icon-button { width: 40px; height: 40px; padding: 5px; flex: none; }
+#topbar .topbar-back { flex: none; white-space: nowrap; font-weight: 600; }
 #topbar .topbar-back[hidden] { display: none; }
+.topbar-back-art { display: block; width: 21px; height: 21px; flex: none; }
+.topbar-settings-art { display: block; width: 25px; height: 25px; color: var(--accent); }
+#topbar .topbar-action:hover {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, #796043 0%, #57402b 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 232, 190, 0.2), 0 3px 8px rgba(20, 13, 8, 0.34);
+  transform: translateY(-1px);
+}
+#topbar .topbar-action:active {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(20, 13, 8, 0.3);
+}
+#topbar .topbar-action:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .brand {
   min-width: 0;
   overflow: hidden;
@@ -1866,6 +1894,132 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 .warn { color: var(--danger); font-weight: 600; }
 
 /* Экипировка */
+body[data-route="equip"] #screen { max-width: 1400px; }
+.equip-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "doll" "slots" "side";
+  gap: 14px;
+  align-items: start;
+}
+.equip-layout > .panel { min-width: 0; margin-bottom: 0; }
+.knight-panel {
+  grid-area: doll;
+  text-align: center;
+  background: radial-gradient(circle at 50% 18%, rgba(255, 202, 122, 0.12), transparent 58%),
+    linear-gradient(180deg, #493724, #30241a);
+  border: 1px solid #6b553a;
+  box-shadow: inset 0 0 0 3px rgba(255, 202, 122, 0.04), 0 5px 18px var(--shadow);
+}
+.knight-panel h3 { margin-top: 0; }
+.equip-slots-panel { grid-area: slots; }
+.equip-layout .equip-side { grid-area: side; min-width: 0; max-width: none; }
+.knight-doll { width: 100%; min-width: 0; margin: 0; }
+.knight-stage {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 4 / 5;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 2px solid #8a6a45;
+  border-radius: 18px;
+  background: radial-gradient(circle at 50% 32%, #58452f, #241b12 78%);
+  box-shadow: inset 0 0 0 5px rgba(61, 47, 34, 0.8),
+    inset 0 0 28px rgba(0, 0, 0, 0.48), 0 5px 16px rgba(0, 0, 0, 0.35);
+}
+.knight-stage::after {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  z-index: 1000;
+  border: 1px solid rgba(255, 220, 160, 0.22);
+  border-radius: 12px;
+  pointer-events: none;
+}
+.knight-layers { position: absolute; inset: 0; pointer-events: none; }
+.knight-fallback,
+.knight-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+.knight-layer { transition: filter 150ms ease; }
+.knight-layer.is-highlighted {
+  filter: drop-shadow(0 0 5px rgba(255, 202, 122, 0.95))
+    drop-shadow(0 0 12px rgba(255, 202, 122, 0.65));
+}
+.knight-layer.knight-pet { inset: auto; height: auto; }
+.knight-pet-emoji { line-height: 1; text-align: center; font-size: clamp(24px, 8vw, 44px); }
+.knight-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  color: #c9b294;
+  text-align: center;
+  background: radial-gradient(circle at 50% 35%, #4b3929, #241b12);
+}
+.knight-generation-status {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  z-index: 1001;
+  max-width: 90%;
+  padding: 7px 12px;
+  transform: translateX(-50%);
+  border: 1px solid #8a6a45;
+  border-radius: 999px;
+  color: #f3e6cf;
+  background: rgba(36, 27, 18, 0.9);
+  font-size: 13px;
+  text-align: center;
+  pointer-events: none;
+}
+.knight-generated-image[hidden],
+.knight-empty[hidden],
+.knight-generation-status[hidden] { display: none !important; }
+.knight-layers[hidden],
+.knight-fallback[hidden] { display: none !important; }
+.knight-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.slot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (min-width: 760px) {
+  .equip-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "doll doll" "slots side";
+  }
+}
+@media (min-width: 1200px) {
+  .equip-layout {
+    grid-template-columns: minmax(280px, 1fr) minmax(340px, 420px) minmax(300px, 1fr);
+    grid-template-areas: "slots doll side";
+    justify-content: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .knight-layer { transition: none; }
+}
+
 .equip-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2308,7 +2462,9 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 @media (max-width: 640px) {
   #topbar { gap: 8px; padding: 6px 10px; }
   .topbar-context { gap: 6px; }
-  #topbar .topbar-back { min-height: 44px; padding: 4px 8px; }
+  #topbar .topbar-action { min-height: 44px; }
+  #topbar .topbar-icon-button { width: 44px; height: 44px; }
+  #topbar .topbar-back { width: 44px; height: 44px; padding: 5px; }
   .topbar-back-label { display: none; }
   .wallet { gap: 6px; font-size: 14px; }
   .wallet span { padding: 4px 8px; }
@@ -2325,6 +2481,12 @@ button.set-toggle.on::after { left: 30px; background: #fff; }
 
 /* Убираем липкий hover на тач-устройствах */
 @media (hover: none) {
+  #topbar .topbar-action:hover {
+    border-color: #8a6b43;
+    background: linear-gradient(180deg, #66503a 0%, #473526 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 226, 177, 0.14), 0 2px 5px rgba(20, 13, 8, 0.28);
+    transform: none;
+  }
   button:hover { background: var(--panel-2); }
   button.primary:hover { background: #7a5c33; }
 }

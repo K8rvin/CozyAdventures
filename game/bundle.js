@@ -20988,6 +20988,48 @@
     winter: "\u0417\u0438\u043C\u0430"
   };
 
+  // src/data/knightDoll.js
+  var KNIGHT_DOLL_SIZE = Object.freeze({ width: 768, height: 960 });
+  var KNIGHT_DOLL_LAYERS = Object.freeze({
+    room: 0,
+    back: 10,
+    hairBack: 15,
+    body: 20,
+    boots: 30,
+    armor: 40,
+    hairFront: 45,
+    weapon: 50,
+    hands: 60,
+    grip: 65,
+    shield: 70,
+    amulet: 80,
+    belt: 85,
+    ring: 90,
+    helmet: 100,
+    pet: 110
+  });
+  var KNIGHT_DOLL_BODY_IDS = Object.freeze(["male", "female"]);
+  var KNIGHT_DOLL_DEFAULT_BODY = "male";
+  var KNIGHT_DOLL_BODY_VARIANT_SLOTS = Object.freeze(["armor"]);
+  var KNIGHT_DOLL_BODY_VARIANT_ITEMS = Object.freeze([]);
+  var KNIGHT_DOLL_BASES = {
+    male: {
+      layers: [
+        { key: "room", src: "assets/knight/room.webp", layer: "room" },
+        { key: "body", src: "assets/knight/doll/male/body.webp", layer: "body" },
+        { key: "hands", src: "assets/knight/doll/male/hands.webp", layer: "hands" }
+      ]
+    },
+    female: {
+      layers: [
+        { key: "room", src: "assets/knight/room.webp", layer: "room" },
+        { key: "body", src: "assets/knight/doll/female/body.webp", layer: "body" },
+        { key: "hands", src: "assets/knight/doll/female/hands.webp", layer: "hands" }
+      ]
+    }
+  };
+  var KNIGHT_DOLL_BASE_LAYERS = KNIGHT_DOLL_BASES[KNIGHT_DOLL_DEFAULT_BODY].layers;
+
   // src/data/recipes.js
   var RECIPES = [
     // --- Зелья (двойные порции — выгоднее лавки) ---
@@ -23802,7 +23844,7 @@
       // первая дуга и путеводитель: версия, факты и посещения
       story: newStoryState(),
       // режим истории: шаг, круг гостей, память визитов
-      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true, cursorMode: "themed", cursorTheme: "default", cosmeticsNoticeDismissed: false, cosmeticsPackNoticeDismissed: false },
+      settings: { useBeltItems: true, tactic: "balance", keepBookOpen: false, puzzleCatalogMode: "shelf", guestCatalogMode: "shelf", storyMode: true, cursorMode: "themed", cursorTheme: "default", knightBody: KNIGHT_DOLL_DEFAULT_BODY, cosmeticsNoticeDismissed: false, cosmeticsPackNoticeDismissed: false },
       // настройки (бой, каталоги, оформление)
       formation: { knight: 1, merc0: 0, merc1: 5 },
       // слоты 0-2 передний ряд, 3-5 задний
@@ -23864,6 +23906,9 @@
     state2.settings.cursorMode ??= state2.settings.themedCursors === false ? "system" : "themed";
     delete state2.settings.themedCursors;
     state2.settings.cursorTheme ??= "default";
+    if (!KNIGHT_DOLL_BODY_IDS.includes(state2.settings.knightBody)) {
+      state2.settings.knightBody = KNIGHT_DOLL_DEFAULT_BODY;
+    }
     state2.story ||= newStoryState();
     state2.story.guests ||= {};
     state2.story.guestCursor ||= 0;
@@ -25923,7 +25968,7 @@
   function backToPuzzleType(ctx2, level) {
     ctx2.go("puzzles", { mech: level?.mechanic || "mirror" });
   }
-  var DEFAULT_TOPBAR_TITLE = "\u{1F3EE} \u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432";
+  var DEFAULT_TOPBAR_TITLE = "\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432";
   function resetTopbarHeader() {
     const titleEl = document.getElementById("topbar-title");
     const back = document.getElementById("topbar-back");
@@ -36127,6 +36172,362 @@
     });
   }
 
+  // src/core/knightDoll.js
+  function equippedItem(equipment, slot) {
+    const item2 = equipment?.[slot] && ITEM_BY_ID[equipment[slot]];
+    if (!item2) return null;
+    if (slot === "ring1" || slot === "ring2") return item2.slot === "ring" ? item2 : null;
+    return item2.slot === slot ? item2 : null;
+  }
+  function beltItem(state2, index) {
+    const item2 = state2?.consumableBelt?.[index] && ITEM_BY_ID[state2.consumableBelt[index]];
+    return item2?.slot === "consumable" ? item2 : null;
+  }
+  function describeKnightDoll(state2) {
+    const equipment = state2?.equipped || {};
+    const shieldBlocked = isShieldBlocked(equipment);
+    const names = [];
+    for (const slot of SLOTS) {
+      if (slot === "shield" && shieldBlocked) continue;
+      const item2 = equippedItem(equipment, slot);
+      if (item2) names.push(item2.name);
+    }
+    const beltNames = [0, 1].map((index) => beltItem(state2, index)?.name).filter(Boolean);
+    const pet = state2?.pet && PET_BY_ID[state2.pet];
+    const parts = ["\u0420\u044B\u0446\u0430\u0440\u044C \u043B\u0430\u0432\u043A\u0438."];
+    parts.push(names.length ? `\u041D\u0430\u0434\u0435\u0442\u043E: ${names.join(", ")}.` : "\u042D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0430 \u043D\u0435 \u043D\u0430\u0434\u0435\u0442\u0430.");
+    if (beltNames.length) parts.push(`\u041D\u0430 \u043F\u043E\u044F\u0441\u0435: ${beltNames.join(", ")}.`);
+    if (pet) parts.push(`\u0420\u044F\u0434\u043E\u043C: ${pet.name}.`);
+    return parts.join(" ");
+  }
+
+  // src/data/knightVisuals.js
+  var KNIGHT_VISUALS = Object.freeze({
+    "wpn_rusty_sword": "an old but sharp knight's shortsword with a worn leather grip and a tiny dried lavender sprig tied to the pommel",
+    "wpn_oak_mace": "a heavy oak mace with a rough carved wooden head and iron bands, bark texture",
+    "wpn_dagger_firefly": "a slim elegant dagger with a softly glowing green blade, tiny firefly sparks around the tip",
+    "wpn_greatsword_oak": "a massive two-handed greatsword of dark bog oak with a wide steel blade and brass crossguard",
+    "wpn_lumberaxe": "a huge two-handed lumberjack greataxe with a broad crescent blade, faint green spirit wisps curling off the edge",
+    "wpn_hunter_bow": "a dark wooden longbow with a whisper-quiet string and one silver-fletched arrow resting along the limb",
+    "shd_wooden": "a light round linden wood shield with a warm honey grain, simple iron boss and a child's charcoal drawing faintly visible on the rim",
+    "shd_guardian": "a sturdy shop-guard shield of dark oak with a polished steel rim and small thorn-like studs, a brass lantern emblem in the center",
+    "hlm_badger": "a rounded steel cap trimmed with striped badger fur and two small furry badger ears on top, sleepy cozy look",
+    "hlm_leather": "a soft brown leather hood with stitched seams and a folded rim, smelling of rain and herbs",
+    "arm_padded": "a warm quilted gambeson jacket of beige linen with diamond stitching and wooden toggles, handmade and honest",
+    "arm_oak_guardian": "a guardian armor of polished dark oak plates riveted over a leather jerkin, carved leaf motifs and a living green sprout on the shoulder",
+    "arm_silken": "a weightless silken armor of sea-green moth wings layered like scales, shimmering softly with a delicate fuzzy collar",
+    "glv_herbalist": "a pair of soft herbalist gloves of greenish canvas with leather palms, a sprig of dried nettle tucked into the cuff",
+    "glv_crit": "a pair of fitted dark leather gloves with precise golden stitching following fate lines across the palm",
+    "bt_path": "a pair of light trail boots of tan leather with grass-green laces and a tiny clover leaf stuck to the heel, mud-brushed toes",
+    "bt_merchant": "a pair of well-traveled merchant wanderer boots of chestnut leather with folded cuffs, a brass buckle and a lucky coin stitched into the side",
+    "amu_hearth": "a cozy pendant shaped like a tiny hearth with a warm ember glowing inside, on a braided leather cord",
+    "amu_antidote": "a small round glass pendant with a bundle of dried clubmoss herbs sealed inside, green cork top and a twine loop",
+    "rng_luck": "a simple copper ring with a tiny pressed four-leaf clover set in clear resin",
+    "rng_crit": "a silver ring with a sharp-cut crimson stone that flashes with a spark at its facet",
+    "rng_health": "a warm smooth amber ring glowing softly like a mug of tea, rounded and comforting",
+    "pot_heal": "a round glass potion bottle with a warm rose-red healing brew, tiny heart-shaped bubbles rising inside, cork stopper",
+    "pot_vigor": "a slim glass vial with a sparkling mint-amber invigorating brew, tiny awake sparkles and a leaf of peppermint at the neck, cork stopper",
+    "scr_fire_arrow": "a rolled parchment scroll tied with a red ribbon, glowing rune of a fiery arrow on its side, small ember scorch marks on the edges",
+    "scr_heal_mist": "a rolled parchment scroll tied with a mint-green ribbon, glowing rune of a dewdrop on its side, soft healing mist curling around it",
+    "scr_frost": "a rolled parchment scroll tied with a pale blue ribbon, glowing rune of an ice chain link on its side, frost crystals creeping over the paper edges",
+    "scr_storm": "a rolled parchment scroll tied with a storm-grey ribbon, glowing rune of a lightning bolt on its side, tiny crackling sparks around the seal",
+    "scr_fire_step": "a rolled parchment scroll tied with a scorched orange ribbon, glowing rune of spreading flame footsteps on its side, smoldering edge embers",
+    "wpn_iron_sword": "a plain reliable guardsman's iron longsword, polished blade, simple wrapped grip, no ornament",
+    "wpn_warhammer": "a massive stonemason's war hammer with a square stone head and a sturdy oak haft, chips of granite",
+    "shd_tower": "a massive rectangular tower shield with rounded corners, weathered grey steel plates and a worn wooden handle, a narrow vertical highlight stripe",
+    "hlm_kettle": "a classic iron kettle hat with a wide slightly dented brim and a small rivet loop on top, honest guard gear",
+    "arm_chain": "a veteran chainmail shirt of blue-grey steel rings with a patched leather hem and one mismatched bronze ring, well-kept and storied",
+    "glv_smithee": "a pair of heavy blacksmith mitts of scorched brown leather with metal rivets and heat-darkened fingertips, faint ember glow in the seams",
+    "bt_cobble": "a pair of sturdy town boots with hobnail heels and reinforced toes, polished by cobblestone streets, confident upright stance",
+    "amu_fearless": "a bold bronze medallion with a roaring lion relief and a steady red garnet heart in the center, on a sturdy chain",
+    "rng_iron": "a plain sturdy iron ring like a bent nail, honest forged texture with a slight hammered shine",
+    "rng_duelist": "an elegant duelist ring of dark steel with a thin rapier-shaped crest and a small diamond at its tip",
+    "pot_stone": "a heavy squat bottle with a swirling granite-grey brew, tiny pebbles settled at the bottom and a slate shard as a stopper",
+    "wpn_candle_staff": "a tall mage staff topped with a burning candle flame inside a brass lantern cage, wax drips frozen mid-fall",
+    "wpn_firebird_quill": "a legendary dagger shaped like a firebird feather quill, blade of warm ember-orange feather barbs with tiny sparks, ornate gold nib-like hilt",
+    "arm_ink_cloak": "a flowing cloak of deep violet-black cloth that glistens like wet ink, a stray ink blot sliding off its edge without a trace, high collar and silver clasp",
+    "hlm_page_wanderer": "a tall soft pointed traveler hood of deep violet cloth with a floppy tip and a tiny glowing amber star charm, storybook wanderer mood",
+    "glv_binder": "a pair of sturdy bookbinder gloves of waxed grey cloth with strong saddle stitching and a brass thimble on the thumb, faint ink stains",
+    "bt_quiet_step": "a pair of soft silent boots of midnight-violet suede with felt soles and a page-corner motif stitched in silver thread, whisper-quiet look",
+    "amu_pages": "a pendant of tiny folded ancient book pages layered into a flower shape, smelling of old paper, with a miniature brass bookmark chain",
+    "rng_ink": "a glass ring with a dark ink drop floating and swirling inside, silver setting",
+    "rng_contents": "a golden ring with a tiny engraved open book on the bezel and a miniature compass needle pointing sideways",
+    "pot_ink": "a dark glass bottle with an inky violet-black brew that slowly curls like a calligraphy stroke inside, wax-sealed cork",
+    "wpn_master_dagger": "a masterwork stiletto dagger forged from glowing moss and mossy stone, thin green veins of light in the blade",
+    "shd_master": "a kite-shaped shield polished to a perfect mirror shine, reflecting a tiny warm window light, golden trim and a pale blue enamel boss",
+    "hlm_master": "a light golden circlet with a small glowing heart of old willow wood set in the front, delicate engraved leaves",
+    "arm_master": "a masterwork quilted doublet of deep blue cloth soaked in magical ink brew, faint glowing runes in the seams and polished brass buttons",
+    "glv_master": "a pair of elegant fingerless master gloves with engraved brass thimble-caps on the fingertips, glowing faint golden seams",
+    "bt_master": "a pair of sleek masterwork boots of dark supple leather with silent braided grey soles and faint golden stitching, elegant and noiseless",
+    "amu_master": "a delicate golden filigree pendant holding a bundle of dried clubmoss and a single glowing drop of luminous moss, intricate swirling metalwork",
+    "rng_master": "a masterwork signet ring cast of golden honeyed amber with moth pollen glints and a tiny swirl of luck moving inside",
+    "rng_master_loop": "a matching golden band ring engraved with intertwined loops and a warm purring glow along the inner rim",
+    "shd_page_shield": "a shield made from the cover of an ancient leather-bound tome strapped to a wooden frame, brass corners, faded embossed title swirls, a leather belt strap on the back edge",
+    "wpn_swamp_sickle": "a curved swamp witch sickle with a crescent-moon blade, faint green wisp lights orbiting the edge",
+    "shd_swamp_lily": "a shield made of a giant lily pad leaf stretched over a wooden frame, water droplets rolling off",
+    "hlm_swamp_wreath": "a wreath helmet of glowing marsh berries and firefly lights hovering in a circle",
+    "arm_swamp_weave": "a woven cloak of grey-green bog mist threads, wisps curling off the hem",
+    "glv_swamp_fern": "gloves woven of dark fern fronds with tiny glowing spores on the knuckles",
+    "bt_swamp_moss": "soft mossy boots with peat-brown laces, tiny mushrooms growing on the heels",
+    "amu_swamp_frog": "a small frog-shaped wooden amulet with amber eyes, on a reed-fiber cord",
+    "rng_swamp_thread": "a ring of twisted witch's thread with a glowing mist bead caught in the knot",
+    "rng_swamp_glow": "a ring holding a single glowing marsh berry, soft green light pulsing inside",
+    "wpn_fair_hammer": "a festive strongman carnival hammer with red-white striped handle and a brass bell on the head",
+    "shd_fair_target": "a round shield painted as a carnival shooting-range target with concentric red and cream rings",
+    "hlm_fair_jester": "a starry jester cap with three floppy points ending in tiny gold bells",
+    "arm_fair_vest": "a second-hand dealer's vest of patchwork velvet with many little pockets and brass buttons",
+    "glv_fair_magician": "sleek magician gloves of white silk with a hidden card peeking from the cuff",
+    "bt_fair_dancer": "tightrope dancer boots with pointed toes and balancing ribbons at the ankles",
+    "amu_fair_ticket": "a medallion made from an eternal carnival ticket stamped with a star, on a striped ribbon",
+    "rng_fair_coin": "a ring made from a bent lucky fair coin, heads and tails both smiling",
+    "rng_fair_star": "a ring topped with a small golden champion star, engraved rays",
+    "wpn_ember_scimitar": "a curved ash-steppe scimitar with a heat-shimmer blade and ember glow along the fuller",
+    "shd_ember_brazier": "a shield shaped like a shallow brazier with glowing coals behind a metal grate",
+    "hlm_ember_khan": "a half-mask helmet of steppe beast pelt with a storm shard embedded in the brow",
+    "arm_ember_scalemail": "scale mail of overlapping ash-lizard scales, dark grey with ember-lit seams",
+    "glv_ember_forge": "forge gloves of heat-darkened leather with glowing coal dust in the creases",
+    "bt_ember_storm": "boots of the ash storm with smoldering soles and wind-swept straps",
+    "amu_ember_heart": "an amulet holding a beating storm heart ember in a wire cage",
+    "rng_ember_coal": "a ring set with a small hot coal that glows when danger is near",
+    "rng_ember_spark": "a ring with the very first spark of a fire trapped in a tiny glass vial",
+    "wpn_nm_fang": "a sharp dagger made from a polished fang, wrapped handle of night-market cord",
+    "hlm_nm_lantern": "a hooded cap with a small glowing lantern fixed on the side, night market reflections",
+    "amu_nm_mask": "a mysterious lacquered night guest mask with a painted smile, on a silk cord",
+    "wpn_cr_pick": "a sturdy quartz-miner's pickaxe with a crystal-tipped head catching rainbows",
+    "arm_cr_crystal": "a translucent crystal breastplate, heavy and clear, light refracting inside",
+    "rng_cr_echo": "a mountain echo ring of hollow silver that hums faintly when tapped",
+    "wpn_jade_fan": "a folded combat fan of pale jade blades with bamboo ribs, half-open",
+    "bt_jade_silk": "soft silk tea-ceremony boots of pale green, embroidered with bamboo leaves",
+    "amu_jade_pearl": "a single luminous jade pearl pendant on a silk garden-green cord",
+    "wpn_deep_coral": "a coral blade grown into a sword shape, pink branches fused along the fuller",
+    "shd_deep_shell": "a shield made of a giant scallop shell, pearly inside and barnacled outside",
+    "rng_deep_pearl": "a ring with a deep-sea pearl that glows brighter the deeper you go",
+    "wpn_mist_pendulum": "a pendulum blade on a short chain, swinging in perfect rhythm, clock engravings",
+    "glv_mist_gear": "clockmaker gloves with tiny brass gears on the knuckles and measuring marks",
+    "amu_mist_sand": "an hourglass pendant with mist-grey sand flowing upward",
+    "hlm_hag_crown": "the crown of the Mistress of the Mires, woven of black reeds with a crown of will-o-wisps",
+    "wpn_champion_greatsword": "a colossal greatsword shaped like a five-pointed star of the world champion, gold and crimson",
+    "amu_quartz_heart": "the heart of the ancient quartz dragon, a large faceted crystal beating with slow light",
+    "rng_time_loop": "a ring shaped as a tiny looping spiral of time, silver mist circling inside",
+    "pot_jade_tea": "a jade-green tea potion in a porcelain bottle with a bamboo stopper, steam curling",
+    "pot_deep_air": "a bottle of captured surface air, shimmering bubbles swirling inside, cork sealed with wax",
+    "scr_crystal_rain": "a scroll tied with a crystal-clear ribbon, glowing rune of falling shards on its side",
+    "scr_mist_slow": "a scroll tied with a grey velvet ribbon, glowing rune of thick fog on its side",
+    "shd_willow_vow": "a sturdy round shield of dark willow wood with a living green branch curling around its rim and a small golden oath knot carved into the center",
+    "glv_captain_oath": "a pair of dignified captain gauntlets in deep blue leather with brass wrist plates and a small crimson oath ribbon tied without writing",
+    "rng_keeper_bookmark": "an antique gold ring holding a tiny folded living book page that curls like a bookmark, with a warm amber glow along its edges",
+    "amu_star_compass": "a round silver pendant compass with a tiny star-shaped needle pointing toward a glowing constellation, no letters or cardinal labels",
+    "wpn_nm_afterhours": "a slim midnight-blue dagger with a moonlit silver edge and a miniature lantern-shaped pommel glowing softly in the dark",
+    "bt_sw_reed": "a pair of waterproof traveler boots with woven reed patterns, moss-green lining and flexible mud-proof soles for a swamp path",
+    "rng_sf_encore": "a festive silver ring decorated with tiny colorful fairground beads and two small ribbon loops suggesting a joyful encore",
+    "hlm_cr_geode": "a rounded mountain helmet of brushed steel with a split geode set into the forehead, revealing luminous blue and violet crystals",
+    "arm_ash_wayfarer": "a layered wayfarer armor of ash-grey cloth and scorched metal plates with a travel cloak and faint ember light inside the seams",
+    "wpn_jade_branch": "an elegant one-handed sword shaped around a living jade branch, with carved green leaves and a luminous vein running along the blade",
+    "shd_deep_tideglass": "a protective shield of translucent blue-green tideglass framed in dark silver, with a rolling ocean wave suspended inside the glass",
+    "glv_mist_minute": "a pair of soft mist-violet gloves with delicate silver stitching and a tiny numeral-free clock dial resting quietly on each wrist"
+  });
+
+  // src/core/knightImagePrompt.js
+  var KNIGHT_IMAGE_PROMPT_VERSION = 5;
+  function validItem(id, slot) {
+    if (!id) return null;
+    const item2 = ITEM_BY_ID[id];
+    if (!item2) throw new TypeError(`\u041D\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043D\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442: ${id}`);
+    if (slot === "ring1" || slot === "ring2") {
+      if (item2.slot !== "ring") throw new TypeError(`\u041F\u0440\u0435\u0434\u043C\u0435\u0442 ${id} \u043D\u0435\u043B\u044C\u0437\u044F \u043D\u0430\u0434\u0435\u0442\u044C \u0432 ${slot}`);
+    } else if (item2.slot !== slot) {
+      throw new TypeError(`\u041F\u0440\u0435\u0434\u043C\u0435\u0442 ${id} \u043D\u0435\u043B\u044C\u0437\u044F \u043D\u0430\u0434\u0435\u0442\u044C \u0432 ${slot}`);
+    }
+    return item2;
+  }
+  function canonicalKnightImageState(state2 = {}) {
+    const requestedBody = state2.settings?.knightBody;
+    const bodyId = KNIGHT_DOLL_BODY_IDS.includes(requestedBody) ? requestedBody : KNIGHT_DOLL_DEFAULT_BODY;
+    const source = state2.equipped || {};
+    const shieldBlocked = isShieldBlocked(source);
+    const equipped = [];
+    for (const slot of SLOTS) {
+      if (slot === "shield" && shieldBlocked) continue;
+      const item2 = validItem(source[slot], slot);
+      if (item2) equipped.push([slot, item2.id]);
+    }
+    const consumableBelt = [];
+    for (let index = 0; index < 2; index += 1) {
+      const id = state2.consumableBelt?.[index];
+      if (!id) continue;
+      const item2 = ITEM_BY_ID[id];
+      if (!item2 || item2.slot !== "consumable") throw new TypeError(`\u041F\u0440\u0435\u0434\u043C\u0435\u0442 ${id} \u043D\u0435\u043B\u044C\u0437\u044F \u043F\u043E\u043B\u043E\u0436\u0438\u0442\u044C \u043D\u0430 \u043F\u043E\u044F\u0441`);
+      consumableBelt.push([`belt${index}`, id]);
+    }
+    return { bodyId, equipped, consumableBelt };
+  }
+  function knightImageCacheKey(state2) {
+    return `${KNIGHT_IMAGE_PROMPT_VERSION}:${JSON.stringify(canonicalKnightImageState(state2))}`;
+  }
+
+  // src/ui/knightGeneratedView.js
+  var DB_NAME = "knight_portraits_v1";
+  var STORE_NAME = "portraits";
+  var memoryCache = /* @__PURE__ */ new Map();
+  var latestPortrait = null;
+  function openDatabase() {
+    if (!globalThis.indexedDB) return Promise.resolve(null);
+    return new Promise((resolve) => {
+      const request = globalThis.indexedDB.open(DB_NAME, 1);
+      request.onupgradeneeded = () => {
+        if (!request.result.objectStoreNames.contains(STORE_NAME)) request.result.createObjectStore(STORE_NAME, { keyPath: "key" });
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => resolve(null);
+    });
+  }
+  async function readCached(key) {
+    const db = await openDatabase();
+    if (!db) return null;
+    return new Promise((resolve) => {
+      const request = db.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME).get(key);
+      request.onsuccess = () => {
+        db.close();
+        resolve(request.result || null);
+      };
+      request.onerror = () => {
+        db.close();
+        resolve(null);
+      };
+    });
+  }
+  async function writeCached(key, blob) {
+    const db = await openDatabase();
+    if (!db) return;
+    await new Promise((resolve) => {
+      const transaction = db.transaction(STORE_NAME, "readwrite");
+      transaction.objectStore(STORE_NAME).put({ key, blob });
+      transaction.oncomplete = resolve;
+      transaction.onerror = resolve;
+    }).catch(() => {
+    });
+    db.close();
+  }
+  function apiUrl() {
+    const configured = String(globalThis.KNIGHT_IMAGE_API_URL || "").replace(/\/$/, "");
+    if (!configured) return "";
+    return configured.endsWith("/api/knight-image") ? configured : `${configured}/api/knight-image`;
+  }
+  function stateSnapshot(state2) {
+    return {
+      settings: { knightBody: state2.settings?.knightBody },
+      equipped: state2.equipped || {},
+      consumableBelt: state2.consumableBelt || []
+    };
+  }
+  async function requestPortrait(state2, signal) {
+    const key = knightImageCacheKey(state2);
+    if (memoryCache.has(key)) return memoryCache.get(key);
+    const cached = await readCached(key);
+    if (cached?.blob) {
+      const result2 = { key, src: URL.createObjectURL(cached.blob) };
+      memoryCache.set(key, result2);
+      return result2;
+    }
+    const endpoint = apiUrl();
+    if (!endpoint) throw new Error("\u0421\u0435\u0440\u0432\u0435\u0440 \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u043E\u0432 \u043D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D");
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(stateSnapshot(state2)),
+      signal
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u043F\u043E\u0440\u0442\u0440\u0435\u0442");
+    const imageResponse = await fetch(data.url, { signal });
+    if (!imageResponse.ok) throw new Error("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0433\u043E\u0442\u043E\u0432\u044B\u0439 \u043F\u043E\u0440\u0442\u0440\u0435\u0442");
+    const blob = await imageResponse.blob();
+    await writeCached(key, blob).catch(() => {
+    });
+    const result = { key, src: data.url };
+    memoryCache.set(key, result);
+    return result;
+  }
+  function createKnightGeneratedDoll(state2, options = {}) {
+    const key = knightImageCacheKey(state2);
+    const description = describeKnightDoll(state2);
+    const el = document.createElement("figure");
+    el.className = "knight-doll knight-generated";
+    el.setAttribute("role", "img");
+    el.setAttribute("aria-label", description);
+    const stage = document.createElement("div");
+    stage.className = "knight-stage";
+    const image = document.createElement("img");
+    image.className = "knight-layer knight-generated-image";
+    image.alt = "";
+    image.draggable = false;
+    image.hidden = true;
+    const empty = document.createElement("div");
+    empty.className = "knight-empty";
+    empty.textContent = "\u041F\u043E\u0440\u0442\u0440\u0435\u0442 \u0435\u0449\u0451 \u043D\u0435 \u0441\u043E\u0437\u0434\u0430\u043D";
+    const status2 = document.createElement("div");
+    status2.className = "knight-generation-status";
+    status2.setAttribute("role", "status");
+    stage.appendChild(image);
+    stage.appendChild(empty);
+    stage.appendChild(status2);
+    el.appendChild(stage);
+    const caption = document.createElement("figcaption");
+    caption.className = "knight-visually-hidden";
+    caption.textContent = description;
+    el.appendChild(caption);
+    let destroyed = false;
+    let controller = null;
+    let timer2 = null;
+    function showLatest() {
+      if (!latestPortrait) return;
+      image.src = latestPortrait.src;
+      image.hidden = false;
+      empty.hidden = true;
+    }
+    function showReady(result) {
+      el.dataset.generatedState = destroyed ? "destroyed" : result.key !== key ? "stale" : "ready";
+      if (destroyed || result.key !== key) return;
+      latestPortrait = result;
+      image.src = result.src;
+      image.hidden = false;
+      empty.hidden = true;
+      status2.hidden = true;
+    }
+    async function generate() {
+      if (destroyed) return;
+      controller = new AbortController();
+      el.dataset.generatedState = "loading";
+      status2.textContent = "\u0413\u0435\u043D\u0435\u0440\u0438\u0440\u0443\u0435\u043C \u0442\u0435\u043A\u0443\u0449\u0438\u0439 \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0442\u2026";
+      status2.hidden = false;
+      try {
+        const result = await requestPortrait(state2, controller.signal);
+        showReady(result);
+      } catch (error) {
+        if (destroyed || error.name === "AbortError") return;
+        el.dataset.generatedState = "error";
+        status2.textContent = error.message || "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u043F\u043E\u0440\u0442\u0440\u0435\u0442";
+        status2.hidden = false;
+      }
+    }
+    showLatest();
+    timer2 = setTimeout(generate, options.debounceMs ?? 400);
+    return {
+      el,
+      setHighlight(slot) {
+        if (destroyed) return;
+        image.dataset.equipSlot = slot || "";
+        image.classList.toggle("is-highlighted", Boolean(slot));
+      },
+      destroy() {
+        if (destroyed) return;
+        destroyed = true;
+        clearTimeout(timer2);
+        controller?.abort();
+      }
+    };
+  }
+
   // src/ui/equipView.js
   var activeTab = "chest";
   var filterSlot = "all";
@@ -36135,6 +36536,7 @@
   var newIds = null;
   var suppressClick = false;
   var escHandler = null;
+  var dollView = null;
   var RARITY_RANK2 = { common: 0, rare: 1, epic: 2, legendary: 3 };
   var SLOT_CHIPS = [
     ["weapon", "\u041E\u0440\u0443\u0436\u0438\u0435"],
@@ -36208,8 +36610,29 @@
     span.appendChild(img);
     return span;
   }
+  function bindDollHighlight(cell, slot) {
+    cell.addEventListener("pointerenter", () => dollView?.setHighlight(slot));
+    cell.addEventListener("pointerleave", () => dollView?.setHighlight(null));
+    cell.addEventListener("focus", () => dollView?.setHighlight(slot));
+    cell.addEventListener("blur", () => dollView?.setHighlight(null));
+  }
+  function makeCellActivatable(cell, label) {
+    cell.tabIndex = 0;
+    cell.setAttribute("role", "button");
+    cell.setAttribute("aria-label", label);
+    cell.addEventListener("keydown", (ev) => {
+      if (ev.key !== "Enter" && ev.key !== " ") return;
+      ev.preventDefault();
+      cell.click();
+    });
+  }
+  function destroyDollView() {
+    dollView?.destroy();
+    dollView = null;
+  }
   function renderEquip(container, ctx2) {
     const { state: state2 } = ctx2;
+    destroyDollView();
     if (newIds === null) {
       const seen = new Set(state2.inventorySeen || []);
       newIds = new Set(state2.inventory.filter((id) => id && !seen.has(id)));
@@ -36228,18 +36651,6 @@
     head.style.display = "flex";
     head.style.alignItems = "center";
     head.style.gap = "10px";
-    const kIcon = document.createElement("img");
-    kIcon.alt = "";
-    kIcon.style.cssText = "width:56px;height:56px;border-radius:12px;flex:none";
-    const kCandidates = ["assets/knight/icon_knight_web.jpg"];
-    let kIdx = 0;
-    kIcon.addEventListener("error", () => {
-      kIdx += 1;
-      if (kIdx < kCandidates.length) kIcon.src = kCandidates[kIdx];
-      else kIcon.remove();
-    });
-    kIcon.src = kCandidates[0];
-    head.prepend(kIcon);
     container.appendChild(head);
     container.appendChild(quickNav(ctx2, [
       { icon: "\u2694\uFE0F", label: "\u041F\u043E\u0445\u043E\u0434\u044B \u0440\u044B\u0446\u0430\u0440\u044F", screen: "battles", primary: true },
@@ -36256,28 +36667,18 @@
     };
     window.addEventListener("keydown", escHandler);
     const layout = document.createElement("div");
-    layout.style.display = "flex";
-    layout.style.flexWrap = "wrap";
-    layout.style.gap = "14px";
-    layout.style.alignItems = "flex-start";
+    layout.className = "equip-layout";
     const dollPanel = document.createElement("div");
-    dollPanel.className = "panel";
-    dollPanel.style.textAlign = "center";
+    dollPanel.className = "panel knight-panel";
     dollPanel.innerHTML = "<h3>\u0420\u044B\u0446\u0430\u0440\u044C</h3>";
-    const doll = document.createElement("canvas");
-    doll.width = 220;
-    doll.height = 280;
-    doll.style.maxWidth = "100%";
-    dollPanel.appendChild(doll);
-    drawKnightDoll(doll, state2);
+    dollView = createKnightGeneratedDoll(state2);
+    dollPanel.appendChild(dollView.el);
     layout.appendChild(dollPanel);
     const slotEls = {};
     const beltEls = [];
     let chestListEl = null;
     const slotsPanel = document.createElement("div");
-    slotsPanel.className = "panel";
-    slotsPanel.style.flex = "1";
-    slotsPanel.style.minWidth = "300px";
+    slotsPanel.className = "panel equip-slots-panel";
     slotsPanel.innerHTML = "<h3>\u042D\u043A\u0438\u043F\u0438\u0440\u043E\u0432\u043A\u0430</h3>";
     const grid = document.createElement("div");
     grid.className = "equip-grid";
@@ -36324,6 +36725,10 @@
           ctx2.sfx?.("tap");
           rerender();
         });
+      }
+      if (item2) bindDollHighlight(cell, slot);
+      if (item2 || !(slot === "shield" && shieldBlocked)) {
+        makeCellActivatable(cell, item2 ? `${SLOT_LABEL[slot]}: ${item2.name}. \u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0441\u043D\u044F\u0442\u044C.` : `${SLOT_LABEL[slot]}: \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u043F\u0440\u0435\u0434\u043C\u0435\u0442.`);
       }
       grid.appendChild(cell);
     }
@@ -36376,6 +36781,8 @@
           rerender();
         });
       }
+      if (item2) bindDollHighlight(cell, `belt${i}`);
+      makeCellActivatable(cell, item2 ? `\u041F\u043E\u044F\u0441, \u043A\u0430\u0440\u043C\u0430\u0448\u0435\u043A ${i + 1}: ${item2.name}. \u041D\u0430\u0436\u043C\u0438\u0442\u0435, \u0447\u0442\u043E\u0431\u044B \u0441\u043D\u044F\u0442\u044C.` : `\u041F\u043E\u044F\u0441, \u043A\u0430\u0440\u043C\u0430\u0448\u0435\u043A ${i + 1}: \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0440\u0430\u0441\u0445\u043E\u0434\u043D\u0438\u043A.`);
       beltRow.appendChild(cell);
     }
     belt.appendChild(beltRow);
@@ -36730,418 +37137,18 @@
     }
     function rerender() {
       hideItemTip();
+      destroyDollView();
       container.innerHTML = "";
       renderEquip(container, ctx2);
     }
     return () => {
+      destroyDollView();
       if (escHandler) window.removeEventListener("keydown", escHandler);
       escHandler = null;
       newIds = null;
       targetSlot = null;
       hideItemTip();
     };
-  }
-  var RARITY_PAL = {
-    common: { main: "#8a7a62", dark: "#5d4732", trim: "#6b553a" },
-    rare: { main: "#6a7fa0", dark: "#44536e", trim: "#a8d8ff" },
-    epic: { main: "#7a5a9a", dark: "#553d6d", trim: "#d3a8ff" },
-    legendary: { main: "#b8902a", dark: "#8a6a1a", trim: "#ffd98a" }
-  };
-  function drawKnightDoll(canvas, state2) {
-    const g = canvas.getContext("2d");
-    const W = canvas.width;
-    const H = canvas.height;
-    const eq = state2.equipped;
-    const item2 = (slot) => eq[slot] ? ITEM_BY_ID[eq[slot]] : null;
-    const pal = (it) => RARITY_PAL[it?.rarity] || RARITY_PAL.common;
-    const cx = W / 2;
-    const bg = g.createRadialGradient(cx, H * 0.35, 30, cx, H * 0.45, W * 0.75);
-    bg.addColorStop(0, "rgba(255, 202, 122, 0.20)");
-    bg.addColorStop(1, "rgba(255, 202, 122, 0)");
-    g.fillStyle = bg;
-    g.fillRect(0, 0, W, H);
-    g.fillStyle = "rgba(0,0,0,0.3)";
-    g.beginPath();
-    g.ellipse(cx, H * 0.92, 62, 10, 0, 0, Math.PI * 2);
-    g.fill();
-    const el = (x, y, rx, ry, fill) => {
-      g.fillStyle = fill;
-      g.beginPath();
-      g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
-      g.fill();
-    };
-    const rr = (x, y, w, h, r, fill) => {
-      g.fillStyle = fill;
-      g.beginPath();
-      g.moveTo(x + r, y);
-      g.arcTo(x + w, y, x + w, y + h, r);
-      g.arcTo(x + w, y + h, x, y + h, r);
-      g.arcTo(x, y + h, x, y, r);
-      g.arcTo(x, y, x + w, y, r);
-      g.closePath();
-      g.fill();
-    };
-    const boots = item2("boots");
-    const legCol = boots ? pal(boots).dark : "#4a3a29";
-    rr(cx - 26, H * 0.62, 20, 52, 7, legCol);
-    rr(cx + 6, H * 0.62, 20, 52, 7, legCol);
-    const bootCol = boots ? pal(boots).main : "#6b5335";
-    rr(cx - 28, H * 0.79, 26, 20, 6, bootCol);
-    rr(cx + 4, H * 0.79, 26, 20, 6, bootCol);
-    rr(cx - 28, H * 0.79, 26, 6, 4, boots ? pal(boots).trim : "#4a3a29");
-    rr(cx + 4, H * 0.79, 26, 6, 4, boots ? pal(boots).trim : "#4a3a29");
-    const armor = item2("armor");
-    const torsoY = H * 0.4;
-    const torsoH = 82;
-    const drawTorso = (main, dark, style) => {
-      rr(cx - 36, torsoY, 72, torsoH, 20, main);
-      el(cx - 40, torsoY + 14, 14, 12, dark);
-      el(cx + 40, torsoY + 14, 14, 12, dark);
-      if (style === "mail") {
-        g.fillStyle = "rgba(0,0,0,0.18)";
-        for (let yy = torsoY + 10; yy < torsoY + torsoH - 8; yy += 9) {
-          for (let xx = cx - 30; xx < cx + 32; xx += 9) {
-            g.fillRect(xx, yy, 3, 3);
-          }
-        }
-      }
-      if (style === "plates") {
-        g.fillStyle = dark;
-        for (let yy = torsoY + 16; yy < torsoY + torsoH - 6; yy += 18) g.fillRect(cx - 32, yy, 64, 5);
-      }
-      if (style === "cloth") {
-        g.strokeStyle = dark;
-        g.lineWidth = 2;
-        g.setLineDash([5, 5]);
-        g.beginPath();
-        g.moveTo(cx, torsoY + 6);
-        g.lineTo(cx, torsoY + torsoH - 8);
-        g.stroke();
-        g.setLineDash([]);
-      }
-      if (style === "robe") {
-        g.fillStyle = dark;
-        g.beginPath();
-        g.moveTo(cx - 36, torsoY + 20);
-        g.lineTo(cx + 36, torsoY + 20);
-        g.lineTo(cx + 30, torsoY + torsoH + 18);
-        g.lineTo(cx - 30, torsoY + torsoH + 18);
-        g.closePath();
-        g.fill();
-      }
-    };
-    switch (armor?.id) {
-      case "arm_padded":
-        drawTorso("#a08a62", "#6b5535", "cloth");
-        break;
-      case "arm_oak_guardian":
-        drawTorso("#7a5a38", "#4a3a24", "plates");
-        break;
-      case "arm_silken":
-        drawTorso("#6fae9d", "#4a7a6d", "cloth");
-        break;
-      case "arm_chain":
-        drawTorso("#7d94b8", "#4a5a78", "mail");
-        break;
-      case "arm_ink_cloak":
-        drawTorso("#4a3a5a", "#332844", "robe");
-        break;
-      case "arm_master":
-        drawTorso("#3a5a8a", "#27405e", "plates");
-        break;
-      default: {
-        if (armor) drawTorso(pal(armor).main, pal(armor).dark, "mail");
-        else drawTorso("#8a7a62", "#6b5a48", "cloth");
-      }
-    }
-    el(cx, torsoY + 6, 22, 8, armor ? pal(armor).trim : "#6b5a48");
-    rr(cx - 34, torsoY + torsoH - 16, 68, 9, 3, "#3a2c1c");
-    state2.consumableBelt.forEach((id, i) => {
-      const px = cx - 22 + i * 16;
-      rr(px, torsoY + torsoH - 10, 8, 14, 3, "#7a4a5a");
-      rr(px + 2, torsoY + torsoH - 14, 4, 5, 2, "#c9b294");
-    });
-    const headY = H * 0.27;
-    el(cx, headY, 24, 26, "#d9b98a");
-    const helm = item2("helmet");
-    switch (helm?.id) {
-      case void 0:
-      case null:
-        el(cx, headY - 12, 24, 14, "#6b4a2f");
-        el(cx - 8, headY + 2, 3, 4, "#33241a");
-        el(cx + 8, headY + 2, 3, 4, "#33241a");
-        g.strokeStyle = "#8a5a3a";
-        g.lineWidth = 2;
-        g.beginPath();
-        g.arc(cx, headY + 6, 9, 0.2, Math.PI - 0.2);
-        g.stroke();
-        break;
-      case "hlm_leather":
-        el(cx, headY - 10, 26, 18, "#7a5a3a");
-        rr(cx - 26, headY - 12, 52, 10, 5, "#5d4732");
-        break;
-      case "hlm_badger":
-        el(cx, headY - 8, 26, 16, "#8a9098");
-        el(cx - 16, headY - 22, 7, 9, "#8a9098");
-        el(cx + 16, headY - 22, 7, 9, "#8a9098");
-        rr(cx - 26, headY - 12, 52, 8, 4, "#6a7078");
-        break;
-      case "hlm_kettle":
-        el(cx, headY - 10, 22, 16, "#9aa2ac");
-        rr(cx - 30, headY - 12, 60, 7, 3, "#7a828c");
-        rr(cx - 4, headY - 26, 8, 6, 2, "#c9b294");
-        break;
-      case "hlm_page_wanderer":
-        g.fillStyle = "#4a3a5a";
-        g.beginPath();
-        g.moveTo(cx - 24, headY - 8);
-        g.quadraticCurveTo(cx, headY - 52, cx + 24, headY - 8);
-        g.closePath();
-        g.fill();
-        rr(cx - 26, headY - 10, 52, 8, 4, "#332844");
-        el(cx + 6, headY - 30, 3, 4, "#ffd98a");
-        break;
-      case "hlm_master":
-        rr(cx - 20, headY - 16, 40, 7, 3, "#c9a227");
-        el(cx, headY - 14, 4, 5, "#ffd98a");
-        break;
-      default:
-        el(cx, headY - 8, 26, 16, pal(helm).main);
-        rr(cx - 26, headY - 12, 52, 8, 4, pal(helm).dark);
-    }
-    const glv = item2("gloves");
-    const handCol = glv ? pal(glv).main : "#d9b98a";
-    const wpn = item2("weapon");
-    const twoHanded = wpn?.hand === "two";
-    if (!twoHanded) {
-      el(cx - 40, torsoY + 40, 9, 10, handCol);
-      el(cx + 40, torsoY + 40, 9, 10, handCol);
-      if (item2("ring1")) {
-        el(cx - 40, torsoY + 34, 3, 3, "#ffd98a");
-      }
-      if (item2("ring2")) {
-        el(cx + 40, torsoY + 34, 3, 3, "#ffd98a");
-      }
-    }
-    if (wpn) {
-      const steel = "#c8d4dc";
-      const steelDark = "#8a98a4";
-      const angle = twoHanded ? -0.44 : -0.28;
-      const ax = cx - 46;
-      const ay = torsoY + 46;
-      g.save();
-      g.translate(ax, ay);
-      g.rotate(angle);
-      g.shadowColor = "rgba(0,0,0,0.4)";
-      g.shadowBlur = 4;
-      switch (wpn.type) {
-        case "sword":
-          rr(-4.5, -106, 9, 98, 4.5, steel);
-          g.beginPath();
-          g.moveTo(0, -114);
-          g.lineTo(6, -104);
-          g.lineTo(-6, -104);
-          g.closePath();
-          g.fillStyle = steel;
-          g.fill();
-          rr(-18, -12, 36, 7, 3, "#c9a227");
-          rr(-3, -5, 6, 22, 3, "#4a3a29");
-          break;
-        case "mace":
-          rr(-3.5, -72, 7, 72, 3, "#6b5335");
-          el(0, -84, 18, 18, steelDark);
-          g.fillStyle = steelDark;
-          for (let a = 0; a < 8; a++) {
-            const ang = a / 8 * Math.PI * 2;
-            g.beginPath();
-            g.arc(Math.cos(ang) * 18, -84 + Math.sin(ang) * 18, 4, 0, Math.PI * 2);
-            g.fill();
-          }
-          el(0, -84, 7, 7, steel);
-          break;
-        case "dagger":
-          rr(-3.5, -64, 7, 60, 3.5, steel);
-          g.beginPath();
-          g.moveTo(0, -72);
-          g.lineTo(5, -62);
-          g.lineTo(-5, -62);
-          g.closePath();
-          g.fillStyle = steel;
-          g.fill();
-          rr(-12, -8, 24, 6, 3, "#c9a227");
-          rr(-2.5, -2, 5, 15, 2, "#4a3a29");
-          break;
-        case "greatsword":
-          rr(-7.5, -138, 15, 126, 7, steel);
-          rr(-7.5, -138, 15, 20, 7, steelDark);
-          rr(-22, -16, 44, 9, 4, "#c9a227");
-          rr(-4.5, -7, 9, 26, 4, "#4a3a29");
-          el(0, -128, 5, 5, "#ffd98a");
-          break;
-        case "greataxe":
-          rr(-4, -100, 8, 96, 4, "#6b5335");
-          g.fillStyle = steel;
-          g.beginPath();
-          g.moveTo(-4, -98);
-          g.quadraticCurveTo(-44, -88, -36, -52);
-          g.lineTo(-4, -62);
-          g.closePath();
-          g.fill();
-          rr(-8, -106, 16, 7, 3, steelDark);
-          break;
-        case "bow": {
-          g.strokeStyle = "#8a5a3a";
-          g.lineWidth = 5.5;
-          g.lineCap = "round";
-          g.beginPath();
-          g.moveTo(0, -88);
-          g.quadraticCurveTo(-24, -52, -18, -6);
-          g.quadraticCurveTo(-14, 40, 0, 76);
-          g.stroke();
-          g.strokeStyle = "#a06a42";
-          g.lineWidth = 2;
-          g.beginPath();
-          g.moveTo(0, -86);
-          g.quadraticCurveTo(-21, -52, -16, -7);
-          g.quadraticCurveTo(-12, 38, 0, 74);
-          g.stroke();
-          g.strokeStyle = "#d9cdb8";
-          g.lineWidth = 1.6;
-          g.beginPath();
-          g.moveTo(0, -88);
-          g.lineTo(0, 76);
-          g.stroke();
-          rr(-21, -14, 8, 16, 3, "#4a3a29");
-          g.strokeStyle = "#c9b294";
-          g.lineWidth = 2.5;
-          g.beginPath();
-          g.moveTo(4, -4);
-          g.lineTo(-28, -9);
-          g.stroke();
-          g.fillStyle = steel;
-          g.beginPath();
-          g.moveTo(-36, -10);
-          g.lineTo(-27, -13);
-          g.lineTo(-27, -6);
-          g.closePath();
-          g.fill();
-          g.strokeStyle = "#e8dcc8";
-          g.lineWidth = 1.6;
-          g.beginPath();
-          g.moveTo(2, -4);
-          g.lineTo(-3, -11);
-          g.moveTo(3, -2);
-          g.lineTo(-1, 4);
-          g.stroke();
-          break;
-        }
-        case "staff":
-          rr(-4, -110, 6, 108, 3, "#5d4732");
-          el(0, -114, 13, 13, "#ffb85a");
-          el(0, -114, 22, 22, "rgba(255,184,90,0.35)");
-          el(0, -114, 5, 5, "#fff2be");
-          break;
-        default:
-          rr(-4.5, -106, 9, 98, 4.5, steel);
-          rr(-18, -12, 36, 7, 3, "#c9a227");
-          rr(-3, -5, 6, 22, 3, "#4a3a29");
-      }
-      g.restore();
-      if (twoHanded) {
-        const GRIP2H = {
-          greatsword: [[0, -2], [0, 16]],
-          greataxe: [[0, -34], [0, -8]],
-          staff: [[0, -44], [0, -14]],
-          bow: [[-17, -6], [2, -4]]
-          // рука на рукояти лука и на тетиве
-        };
-        const grips = GRIP2H[wpn.type] || [[0, -2], [0, 20]];
-        const cos = Math.cos(angle);
-        const sin = Math.sin(angle);
-        const toWorld = ([x, y]) => [ax + x * cos - y * sin, ay + x * sin + y * cos];
-        const [h1, h2] = grips.map(toWorld);
-        g.shadowColor = "rgba(0,0,0,0.4)";
-        g.shadowBlur = 4;
-        el(h1[0], h1[1], 9, 10, handCol);
-        el(h2[0], h2[1], 9, 10, handCol);
-        if (item2("ring1")) el(h2[0], h2[1] - 6, 3, 3, "#ffd98a");
-        if (item2("ring2")) el(h2[0] + 5, h2[1] - 3, 3, 3, "#ffd98a");
-        g.shadowBlur = 0;
-      }
-    }
-    const shd = item2("shield");
-    if (shd) {
-      const sx = cx + 48;
-      const sy = torsoY + 46;
-      g.save();
-      g.shadowColor = "rgba(0,0,0,0.4)";
-      g.shadowBlur = 4;
-      const drawKite = (main, trim, boss) => {
-        g.fillStyle = main;
-        g.beginPath();
-        g.moveTo(sx - 28, sy - 44);
-        g.lineTo(sx + 28, sy - 44);
-        g.lineTo(sx + 28, sy + 14);
-        g.quadraticCurveTo(sx, sy + 44, sx - 28, sy + 14);
-        g.closePath();
-        g.fill();
-        g.strokeStyle = trim;
-        g.lineWidth = 5;
-        g.stroke();
-        if (boss) el(sx, sy - 14, 9, 9, boss);
-      };
-      switch (shd.id) {
-        case "shd_wooden":
-          el(sx, sy, 32, 35, "#8a6a45");
-          el(sx, sy, 21, 23, "#7a5a38");
-          el(sx, sy, 9, 9, "#6b5335");
-          break;
-        case "shd_tower":
-          rr(sx - 21, sy - 46, 42, 84, 9, "#8a9098");
-          rr(sx - 21, sy - 46, 42, 13, 7, "#6a7078");
-          el(sx, sy - 8, 8, 8, "#4a3a29");
-          g.fillStyle = "rgba(255,255,255,0.15)";
-          g.fillRect(sx - 16, sy - 38, 8, 68);
-          break;
-        case "shd_master":
-          drawKite("#b8c8d8", "#ffd98a", "#e8f4ff");
-          g.fillStyle = "rgba(255,255,255,0.5)";
-          g.beginPath();
-          g.moveTo(sx - 18, sy - 38);
-          g.lineTo(sx - 5, sy - 38);
-          g.lineTo(sx - 13, sy + 8);
-          g.lineTo(sx - 21, sy + 3);
-          g.closePath();
-          g.fill();
-          break;
-        case "shd_page_shield":
-          rr(sx - 22, sy - 38, 44, 74, 7, "#6b4a2f");
-          rr(sx - 22, sy - 38, 12, 74, 7, "#4a3320");
-          el(sx + 3, sy, 6, 7, "#c9a227");
-          break;
-        default:
-          drawKite(pal(shd).main, pal(shd).trim, pal(shd).trim);
-      }
-      g.restore();
-    }
-    const amu = item2("amulet");
-    if (amu) {
-      g.strokeStyle = "#c9b294";
-      g.lineWidth = 2;
-      g.beginPath();
-      g.moveTo(cx - 10, torsoY + 4);
-      g.quadraticCurveTo(cx, torsoY + 18, cx + 10, torsoY + 4);
-      g.stroke();
-      el(cx, torsoY + 24, 6, 7, pal(amu).trim);
-      el(cx, torsoY + 24, 10, 12, "rgba(255,226,138,0.3)");
-    }
-    if (state2.pet && PET_BY_ID[state2.pet]) {
-      const e = PET_BY_ID[state2.pet].icon;
-      g.font = '30px "Segoe UI Emoji", sans-serif';
-      g.textAlign = "center";
-      g.textBaseline = "middle";
-      g.fillText(e, W * 0.82, H * 0.86);
-    }
   }
 
   // src/ui/shopView.js
@@ -38729,6 +38736,42 @@
       }
     }));
     container.appendChild(storySec);
+    const knightSec = makeSection("\u2694\uFE0F \u0420\u044B\u0446\u0430\u0440\u044C");
+    const bodyLabel = document.createElement("div");
+    bodyLabel.className = "pc-layout-label";
+    bodyLabel.textContent = "\u041E\u0431\u0440\u0430\u0437 \u0440\u044B\u0446\u0430\u0440\u044F";
+    const bodyPicker = document.createElement("div");
+    bodyPicker.className = "pc-mode-picker set-cursor-modes";
+    bodyPicker.setAttribute("role", "group");
+    bodyPicker.setAttribute("aria-label", "\u041E\u0431\u0440\u0430\u0437 \u0440\u044B\u0446\u0430\u0440\u044F");
+    const BODY_LABELS = { male: "\u041C\u0443\u0436\u0441\u043A\u043E\u0439", female: "\u0416\u0435\u043D\u0441\u043A\u0438\u0439" };
+    const syncBodyUI = () => {
+      for (const button of bodyPicker.children) {
+        const active2 = state2.settings.knightBody === button.dataset.body;
+        button.className = `small pc-mode-option${active2 ? " primary is-active" : " ghost"}`;
+        button.setAttribute("aria-pressed", String(active2));
+      }
+    };
+    for (const bodyId of KNIGHT_DOLL_BODY_IDS) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.body = bodyId;
+      button.textContent = BODY_LABELS[bodyId];
+      button.addEventListener("click", () => {
+        if (state2.settings.knightBody === bodyId) return;
+        state2.settings.knightBody = bodyId;
+        ctx2.save();
+        ctx2.sfx?.("tap");
+        syncBodyUI();
+      });
+      bodyPicker.appendChild(button);
+    }
+    const bodyHint = document.createElement("div");
+    bodyHint.className = "set-hint";
+    bodyHint.textContent = "\u0422\u043E\u043B\u044C\u043A\u043E \u0432\u043D\u0435\u0448\u043D\u0438\u0439 \u0432\u0438\u0434 \u0432 \u043A\u043E\u043C\u043D\u0430\u0442\u0435 \u0440\u044B\u0446\u0430\u0440\u044F, \u043D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439.";
+    knightSec.append(bodyLabel, bodyPicker, bodyHint);
+    syncBodyUI();
+    container.appendChild(knightSec);
     const puzzleSec = makeSection("\u{1F9E9} \u0413\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0438");
     const catalogBox = document.createElement("div");
     catalogBox.className = "pc-settings-catalog";
@@ -43321,7 +43364,7 @@
     overlay.className = "overlay";
     overlay.innerHTML = `
     <div class="card" style="text-align:left">
-      <h2 style="text-align:center">\u{1F3EE} \u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432</h2>
+      <h2 style="text-align:center">\u041B\u0430\u0432\u043A\u0430 \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043A\u0435 \u043C\u0438\u0440\u043E\u0432</h2>
       <div class="muted center" style="margin-bottom:10px">\u0432\u0435\u0440\u0441\u0438\u044F 0.10 \xB7 \u0443\u044E\u0442\u043D\u0430\u044F \u0438\u0433\u0440\u0430-\u043C\u0430\u0433\u0430\u0437\u0438\u043D \u0441 \u043F\u0440\u0438\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F\u043C\u0438</div>
       <p><b>\u0410\u0432\u0442\u043E\u0440:</b> K8rvin (\u0410\u043D\u0434\u0440\u0435\u0439)</p>
       <p><b>\u0421\u0434\u0435\u043B\u0430\u043D\u043E:</b> \u0432\u0434\u0432\u043E\u0451\u043C \u2014 \u0447\u0435\u043B\u043E\u0432\u0435\u043A \u0438 \u0418\u0418-\u0430\u0433\u0435\u043D\u0442 Kimi Code.

@@ -31,6 +31,8 @@
   гостями. Сцены показываются на пути кампании и доступны для перечитывания.
 - Снаряжение занимает 9 слотов, двуручное оружие занимает обе руки, пояс вмещает
   два расходника. В таверне нанимаются спутники, питомцы и наёмники.
+- В комнате можно выбрать мужской или женский образ рыцаря; это косметика,
+  не влияющая на характеристики и бой.
 
 ### Первая дуга и цели
 
@@ -124,7 +126,10 @@
 npm install     # один раз, только dev-инструменты
 npm test        # ядро, контент, решатели, UI и bundle
 npm run build   # обязательно после правок src/
-npm run serve   # локальный сервер
+npm run serve   # статический сервер без генерации портрета
+node tools/build-knight-visuals.mjs # обновить визуальные описания всех предметов
+KNIGHT_TEST_MODE=1 node tools/knight-server.mjs # игра + generated backend в test mode
+node tools/knight-server.mjs # игра + image backend, нужен GEMINI_API_KEY или OPENROUTER_API_KEY
 npm run achievements:art # пересобрать медальоны (Python + Pillow, только для разработки)
 
 node tools/sim-world.mjs nm 40 reasonable

@@ -9,6 +9,7 @@
     "serve": "python -m http.server 8080",
     "assets": "node tools/generate-assets.mjs",
     "assets:variants": "node tools/generate-assets.mjs --variants",
+    "knight:art": "node tools/build-knight-art.mjs",
     "achievements:art": "node tools/build-achievement-art.mjs"
   },
   "license": "MIT",

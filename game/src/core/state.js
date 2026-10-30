@@ -25,6 +25,7 @@ import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
 import { COSMETIC_BY_ID, LEGACY_COSMETIC_ALIASES, COSMETICS_VERSION } from '../data/cosmetics.js';
+import { KNIGHT_DOLL_BODY_IDS, KNIGHT_DOLL_DEFAULT_BODY } from '../data/knightDoll.js';
 import { RECIPES, RECIPE_BY_ID } from '../data/recipes.js';
 import { MATERIALS, materialLabel } from '../data/materials.js';
 import { exchangeMaterials } from './materialExchange.js';
@@ -94,7 +95,7 @@ export function newGame(now = Date.now()) {
     tutorialSkipped: false, // игрок пропустил обучение целиком
     onboarding: newOnboardingState(), // первая дуга и путеводитель: версия, факты и посещения
     story: newStoryState(), // режим истории: шаг, круг гостей, память визитов
-    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf', guestCatalogMode: 'shelf', storyMode: true, cursorMode: 'themed', cursorTheme: 'default', cosmeticsNoticeDismissed: false, cosmeticsPackNoticeDismissed: false }, // настройки (бой, каталоги, оформление)
+    settings: { useBeltItems: true, tactic: 'balance', keepBookOpen: false, puzzleCatalogMode: 'shelf', guestCatalogMode: 'shelf', storyMode: true, cursorMode: 'themed', cursorTheme: 'default', knightBody: KNIGHT_DOLL_DEFAULT_BODY, cosmeticsNoticeDismissed: false, cosmeticsPackNoticeDismissed: false }, // настройки (бой, каталоги, оформление)
     formation: { knight: 1, merc0: 0, merc1: 5 }, // слоты 0-2 передний ряд, 3-5 задний
     cheats: { used: [], spiderHat: false }, // активированные читы и пасхалки
     stats: { puzzlesSolved: 0, battlesWon: 0, coinsEarned: 0 },
@@ -162,6 +163,9 @@ function migrate(state, now = Date.now()) {
   state.settings.cursorMode ??= state.settings.themedCursors === false ? 'system' : 'themed';
   delete state.settings.themedCursors;
   state.settings.cursorTheme ??= 'default';
+  if (!KNIGHT_DOLL_BODY_IDS.includes(state.settings.knightBody)) {
+    state.settings.knightBody = KNIGHT_DOLL_DEFAULT_BODY;
+  }
   state.story ||= newStoryState();
   state.story.guests ||= {};
   state.story.guestCursor ||= 0;
