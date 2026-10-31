@@ -60,21 +60,23 @@ function stateSnapshot(state) {
   };
 }
 
-async function requestPortrait(state, signal) {
+async function requestPortrait(state, signal, regenerate = false) {
   const key = knightImageCacheKey(state);
-  if (memoryCache.has(key)) return memoryCache.get(key);
-  const cached = await readCached(key);
-  if (cached?.blob) {
-    const result = { key, src: URL.createObjectURL(cached.blob) };
-    memoryCache.set(key, result);
-    return result;
+  if (!regenerate) {
+    if (memoryCache.has(key)) return memoryCache.get(key);
+    const cached = await readCached(key);
+    if (cached?.blob) {
+      const result = { key, src: URL.createObjectURL(cached.blob) };
+      memoryCache.set(key, result);
+      return result;
+    }
   }
   const endpoint = apiUrl();
   if (!endpoint) throw new Error('Сервер портретов не настроен');
   const response = await fetch(endpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(stateSnapshot(state)),
+    body: JSON.stringify({ ...stateSnapshot(state), ...(regenerate ? { regenerate: true } : {}) }),
     signal,
   });
   const data = await response.json().catch(() => ({}));
@@ -110,11 +112,29 @@ export function createKnightGeneratedDoll(state, options = {}) {
   const empty = document.createElement('div');
   empty.className = 'knight-empty';
   empty.textContent = 'Портрет ещё не создан';
+  const fx = document.createElement('div');
+  fx.className = 'knight-generation-fx';
+  fx.hidden = true;
+  fx.setAttribute('aria-hidden', 'true');
+  const orbit = document.createElement('div');
+  orbit.className = 'knight-generation-orbit';
+  const star = document.createElement('span');
+  star.className = 'knight-generation-star';
+  star.textContent = '✦';
+  orbit.appendChild(star);
+  fx.appendChild(orbit);
+  for (let index = 0; index < 4; index += 1) {
+    const spark = document.createElement('span');
+    spark.className = `knight-generation-spark spark-${index + 1}`;
+    spark.textContent = '✦';
+    fx.appendChild(spark);
+  }
   const status = document.createElement('div');
   status.className = 'knight-generation-status';
   status.setAttribute('role', 'status');
   stage.appendChild(image);
   stage.appendChild(empty);
+  stage.appendChild(fx);
   stage.appendChild(status);
   el.appendChild(stage);
   const caption = document.createElement('figcaption');
@@ -125,6 +145,7 @@ export function createKnightGeneratedDoll(state, options = {}) {
   let destroyed = false;
   let controller = null;
   let timer = null;
+  let taps = [];
 
   function showLatest() {
     if (!latestPortrait) return;
@@ -140,31 +161,58 @@ export function createKnightGeneratedDoll(state, options = {}) {
     image.src = result.src;
     image.hidden = false;
     empty.hidden = true;
+    fx.hidden = true;
     status.hidden = true;
   }
 
-  async function generate() {
+  async function generate(regenerate = false) {
     if (destroyed) return;
+    controller?.abort();
     controller = new AbortController();
     el.dataset.generatedState = 'loading';
-    status.textContent = 'Генерируем текущий комплект…';
+    status.textContent = regenerate ? 'Перегенерируем портрет…' : 'Генерируем текущий комплект…';
     status.hidden = false;
+    fx.hidden = false;
     try {
-      const result = await requestPortrait(state, controller.signal);
+      const result = await requestPortrait(state, controller.signal, regenerate);
       showReady(result);
     } catch (error) {
       if (destroyed || error.name === 'AbortError') return;
       el.dataset.generatedState = 'error';
+      fx.hidden = true;
       status.textContent = error.message || 'Не удалось создать портрет';
       status.hidden = false;
     }
   }
 
+  function regenerate() {
+    if (destroyed) return Promise.resolve();
+    const message = 'Заново сгенерировать этот портрет через OpenRouter? Прежнее изображение останется на экране до готовности.';
+    if (globalThis.confirm?.(message) === false) return Promise.resolve();
+    return generate(true);
+  }
+
+  el.addEventListener('click', (event) => {
+    if (!event.ctrlKey || !event.shiftKey) return;
+    event.preventDefault();
+    regenerate();
+  });
+  el.addEventListener('pointerup', (event) => {
+    if (event.pointerType !== 'touch') return;
+    const now = Date.now();
+    taps = [...taps.filter((time) => now - time < 2000), now];
+    if (taps.length >= 5) {
+      taps = [];
+      regenerate();
+    }
+  });
+
   showLatest();
-  timer = setTimeout(generate, options.debounceMs ?? 400);
+  timer = setTimeout(() => generate(false), options.debounceMs ?? 400);
 
   return {
     el,
+    regenerate,
     setHighlight(slot) {
       if (destroyed) return;
       image.dataset.equipSlot = slot || '';

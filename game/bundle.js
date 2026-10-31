@@ -36420,21 +36420,23 @@
       consumableBelt: state2.consumableBelt || []
     };
   }
-  async function requestPortrait(state2, signal) {
+  async function requestPortrait(state2, signal, regenerate = false) {
     const key = knightImageCacheKey(state2);
-    if (memoryCache.has(key)) return memoryCache.get(key);
-    const cached = await readCached(key);
-    if (cached?.blob) {
-      const result2 = { key, src: URL.createObjectURL(cached.blob) };
-      memoryCache.set(key, result2);
-      return result2;
+    if (!regenerate) {
+      if (memoryCache.has(key)) return memoryCache.get(key);
+      const cached = await readCached(key);
+      if (cached?.blob) {
+        const result2 = { key, src: URL.createObjectURL(cached.blob) };
+        memoryCache.set(key, result2);
+        return result2;
+      }
     }
     const endpoint = apiUrl();
     if (!endpoint) throw new Error("\u0421\u0435\u0440\u0432\u0435\u0440 \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u043E\u0432 \u043D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D");
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(stateSnapshot(state2)),
+      body: JSON.stringify({ ...stateSnapshot(state2), ...regenerate ? { regenerate: true } : {} }),
       signal
     });
     const data = await response.json().catch(() => ({}));
@@ -36465,11 +36467,29 @@
     const empty = document.createElement("div");
     empty.className = "knight-empty";
     empty.textContent = "\u041F\u043E\u0440\u0442\u0440\u0435\u0442 \u0435\u0449\u0451 \u043D\u0435 \u0441\u043E\u0437\u0434\u0430\u043D";
+    const fx = document.createElement("div");
+    fx.className = "knight-generation-fx";
+    fx.hidden = true;
+    fx.setAttribute("aria-hidden", "true");
+    const orbit = document.createElement("div");
+    orbit.className = "knight-generation-orbit";
+    const star = document.createElement("span");
+    star.className = "knight-generation-star";
+    star.textContent = "\u2726";
+    orbit.appendChild(star);
+    fx.appendChild(orbit);
+    for (let index = 0; index < 4; index += 1) {
+      const spark = document.createElement("span");
+      spark.className = `knight-generation-spark spark-${index + 1}`;
+      spark.textContent = "\u2726";
+      fx.appendChild(spark);
+    }
     const status2 = document.createElement("div");
     status2.className = "knight-generation-status";
     status2.setAttribute("role", "status");
     stage.appendChild(image);
     stage.appendChild(empty);
+    stage.appendChild(fx);
     stage.appendChild(status2);
     el.appendChild(stage);
     const caption = document.createElement("figcaption");
@@ -36479,6 +36499,7 @@
     let destroyed = false;
     let controller = null;
     let timer2 = null;
+    let taps = [];
     function showLatest() {
       if (!latestPortrait) return;
       image.src = latestPortrait.src;
@@ -36492,28 +36513,53 @@
       image.src = result.src;
       image.hidden = false;
       empty.hidden = true;
+      fx.hidden = true;
       status2.hidden = true;
     }
-    async function generate() {
+    async function generate(regenerate2 = false) {
       if (destroyed) return;
+      controller?.abort();
       controller = new AbortController();
       el.dataset.generatedState = "loading";
-      status2.textContent = "\u0413\u0435\u043D\u0435\u0440\u0438\u0440\u0443\u0435\u043C \u0442\u0435\u043A\u0443\u0449\u0438\u0439 \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0442\u2026";
+      status2.textContent = regenerate2 ? "\u041F\u0435\u0440\u0435\u0433\u0435\u043D\u0435\u0440\u0438\u0440\u0443\u0435\u043C \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u2026" : "\u0413\u0435\u043D\u0435\u0440\u0438\u0440\u0443\u0435\u043C \u0442\u0435\u043A\u0443\u0449\u0438\u0439 \u043A\u043E\u043C\u043F\u043B\u0435\u043A\u0442\u2026";
       status2.hidden = false;
+      fx.hidden = false;
       try {
-        const result = await requestPortrait(state2, controller.signal);
+        const result = await requestPortrait(state2, controller.signal, regenerate2);
         showReady(result);
       } catch (error) {
         if (destroyed || error.name === "AbortError") return;
         el.dataset.generatedState = "error";
+        fx.hidden = true;
         status2.textContent = error.message || "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u043F\u043E\u0440\u0442\u0440\u0435\u0442";
         status2.hidden = false;
       }
     }
+    function regenerate() {
+      if (destroyed) return Promise.resolve();
+      const message = "\u0417\u0430\u043D\u043E\u0432\u043E \u0441\u0433\u0435\u043D\u0435\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u044D\u0442\u043E\u0442 \u043F\u043E\u0440\u0442\u0440\u0435\u0442 \u0447\u0435\u0440\u0435\u0437 OpenRouter? \u041F\u0440\u0435\u0436\u043D\u0435\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043E\u0441\u0442\u0430\u043D\u0435\u0442\u0441\u044F \u043D\u0430 \u044D\u043A\u0440\u0430\u043D\u0435 \u0434\u043E \u0433\u043E\u0442\u043E\u0432\u043D\u043E\u0441\u0442\u0438.";
+      if (globalThis.confirm?.(message) === false) return Promise.resolve();
+      return generate(true);
+    }
+    el.addEventListener("click", (event) => {
+      if (!event.ctrlKey || !event.shiftKey) return;
+      event.preventDefault();
+      regenerate();
+    });
+    el.addEventListener("pointerup", (event) => {
+      if (event.pointerType !== "touch") return;
+      const now = Date.now();
+      taps = [...taps.filter((time) => now - time < 2e3), now];
+      if (taps.length >= 5) {
+        taps = [];
+        regenerate();
+      }
+    });
     showLatest();
-    timer2 = setTimeout(generate, options.debounceMs ?? 400);
+    timer2 = setTimeout(() => generate(false), options.debounceMs ?? 400);
     return {
       el,
+      regenerate,
       setHighlight(slot) {
         if (destroyed) return;
         image.dataset.equipSlot = slot || "";

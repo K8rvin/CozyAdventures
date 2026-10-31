@@ -222,20 +222,22 @@ export async function createKnightServer(options = {}) {
     return true;
   }
 
-  async function convert(raw, built, key) {
+  async function convert(raw, built, key, force = false) {
     const rawPath = join(config.cacheDir, `.${key}.raw.png`);
     const outputPath = join(config.cacheDir, `${key}.webp`);
     const metadataPath = join(config.cacheDir, `${key}.json`);
     try {
       await writeFile(rawPath, raw);
       const python = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
-      const result = spawnSync(python, [
+      const args = [
         CONVERTER, rawPath, outputPath, metadataPath,
         '--key', key,
         '--model', config.model,
         '--prompt-version', String(built.promptVersion),
         '--state', JSON.stringify(canonicalKnightImageState(built.state)),
-      ], { encoding: 'utf8', timeout: 30000, maxBuffer: 1024 * 1024 });
+      ];
+      if (force) args.push('--force');
+      const result = spawnSync(python, args, { encoding: 'utf8', timeout: 30000, maxBuffer: 1024 * 1024 });
       if (result.error || result.status !== 0) throw new Error(`Конвертация не удалась: ${result.stderr || result.error?.message || result.status}`);
       stats.generations += 1;
     } finally {
@@ -244,13 +246,18 @@ export async function createKnightServer(options = {}) {
     }
   }
 
+  async function versionedUrl(baseUrl, cachedPath) {
+    const info = await stat(cachedPath);
+    return `${baseUrl}?v=${Math.round(info.mtimeMs).toString(36)}`;
+  }
+
   async function generate(payload, req) {
     const built = buildKnightImagePrompt(payload);
     built.state = payload;
     const key = hashRequest(built, config.model);
-    const url = `${publicBase(req, config)}/api/knight-cache/${key}.webp`;
+    const baseUrl = `${publicBase(req, config)}/api/knight-cache/${key}.webp`;
     const cachedPath = join(config.cacheDir, `${key}.webp`);
-    if (existsSync(cachedPath)) return { key, url, cached: true };
+    if (payload.regenerate !== true && existsSync(cachedPath)) return { key, url: await versionedUrl(baseUrl, cachedPath), cached: true };
     if (inflight.has(key)) return inflight.get(key);
     if (!config.testMode && !config.apiKey) throw new HttpError(503, 'Gemini API key не настроен');
     if (!rateAllowed(req)) throw new HttpError(429, 'Слишком много генераций, попробуйте позже');
@@ -261,8 +268,8 @@ export async function createKnightServer(options = {}) {
       stats.active += 1;
       try {
         const raw = config.testMode ? Buffer.from(TEST_PNG, 'base64') : await (config.provider === 'openrouter' ? callOpenRouter(built, config) : callGemini(built, config));
-        await convert(raw, built, key);
-        return { key, url, cached: false };
+        await convert(raw, built, key, payload.regenerate === true);
+        return { key, url: await versionedUrl(baseUrl, cachedPath), cached: false };
       } finally {
         stats.active -= 1;
       }

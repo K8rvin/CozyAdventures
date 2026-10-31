@@ -18,6 +18,7 @@ def parse_args():
     parser.add_argument("--model", required=True)
     parser.add_argument("--prompt-version", type=int, required=True)
     parser.add_argument("--state", required=True)
+    parser.add_argument("--force", action="store_true")
     return parser.parse_args()
 
 
@@ -33,7 +34,7 @@ def main():
     metadata = Path(args.metadata)
     output.parent.mkdir(parents=True, exist_ok=True)
     metadata.parent.mkdir(parents=True, exist_ok=True)
-    if output.exists() and metadata.exists():
+    if not args.force and output.exists() and metadata.exists():
         print(f"Кэш уже существует: {output}")
         return
     with Image.open(args.input) as opened:

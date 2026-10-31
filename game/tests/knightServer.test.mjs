@@ -64,12 +64,25 @@ test('backend валидирует комплект, создаёт WebP и ис
   const afterShared = await (await fetch(`${base}/health`)).json();
   assert.equal(afterShared.generations, 2);
 
+  const forceState = newGame();
+  forceState.regenerate = true;
+  const regenerated = await post(forceState);
+  assert.equal(regenerated.status, 200);
+  assert.equal(regenerated.body.cached, false);
+  assert.equal(regenerated.body.key, first.body.key);
+  assert.notEqual(regenerated.body.url, first.body.url);
+  const afterRegenerated = await (await fetch(`${base}/health`)).json();
+  assert.equal(afterRegenerated.generations, 3);
+  const repeatedAfterForce = await post(newGame());
+  assert.equal(repeatedAfterForce.body.cached, true);
+  assert.equal(repeatedAfterForce.body.url, regenerated.body.url);
+
   const invalid = newGame();
   invalid.equipped.weapon = 'unknown_item';
   const rejected = await post(invalid);
   assert.equal(rejected.status, 400);
   const afterRejected = await (await fetch(`${base}/health`)).json();
-  assert.equal(afterRejected.generations, 2);
+  assert.equal(afterRejected.generations, 3);
 
   await new Promise((resolve) => server.close(resolve));
   server = await createKnightServer({ cacheDir, testMode: true });

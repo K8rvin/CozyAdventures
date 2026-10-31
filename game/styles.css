@@ -1984,6 +1984,101 @@ body[data-route="equip"] #screen { max-width: 1400px; }
   text-align: center;
   pointer-events: none;
 }
+.knight-generation-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 44%, rgba(138, 106, 69, 0.24), rgba(24, 16, 11, 0.7) 76%);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+.knight-generation-fx::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: linear-gradient(115deg, transparent 36%, rgba(255, 224, 174, 0.15) 49%, transparent 63%);
+  transform: translateX(-35%);
+  animation: knight-shimmer 2.8s ease-in-out infinite;
+}
+.knight-generation-orbit {
+  position: relative;
+  width: 112px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 220, 160, 0.55);
+  border-radius: 50%;
+  box-shadow: 0 0 32px rgba(255, 185, 95, 0.2), inset 0 0 24px rgba(255, 220, 160, 0.12);
+  animation: knight-orbit 5s linear infinite;
+}
+.knight-generation-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px dashed rgba(255, 220, 160, 0.35);
+  border-radius: 50%;
+  animation: knight-orbit 8s linear infinite reverse;
+}
+.knight-generation-orbit::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffe2a4;
+  box-shadow: 0 0 16px 5px rgba(255, 196, 105, 0.55);
+}
+.knight-generation-star {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #ffe4ad;
+  font-size: 44px;
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(255, 190, 100, 0.8);
+  animation: knight-star 1.8s ease-in-out infinite;
+}
+.knight-generation-spark {
+  position: absolute;
+  color: #ffdba0;
+  font-size: 17px;
+  opacity: 0;
+  text-shadow: 0 0 12px rgba(255, 190, 100, 0.8);
+  animation: knight-spark 2.4s ease-in-out infinite;
+}
+.knight-generation-spark.spark-1 { top: 24%; left: 27%; }
+.knight-generation-spark.spark-2 { top: 30%; right: 24%; animation-delay: 0.6s; }
+.knight-generation-spark.spark-3 { bottom: 27%; left: 32%; animation-delay: 1.2s; }
+.knight-generation-spark.spark-4 { right: 30%; bottom: 23%; animation-delay: 1.8s; }
+.knight-generated[data-generated-state="loading"] .knight-generated-image {
+  filter: brightness(0.78) saturate(0.82);
+}
+.knight-generation-fx[hidden] { display: none !important; }
+@keyframes knight-orbit { to { transform: rotate(360deg); } }
+@keyframes knight-star {
+  0%, 100% { transform: scale(0.9); opacity: 0.75; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+@keyframes knight-spark {
+  0%, 100% { transform: translateY(8px) scale(0.7); opacity: 0; }
+  35%, 65% { transform: translateY(-6px) scale(1); opacity: 0.9; }
+}
+@keyframes knight-shimmer {
+  from { transform: translateX(-35%); }
+  to { transform: translateX(35%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .knight-generation-fx::before,
+  .knight-generation-orbit,
+  .knight-generation-orbit::before,
+  .knight-generation-star,
+  .knight-generation-spark { animation: none; }
+  .knight-generation-spark { opacity: 0.65; transform: none; }
+}
 .knight-generated-image[hidden],
 .knight-empty[hidden],
 .knight-generation-status[hidden] { display: none !important; }
