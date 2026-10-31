@@ -36328,7 +36328,8 @@
   });
 
   // src/core/knightImagePrompt.js
-  var KNIGHT_IMAGE_PROMPT_VERSION = 5;
+  var KNIGHT_IMAGE_PROMPT_VERSION = 6;
+  var PORTRAIT_SLOTS = /* @__PURE__ */ new Set(["weapon", "helmet", "shield", "gloves", "armor", "boots"]);
   function validItem(id, slot) {
     if (!id) return null;
     const item2 = ITEM_BY_ID[id];
@@ -36347,19 +36348,16 @@
     const shieldBlocked = isShieldBlocked(source);
     const equipped = [];
     for (const slot of SLOTS) {
-      if (slot === "shield" && shieldBlocked) continue;
       const item2 = validItem(source[slot], slot);
-      if (item2) equipped.push([slot, item2.id]);
+      if (item2 && PORTRAIT_SLOTS.has(slot) && !(slot === "shield" && shieldBlocked)) equipped.push([slot, item2.id]);
     }
-    const consumableBelt = [];
     for (let index = 0; index < 2; index += 1) {
       const id = state2.consumableBelt?.[index];
       if (!id) continue;
       const item2 = ITEM_BY_ID[id];
       if (!item2 || item2.slot !== "consumable") throw new TypeError(`\u041F\u0440\u0435\u0434\u043C\u0435\u0442 ${id} \u043D\u0435\u043B\u044C\u0437\u044F \u043F\u043E\u043B\u043E\u0436\u0438\u0442\u044C \u043D\u0430 \u043F\u043E\u044F\u0441`);
-      consumableBelt.push([`belt${index}`, id]);
     }
-    return { bodyId, equipped, consumableBelt };
+    return { bodyId, equipped, consumableBelt: [] };
   }
   function knightImageCacheKey(state2) {
     return `${KNIGHT_IMAGE_PROMPT_VERSION}:${JSON.stringify(canonicalKnightImageState(state2))}`;

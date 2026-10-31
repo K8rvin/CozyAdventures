@@ -180,12 +180,13 @@ game/
 - `core/knightImagePrompt.js` валидирует состояние, строит стабильный ключ комплекта
   и prompt. `data/knightVisuals.js` — все 122 английских описания, генерируется из
   `art-src/PROMPTS_KNIGHT.md` командой `node tools/build-knight-visuals.mjs`.
-  Референсы: тело `doll/<bodyId>/full.png`, `room_no_mirrors.png` и иконки; максимум 13.
-  `KNIGHT_IMAGE_PROMPT_VERSION=5` входит и в IndexedDB key, и в backend hash, поэтому
+  Референсы: тело `doll/<bodyId>/full.png`, `room_no_mirrors.png` и иконки; максимум 8.
+  `KNIGHT_IMAGE_PROMPT_VERSION=6` входит и в IndexedDB key, и в backend hash, поэтому
   смена prompt не подставляет старое изображение. Одноручное оружие обязано быть
   в правой кисти, щит — на левом предплечье, никакого оружия на полу; зеркала
-  и отражающие поверхности запрещены. Двуручное скрывает щит, оба кольца/расходника
-  входят в prompt, повтор ID не увеличивает число файлов.
+  и отражающие поверхности запрещены. Двуручное скрывает щит. В prompt и ключ входят
+  только weapon/helmet/shield/gloves/armor/boots. Кольца, амулет и пояс валидируются,
+  но не генерируются и не вызывают новый запрос; генерация идёт только по реальному спросу.
   `settings.knightBody` меняет ключ, невалидное тело → male.
 - `tools/knight-server.mjs` (Node 22, без JS-зависимостей): static + `/health` +
   POST `/api/knight-image` + GET `/api/knight-cache/<sha256>.webp`. Провайдеры:

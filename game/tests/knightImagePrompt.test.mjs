@@ -22,17 +22,17 @@ test('все 122 предмета имеют визуальное описани
 test('prompt и key стабильны, референсы соответствуют стартовому комплекту', () => {
   const state = newGame();
   const first = buildKnightImagePrompt(state);
-  assert.deepEqual(first.referenceIds, ['body', 'room', 'wpn_rusty_sword', 'shd_wooden', 'pot_heal']);
+  assert.deepEqual(first.referenceIds, ['body', 'room', 'wpn_rusty_sword', 'shd_wooden']);
   assert.equal(first.bodyId, 'male');
-  assert.equal(first.promptVersion, 5);
+  assert.equal(first.promptVersion, 6);
   assert.match(first.prompt, /old but sharp knight's shortsword/);
   assert.match(first.prompt, /light round linden wood shield/);
-  assert.match(first.prompt, /round glass potion bottle/);
+  assert.doesNotMatch(first.prompt, /round glass potion bottle/);
   const reordered = { ...state, equipped: Object.fromEntries(Object.entries(state.equipped).reverse()) };
   assert.equal(knightImageCacheKey(reordered), first.key);
 });
 
-test('двуручное скрывает щит, дубликаты не увеличивают референсы, тело меняет key', () => {
+test('двуручное скрывает щит, необязательные предметы не попадают в референсы', () => {
   const state = newGame();
   state.equipped.weapon = 'wpn_greatsword_oak';
   state.equipped.shield = 'shd_wooden';
@@ -40,13 +40,13 @@ test('двуручное скрывает щит, дубликаты не уве
   state.equipped.ring2 = 'rng_luck';
   state.consumableBelt = ['pot_heal', 'pot_heal'];
   const result = buildKnightImagePrompt(state);
-  assert.deepEqual(result.itemIds, ['wpn_greatsword_oak', 'rng_luck', 'pot_heal']);
+  assert.deepEqual(result.itemIds, ['wpn_greatsword_oak']);
   assert.ok(!result.referenceIds.includes('shd_wooden'));
-  assert.match(result.prompt, /ring1: a simple copper ring/);
-  assert.match(result.prompt, /ring2: a simple copper ring/);
-  assert.match(result.prompt, /belt0: a round glass potion bottle/);
-  assert.match(result.prompt, /belt1: a round glass potion bottle/);
-  assert.ok(result.referenceIds.length <= 13);
+  assert.doesNotMatch(result.prompt, /ring1: a simple copper ring/);
+  assert.doesNotMatch(result.prompt, /ring2: a simple copper ring/);
+  assert.doesNotMatch(result.prompt, /belt0: a round glass potion bottle/);
+  assert.doesNotMatch(result.prompt, /belt1: a round glass potion bottle/);
+  assert.ok(result.referenceIds.length <= 8);
   state.settings.knightBody = 'female';
   assert.notEqual(knightImageCacheKey(state), result.key);
 });
@@ -66,4 +66,21 @@ test('чужие id и предметы в неверном слоте откл�
   state.equipped.weapon = 'wpn_rusty_sword';
   state.consumableBelt = ['arm_padded'];
   assert.throws(() => buildKnightImagePrompt(state), /нельзя положить на пояс/);
+});
+
+
+test('необязательные предметы не меняют ключ, обязательные меняют, валидация сохраняется', () => {
+  const state = newGame();
+  const originalKey = knightImageCacheKey(state);
+  state.equipped.amulet = ITEMS.find((item) => item.slot === 'amulet').id;
+  state.equipped.ring1 = 'rng_luck';
+  state.equipped.ring2 = 'rng_luck';
+  state.consumableBelt = ['pot_heal', 'pot_heal'];
+  assert.equal(knightImageCacheKey(state), originalKey);
+  const prompt = buildKnightImagePrompt(state).prompt;
+  assert.doesNotMatch(prompt, /ring1:|ring2:|amulet:|belt0:|belt1:/);
+  state.equipped.weapon = 'wpn_greatsword_oak';
+  assert.notEqual(knightImageCacheKey(state), originalKey);
+  state.equipped.amulet = 'not-an-item';
+  assert.throws(() => buildKnightImagePrompt(state), /Неизвестный предмет/);
 });

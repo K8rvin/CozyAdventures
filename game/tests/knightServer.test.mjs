@@ -46,7 +46,7 @@ test('backend валидирует комплект, создаёт WebP и ис
   assert.deepEqual([metadata.width, metadata.height], [768, 960]);
   assert.equal(metadata.format, 'webp');
   assert.equal(metadata.state.bodyId, 'male');
-  assert.equal(metadata.promptVersion, 5);
+  assert.equal(metadata.promptVersion, 6);
   const cachedImage = await fetch(first.body.url);
   assert.equal(cachedImage.status, 200);
   assert.equal(cachedImage.headers.get('content-type'), 'image/webp');

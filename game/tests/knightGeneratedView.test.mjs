@@ -317,3 +317,47 @@ test('анимация видна только во время ожидания 
   await flush();
   assert.equal(fx.hidden, true);
 });
+
+
+test('изменение только необязательных предметов использует кэш без POST', async (t) => {
+  cleanup(t);
+  resetKnightGeneratedCache();
+  globalThis.indexedDB = makeIdb();
+  globalThis.KNIGHT_IMAGE_API_URL = 'http://api';
+  const { ITEMS } = await import('../src/data/items.js');
+  const amuletId = ITEMS.find((item) => item.slot === 'amulet').id;
+  const otherPotion = ITEMS.find((item) => item.slot === 'consumable' && item.id !== 'pot_heal').id;
+  const otherArmor = ITEMS.find((item) => item.slot === 'armor' && item.id !== 'arm_padded').id;
+  let apiCalls = 0;
+  globalThis.fetch = async (target) => {
+    if (target === 'http://api/api/knight-image') {
+      apiCalls += 1;
+      return { ok: true, json: async () => ({ key: 'a'.repeat(64), url: `http://api/${apiCalls}.webp`, cached: false }) };
+    }
+    return { ok: true, blob: async () => ({ type: 'image/webp', size: apiCalls }) };
+  };
+  const initial = newGame();
+  initial.equipped.armor = 'arm_padded';
+  const first = createKnightGeneratedDoll(initial, { debounceMs: 0 });
+  t.after(() => first.destroy());
+  await flush();
+  assert.equal(apiCalls, 1);
+
+  const optional = newGame();
+  optional.equipped.armor = 'arm_padded';
+  optional.equipped.amulet = amuletId;
+  optional.equipped.ring1 = 'rng_luck';
+  optional.equipped.ring2 = 'rng_luck';
+  optional.consumableBelt = [otherPotion, otherPotion];
+  const second = createKnightGeneratedDoll(optional, { debounceMs: 0 });
+  t.after(() => second.destroy());
+  await flush();
+  assert.equal(apiCalls, 1);
+
+  const required = newGame();
+  required.equipped.armor = otherArmor;
+  const third = createKnightGeneratedDoll(required, { debounceMs: 0 });
+  t.after(() => third.destroy());
+  await flush();
+  assert.equal(apiCalls, 2);
+});
