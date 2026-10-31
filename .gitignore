@@ -1,11 +1,15 @@
 # Секреты — никогда в репозиторий
 .env
+deploy/.env
+deploy/secrets/
 
 # Зависимости и окружения
 node_modules/
 .venv-*/
 __pycache__/
 .cache/
+deploy/sing-box/sing-box
+deploy/sing-box/ca-certificates.crt
 
 # Временные файлы и системное
 .tmp/

@@ -193,13 +193,19 @@ game/
   `api/v1/chat/completions` (`google/gemini-3.1-flash-image`, `modalities: image+text`,
   `image_url`, `image_config` 4:5 1K). Выбор — `KNIGHT_IMAGE_PROVIDER`, при наличии
   `OPENROUTER_API_KEY` он выбирается автоматически; модель можно переопределить
-  `OPENROUTER_IMAGE_MODEL`/`GEMINI_IMAGE_MODEL`. Ключи только backend `.env`/Render,
-  НЕ в браузере/логах. Валидация, CORS,
+  `OPENROUTER_IMAGE_MODEL`/`GEMINI_IMAGE_MODEL`. Ключи только backend `.env`/секреты
+  хостинга, НЕ в браузере/логах. Валидация, CORS,
   rate limit, очередь 2, timeout/retry, in-flight coalescing.
 - `tools/convert-knight-image.py` (Pillow): WebP 768×960, quality 86, atomic WebP+JSON
-  metadata. Локально `game/.cache/knight` (в .gitignore), на Render `KNIGHT_CACHE_DIR`
-  на persistent disk, TTL нет. Повторный комплект НИКОГДА не генерируется заново;
+  metadata. Локально `game/.cache/knight` (в .gitignore), на хостинге `KNIGHT_CACHE_DIR`
+  на persistent disk/volume, TTL нет. Повторный комплект НИКОГДА не генерируется заново;
   после перезапуска читается готовый WebP. Dockerfile ставит Node 22 + Python/Pillow.
+- `deploy/` — Docker Compose для VPS: `sing-box` (VLESS/REALITY) изолированно для
+  backend, named Cloudflare Tunnel с постоянным `api.cozyknight.ru`, Caddy и lego как
+  прямой HTTPS fallback, named volumes для кэша и сертификатов. Секреты создаются
+  интерактивно `configure-secrets.py`, токены хранятся только в `deploy/secrets/` и не
+  коммитятся. Официальные бинарники sing-box/cloudflared/lego и CA bundle — локальные
+  артефакты сборки, игнорируются Git; Dockerfile sing-box — `deploy/sing-box/Dockerfile`.
 - Постоянство также в IndexedDB `knight_portraits_v1`: после успеха Blob сохраняется
   по каноническому key. При rerender сначала memory/IndexedDB/backend, только cache
   miss → Gemini. Фильтры и hover новый запрос не создают. Debounce 400 мс, последний
@@ -207,13 +213,13 @@ game/
 - Во время генерации допустимо последнее СГЕНЕРИРОВАННОЕ изображение + status;
   иначе нейтральная рамка. При ошибке сохраняется последний generated image/нейтральный
   статус, не старые слои. `game/knight-api.js` содержит только публичный URL/endpoint,
-  сейчас локальный `/api/knight-image`; пустая строка отключает сетевые запросы.
+  сейчас `https://api.cozyknight.ru/api/knight-image`; пустая строка отключает запросы.
 - Тесты: `knightImagePrompt.test.mjs`, `knightServer.test.mjs` (test mode + WebP +
   persistent cache), `knightGeneratedView.test.mjs` (IndexedDB/lifecycle) и generated
   ветка `ui-smoke.test.mjs`. Платный Gemini в `npm test` не вызывается;
   `KNIGHT_TEST_MODE=1 node tools/knight-server.mjs` — локальный end-to-end.
   После правок `src/` обязательны `npm run build && npm test`. Публичный deploy на
-  Render и включение URL — только после живой визуальной приёмки и явного разрешения.
+  Render/VPS и включение URL — только после живой визуальной приёмки и явного разрешения.
 
 ## Головоломки: механики (puzzleView.js — PUZZLE_TYPES + dispatch)
 

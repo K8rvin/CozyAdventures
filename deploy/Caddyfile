@@ -1,0 +1,5 @@
+{$KNIGHT_HOST} {
+	tls /var/lib/lego/certificates/{$KNIGHT_HOST}.crt /var/lib/lego/certificates/{$KNIGHT_HOST}.key
+	encode zstd gzip
+	reverse_proxy vpn:10000
+}

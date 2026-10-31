@@ -36,7 +36,7 @@ jobs:
         working-directory: game
         run: |
           mkdir -p ../site
-          cp index.html bundle.js styles.css manifest.webmanifest sw.js ../site/
+          cp index.html knight-api.js bundle.js styles.css manifest.webmanifest sw.js ../site/
           cp -r assets ../site/
           touch ../site/.nojekyll
       - uses: actions/upload-pages-artifact@v3

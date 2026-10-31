@@ -1,0 +1,115 @@
+name: cozy-knight
+
+services:
+  vpn:
+    image: cozy-knight-sing-box:1.11.15
+    build:
+      context: ./sing-box
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./secrets/sing-box.json:/etc/sing-box/config.json:ro
+    command: ["run", "-c", "/etc/sing-box/config.json"]
+    networks:
+      backend:
+        aliases:
+          - acme-proxy
+    healthcheck:
+      test: ["CMD", "sing-box", "check", "-c", "/etc/sing-box/config.json"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      vpn:
+        condition: service_healthy
+    network_mode: service:vpn
+    env_file: .env
+    environment:
+      KNIGHT_IMAGE_PROVIDER: openrouter
+      OPENROUTER_IMAGE_MODEL: google/gemini-3.1-flash-image
+      KNIGHT_CACHE_DIR: /var/data/knight
+      KNIGHT_ALLOWED_ORIGINS: https://k8rvin.github.io
+      KNIGHT_PUBLIC_URL: https://api.cozyknight.ru
+      KNIGHT_RATE_LIMIT: 20
+      PORT: 10000
+      PYTHON: python3
+    volumes:
+      - knight-cache:/var/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:10000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+
+  acme-proxy:
+    image: node:22-bookworm
+    restart: unless-stopped
+    depends_on:
+      vpn:
+        condition: service_healthy
+    network_mode: service:vpn
+    environment:
+      DUCKDNS_TOKEN_FILE: /run/secrets/duckdns-token
+    volumes:
+      - ./acme-proxy.js:/opt/acme-proxy.js:ro
+      - /usr/local/bin/lego:/opt/lego:ro
+      - ./secrets/duckdns-token:/run/secrets/duckdns-token:ro
+      - lego-data:/var/lib/lego
+    command: ["node", "/opt/acme-proxy.js"]
+
+  tunnel:
+    image: node:22-bookworm
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    network_mode: service:vpn
+    volumes:
+      - /usr/local/bin/cloudflared:/opt/cloudflared:ro
+      - ./secrets/cloudflare-tunnel-token:/run/secrets/cloudflare-tunnel-token:ro
+    command: ["/opt/cloudflared", "tunnel", "--no-autoupdate", "--protocol", "http2", "run", "--token-file", "/run/secrets/cloudflare-tunnel-token"]
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+      acme-proxy:
+        condition: service_started
+    environment:
+      KNIGHT_HOST: ${KNIGHT_HOST:?set KNIGHT_HOST in deploy/.env}
+      HTTP_PROXY: http://acme-proxy:1080
+      HTTPS_PROXY: http://acme-proxy:1080
+      NO_PROXY: localhost,127.0.0.1,vpn
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+      - lego-data:/var/lib/lego:ro
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  knight-cache:
+  caddy-data:
+  caddy-config:
+  lego-data:

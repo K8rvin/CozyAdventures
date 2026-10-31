@@ -1,7 +1,14 @@
 .git
 .env
+**/.env
 .cache
 node_modules
 **/node_modules
 **/__pycache__
+deploy
 tmp
+art-src
+!art-src/knight
+!art-src/knight/doll
+!art-src/knight/doll/**
+!art-src/knight/room_no_mirrors.png
