@@ -309,7 +309,7 @@ test('настройки: выбор образа рыцаря сохраняе�
   const root = new El('main');
   renderSettings(root, ctx);
   const buttons = flatElements(root).filter((el) => el.dataset.body);
-  assert.equal(buttons.length, 9);
+  assert.equal(buttons.length, 8);
   const male = buttons.find((el) => el.dataset.body === 'male');
   const female = buttons.find((el) => el.dataset.body === 'female');
   assert.equal(male['aria-pressed'], 'true');
