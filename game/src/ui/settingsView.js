@@ -126,7 +126,9 @@ export function renderSettings(container, ctx) {
     button.className = 'knight-body-card';
     const image = document.createElement('img');
     image.className = 'knight-body-thumb';
-    image.src = `assets/knight/doll/${bodyId}/full.png`;
+    image.src = bodyId.startsWith('female_type')
+      ? `assets/knight/doll/${bodyId}/full.png`
+      : `assets/knight/doll/${bodyId}/body.webp`;
     image.alt = '';
     image.loading = 'lazy';
     const label = document.createElement('span');

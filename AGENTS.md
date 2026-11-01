@@ -188,8 +188,8 @@ game/
   только weapon/helmet/shield/gloves/armor/boots. Кольца, амулет и пояс валидируются,
   но не генерируются и не вызывают новый запрос; генерация идёт только по реальному спросу.
   `settings.knightBody` меняет ключ, невалидное тело → male. В Настройках галерея
-  male/female и `female_type3`…`female_type13` с русскими labels и миниатюрами
-  `assets/knight/doll/<bodyId>/full.png`. У custom-референса берутся личность,
+  male/female и `female_type4/5/7/9/11/12/13` с русскими labels и миниатюрами
+  `full.png` (у male/female — `body.webp`). У custom-референса берутся личность,
   внешность и пропорции, фон/рамка игнорируются, а поза рук адаптируется под
   правильную экипировку меча и щита. Для legacy-частей custom id через
   `knightDollAssetBodyId` отображаются на `female`, без новых layered-файлов.

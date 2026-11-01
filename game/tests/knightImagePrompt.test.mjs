@@ -87,8 +87,7 @@ test('необязательные предметы не меняют ключ, 
 
 
 test('кастомные образы female_type имеют свои референсы, ключи и adult woman', () => {
-  for (let number = 3; number <= 13; number += 1) {
-    const bodyId = `female_type${number}`;
+  for (const bodyId of ['female_type4', 'female_type5', 'female_type7', 'female_type9', 'female_type11', 'female_type12', 'female_type13']) {
     const state = newGame();
     state.settings.knightBody = bodyId;
     const result = buildKnightImagePrompt(state);

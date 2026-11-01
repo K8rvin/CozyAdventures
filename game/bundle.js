@@ -21011,19 +21011,21 @@
   var KNIGHT_DOLL_BODY_IDS = Object.freeze([
     "male",
     "female",
-    ...Array.from({ length: 11 }, (_, index) => `female_type${index + 3}`)
+    "female_type4",
+    "female_type5",
+    "female_type7",
+    "female_type9",
+    "female_type11",
+    "female_type12",
+    "female_type13"
   ]);
   var KNIGHT_DOLL_BODY_LABELS = Object.freeze({
     male: "\u041C\u0443\u0436\u0441\u043A\u043E\u0439",
     female: "\u0416\u0435\u043D\u0441\u043A\u0438\u0439",
-    female_type3: "\u0411\u0440\u044E\u043D\u0435\u0442\u0442\u0430 \u0443 \u043A\u0430\u043C\u0438\u043D\u0430",
     female_type4: "\u0411\u0440\u044E\u043D\u0435\u0442\u0442\u0430 \u0432 \u0437\u0430\u043B\u0435",
     female_type5: "\u0411\u043B\u043E\u043D\u0434\u0438\u043D\u043A\u0430 \u0432 \u0431\u0443\u0434\u0443\u0430\u0440\u0435",
-    female_type6: "\u0411\u043B\u043E\u043D\u0434\u0438\u043D\u043A\u0430 \u043F\u0440\u0438 \u0441\u0432\u0435\u0447\u0430\u0445",
     female_type7: "\u0412\u043E\u0438\u0442\u0435\u043B\u044C\u043D\u0438\u0446\u0430 \u0432 \u0430\u0440\u0441\u0435\u043D\u0430\u043B\u0435",
-    female_type8: "\u0420\u044B\u0436\u0430\u044F \u0432 \u0430\u0440\u0441\u0435\u043D\u0430\u043B\u0435",
     female_type9: "\u0420\u044B\u0436\u0430\u044F \u0432 \u043A\u0443\u0437\u043D\u0438\u0446\u0435",
-    female_type10: "\u0420\u044B\u0436\u0430\u044F \u0441 \u043F\u043E\u0432\u044F\u0437\u043A\u0430\u043C\u0438",
     female_type11: "\u041A\u0443\u0434\u0440\u044F\u0432\u0430\u044F \u043A\u043E\u043F\u0435\u0439\u0449\u0438\u0446\u0430",
     female_type12: "\u0421\u0435\u0440\u0435\u0431\u0440\u043E\u0432\u043E\u043B\u043E\u0441\u0430\u044F \u044D\u043B\u044C\u0444\u0438\u0439\u043A\u0430",
     female_type13: "\u0420\u0430\u0437\u0432\u0435\u0434\u0447\u0438\u0446\u0430 \u043D\u0430 \u043A\u0440\u044B\u0448\u0435"
@@ -38826,7 +38828,7 @@
       button.className = "knight-body-card";
       const image = document.createElement("img");
       image.className = "knight-body-thumb";
-      image.src = `assets/knight/doll/${bodyId}/full.png`;
+      image.src = bodyId.startsWith("female_type") ? `assets/knight/doll/${bodyId}/full.png` : `assets/knight/doll/${bodyId}/body.webp`;
       image.alt = "";
       image.loading = "lazy";
       const label = document.createElement("span");
