@@ -1548,6 +1548,39 @@ canvas.game { display: block; border-radius: 8px; touch-action: manipulation; }
 .pc-layout-label { color: var(--muted); font-size: 13px; font-weight: 700; }
 .pc-mode-picker { display: flex; flex: 1; flex-wrap: wrap; gap: 8px; }
 .pc-mode-option { min-height: 38px; }
+.knight-body-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  max-height: 430px;
+  padding: 4px;
+  overflow-y: auto;
+}
+.knight-body-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+  padding: 6px;
+  text-align: center;
+}
+.knight-body-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 9px;
+  object-fit: cover;
+  object-position: center 18%;
+  background: #2b2016;
+}
+.knight-body-name { font-size: 12px; line-height: 1.25; }
+@media (max-width: 1000px) {
+  .knight-body-gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .knight-body-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .pc-settings-catalog { margin-bottom: 16px; }
 .pc-settings-catalog .pc-layout-label { margin-bottom: 8px; }
 

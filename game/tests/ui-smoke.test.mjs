@@ -309,7 +309,7 @@ test('настройки: выбор образа рыцаря сохраняе�
   const root = new El('main');
   renderSettings(root, ctx);
   const buttons = flatElements(root).filter((el) => el.dataset.body);
-  assert.equal(buttons.length, 2);
+  assert.equal(buttons.length, 13);
   const male = buttons.find((el) => el.dataset.body === 'male');
   const female = buttons.find((el) => el.dataset.body === 'female');
   assert.equal(male['aria-pressed'], 'true');
@@ -321,6 +321,12 @@ test('настройки: выбор образа рыцаря сохраняе�
   male.click();
   assert.equal(state.settings.knightBody, 'male');
   assert.equal(male['aria-pressed'], 'true');
+  const custom = buttons.find((el) => el.dataset.body === 'female_type7');
+  custom.click();
+  assert.equal(state.settings.knightBody, 'female_type7');
+  assert.equal(custom['aria-pressed'], 'true');
+  assert.equal(male['aria-pressed'], 'false');
+  assert.equal(custom.children[0].src, 'assets/knight/doll/female_type7/full.png');
 });
 
 test('все экраны рендерятся без ошибок', () => {

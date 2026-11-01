@@ -4,7 +4,7 @@ import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js
 import { applyCheat } from '../core/state.js';
 import { createPuzzleCatalogModePicker } from './puzzleCatalogView.js';
 import { CURSOR_THEMES, applyCursor, cursorMode, fixedCursorTheme } from './cursors.js';
-import { KNIGHT_DOLL_BODY_IDS } from '../data/knightDoll.js';
+import { KNIGHT_DOLL_BODY_IDS, KNIGHT_DOLL_BODY_LABELS } from '../data/knightDoll.js';
 import { reopenOnboardingGuide, onboardingGuideNext } from '../core/onboarding.js';
 
 function makeSection(title, danger = false) {
@@ -109,14 +109,13 @@ export function renderSettings(container, ctx) {
   bodyLabel.className = 'pc-layout-label';
   bodyLabel.textContent = 'Образ рыцаря';
   const bodyPicker = document.createElement('div');
-  bodyPicker.className = 'pc-mode-picker set-cursor-modes';
+  bodyPicker.className = 'knight-body-gallery set-cursor-modes';
   bodyPicker.setAttribute('role', 'group');
   bodyPicker.setAttribute('aria-label', 'Образ рыцаря');
-  const BODY_LABELS = { male: 'Мужской', female: 'Женский' };
   const syncBodyUI = () => {
     for (const button of bodyPicker.children) {
       const active = state.settings.knightBody === button.dataset.body;
-      button.className = `small pc-mode-option${active ? ' primary is-active' : ' ghost'}`;
+      button.className = `small knight-body-card${active ? ' primary is-active' : ' ghost'}`;
       button.setAttribute('aria-pressed', String(active));
     }
   };
@@ -124,7 +123,17 @@ export function renderSettings(container, ctx) {
     const button = document.createElement('button');
     button.type = 'button';
     button.dataset.body = bodyId;
-    button.textContent = BODY_LABELS[bodyId];
+    button.className = 'knight-body-card';
+    const image = document.createElement('img');
+    image.className = 'knight-body-thumb';
+    image.src = `assets/knight/doll/${bodyId}/full.png`;
+    image.alt = '';
+    image.loading = 'lazy';
+    const label = document.createElement('span');
+    label.className = 'knight-body-name';
+    label.textContent = KNIGHT_DOLL_BODY_LABELS[bodyId];
+    button.appendChild(image);
+    button.appendChild(label);
     button.addEventListener('click', () => {
       if (state.settings.knightBody === bodyId) return;
       state.settings.knightBody = bodyId;

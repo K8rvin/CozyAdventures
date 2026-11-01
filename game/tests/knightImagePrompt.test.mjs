@@ -84,3 +84,21 @@ test('необязательные предметы не меняют ключ, 
   state.equipped.amulet = 'not-an-item';
   assert.throws(() => buildKnightImagePrompt(state), /Неизвестный предмет/);
 });
+
+
+test('кастомные образы female_type имеют свои референсы, ключи и adult woman', () => {
+  for (let number = 3; number <= 13; number += 1) {
+    const bodyId = `female_type${number}`;
+    const state = newGame();
+    state.settings.knightBody = bodyId;
+    const result = buildKnightImagePrompt(state);
+    assert.equal(result.bodyId, bodyId);
+    assert.equal(result.promptVersion, 6);
+    assert.match(result.prompt, /adult woman knight/);
+    assert.match(result.prompt, /ignore its background, border and furniture/);
+    assert.ok(result.referenceIds.length <= 8);
+    assert.notEqual(result.key, buildKnightImagePrompt(newGame()).key);
+    assert.ok(existsSync(new URL(`../../art-src/knight/doll/${bodyId}/full.png`, import.meta.url)), bodyId);
+    assert.ok(existsSync(new URL(`../assets/knight/doll/${bodyId}/full.png`, import.meta.url)), bodyId);
+  }
+});

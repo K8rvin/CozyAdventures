@@ -20,7 +20,25 @@ export const KNIGHT_DOLL_LAYERS = Object.freeze({
   pet: 110,
 });
 
-export const KNIGHT_DOLL_BODY_IDS = Object.freeze(['male', 'female']);
+export const KNIGHT_DOLL_BODY_IDS = Object.freeze([
+  'male', 'female',
+  ...Array.from({ length: 11 }, (_, index) => `female_type${index + 3}`),
+]);
+export const KNIGHT_DOLL_BODY_LABELS = Object.freeze({
+  male: 'Мужской',
+  female: 'Женский',
+  female_type3: 'Брюнетта у камина',
+  female_type4: 'Брюнетта в зале',
+  female_type5: 'Блондинка в будуаре',
+  female_type6: 'Блондинка при свечах',
+  female_type7: 'Воительница в арсенале',
+  female_type8: 'Рыжая в арсенале',
+  female_type9: 'Рыжая в кузнице',
+  female_type10: 'Рыжая с повязками',
+  female_type11: 'Кудрявая копейщица',
+  female_type12: 'Сереброволосая эльфийка',
+  female_type13: 'Разведчица на крыше',
+});
 export const KNIGHT_DOLL_DEFAULT_BODY = 'male';
 export const KNIGHT_DOLL_BODY_VARIANT_SLOTS = Object.freeze(['armor']);
 export const KNIGHT_DOLL_BODY_VARIANT_ITEMS = Object.freeze([]);
@@ -45,6 +63,16 @@ export const KNIGHT_DOLL_BASES = {
     ],
   },
 };
+
+for (const bodyId of KNIGHT_DOLL_BODY_IDS) {
+  if (bodyId.startsWith('female_type')) {
+    KNIGHT_DOLL_BASES[bodyId] = { layers: KNIGHT_DOLL_BASES.female.layers.map((layer) => ({ ...layer })) };
+  }
+}
+
+export function knightDollAssetBodyId(bodyId) {
+  return bodyId.startsWith('female_type') ? 'female' : bodyId;
+}
 
 export const KNIGHT_DOLL_BASE_LAYERS = KNIGHT_DOLL_BASES[KNIGHT_DOLL_DEFAULT_BODY].layers;
 

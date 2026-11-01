@@ -187,7 +187,11 @@ game/
   и отражающие поверхности запрещены. Двуручное скрывает щит. В prompt и ключ входят
   только weapon/helmet/shield/gloves/armor/boots. Кольца, амулет и пояс валидируются,
   но не генерируются и не вызывают новый запрос; генерация идёт только по реальному спросу.
-  `settings.knightBody` меняет ключ, невалидное тело → male.
+  `settings.knightBody` меняет ключ, невалидное тело → male. В Настройках галерея
+  male/female и `female_type3`…`female_type13` с русскими labels и миниатюрами
+  `assets/knight/doll/<bodyId>/full.png`. У custom-референса берутся только личность,
+  внешность и поза, фон/рамка игнорируются. Для legacy-частей custom id через
+  `knightDollAssetBodyId` отображаются на `female`, без новых layered-файлов.
 - `tools/knight-server.mjs` (Node 22, без JS-зависимостей): static + `/health` +
   POST `/api/knight-image` + GET `/api/knight-cache/<sha256>.webp`. Провайдеры:
   Gemini REST `v1beta/interactions` (`gemini-nano-banana-2.1`) и OpenRouter

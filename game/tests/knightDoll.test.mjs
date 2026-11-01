@@ -14,6 +14,7 @@ import {
   KNIGHT_DOLL_SECOND_SLOT,
   KNIGHT_DOLL_SIZE,
   hasKnightDollBodyVariant,
+  knightDollAssetBodyId,
 } from '../src/data/knightDoll.js';
 import { KNIGHT_DOLL_ASSET_FILES } from '../src/data/knightDollAssets.js';
 
@@ -37,7 +38,7 @@ function expectedSources() {
   )));
   for (const item of ITEMS) {
     const roots = hasKnightDollBodyVariant(item)
-      ? KNIGHT_DOLL_BODY_IDS.map((bodyId) => `assets/knight/parts/${bodyId}`)
+      ? KNIGHT_DOLL_BODY_IDS.map((bodyId) => `assets/knight/parts/${knightDollAssetBodyId(bodyId)}`)
       : ['assets/knight/parts'];
     for (const root of roots) {
       sources.add(`${root}/${item.id}.webp`);
@@ -258,4 +259,14 @@ test('manifest содержит только ожидаемые и реальн�
     assert.deepEqual([info.width, info.height], [KNIGHT_DOLL_SIZE.width, KNIGHT_DOLL_SIZE.height], src);
     if (src !== 'assets/knight/room.webp') assert.ok(info.alpha, `${src}: нет альфа-канала`);
   }
+});
+
+
+test('кастомный образ использует female для legacy-частей и не требует новых файлов брони', () => {
+  const state = stateWith(ITEMS.find((item) => item.id === 'arm_ash_wayfarer'));
+  state.settings = { knightBody: 'female_type7' };
+  const layers = resolveKnightDoll(state);
+  assert.equal(layers.find((layer) => layer.key === 'base:body').src, 'assets/knight/doll/female/body.webp');
+  assert.equal(layers.find((layer) => layer.itemId === 'arm_ash_wayfarer').src, 'assets/knight/parts/female/arm_ash_wayfarer.webp');
+  assert.ok(existsSync(new URL('../assets/knight/doll/female_type7/full.png', import.meta.url)));
 });

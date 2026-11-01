@@ -46,10 +46,11 @@ export function buildKnightImagePrompt(state) {
   const canonical = canonicalKnightImageState(state);
   const entries = [...canonical.equipped, ...canonical.consumableBelt];
   const itemIds = [...new Set(entries.map(([, id]) => id))];
-  const person = canonical.bodyId === 'female' ? 'adult woman' : 'adult man';
+  const person = canonical.bodyId === 'male' ? 'adult man' : 'adult woman';
   const equipment = entries.map(([slot, id]) => `- ${slot}: ${KNIGHT_VISUALS[id]}`).join('\n') || '- no equipped items, only the base medieval undergarments';
   const prompt = `Create one coherent full-frame 4:5 illustration of the same ${person} knight in the same warm room.\n`
     + `Reference 1 is the approved fixed ${canonical.bodyId} body and identity. Reference 2 is the approved room. `
+    + `Use Reference 1 only for identity, appearance and pose; ignore its background, border and furniture, and use the room from Reference 2. `
     + `References 3 and later are the exact inventory designs for the equipped items.\n`
     + `Preserve the reference face, natural adult anatomy, calm non-combat three-quarter pose, hand and foot positions, camera, crop, character scale, warm light from the upper left and romantic storybook gouache rendering. `
     + `Whenever a one-handed weapon is equipped, its handle must be inside the closed right fist on image left with no gap. Whenever a shield is equipped, it must be mounted on the left forearm on image right and held by the hand or straps. Armor must never move the hands, sword or shield. No equipped weapon or shield may lie on the ground or floor, lean against furniture, rest at the feet, hang on a wall or float in the air. `

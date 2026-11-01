@@ -11,6 +11,7 @@ import {
   KNIGHT_DOLL_PET_SPOTS,
   KNIGHT_DOLL_SECOND_SLOT,
   hasKnightDollBodyVariant,
+  knightDollAssetBodyId,
 } from '../data/knightDoll.js';
 
 function equippedItem(equipment, slot) {
@@ -37,7 +38,7 @@ function makeItemLayers(item, slot, bodyId) {
   const variant = KNIGHT_DOLL_SECOND_SLOT[slot];
   const suffix = variant ? `__${variant.suffix}` : '';
   const root = hasKnightDollBodyVariant(item)
-    ? `${KNIGHT_DOLL_PART_ROOT}/${bodyId}`
+    ? `${KNIGHT_DOLL_PART_ROOT}/${knightDollAssetBodyId(bodyId)}`
     : KNIGHT_DOLL_PART_ROOT;
   const common = { itemId: item.id, slot, required: true };
   const layers = [];
