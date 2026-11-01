@@ -96,6 +96,7 @@ test('кастомные образы female_type имеют свои рефер
     assert.equal(result.promptVersion, 6);
     assert.match(result.prompt, /adult woman knight/);
     assert.match(result.prompt, /ignore its background, border and furniture/);
+    assert.match(result.prompt, /Allow the arm and hand positions to change/);
     assert.ok(result.referenceIds.length <= 8);
     assert.notEqual(result.key, buildKnightImagePrompt(newGame()).key);
     assert.ok(existsSync(new URL(`../../art-src/knight/doll/${bodyId}/full.png`, import.meta.url)), bodyId);
