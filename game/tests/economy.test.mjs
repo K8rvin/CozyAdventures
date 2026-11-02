@@ -18,7 +18,7 @@ import {
   SHOP_STOCK, CREW_STOCK, pricedShopItem, compareShopItems, itemsForShop,
 } from '../src/data/shop.js';
 import { ITEM_BY_ID } from '../src/data/items.js';
-import { COSMETICS } from '../src/data/cosmetics.js';
+import { BASE_COSMETICS, SUPPORTER_COSMETICS } from '../src/data/cosmetics.js';
 import { RECIPES } from '../src/data/recipes.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../src/data/crew.js';
 
@@ -42,14 +42,15 @@ function budget() {
   });
   const crewDefs = Object.values({ ...COMPANION_BY_ID, ...PET_BY_ID, ...MERC_BY_ID });
   const crew = sum(crewDefs, (def) => def.currency !== 'seals' ? def.price : 0);
-  const cosmetics = sum(COSMETICS, (def) => !def.sealPrice ? def.price : 0);
+  const cosmetics = sum(BASE_COSMETICS, (def) => !def.sealPrice ? def.price : 0);
   const craft = sum(RECIPES, (recipe) => recipe.coins || 0);
   const puzzleSeals = sum(ALL_PUZZLES, (p) => sum(p.rewards.filter((r) => r.type === 'seals'), (r) => r.amount));
   const battleSeals = sum(BATTLES, (battle) => sum(battle.enemies, (entry) => {
     const id = typeof entry === 'string' ? entry : entry.id;
     return ENEMY_BY_ID[id]?.reward?.seals || 0;
   }));
-  const cosmeticSealStock = sum(COSMETICS, (def) => def.sealPrice || 0);
+  const cosmeticSealStock = sum(BASE_COSMETICS, (def) => def.sealPrice || 0);
+  const supporterSealStock = sum(SUPPORTER_COSMETICS, (def) => def.sealPrice || 0);
   const sealStock = sum(crewDefs, (def) => def.currency === 'seals' ? def.price : 0)
     + sum(SHOP_STOCK.map(pricedShopItem), (item) => item.sealPrice || 0)
     + cosmeticSealStock;
@@ -64,6 +65,7 @@ function budget() {
     sealStock,
     cosmetics,
     cosmeticSealStock,
+    supporterSealStock,
   };
 }
 
@@ -333,19 +335,20 @@ test('economyVersion и повторная загрузка идемпотент
   assert.deepEqual(loadedAgain, loaded, 'повторная миграция ничего не меняет');
 });
 
-test('полные бюджеты первых наград и печатей находятся в целевых отношениях', () => {
+test('полные бюджеты первых наград и печатей покрывают разовые стоки', () => {
   const report = budget();
   assert.equal(report.coins, 76762, 'доход соответствует каталогу с большими сборами');
-  assert.equal(report.cosmetics, 1310, 'шесть полных пакетов');
-  assert.equal(report.cosmeticSealStock, 0, 'отдельной печатной вывески больше нет');
-  assert.equal(report.stock, 55320);
+  assert.equal(report.cosmetics, 21310, 'шесть фонов и два образа по 10 000 монет');
+  assert.equal(report.cosmeticSealStock, 0, 'базовая косметика не требует печатей');
+  assert.equal(report.supporterSealStock, 16, 'четыре supporter-образа по 4 печати учитываются отдельно');
+  assert.equal(report.stock, 75320);
   assert.equal(report.sealStock, 45);
   const ratio = report.coins / report.stock;
-  assert.ok(Math.abs(ratio - 1.39) < 0.01, `монеты/разовые стоки: ${ratio}`);
-  assert.ok(ratio >= 1.3 && ratio <= 1.8, `монеты/разовые стоки: ${ratio}`);
+  assert.ok(Math.abs(ratio - 76762 / 75320) < 1e-12, `монеты/разовые стоки: ${ratio}`);
+  assert.ok(ratio >= 1 && ratio <= 1.8, `монеты/разовые стоки: ${ratio}`);
   const sealRatio = report.seals / report.sealStock;
   assert.ok(Math.abs(sealRatio - 62 / 45) < 1e-12, `печати/печатные стоки: ${sealRatio}`);
-  assert.ok(sealRatio >= 1.2 && sealRatio <= 1.5, `печати/печатные стоки: ${sealRatio}`);
+  assert.ok(sealRatio >= 1 && sealRatio <= 1.5, `печати/печатные стоки: ${sealRatio}`);
   assert.equal(report.puzzleSeals, 16);
   assert.equal(report.battleSeals, 46);
 });

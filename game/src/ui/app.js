@@ -1,5 +1,10 @@
 // Роутер экранов и общий контекст UI.
-import { newGame, saveGame, loadGame } from '../core/state.js';
+import {
+  newGame, saveGame, loadGameDetailed, migrateGameState,
+} from '../core/state.js';
+import { createAccountClient } from './accountClient.js';
+import { createPersistence } from './persistence.js';
+import { deserializeGameSave, SAVE_MAX_BYTES } from '../core/saveFormat.js';
 import { renderHub } from './hub.js';
 import { renderPuzzleList, renderPuzzle } from './puzzleView.js';
 import { renderEquip } from './equipView.js';
@@ -25,7 +30,7 @@ import { checkAchievements } from '../data/achievements.js';
 import { ALL_PUZZLES } from '../core/state.js';
 import { BATTLES } from '../data/battles.js';
 import { queueAchievementCelebrations, clearAchievementCelebrations } from './achievementCelebration.js';
-import { initSound, sfx, startMusic } from './sound.js';
+import { initSound, sfx, startMusic, musicOn } from './sound.js';
 import { applyCursor } from './cursors.js';
 import { resetTopbarHeader } from './common.js';
 import { destroyTutorial } from './tutorial.js';
@@ -37,9 +42,32 @@ import { syncOnboardingDock } from './onboardingView.js';
 const screenEl = document.getElementById('screen');
 const toastEl = document.getElementById('toast');
 
-let state = loadGame() || newGame();
+const loaded = loadGameDetailed();
+let state = loaded.state || newGame();
+const account = createAccountClient();
+const persistence = createPersistence({
+  account,
+  hadLocalSave: loaded.hadRaw,
+  getState: () => state,
+  replaceState,
+  confirmInitialUpload: async ({ localState }) => confirm(
+    `Загрузить прогресс этого устройства в облако? Решено головоломок: ${localState.stats?.puzzlesSolved || 0}, монет: ${localState.coins}.`,
+  ),
+  chooseConflict: async ({ remote, remoteState, localState }) => {
+    if (!remote) return confirm('Облачная копия не найдена. Загрузить туда текущий прогресс устройства?') ? 'local' : 'wait';
+    const useCloud = confirm(
+      `Сейвы различаются. На устройстве: ${localState.coins} монет, ${localState.stats?.puzzlesSolved || 0} головоломок. `
+      + `В облаке: ${remoteState.coins} монет, ${remoteState.stats?.puzzlesSolved || 0} головоломок. `
+      + 'Нажмите «ОК», чтобы выбрать облако, или «Отмена», чтобы оставить устройство.',
+    );
+    return useCloud ? 'remote' : 'local';
+  },
+});
 const backfilledAchievements = checkAchievements(state).length;
-if (backfilledAchievements) saveGame(state);
+if (backfilledAchievements) {
+  saveGame(state);
+  persistence.notifyDirty();
+}
 let currentRoute = 'hub';
 let currentParams = {};
 let dockSyncQueued = false;
@@ -61,7 +89,9 @@ function syncDockSoon() {
 function save() {
   reconcileOnboarding(state);
   const fresh = checkAchievements(state);
-  saveGame(state);
+  const stored = saveGame(state);
+  persistence.notifyDirty();
+  if (!stored) toast('Локальное сохранение недоступно. Экспортируйте сейв в настройках.');
   updateWallet();
   if (fresh.length) queueAchievementCelebrations(fresh, { sfx });
   syncDockSoon();
@@ -132,7 +162,7 @@ function go(name, params = {}) {
     navigationChanged = onboardingPuzzleChoice(state, currentParams.id) || navigationChanged;
   }
   navigationChanged = onboardingVisit(state, currentRoute, currentParams) || navigationChanged;
-  if (navigationChanged) saveGame(state);
+  if (navigationChanged) save();
 
   if (currentCleanup) { currentCleanup(); currentCleanup = null; }
   resetTopbarHeader();
@@ -157,20 +187,55 @@ function initialRoute() {
   return { name: 'hub', params: {} };
 }
 
+function replaceState(next) {
+  clearAchievementCelebrations();
+  state = next;
+  saveGame(state);
+  updateWallet();
+  if (routes[currentRoute]) go(currentRoute, currentParams);
+}
+
 function newGameConfirm() {
-  if (confirm('Начать новую игру? Прогресс текущей лавки будет стёрт.')) {
-    clearAchievementCelebrations();
-    state = newGame();
-    const start = initialRoute();
-    save();
-    go(start.name, start.params);
-    toast('Новая лавка открыта. Добро пожаловать, хозяин!');
+  if (!confirm('Начать новую игру? Прогресс текущей лавки будет стёрт.')) return;
+  if (persistence.getStatus().enabled
+    && !confirm('Текущая облачная копия тоже будет заменена без отката. Продолжить?')) return;
+  clearAchievementCelebrations();
+  state = newGame();
+  persistence.beginNewGeneration();
+  const start = initialRoute();
+  save();
+  go(start.name, start.params);
+  toast('Новая лавка открыта. Добро пожаловать, хозяин!');
+}
+
+function exportSave() {
+  const blob = new Blob([persistence.exportSave()], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `lavka-save-${new Date().toISOString().slice(0, 10)}.json`;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast('Файл сохранения подготовлен.');
+}
+
+async function importSave(file) {
+  try {
+    if (file.size > SAVE_MAX_BYTES) throw new Error('Файл сохранения слишком большой.');
+    const raw = await file.text();
+    const preview = deserializeGameSave(raw, { migrate: migrateGameState });
+    if (!confirm(`Импортировать сейв с ${preview.state.coins} монетами и ${preview.state.stats?.puzzlesSolved || 0} решёнными головоломками? Текущий прогресс будет заменён.`)) return;
+    persistence.importSave(raw);
+    toast('Сохранение импортировано.');
+  } catch (error) {
+    toast(error.message || 'Не удалось импортировать сохранение.');
   }
 }
 
 const ctx = {
   get state() { return state; },
   save, go, toast, newGameConfirm,
+  account, persistence, exportSave, importSave,
   sfx,
   setHubScene(scene) {
     lastHubScene = scene;
@@ -178,16 +243,30 @@ const ctx = {
     currentParams = { scene };
     const sceneChanged = onboardingScene(state, scene);
     const guideChanged = onboardingVisit(state, 'hub', currentParams);
-    if (sceneChanged || guideChanged) saveGame(state);
+    if (sceneChanged || guideChanged) save();
   },
   syncOnboarding: syncDock,
 };
+
+account.subscribe((snapshot) => {
+  if (snapshot.status === 'authenticated' && snapshot.profile) {
+    if (snapshot.supporter.active) {
+      if (!persistence.getStatus().configured) persistence.setEnabled(true).catch(() => {});
+      else if (persistence.getStatus().enabled) persistence.reconcile().catch(() => {});
+    } else {
+      persistence.reset();
+    }
+  } else if (snapshot.status === 'anonymous') {
+    persistence.reset();
+  }
+  if (musicOn()) startMusic({ supporter: snapshot.supporter.active });
+});
 
 // Звук инициализируется по первому взаимодействию (требование браузеров).
 initSound();
 // Музыка лавки стартует после первого взаимодействия.
 const musicUnlock = () => {
-  startMusic();
+  startMusic({ supporter: account.isSupporter() });
   document.removeEventListener?.('pointerdown', musicUnlock);
   document.removeEventListener?.('keydown', musicUnlock);
 };
@@ -355,7 +434,7 @@ function showAbout() {
       <div class="muted center" style="margin-bottom:10px">версия 0.10 · уютная игра-магазин с приключениями</div>
       <p><b>Автор:</b> K8rvin (Андрей)</p>
       <p><b>Сделано:</b> вдвоём — человек и ИИ-агент Kimi Code.
-      Чистый JavaScript, Canvas, SVG-арт, локальные сохранения. Ни строчки бэкенда.</p>
+      Чистый JavaScript, Canvas, SVG-арт, локальные сохранения и необязательное облако.</p>
       <p><b>Внутри:</b> ${puzzleTypes} механик головоломок · ${ALL_PUZZLES.length} загадок · ${campaignBattles} боёв в 12 мирах ·
       60+ существ · крафт · отряд · поле 8×3 и лор-сцены · и один очень трудолюбивый паучок 🕷️</p>
       <p class="muted">Спасибо, что заглянул на перекрёсток. Стучи по вывеске в любое время.</p>
@@ -377,3 +456,5 @@ go(startRoute.name, startRoute.params);
 if (backfilledAchievements) {
   toast(`Книга славы пополнена: новых достижений — ${backfilledAchievements}.`);
 }
+if (loaded.error) toast(loaded.error);
+account.refresh().catch(() => {});

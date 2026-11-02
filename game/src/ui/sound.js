@@ -242,60 +242,106 @@ export function sfx(name, step = 0) {
 }
 
 // --- Генеративная фоновая музыка лавки (лоу-фай, без файлов) ---
-// Медленные аккорды Am–F–C–G, мягкие треугольные волны, редкие колокольчики,
-// лёгкий шелест дождя. Управление: startMusic/stopMusic/toggleMusic.
 
 const MUSIC_KEY = 'cozy_music';
+const MUSIC_PRESET_KEY = 'cozy_music_preset';
 let musicTimer = null;
 let musicGain = null;
 let musicNoise = null;
 let chordIdx = 0;
 let bellIdx = 0;
+let activeMusicPreset = null;
 
-const CHORDS = [
-  [220.0, 261.63, 329.63], // Am
-  [174.61, 220.0, 261.63], // F
-  [130.81, 196.0, 329.63], // C
-  [196.0, 246.94, 293.66], // G
+export const MUSIC_PRESETS = [
+  {
+    id: 'rain', name: 'Дождь у лавки', icon: '🌧️',
+    chords: [[220.0, 261.63, 329.63], [174.61, 220.0, 261.63], [130.81, 196.0, 329.63], [196.0, 246.94, 293.66]],
+    bells: [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5],
+    wave: 'triangle', bellProbability: 0.65, noiseFrequency: 900, noiseGain: 0.35, noiseDepth: 0.12,
+  },
+  {
+    id: 'hearth', name: 'Камин', icon: '🔥', supporter: true,
+    chords: [[196.0, 246.94, 293.66], [164.81, 220.0, 261.63], [130.81, 196.0, 246.94], [174.61, 220.0, 293.66]],
+    bells: [261.63, 329.63, 392.0, 523.25],
+    wave: 'sine', bellProbability: 0.2, noiseFrequency: 1800, noiseGain: 0.16, noiseDepth: 0.18,
+  },
+  {
+    id: 'night_market', name: 'Ночной рынок', icon: '🏮', supporter: true,
+    chords: [[220.0, 277.18, 329.63], [196.0, 246.94, 311.13], [174.61, 220.0, 277.18], [196.0, 246.94, 329.63]],
+    bells: [440.0, 554.37, 659.25, 830.61],
+    wave: 'triangle', bellProbability: 0.4, noiseFrequency: 1200, noiseGain: 0.18, noiseDepth: 0.1,
+  },
+  {
+    id: 'lute', name: 'Тихая лютня', icon: '🎼', supporter: true,
+    chords: [[174.61, 220.0, 261.63], [130.81, 164.81, 196.0], [146.83, 174.61, 220.0], [164.81, 196.0, 246.94]],
+    bells: [349.23, 440.0, 523.25, 698.46],
+    wave: 'sine', bellProbability: 0.5, noiseFrequency: 700, noiseGain: 0.06, noiseDepth: 0.06,
+  },
 ];
-const BELLS = [523.25, 587.33, 659.25, 783.99, 880.0, 1046.5];
+const MUSIC_PRESET_BY_ID = Object.fromEntries(MUSIC_PRESETS.map((preset) => [preset.id, preset]));
 
 function musicEnabledSetting() {
   try { return localStorage.getItem(MUSIC_KEY) !== 'off'; } catch { return true; }
 }
 
-export function startMusic() {
+export function musicPreset(access = {}) {
+  let id = 'rain';
+  try { id = localStorage.getItem(MUSIC_PRESET_KEY) || 'rain'; } catch { /* ignore */ }
+  const preset = MUSIC_PRESET_BY_ID[id] || MUSIC_PRESET_BY_ID.rain;
+  return preset.supporter && access.supporter !== true ? 'rain' : preset.id;
+}
+
+export function setMusicPreset(id, access = {}) {
+  const preset = MUSIC_PRESET_BY_ID[id];
+  if (!preset) return { ok: false, error: 'Нет такого музыкального оформления' };
+  if (preset.supporter && access.supporter !== true) {
+    return { ok: false, error: 'Мелодия доступна в Издании хранителя' };
+  }
+  try { localStorage.setItem(MUSIC_PRESET_KEY, id); } catch { /* ignore */ }
+  if (musicTimer) {
+    stopMusic();
+    startMusic(access);
+  }
+  return { ok: true, preset: id };
+}
+
+export function startMusic(access = {}) {
   const a = ac();
-  if (!a || musicTimer || !musicEnabledSetting()) return;
+  if (!a || !musicEnabledSetting()) return;
+  const presetId = musicPreset(access);
+  if (musicTimer && activeMusicPreset === presetId) return;
+  if (musicTimer) stopMusic();
+  const preset = MUSIC_PRESET_BY_ID[presetId];
+  activeMusicPreset = presetId;
+  chordIdx = 0;
+  bellIdx = 0;
   musicGain = a.createGain();
   musicGain.gain.value = 0.0;
   musicGain.gain.linearRampToValueAtTime(0.045, a.currentTime + 2);
   musicGain.connect(a.destination);
 
-  // Шелест дождя: петля шума через фильтр
   const noiseLen = a.sampleRate * 2;
   const noiseBuf = a.createBuffer(1, noiseLen, a.sampleRate);
   const data = noiseBuf.getChannelData(0);
-  for (let i = 0; i < noiseLen; i++) data[i] = (Math.random() * 2 - 1) * 0.12;
+  for (let i = 0; i < noiseLen; i++) data[i] = (Math.random() * 2 - 1) * preset.noiseDepth;
   musicNoise = a.createBufferSource();
   musicNoise.buffer = noiseBuf;
   musicNoise.loop = true;
   const noiseFilter = a.createBiquadFilter();
   noiseFilter.type = 'lowpass';
-  noiseFilter.frequency.value = 900;
+  noiseFilter.frequency.value = preset.noiseFrequency;
   const noiseGain = a.createGain();
-  noiseGain.gain.value = 0.35;
+  noiseGain.gain.value = preset.noiseGain;
   musicNoise.connect(noiseFilter).connect(noiseGain).connect(musicGain);
   musicNoise.start();
 
   const bar = () => {
     if (!musicGain) return;
     const t0 = a.currentTime + 0.05;
-    // Аккорд (3 ноты по 3.6 сек)
-    for (const f of CHORDS[chordIdx % CHORDS.length]) {
+    for (const f of preset.chords[chordIdx % preset.chords.length]) {
       const osc = a.createOscillator();
       const g = a.createGain();
-      osc.type = 'triangle';
+      osc.type = preset.wave;
       osc.frequency.value = f;
       g.gain.setValueAtTime(0, t0);
       g.gain.linearRampToValueAtTime(0.5, t0 + 0.7);
@@ -304,13 +350,12 @@ export function startMusic() {
       osc.start(t0);
       osc.stop(t0 + 3.7);
     }
-    // Редкий колокольчик с вероятностью
-    if (Math.random() < 0.65) {
+    if (Math.random() < preset.bellProbability) {
       const bt = t0 + 0.8 + Math.random() * 2.2;
       const osc = a.createOscillator();
       const g = a.createGain();
       osc.type = 'sine';
-      osc.frequency.value = BELLS[bellIdx++ % BELLS.length];
+      osc.frequency.value = preset.bells[bellIdx++ % preset.bells.length];
       g.gain.setValueAtTime(0, bt);
       g.gain.linearRampToValueAtTime(0.35, bt + 0.02);
       g.gain.exponentialRampToValueAtTime(0.0001, bt + 1.6);
@@ -326,20 +371,23 @@ export function startMusic() {
 
 export function stopMusic() {
   if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
+  activeMusicPreset = null;
   try { musicNoise?.stop(); } catch { /* ignore */ }
   musicNoise = null;
-  if (musicGain) {
+  const gain = musicGain;
+  musicGain = null;
+  if (gain) {
     const a = ac();
-    if (a) musicGain.gain.linearRampToValueAtTime(0, a.currentTime + 0.8);
-    setTimeout(() => { try { musicGain?.disconnect(); } catch { /* ignore */ } musicGain = null; }, 900);
+    if (a) gain.gain.linearRampToValueAtTime(0, a.currentTime + 0.8);
+    setTimeout(() => { try { gain.disconnect(); } catch { /* ignore */ } }, 900);
   }
 }
 
-export function toggleMusic() {
+export function toggleMusic(access = {}) {
   const on = !musicEnabledSetting();
   try { localStorage.setItem(MUSIC_KEY, on ? 'on' : 'off'); } catch { /* ignore */ }
   if (!on) stopMusic();
-  else startMusic();
+  else startMusic(access);
   return on;
 }
 

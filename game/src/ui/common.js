@@ -6,6 +6,12 @@ import { onboardingBlocksStory, onboardingCtaForResult } from '../core/onboardin
 import { destroyTutorial } from './tutorial.js';
 import { savingsGoalSummary } from './goalView.js';
 
+export function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]);
+}
+
 // Кнопка «Пропустить загадку за монеты» для экранов головоломок.
 export function puzzleSkipButton(ctx, level, onSkipped) {
   const price = skipPuzzlePrice(level);
@@ -110,11 +116,11 @@ export function showOverlay(ctx, { title, subtitle, rewards, advice, buttons = [
   overlay.innerHTML = `
     <div class="card">
       ${art ? `<div class="overlay-art">${art}</div>` : ''}
-      <h2>${title}</h2>
-      ${subtitle ? `<div class="muted">${subtitle}</div>` : ''}
+      <h2>${escapeHtml(title)}</h2>
+      ${subtitle ? `<div class="muted">${escapeHtml(subtitle)}</div>` : ''}
       ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ''}
       ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ''}
-      ${advice ? `<div class="advice">💡 ${advice}</div>` : ''}
+      ${advice ? `<div class="advice">💡 ${escapeHtml(advice)}</div>` : ''}
       <div class="actions"></div>
     </div>`;
   const actions = overlay.querySelector('.actions');

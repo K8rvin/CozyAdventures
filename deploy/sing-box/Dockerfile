@@ -1,6 +1,7 @@
-FROM scratch
+FROM python:3.12-alpine
 
 COPY --chmod=755 sing-box /usr/local/bin/sing-box
 COPY ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --chmod=755 entrypoint.py /usr/local/bin/sing-box-entrypoint.py
 
-ENTRYPOINT ["/usr/local/bin/sing-box"]
+ENTRYPOINT ["python3", "/usr/local/bin/sing-box-entrypoint.py"]

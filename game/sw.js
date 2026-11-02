@@ -1,7 +1,7 @@
 // Service Worker: офлайн-режим игры «Лавка на перекрёстке миров».
 // Документ и код — network-first (свежее сразу, офлайн — из кэша),
 // ассеты — cache-first (картинки/звуки меняются редко, кэш ускоряет).
-const CACHE = 'cozy-adventures-v5';
+const CACHE = 'cozy-adventures-v6';
 
 // Ядро: то, без чего игра не откроется офлайн.
 const CORE = [
@@ -10,6 +10,7 @@ const CORE = [
   'styles.css',
   'knight-api.js',
   'bundle.js',
+  'bootstrap.js',
   'manifest.webmanifest',
   'assets/brand/fav2_mug.svg',
   'assets/brand/icon-192.png',
@@ -40,6 +41,7 @@ function put(cache, request, response) {
 self.addEventListener('fetch', (ev) => {
   const url = new URL(ev.request.url);
   if (ev.request.method !== 'GET' || url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith('/api/')) return;
   const isAsset = url.pathname.includes('/assets/');
 
   ev.respondWith((async () => {

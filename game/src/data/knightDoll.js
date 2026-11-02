@@ -20,6 +20,7 @@ export const KNIGHT_DOLL_LAYERS = Object.freeze({
   pet: 110,
 });
 
+export const KNIGHT_DOLL_FREE_BODY_IDS = Object.freeze(['male', 'female']);
 export const KNIGHT_DOLL_BODY_IDS = Object.freeze([
   'male', 'female',
   'female_type4', 'female_type5', 'female_type7', 'female_type9',
@@ -28,7 +29,7 @@ export const KNIGHT_DOLL_BODY_IDS = Object.freeze([
 export const KNIGHT_DOLL_BODY_LABELS = Object.freeze({
   male: 'Мужской',
   female: 'Женский',
-  female_type4: 'Брюнетта в зале',
+  female_type4: 'Брюнетка в зале',
   female_type5: 'Блондинка в будуаре',
   female_type7: 'Воительница в арсенале',
   female_type9: 'Рыжая в кузнице',

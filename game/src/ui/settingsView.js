@@ -1,11 +1,15 @@
 // Настройки игры: секции со строками-тумблерами, действия отдельно от переключателей.
 import { header } from './common.js';
-import { toggleSound, soundEnabled, toggleMusic, musicEnabled } from './sound.js';
-import { applyCheat } from '../core/state.js';
+import {
+  toggleSound, soundEnabled, toggleMusic, musicEnabled,
+  MUSIC_PRESETS, musicPreset, setMusicPreset,
+} from './sound.js';
+import { applyCheat, availableKnightBodyIds, selectKnightBody } from '../core/state.js';
 import { createPuzzleCatalogModePicker } from './puzzleCatalogView.js';
 import { CURSOR_THEMES, applyCursor, cursorMode, fixedCursorTheme } from './cursors.js';
-import { KNIGHT_DOLL_BODY_IDS, KNIGHT_DOLL_BODY_LABELS } from '../data/knightDoll.js';
+import { KNIGHT_DOLL_BODY_LABELS } from '../data/knightDoll.js';
 import { reopenOnboardingGuide, onboardingGuideNext } from '../core/onboarding.js';
+import { createAccountSection } from './accountView.js';
 
 function makeSection(title, danger = false) {
   const sec = document.createElement('div');
@@ -70,6 +74,8 @@ function makeActionRow({ name, hint, btnText, onClick }) {
 export function renderSettings(container, ctx) {
   const { state } = ctx;
   container.appendChild(header(ctx, 'Настройки', 'Лавка подстраивается под хозяина'));
+  const accountSection = createAccountSection(ctx);
+  container.appendChild(accountSection.element);
 
   const soundSec = makeSection('🔊 Звук');
   soundSec.appendChild(makeToggleRow({
@@ -84,10 +90,34 @@ export function renderSettings(container, ctx) {
   }));
   soundSec.appendChild(makeToggleRow({
     name: 'Музыка',
-    hint: 'Тихий дождь и уютный фон в лавке.',
+    hint: 'Тихий генеративный фон в лавке.',
     get: () => musicEnabled(),
-    flip: () => toggleMusic(),
+    flip: () => toggleMusic({ supporter: ctx.account?.isSupporter?.() === true }),
   }));
+  const musicLabel = document.createElement('div');
+  musicLabel.className = 'pc-layout-label';
+  musicLabel.textContent = 'Музыкальное оформление';
+  const musicPicker = document.createElement('div');
+  musicPicker.className = 'pc-mode-picker set-cursor-modes';
+  musicPicker.setAttribute('role', 'group');
+  musicPicker.setAttribute('aria-label', 'Музыкальное оформление');
+  for (const preset of MUSIC_PRESETS) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'small pc-mode-option';
+    button.dataset.musicPreset = preset.id;
+    button.textContent = `${preset.icon} ${preset.name}${preset.supporter ? ' · Хранитель' : ''}`;
+    const active = musicPreset({ supporter: ctx.account?.isSupporter?.() === true }) === preset.id;
+    button.setAttribute('aria-pressed', String(active));
+    button.addEventListener('click', () => {
+      const result = setMusicPreset(preset.id, { supporter: ctx.account?.isSupporter?.() === true });
+      if (!result.ok) { ctx.toast(result.error); return; }
+      for (const option of musicPicker.children) option.setAttribute('aria-pressed', String(option === button));
+      ctx.sfx?.('tap');
+    });
+    musicPicker.appendChild(button);
+  }
+  soundSec.append(musicLabel, musicPicker);
   container.appendChild(soundSec);
 
   const storySec = makeSection('📖 История');
@@ -119,16 +149,14 @@ export function renderSettings(container, ctx) {
       button.setAttribute('aria-pressed', String(active));
     }
   };
-  for (const bodyId of KNIGHT_DOLL_BODY_IDS) {
+  for (const bodyId of availableKnightBodyIds(state)) {
     const button = document.createElement('button');
     button.type = 'button';
     button.dataset.body = bodyId;
     button.className = 'knight-body-card';
     const image = document.createElement('img');
     image.className = 'knight-body-thumb';
-    image.src = bodyId.startsWith('female_type')
-      ? `assets/knight/doll/${bodyId}/full.png`
-      : `assets/knight/doll/${bodyId}/body.webp`;
+    image.src = `assets/knight/doll/${bodyId}/full.png`;
     image.alt = '';
     image.loading = 'lazy';
     const label = document.createElement('span');
@@ -138,7 +166,7 @@ export function renderSettings(container, ctx) {
     button.appendChild(label);
     button.addEventListener('click', () => {
       if (state.settings.knightBody === bodyId) return;
-      state.settings.knightBody = bodyId;
+      if (!selectKnightBody(state, bodyId).ok) return;
       ctx.save();
       ctx.sfx?.('tap');
       syncBodyUI();
@@ -147,7 +175,7 @@ export function renderSettings(container, ctx) {
   }
   const bodyHint = document.createElement('div');
   bodyHint.className = 'set-hint';
-  bodyHint.textContent = 'Только внешний вид в комнате рыцаря, не влияет на характеристики и бой.';
+  bodyHint.textContent = 'Мужской и женский образы доступны сразу, дополнительные открываются в Прилавке. Характеристики и бой не меняются.';
   knightSec.append(bodyLabel, bodyPicker, bodyHint);
   syncBodyUI();
   container.appendChild(knightSec);
@@ -333,4 +361,5 @@ export function renderSettings(container, ctx) {
     secret.replaceWith(box);
     input.focus();
   }
+  return () => accountSection.destroy();
 }

@@ -3,10 +3,10 @@ import { ITEM_BY_ID, RARITY_LABEL } from '../data/items.js';
 import { itemIconEl, itemIconHtml } from './itemTip.js';
 import { describeItem, SLOTS, SLOT_LABEL } from '../core/items.js';
 import {
-  shopStock, buyItem, buyCosmetic, toggleCosmetic, selectCosmetic,
+  shopStock, buyItem, buyCosmetic, toggleCosmetic, selectCosmetic, selectKnightBody,
   unseenShopItems, markShopSeen,
 } from '../core/state.js';
-import { COSMETIC_PACKS, SEASON_LABEL } from '../data/cosmetics.js';
+import { COSMETIC_PACKS, KNIGHT_BODY_COSMETICS, SEASON_LABEL } from '../data/cosmetics.js';
 import { SHOPS, itemsForShop } from '../data/shop.js';
 import { startTutorial } from './tutorial.js';
 import { header, quickNav } from './common.js';
@@ -250,6 +250,71 @@ export function renderShop(container, ctx) {
   }
   cosPanel.appendChild(cosList);
   container.appendChild(cosPanel);
+
+  const appendBodyProducts = (products, supporter = false) => {
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.dataset[supporter ? 'supporterCosmeticsPanel' : 'knightBodiesPanel'] = '1';
+    panel.innerHTML = supporter
+      ? '<h3>Издание хранителя</h3><div class="muted" style="font-size:13px;margin-bottom:8px">Разовый донат открывает покупку этих образов за печати. Уже купленные образы остаются доступны всегда.</div>'
+      : '<h3>Образы рыцаря</h3><div class="muted" style="font-size:13px;margin-bottom:8px">Мужской и женский образы доступны сразу. Дополнительные меняют только цельный портрет, не характеристики и бой.</div>';
+    const list = document.createElement('div');
+    list.className = 'list';
+    for (const c of products) {
+      const owned = state.cosmeticsOwned.includes(c.id);
+      const active = state.settings.knightBody === c.id;
+      const row = document.createElement('div');
+      row.className = 'row' + (active ? ' done' : '');
+      row.dataset.knightBodyRow = c.id;
+      const price = c.sealPrice ? `🔰 ${c.sealPrice}` : `🪙 ${c.price}`;
+      row.innerHTML = `<span class="grow"><div class="name">${c.name}</div><div class="desc">${c.description}</div></span>`;
+      const preview = previewEl(c.preview, c.icon);
+      preview.classList.add('knight-body-product-preview');
+      row.prepend(preview);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'small' + (active ? ' ghost' : '');
+      btn.dataset.knightBodyId = c.id;
+      btn.setAttribute('aria-pressed', String(active));
+      if (!owned) {
+        const enough = c.sealPrice ? state.seals >= c.sealPrice : state.coins >= c.price;
+        btn.innerHTML = `Купить · ${price}`;
+        btn.disabled = !enough || (supporter && ctx.account?.isSupporter?.() !== true);
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          let allowed = !supporter;
+          if (supporter) {
+            try {
+              const profile = await ctx.account?.refresh?.();
+              allowed = profile?.supporter?.active === true;
+            } catch {
+              ctx.toast('Не удалось проверить Издание хранителя. Попробуйте позже.');
+              rerenderCurrent();
+              return;
+            }
+          }
+          const r = buyCosmetic(state, c.id, { supporter: allowed });
+          if (r.ok) { ctx.toast(`${c.name} — образ выбран.`); ctx.sfx?.('success'); ctx.save(); }
+          else ctx.toast(r.error);
+          rerenderCurrent();
+        });
+      } else {
+        btn.textContent = active ? 'Выбран' : 'Выбрать';
+        btn.disabled = active;
+        btn.addEventListener('click', () => {
+          const r = selectKnightBody(state, c.id);
+          if (r.ok) { ctx.sfx?.('tap'); ctx.save(); rerenderCurrent(); }
+          else ctx.toast(r.error);
+        });
+      }
+      row.appendChild(btn);
+      list.appendChild(row);
+    }
+    panel.appendChild(list);
+    container.appendChild(panel);
+  };
+  appendBodyProducts(KNIGHT_BODY_COSMETICS.filter((c) => c.edition !== 'supporter'));
+  appendBodyProducts(KNIGHT_BODY_COSMETICS.filter((c) => c.edition === 'supporter'), true);
 
   currentRerender = () => {
     container.innerHTML = '';

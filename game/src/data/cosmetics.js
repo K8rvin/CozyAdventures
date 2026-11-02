@@ -73,6 +73,15 @@ export const COSMETIC_PACKS = [
   },
 ];
 
+export const KNIGHT_BODY_COSMETICS = [
+  { id: 'female_type4', kind: 'knightBody', name: 'Брюнетка в зале', icon: '🛡️', price: 10000, preview: 'assets/knight/doll/female_type4/full.png', description: 'Новый образ для цельного портрета. Не влияет на характеристики и бой.' },
+  { id: 'female_type5', kind: 'knightBody', name: 'Блондинка в будуаре', icon: '🛡️', price: 10000, preview: 'assets/knight/doll/female_type5/full.png', description: 'Новый образ для цельного портрета. Не влияет на характеристики и бой.' },
+  { id: 'female_type7', kind: 'knightBody', edition: 'supporter', name: 'Воительница в арсенале', icon: '🛡️', price: 0, sealPrice: 4, preview: 'assets/knight/doll/female_type7/full.png', description: 'Новый образ для цельного портрета. Не влияет на характеристики и бой.' },
+  { id: 'female_type9', kind: 'knightBody', edition: 'supporter', name: 'Рыжая в кузнице', icon: '🛡️', price: 0, sealPrice: 4, preview: 'assets/knight/doll/female_type9/full.png', description: 'Новый образ для цельного портрета. Не влияет на характеристики и бой.' },
+  { id: 'female_type12', kind: 'knightBody', edition: 'supporter', name: 'Сереброволосая эльфийка', icon: '🛡️', price: 0, sealPrice: 4, preview: 'assets/knight/doll/female_type12/full.png', description: 'Новый образ для цельного портрета. Не влияет на характеристики и бой.' },
+  { id: 'female_type13', kind: 'knightBody', edition: 'supporter', name: 'Разведчица на крыше', icon: '🛡️', price: 0, sealPrice: 4, preview: 'assets/knight/doll/female_type13/full.png', description: 'Новый образ для цельного портрета. Не влияет на характеристики и бой.' },
+];
+
 export const LAVKA_COSMETIC_LAYOUTS = {
   lavka_pack_hearth_3x1: {
     hotspots: {
@@ -178,9 +187,12 @@ export const LAVKA_COSMETIC_LAYOUTS = {
   },
 };
 
-export const COSMETICS = COSMETIC_PACKS;
+export const COSMETICS = [...COSMETIC_PACKS, ...KNIGHT_BODY_COSMETICS];
+export const BASE_COSMETICS = COSMETICS.filter((product) => product.edition !== 'supporter');
+export const SUPPORTER_COSMETICS = COSMETICS.filter((product) => product.edition === 'supporter');
 export const COSMETIC_PACK_BY_ID = Object.fromEntries(COSMETIC_PACKS.map((pack) => [pack.id, pack]));
 export const COSMETIC_BY_ID = COSMETIC_PACK_BY_ID;
+export const COSMETIC_PRODUCT_BY_ID = Object.fromEntries(COSMETICS.map((product) => [product.id, product]));
 
 // Только для миграции покупок и временного sprite-fallback, не для каталога.
 export const LEGACY_COSMETIC_ALIASES = {

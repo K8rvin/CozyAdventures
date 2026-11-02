@@ -303,17 +303,18 @@ test('настройки: reopen путеводителя отдельно от 
   assert.equal(state.onboarding.step, 'done');
 });
 
-test('настройки: выбор образа рыцаря сохраняет knightBody и aria-pressed', () => {
+test('настройки: базовые и купленные образы сохраняют knightBody и aria-pressed', () => {
   const state = newGame();
   const ctx = makeUiCtx(state);
   const root = new El('main');
   renderSettings(root, ctx);
   const buttons = flatElements(root).filter((el) => el.dataset.body);
-  assert.equal(buttons.length, 8);
+  assert.equal(buttons.length, 2);
   const male = buttons.find((el) => el.dataset.body === 'male');
   const female = buttons.find((el) => el.dataset.body === 'female');
   assert.equal(male['aria-pressed'], 'true');
   assert.equal(female['aria-pressed'], 'false');
+  assert.equal(buttons.find((el) => el.dataset.body === 'female_type7'), undefined);
   female.click();
   assert.equal(state.settings.knightBody, 'female');
   assert.equal(female['aria-pressed'], 'true');
@@ -321,14 +322,19 @@ test('настройки: выбор образа рыцаря сохраняе�
   male.click();
   assert.equal(state.settings.knightBody, 'male');
   assert.equal(male['aria-pressed'], 'true');
-  const custom = buttons.find((el) => el.dataset.body === 'female_type7');
+  assert.equal(male.children[0].src, 'assets/knight/doll/male/full.png');
+  assert.equal(female.children[0].src, 'assets/knight/doll/female/full.png');
+
+  state.cosmeticsOwned.push('female_type7');
+  const unlockedRoot = new El('main');
+  renderSettings(unlockedRoot, ctx);
+  const unlocked = flatElements(unlockedRoot).filter((el) => el.dataset.body);
+  assert.equal(unlocked.length, 3);
+  const custom = unlocked.find((el) => el.dataset.body === 'female_type7');
   custom.click();
   assert.equal(state.settings.knightBody, 'female_type7');
   assert.equal(custom['aria-pressed'], 'true');
-  assert.equal(male['aria-pressed'], 'false');
   assert.equal(custom.children[0].src, 'assets/knight/doll/female_type7/full.png');
-  assert.equal(male.children[0].src, 'assets/knight/doll/male/body.webp');
-  assert.equal(female.children[0].src, 'assets/knight/doll/female/body.webp');
 });
 
 test('все экраны рендерятся без ошибок', () => {

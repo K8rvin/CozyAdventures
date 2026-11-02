@@ -26,7 +26,7 @@ import { RECIPES } from '../src/data/recipes.js';
 import { COMPANIONS, PETS, MERCENARIES } from '../src/data/crew.js';
 import { TROPHIES, MINI_TROPHIES } from '../src/data/trophies.js';
 import { BOSS_DROPS } from '../src/data/bossDrops.js';
-import { COSMETIC_PACKS } from '../src/data/cosmetics.js';
+import { COSMETIC_PACKS, KNIGHT_BODY_COSMETICS } from '../src/data/cosmetics.js';
 import { SETS } from '../src/data/sets.js';
 import { ITEMS } from '../src/data/items.js';
 
@@ -528,6 +528,9 @@ test('трофеи, босс-находки, оформления и честн�
   assert.equal(done(state, 'boss_find_6'), true);
   assert.equal(done(state, 'boss_find_12'), true);
 
+  state.cosmeticsOwned = KNIGHT_BODY_COSMETICS.map((product) => product.id);
+  assert.equal(done(state, 'cosmetic_1'), false, 'образы рыцаря не считаются фонами');
+  assert.equal(done(state, 'cosmetic_all'), false);
   state.cosmeticsOwned = [...COSMETIC_PACKS.map((pack) => pack.id), 'unknown'];
   assert.equal(done(state, 'cosmetic_1'), true);
   assert.equal(done(state, 'cosmetic_all'), true);

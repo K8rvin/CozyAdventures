@@ -10,7 +10,7 @@ import { BATTLES, BATTLE_BY_ID } from '../src/data/battles.js';
 import { ENEMY_BY_ID } from '../src/data/enemies.js';
 import { SHOP_STOCK, pricedShopItem } from '../src/data/shop.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../src/data/crew.js';
-import { COSMETICS } from '../src/data/cosmetics.js';
+import { BASE_COSMETICS, SUPPORTER_COSMETICS } from '../src/data/cosmetics.js';
 import { RECIPES } from '../src/data/recipes.js';
 import { battleEnergyCost } from '../src/core/energy.js';
 import { BATTLE_ENERGY_CAP, BATTLE_ENERGY_PER_DAY } from '../src/data/energy.js';
@@ -161,7 +161,7 @@ function oneTimeStocks() {
   });
   const crewDefs = Object.values({ ...COMPANION_BY_ID, ...PET_BY_ID, ...MERC_BY_ID });
   const crew = sum(crewDefs, (def) => def.currency !== 'seals' ? def.price : 0);
-  const cosmetics = sum(COSMETICS, (def) => !def.sealPrice ? def.price : 0);
+  const cosmetics = sum(BASE_COSMETICS, (def) => !def.sealPrice ? def.price : 0);
   const craft = sum(RECIPES, (recipe) => recipe.coins || 0);
   return { shop, consumables, crew, cosmetics, craft, total: shop + consumables + crew + cosmetics + craft };
 }
@@ -178,10 +178,12 @@ function budget() {
   const itemSeals = sum(Object.values({ ...COMPANION_BY_ID, ...PET_BY_ID, ...MERC_BY_ID }),
     (def) => def.currency === 'seals' ? def.price : 0);
   const gearSeals = sum(Object.values(SHOP_STOCK.map(pricedShopItem)), (item) => item.sealPrice || 0);
-  const cosmeticSeals = sum(COSMETICS, (def) => def.sealPrice || 0);
+  const cosmeticSeals = sum(BASE_COSMETICS, (def) => def.sealPrice || 0);
+  const supporterSealStock = sum(SUPPORTER_COSMETICS, (def) => def.sealPrice || 0);
   return {
     puzzleCoins, battleCoins, totalCoins: puzzleCoins + battleCoins, stocks,
     puzzleSeals, battleSeals, sealStock: itemSeals + gearSeals + cosmeticSeals,
+    supporterSealStock,
   };
 }
 
@@ -213,6 +215,7 @@ function scenarioShopping() {
   console.log(`Магазин ${fmt(stocks.shop)} · расходники ${fmt(stocks.consumables)} · крафт ${fmt(stocks.craft)} · команда ${fmt(stocks.crew)} · косметика ${fmt(stocks.cosmetics)} · всего ${fmt(stocks.total)}`);
   console.log(`Доход/сток ${decimal(report.totalCoins / stocks.total)} · доля магазина в стоках ${decimal(stocks.shop * 100 / stocks.total)}%`);
   console.log(`Печати ${report.puzzleSeals + report.battleSeals}/${report.sealStock} = ${decimal((report.puzzleSeals + report.battleSeals) / report.sealStock)} (головоломки ${report.puzzleSeals}, боссы ${report.battleSeals})`);
+  console.log(`Отдельный сток Издания хранителя: ${report.supporterSealStock} печатей, в базовый норматив не входит.`);
 
   console.log('\n=== Стратегии покупки: сила / команда / косметика ===');
   for (const [name, stock] of [['сила', stocks.shop], ['команда', stocks.crew], ['косметика', stocks.cosmetics]]) {

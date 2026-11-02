@@ -27,7 +27,7 @@ import { startTutorial, destroyTutorial } from './tutorial.js';
 import {
   onboardingBlocksStory, onboardingBlocksLegacyTutorials, onboardingCtaForResult,
 } from '../core/onboarding.js';
-import { quickNav, puzzleSkipButton, header, backToPuzzleType } from './common.js';
+import { quickNav, puzzleSkipButton, header, backToPuzzleType, escapeHtml } from './common.js';
 import { createPuzzleCatalogModePicker, renderPuzzleCatalog } from './puzzleCatalogView.js';
 import { savingsGoalSummary } from './goalView.js';
 
@@ -110,8 +110,8 @@ export function renderPuzzleTypeList(container, ctx, mech) {
     row.innerHTML = `
       <span class="icon">${available ? (solved ? '🏮' : '🧩') : '🔒'}</span>
       <span class="grow">
-        <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">заказ дня ×2</span>' : ''}</div>
-        <div class="desc">${available ? p.intro : 'Реши предыдущую загадку, чтобы открыть.'}</div>
+        <div class="name">${i + 1}. ${escapeHtml(p.name)} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">заказ дня ×2</span>' : ''}</div>
+        <div class="desc">${available ? escapeHtml(p.intro) : 'Реши предыдущую загадку, чтобы открыть.'}</div>
       </span>`;
     if (available) {
       const btn = document.createElement('button');
@@ -486,7 +486,7 @@ function showVictory(ctx, level, rewards) {
   overlay.innerHTML = `
     <div class="card">
       <h2>🏮 Лавка сияет!</h2>
-      <div class="muted">«${level.name}» — решено</div>
+      <div class="muted">«${escapeHtml(level.name)}» — решено</div>
       <div class="rewards">${rewardHtml}</div>
       ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ''}
       <div class="actions"></div>

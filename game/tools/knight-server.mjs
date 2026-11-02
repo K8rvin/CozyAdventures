@@ -2,10 +2,16 @@ import http from 'node:http';
 import { createReadStream, existsSync } from 'node:fs';
 import { mkdir, readFile, rename, stat, unlink, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { spawnSync } from 'node:child_process';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildKnightImagePrompt, canonicalKnightImageState } from '../src/core/knightImagePrompt.js';
+import { bodyJson, HttpError, json } from './server/http.js';
+import { createAccountStore } from './server/store.js';
+import { createAccountRouter } from './server/accountRoutes.js';
+
+const execFileAsync = promisify(execFile);
 
 const GAME_ROOT = fileURLToPath(new URL('..', import.meta.url));
 const REPO_ROOT = resolve(GAME_ROOT, '..');
@@ -25,13 +31,6 @@ const MIME = {
   '.woff2': 'font/woff2',
 };
 
-class HttpError extends Error {
-  constructor(status, message) {
-    super(message);
-    this.status = status;
-  }
-}
-
 function loadEnv() {
   const path = join(REPO_ROOT, '.env');
   if (!existsSync(path)) return {};
@@ -46,21 +45,33 @@ function loadEnv() {
 }
 
 async function configuration(options) {
-  const env = await loadEnv();
-  const testMode = options.testMode ?? process.env.KNIGHT_TEST_MODE === '1';
-  const provider = options.provider || process.env.KNIGHT_IMAGE_PROVIDER || (!testMode && (process.env.OPENROUTER_API_KEY || env.OPENROUTER_API_KEY) ? 'openrouter' : 'gemini');
+  const env = options.env || (options.testMode ? {} : await loadEnv());
+  const testMode = options.testMode ?? (process.env.KNIGHT_TEST_MODE || env.KNIGHT_TEST_MODE) === '1';
+  const provider = options.provider || process.env.KNIGHT_IMAGE_PROVIDER || env.KNIGHT_IMAGE_PROVIDER || (!testMode && (process.env.OPENROUTER_API_KEY || env.OPENROUTER_API_KEY) ? 'openrouter' : 'gemini');
   const apiKey = provider === 'openrouter'
     ? options.apiKey || process.env.OPENROUTER_API_KEY || env.OPENROUTER_API_KEY || ''
     : options.apiKey || process.env.GEMINI_API_KEY || env.GEMINI_API_KEY || '';
+  const origins = options.allowedOrigins || (process.env.KNIGHT_ALLOWED_ORIGINS || env.KNIGHT_ALLOWED_ORIGINS || 'https://k8rvin.github.io,http://localhost:8787,http://127.0.0.1:8787,http://localhost:8081,http://127.0.0.1:8081').split(',');
+  const databaseUrl = options.databaseUrl || process.env.DATABASE_URL || env.DATABASE_URL || '';
+  if ((process.env.NODE_ENV || env.NODE_ENV) === 'production' && !testMode && !options.store && !databaseUrl) {
+    throw new Error('DATABASE_URL обязателен в production: memory store запрещён');
+  }
   return {
     provider,
-    cacheDir: options.cacheDir || process.env.KNIGHT_CACHE_DIR || join(GAME_ROOT, '.cache', 'knight'),
-    model: options.model || (provider === 'openrouter' ? process.env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3.1-flash-image' : process.env.GEMINI_IMAGE_MODEL || 'gemini-nano-banana-2.1'),
+    cacheDir: options.cacheDir || process.env.KNIGHT_CACHE_DIR || env.KNIGHT_CACHE_DIR || join(GAME_ROOT, '.cache', 'knight'),
+    model: options.model || (provider === 'openrouter' ? process.env.OPENROUTER_IMAGE_MODEL || env.OPENROUTER_IMAGE_MODEL || 'google/gemini-3.1-flash-image' : process.env.GEMINI_IMAGE_MODEL || env.GEMINI_IMAGE_MODEL || 'gemini-nano-banana-2.1'),
     apiKey,
     testMode,
-    allowedOrigins: new Set(options.allowedOrigins || (process.env.KNIGHT_ALLOWED_ORIGINS || 'https://k8rvin.github.io,http://localhost:8787,http://127.0.0.1:8787,http://localhost:8081,http://127.0.0.1:8081').split(',')),
-    rateLimit: options.rateLimit || Number(process.env.KNIGHT_RATE_LIMIT || 20),
-    publicUrl: options.publicUrl || process.env.KNIGHT_PUBLIC_URL || '',
+    allowedOrigins: new Set(origins.map((origin) => origin.trim()).filter((origin) => origin && origin !== 'null')),
+    rateLimit: options.rateLimit || Number(process.env.KNIGHT_RATE_LIMIT || env.KNIGHT_RATE_LIMIT || 20),
+    publicUrl: options.publicUrl || process.env.KNIGHT_PUBLIC_URL || env.KNIGHT_PUBLIC_URL || '',
+    store: options.store,
+    databaseUrl,
+    databasePoolSize: options.databasePoolSize || Number(process.env.DATABASE_POOL_SIZE || env.DATABASE_POOL_SIZE || 0) || undefined,
+    databaseSsl: options.databaseSsl,
+    testGrantSupporter: options.testGrantSupporter === true,
+    loginRateLimit: options.loginRateLimit ?? Number(process.env.KNIGHT_LOGIN_RATE_LIMIT || env.KNIGHT_LOGIN_RATE_LIMIT || 10),
+    sessionTtlSeconds: options.sessionTtlSeconds || Number(process.env.ACCOUNT_SESSION_TTL_SECONDS || env.ACCOUNT_SESSION_TTL_SECONDS || 0) || undefined,
   };
 }
 
@@ -70,30 +81,9 @@ function cors(req, res, config) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Vary', 'Origin');
   }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('X-Content-Type-Options', 'nosniff');
-}
-
-function json(res, status, value) {
-  const body = JSON.stringify(value);
-  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': Buffer.byteLength(body) });
-  res.end(body);
-}
-
-async function bodyJson(req) {
-  let size = 0;
-  const chunks = [];
-  for await (const chunk of req) {
-    size += chunk.length;
-    if (size > 16384) throw new HttpError(413, 'Слишком большой запрос');
-    chunks.push(chunk);
-  }
-  try {
-    return JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}');
-  } catch {
-    throw new HttpError(400, 'Некорректный JSON');
-  }
 }
 
 function publicBase(req, config) {
@@ -207,6 +197,8 @@ export async function createKnightServer(options = {}) {
   const rates = new Map();
   const stats = { generations: 0, active: 0, queued: 0 };
   await mkdir(config.cacheDir, { recursive: true });
+  const accountStore = await createAccountStore(config);
+  const accounts = createAccountRouter({ ...config, store: accountStore.store });
 
   function rateAllowed(req) {
     const ip = String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown').split(',')[0].trim();
@@ -237,8 +229,11 @@ export async function createKnightServer(options = {}) {
         '--state', JSON.stringify(canonicalKnightImageState(built.state)),
       ];
       if (force) args.push('--force');
-      const result = spawnSync(python, args, { encoding: 'utf8', timeout: 30000, maxBuffer: 1024 * 1024 });
-      if (result.error || result.status !== 0) throw new Error(`Конвертация не удалась: ${result.stderr || result.error?.message || result.status}`);
+      try {
+        await execFileAsync(python, args, { encoding: 'utf8', timeout: 30000, maxBuffer: 1024 * 1024, windowsHide: true });
+      } catch (error) {
+        throw new Error(`Конвертация не удалась: ${error.stderr || error.message}`);
+      }
       stats.generations += 1;
     } finally {
       await unlink(rawPath).catch(() => {});
@@ -282,6 +277,31 @@ export async function createKnightServer(options = {}) {
     }
   }
 
+  function fail(req, res, error) {
+    const status = error.status || (error instanceof TypeError ? 400 : 500);
+    const pathname = String(req.url || '').split('?')[0];
+    const accountRoute = pathname.startsWith('/api/auth/') || pathname === '/api/cloud-save';
+    if (status >= 500) {
+      console.error(accountRoute ? `[knight-server] Ошибка маршрута ${pathname}` : `[knight-server] ${error.message}`);
+    }
+    if (res.headersSent) {
+      res.end();
+      return;
+    }
+    const fallback = pathname === '/api/knight-image'
+      ? 'Не удалось создать портрет'
+      : pathname === '/api/cloud-save'
+        ? 'Не удалось обработать облачное сохранение'
+        : accountRoute
+          ? 'Не удалось обработать запрос аккаунта'
+          : 'Внутренняя ошибка сервера';
+    const body = error.code
+      ? { error: error.code, code: error.code, message: status >= 500 && !(error instanceof HttpError) ? fallback : error.message }
+      : { error: status >= 500 ? fallback : error.message };
+    if (error.details && typeof error.details === 'object') Object.assign(body, error.details);
+    json(res, status, body);
+  }
+
   async function handle(req, res) {
     cors(req, res, config);
     try {
@@ -295,6 +315,7 @@ export async function createKnightServer(options = {}) {
         json(res, 200, { ok: true, provider: config.provider, model: config.model, configured: config.testMode || Boolean(config.apiKey), generations: stats.generations, active: stats.active, queued: stats.queued });
         return;
       }
+      if (await accounts.handle(req, res)) return;
       if (url.pathname === '/api/knight-image' && req.method === 'POST') {
         const result = await generate(await bodyJson(req), req);
         json(res, 200, result);
@@ -319,21 +340,18 @@ export async function createKnightServer(options = {}) {
       if (req.method === 'HEAD') res.end();
       else createReadStream(file).pipe(res);
     } catch (error) {
-      const status = error.status || (error instanceof TypeError ? 400 : 500);
-      if (status >= 500) console.error(`[knight-server] ${error.message}`);
-      if (!res.headersSent) json(res, status, { error: status >= 500 ? 'Не удалось создать портрет' : error.message });
-      else res.end();
+      fail(req, res, error);
     }
   }
 
   const server = http.createServer((req, res) => {
-    handle(req, res).catch((error) => {
-      console.error(`[knight-server] ${error.message}`);
-      if (!res.headersSent) json(res, 500, { error: 'Не удалось создать портрет' });
-      else res.end();
-    });
+    handle(req, res).catch((error) => fail(req, res, error));
+  });
+  server.on('close', () => {
+    if (accountStore.owned) accountStore.store.close().catch(() => console.error('[knight-server] Не удалось закрыть store'));
   });
   server.knightStats = stats;
+  server.accountStore = accountStore.store;
   return server;
 }
 

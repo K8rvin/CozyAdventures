@@ -751,13 +751,13 @@ export function renderHub(container, ctx, params = {}) {
     if (chatter) {
       const line = document.createElement('div');
       line.className = 'cat-line';
-      line.innerHTML = chatter;
+      line.textContent = chatter;
       body.appendChild(line);
     }
     for (const j of journal) {
       const entry = document.createElement('div');
       entry.className = 'cat-entry';
-      entry.innerHTML = `${j.icon} ${j.text}`;
+      entry.textContent = `${j.icon} ${j.text}`;
       body.appendChild(entry);
     }
     catPanel.appendChild(body);

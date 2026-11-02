@@ -20867,6 +20867,14 @@
       scenes: { lavka: lavkaScene("halloween") }
     }
   ];
+  var KNIGHT_BODY_COSMETICS = [
+    { id: "female_type4", kind: "knightBody", name: "\u0411\u0440\u044E\u043D\u0435\u0442\u043A\u0430 \u0432 \u0437\u0430\u043B\u0435", icon: "\u{1F6E1}\uFE0F", price: 1e4, preview: "assets/knight/doll/female_type4/full.png", description: "\u041D\u043E\u0432\u044B\u0439 \u043E\u0431\u0440\u0430\u0437 \u0434\u043B\u044F \u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u0430. \u041D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439." },
+    { id: "female_type5", kind: "knightBody", name: "\u0411\u043B\u043E\u043D\u0434\u0438\u043D\u043A\u0430 \u0432 \u0431\u0443\u0434\u0443\u0430\u0440\u0435", icon: "\u{1F6E1}\uFE0F", price: 1e4, preview: "assets/knight/doll/female_type5/full.png", description: "\u041D\u043E\u0432\u044B\u0439 \u043E\u0431\u0440\u0430\u0437 \u0434\u043B\u044F \u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u0430. \u041D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439." },
+    { id: "female_type7", kind: "knightBody", edition: "supporter", name: "\u0412\u043E\u0438\u0442\u0435\u043B\u044C\u043D\u0438\u0446\u0430 \u0432 \u0430\u0440\u0441\u0435\u043D\u0430\u043B\u0435", icon: "\u{1F6E1}\uFE0F", price: 0, sealPrice: 4, preview: "assets/knight/doll/female_type7/full.png", description: "\u041D\u043E\u0432\u044B\u0439 \u043E\u0431\u0440\u0430\u0437 \u0434\u043B\u044F \u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u0430. \u041D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439." },
+    { id: "female_type9", kind: "knightBody", edition: "supporter", name: "\u0420\u044B\u0436\u0430\u044F \u0432 \u043A\u0443\u0437\u043D\u0438\u0446\u0435", icon: "\u{1F6E1}\uFE0F", price: 0, sealPrice: 4, preview: "assets/knight/doll/female_type9/full.png", description: "\u041D\u043E\u0432\u044B\u0439 \u043E\u0431\u0440\u0430\u0437 \u0434\u043B\u044F \u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u0430. \u041D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439." },
+    { id: "female_type12", kind: "knightBody", edition: "supporter", name: "\u0421\u0435\u0440\u0435\u0431\u0440\u043E\u0432\u043E\u043B\u043E\u0441\u0430\u044F \u044D\u043B\u044C\u0444\u0438\u0439\u043A\u0430", icon: "\u{1F6E1}\uFE0F", price: 0, sealPrice: 4, preview: "assets/knight/doll/female_type12/full.png", description: "\u041D\u043E\u0432\u044B\u0439 \u043E\u0431\u0440\u0430\u0437 \u0434\u043B\u044F \u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u0430. \u041D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439." },
+    { id: "female_type13", kind: "knightBody", edition: "supporter", name: "\u0420\u0430\u0437\u0432\u0435\u0434\u0447\u0438\u0446\u0430 \u043D\u0430 \u043A\u0440\u044B\u0448\u0435", icon: "\u{1F6E1}\uFE0F", price: 0, sealPrice: 4, preview: "assets/knight/doll/female_type13/full.png", description: "\u041D\u043E\u0432\u044B\u0439 \u043E\u0431\u0440\u0430\u0437 \u0434\u043B\u044F \u0446\u0435\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u043E\u0440\u0442\u0440\u0435\u0442\u0430. \u041D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439." }
+  ];
   var LAVKA_COSMETIC_LAYOUTS = {
     lavka_pack_hearth_3x1: {
       hotspots: {
@@ -20971,8 +20979,12 @@
       }
     }
   };
+  var COSMETICS = [...COSMETIC_PACKS, ...KNIGHT_BODY_COSMETICS];
+  var BASE_COSMETICS = COSMETICS.filter((product) => product.edition !== "supporter");
+  var SUPPORTER_COSMETICS = COSMETICS.filter((product) => product.edition === "supporter");
   var COSMETIC_PACK_BY_ID = Object.fromEntries(COSMETIC_PACKS.map((pack) => [pack.id, pack]));
   var COSMETIC_BY_ID = COSMETIC_PACK_BY_ID;
+  var COSMETIC_PRODUCT_BY_ID = Object.fromEntries(COSMETICS.map((product) => [product.id, product]));
   var LEGACY_COSMETIC_ALIASES = {
     cos_carpet: "hearth",
     cos_crest: "hearth",
@@ -21008,6 +21020,7 @@
     helmet: 100,
     pet: 110
   });
+  var KNIGHT_DOLL_FREE_BODY_IDS = Object.freeze(["male", "female"]);
   var KNIGHT_DOLL_BODY_IDS = Object.freeze([
     "male",
     "female",
@@ -21021,7 +21034,7 @@
   var KNIGHT_DOLL_BODY_LABELS = Object.freeze({
     male: "\u041C\u0443\u0436\u0441\u043A\u043E\u0439",
     female: "\u0416\u0435\u043D\u0441\u043A\u0438\u0439",
-    female_type4: "\u0411\u0440\u044E\u043D\u0435\u0442\u0442\u0430 \u0432 \u0437\u0430\u043B\u0435",
+    female_type4: "\u0411\u0440\u044E\u043D\u0435\u0442\u043A\u0430 \u0432 \u0437\u0430\u043B\u0435",
     female_type5: "\u0411\u043B\u043E\u043D\u0434\u0438\u043D\u043A\u0430 \u0432 \u0431\u0443\u0434\u0443\u0430\u0440\u0435",
     female_type7: "\u0412\u043E\u0438\u0442\u0435\u043B\u044C\u043D\u0438\u0446\u0430 \u0432 \u0430\u0440\u0441\u0435\u043D\u0430\u043B\u0435",
     female_type9: "\u0420\u044B\u0436\u0430\u044F \u0432 \u043A\u0443\u0437\u043D\u0438\u0446\u0435",
@@ -23837,7 +23850,7 @@
       cosmeticsVersion: COSMETICS_VERSION,
       // пакетная модель полных тем
       cosmeticsOwned: [],
-      // все купленные пакеты без дублей
+      // купленные фоны и образы рыцаря без дублей
       cosmeticsActive: [],
       // не более одного выбранного pack id
       legacyCosmeticsActive: [],
@@ -23933,6 +23946,9 @@
     if (!KNIGHT_DOLL_BODY_IDS.includes(state2.settings.knightBody)) {
       state2.settings.knightBody = KNIGHT_DOLL_DEFAULT_BODY;
     }
+    if (!KNIGHT_DOLL_FREE_BODY_IDS.includes(state2.settings.knightBody) && !state2.cosmeticsOwned.includes(state2.settings.knightBody)) {
+      state2.cosmeticsOwned.push(state2.settings.knightBody);
+    }
     state2.story ||= newStoryState();
     state2.story.guests ||= {};
     state2.story.guestCursor ||= 0;
@@ -23996,6 +24012,9 @@
     state2.onboarding.version = ONBOARDING_VERSION;
     reconcileOnboarding(state2);
     return state2;
+  }
+  function migrateGameState(state2, now = Date.now()) {
+    return migrate(state2, now);
   }
   function addCoins(state2, n) {
     state2.coins += n;
@@ -24283,10 +24302,23 @@
     recordSeasonalCosmetic(state2, COSMETIC_BY_ID[id], currentSeason());
     return { ok: true, active: true };
   }
-  function buyCosmetic(state2, id) {
-    const def = COSMETIC_BY_ID[id];
+  function availableKnightBodyIds(state2) {
+    const owned = new Set(state2.cosmeticsOwned || []);
+    return KNIGHT_DOLL_BODY_IDS.filter((id) => KNIGHT_DOLL_FREE_BODY_IDS.includes(id) || owned.has(id));
+  }
+  function selectKnightBody(state2, id) {
+    if (!KNIGHT_DOLL_BODY_IDS.includes(id)) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u043E\u0431\u0440\u0430\u0437\u0430" };
+    if (!availableKnightBodyIds(state2).includes(id)) return { ok: false, error: "\u041E\u0431\u0440\u0430\u0437 \u0435\u0449\u0451 \u043D\u0435 \u043A\u0443\u043F\u043B\u0435\u043D" };
+    state2.settings.knightBody = id;
+    return { ok: true };
+  }
+  function buyCosmetic(state2, id, access = {}) {
+    const def = COSMETIC_PRODUCT_BY_ID[id];
     if (!def) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u044F" };
     if (state2.cosmeticsOwned.includes(id)) return { ok: false, error: "\u0423\u0436\u0435 \u043A\u0443\u043F\u043B\u0435\u043D\u043E" };
+    if (def.edition === "supporter" && access.supporter !== true) {
+      return { ok: false, error: "\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u043E \u0432 \u0418\u0437\u0434\u0430\u043D\u0438\u0438 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F" };
+    }
     if (def.sealPrice) {
       if (state2.seals < def.sealPrice) return { ok: false, error: "\u041D\u0435 \u0445\u0432\u0430\u0442\u0430\u0435\u0442 \u043F\u0435\u0447\u0430\u0442\u0435\u0439 \u043C\u0430\u0441\u0442\u0435\u0440\u0430" };
       state2.seals -= def.sealPrice;
@@ -24295,7 +24327,8 @@
       state2.coins -= def.price;
     }
     state2.cosmeticsOwned.push(id);
-    selectCosmetic(state2, id);
+    if (def.kind === "knightBody") selectKnightBody(state2, id);
+    else selectCosmetic(state2, id);
     return { ok: true };
   }
   function toggleCosmetic(state2, id) {
@@ -25435,23 +25468,23 @@
       if (state2.crew.includes(merc.id)) return `\u0412\u043E\u0437\u044C\u043C\u0438 \xAB${merc.name}\xBB \u0432 \u043E\u0442\u0440\u044F\u0434 \u0447\u0435\u0440\u0435\u0437 \u0442\u0430\u0432\u0435\u0440\u043D\u0443`;
       return `\u041D\u0430\u0439\u043C\u0438 \u0432 \u0442\u0430\u0432\u0435\u0440\u043D\u0435 \xAB${merc.name}\xBB${merc.role === "\u0442\u0430\u043D\u043A" ? " \u0434\u043B\u044F \u043F\u0435\u0440\u0435\u0434\u043D\u0435\u0433\u043E \u0440\u044F\u0434\u0430" : ""}`;
     };
-    let action = null;
+    let action2 = null;
     if (report.timedOut) {
-      action = state2.settings.tactic !== "offense" ? "\u0421\u043C\u0435\u043D\u0438 \u0442\u0430\u043A\u0442\u0438\u043A\u0443 \u043D\u0430 \xAB\u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435\xBB" : bestItem(
+      action2 = state2.settings.tactic !== "offense" ? "\u0421\u043C\u0435\u043D\u0438 \u0442\u0430\u043A\u0442\u0438\u043A\u0443 \u043D\u0430 \xAB\u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435\xBB" : bestItem(
         (item2) => item2.slot !== "consumable" && isUpgrade(item2) && ((item2.stats?.attack || 0) > 0 || (item2.stats?.crit || 0) > 0 || item2.traits?.includes("pierce")),
         (item2) => (item2.stats?.attack || 0) * 4 + (item2.stats?.crit || 0) * 100 + itemScore(item2) / 100
       ) || mercAction() || defenseAction();
     } else if (report.deathCause === "sleep") {
-      action = bestItem((item2) => (item2.stats?.resist?.sleep || 0) > 0 || item2.effect?.kind === "cleanse_sleep") || defenseAction();
+      action2 = bestItem((item2) => (item2.stats?.resist?.sleep || 0) > 0 || item2.effect?.kind === "cleanse_sleep") || defenseAction();
     } else if (report.deathCause === "poison") {
-      action = bestItem((item2) => (item2.stats?.resist?.poison || 0) > 0 || item2.effect?.kind === "cleanse_poison") || defenseAction();
+      action2 = bestItem((item2) => (item2.stats?.resist?.poison || 0) > 0 || item2.effect?.kind === "cleanse_poison") || defenseAction();
     } else if ((report.alliesStats || []).length === 1) {
-      action = mercAction() || defenseAction();
+      action2 = mercAction() || defenseAction();
     } else {
-      action = defenseAction();
+      action2 = defenseAction();
     }
-    action ||= "\u041F\u0435\u0440\u0435\u0441\u0442\u0430\u0432\u044C \u043A\u0440\u0435\u043F\u043A\u0438\u0445 \u0431\u043E\u0439\u0446\u043E\u0432 \u0432 \u043F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434, \u0430 \u0441\u0442\u0440\u0435\u043B\u043A\u043E\u0432 \u2014 \u0437\u0430 \u0438\u0445 \u0441\u043F\u0438\u043D\u044B";
-    return `${report.advice || "\u041D\u0435 \u0445\u0432\u0430\u0442\u0438\u043B\u043E \u043C\u043E\u0449\u0438."} ${action}.`;
+    action2 ||= "\u041F\u0435\u0440\u0435\u0441\u0442\u0430\u0432\u044C \u043A\u0440\u0435\u043F\u043A\u0438\u0445 \u0431\u043E\u0439\u0446\u043E\u0432 \u0432 \u043F\u0435\u0440\u0435\u0434\u043D\u0438\u0439 \u0440\u044F\u0434, \u0430 \u0441\u0442\u0440\u0435\u043B\u043A\u043E\u0432 \u2014 \u0437\u0430 \u0438\u0445 \u0441\u043F\u0438\u043D\u044B";
+    return `${report.advice || "\u041D\u0435 \u0445\u0432\u0430\u0442\u0438\u043B\u043E \u043C\u043E\u0449\u0438."} ${action2}.`;
   }
   function runBattle(state2, battleId, seed = 1, options = {}) {
     const battle = BATTLE_BY_ID[battleId];
@@ -25555,22 +25588,31 @@
   function saveGame(state2, storage) {
     const s = storage || (typeof localStorage !== "undefined" ? localStorage : null);
     if (!s) return false;
-    s.setItem(SAVE_KEY, JSON.stringify(state2));
-    return true;
-  }
-  function loadGame(storage, now = Date.now()) {
-    const s = storage || (typeof localStorage !== "undefined" ? localStorage : null);
-    if (!s) return null;
     try {
-      const raw = s.getItem(SAVE_KEY) || s.getItem("cozy_adventures_save_v1");
-      if (!raw) return null;
+      s.setItem(SAVE_KEY, JSON.stringify(state2));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  function loadGameDetailed(storage, now = Date.now()) {
+    const s = storage || (typeof localStorage !== "undefined" ? localStorage : null);
+    if (!s) return { state: null, hadRaw: false, error: "\u041B\u043E\u043A\u0430\u043B\u044C\u043D\u043E\u0435 \u0445\u0440\u0430\u043D\u0438\u043B\u0438\u0449\u0435 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E." };
+    let raw;
+    try {
+      raw = s.getItem(SAVE_KEY) || s.getItem("cozy_adventures_save_v1");
+    } catch {
+      return { state: null, hadRaw: false, error: "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435." };
+    }
+    if (!raw) return { state: null, hadRaw: false, error: null };
+    try {
       const data = JSON.parse(raw);
-      if (!data || typeof data.coins !== "number") return null;
+      if (!data || typeof data.coins !== "number") throw new Error("invalid");
       const migrated = migrate(data, now);
       migrateSeekOverrides(migrated, s);
-      return migrated;
+      return { state: migrated, hadRaw: true, error: null };
     } catch {
-      return null;
+      return { state: null, hadRaw: true, error: "\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u043F\u043E\u0432\u0440\u0435\u0436\u0434\u0435\u043D\u043E. \u0418\u0441\u0445\u043E\u0434\u043D\u044B\u0439 \u0444\u0430\u0439\u043B \u043D\u0435 \u0443\u0434\u0430\u043B\u0451\u043D; \u043D\u043E\u0432\u043E\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u043C\u043E\u0436\u0435\u0442 \u0437\u0430\u043C\u0435\u043D\u0438\u0442\u044C \u0435\u0433\u043E." };
     }
   }
   function moveFormationSlot(state2, unitKey, slot) {
@@ -25688,6 +25730,873 @@
       energyAfter: state2.battleEnergy?.value ?? 0,
       formation: initialFormation
       // начальные клетки (не конец боя!)
+    };
+  }
+
+  // src/ui/accountClient.js
+  var SESSION_KEY = "cozy_account_session_v1";
+  function apiBase() {
+    const configured = String(globalThis.COZY_API_BASE_URL || "").replace(/\/$/, "");
+    if (configured) return configured;
+    const portrait = String(globalThis.KNIGHT_IMAGE_API_URL || "").replace(/\/$/, "");
+    return portrait.endsWith("/api/knight-image") ? portrait.slice(0, -"/api/knight-image".length) : "";
+  }
+  function createAccountClient(options = {}) {
+    const base = (options.baseUrl ?? apiBase()).replace(/\/$/, "");
+    const storage = options.storage || globalThis.sessionStorage;
+    const fetchImpl = options.fetchImpl || globalThis.fetch?.bind(globalThis);
+    const listeners = /* @__PURE__ */ new Set();
+    let session = null;
+    try {
+      session = JSON.parse(storage?.getItem(SESSION_KEY) || "null");
+    } catch {
+      session = null;
+    }
+    let profile = null;
+    let status2 = session?.token ? "loading" : "anonymous";
+    let lastError = "";
+    function snapshot() {
+      return {
+        status: status2,
+        profile,
+        lastError,
+        configured: Boolean(base),
+        supporter: { active: profile?.supporter?.active === true, grantedAt: profile?.supporter?.grantedAt || null }
+      };
+    }
+    function emit() {
+      const value = snapshot();
+      for (const listener of listeners) listener(value);
+    }
+    function setStatus(next, error = "") {
+      status2 = next;
+      lastError = error;
+      emit();
+    }
+    function saveSession(value) {
+      session = value;
+      try {
+        if (value) storage?.setItem(SESSION_KEY, JSON.stringify(value));
+        else storage?.removeItem(SESSION_KEY);
+      } catch {
+      }
+    }
+    async function request(path, init = {}) {
+      if (!base) throw new Error("\u0421\u0435\u0440\u0432\u0435\u0440 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430 \u043D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D");
+      if (!fetchImpl) throw new Error("\u0421\u0435\u0442\u044C \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430");
+      const response = await fetchImpl(`${base}${path}`, {
+        ...init,
+        headers: {
+          ...init.body ? { "Content-Type": "application/json" } : {},
+          ...session?.token ? { Authorization: `Bearer ${session.token}` } : {},
+          ...init.headers || {}
+        }
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const error = new Error(data.error || "\u0421\u0435\u0440\u0432\u0435\u0440 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u0435\u043D");
+        error.status = response.status;
+        error.code = data.code;
+        error.data = data;
+        throw error;
+      }
+      return data;
+    }
+    async function refresh() {
+      if (!session?.token) {
+        profile = null;
+        setStatus("anonymous");
+        return snapshot().profile;
+      }
+      setStatus("loading");
+      try {
+        const data = await request("/api/auth/me");
+        profile = { ...data.user || {}, supporter: data.supporter, cloud: data.cloud ?? data.save ?? null };
+        setStatus("authenticated");
+        return profile;
+      } catch (error) {
+        profile = null;
+        if (error.status === 401) saveSession(null);
+        setStatus(error.status === 401 ? "anonymous" : "error", error.message);
+        throw error;
+      }
+    }
+    async function authenticate(path, body, clearOnFailure = false) {
+      setStatus("loading");
+      try {
+        const result = await request(path, { method: "POST", body: JSON.stringify(body) });
+        saveSession({ token: result.sessionToken, expiresAt: result.expiresAt || null });
+        profile = result.user ? { ...result.user, supporter: result.supporter, cloud: result.cloud } : null;
+        if (profile) setStatus("authenticated");
+        else await refresh();
+        return profile;
+      } catch (error) {
+        if (clearOnFailure) {
+          saveSession(null);
+          profile = null;
+        }
+        setStatus("error", error.message);
+        throw error;
+      }
+    }
+    function register(credentials) {
+      return authenticate("/api/auth/register", credentials, true);
+    }
+    function login(credentials) {
+      return authenticate("/api/auth/login", credentials, true);
+    }
+    function changePassword(credentials) {
+      return authenticate("/api/auth/change-password", credentials);
+    }
+    async function logout() {
+      try {
+        if (session?.token) await request("/api/auth/logout", { method: "POST" });
+      } finally {
+        saveSession(null);
+        profile = null;
+        setStatus("anonymous");
+      }
+    }
+    return {
+      snapshot,
+      subscribe(listener) {
+        listeners.add(listener);
+        listener(snapshot());
+        return () => listeners.delete(listener);
+      },
+      isSupporter() {
+        return profile?.supporter?.active === true;
+      },
+      getAccessToken() {
+        return session?.token || null;
+      },
+      refresh,
+      register,
+      login,
+      changePassword,
+      logout,
+      async getCloudSave() {
+        const data = await request("/api/cloud-save");
+        if (!data.save) return null;
+        return { ...data.save, serverTime: data.serverTime };
+      },
+      putCloudSave(payload) {
+        return request("/api/cloud-save", { method: "PUT", body: JSON.stringify(payload) });
+      }
+    };
+  }
+
+  // src/core/minuteAutosave.js
+  var STATUS_MESSAGES = {
+    offline: "\u041D\u0435\u0442 \u0441\u0432\u044F\u0437\u0438. \u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E \u0438 \u0431\u0443\u0434\u0443\u0442 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u043E\u0437\u0436\u0435.",
+    conflict: "\u041E\u0431\u043B\u0430\u0447\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0438\u0437\u043C\u0435\u043D\u0438\u043B\u043E\u0441\u044C \u043D\u0430 \u0434\u0440\u0443\u0433\u043E\u043C \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0435. \u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0432\u0435\u0440\u0441\u0438\u044E.",
+    error: "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435. \u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u044B \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E."
+  };
+  function isThenable(value) {
+    return value && typeof value.then === "function";
+  }
+  function responseStatus(error) {
+    return error?.status ?? error?.statusCode ?? error?.response?.status;
+  }
+  function isConflict(error) {
+    return Number(responseStatus(error) ?? error?.code) === 409;
+  }
+  function isOffline(error) {
+    if (error?.offline === true || error?.name === "TypeError" || error?.name === "NetworkError") return true;
+    if (Number(responseStatus(error)) === 0) return true;
+    return ["OFFLINE", "ERR_OFFLINE", "NETWORK_ERROR", "ERR_NETWORK"].includes(error?.code);
+  }
+  function createMinuteAutosave(options = {}) {
+    const {
+      intervalMs = 6e4,
+      isEnabled = () => true,
+      getSnapshot,
+      putSnapshot,
+      deviceId,
+      initialBaseRevision = 0,
+      onStatus,
+      onConflict,
+      scheduler = globalThis,
+      loadPending,
+      savePending,
+      now = () => Date.now()
+    } = options;
+    if (!Number.isFinite(intervalMs) || intervalMs <= 0) throw new Error("\u0418\u043D\u0442\u0435\u0440\u0432\u0430\u043B \u0430\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u0442\u044C \u043F\u043E\u043B\u043E\u0436\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C \u0447\u0438\u0441\u043B\u043E\u043C.");
+    if (typeof getSnapshot !== "function" || typeof putSnapshot !== "function") {
+      throw new Error("\u0414\u043B\u044F \u0430\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u043D\u0443\u0436\u043D\u044B \u0444\u0443\u043D\u043A\u0446\u0438\u0438 getSnapshot \u0438 putSnapshot.");
+    }
+    if (typeof deviceId !== "string" || !deviceId) throw new Error("\u0414\u043B\u044F \u0430\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u043D\u0443\u0436\u0435\u043D \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430.");
+    if (typeof isEnabled !== "function" || typeof now !== "function" || typeof scheduler?.setInterval !== "function" || typeof scheduler?.clearInterval !== "function") {
+      throw new Error("\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0435 \u043F\u0430\u0440\u0430\u043C\u0435\u0442\u0440\u044B \u0430\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F.");
+    }
+    let timer2 = null;
+    let started = false;
+    let destroyed = false;
+    let initialized = false;
+    let initialization = null;
+    let inFlight = null;
+    let dirty = false;
+    let dirtyVersion = 0;
+    let baseRevision = initialBaseRevision;
+    let lastSyncedAt = null;
+    let sequence = 0;
+    let status2 = "local";
+    let errorMessage = null;
+    function getStatus() {
+      return {
+        status: status2,
+        dirty,
+        baseRevision,
+        lastSyncedAt,
+        sequence,
+        error: errorMessage
+      };
+    }
+    function updateStatus(next, message = null) {
+      if (destroyed) return;
+      status2 = next;
+      errorMessage = message;
+      if (onStatus) onStatus(getStatus());
+    }
+    function persistPending() {
+      if (!savePending) return;
+      try {
+        const result = savePending(dirty);
+        if (isThenable(result)) {
+          Promise.resolve(result).catch(() => updateStatus("error", STATUS_MESSAGES.error));
+        }
+      } catch {
+        updateStatus("error", STATUS_MESSAGES.error);
+      }
+    }
+    function applyLoadedPending(value, versionAtStart) {
+      if (destroyed) return;
+      if (value === true) {
+        if (!dirty) dirtyVersion += 1;
+        dirty = true;
+      } else if (dirtyVersion === versionAtStart) {
+        dirty = false;
+      }
+      if (started && !inFlight) updateStatus(dirty ? "pending" : lastSyncedAt === null ? "local" : "synced");
+    }
+    function initializePending() {
+      if (initialized || !loadPending) return;
+      initialized = true;
+      const versionAtStart = dirtyVersion;
+      try {
+        const result = loadPending();
+        if (isThenable(result)) {
+          initialization = Promise.resolve(result).then(
+            (value) => applyLoadedPending(value, versionAtStart),
+            () => updateStatus("error", STATUS_MESSAGES.error)
+          );
+        } else {
+          applyLoadedPending(result, versionAtStart);
+        }
+      } catch {
+        updateStatus("error", STATUS_MESSAGES.error);
+      }
+    }
+    function handleFailure(error, payload, requestSequence) {
+      if (destroyed || requestSequence !== sequence) return;
+      if (isConflict(error)) {
+        updateStatus("conflict", STATUS_MESSAGES.conflict);
+        if (onConflict) onConflict(error, payload);
+      } else {
+        const kind = isOffline(error) ? "offline" : "error";
+        updateStatus(kind, STATUS_MESSAGES[kind]);
+      }
+    }
+    function requestSync() {
+      if (destroyed) return Promise.resolve(null);
+      if (inFlight) return inFlight;
+      if (!initialization && (!dirty || !isEnabled())) return Promise.resolve(null);
+      const promise = (async () => {
+        if (initialization) await initialization;
+        if (destroyed || !dirty || !isEnabled()) return null;
+        const snapshot = getSnapshot();
+        const requestSequence = sequence + 1;
+        sequence = requestSequence;
+        const versionAtStart = dirtyVersion;
+        const payload = {
+          generation: snapshot.generation,
+          state: snapshot.state,
+          baseRevision,
+          deviceId,
+          sequence: requestSequence
+        };
+        updateStatus("syncing");
+        let response;
+        try {
+          response = await putSnapshot(payload);
+          if (isConflict(response)) throw response;
+          if (!response || typeof response !== "object" || response.revision === void 0) {
+            throw new Error("\u0421\u0435\u0440\u0432\u0435\u0440 \u043D\u0435 \u0432\u0435\u0440\u043D\u0443\u043B \u0440\u0435\u0432\u0438\u0437\u0438\u044E \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F.");
+          }
+        } catch (error) {
+          handleFailure(error, payload, requestSequence);
+          throw error;
+        }
+        if (destroyed || requestSequence !== sequence) return response;
+        baseRevision = response.revision;
+        lastSyncedAt = now();
+        if (dirtyVersion === versionAtStart) dirty = false;
+        updateStatus(dirty ? "pending" : "synced");
+        if (!dirty) persistPending();
+        return response;
+      })();
+      inFlight = promise;
+      const clearFlight = () => {
+        if (inFlight === promise) inFlight = null;
+      };
+      promise.then(clearFlight, clearFlight);
+      return promise;
+    }
+    function start() {
+      if (started || destroyed) return;
+      started = true;
+      initializePending();
+      if (!inFlight && status2 !== "error") {
+        updateStatus(dirty ? "pending" : lastSyncedAt === null ? "local" : "synced");
+      }
+      timer2 = scheduler.setInterval(() => {
+        requestSync().catch(() => {
+        });
+      }, intervalMs);
+    }
+    function stop() {
+      if (timer2 !== null) scheduler.clearInterval(timer2);
+      timer2 = null;
+      started = false;
+    }
+    function notifyDirty() {
+      if (destroyed) return;
+      dirty = true;
+      dirtyVersion += 1;
+      if (status2 !== "syncing") updateStatus("pending");
+      persistPending();
+    }
+    function destroy() {
+      stop();
+      destroyed = true;
+    }
+    return {
+      start,
+      stop,
+      notifyDirty,
+      syncNow: requestSync,
+      getStatus,
+      destroy
+    };
+  }
+
+  // src/core/saveFormat.js
+  var SAVE_SCHEMA_VERSION = 1;
+  var SAVE_MAX_BYTES = 4 * 1024 * 1024;
+  var SAVE_MAX_DEPTH = 64;
+  var SAVE_MAX_NODES = 25e4;
+  var DANGEROUS_KEYS = /* @__PURE__ */ new Set(["__proto__", "prototype", "constructor"]);
+  var encoder = new TextEncoder();
+  var SaveFormatError = class extends Error {
+    constructor(message, code = "INVALID_SAVE") {
+      super(message);
+      this.name = "SaveFormatError";
+      this.code = code;
+    }
+  };
+  function fail(message, code) {
+    throw new SaveFormatError(message, code);
+  }
+  function isRecord(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+    const prototype = Object.getPrototypeOf(value);
+    return prototype === Object.prototype || prototype === null;
+  }
+  function validateGeneration(generation) {
+    if (typeof generation !== "string" || !generation.trim() || generation.length > 256) {
+      fail("\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440 \u043F\u043E\u043A\u043E\u043B\u0435\u043D\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F.", "INVALID_GENERATION");
+    }
+  }
+  function validateJson(value, options = {}) {
+    const maxDepth = options.maxDepth ?? SAVE_MAX_DEPTH;
+    const maxNodes = options.maxNodes ?? SAVE_MAX_NODES;
+    const ancestors = /* @__PURE__ */ new Set();
+    let nodes = 0;
+    function visit(current, depth) {
+      nodes += 1;
+      if (nodes > maxNodes) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u043C\u043D\u043E\u0433\u043E \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432.", "SAVE_TOO_MANY_NODES");
+      if (depth > maxDepth) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0438\u043C\u0435\u0435\u0442 \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u0431\u043E\u043B\u044C\u0448\u0443\u044E \u0432\u043B\u043E\u0436\u0435\u043D\u043D\u043E\u0441\u0442\u044C.", "SAVE_TOO_DEEP");
+      if (current === null || typeof current === "string" || typeof current === "boolean") return;
+      if (typeof current === "number") {
+        if (!Number.isFinite(current)) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u043D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0447\u0438\u0441\u043B\u043E.", "INVALID_JSON_VALUE");
+        return;
+      }
+      if (typeof current !== "object") fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u0435, \u043A\u043E\u0442\u043E\u0440\u043E\u0435 \u043D\u0435\u043B\u044C\u0437\u044F \u0437\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0432 JSON.", "INVALID_JSON_VALUE");
+      if (ancestors.has(current)) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0446\u0438\u043A\u043B\u0438\u0447\u0435\u0441\u043A\u0443\u044E \u0441\u0441\u044B\u043B\u043A\u0443.", "CYCLIC_SAVE");
+      if (!Array.isArray(current) && !isRecord(current)) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0434\u043E\u043B\u0436\u043D\u043E \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u043F\u0440\u043E\u0441\u0442\u044B\u0435 JSON-\u043E\u0431\u044A\u0435\u043A\u0442\u044B.", "INVALID_JSON_VALUE");
+      if (Object.getOwnPropertySymbols(current).length > 0) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u043D\u0435\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u043C\u044B\u0435 \u043A\u043B\u044E\u0447\u0438.", "INVALID_JSON_VALUE");
+      ancestors.add(current);
+      for (const key of Object.keys(current)) {
+        if (DANGEROUS_KEYS.has(key)) fail(`\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u043E\u043F\u0430\u0441\u043D\u044B\u0439 \u043A\u043B\u044E\u0447 \xAB${key}\xBB.`, "UNSAFE_SAVE_KEY");
+        const descriptor = Object.getOwnPropertyDescriptor(current, key);
+        if (descriptor?.get || descriptor?.set) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0432\u044B\u0447\u0438\u0441\u043B\u044F\u0435\u043C\u044B\u0435 \u0441\u0432\u043E\u0439\u0441\u0442\u0432\u0430.", "INVALID_JSON_VALUE");
+        visit(current[key], depth + 1);
+      }
+      ancestors.delete(current);
+    }
+    visit(value, 1);
+    return true;
+  }
+  function requireNonnegative(state2, key) {
+    if (!Number.isFinite(state2[key]) || state2[key] < 0) {
+      fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: \u043F\u043E\u043B\u0435 ${key} \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u043A\u043E\u043D\u0435\u0447\u043D\u044B\u043C \u043D\u0435\u043E\u0442\u0440\u0438\u0446\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u043C \u0447\u0438\u0441\u043B\u043E\u043C.`, "INVALID_GAME_STATE");
+    }
+  }
+  function requireRecord(state2, key, required = true) {
+    if (state2[key] === void 0 && !required) return;
+    if (!isRecord(state2[key])) fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: \u043F\u043E\u043B\u0435 ${key} \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u043E\u0431\u044A\u0435\u043A\u0442\u043E\u043C.`, "INVALID_GAME_STATE");
+  }
+  function requireArray(state2, key, required = false) {
+    if (state2[key] === void 0 && !required) return;
+    if (!Array.isArray(state2[key])) fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: \u043F\u043E\u043B\u0435 ${key} \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u043C\u0430\u0441\u0441\u0438\u0432\u043E\u043C.`, "INVALID_GAME_STATE");
+  }
+  function validateRecordValues(record, path, validate) {
+    for (const [key, value] of Object.entries(record)) validate(value, `${path}.${key}`);
+  }
+  function validateGameStateShape(state2) {
+    if (!isRecord(state2)) fail("\u0421\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0435 \u0438\u0433\u0440\u044B \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u043F\u0440\u043E\u0441\u0442\u044B\u043C \u043E\u0431\u044A\u0435\u043A\u0442\u043E\u043C.", "INVALID_GAME_STATE");
+    requireNonnegative(state2, "coins");
+    if (state2.seals !== void 0) requireNonnegative(state2, "seals");
+    requireArray(state2, "inventory", true);
+    requireRecord(state2, "equipped");
+    requireRecord(state2, "puzzlesDone");
+    requireRecord(state2, "battlesDone");
+    requireRecord(state2, "stats");
+    for (const key of [
+      "materials",
+      "settings",
+      "battleLoreSeen",
+      "bossDrops",
+      "seekOverrides",
+      "achievements",
+      "achievementStats",
+      "tutorial",
+      "onboarding",
+      "story",
+      "formation",
+      "cheats",
+      "battleEnergy"
+    ]) {
+      requireRecord(state2, key, false);
+    }
+    for (const key of [
+      "consumableBelt",
+      "crew",
+      "squadCompanions",
+      "squadMercs",
+      "customPuzzles",
+      "cosmeticsOwned",
+      "cosmeticsActive",
+      "legacyCosmeticsActive",
+      "shopSeenStock",
+      "inventorySeen",
+      "trophies",
+      "trophiesSeen",
+      "journal"
+    ]) requireArray(state2, key);
+    if (state2.savingsGoal !== void 0 && state2.savingsGoal !== null && !isRecord(state2.savingsGoal)) {
+      fail("\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: \u043F\u043E\u043B\u0435 savingsGoal \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u043E\u0431\u044A\u0435\u043A\u0442\u043E\u043C \u0438\u043B\u0438 null.", "INVALID_GAME_STATE");
+    }
+    for (const key of ["pet", "lastDailyBonus", "lastCatGift"]) {
+      if (state2[key] !== void 0 && state2[key] !== null && typeof state2[key] !== "string") {
+        fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: \u043F\u043E\u043B\u0435 ${key} \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u0441\u0442\u0440\u043E\u043A\u043E\u0439 \u0438\u043B\u0438 null.`, "INVALID_GAME_STATE");
+      }
+    }
+    for (const id of state2.inventory) {
+      if (typeof id !== "string") fail("\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: inventory \u0434\u043E\u043B\u0436\u0435\u043D \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u0442\u043E\u043B\u044C\u043A\u043E \u0438\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440\u044B.", "INVALID_GAME_STATE");
+    }
+    for (const id of Object.values(state2.equipped)) {
+      if (id !== null && typeof id !== "string") fail("\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: equipped \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u043D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442.", "INVALID_GAME_STATE");
+    }
+    if (state2.materials) {
+      validateRecordValues(state2.materials, "materials", (value, path) => {
+        if (!Number.isFinite(value) || value < 0) fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E \u043C\u0430\u0442\u0435\u0440\u0438\u0430\u043B\u0430 \u0432 ${path}.`, "INVALID_GAME_STATE");
+      });
+    }
+    validateRecordValues(state2.puzzlesDone, "puzzlesDone", (value, path) => {
+      if (!isRecord(value)) fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u0430\u044F \u0437\u0430\u043F\u0438\u0441\u044C \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441\u0430 ${path}.`, "INVALID_GAME_STATE");
+    });
+    validateRecordValues(state2.battlesDone, "battlesDone", (value, path) => {
+      if (!isRecord(value)) fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u0430\u044F \u0437\u0430\u043F\u0438\u0441\u044C \u043F\u043E\u0445\u043E\u0434\u0430 ${path}.`, "INVALID_GAME_STATE");
+      if (value.victories !== void 0 && (!Number.isFinite(value.victories) || value.victories < 0)) {
+        fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0447\u0438\u0441\u043B\u043E \u043F\u043E\u0431\u0435\u0434 \u0432 ${path}.`, "INVALID_GAME_STATE");
+      }
+    });
+    if (state2.customPuzzles) {
+      for (const puzzle of state2.customPuzzles) {
+        if (!isRecord(puzzle)) fail("\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: customPuzzles \u0434\u043E\u043B\u0436\u0435\u043D \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u043E\u0431\u044A\u0435\u043A\u0442\u044B \u0443\u0440\u043E\u0432\u043D\u0435\u0439.", "INVALID_GAME_STATE");
+      }
+    }
+    for (const key of ["puzzlesSolved", "battlesWon", "coinsEarned", "itemsBought", "itemsCrafted", "catPets"]) {
+      if (state2.stats[key] !== void 0 && (!Number.isFinite(state2.stats[key]) || state2.stats[key] < 0)) {
+        fail(`\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: \u043F\u043E\u043B\u0435 stats.${key} \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C \u043D\u0435\u043E\u0442\u0440\u0438\u0446\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u043C \u0447\u0438\u0441\u043B\u043E\u043C.`, "INVALID_GAME_STATE");
+      }
+    }
+    return true;
+  }
+  function checkMaxBytes(maxBytes) {
+    if (!Number.isInteger(maxBytes) || maxBytes <= 0) fail("\u041B\u0438\u043C\u0438\u0442 \u0440\u0430\u0437\u043C\u0435\u0440\u0430 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u0442\u044C \u043F\u043E\u043B\u043E\u0436\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u043C \u0446\u0435\u043B\u044B\u043C \u0447\u0438\u0441\u043B\u043E\u043C.", "INVALID_SAVE_LIMIT");
+  }
+  function serializeGameSave(state2, generation, options = {}) {
+    const maxBytes = options.maxBytes ?? SAVE_MAX_BYTES;
+    checkMaxBytes(maxBytes);
+    validateGeneration(generation);
+    validateGameStateShape(state2);
+    const envelope = { schemaVersion: SAVE_SCHEMA_VERSION, generation, state: state2 };
+    validateJson(envelope, options);
+    const raw = JSON.stringify(envelope);
+    if (encoder.encode(raw).byteLength > maxBytes) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u0431\u043E\u043B\u044C\u0448\u043E\u0435.", "SAVE_TOO_LARGE");
+    return raw;
+  }
+  function deserializeGameSave(raw, options = {}) {
+    const maxBytes = options.maxBytes ?? SAVE_MAX_BYTES;
+    checkMaxBytes(maxBytes);
+    if (typeof raw !== "string") fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0434\u043E\u043B\u0436\u043D\u043E \u0431\u044B\u0442\u044C JSON-\u0441\u0442\u0440\u043E\u043A\u043E\u0439.", "INVALID_SAVE");
+    if (encoder.encode(raw).byteLength > maxBytes) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u0431\u043E\u043B\u044C\u0448\u043E\u0435.", "SAVE_TOO_LARGE");
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      fail("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0440\u043E\u0447\u0438\u0442\u0430\u0442\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435: JSON \u043F\u043E\u0432\u0440\u0435\u0436\u0434\u0451\u043D.", "INVALID_JSON");
+    }
+    if (!isRecord(data)) fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0434\u043E\u043B\u0436\u043D\u043E \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0442\u044C \u043E\u0431\u044A\u0435\u043A\u0442.", "INVALID_SAVE");
+    validateJson(data, options);
+    const wrapped = Object.hasOwn(data, "schemaVersion") || Object.hasOwn(data, "generation") && Object.hasOwn(data, "state");
+    let generation;
+    let state2;
+    if (wrapped) {
+      if (!Number.isInteger(data.schemaVersion) || data.schemaVersion < 1) {
+        fail("\u041D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u0430\u044F \u0432\u0435\u0440\u0441\u0438\u044F \u0441\u0445\u0435\u043C\u044B \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F.", "INVALID_SAVE_SCHEMA");
+      }
+      if (data.schemaVersion > SAVE_SCHEMA_VERSION) {
+        fail("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0441\u043E\u0437\u0434\u0430\u043D\u043E \u0431\u043E\u043B\u0435\u0435 \u043D\u043E\u0432\u043E\u0439 \u0432\u0435\u0440\u0441\u0438\u0435\u0439 \u0438\u0433\u0440\u044B. \u041E\u0431\u043D\u043E\u0432\u0438\u0442\u0435 \u0438\u0433\u0440\u0443, \u0447\u0442\u043E\u0431\u044B \u043E\u0442\u043A\u0440\u044B\u0442\u044C \u0435\u0433\u043E.", "FUTURE_SAVE_SCHEMA");
+      }
+      validateGeneration(data.generation);
+      generation = data.generation;
+      state2 = data.state;
+    } else {
+      generation = options.generation ?? null;
+      if (generation !== null) validateGeneration(generation);
+      state2 = data;
+    }
+    validateGameStateShape(state2);
+    const migrate2 = options.migrate || ((current) => current);
+    if (typeof migrate2 !== "function") fail("\u041C\u0438\u0433\u0440\u0430\u0446\u0438\u044F \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0434\u043E\u043B\u0436\u043D\u0430 \u0431\u044B\u0442\u044C \u0444\u0443\u043D\u043A\u0446\u0438\u0435\u0439.", "INVALID_MIGRATION");
+    const migrated = migrate2(state2, options.now ?? Date.now());
+    state2 = migrated === void 0 ? state2 : migrated;
+    validateGameStateShape(state2);
+    validateJson(state2, options);
+    return { schemaVersion: SAVE_SCHEMA_VERSION, generation, state: state2 };
+  }
+
+  // src/ui/persistence.js
+  var META_KEY = "cozy_cloud_sync_v1";
+  function uuid() {
+    return globalThis.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  }
+  function createPersistence(options) {
+    const {
+      account: account2,
+      storage = globalThis.localStorage,
+      getState,
+      replaceState: replaceState2,
+      hadLocalSave = false,
+      chooseConflict,
+      confirmInitialUpload,
+      onStatus
+    } = options;
+    let meta = { deviceId: uuid(), generation: uuid(), userId: null, baseRevision: 0, pending: false, enabled: false, configured: false };
+    try {
+      meta = { ...meta, ...JSON.parse(storage?.getItem(META_KEY) || "null") };
+    } catch {
+    }
+    let autosave = null;
+    let busy2 = null;
+    let currentStatus = { status: meta.pending ? "pending" : "local", dirty: meta.pending, baseRevision: meta.baseRevision, lastSyncedAt: null };
+    const listeners = /* @__PURE__ */ new Set();
+    const tabId = uuid();
+    const channel = typeof globalThis.window?.BroadcastChannel === "function" ? new globalThis.window.BroadcastChannel("cozy_cloud_sync_v1") : null;
+    function conflictFromTab() {
+      stopAutosave();
+      emit({
+        ...currentStatus,
+        status: "conflict",
+        dirty: true,
+        error: "\u0414\u0440\u0443\u0433\u0430\u044F \u0432\u043A\u043B\u0430\u0434\u043A\u0430 \u0438\u0437\u043C\u0435\u043D\u0438\u043B\u0430 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435. \u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0430\u043A\u0442\u0443\u0430\u043B\u044C\u043D\u0443\u044E \u0432\u0435\u0440\u0441\u0438\u044E \u043F\u0435\u0440\u0435\u0434 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0435\u043D\u0438\u0435\u043C."
+      });
+    }
+    if (channel) {
+      channel.onmessage = (event) => {
+        if (event.data?.tabId !== tabId) conflictFromTab();
+      };
+    }
+    const onStorage = (event) => {
+      if (event.key === "cozy_adventures_save_v2" && event.newValue) conflictFromTab();
+    };
+    globalThis.window?.addEventListener?.("storage", onStorage);
+    function saveMeta() {
+      try {
+        storage?.setItem(META_KEY, JSON.stringify(meta));
+      } catch {
+      }
+    }
+    function snapshot() {
+      return {
+        ...currentStatus,
+        enabled: meta.enabled && account2.isSupporter(),
+        configured: meta.configured,
+        generation: meta.generation,
+        deviceId: meta.deviceId,
+        pending: meta.pending
+      };
+    }
+    function emit(status2 = currentStatus) {
+      currentStatus = status2;
+      const value = snapshot();
+      for (const listener of listeners) listener(value);
+      onStatus?.(value);
+    }
+    function profileId() {
+      const profile = account2.snapshot().profile;
+      return profile?.id || profile?.userId || profile?.user?.id || null;
+    }
+    function currentSnapshot() {
+      return { generation: meta.generation, state: structuredClone(getState()) };
+    }
+    function stopAutosave() {
+      autosave?.destroy();
+      autosave = null;
+    }
+    function startAutosave() {
+      stopAutosave();
+      autosave = createMinuteAutosave({
+        deviceId: meta.deviceId,
+        initialBaseRevision: meta.baseRevision,
+        isEnabled: () => meta.enabled && account2.isSupporter(),
+        getSnapshot: currentSnapshot,
+        putSnapshot: (payload) => account2.putCloudSave(payload),
+        loadPending: () => meta.pending,
+        savePending(value) {
+          meta.pending = value;
+          saveMeta();
+        },
+        onConflict() {
+          stopAutosave();
+          emit({ ...currentStatus, status: "conflict", dirty: true });
+        },
+        onStatus(status3) {
+          meta.baseRevision = status3.baseRevision;
+          meta.pending = status3.dirty;
+          saveMeta();
+          emit(status3);
+        }
+      });
+      if (meta.enabled) autosave.start();
+      const status2 = autosave.getStatus();
+      emit(status2.dirty ? status2 : { ...status2, status: "synced", lastSyncedAt: Date.now() });
+    }
+    function parseRemote(remote) {
+      return deserializeGameSave(JSON.stringify({
+        schemaVersion: remote.schemaVersion,
+        generation: remote.generation,
+        state: remote.state
+      }), { migrate: migrateGameState, maxBytes: SAVE_MAX_BYTES });
+    }
+    function acceptRemote(remote, parsed) {
+      replaceState2(parsed.state, { remote: true });
+      meta.generation = parsed.generation;
+      meta.baseRevision = remote.revision;
+      meta.pending = false;
+      saveMeta();
+    }
+    async function putLocal(baseRevision) {
+      const response = await account2.putCloudSave({
+        ...currentSnapshot(),
+        baseRevision,
+        deviceId: meta.deviceId
+      });
+      meta.baseRevision = response.revision;
+      meta.pending = false;
+      saveMeta();
+      return response;
+    }
+    async function choose(remote, parsed) {
+      const local = currentSnapshot();
+      return chooseConflict({
+        remote,
+        remoteState: parsed.state,
+        localState: local.state,
+        sameGeneration: remote.generation === local.generation
+      });
+    }
+    function reconcile() {
+      if (busy2) return busy2;
+      busy2 = (async () => {
+        if (!account2.isSupporter() || !meta.enabled) {
+          stopAutosave();
+          emit({ ...currentStatus, status: "local" });
+          return null;
+        }
+        emit({ ...currentStatus, status: "syncing" });
+        let remote = null;
+        try {
+          remote = await account2.getCloudSave();
+        } catch (error) {
+          if (error.status !== 404) {
+            emit({ ...currentStatus, status: error.status ? "error" : "offline", dirty: meta.pending, error: error.message });
+            throw error;
+          }
+        }
+        const uid = profileId();
+        let result = null;
+        if (!remote) {
+          if (meta.baseRevision > 0 && meta.userId === uid) {
+            const choice = await chooseConflict({ remote: null, localState: getState(), reason: "missing" });
+            if (choice === "wait") {
+              emit({ ...currentStatus, status: "conflict", dirty: true });
+              return null;
+            }
+          }
+          if (meta.baseRevision === 0 && meta.userId !== uid && confirmInitialUpload) {
+            const allowed = await confirmInitialUpload({ localState: getState() });
+            if (!allowed) {
+              meta.enabled = false;
+              saveMeta();
+              emit({ ...currentStatus, status: "local" });
+              return null;
+            }
+          }
+          result = await putLocal(0);
+        } else {
+          const parsed = parseRemote(remote);
+          const firstDownload = !hadLocalSave && !meta.pending;
+          const sameSave = meta.userId === uid && meta.generation === remote.generation;
+          let action2 = "keep";
+          if (firstDownload) action2 = "remote";
+          else if (sameSave && !meta.pending && remote.revision > meta.baseRevision) action2 = "remote";
+          else if (sameSave && remote.revision === meta.baseRevision) action2 = meta.pending ? "local" : "keep";
+          else if (!sameSave || remote.revision !== meta.baseRevision) {
+            action2 = await choose(remote, parsed);
+          }
+          if (action2 === "wait") {
+            emit({ ...currentStatus, status: "conflict", dirty: true });
+            return null;
+          }
+          if (action2 === "remote") acceptRemote(remote, parsed);
+          else if (action2 === "local") result = await putLocal(remote.revision);
+          else meta.baseRevision = remote.revision;
+          meta.pending = action2 === "remote" ? false : meta.pending;
+          saveMeta();
+        }
+        meta.userId = uid;
+        if (result) meta.baseRevision = result.revision;
+        saveMeta();
+        startAutosave();
+        return result || remote;
+      })();
+      busy2.finally(() => {
+        busy2 = null;
+      }).catch(() => {
+      });
+      return busy2;
+    }
+    return {
+      notifyDirty() {
+        meta.pending = true;
+        saveMeta();
+        channel?.postMessage({ tabId, deviceId: meta.deviceId, generation: meta.generation });
+        autosave?.notifyDirty();
+        if (!autosave) emit({ ...currentStatus, status: "pending", dirty: true });
+      },
+      reconcile,
+      setEnabled(value) {
+        meta.enabled = Boolean(value);
+        meta.configured = true;
+        saveMeta();
+        if (!meta.enabled) {
+          stopAutosave();
+          emit({ ...currentStatus, status: "local" });
+          return Promise.resolve(null);
+        }
+        return reconcile();
+      },
+      async syncNow() {
+        if (!meta.enabled) {
+          meta.enabled = true;
+          meta.configured = true;
+          saveMeta();
+        }
+        try {
+          if (currentStatus.status === "conflict") {
+            stopAutosave();
+            return await reconcile();
+          }
+          if (!autosave) {
+            const result = await reconcile();
+            if (autosave && meta.pending) return await autosave.syncNow();
+            return result;
+          }
+          if (!meta.pending) return await reconcile();
+          return await autosave.syncNow();
+        } catch (error) {
+          if (error.status === 409 || error.code === 409) {
+            stopAutosave();
+            return reconcile();
+          }
+          throw error;
+        }
+      },
+      reset() {
+        stopAutosave();
+        meta.enabled = false;
+        meta.userId = null;
+        meta.baseRevision = 0;
+        saveMeta();
+        emit({ ...currentStatus, status: meta.pending ? "pending" : "local", baseRevision: 0, lastSyncedAt: null });
+      },
+      beginNewGeneration() {
+        meta.generation = uuid();
+        meta.pending = true;
+        saveMeta();
+        if (autosave) startAutosave();
+        else emit({ ...currentStatus, status: "pending", dirty: true });
+      },
+      exportSave() {
+        return serializeGameSave(getState(), meta.generation);
+      },
+      importSave(raw) {
+        const parsed = deserializeGameSave(raw, { migrate: migrateGameState });
+        replaceState2(parsed.state, { remote: false });
+        meta.generation = parsed.generation || uuid();
+        meta.baseRevision = 0;
+        meta.pending = true;
+        saveMeta();
+        if (autosave) startAutosave();
+        else emit({ ...currentStatus, status: "pending", dirty: true });
+        return parsed;
+      },
+      getStatus: snapshot,
+      subscribe(listener) {
+        listeners.add(listener);
+        listener(snapshot());
+        return () => listeners.delete(listener);
+      },
+      destroy() {
+        stopAutosave();
+        listeners.clear();
+        channel?.close();
+        globalThis.window?.removeEventListener?.("storage", onStorage);
+      }
     };
   }
 
@@ -25969,6 +26878,15 @@
   }
 
   // src/ui/common.js
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
   function puzzleSkipButton(ctx2, level, onSkipped) {
     const price = skipPuzzlePrice(level);
     const b = document.createElement("button");
@@ -26061,11 +26979,11 @@
     overlay.innerHTML = `
     <div class="card">
       ${art ? `<div class="overlay-art">${art}</div>` : ""}
-      <h2>${title}</h2>
-      ${subtitle ? `<div class="muted">${subtitle}</div>` : ""}
+      <h2>${escapeHtml(title)}</h2>
+      ${subtitle ? `<div class="muted">${escapeHtml(subtitle)}</div>` : ""}
       ${rewardHtml ? `<div class="rewards">${rewardHtml}</div>` : ""}
       ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ""}
-      ${advice ? `<div class="advice">\u{1F4A1} ${advice}</div>` : ""}
+      ${advice ? `<div class="advice">\u{1F4A1} ${escapeHtml(advice)}</div>` : ""}
       <div class="actions"></div>
     </div>`;
     const actions = overlay.querySelector(".actions");
@@ -27090,13 +28008,13 @@
       if (chatter) {
         const line = document.createElement("div");
         line.className = "cat-line";
-        line.innerHTML = chatter;
+        line.textContent = chatter;
         body.appendChild(line);
       }
       for (const j of journal) {
         const entry = document.createElement("div");
         entry.className = "cat-entry";
-        entry.innerHTML = `${j.icon} ${j.text}`;
+        entry.textContent = `${j.icon} ${j.text}`;
         body.appendChild(entry);
       }
       catPanel.appendChild(body);
@@ -31636,26 +32554,26 @@
   function sameAction(a, b) {
     return !!a && !!b && a.do === b.do && (a.ingredient ?? null) === (b.ingredient ?? null);
   }
-  function stepMatches(step, action) {
+  function stepMatches(step, action2) {
     if (!step) return false;
-    if (Array.isArray(step.anyOf)) return step.anyOf.some((o) => sameAction(o, action));
-    return sameAction(step, action);
+    if (Array.isArray(step.anyOf)) return step.anyOf.some((o) => sameAction(o, action2));
+    return sameAction(step, action2);
   }
   function expectedStep(state2) {
     return state2.level.recipe[state2.progress] || null;
   }
-  function doBrewAction(state2, action) {
-    if (!action || !BREW_ACTIONS[action.do]) return { ok: false, error: "\u0422\u0430\u043A \u043D\u0435 \u0432\u0430\u0440\u044F\u0442" };
-    if (ING_ACTIONS.has(action.do)) {
-      if (!state2.level.ingredients.some((i) => i.id === action.ingredient)) {
+  function doBrewAction(state2, action2) {
+    if (!action2 || !BREW_ACTIONS[action2.do]) return { ok: false, error: "\u0422\u0430\u043A \u043D\u0435 \u0432\u0430\u0440\u044F\u0442" };
+    if (ING_ACTIONS.has(action2.do)) {
+      if (!state2.level.ingredients.some((i) => i.id === action2.ingredient)) {
         return { ok: false, error: "\u041D\u0430 \u0441\u0442\u043E\u043B\u0435 \u0442\u0430\u043A\u043E\u0433\u043E \u043D\u0435\u0442" };
       }
     }
     if (isBrewSolved(state2)) return { ok: false, error: "\u0417\u0435\u043B\u044C\u0435 \u0443\u0436\u0435 \u0433\u043E\u0442\u043E\u0432\u043E" };
     const exp = expectedStep(state2);
     state2.moves += 1;
-    if (stepMatches(exp, action)) {
-      state2.history.push({ do: action.do, ingredient: action.ingredient ?? null });
+    if (stepMatches(exp, action2)) {
+      state2.history.push({ do: action2.do, ingredient: action2.ingredient ?? null });
       if (state2.reps + 1 < (exp.times ?? 1)) {
         state2.reps += 1;
       } else {
@@ -32079,18 +32997,18 @@
         ctx2.toast("\u0417\u0435\u043B\u044C\u0435 \u0443\u0436\u0435 \u0433\u043E\u0442\u043E\u0432\u043E!");
       }
     }
-    function onAction(action) {
+    function onAction(action2) {
       if (finished) return;
-      if (action.do === "add" && prepMode) {
-        action = { do: prepMode, ingredient: action.ingredient };
+      if (action2.do === "add" && prepMode) {
+        action2 = { do: prepMode, ingredient: action2.ingredient };
         prepMode = null;
       }
-      const r = doBrewAction(puzzle, action);
+      const r = doBrewAction(puzzle, action2);
       if (r.ok) {
         hintAction = null;
-        ctx2.sfx?.(SFX_BY_DO[action.do] || "bubble");
+        ctx2.sfx?.(SFX_BY_DO[action2.do] || "bubble");
         pulsePot();
-        playFx(action);
+        playFx(action2);
         draw();
         if (r.solved) finish();
         return;
@@ -32111,8 +33029,8 @@
       }
       ctx2.toast(r.error || "\u041D\u0435 \u0432\u044B\u0445\u043E\u0434\u0438\u0442");
     }
-    function playFx(action) {
-      if (action.do === "cover" || action.do === "uncover") return;
+    function playFx(action2) {
+      if (action2.do === "cover" || action2.do === "uncover") return;
       const byDo = {
         stir: ["\u{1F944}", "fx-stir"],
         heat: ["\u{1F525}", "fx-heat"],
@@ -32121,8 +33039,8 @@
         crush: ["\u{1F963}", "fx-pound"],
         cut: ["\u{1F52A}", "fx-chop"]
       };
-      const ing = action.ingredient ? level.ingredients.find((i) => i.id === action.ingredient) : null;
-      const [icon, cls] = byDo[action.do] || [ing?.icon || "\u{1F4A7}", "fx-fall"];
+      const ing = action2.ingredient ? level.ingredients.find((i) => i.id === action2.ingredient) : null;
+      const [icon, cls] = byDo[action2.do] || [ing?.icon || "\u{1F4A7}", "fx-fall"];
       fx.textContent = icon;
       fx.className = "brew-fx";
       void fx.offsetWidth;
@@ -35561,8 +36479,8 @@
       row.innerHTML = `
       <span class="icon">${available ? solved ? "\u{1F3EE}" : "\u{1F9E9}" : "\u{1F512}"}</span>
       <span class="grow">
-        <div class="name">${i + 1}. ${p.name} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">\u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \xD72</span>' : ""}</div>
-        <div class="desc">${available ? p.intro : "\u0420\u0435\u0448\u0438 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443, \u0447\u0442\u043E\u0431\u044B \u043E\u0442\u043A\u0440\u044B\u0442\u044C."}</div>
+        <div class="name">${i + 1}. ${escapeHtml(p.name)} <span class="badge">${stars}</span>${isDaily ? ' <span class="badge new-badge">\u0437\u0430\u043A\u0430\u0437 \u0434\u043D\u044F \xD72</span>' : ""}</div>
+        <div class="desc">${available ? escapeHtml(p.intro) : "\u0420\u0435\u0448\u0438 \u043F\u0440\u0435\u0434\u044B\u0434\u0443\u0449\u0443\u044E \u0437\u0430\u0433\u0430\u0434\u043A\u0443, \u0447\u0442\u043E\u0431\u044B \u043E\u0442\u043A\u0440\u044B\u0442\u044C."}</div>
       </span>`;
       if (available) {
         const btn = document.createElement("button");
@@ -35897,7 +36815,7 @@
     overlay.innerHTML = `
     <div class="card">
       <h2>\u{1F3EE} \u041B\u0430\u0432\u043A\u0430 \u0441\u0438\u044F\u0435\u0442!</h2>
-      <div class="muted">\xAB${level.name}\xBB \u2014 \u0440\u0435\u0448\u0435\u043D\u043E</div>
+      <div class="muted">\xAB${escapeHtml(level.name)}\xBB \u2014 \u0440\u0435\u0448\u0435\u043D\u043E</div>
       <div class="rewards">${rewardHtml}</div>
       ${goalHtml ? `<div class="goal-progress">${goalHtml}</div>` : ""}
       <div class="actions"></div>
@@ -37454,6 +38372,74 @@
     }
     cosPanel.appendChild(cosList);
     container.appendChild(cosPanel);
+    const appendBodyProducts = (products, supporter = false) => {
+      const panel = document.createElement("div");
+      panel.className = "panel";
+      panel.dataset[supporter ? "supporterCosmeticsPanel" : "knightBodiesPanel"] = "1";
+      panel.innerHTML = supporter ? '<h3>\u0418\u0437\u0434\u0430\u043D\u0438\u0435 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F</h3><div class="muted" style="font-size:13px;margin-bottom:8px">\u0420\u0430\u0437\u043E\u0432\u044B\u0439 \u0434\u043E\u043D\u0430\u0442 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u043F\u043E\u043A\u0443\u043F\u043A\u0443 \u044D\u0442\u0438\u0445 \u043E\u0431\u0440\u0430\u0437\u043E\u0432 \u0437\u0430 \u043F\u0435\u0447\u0430\u0442\u0438. \u0423\u0436\u0435 \u043A\u0443\u043F\u043B\u0435\u043D\u043D\u044B\u0435 \u043E\u0431\u0440\u0430\u0437\u044B \u043E\u0441\u0442\u0430\u044E\u0442\u0441\u044F \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B \u0432\u0441\u0435\u0433\u0434\u0430.</div>' : '<h3>\u041E\u0431\u0440\u0430\u0437\u044B \u0440\u044B\u0446\u0430\u0440\u044F</h3><div class="muted" style="font-size:13px;margin-bottom:8px">\u041C\u0443\u0436\u0441\u043A\u043E\u0439 \u0438 \u0436\u0435\u043D\u0441\u043A\u0438\u0439 \u043E\u0431\u0440\u0430\u0437\u044B \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B \u0441\u0440\u0430\u0437\u0443. \u0414\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u043C\u0435\u043D\u044F\u044E\u0442 \u0442\u043E\u043B\u044C\u043A\u043E \u0446\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u043E\u0440\u0442\u0440\u0435\u0442, \u043D\u0435 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439.</div>';
+      const list2 = document.createElement("div");
+      list2.className = "list";
+      for (const c of products) {
+        const owned = state2.cosmeticsOwned.includes(c.id);
+        const active2 = state2.settings.knightBody === c.id;
+        const row = document.createElement("div");
+        row.className = "row" + (active2 ? " done" : "");
+        row.dataset.knightBodyRow = c.id;
+        const price = c.sealPrice ? `\u{1F530} ${c.sealPrice}` : `\u{1FA99} ${c.price}`;
+        row.innerHTML = `<span class="grow"><div class="name">${c.name}</div><div class="desc">${c.description}</div></span>`;
+        const preview = previewEl(c.preview, c.icon);
+        preview.classList.add("knight-body-product-preview");
+        row.prepend(preview);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "small" + (active2 ? " ghost" : "");
+        btn.dataset.knightBodyId = c.id;
+        btn.setAttribute("aria-pressed", String(active2));
+        if (!owned) {
+          const enough = c.sealPrice ? state2.seals >= c.sealPrice : state2.coins >= c.price;
+          btn.innerHTML = `\u041A\u0443\u043F\u0438\u0442\u044C \xB7 ${price}`;
+          btn.disabled = !enough || supporter && ctx2.account?.isSupporter?.() !== true;
+          btn.addEventListener("click", async () => {
+            btn.disabled = true;
+            let allowed = !supporter;
+            if (supporter) {
+              try {
+                const profile = await ctx2.account?.refresh?.();
+                allowed = profile?.supporter?.active === true;
+              } catch {
+                ctx2.toast("\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u0440\u043E\u0432\u0435\u0440\u0438\u0442\u044C \u0418\u0437\u0434\u0430\u043D\u0438\u0435 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043F\u043E\u0437\u0436\u0435.");
+                rerenderCurrent();
+                return;
+              }
+            }
+            const r = buyCosmetic(state2, c.id, { supporter: allowed });
+            if (r.ok) {
+              ctx2.toast(`${c.name} \u2014 \u043E\u0431\u0440\u0430\u0437 \u0432\u044B\u0431\u0440\u0430\u043D.`);
+              ctx2.sfx?.("success");
+              ctx2.save();
+            } else ctx2.toast(r.error);
+            rerenderCurrent();
+          });
+        } else {
+          btn.textContent = active2 ? "\u0412\u044B\u0431\u0440\u0430\u043D" : "\u0412\u044B\u0431\u0440\u0430\u0442\u044C";
+          btn.disabled = active2;
+          btn.addEventListener("click", () => {
+            const r = selectKnightBody(state2, c.id);
+            if (r.ok) {
+              ctx2.sfx?.("tap");
+              ctx2.save();
+              rerenderCurrent();
+            } else ctx2.toast(r.error);
+          });
+        }
+        row.appendChild(btn);
+        list2.appendChild(row);
+      }
+      panel.appendChild(list2);
+      container.appendChild(panel);
+    };
+    appendBodyProducts(KNIGHT_BODY_COSMETICS.filter((c) => c.edition !== "supporter"));
+    appendBodyProducts(KNIGHT_BODY_COSMETICS.filter((c) => c.edition === "supporter"), true);
     currentRerender = () => {
       container.innerHTML = "";
       renderShop(container, ctx2);
@@ -37843,7 +38829,7 @@
       row.innerHTML = `
       <span class="icon">${done ? "\u{1F3EE}" : "\u{1F6E0}\uFE0F"}</span>
       <span class="grow">
-        <div class="name">${p.name}</div>
+        <div class="name">${escapeHtml(p.name)}</div>
         <div class="desc">\u0421\u0435\u0442\u043A\u0430 ${p.grid[0]}\xD7${p.grid[1]} \xB7 \u043E\u0431\u044A\u0435\u043A\u0442\u043E\u0432: ${p.objects.length}</div>
       </span>`;
       const play = document.createElement("button");
@@ -38599,22 +39585,67 @@
     }
   }
   var MUSIC_KEY = "cozy_music";
+  var MUSIC_PRESET_KEY = "cozy_music_preset";
   var musicTimer = null;
   var musicGain = null;
   var musicNoise = null;
   var chordIdx = 0;
   var bellIdx = 0;
-  var CHORDS = [
-    [220, 261.63, 329.63],
-    // Am
-    [174.61, 220, 261.63],
-    // F
-    [130.81, 196, 329.63],
-    // C
-    [196, 246.94, 293.66]
-    // G
+  var activeMusicPreset = null;
+  var MUSIC_PRESETS = [
+    {
+      id: "rain",
+      name: "\u0414\u043E\u0436\u0434\u044C \u0443 \u043B\u0430\u0432\u043A\u0438",
+      icon: "\u{1F327}\uFE0F",
+      chords: [[220, 261.63, 329.63], [174.61, 220, 261.63], [130.81, 196, 329.63], [196, 246.94, 293.66]],
+      bells: [523.25, 587.33, 659.25, 783.99, 880, 1046.5],
+      wave: "triangle",
+      bellProbability: 0.65,
+      noiseFrequency: 900,
+      noiseGain: 0.35,
+      noiseDepth: 0.12
+    },
+    {
+      id: "hearth",
+      name: "\u041A\u0430\u043C\u0438\u043D",
+      icon: "\u{1F525}",
+      supporter: true,
+      chords: [[196, 246.94, 293.66], [164.81, 220, 261.63], [130.81, 196, 246.94], [174.61, 220, 293.66]],
+      bells: [261.63, 329.63, 392, 523.25],
+      wave: "sine",
+      bellProbability: 0.2,
+      noiseFrequency: 1800,
+      noiseGain: 0.16,
+      noiseDepth: 0.18
+    },
+    {
+      id: "night_market",
+      name: "\u041D\u043E\u0447\u043D\u043E\u0439 \u0440\u044B\u043D\u043E\u043A",
+      icon: "\u{1F3EE}",
+      supporter: true,
+      chords: [[220, 277.18, 329.63], [196, 246.94, 311.13], [174.61, 220, 277.18], [196, 246.94, 329.63]],
+      bells: [440, 554.37, 659.25, 830.61],
+      wave: "triangle",
+      bellProbability: 0.4,
+      noiseFrequency: 1200,
+      noiseGain: 0.18,
+      noiseDepth: 0.1
+    },
+    {
+      id: "lute",
+      name: "\u0422\u0438\u0445\u0430\u044F \u043B\u044E\u0442\u043D\u044F",
+      icon: "\u{1F3BC}",
+      supporter: true,
+      chords: [[174.61, 220, 261.63], [130.81, 164.81, 196], [146.83, 174.61, 220], [164.81, 196, 246.94]],
+      bells: [349.23, 440, 523.25, 698.46],
+      wave: "sine",
+      bellProbability: 0.5,
+      noiseFrequency: 700,
+      noiseGain: 0.06,
+      noiseDepth: 0.06
+    }
   ];
-  var BELLS = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
+  var MUSIC_PRESET_BY_ID = Object.fromEntries(MUSIC_PRESETS.map((preset) => [preset.id, preset]));
   function musicEnabledSetting() {
     try {
       return localStorage.getItem(MUSIC_KEY) !== "off";
@@ -38622,9 +39653,41 @@
       return true;
     }
   }
-  function startMusic() {
+  function musicPreset(access = {}) {
+    let id = "rain";
+    try {
+      id = localStorage.getItem(MUSIC_PRESET_KEY) || "rain";
+    } catch {
+    }
+    const preset = MUSIC_PRESET_BY_ID[id] || MUSIC_PRESET_BY_ID.rain;
+    return preset.supporter && access.supporter !== true ? "rain" : preset.id;
+  }
+  function setMusicPreset(id, access = {}) {
+    const preset = MUSIC_PRESET_BY_ID[id];
+    if (!preset) return { ok: false, error: "\u041D\u0435\u0442 \u0442\u0430\u043A\u043E\u0433\u043E \u043C\u0443\u0437\u044B\u043A\u0430\u043B\u044C\u043D\u043E\u0433\u043E \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u044F" };
+    if (preset.supporter && access.supporter !== true) {
+      return { ok: false, error: "\u041C\u0435\u043B\u043E\u0434\u0438\u044F \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0430 \u0432 \u0418\u0437\u0434\u0430\u043D\u0438\u0438 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F" };
+    }
+    try {
+      localStorage.setItem(MUSIC_PRESET_KEY, id);
+    } catch {
+    }
+    if (musicTimer) {
+      stopMusic();
+      startMusic(access);
+    }
+    return { ok: true, preset: id };
+  }
+  function startMusic(access = {}) {
     const a = ac();
-    if (!a || musicTimer || !musicEnabledSetting()) return;
+    if (!a || !musicEnabledSetting()) return;
+    const presetId = musicPreset(access);
+    if (musicTimer && activeMusicPreset === presetId) return;
+    if (musicTimer) stopMusic();
+    const preset = MUSIC_PRESET_BY_ID[presetId];
+    activeMusicPreset = presetId;
+    chordIdx = 0;
+    bellIdx = 0;
     musicGain = a.createGain();
     musicGain.gain.value = 0;
     musicGain.gain.linearRampToValueAtTime(0.045, a.currentTime + 2);
@@ -38632,24 +39695,24 @@
     const noiseLen = a.sampleRate * 2;
     const noiseBuf = a.createBuffer(1, noiseLen, a.sampleRate);
     const data = noiseBuf.getChannelData(0);
-    for (let i = 0; i < noiseLen; i++) data[i] = (Math.random() * 2 - 1) * 0.12;
+    for (let i = 0; i < noiseLen; i++) data[i] = (Math.random() * 2 - 1) * preset.noiseDepth;
     musicNoise = a.createBufferSource();
     musicNoise.buffer = noiseBuf;
     musicNoise.loop = true;
     const noiseFilter = a.createBiquadFilter();
     noiseFilter.type = "lowpass";
-    noiseFilter.frequency.value = 900;
+    noiseFilter.frequency.value = preset.noiseFrequency;
     const noiseGain = a.createGain();
-    noiseGain.gain.value = 0.35;
+    noiseGain.gain.value = preset.noiseGain;
     musicNoise.connect(noiseFilter).connect(noiseGain).connect(musicGain);
     musicNoise.start();
     const bar = () => {
       if (!musicGain) return;
       const t0 = a.currentTime + 0.05;
-      for (const f of CHORDS[chordIdx % CHORDS.length]) {
+      for (const f of preset.chords[chordIdx % preset.chords.length]) {
         const osc = a.createOscillator();
         const g = a.createGain();
-        osc.type = "triangle";
+        osc.type = preset.wave;
         osc.frequency.value = f;
         g.gain.setValueAtTime(0, t0);
         g.gain.linearRampToValueAtTime(0.5, t0 + 0.7);
@@ -38658,12 +39721,12 @@
         osc.start(t0);
         osc.stop(t0 + 3.7);
       }
-      if (Math.random() < 0.65) {
+      if (Math.random() < preset.bellProbability) {
         const bt = t0 + 0.8 + Math.random() * 2.2;
         const osc = a.createOscillator();
         const g = a.createGain();
         osc.type = "sine";
-        osc.frequency.value = BELLS[bellIdx++ % BELLS.length];
+        osc.frequency.value = preset.bells[bellIdx++ % preset.bells.length];
         g.gain.setValueAtTime(0, bt);
         g.gain.linearRampToValueAtTime(0.35, bt + 0.02);
         g.gain.exponentialRampToValueAtTime(1e-4, bt + 1.6);
@@ -38681,35 +39744,266 @@
       clearInterval(musicTimer);
       musicTimer = null;
     }
+    activeMusicPreset = null;
     try {
       musicNoise?.stop();
     } catch {
     }
     musicNoise = null;
-    if (musicGain) {
+    const gain = musicGain;
+    musicGain = null;
+    if (gain) {
       const a = ac();
-      if (a) musicGain.gain.linearRampToValueAtTime(0, a.currentTime + 0.8);
+      if (a) gain.gain.linearRampToValueAtTime(0, a.currentTime + 0.8);
       setTimeout(() => {
         try {
-          musicGain?.disconnect();
+          gain.disconnect();
         } catch {
         }
-        musicGain = null;
       }, 900);
     }
   }
-  function toggleMusic() {
+  function toggleMusic(access = {}) {
     const on = !musicEnabledSetting();
     try {
       localStorage.setItem(MUSIC_KEY, on ? "on" : "off");
     } catch {
     }
     if (!on) stopMusic();
-    else startMusic();
+    else startMusic(access);
     return on;
+  }
+  function musicOn() {
+    return !!musicTimer;
   }
   function musicEnabled() {
     return musicEnabledSetting();
+  }
+
+  // src/ui/accountView.js
+  function rowText(title, hint2 = "") {
+    const row = document.createElement("div");
+    row.className = "set-row";
+    const box = document.createElement("div");
+    box.className = "set-text";
+    const name = document.createElement("div");
+    name.className = "set-name";
+    name.textContent = title;
+    box.appendChild(name);
+    if (hint2) {
+      const text = document.createElement("div");
+      text.className = "set-hint";
+      text.textContent = hint2;
+      box.appendChild(text);
+    }
+    row.appendChild(box);
+    return row;
+  }
+  function action(title, hint2, label, onClick) {
+    const row = rowText(title, hint2);
+    const button = document.createElement("button");
+    button.className = "ghost";
+    button.textContent = label;
+    button.addEventListener("click", onClick);
+    row.appendChild(button);
+    return { row, button };
+  }
+  function passwordInput(autocomplete, label = "\u041F\u0430\u0440\u043E\u043B\u044C") {
+    const wrapper = document.createElement("label");
+    wrapper.className = "set-text";
+    const caption = document.createElement("span");
+    caption.className = "set-name";
+    caption.textContent = label;
+    const input = document.createElement("input");
+    input.type = "password";
+    input.required = true;
+    input.minLength = 10;
+    input.autocomplete = autocomplete;
+    input.dataset.passwordInput = autocomplete;
+    wrapper.append(caption, input);
+    return { wrapper, input };
+  }
+  function createAccountSection(ctx2) {
+    const account2 = ctx2.account || {
+      snapshot: () => ({ configured: false, status: "anonymous", supporter: { active: false } }),
+      subscribe: (listener) => {
+        listener({ configured: false, status: "anonymous", supporter: { active: false } });
+        return () => {
+        };
+      }
+    };
+    const section = document.createElement("section");
+    section.className = "panel set-section";
+    section.dataset.accountSection = "1";
+    const heading = document.createElement("h3");
+    heading.textContent = "\u2601\uFE0F \u0410\u043A\u043A\u0430\u0443\u043D\u0442 \u0438 \u0438\u0437\u0434\u0430\u043D\u0438\u0435";
+    section.appendChild(heading);
+    const accountStatus = document.createElement("div");
+    section.appendChild(accountStatus);
+    const authHost = document.createElement("div");
+    section.appendChild(authHost);
+    const syncHost = document.createElement("div");
+    section.appendChild(syncHost);
+    const transferHost = document.createElement("div");
+    section.appendChild(transferHost);
+    let authMode = "login";
+    let changeMode = false;
+    function makeAuthForm(mode) {
+      const form = document.createElement("form");
+      form.dataset.authForm = mode;
+      const email = document.createElement("input");
+      if (mode !== "change") {
+        const emailLabel = document.createElement("label");
+        emailLabel.className = "set-text";
+        const caption = document.createElement("span");
+        caption.className = "set-name";
+        caption.textContent = "\u041F\u043E\u0447\u0442\u0430";
+        email.type = "email";
+        email.required = true;
+        email.maxLength = 254;
+        email.autocomplete = "email";
+        email.dataset.emailInput = "1";
+        emailLabel.append(caption, email);
+        form.appendChild(emailLabel);
+      }
+      const current = passwordInput(
+        mode === "register" ? "new-password" : "current-password",
+        mode === "register" ? "\u041F\u0430\u0440\u043E\u043B\u044C (\u043C\u0438\u043D\u0438\u043C\u0443\u043C 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432)" : mode === "change" ? "\u0422\u0435\u043A\u0443\u0449\u0438\u0439 \u043F\u0430\u0440\u043E\u043B\u044C" : "\u041F\u0430\u0440\u043E\u043B\u044C"
+      );
+      form.appendChild(current.wrapper);
+      const next = mode === "change" ? passwordInput("new-password", "\u041D\u043E\u0432\u044B\u0439 \u043F\u0430\u0440\u043E\u043B\u044C (\u043C\u0438\u043D\u0438\u043C\u0443\u043C 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432)") : null;
+      if (next) form.appendChild(next.wrapper);
+      const submit = document.createElement("button");
+      submit.type = "submit";
+      submit.className = "primary";
+      submit.textContent = mode === "register" ? "\u0417\u0430\u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0438\u0440\u043E\u0432\u0430\u0442\u044C\u0441\u044F" : mode === "change" ? "\u0421\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C" : "\u0412\u043E\u0439\u0442\u0438";
+      const error = document.createElement("div");
+      error.className = "set-hint";
+      error.setAttribute("role", "alert");
+      form.append(submit, error);
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        submit.disabled = true;
+        error.textContent = "";
+        try {
+          if (mode === "register") await account2.register({ email: email.value, password: current.input.value });
+          else if (mode === "login") await account2.login({ email: email.value, password: current.input.value });
+          else await account2.changePassword({ currentPassword: current.input.value, newPassword: next.input.value });
+          if (mode === "change") {
+            changeMode = false;
+            ctx2.toast("\u041F\u0430\u0440\u043E\u043B\u044C \u0438\u0437\u043C\u0435\u043D\u0451\u043D. \u0414\u0440\u0443\u0433\u0438\u0435 \u0441\u0435\u0441\u0441\u0438\u0438 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u044B.");
+          }
+        } catch (requestError) {
+          error.textContent = requestError.message;
+        } finally {
+          current.input.value = "";
+          if (next) next.input.value = "";
+          submit.disabled = false;
+        }
+      });
+      return form;
+    }
+    function renderAccount(snapshot) {
+      accountStatus.innerHTML = "";
+      authHost.innerHTML = "";
+      syncHost.innerHTML = "";
+      if (!snapshot.configured) {
+        accountStatus.appendChild(rowText("\u041B\u043E\u043A\u0430\u043B\u044C\u043D\u0430\u044F \u0438\u0433\u0440\u0430", "\u0421\u0435\u0440\u0432\u0435\u0440 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430 \u043D\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D. \u0412\u0441\u0435 \u043E\u0441\u043D\u043E\u0432\u043D\u044B\u0435 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u0438 \u0438 \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0435\u0439\u0432 \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B \u0431\u0435\u0437 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438."));
+      } else if (snapshot.status === "authenticated" && snapshot.profile) {
+        const name = snapshot.profile.email || "\u0425\u043E\u0437\u044F\u0438\u043D \u043B\u0430\u0432\u043A\u0438";
+        accountStatus.appendChild(rowText(`\u0410\u043A\u043A\u0430\u0443\u043D\u0442: ${name}`, snapshot.supporter.active ? "\u0418\u0437\u0434\u0430\u043D\u0438\u0435 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F \u0430\u043A\u0442\u0438\u0432\u043D\u043E. \u0421\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0443 \u0438\u0433\u0440\u044B!" : "\u0411\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u044B\u0439 \u0430\u043A\u043A\u0430\u0443\u043D\u0442. \u041E\u0431\u043B\u0430\u043A\u043E \u0438 supporter-\u0432\u0438\u0442\u0440\u0438\u043D\u0430 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u044E\u0442\u0441\u044F \u043E\u0434\u043D\u0438\u043C \u0440\u0430\u0437\u043E\u0432\u044B\u043C \u0434\u043E\u043D\u0430\u0442\u043E\u043C."));
+        const change = action("\u0411\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u044C", "\u041F\u043E\u0441\u043B\u0435 \u0441\u043C\u0435\u043D\u044B \u043F\u0430\u0440\u043E\u043B\u044F \u043E\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0435 \u0441\u0435\u0441\u0441\u0438\u0438 \u0437\u0430\u0432\u0435\u0440\u0448\u0430\u0442\u0441\u044F.", changeMode ? "\u041E\u0442\u043C\u0435\u043D\u0430" : "\u0421\u043C\u0435\u043D\u0438\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C", () => {
+          changeMode = !changeMode;
+          renderAccount(account2.snapshot());
+        });
+        accountStatus.appendChild(change.row);
+        if (changeMode) accountStatus.appendChild(makeAuthForm("change"));
+        const logout = action("\u0412\u044B\u0445\u043E\u0434 \u0438\u0437 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430", "\u041B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u0439 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0438 \u043A\u0443\u043F\u043B\u0435\u043D\u043D\u0430\u044F \u043A\u043E\u0441\u043C\u0435\u0442\u0438\u043A\u0430 \u043E\u0441\u0442\u0430\u043D\u0443\u0442\u0441\u044F \u043D\u0430 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0435.", "\u0412\u044B\u0439\u0442\u0438", async () => {
+          await account2.logout();
+          ctx2.persistence?.reset();
+          ctx2.toast("\u0412\u044B \u0432\u044B\u0448\u043B\u0438 \u0438\u0437 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430. \u0418\u0433\u0440\u0430 \u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0435\u0442\u0441\u044F \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u043E.");
+        });
+        accountStatus.appendChild(logout.row);
+      } else {
+        accountStatus.appendChild(rowText(
+          snapshot.status === "loading" ? "\u041F\u0440\u043E\u0432\u0435\u0440\u044F\u0435\u043C \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u2026" : "\u0418\u0433\u0440\u0430 \u0431\u0435\u0437 \u0440\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u0438",
+          snapshot.lastError || "\u041F\u043E\u0447\u0442\u0430 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F \u0442\u043E\u043B\u044C\u043A\u043E \u043A\u0430\u043A \u043B\u043E\u0433\u0438\u043D. \u041F\u0438\u0441\u044C\u043C\u0430 \u043D\u0435 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u044E\u0442\u0441\u044F; \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u043E email \u043D\u0435\u0442."
+        ));
+        if (snapshot.status !== "loading") {
+          const modes = document.createElement("div");
+          modes.className = "pc-mode-picker";
+          for (const [id, label] of [["login", "\u0412\u0445\u043E\u0434"], ["register", "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"]]) {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = `small pc-mode-option${authMode === id ? " primary is-active" : " ghost"}`;
+            button.dataset.authMode = id;
+            button.textContent = label;
+            button.setAttribute("aria-pressed", String(authMode === id));
+            button.addEventListener("click", () => {
+              authMode = id;
+              renderAccount(account2.snapshot());
+            });
+            modes.appendChild(button);
+          }
+          authHost.append(modes, makeAuthForm(authMode));
+        }
+      }
+      if (snapshot.status === "authenticated") authHost.innerHTML = "";
+      const sync = ctx2.persistence?.getStatus?.() || { enabled: false, status: "local" };
+      if (snapshot.supporter.active) {
+        const labels = {
+          local: "\u041B\u043E\u043A\u0430\u043B\u044C\u043D\u043E",
+          pending: "\u0416\u0434\u0451\u0442 \u043C\u0438\u043D\u0443\u0442\u043D\u043E\u0439 \u043E\u0442\u043F\u0440\u0430\u0432\u043A\u0438",
+          syncing: "\u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u0443\u0435\u043C\u2026",
+          synced: "\u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u043D\u043E",
+          offline: "\u041E\u0444\u043B\u0430\u0439\u043D \u2014 \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u043C \u043F\u043E\u0437\u0436\u0435",
+          conflict: "\u041D\u0443\u0436\u0435\u043D \u0432\u044B\u0431\u043E\u0440 \u043F\u0440\u0438 \u043A\u043E\u043D\u0444\u043B\u0438\u043A\u0442\u0435",
+          error: "\u041E\u0448\u0438\u0431\u043A\u0430 \u0441\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
+        };
+        const hint2 = `${labels[sync.status] || labels.local}. \u0410\u0432\u0442\u043E\u043C\u0430\u0442\u0438\u0447\u0435\u0441\u043A\u0438 \u0440\u0430\u0437 \u0432 60 \u0441\u0435\u043A\u0443\u043D\u0434 \u043F\u0440\u0438 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F\u0445; \u043E\u0434\u043D\u0430 \u0442\u0435\u043A\u0443\u0449\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0431\u0435\u0437 \u0438\u0441\u0442\u043E\u0440\u0438\u0438.`;
+        const toggle = action("\u041E\u0431\u043B\u0430\u0447\u043D\u043E\u0435 \u0430\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435", hint2, sync.enabled ? "\u0412\u043A\u043B\u044E\u0447\u0435\u043D\u043E" : "\u0412\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u043E", async () => {
+          await ctx2.persistence.setEnabled(!sync.enabled);
+        });
+        toggle.button.setAttribute("aria-pressed", String(sync.enabled));
+        toggle.button.className = `set-toggle${sync.enabled ? " on" : ""}`;
+        syncHost.appendChild(toggle.row);
+        const now = action("\u0420\u0443\u0447\u043D\u0430\u044F \u0441\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0430\u0446\u0438\u044F", sync.lastSyncedAt ? `\u041F\u043E\u0441\u043B\u0435\u0434\u043D\u044F\u044F: ${new Date(sync.lastSyncedAt).toLocaleString("ru-RU")}` : "\u041C\u043E\u0436\u043D\u043E \u043D\u0435 \u0436\u0434\u0430\u0442\u044C \u043C\u0438\u043D\u0443\u0442\u043D\u043E\u0433\u043E \u0442\u0430\u0439\u043C\u0435\u0440\u0430.", "\u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u0442\u044C", async () => {
+          now.button.disabled = true;
+          try {
+            await ctx2.persistence.syncNow();
+          } catch (error) {
+            ctx2.toast(error.message);
+          }
+          now.button.disabled = false;
+        });
+        syncHost.appendChild(now.row);
+      } else {
+        syncHost.appendChild(rowText("\u0418\u0437\u0434\u0430\u043D\u0438\u0435 \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044F", "\u0420\u0430\u0437\u043E\u0432\u044B\u0439 \u0434\u043E\u043D\u0430\u0442 \u043E\u0442\u043A\u0440\u043E\u0435\u0442 \u043E\u0431\u043B\u0430\u0447\u043D\u044B\u0435 \u0430\u0432\u0442\u043E\u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F, \u0447\u0435\u0442\u044B\u0440\u0435 \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u043E\u0431\u0440\u0430\u0437\u0430 \u0440\u044B\u0446\u0430\u0440\u044F \u0438 \u043C\u0443\u0437\u044B\u043A\u0430\u043B\u044C\u043D\u044B\u0435 \u043F\u0440\u0435\u0441\u0435\u0442\u044B. \u041F\u043B\u0430\u0442\u0451\u0436\u043D\u044B\u0439 \u0441\u0435\u0440\u0432\u0438\u0441 \u0431\u0443\u0434\u0435\u0442 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0451\u043D \u043F\u043E\u0437\u0436\u0435."));
+      }
+    }
+    const exportAction = action("\u042D\u043A\u0441\u043F\u043E\u0440\u0442 \u0441\u0435\u0439\u0432\u0430", "\u0411\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E \u0438 \u0431\u0435\u0437 \u0430\u043A\u043A\u0430\u0443\u043D\u0442\u0430: \u0444\u0430\u0439\u043B \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u0442 \u0438\u0433\u0440\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441, \u043D\u043E \u043D\u0435 \u0441\u0435\u0441\u0441\u0438\u044E \u0438 \u043D\u0435 \u043F\u0440\u0438\u0437\u043D\u0430\u043A \u043E\u043F\u043B\u0430\u0442\u044B.", "\u0421\u043A\u0430\u0447\u0430\u0442\u044C", () => ctx2.exportSave());
+    transferHost.appendChild(exportAction.row);
+    const file = document.createElement("input");
+    file.type = "file";
+    file.accept = "application/json,.json";
+    file.hidden = true;
+    file.dataset.saveImport = "1";
+    file.addEventListener("change", async () => {
+      if (file.files?.[0]) await ctx2.importSave(file.files[0]);
+      file.value = "";
+    });
+    const importAction = action("\u0418\u043C\u043F\u043E\u0440\u0442 \u0441\u0435\u0439\u0432\u0430", "\u0424\u0430\u0439\u043B \u0431\u0443\u0434\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u0435\u043D \u043F\u0435\u0440\u0435\u0434 \u0437\u0430\u043C\u0435\u043D\u043E\u0439 \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441\u0430.", "\u0412\u044B\u0431\u0440\u0430\u0442\u044C \u0444\u0430\u0439\u043B", () => file.click());
+    transferHost.append(importAction.row, file);
+    const unsubscribe = account2.subscribe(renderAccount);
+    const unsubscribeSync = ctx2.persistence?.subscribe(() => renderAccount(account2.snapshot()));
+    renderAccount(account2.snapshot());
+    return {
+      element: section,
+      destroy() {
+        unsubscribe();
+        unsubscribeSync?.();
+      }
+    };
   }
 
   // src/ui/settingsView.js
@@ -38773,6 +40067,8 @@
   function renderSettings(container, ctx2) {
     const { state: state2 } = ctx2;
     container.appendChild(header(ctx2, "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438", "\u041B\u0430\u0432\u043A\u0430 \u043F\u043E\u0434\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u0442\u0441\u044F \u043F\u043E\u0434 \u0445\u043E\u0437\u044F\u0438\u043D\u0430"));
+    const accountSection = createAccountSection(ctx2);
+    container.appendChild(accountSection.element);
     const soundSec = makeSection("\u{1F50A} \u0417\u0432\u0443\u043A");
     soundSec.appendChild(makeToggleRow({
       name: "\u0417\u0432\u0443\u043A\u043E\u0432\u044B\u0435 \u044D\u0444\u0444\u0435\u043A\u0442\u044B",
@@ -38786,10 +40082,37 @@
     }));
     soundSec.appendChild(makeToggleRow({
       name: "\u041C\u0443\u0437\u044B\u043A\u0430",
-      hint: "\u0422\u0438\u0445\u0438\u0439 \u0434\u043E\u0436\u0434\u044C \u0438 \u0443\u044E\u0442\u043D\u044B\u0439 \u0444\u043E\u043D \u0432 \u043B\u0430\u0432\u043A\u0435.",
+      hint: "\u0422\u0438\u0445\u0438\u0439 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u0438\u0432\u043D\u044B\u0439 \u0444\u043E\u043D \u0432 \u043B\u0430\u0432\u043A\u0435.",
       get: () => musicEnabled(),
-      flip: () => toggleMusic()
+      flip: () => toggleMusic({ supporter: ctx2.account?.isSupporter?.() === true })
     }));
+    const musicLabel = document.createElement("div");
+    musicLabel.className = "pc-layout-label";
+    musicLabel.textContent = "\u041C\u0443\u0437\u044B\u043A\u0430\u043B\u044C\u043D\u043E\u0435 \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435";
+    const musicPicker = document.createElement("div");
+    musicPicker.className = "pc-mode-picker set-cursor-modes";
+    musicPicker.setAttribute("role", "group");
+    musicPicker.setAttribute("aria-label", "\u041C\u0443\u0437\u044B\u043A\u0430\u043B\u044C\u043D\u043E\u0435 \u043E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u0435");
+    for (const preset of MUSIC_PRESETS) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "small pc-mode-option";
+      button.dataset.musicPreset = preset.id;
+      button.textContent = `${preset.icon} ${preset.name}${preset.supporter ? " \xB7 \u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C" : ""}`;
+      const active2 = musicPreset({ supporter: ctx2.account?.isSupporter?.() === true }) === preset.id;
+      button.setAttribute("aria-pressed", String(active2));
+      button.addEventListener("click", () => {
+        const result = setMusicPreset(preset.id, { supporter: ctx2.account?.isSupporter?.() === true });
+        if (!result.ok) {
+          ctx2.toast(result.error);
+          return;
+        }
+        for (const option of musicPicker.children) option.setAttribute("aria-pressed", String(option === button));
+        ctx2.sfx?.("tap");
+      });
+      musicPicker.appendChild(button);
+    }
+    soundSec.append(musicLabel, musicPicker);
     container.appendChild(soundSec);
     const storySec = makeSection("\u{1F4D6} \u0418\u0441\u0442\u043E\u0440\u0438\u044F");
     storySec.appendChild(makeToggleRow({
@@ -38819,14 +40142,14 @@
         button.setAttribute("aria-pressed", String(active2));
       }
     };
-    for (const bodyId of KNIGHT_DOLL_BODY_IDS) {
+    for (const bodyId of availableKnightBodyIds(state2)) {
       const button = document.createElement("button");
       button.type = "button";
       button.dataset.body = bodyId;
       button.className = "knight-body-card";
       const image = document.createElement("img");
       image.className = "knight-body-thumb";
-      image.src = bodyId.startsWith("female_type") ? `assets/knight/doll/${bodyId}/full.png` : `assets/knight/doll/${bodyId}/body.webp`;
+      image.src = `assets/knight/doll/${bodyId}/full.png`;
       image.alt = "";
       image.loading = "lazy";
       const label = document.createElement("span");
@@ -38836,7 +40159,7 @@
       button.appendChild(label);
       button.addEventListener("click", () => {
         if (state2.settings.knightBody === bodyId) return;
-        state2.settings.knightBody = bodyId;
+        if (!selectKnightBody(state2, bodyId).ok) return;
         ctx2.save();
         ctx2.sfx?.("tap");
         syncBodyUI();
@@ -38845,7 +40168,7 @@
     }
     const bodyHint = document.createElement("div");
     bodyHint.className = "set-hint";
-    bodyHint.textContent = "\u0422\u043E\u043B\u044C\u043A\u043E \u0432\u043D\u0435\u0448\u043D\u0438\u0439 \u0432\u0438\u0434 \u0432 \u043A\u043E\u043C\u043D\u0430\u0442\u0435 \u0440\u044B\u0446\u0430\u0440\u044F, \u043D\u0435 \u0432\u043B\u0438\u044F\u0435\u0442 \u043D\u0430 \u0445\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439.";
+    bodyHint.textContent = "\u041C\u0443\u0436\u0441\u043A\u043E\u0439 \u0438 \u0436\u0435\u043D\u0441\u043A\u0438\u0439 \u043E\u0431\u0440\u0430\u0437\u044B \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B \u0441\u0440\u0430\u0437\u0443, \u0434\u043E\u043F\u043E\u043B\u043D\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0435 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u044E\u0442\u0441\u044F \u0432 \u041F\u0440\u0438\u043B\u0430\u0432\u043A\u0435. \u0425\u0430\u0440\u0430\u043A\u0442\u0435\u0440\u0438\u0441\u0442\u0438\u043A\u0438 \u0438 \u0431\u043E\u0439 \u043D\u0435 \u043C\u0435\u043D\u044F\u044E\u0442\u0441\u044F.";
     knightSec.append(bodyLabel, bodyPicker, bodyHint);
     syncBodyUI();
     container.appendChild(knightSec);
@@ -39029,6 +40352,7 @@
       secret.replaceWith(box);
       input.focus();
     }
+    return () => accountSection.destroy();
   }
 
   // src/ui/formationView.js
@@ -41380,11 +42704,11 @@
   function renderSandbox(container, ctx2) {
     let currentCleanup2 = null;
     let disposed = false;
-    const rerender = (action = null) => {
+    const rerender = (action2 = null) => {
       currentCleanup2?.();
       if (disposed) return;
       container.innerHTML = "";
-      currentCleanup2 = renderSandboxScreen(container, ctx2, rerender, action) || null;
+      currentCleanup2 = renderSandboxScreen(container, ctx2, rerender, action2) || null;
     };
     rerender();
     return () => {
@@ -41393,7 +42717,7 @@
       currentCleanup2 = null;
     };
   }
-  function renderSandboxScreen(container, ctx2, rerender, action) {
+  function renderSandboxScreen(container, ctx2, rerender, action2) {
     const { state: state2 } = ctx2;
     const picked = renderSandbox._picked ||= { allies: ["merc_guard", "merc_archer"], foes: ["slime_meadow", "slime_meadow"] };
     container.appendChild(header(
@@ -41559,8 +42883,8 @@
       <div class="muted">\u0421\u0440\u0435\u0434\u043D\u044F\u044F \u0434\u043B\u0438\u043D\u0430 \u0431\u043E\u044F: ${Math.round(ticksSum / N)} \u0442\u0438\u043A\u043E\u0432 \xB7 \u0442\u0430\u043A\u0442\u0438\u043A\u0430: ${{ defense: "\u{1F6E1} \u0417\u0430\u0449\u0438\u0442\u0430", balance: "\u2696 \u0411\u0430\u043B\u0430\u043D\u0441", offense: "\u2694 \u041D\u0430\u043F\u0430\u0434\u0435\u043D\u0438\u0435" }[state2.settings.tactic || "balance"]}</div>`;
       seriesOut.appendChild(panel);
     }
-    if (action === "one") runOne();
-    if (action === "series") runSeries();
+    if (action2 === "one") runOne();
+    if (action2 === "series") runSeries();
     return () => {
       replayCleanup?.();
       replayCleanup = null;
@@ -43147,9 +44471,30 @@
   // src/ui/app.js
   var screenEl = document.getElementById("screen");
   var toastEl = document.getElementById("toast");
-  var state = loadGame() || newGame();
+  var loaded = loadGameDetailed();
+  var state = loaded.state || newGame();
+  var account = createAccountClient();
+  var persistence = createPersistence({
+    account,
+    hadLocalSave: loaded.hadRaw,
+    getState: () => state,
+    replaceState,
+    confirmInitialUpload: async ({ localState }) => confirm(
+      `\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u044D\u0442\u043E\u0433\u043E \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430 \u0432 \u043E\u0431\u043B\u0430\u043A\u043E? \u0420\u0435\u0448\u0435\u043D\u043E \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A: ${localState.stats?.puzzlesSolved || 0}, \u043C\u043E\u043D\u0435\u0442: ${localState.coins}.`
+    ),
+    chooseConflict: async ({ remote, remoteState, localState }) => {
+      if (!remote) return confirm("\u041E\u0431\u043B\u0430\u0447\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430. \u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0442\u0443\u0434\u0430 \u0442\u0435\u043A\u0443\u0449\u0438\u0439 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0430?") ? "local" : "wait";
+      const useCloud = confirm(
+        `\u0421\u0435\u0439\u0432\u044B \u0440\u0430\u0437\u043B\u0438\u0447\u0430\u044E\u0442\u0441\u044F. \u041D\u0430 \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u0435: ${localState.coins} \u043C\u043E\u043D\u0435\u0442, ${localState.stats?.puzzlesSolved || 0} \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A. \u0412 \u043E\u0431\u043B\u0430\u043A\u0435: ${remoteState.coins} \u043C\u043E\u043D\u0435\u0442, ${remoteState.stats?.puzzlesSolved || 0} \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A. \u041D\u0430\u0436\u043C\u0438\u0442\u0435 \xAB\u041E\u041A\xBB, \u0447\u0442\u043E\u0431\u044B \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u043E\u0431\u043B\u0430\u043A\u043E, \u0438\u043B\u0438 \xAB\u041E\u0442\u043C\u0435\u043D\u0430\xBB, \u0447\u0442\u043E\u0431\u044B \u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0443\u0441\u0442\u0440\u043E\u0439\u0441\u0442\u0432\u043E.`
+      );
+      return useCloud ? "remote" : "local";
+    }
+  });
   var backfilledAchievements = checkAchievements2(state).length;
-  if (backfilledAchievements) saveGame(state);
+  if (backfilledAchievements) {
+    saveGame(state);
+    persistence.notifyDirty();
+  }
   var currentRoute = "hub";
   var currentParams = {};
   var dockSyncQueued = false;
@@ -43167,7 +44512,9 @@
   function save() {
     reconcileOnboarding(state);
     const fresh = checkAchievements2(state);
-    saveGame(state);
+    const stored = saveGame(state);
+    persistence.notifyDirty();
+    if (!stored) toast("\u041B\u043E\u043A\u0430\u043B\u044C\u043D\u043E\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E. \u042D\u043A\u0441\u043F\u043E\u0440\u0442\u0438\u0440\u0443\u0439\u0442\u0435 \u0441\u0435\u0439\u0432 \u0432 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0430\u0445.");
     updateWallet();
     if (fresh.length) queueAchievementCelebrations(fresh, { sfx });
     syncDockSoon();
@@ -43233,7 +44580,7 @@
       navigationChanged = onboardingPuzzleChoice(state, currentParams.id) || navigationChanged;
     }
     navigationChanged = onboardingVisit(state, currentRoute, currentParams) || navigationChanged;
-    if (navigationChanged) saveGame(state);
+    if (navigationChanged) save();
     if (currentCleanup) {
       currentCleanup();
       currentCleanup = null;
@@ -43256,14 +44603,44 @@
     }
     return { name: "hub", params: {} };
   }
+  function replaceState(next) {
+    clearAchievementCelebrations();
+    state = next;
+    saveGame(state);
+    updateWallet();
+    if (routes[currentRoute]) go(currentRoute, currentParams);
+  }
   function newGameConfirm() {
-    if (confirm("\u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443? \u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u043B\u0430\u0432\u043A\u0438 \u0431\u0443\u0434\u0435\u0442 \u0441\u0442\u0451\u0440\u0442.")) {
-      clearAchievementCelebrations();
-      state = newGame();
-      const start = initialRoute();
-      save();
-      go(start.name, start.params);
-      toast("\u041D\u043E\u0432\u0430\u044F \u043B\u0430\u0432\u043A\u0430 \u043E\u0442\u043A\u0440\u044B\u0442\u0430. \u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C, \u0445\u043E\u0437\u044F\u0438\u043D!");
+    if (!confirm("\u041D\u0430\u0447\u0430\u0442\u044C \u043D\u043E\u0432\u0443\u044E \u0438\u0433\u0440\u0443? \u041F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u043B\u0430\u0432\u043A\u0438 \u0431\u0443\u0434\u0435\u0442 \u0441\u0442\u0451\u0440\u0442.")) return;
+    if (persistence.getStatus().enabled && !confirm("\u0422\u0435\u043A\u0443\u0449\u0430\u044F \u043E\u0431\u043B\u0430\u0447\u043D\u0430\u044F \u043A\u043E\u043F\u0438\u044F \u0442\u043E\u0436\u0435 \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u043C\u0435\u043D\u0435\u043D\u0430 \u0431\u0435\u0437 \u043E\u0442\u043A\u0430\u0442\u0430. \u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C?")) return;
+    clearAchievementCelebrations();
+    state = newGame();
+    persistence.beginNewGeneration();
+    const start = initialRoute();
+    save();
+    go(start.name, start.params);
+    toast("\u041D\u043E\u0432\u0430\u044F \u043B\u0430\u0432\u043A\u0430 \u043E\u0442\u043A\u0440\u044B\u0442\u0430. \u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C, \u0445\u043E\u0437\u044F\u0438\u043D!");
+  }
+  function exportSave() {
+    const blob = new Blob([persistence.exportSave()], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `lavka-save-${(/* @__PURE__ */ new Date()).toISOString().slice(0, 10)}.json`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1e3);
+    toast("\u0424\u0430\u0439\u043B \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043B\u0435\u043D.");
+  }
+  async function importSave(file) {
+    try {
+      if (file.size > SAVE_MAX_BYTES) throw new Error("\u0424\u0430\u0439\u043B \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0441\u043B\u0438\u0448\u043A\u043E\u043C \u0431\u043E\u043B\u044C\u0448\u043E\u0439.");
+      const raw = await file.text();
+      const preview = deserializeGameSave(raw, { migrate: migrateGameState });
+      if (!confirm(`\u0418\u043C\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0441\u0435\u0439\u0432 \u0441 ${preview.state.coins} \u043C\u043E\u043D\u0435\u0442\u0430\u043C\u0438 \u0438 ${preview.state.stats?.puzzlesSolved || 0} \u0440\u0435\u0448\u0451\u043D\u043D\u044B\u043C\u0438 \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043A\u0430\u043C\u0438? \u0422\u0435\u043A\u0443\u0449\u0438\u0439 \u043F\u0440\u043E\u0433\u0440\u0435\u0441\u0441 \u0431\u0443\u0434\u0435\u0442 \u0437\u0430\u043C\u0435\u043D\u0451\u043D.`)) return;
+      persistence.importSave(raw);
+      toast("\u0421\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0438\u043C\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043E.");
+    } catch (error) {
+      toast(error.message || "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0438\u043C\u043F\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435.");
     }
   }
   var ctx = {
@@ -43274,6 +44651,10 @@
     go,
     toast,
     newGameConfirm,
+    account,
+    persistence,
+    exportSave,
+    importSave,
     sfx,
     setHubScene(scene) {
       lastHubScene = scene;
@@ -43281,13 +44662,28 @@
       currentParams = { scene };
       const sceneChanged = onboardingScene(state, scene);
       const guideChanged = onboardingVisit(state, "hub", currentParams);
-      if (sceneChanged || guideChanged) saveGame(state);
+      if (sceneChanged || guideChanged) save();
     },
     syncOnboarding: syncDock
   };
+  account.subscribe((snapshot) => {
+    if (snapshot.status === "authenticated" && snapshot.profile) {
+      if (snapshot.supporter.active) {
+        if (!persistence.getStatus().configured) persistence.setEnabled(true).catch(() => {
+        });
+        else if (persistence.getStatus().enabled) persistence.reconcile().catch(() => {
+        });
+      } else {
+        persistence.reset();
+      }
+    } else if (snapshot.status === "anonymous") {
+      persistence.reset();
+    }
+    if (musicOn()) startMusic({ supporter: snapshot.supporter.active });
+  });
   initSound();
   var musicUnlock = () => {
-    startMusic();
+    startMusic({ supporter: account.isSupporter() });
     document.removeEventListener?.("pointerdown", musicUnlock);
     document.removeEventListener?.("keydown", musicUnlock);
   };
@@ -43445,7 +44841,7 @@
       <div class="muted center" style="margin-bottom:10px">\u0432\u0435\u0440\u0441\u0438\u044F 0.10 \xB7 \u0443\u044E\u0442\u043D\u0430\u044F \u0438\u0433\u0440\u0430-\u043C\u0430\u0433\u0430\u0437\u0438\u043D \u0441 \u043F\u0440\u0438\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F\u043C\u0438</div>
       <p><b>\u0410\u0432\u0442\u043E\u0440:</b> K8rvin (\u0410\u043D\u0434\u0440\u0435\u0439)</p>
       <p><b>\u0421\u0434\u0435\u043B\u0430\u043D\u043E:</b> \u0432\u0434\u0432\u043E\u0451\u043C \u2014 \u0447\u0435\u043B\u043E\u0432\u0435\u043A \u0438 \u0418\u0418-\u0430\u0433\u0435\u043D\u0442 Kimi Code.
-      \u0427\u0438\u0441\u0442\u044B\u0439 JavaScript, Canvas, SVG-\u0430\u0440\u0442, \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F. \u041D\u0438 \u0441\u0442\u0440\u043E\u0447\u043A\u0438 \u0431\u044D\u043A\u0435\u043D\u0434\u0430.</p>
+      \u0427\u0438\u0441\u0442\u044B\u0439 JavaScript, Canvas, SVG-\u0430\u0440\u0442, \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u0435 \u0441\u043E\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F \u0438 \u043D\u0435\u043E\u0431\u044F\u0437\u0430\u0442\u0435\u043B\u044C\u043D\u043E\u0435 \u043E\u0431\u043B\u0430\u043A\u043E.</p>
       <p><b>\u0412\u043D\u0443\u0442\u0440\u0438:</b> ${puzzleTypes} \u043C\u0435\u0445\u0430\u043D\u0438\u043A \u0433\u043E\u043B\u043E\u0432\u043E\u043B\u043E\u043C\u043E\u043A \xB7 ${ALL_PUZZLES.length} \u0437\u0430\u0433\u0430\u0434\u043E\u043A \xB7 ${campaignBattles} \u0431\u043E\u0451\u0432 \u0432 12 \u043C\u0438\u0440\u0430\u0445 \xB7
       60+ \u0441\u0443\u0449\u0435\u0441\u0442\u0432 \xB7 \u043A\u0440\u0430\u0444\u0442 \xB7 \u043E\u0442\u0440\u044F\u0434 \xB7 \u043F\u043E\u043B\u0435 8\xD73 \u0438 \u043B\u043E\u0440-\u0441\u0446\u0435\u043D\u044B \xB7 \u0438 \u043E\u0434\u0438\u043D \u043E\u0447\u0435\u043D\u044C \u0442\u0440\u0443\u0434\u043E\u043B\u044E\u0431\u0438\u0432\u044B\u0439 \u043F\u0430\u0443\u0447\u043E\u043A \u{1F577}\uFE0F</p>
       <p class="muted">\u0421\u043F\u0430\u0441\u0438\u0431\u043E, \u0447\u0442\u043E \u0437\u0430\u0433\u043B\u044F\u043D\u0443\u043B \u043D\u0430 \u043F\u0435\u0440\u0435\u043A\u0440\u0451\u0441\u0442\u043E\u043A. \u0421\u0442\u0443\u0447\u0438 \u043F\u043E \u0432\u044B\u0432\u0435\u0441\u043A\u0435 \u0432 \u043B\u044E\u0431\u043E\u0435 \u0432\u0440\u0435\u043C\u044F.</p>
@@ -43468,4 +44864,7 @@
   if (backfilledAchievements) {
     toast(`\u041A\u043D\u0438\u0433\u0430 \u0441\u043B\u0430\u0432\u044B \u043F\u043E\u043F\u043E\u043B\u043D\u0435\u043D\u0430: \u043D\u043E\u0432\u044B\u0445 \u0434\u043E\u0441\u0442\u0438\u0436\u0435\u043D\u0438\u0439 \u2014 ${backfilledAchievements}.`);
   }
+  if (loaded.error) toast(loaded.error);
+  account.refresh().catch(() => {
+  });
 })();

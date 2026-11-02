@@ -48,9 +48,9 @@ class El {
   dispatch(type, event = {}) {
     event.target ||= this;
     event.preventDefault ||= () => {};
-    for (const fn of [...(this._listeners[type] || [])]) fn(event);
+    return Promise.all([...(this._listeners[type] || [])].map((fn) => fn(event)));
   }
-  click() { if (!this.disabled) this.dispatch('click'); }
+  click() { if (!this.disabled) return this.dispatch('click'); return undefined; }
   setAttribute(name, value) { this.attributes[name] = String(value); }
   getAttribute(name) { return this.attributes[name] ?? null; }
   getBoundingClientRect() { return { left: 0, top: 0, width: 100, height: 100 }; }
@@ -107,7 +107,7 @@ const {
   COSMETIC_SCENE_BASE,
 } = await import('../src/core/cosmetics.js');
 const {
-  COSMETICS, COSMETIC_PACKS, COSMETIC_BY_ID, COSMETIC_PACK_BY_ID,
+  COSMETICS, COSMETIC_PACKS, KNIGHT_BODY_COSMETICS, COSMETIC_BY_ID, COSMETIC_PACK_BY_ID,
   LEGACY_COSMETIC_ALIASES, COSMETICS_VERSION, LAVKA_COSMETIC_LAYOUTS,
 } = await import('../src/data/cosmetics.js');
 
@@ -524,7 +524,7 @@ test('питомцы, команда, гость и 12+4 трофея — дос
 
 test('pack metadata, aliases и scene resolver: полные темы без старых товарных id', () => {
   assert.equal(COSMETICS_VERSION, 2);
-  assert.equal(COSMETICS, COSMETIC_PACKS);
+  assert.deepEqual(COSMETICS, [...COSMETIC_PACKS, ...KNIGHT_BODY_COSMETICS]);
   assert.equal(COSMETIC_BY_ID, COSMETIC_PACK_BY_ID);
   const expected = {
     hearth: ['Домашний очаг', '🏮', 200, null, 5],
@@ -809,6 +809,63 @@ test('прилавок: полные pack-карточки, одиночный �
   const rerendered = new El('main');
   renderShop(rerendered, ctx);
   assert.equal(byData(rerendered, 'cosmeticNoticeDismiss', '1').length, 0);
+  assert.ok(ctx.saves >= 3);
+});
+
+test('прилавок: шесть покупных образов, монеты, печати и выбор без смены фона', async () => {
+  assert.deepEqual(KNIGHT_BODY_COSMETICS.map((c) => [c.id, c.price, c.sealPrice || 0]), [
+    ['female_type4', 10000, 0], ['female_type5', 10000, 0],
+    ['female_type7', 0, 4], ['female_type9', 0, 4],
+    ['female_type12', 0, 4], ['female_type13', 0, 4],
+  ]);
+  assert.deepEqual(KNIGHT_BODY_COSMETICS.filter((c) => c.edition === 'supporter').map((c) => c.id),
+    ['female_type7', 'female_type9', 'female_type12', 'female_type13']);
+  const state = newGame();
+  state.coins = 0;
+  state.seals = 0;
+  state.cosmeticsOwned = ['hearth'];
+  state.cosmeticsActive = ['hearth'];
+  state.legacyCosmeticsActive = ['hearth'];
+  const ctx = makeCtx(state);
+  const root = new El('main');
+  renderShop(root, ctx);
+  assert.equal(byData(root, 'knightBodyId').length, 6);
+  assert.equal(byData(root, 'supporterCosmeticsPanel').length, 1);
+  assert.equal(byData(root, 'cosmeticId').length, 7, 'фоновая витрина не изменилась');
+  for (const button of byData(root, 'knightBodyId')) assert.equal(button.disabled, true);
+
+  state.coins = 10000;
+  state.seals = 4;
+  ctx.account = {
+    isSupporter: () => true,
+    refresh: async () => ({ supporter: { active: true } }),
+  };
+  const fundedRoot = new El('main');
+  renderShop(fundedRoot, ctx);
+  const choice = (id) => byData(fundedRoot, 'knightBodyId', id)[0];
+  for (const c of KNIGHT_BODY_COSMETICS) {
+    assert.ok(flat(fundedRoot).some((el) => el.src === c.preview), `${c.id}: preview`);
+  }
+  assert.match(choice('female_type4').innerHTML, /🪙 10000/);
+  assert.match(choice('female_type7').innerHTML, /🔰 4/);
+  await choice('female_type4').click();
+  assert.equal(state.coins, 0);
+  assert.equal(state.seals, 4);
+  assert.equal(state.settings.knightBody, 'female_type4');
+  assert.deepEqual(state.cosmeticsActive, ['hearth']);
+  assert.equal(choice('female_type4').textContent, 'Выбран');
+  assert.equal(choice('female_type4').disabled, true);
+
+  await choice('female_type7').click();
+  assert.equal(state.coins, 0);
+  assert.equal(state.seals, 0);
+  assert.equal(state.settings.knightBody, 'female_type7');
+  assert.deepEqual(state.cosmeticsActive, ['hearth']);
+  assert.equal(choice('female_type4').textContent, 'Выбрать');
+  await choice('female_type4').click();
+  assert.equal(state.settings.knightBody, 'female_type4');
+  assert.equal(state.coins, 0);
+  assert.equal(state.seals, 0);
   assert.ok(ctx.saves >= 3);
 });
 

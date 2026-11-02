@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import {
   newGame, addCoins, buyItem, sellItem, shopStock, equipFromInventory,
   unequipToInventory, completePuzzle, puzzleAvailable, runBattle, battleAvailable,
-  saveGame, loadGame, removeFromBelt, nextPuzzle, firstUnsolvedPuzzle, ALL_PUZZLES,
+  saveGame, loadGame, loadGameDetailed, removeFromBelt, nextPuzzle, firstUnsolvedPuzzle, ALL_PUZZLES,
   nextBattle, firstUnbeatenBattle, skipPuzzle, skipPuzzlePrice, applyCheat,
   findPuzzle, applySeekOverrides, saveSeekOverride, resetSeekOverride,
   unseenShopItems, markShopSeen, loadSeekOverrides, autoEquipBest,
   dailyPuzzle, currentSeason, SEASON_LABEL, petTheCat, todayKey, isDailyPuzzle,
-  buyCosmetic, toggleCosmetic, selectCosmetic,
+  buyCosmetic, toggleCosmetic, selectCosmetic, selectKnightBody, availableKnightBodyIds,
 } from '../src/core/state.js';
 import { PUZZLES } from '../src/data/puzzles.js';
 import { BATTLES } from '../src/data/battles.js';
@@ -559,6 +559,19 @@ test('сохранение и загрузка', () => {
   assert.equal(loaded.coins, 777);
 });
 
+test('повреждённый сейв различается явно, ошибка записи не выбрасывается', () => {
+  const raw = '{broken';
+  const storage = {
+    getItem: () => raw,
+    setItem: () => { throw new Error('quota'); },
+  };
+  const detailed = loadGameDetailed(storage);
+  assert.equal(detailed.state, null);
+  assert.equal(detailed.hadRaw, true);
+  assert.match(detailed.error, /повреждено/);
+  assert.equal(saveGame(newGame(), storage), false);
+});
+
 test('миграция оформления: aliases без дублей, active последний, legacy полный и повтор стабилен', () => {
   const old = newGame(1000);
   old.cosmeticsVersion = 1;
@@ -624,4 +637,75 @@ test('оформление: покупка и выбор заменяют pack i
   assert.deepEqual(s.legacyCosmeticsActive, ['halloween']);
   assert.deepEqual(s.inventory, inventory);
   assert.deepEqual(s.battlesDone, battles);
+});
+
+test('образы рыцаря: покупка за монеты и печати, выбор только купленных', () => {
+  const s = newGame();
+  s.coins = 20000;
+  s.seals = 8;
+  s.cosmeticsOwned = ['hearth'];
+  s.cosmeticsActive = ['hearth'];
+  s.legacyCosmeticsActive = ['hearth'];
+  assert.deepEqual(availableKnightBodyIds(s), ['male', 'female']);
+  const before = structuredClone(s);
+  assert.equal(selectKnightBody(s, 'female_type4').ok, false);
+  assert.deepEqual(s, before, 'locked-выбор не меняет состояние');
+
+  assert.equal(buyCosmetic(s, 'female_type4').ok, true);
+  assert.equal(s.coins, 10000);
+  assert.equal(s.seals, 8);
+  assert.equal(s.settings.knightBody, 'female_type4');
+  assert.deepEqual(s.cosmeticsActive, ['hearth'], 'покупка тела не меняет фон');
+  assert.deepEqual(s.legacyCosmeticsActive, ['hearth']);
+  assert.ok(availableKnightBodyIds(s).includes('female_type4'));
+  assert.equal(buyCosmetic(s, 'female_type4').ok, false);
+  assert.equal(s.coins, 10000, 'повторная покупка не списывает монеты');
+
+  const lockedBefore = structuredClone(s);
+  assert.equal(buyCosmetic(s, 'female_type7').ok, false, 'без supporter нельзя купить выбранный образ');
+  assert.deepEqual(s, lockedBefore, 'запрет не списывает печати и не меняет состояние');
+  assert.equal(buyCosmetic(s, 'female_type7', { supporter: true }).ok, true);
+  assert.equal(s.coins, 10000);
+  assert.equal(s.seals, 4);
+  assert.equal(s.settings.knightBody, 'female_type7');
+  assert.deepEqual(s.cosmeticsActive, ['hearth']);
+  assert.equal(selectKnightBody(s, 'female').ok, true);
+  assert.equal(s.settings.knightBody, 'female');
+  assert.equal(selectKnightBody(s, 'female_type9').ok, false);
+  assert.equal(s.settings.knightBody, 'female');
+
+  const poor = newGame();
+  const poorBefore = structuredClone(poor);
+  assert.equal(buyCosmetic(poor, 'female_type4').ok, false);
+  assert.equal(buyCosmetic(poor, 'female_type7', { supporter: true }).ok, false);
+  assert.deepEqual(poor, poorBefore, 'нехватка валюты не меняет состояние');
+
+  const legacyOwner = newGame();
+  legacyOwner.cosmeticsOwned = ['female_type7'];
+  assert.equal(selectKnightBody(legacyOwner, 'female_type7').ok, true, 'прежнее владение работает без аккаунта');
+});
+
+test('миграция сохраняет только выбранный старый custom-образ и не выдаёт остальные', () => {
+  const old = newGame(1000);
+  old.settings.knightBody = 'female_type9';
+  old.cosmeticsOwned = ['hearth'];
+  old.cosmeticsActive = ['hearth'];
+  old.legacyCosmeticsActive = ['hearth'];
+  old.coins = 12345;
+  old.seals = 7;
+  const memory = { cozy_adventures_save_v2: JSON.stringify(old) };
+  const storage = {
+    getItem: (key) => memory[key] ?? null,
+    setItem: (key, value) => { memory[key] = String(value); },
+  };
+  const loaded = loadGame(storage, 2000);
+  assert.equal(loaded.settings.knightBody, 'female_type9');
+  assert.deepEqual(loaded.cosmeticsOwned, ['hearth', 'female_type9']);
+  assert.deepEqual(loaded.cosmeticsActive, ['hearth']);
+  assert.equal(loaded.coins, 12345);
+  assert.equal(loaded.seals, 7);
+  assert.equal(selectKnightBody(loaded, 'female_type4').ok, false);
+  saveGame(loaded, storage);
+  const again = loadGame(storage, 2000);
+  assert.deepEqual(again, loaded, 'повторная миграция стабильна');
 });

@@ -8,8 +8,9 @@
 
 ## Стек и запуск
 
-- Чистый JavaScript (ES-модули) + Canvas 2D + DOM. **Ноль зависимостей в продакшене**;
-  esbuild — только чтобы собрать `game/bundle.js`.
+- Чистый JavaScript (ES-модули) + Canvas 2D + DOM. **Ноль зависимостей в браузерном
+  продакшене**; esbuild — только чтобы собрать `game/bundle.js`. Backend использует
+  `pg` и встроенный `node:crypto` для scrypt, устанавливаемые в production-образе.
 - Запуск игры: двойной клик `game/index.html` (работает с file://) или
   `npm run serve` в `game/`.
 - **Команды (cwd = `game/`):**
@@ -37,11 +38,14 @@ game/
   src/core/   — чистая логика БЕЗ DOM: state.js, formBattle.js, *Puzzle.js, items.js,
                 rng.js, economy.js, onboarding.js, energy.js, bossDrops.js,
                 materialExchange.js, goals.js, hubGeometry.js, cosmetics.js,
-                achievements.js (единый прогресс/выдача), achievementStats.js (рекорды)
+                achievements.js (единый прогресс/выдача), achievementStats.js (рекорды),
+                saveFormat.js (валидация/оболочка), minuteAutosave.js (очередь 60 с)
   src/data/   — контент как данные: items, enemies, battles, puzzles*, crew, shop,
                 sets, economy, energy, onboarding, bossDrops, cosmetics…
   src/ui/     — экраны (app.js — роутер и ctx; hub.js — сцены-хабы; *View.js,
                 onboardingView.js, goalView.js);
+                accountClient.js — email+пароль/сессия/API; persistence.js — привязка,
+                конфликты и offline outbox; accountView.js — аккаунт и экспорт;
                 cursors.js — тематические курсоры: роутер ставит body[data-cursor],
                 правила и хотспоты в styles.css (хвост файла), PNG 32×32 в
                 assets/cursors/<key>.png (+_hover) — промты р.19, без файла —
@@ -54,7 +58,8 @@ game/
                 исходники и PROMPTS.md — в ../art-src/ (пользователь генерирует сам)
   tools/      — sim-world.mjs (винрейт по профилям), sim-economy.mjs (нормативная
                 экономика), generate-assets.mjs (API-генерация), fate-deck.mjs
-                (пересборка уровней и рук «Карт судьбы»)
+                (пересборка уровней и рук «Карт судьбы»),
+                server/ — auth/PostgreSQL/cloud API и SQL-миграции
 ```
 
 ## Архитектурные правила
@@ -64,6 +69,13 @@ game/
 - Состояние игры: `state.js` (newGame/migrate — миграции старых сейвов ТОЛЬКО там),
   localStorage ключ `cozy_adventures_save_v2`. Правки искалок из редактора —
   ОТДЕЛЬНЫЙ ключ `cozy_seek_overrides_v1` (не стирать, переживает новую игру).
+  Метаданные облака — `cozy_cloud_sync_v1` (generation/deviceId/revision/outbox),
+  opaque-сессия — `cozy_account_session_v1` в sessionStorage. Не складывать их в
+  игровой state и не экспортировать. Экспорт/импорт использует `saveFormat.js`.
+- Все исходные секреты и адреса задаются в корневом `.env`; его не читать и не
+  коммитить. Пользователь отдельно запускает `npm run config`, который копирует
+  в браузер только публичные COZY_API_BASE_URL и адрес портретного endpoint.
+  Обычные `npm run build`/`npm test` `.env` не читают.
 - Все новые пользовательские строки — на русском. Есть регрессионные тесты на
   английские ключи (материалы, бонусы, тексты скиллов) — не ломать.
 
@@ -90,8 +102,9 @@ game/
   старых денег; фактические и отчётные награды обязаны совпадать.
 - Покупка/продажа использует эффективную цену `pricedShopItem` (tier/order/override),
   НЕ сырой `ITEM_BY_ID.price`. Не обходить этот слой в UI, симуляциях и целях.
-- `sim-economy.mjs`: доход 76 762 монеты, разовые стоки 55 320 (косметика
-  1 310), отношение ≈1,39. Печатные стоки 45, печати 62/45 ≈1,38. Это измерение
+- `sim-economy.mjs`: доход 76 762 монеты, разовые стоки 75 320 (косметика
+  21 310), отношение ≈1,02. Базовые печатные стоки 45, печати 62/45 ≈1,38;
+  отдельный supporter-сток 16 печатей не входит в базовый норматив. Это измерение
   модели на текущий контент, не обещание игроку и не фактический темп прохождения.
 - `sim-world` по умолчанию использует endgame. Текущий nm_17: scales 1,64,
   endgame 42%, reasonable 71%, upgrade 100%; остальные endgame-миры выше 40%.
@@ -141,9 +154,14 @@ game/
 
 ## Монетизация
 
-- Допустимы только косметика и добровольный донат. Энергию, бустеры и силу за
-  деньги НЕ продаём. Донат-кнопки пока нет: сначала нужны реальный URL и выбранная
-  платформа. Не добавлять заглушки, выдуманные ссылки или client-only «оплату».
+- Допустимы только косметика, облачное удобство и добровольный донат. Энергию,
+  бустеры и силу за деньги НЕ продаём. Разовый донат открывает `supporter_edition`:
+  облачную синхронизацию раз в 60 секунд, female_type7/9/12/13 за печати и
+  дополнительные музыкальные пресеты. Прежнее владение косметикой не отзываем.
+- Признак оплаты — только серверный entitlement в PostgreSQL, НЕ поле сейва или
+  client-only `paid`. Донат-кнопки пока нет: сначала нужны реальный провайдер,
+  подписанный/проверенный webhook и URL. Не добавлять заглушки или «оплату» в UI.
+  Тестовый grant допустим только через server options при testMode=true.
 
 ## Бой (src/core/formBattle.js + src/ui/formationView.js)
 
@@ -187,31 +205,48 @@ game/
   и отражающие поверхности запрещены. Двуручное скрывает щит. В prompt и ключ входят
   только weapon/helmet/shield/gloves/armor/boots. Кольца, амулет и пояс валидируются,
   но не генерируются и не вызывают новый запрос; генерация идёт только по реальному спросу.
-  `settings.knightBody` меняет ключ, невалидное тело → male. В Настройках галерея
-  male/female и `female_type4/5/7/9/12/13` с русскими labels и миниатюрами
-  `full.png` (у male/female — `body.webp`). У custom-референса берутся личность,
+  `settings.knightBody` меняет ключ, невалидное тело → male. Полный
+  `KNIGHT_DOLL_BODY_IDS` сохраняет все 8 тел для prompt, но Настройки показывают
+  только male/female и купленные через `availableKnightBodyIds`. В Прилавке
+  `KNIGHT_BODY_COSMETICS`: female_type4/5 по 10 000 монет для всех,
+  female_type7/9/12/13 по 4 печати с `edition: 'supporter'`. Покупка supporter
+  требует свежего серверного права; уже купленный образ доступен офлайн/logout.
+  Владение — общий `cosmeticsOwned`; `selectKnightBody` не меняет фон и не требует
+  аккаунт. Миграция сохраняет только активный custom-образ старого сейва. Превью —
+  `assets/knight/doll/<bodyId>/full.png`. У custom-референса берутся личность,
   внешность и пропорции, фон/рамка игнорируются, а поза рук адаптируется под
   правильную экипировку меча и щита. Для legacy-частей custom id через
   `knightDollAssetBodyId` отображаются на `female`, без новых layered-файлов.
-- `tools/knight-server.mjs` (Node 22, без JS-зависимостей): static + `/health` +
-  POST `/api/knight-image` + GET `/api/knight-cache/<sha256>.webp`. Провайдеры:
+- `tools/knight-server.mjs` (Node 22): static + `/health` + POST `/api/knight-image`
+  + GET `/api/knight-cache/<sha256>.webp`. Провайдеры:
   Gemini REST `v1beta/interactions` (`gemini-nano-banana-2.1`) и OpenRouter
   `api/v1/chat/completions` (`google/gemini-3.1-flash-image`, `modalities: image+text`,
   `image_url`, `image_config` 4:5 1K). Выбор — `KNIGHT_IMAGE_PROVIDER`, при наличии
   `OPENROUTER_API_KEY` он выбирается автоматически; модель можно переопределить
-  `OPENROUTER_IMAGE_MODEL`/`GEMINI_IMAGE_MODEL`. Ключи только backend `.env`/секреты
-  хостинга, НЕ в браузере/логах. Валидация, CORS,
-  rate limit, очередь 2, timeout/retry, in-flight coalescing.
+  `OPENROUTER_IMAGE_MODEL`/`GEMINI_IMAGE_MODEL`. Ключи только корневой `.env`,
+  НЕ в браузере/логах. Валидация, CORS, rate limit, очередь 2, timeout/retry,
+  in-flight coalescing. Конвертация работает асинхронно, не блокирует account API.
+- `tools/server/`: POST `/api/auth/register`, `/api/auth/login`,
+  `/api/auth/change-password`, `/api/auth/logout`, GET me, GET/PUT cloud-save.
+  Email — логин, пароль 10–128 code points хешируется scrypt с солью через
+  node:crypto, plaintext не хранится. Письма/подтверждение/сброс по email нет.
+  Смена пароля отзывает старые сессии и выдаёт новую. Bearer-сессии случайные,
+  в БД только SHA-256. Production требует DATABASE_URL; memory store только test/dev.
+  PostgreSQL: users/auth_credentials/sessions/entitlements/cloud_saves, одна текущая
+  копия без истории. Cloud требует supporter, body ≤2 МиБ, CAS generation+baseRevision,
+  409 при конфликте. Приватные ответы no-store, Origin:null запрещён.
 - `tools/convert-knight-image.py` (Pillow): WebP 768×960, quality 86, atomic WebP+JSON
   metadata. Локально `game/.cache/knight` (в .gitignore), на хостинге `KNIGHT_CACHE_DIR`
   на persistent disk/volume, TTL нет. Повторный комплект НИКОГДА не генерируется заново;
   после перезапуска читается готовый WebP. Dockerfile ставит Node 22 + Python/Pillow.
 - `deploy/` — Docker Compose для VPS: `sing-box` (VLESS/REALITY) изолированно для
   backend, named Cloudflare Tunnel с постоянным `api.cozyknight.ru`, Caddy и lego как
-  прямой HTTPS fallback, named volumes для кэша и сертификатов. Секреты создаются
-  интерактивно `configure-secrets.py`, токены хранятся только в `deploy/secrets/` и не
-  коммитятся. Официальные бинарники sing-box/cloudflared/lego и CA bundle — локальные
-  артефакты сборки, игнорируются Git; Dockerfile sing-box — `deploy/sing-box/Dockerfile`.
+  прямой HTTPS fallback. Все исходные секреты — только корневой `.env`, обновляемый
+  `configure-secrets.py`; VLESS/tunnel/ACME получают env, временный sing-box config
+  создаётся внутри контейнера. PostgreSQL 16 без внешнего порта, `account-data`,
+  ежедневный gzip `pg_dump` в `account-backups` (BACKUP_KEEP_DAYS, default 14).
+  Offsite-backup не настроен. Официальные бинарники sing-box/cloudflared/lego и CA
+  bundle — локальные артефакты сборки, игнорируются Git.
 - Постоянство также в IndexedDB `knight_portraits_v1`: после успеха Blob сохраняется
   по каноническому key. При rerender сначала memory/IndexedDB/backend, только cache
   miss → Gemini. Фильтры и hover новый запрос не создают. Debounce 400 мс, последний
@@ -224,11 +259,15 @@ game/
   `prefers-reduced-motion`, layered/Canvas не возвращаются.
 - Во время генерации допустимо последнее СГЕНЕРИРОВАННОЕ изображение + status;
   иначе нейтральная рамка. При ошибке сохраняется последний generated image/нейтральный
-  статус, не старые слои. `game/knight-api.js` содержит только публичный URL/endpoint,
-  сейчас `https://api.cozyknight.ru/api/knight-image`; пустая строка отключает запросы.
+  статус, не старые слои. `game/knight-api.js` генерируется из корневого `.env`
+  только с публичными URL; пустая строка отключает соответствующие запросы.
 - Тесты: `knightImagePrompt.test.mjs`, `knightServer.test.mjs` (test mode + WebP +
-  persistent cache), `knightGeneratedView.test.mjs` (IndexedDB/lifecycle) и generated
-  ветка `ui-smoke.test.mjs`. Платный Gemini в `npm test` не вызывается;
+  persistent cache), `knightGeneratedView.test.mjs` (IndexedDB/lifecycle),
+  `accountServer.test.mjs`, `accountClient.test.mjs`, `accountView.test.mjs`,
+  `cloudPersistenceServer.test.mjs` (реальные HTTP auth/сейв/два устройства),
+  `minuteAutosave.test.mjs` (60 секунд на fake scheduler),
+  `saveFormat.test.mjs`, `persistence.test.mjs` и generated ветка `ui-smoke.test.mjs`.
+  Платный Gemini и живой внешний auth в `npm test` не вызываются;
   `KNIGHT_TEST_MODE=1 node tools/knight-server.mjs` — локальный end-to-end.
   После правок `src/` обязательны `npm run build && npm test`. Публичный deploy на
   Render/VPS и включение URL — только после живой визуальной приёмки и явного разрешения.

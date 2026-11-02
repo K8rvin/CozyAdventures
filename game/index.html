@@ -7,6 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/brand/fav2_mug.svg">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#3d2f22">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; frame-src 'none'; connect-src 'self' https://api.cozyknight.ru http://localhost:* http://127.0.0.1:*; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <link rel="apple-touch-icon" href="assets/brand/icon-192.png">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -38,39 +39,6 @@
 </div>
 <script src="knight-api.js"></script>
 <script src="bundle.js"></script>
-<script>
-(function () {
-  var hint = document.getElementById('rotate-hint');
-  var mq = window.matchMedia('(orientation: portrait)');
-  var coarse = window.matchMedia('(pointer: coarse)');
-  var dismissed = false;
-  function update() {
-    hint.hidden = dismissed || !coarse.matches || !mq.matches;
-  }
-  mq.addEventListener?.('change', update);
-  update();
-  document.getElementById('rh-dismiss').addEventListener('click', function () {
-    dismissed = true;
-    update();
-  });
-  document.getElementById('rh-fullscreen').addEventListener('click', function () {
-    var el = document.documentElement;
-    var req = el.requestFullscreen || el.webkitRequestFullscreen;
-    var p = req ? req.call(el) : Promise.reject();
-    Promise.resolve(p).then(function () {
-      return screen.orientation?.lock?.('landscape').catch(function () {});
-    }).catch(function () {});
-    dismissed = true;
-    update();
-  });
-})();
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  });
-}
-</script>
+<script src="bootstrap.js" defer></script>
 </body>
 </html>

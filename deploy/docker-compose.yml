@@ -6,22 +6,37 @@ services:
     build:
       context: ./sing-box
     restart: unless-stopped
+    env_file: ../.env
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
     volumes:
-      - ./secrets/sing-box.json:/etc/sing-box/config.json:ro
-    command: ["run", "-c", "/etc/sing-box/config.json"]
+      - ./sing-box.example.json:/etc/sing-box/config.template.json:ro
     networks:
       backend:
         aliases:
           - acme-proxy
     healthcheck:
-      test: ["CMD", "sing-box", "check", "-c", "/etc/sing-box/config.json"]
+      test: ["CMD", "sing-box", "check", "-c", "/tmp/sing-box-config.json"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: ../.env
+    volumes:
+      - account-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   app:
     build:
@@ -31,15 +46,13 @@ services:
     depends_on:
       vpn:
         condition: service_healthy
+      db:
+        condition: service_healthy
     network_mode: service:vpn
-    env_file: .env
+    env_file: ../.env
     environment:
-      KNIGHT_IMAGE_PROVIDER: openrouter
-      OPENROUTER_IMAGE_MODEL: google/gemini-3.1-flash-image
+      NODE_ENV: production
       KNIGHT_CACHE_DIR: /var/data/knight
-      KNIGHT_ALLOWED_ORIGINS: https://k8rvin.github.io
-      KNIGHT_PUBLIC_URL: https://api.cozyknight.ru
-      KNIGHT_RATE_LIMIT: 20
       PORT: 10000
       PYTHON: python3
     volumes:
@@ -51,6 +64,41 @@ services:
       retries: 5
       start_period: 20s
 
+  backup:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: ../.env
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -euo pipefail
+        : "$${DATABASE_URL:?DATABASE_URL is required}"
+        keep_days="$${BACKUP_KEEP_DAYS:-14}"
+        case "$$keep_days" in
+          ''|*[!0-9]*) echo "BACKUP_KEEP_DAYS must be a nonnegative integer" >&2; exit 1 ;;
+        esac
+        while true; do
+          stamp=$$(date -u +%Y%m%dT%H%M%SZ)
+          final="/backups/cozy-$$stamp.sql.gz"
+          temporary="$$final.tmp"
+          rm -f "$$temporary"
+          if pg_dump "$$DATABASE_URL" | gzip > "$$temporary"; then
+            mv "$$temporary" "$$final"
+          else
+            rm -f "$$temporary"
+            echo "Database backup failed" >&2
+          fi
+          find /backups -type f -name 'cozy-*.sql.gz' -mtime "+$$keep_days" -delete
+          sleep 86400
+        done
+    volumes:
+      - account-backups:/backups
+    networks:
+      - backend
+
   acme-proxy:
     image: node:22-bookworm
     restart: unless-stopped
@@ -58,12 +106,10 @@ services:
       vpn:
         condition: service_healthy
     network_mode: service:vpn
-    environment:
-      DUCKDNS_TOKEN_FILE: /run/secrets/duckdns-token
+    env_file: ../.env
     volumes:
       - ./acme-proxy.js:/opt/acme-proxy.js:ro
       - /usr/local/bin/lego:/opt/lego:ro
-      - ./secrets/duckdns-token:/run/secrets/duckdns-token:ro
       - lego-data:/var/lib/lego
     command: ["node", "/opt/acme-proxy.js"]
 
@@ -74,10 +120,10 @@ services:
       app:
         condition: service_healthy
     network_mode: service:vpn
+    env_file: ../.env
     volumes:
       - /usr/local/bin/cloudflared:/opt/cloudflared:ro
-      - ./secrets/cloudflare-tunnel-token:/run/secrets/cloudflare-tunnel-token:ro
-    command: ["/opt/cloudflared", "tunnel", "--no-autoupdate", "--protocol", "http2", "run", "--token-file", "/run/secrets/cloudflare-tunnel-token"]
+    command: ["/opt/cloudflared", "tunnel", "--no-autoupdate", "--protocol", "http2", "run"]
 
   caddy:
     image: caddy:2-alpine
@@ -87,8 +133,8 @@ services:
         condition: service_healthy
       acme-proxy:
         condition: service_started
+    env_file: ../.env
     environment:
-      KNIGHT_HOST: ${KNIGHT_HOST:?set KNIGHT_HOST in deploy/.env}
       HTTP_PROXY: http://acme-proxy:1080
       HTTPS_PROXY: http://acme-proxy:1080
       NO_PROXY: localhost,127.0.0.1,vpn
@@ -110,6 +156,8 @@ networks:
 
 volumes:
   knight-cache:
+  account-data:
+  account-backups:
   caddy-data:
   caddy-config:
   lego-data:

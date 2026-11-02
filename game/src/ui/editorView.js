@@ -2,7 +2,7 @@
 // Уровни сохраняются в state.customPuzzles и играются как обычные.
 import { createPuzzle, traceLight } from '../core/puzzle.js';
 import { validateLevel } from '../core/solver.js';
-import { header, showOverlay } from './common.js';
+import { header, showOverlay, escapeHtml } from './common.js';
 
 const CELL = 56;
 
@@ -50,7 +50,7 @@ export function renderWorkshop(container, ctx) {
     row.innerHTML = `
       <span class="icon">${done ? '🏮' : '🛠️'}</span>
       <span class="grow">
-        <div class="name">${p.name}</div>
+        <div class="name">${escapeHtml(p.name)}</div>
         <div class="desc">Сетка ${p.grid[0]}×${p.grid[1]} · объектов: ${p.objects.length}</div>
       </span>`;
     const play = document.createElement('button');

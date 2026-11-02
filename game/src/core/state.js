@@ -24,8 +24,10 @@ import { SEATING_PUZZLES } from '../data/puzzlesSeating.js';
 import { BATTLES, BATTLE_BY_ID } from '../data/battles.js';
 import { TROPHY_BY_BATTLE } from '../data/trophies.js';
 import { COMPANION_BY_ID, PET_BY_ID, MERC_BY_ID } from '../data/crew.js';
-import { COSMETIC_BY_ID, LEGACY_COSMETIC_ALIASES, COSMETICS_VERSION } from '../data/cosmetics.js';
-import { KNIGHT_DOLL_BODY_IDS, KNIGHT_DOLL_DEFAULT_BODY } from '../data/knightDoll.js';
+import {
+  COSMETIC_BY_ID, COSMETIC_PRODUCT_BY_ID, LEGACY_COSMETIC_ALIASES, COSMETICS_VERSION,
+} from '../data/cosmetics.js';
+import { KNIGHT_DOLL_BODY_IDS, KNIGHT_DOLL_FREE_BODY_IDS, KNIGHT_DOLL_DEFAULT_BODY } from '../data/knightDoll.js';
 import { RECIPES, RECIPE_BY_ID } from '../data/recipes.js';
 import { MATERIALS, materialLabel } from '../data/materials.js';
 import { exchangeMaterials } from './materialExchange.js';
@@ -79,7 +81,7 @@ export function newGame(now = Date.now()) {
     lastDailyBonus: null,   // день, когда получен бонус заказа дня
     lastCatGift: null,      // день последнего подарка от кота
     cosmeticsVersion: COSMETICS_VERSION, // пакетная модель полных тем
-    cosmeticsOwned: [],     // все купленные пакеты без дублей
+    cosmeticsOwned: [],     // купленные фоны и образы рыцаря без дублей
     cosmeticsActive: [],    // не более одного выбранного pack id
     legacyCosmeticsActive: [], // прежние спрайты только для fallback до загрузки полного фона
     seekOverrides: {},      // правки хотспотов искалок из редактора: levelId -> groups
@@ -166,6 +168,10 @@ function migrate(state, now = Date.now()) {
   if (!KNIGHT_DOLL_BODY_IDS.includes(state.settings.knightBody)) {
     state.settings.knightBody = KNIGHT_DOLL_DEFAULT_BODY;
   }
+  if (!KNIGHT_DOLL_FREE_BODY_IDS.includes(state.settings.knightBody)
+    && !state.cosmeticsOwned.includes(state.settings.knightBody)) {
+    state.cosmeticsOwned.push(state.settings.knightBody);
+  }
   state.story ||= newStoryState();
   state.story.guests ||= {};
   state.story.guestCursor ||= 0;
@@ -242,6 +248,10 @@ function migrate(state, now = Date.now()) {
   state.onboarding.version = ONBOARDING_VERSION;
   reconcileOnboarding(state);
   return state;
+}
+
+export function migrateGameState(state, now = Date.now()) {
+  return migrate(state, now);
 }
 
 // --- Экономика ---
@@ -589,7 +599,7 @@ export function journalPush(state, icon, text) {
   if (state.journal.length > 30) state.journal.splice(0, state.journal.length - 30);
 }
 
-// --- Оформление лавки (только красота, без влияния на силу) ---
+// --- Косметика лавки и образы рыцаря (только красота, без влияния на силу) ---
 
 export function selectCosmetic(state, id) {
   if (id === null) {
@@ -604,10 +614,25 @@ export function selectCosmetic(state, id) {
   return { ok: true, active: true };
 }
 
-export function buyCosmetic(state, id) {
-  const def = COSMETIC_BY_ID[id];
+export function availableKnightBodyIds(state) {
+  const owned = new Set(state.cosmeticsOwned || []);
+  return KNIGHT_DOLL_BODY_IDS.filter((id) => KNIGHT_DOLL_FREE_BODY_IDS.includes(id) || owned.has(id));
+}
+
+export function selectKnightBody(state, id) {
+  if (!KNIGHT_DOLL_BODY_IDS.includes(id)) return { ok: false, error: 'Нет такого образа' };
+  if (!availableKnightBodyIds(state).includes(id)) return { ok: false, error: 'Образ ещё не куплен' };
+  state.settings.knightBody = id;
+  return { ok: true };
+}
+
+export function buyCosmetic(state, id, access = {}) {
+  const def = COSMETIC_PRODUCT_BY_ID[id];
   if (!def) return { ok: false, error: 'Нет такого оформления' };
   if (state.cosmeticsOwned.includes(id)) return { ok: false, error: 'Уже куплено' };
+  if (def.edition === 'supporter' && access.supporter !== true) {
+    return { ok: false, error: 'Доступно в Издании хранителя' };
+  }
   if (def.sealPrice) {
     if (state.seals < def.sealPrice) return { ok: false, error: 'Не хватает печатей мастера' };
     state.seals -= def.sealPrice;
@@ -616,7 +641,8 @@ export function buyCosmetic(state, id) {
     state.coins -= def.price;
   }
   state.cosmeticsOwned.push(id);
-  selectCosmetic(state, id); // покупка сразу заменяет текущее оформление
+  if (def.kind === 'knightBody') selectKnightBody(state, id);
+  else selectCosmetic(state, id);
   return { ok: true };
 }
 
@@ -1210,24 +1236,37 @@ export function cheatList() {
 export function saveGame(state, storage) {
   const s = storage || (typeof localStorage !== 'undefined' ? localStorage : null);
   if (!s) return false;
-  s.setItem(SAVE_KEY, JSON.stringify(state));
-  return true;
+  try {
+    s.setItem(SAVE_KEY, JSON.stringify(state));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function loadGameDetailed(storage, now = Date.now()) {
+  const s = storage || (typeof localStorage !== 'undefined' ? localStorage : null);
+  if (!s) return { state: null, hadRaw: false, error: 'Локальное хранилище недоступно.' };
+  let raw;
+  try {
+    raw = s.getItem(SAVE_KEY) || s.getItem('cozy_adventures_save_v1');
+  } catch {
+    return { state: null, hadRaw: false, error: 'Не удалось прочитать локальное сохранение.' };
+  }
+  if (!raw) return { state: null, hadRaw: false, error: null };
+  try {
+    const data = JSON.parse(raw);
+    if (!data || typeof data.coins !== 'number') throw new Error('invalid');
+    const migrated = migrate(data, now);
+    migrateSeekOverrides(migrated, s);
+    return { state: migrated, hadRaw: true, error: null };
+  } catch {
+    return { state: null, hadRaw: true, error: 'Сохранение повреждено. Исходный файл не удалён; новое действие может заменить его.' };
+  }
 }
 
 export function loadGame(storage, now = Date.now()) {
-  const s = storage || (typeof localStorage !== 'undefined' ? localStorage : null);
-  if (!s) return null;
-  try {
-    const raw = s.getItem(SAVE_KEY) || s.getItem('cozy_adventures_save_v1');
-    if (!raw) return null;
-    const data = JSON.parse(raw);
-    if (!data || typeof data.coins !== 'number') return null;
-    const migrated = migrate(data, now);
-    migrateSeekOverrides(migrated, s);
-    return migrated;
-  } catch {
-    return null;
-  }
+  return loadGameDetailed(storage, now).state;
 }
 
 // --- Режим «сбор»: автобой на поле боя с рядами ---
